@@ -43,8 +43,19 @@ class SendArbitraryTransactionViewController: UIViewController {
         
         self.title = "Transaction"
         //TODO: - Setup outlets
-        methodNameLabel.text = transactionInfo.methodName
+        methodNameLabel.text = "Method name: " + transactionInfo.methodName
+        if let address = KeysService().selectedWallet()?.address {
+            fromTextField.text = "From: \(address)"
+        }
+        
+        Web3SwiftService().getETHbalance { (balance, error) in
+            if let balance = balance {
+                self.balanceOnWalletTextField.text = "Wallet balance: " + balance + " ETH"
+            }
+        }
         contractAddressTextField.text = transactionInfo.contractAddress
+        gasPriceTextField.text = transactionInfo.transactionIntermediate.transaction.gasPrice.description
+        gasLimitTextField.text = transactionInfo.transactionIntermediate.transaction.gasLimit.description
     }
     
     
@@ -52,6 +63,12 @@ class SendArbitraryTransactionViewController: UIViewController {
         //TODO: - Password
         enterPassword()
         
+    }
+    
+    @IBAction func closeButtonWasTapped(_ sender: Any) {
+        let c = self.goToApp()
+        c.view.backgroundColor = UIColor.white
+        UIApplication.shared.keyWindow?.rootViewController = c
     }
     
     func enterPassword() {
@@ -132,6 +149,11 @@ extension SendArbitraryTransactionViewController: UITableViewDelegate, UITableVi
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ParameterCell", for: indexPath) as? ParameterCell else { return UITableViewCell() }
         cell.configure(params[indexPath.row])
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
     }
     
 }
