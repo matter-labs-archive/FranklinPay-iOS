@@ -163,6 +163,7 @@ extension Web3 {
         public var chainID: BigUInt?
         public var functionName: String?
         public var parameters: [EIP681Parameter] = [EIP681Parameter]()
+        public var params: [(String, String)] = []
         public var gasLimit: BigUInt?
         public var gasPrice: BigUInt?
         public var amount: BigUInt?
@@ -284,6 +285,7 @@ extension Web3 {
                     if nativeValue != nil {
                         inputs.append(ABIv2.Element.InOut(name: String(inputNumber), type: inputType))
                         code.parameters.append(EIP681Code.EIP681Parameter(type: inputType, value: nativeValue!))
+                        code.params.append((inputType.abiRepresentation, value))
                         inputNumber = inputNumber + 1
                     }
                 } else {

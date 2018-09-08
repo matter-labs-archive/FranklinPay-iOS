@@ -99,8 +99,8 @@ class AppController {
         case false:
             guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
             guard let methodName = parsed.functionName else { return }
-            let params = parsed.parameters.map {
-                return Parameter(type: $0.type.abiRepresentation, value: "test")
+            let params = parsed.params.map {
+                return Parameter(type: $0.0, value: $0.1)
             }
             etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
                 switch result {
@@ -110,7 +110,7 @@ class AppController {
                         case .Error(let error):
                             print(error)
                         case .Success(let intermediate):
-                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                            let controller = SendArbitraryTransactionViewController(params: parsed.params.map{return Parameter(type: $0.0, value: $0.1)}, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
                             window.rootViewController = controller
                             window.makeKeyAndVisible()
                         }
@@ -124,7 +124,7 @@ class AppController {
                     } else {
                         contractAbi = peepEthAbi
                     }
-                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
+                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{return $0.value}, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
                         switch result {
                         case .Error(let error):
                             print(error)
