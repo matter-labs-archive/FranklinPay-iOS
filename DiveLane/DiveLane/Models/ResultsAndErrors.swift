@@ -1,5 +1,5 @@
 //
-//  Errors.swift
+//  Result.swift
 //  DiveLane
 //
 //  Created by Anton Grigorev on 08/09/2018.
@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+enum Result<T> {
+    case Success(T)
+    case Error(Error)
+}
 
 enum WalletSavingError: Error {
     case couldNotSaveTheWallet

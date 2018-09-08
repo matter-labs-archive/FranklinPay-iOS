@@ -13,14 +13,12 @@
 		91B6A79E21435F5E0033A045 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79D21435F5E0033A045 /* Assets.xcassets */; };
 		91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */; };
 		91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AC214360F90033A045 /* Web3Service.swift */; };
-		91B6A7AF2143610C0033A045 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AE2143610C0033A045 /* Result.swift */; };
+		91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */; };
 		91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B2214361730033A045 /* LocalDatabase.swift */; };
 		91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B4214361AE0033A045 /* KeysService.swift */; };
-		91B6A7B7214361E30033A045 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B6214361E30033A045 /* Errors.swift */; };
-		91B6A7B9214362080033A045 /* KeyWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B8214362080033A045 /* KeyWallet.swift */; };
+		91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B8214362080033A045 /* WalletAndKeys.swift */; };
 		91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7BA2143621E0033A045 /* CoreDataModel.xcdatamodeld */; };
 		91B6A7BE2143649A0033A045 /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7BD2143649A0033A045 /* TransactionsService.swift */; };
-		91B6A7C0214365580033A045 /* HDKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7BF214365580033A045 /* HDKey.swift */; };
 		91B6A7C2214365890033A045 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C1214365890033A045 /* Transaction.swift */; };
 		91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C3214365B30033A045 /* ERC20Token.swift */; };
 		91B6A7C62143660B0033A045 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C52143660B0033A045 /* AppController.swift */; };
@@ -36,14 +34,12 @@
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91B6A7A221435F5E0033A045 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		91B6A7AC214360F90033A045 /* Web3Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Web3Service.swift; sourceTree = "<group>"; };
-		91B6A7AE2143610C0033A045 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
+		91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsAndErrors.swift; sourceTree = "<group>"; };
 		91B6A7B2214361730033A045 /* LocalDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalDatabase.swift; sourceTree = "<group>"; };
 		91B6A7B4214361AE0033A045 /* KeysService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysService.swift; sourceTree = "<group>"; };
-		91B6A7B6214361E30033A045 /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		91B6A7B8214362080033A045 /* KeyWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyWallet.swift; sourceTree = "<group>"; };
+		91B6A7B8214362080033A045 /* WalletAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAndKeys.swift; sourceTree = "<group>"; };
 		91B6A7BB2143621E0033A045 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		91B6A7BD2143649A0033A045 /* TransactionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsService.swift; sourceTree = "<group>"; };
-		91B6A7BF214365580033A045 /* HDKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDKey.swift; sourceTree = "<group>"; };
 		91B6A7C1214365890033A045 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		91B6A7C3214365B30033A045 /* ERC20Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		91B6A7C52143660B0033A045 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
@@ -113,10 +109,8 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				91B6A7AE2143610C0033A045 /* Result.swift */,
-				91B6A7B6214361E30033A045 /* Errors.swift */,
-				91B6A7B8214362080033A045 /* KeyWallet.swift */,
-				91B6A7BF214365580033A045 /* HDKey.swift */,
+				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
+				91B6A7B8214362080033A045 /* WalletAndKeys.swift */,
 				91B6A7C1214365890033A045 /* Transaction.swift */,
 				91B6A7C3214365B30033A045 /* ERC20Token.swift */,
 				91B6A7C7214368470033A045 /* Parameter.swift */,
@@ -278,17 +272,15 @@
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				91B6A79921435F5D0033A045 /* ViewController.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
-				91B6A7C0214365580033A045 /* HDKey.swift in Sources */,
-				91B6A7AF2143610C0033A045 /* Result.swift in Sources */,
+				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
-				91B6A7B9214362080033A045 /* KeyWallet.swift in Sources */,
+				91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */,
 				91B6A7BE2143649A0033A045 /* TransactionsService.swift in Sources */,
 				91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */,
-				91B6A7B7214361E30033A045 /* Errors.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

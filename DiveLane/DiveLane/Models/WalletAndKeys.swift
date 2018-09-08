@@ -23,3 +23,8 @@ struct KeyWalletModel {
         return model
     }
 }
+
+struct HDKey {
+    let name: String?
+    let address: String
+}
