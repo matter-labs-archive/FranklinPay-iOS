@@ -42,20 +42,22 @@ class SendArbitraryTransactionViewController: UIViewController {
         self.tableView.register(nib, forCellReuseIdentifier: "ParameterCell")
         
         //TODO: - Setup outlets
+        methodNameLabel.text = transactionInfo.methodName
+        contractAddressTextField.text = transactionInfo.contractAddress
     }
     
     
     @IBAction func sendButtonWasTapped(_ sender: Any) {
         //TODO: - Password
-        TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: "") { (result) in
-            switch result {
-            case .Error(let error):
-                print(error)
-            case .Success(let success):
-                print(success)
-                //TODO: - Something
-            }
-        }
+//        TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: "") { (result) in
+//            switch result {
+//            case .Error(let error):
+//                print(error)
+//            case .Success(let success):
+//                print(success)
+//                //TODO: - Something
+//            }
+//        }
     }
     
 }
