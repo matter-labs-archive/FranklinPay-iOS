@@ -44,7 +44,9 @@ class TokenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        guard let balance = BigUInt(tokenBalance!) else {
+        guard let balance = Float(tokenBalance!) else {
+            sendTokenButton.isEnabled = false
+            sendTokenButton.alpha = 0.5
             return
         }
         guard balance > 0 else {
@@ -98,7 +100,7 @@ class TokenViewController: UIViewController {
             walletName: walletName ?? "",
             tokenBalance: tokenBalance ?? "",
             walletAddress: walletAddress ?? "")
-        self.navigationController?.viewControllers.append(sendSettingsViewController)
+        self.navigationController?.pushViewController(sendSettingsViewController, animated: true)
     }
     
 }
