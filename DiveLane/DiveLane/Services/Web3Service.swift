@@ -21,7 +21,8 @@ protocol IWeb3SwiftService {
 class Web3SwiftService: IWeb3SwiftService {
     
     static var web3instance: web3 {
-        let web3 = Web3.InfuraMainnetWeb3()
+        //let web3 = Web3.InfuraMainnetWeb3()
+        let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
         web3.addKeystoreManager(KeysService().keystoreManager())
         return web3
     }
@@ -58,7 +59,8 @@ class Web3SwiftService: IWeb3SwiftService {
             let wallet = KeysService().localStorage.getWallet()
             guard let address = wallet?.address else { return }
             let ETHaddress = EthereumAddress(address)!
-            let web3Main = Web3.InfuraMainnetWeb3()
+            //let web3Main = Web3.InfuraMainnetWeb3()
+            let web3Main = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
             let balanceResult = web3Main.eth.getBalance(address: ETHaddress)
             guard case .success(let balance) = balanceResult else {
                 DispatchQueue.main.async {
@@ -82,7 +84,7 @@ class Web3SwiftService: IWeb3SwiftService {
                     completion: @escaping (String?,Error?)->Void) {
         DispatchQueue.global().async {
             
-            let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
             guard let ethAddress = EthereumAddress(address) else {
                 DispatchQueue.main.async {
                     completion(nil,BalanceError.wrongAddress)
@@ -115,7 +117,7 @@ class Web3SwiftService: IWeb3SwiftService {
     }
     
     private func contract(for address: String) -> web3.web3contract? {
-        let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+        let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
         web3.addKeystoreManager(KeysService().keystoreManager())
         guard let ethAddress = EthereumAddress(address) else {
             return nil

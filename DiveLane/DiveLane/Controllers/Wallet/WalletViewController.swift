@@ -31,7 +31,13 @@ class WalletViewController: UIViewController {
         self.title = "Wallet"
         self.tabBarController?.tabBar.selectedItem?.title = nil
         
-        self.getTokensList()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        listOfTokens.removeAll()
+        getTokensList()
+        
         self.currentWallet = KeysService().selectedWallet()?.address
         
         self.walletTableView.delegate = self

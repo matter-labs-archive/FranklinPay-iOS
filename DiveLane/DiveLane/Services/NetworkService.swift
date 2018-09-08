@@ -24,7 +24,6 @@ class CurrentWeb {
         }
         
         set(web) {
-            
             _currentWeb = web
         }
     }

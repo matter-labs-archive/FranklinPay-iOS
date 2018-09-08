@@ -62,21 +62,32 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dive Lane" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTj-yS-aSH">
-                    <rect key="frame" x="121" y="170" width="133" height="36"/>
+                    <rect key="frame" x="121" y="325.5" width="133" height="36"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dive" translatesAutoresizingMaskIntoConstraints="NO" id="76K-wD-r5P">
+                    <rect key="frame" x="57" y="40" width="262.5" height="265.5"/>
+                </imageView>
             </subviews>
             <color key="backgroundColor" red="0.94696103897561579" green="0.94544369816295803" blue="0.97194786269430056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="5Oe-oL-Ck1"/>
                 <constraint firstItem="bVN-Yh-V2J" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="F78-M9-lkK"/>
                 <constraint firstItem="mOM-MJ-t3B" firstAttribute="bottom" secondItem="bVN-Yh-V2J" secondAttribute="bottom" constant="50" id="KgR-HL-8EJ"/>
-                <constraint firstItem="wTj-yS-aSH" firstAttribute="top" secondItem="mOM-MJ-t3B" secondAttribute="top" constant="150" id="YsJ-zH-vL4"/>
+                <constraint firstItem="76K-wD-r5P" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="NH0-mo-GwA"/>
+                <constraint firstItem="76K-wD-r5P" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mOM-MJ-t3B" secondAttribute="top" constant="20" id="SOZ-Eq-jAL"/>
+                <constraint firstItem="wTj-yS-aSH" firstAttribute="top" secondItem="76K-wD-r5P" secondAttribute="bottom" constant="20" id="asl-uq-d7x"/>
+                <constraint firstItem="wTj-yS-aSH" firstAttribute="centerY" secondItem="mOM-MJ-t3B" secondAttribute="centerY" id="ppC-67-DdP"/>
+                <constraint firstItem="76K-wD-r5P" firstAttribute="width" relation="lessThanOrEqual" secondItem="iEO-iG-X63" secondAttribute="width" multiplier="0.7" id="sUX-GK-9iT"/>
                 <constraint firstItem="bVN-Yh-V2J" firstAttribute="width" secondItem="iEO-iG-X63" secondAttribute="width" multiplier="0.9" id="yJI-qf-PCi"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="mOM-MJ-t3B"/>
+            <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
+    <resources>
+        <image name="dive" width="4781" height="3323"/>
+    </resources>
 </document>

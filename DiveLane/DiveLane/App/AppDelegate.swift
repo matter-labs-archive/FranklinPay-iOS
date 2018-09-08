@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import UIKit
+import web3swift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
+        CurrentNetwork.currentNetwork = (UserDefaults.standard.object(forKey: "currentNetwork") as? Networks) ?? Networks.Mainnet
+        CurrentWeb.currentWeb = (UserDefaults.standard.object(forKey: "currentWeb") as? web3) ?? Web3.InfuraMainnetWeb3()
         
         controller = AppController(window: window!)
         

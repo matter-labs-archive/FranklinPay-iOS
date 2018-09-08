@@ -67,7 +67,8 @@ class TransactionsService: ITransactionsService {
                 return
             }
             
-            let web3 = Web3.InfuraMainnetWeb3()
+            //let web3 = Web3.InfuraMainnetWeb3()
+            let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
             web3.addKeystoreManager(TransactionsService.keyservice.keystoreManager())
             
             var options = Web3Options.defaultOptions()
@@ -115,7 +116,7 @@ class TransactionsService: ITransactionsService {
             }
             
             
-            let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
             web3.addKeystoreManager(KeysService().keystoreManager())
             
             let ethAddressFrom = EthereumAddress(selectedKey)
@@ -177,7 +178,7 @@ class TransactionsService: ITransactionsService {
                 return
             }
             
-            let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
             web3.addKeystoreManager(KeysService().keystoreManager())
             
             let contract = self.contract(for: token, web3: web3)

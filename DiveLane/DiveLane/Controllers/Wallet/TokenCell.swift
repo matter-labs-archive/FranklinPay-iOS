@@ -32,7 +32,16 @@ class TokenCell: UITableViewCell {
         }
         
         let walletName = LocalDatabase().getWallet()?.name
-        self.walletName.text = walletName
+        var networkName: String?
+        guard CurrentNetwork.currentNetwork != nil else {return}
+        switch CurrentNetwork.currentNetwork! {
+        case .Rinkeby: networkName = "Rinkeby"
+        case .Ropsten: networkName = "Ropsten"
+        case .Mainnet: networkName = "Mainnet"
+        case .Kovan: networkName = "Kovan"
+        case .Custom: networkName = ""
+        }
+        self.walletName.text = (walletName ?? "") + " on " + (networkName ?? "")
         self.tokenShortName.text = token.symbol.uppercased()
         
         if token == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {

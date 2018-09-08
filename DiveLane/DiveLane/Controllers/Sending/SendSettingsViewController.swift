@@ -314,11 +314,23 @@ extension SendSettingsViewController: UITextFieldDelegate {
                 gasLimitTextField.textColor = UIColor.red
                 return true
             }
+            if Int((gasLimitTextField.text ?? "0"))! > 21000 {
+                gasLimitTextField.text = "21000"
+            }
+            if Int((gasLimitTextField.text ?? "0"))! < 5 {
+                gasLimitTextField.text = "5"
+            }
         }
         if textField == gasPriceTextField {
             guard let _ = Int((gasPriceTextField.text ?? "")) else {
                 gasPriceTextField.textColor = UIColor.red
                 return true
+            }
+            if Int((gasPriceTextField.text ?? "0"))! > 100 {
+                gasPriceTextField.text = "100"
+            }
+            if Int((gasPriceTextField.text ?? "0"))! < 5 {
+                gasPriceTextField.text = "5"
             }
         }
         return true

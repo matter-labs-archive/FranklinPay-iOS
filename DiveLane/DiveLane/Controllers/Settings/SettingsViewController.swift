@@ -36,7 +36,10 @@ class SettingsViewController: UIViewController {
         settings["currentWallet"] = KeysService().selectedWallet()?.name
     }
     
-    
+    override func viewDidAppear(_ animated: Bool) {
+        getSettings()
+        self.settingsTableView.reloadData()
+    }
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -93,13 +96,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? SettingsCell
         
         if selectedCell?.param.text == "Network" {
-            print("network")
+            let networksViewController = NetworksViewController()
+            self.navigationController?.pushViewController(networksViewController, animated: true)
         }
-        //        let tokenViewController = TokenViewController(
-        //            walletAddress: currentWallet ?? "",
-        //            walletName: selectedCell?.walletName.text ?? "",
-        //            tokenBalance: selectedCell?.balance.text ?? "0")
-        //        self.navigationController?.viewControllers.append(tokenViewController)
         tableView.deselectRow(at: indexPath, animated: true)
         
     }

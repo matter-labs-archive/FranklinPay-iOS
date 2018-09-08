@@ -32,6 +32,10 @@
 		9197F3252144041400C358AA /* SettingsTableViewSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3242144041400C358AA /* SettingsTableViewSections.swift */; };
 		9197F3282144043500C358AA /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3262144043500C358AA /* SettingsCell.swift */; };
 		9197F3292144043500C358AA /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3272144043500C358AA /* SettingsCell.xib */; };
+		9197F32F2144213000C358AA /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F32D2144213000C358AA /* NetworksViewController.swift */; };
+		9197F3302144213000C358AA /* NetworksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F32E2144213000C358AA /* NetworksViewController.xib */; };
+		9197F3332144228B00C358AA /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3312144228B00C358AA /* NetworksCell.swift */; };
+		9197F3342144228B00C358AA /* NetworksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3322144228B00C358AA /* NetworksCell.xib */; };
 		91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A79621435F5D0033A045 /* AppDelegate.swift */; };
 		91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */; };
 		91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AC214360F90033A045 /* Web3Service.swift */; };
@@ -85,6 +89,10 @@
 		9197F3242144041400C358AA /* SettingsTableViewSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewSections.swift; sourceTree = "<group>"; };
 		9197F3262144043500C358AA /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		9197F3272144043500C358AA /* SettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
+		9197F32D2144213000C358AA /* NetworksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksViewController.swift; sourceTree = "<group>"; };
+		9197F32E2144213000C358AA /* NetworksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksViewController.xib; sourceTree = "<group>"; };
+		9197F3312144228B00C358AA /* NetworksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCell.swift; sourceTree = "<group>"; };
+		9197F3322144228B00C358AA /* NetworksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksCell.xib; sourceTree = "<group>"; };
 		91B6A79321435F5D0033A045 /* DiveLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiveLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B6A79621435F5D0033A045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -291,6 +299,24 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		9197F32B2144210400C358AA /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32E2144213000C358AA /* NetworksViewController.xib */,
+				9197F3322144228B00C358AA /* NetworksCell.xib */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
+		9197F32C2144211300C358AA /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32D2144213000C358AA /* NetworksViewController.swift */,
+				9197F3312144228B00C358AA /* NetworksCell.swift */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
 		91B6A78A21435F5D0033A045 = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +397,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
 				9197F2FC2143BF8300C358AA /* Token */,
@@ -385,6 +412,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
 				9197F30A2143C3A900C358AA /* Sending */,
 				9197F2FD2143BF9800C358AA /* Token */,
@@ -481,8 +509,10 @@
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
+				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				B25BD13C2143E61A0091C481 /* ParameterCell.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
+				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -549,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
@@ -582,6 +613,7 @@
 				91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */,
 				91B6A7D22143B1E80033A045 /* ViewControllerExtensions.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
+				9197F32F2144213000C358AA /* NetworksViewController.swift in Sources */,
 				91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */,
 				B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */,
 				9197F3252144041400C358AA /* SettingsTableViewSections.swift in Sources */,
