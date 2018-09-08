@@ -152,13 +152,6 @@
 			path = Onboarding;
 			sourceTree = "<group>";
 		};
-		9197F2DA2143B55A00C358AA /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
 		9197F2DB2143B56400C358AA /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -225,13 +218,6 @@
 			path = Token;
 			sourceTree = "<group>";
 		};
-		9197F2FE2143BF9F00C358AA /* Token */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Token;
-			sourceTree = "<group>";
-		};
 		9197F3042143C33800C358AA /* Sending */ = {
 			isa = PBXGroup;
 			children = (
@@ -287,7 +273,6 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9197F2FE2143BF9F00C358AA /* Token */,
 				9197F2F42143BBFF00C358AA /* Wallet */,
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
@@ -338,7 +323,6 @@
 				9197F2EF2143B93400C358AA /* Wallet */,
 				9197F2E72143B66400C358AA /* WalletCreation */,
 				91B6A7E02143B3020033A045 /* AddWallet */,
-				9197F2DA2143B55A00C358AA /* Onboarding */,
 				9197F2E82143B75600C358AA /* Alerts.swift */,
 			);
 			path = Views;
@@ -679,7 +663,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8FZ3UYF69;
+				DEVELOPMENT_TEAM = 8DB897QKJA;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -698,7 +682,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = U8FZ3UYF69;
+				DEVELOPMENT_TEAM = 8DB897QKJA;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
