@@ -47,6 +47,11 @@
 		91B6A7D62143B2340033A045 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D52143B2340033A045 /* TabViewController.swift */; };
 		91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */; };
 		91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */; };
+		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
+		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
+		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
+		B25BD13B2143E61A0091C481 /* SendArbitraryTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B25BD1392143E61A0091C481 /* SendArbitraryTransactionViewController.xib */; };
+		B25BD13C2143E61A0091C481 /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B25BD13A2143E61A0091C481 /* ParameterCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,6 +98,11 @@
 		91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletViewController.swift; sourceTree = "<group>"; };
 		91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWalletViewController.xib; sourceTree = "<group>"; };
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
+		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
+		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
+		B25BD1392143E61A0091C481 /* SendArbitraryTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SendArbitraryTransactionViewController.xib; path = "../../../../../../Downloads/Telegram Desktop/MatterMask 2/MetamaskTest/Views/Sending/SendArbitraryTransactionViewController.xib"; sourceTree = "<group>"; };
+		B25BD13A2143E61A0091C481 /* ParameterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ParameterCell.xib; path = "../../../../../../Downloads/Telegram Desktop/MatterMask 2/MetamaskTest/Views/Sending/ParameterCell.xib"; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -226,6 +236,8 @@
 			isa = PBXGroup;
 			children = (
 				9197F3072143C39C00C358AA /* SendSettingsViewController.xib */,
+				B25BD1392143E61A0091C481 /* SendArbitraryTransactionViewController.xib */,
+				B25BD13A2143E61A0091C481 /* ParameterCell.xib */,
 			);
 			path = Sending;
 			sourceTree = "<group>";
@@ -234,6 +246,8 @@
 			isa = PBXGroup;
 			children = (
 				9197F3062143C39C00C358AA /* SendSettingsViewController.swift */,
+				B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */,
+				B25BD1372143E5BC0091C481 /* ParameterCell.swift */,
 			);
 			path = Sending;
 			sourceTree = "<group>";
@@ -296,6 +310,7 @@
 				91B6A7B4214361AE0033A045 /* KeysService.swift */,
 				91B6A7B2214361730033A045 /* LocalDatabase.swift */,
 				91B6A7CF2143B1640033A045 /* ParserEIP.swift */,
+				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -422,8 +437,10 @@
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
+				B25BD13B2143E61A0091C481 /* SendArbitraryTransactionViewController.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
+				B25BD13C2143E61A0091C481 /* ParameterCell.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 			);
@@ -494,6 +511,7 @@
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
+				B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
@@ -505,6 +523,7 @@
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
+				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
 				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
@@ -522,6 +541,7 @@
 				91B6A7D22143B1E80033A045 /* ViewControllerExtensions.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 				91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */,
+				B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,7 +679,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DB897QKJA;
+				DEVELOPMENT_TEAM = U8FZ3UYF69;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -678,7 +698,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DB897QKJA;
+				DEVELOPMENT_TEAM = U8FZ3UYF69;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -38,7 +38,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="200" height="37.5"/>
                             <accessibility key="accessibilityConfiguration" identifier="WalletPasswordTextFieldPassphrase"/>
                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
+                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
                             <connections>
                                 <outlet property="delegate" destination="-1" id="mqs-3l-Lbf"/>
                             </connections>
