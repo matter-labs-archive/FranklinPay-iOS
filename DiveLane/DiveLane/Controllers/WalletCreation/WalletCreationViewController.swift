@@ -42,7 +42,8 @@ class WalletCreationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = additionMode?.title()
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.hideKeyboardWhenTappedAround()
         enterButton.setTitle(additionMode?.title(), for: .normal)
         enterButton.isEnabled = false
@@ -52,6 +53,7 @@ class WalletCreationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
         if additionMode == .createWallet {
             enterPrivateKeyTextField.isHidden = true
             qrCodeButton.isHidden = true

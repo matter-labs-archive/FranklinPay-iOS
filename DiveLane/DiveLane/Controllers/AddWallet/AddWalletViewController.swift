@@ -12,7 +12,11 @@ class AddWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Add Wallet"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     @IBAction func importWallet(_ sender: UIButton) {
@@ -25,7 +29,7 @@ class AddWalletViewController: UIViewController {
     
     func goToWalletCreation(type: WalletAdditionMode) {
         let walletCreationViewController = WalletCreationViewController(additionType: type)
-        self.navigationController?.viewControllers.append(walletCreationViewController)
+        self.navigationController?.pushViewController(walletCreationViewController, animated: true)
     }
     
 }

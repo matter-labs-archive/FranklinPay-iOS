@@ -33,7 +33,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="lsV-Gd-qKJ">
-                    <rect key="frame" x="16" y="52" width="288" height="316"/>
+                    <rect key="frame" x="16" y="47" width="288" height="316"/>
                     <subviews>
                         <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Wallet name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vqL-4G-h66">
                             <rect key="frame" x="0.0" y="0.0" width="288" height="36"/>
@@ -114,7 +114,7 @@
             </subviews>
             <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
             <constraints>
-                <constraint firstItem="sEL-uz-4PL" firstAttribute="centerY" secondItem="2Yl-zj-tGt" secondAttribute="centerY" id="7iN-cm-H2A"/>
+                <constraint firstItem="sEL-uz-4PL" firstAttribute="centerY" secondItem="2Yl-zj-tGt" secondAttribute="centerY" constant="-5" id="7iN-cm-H2A"/>
                 <constraint firstItem="lsV-Gd-qKJ" firstAttribute="centerX" secondItem="2Yl-zj-tGt" secondAttribute="centerX" id="BHG-Ax-FGI"/>
                 <constraint firstItem="lsV-Gd-qKJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="2Yl-zj-tGt" secondAttribute="top" constant="20" id="Hok-ML-UFW"/>
                 <constraint firstItem="lsV-Gd-qKJ" firstAttribute="width" secondItem="9T7-IB-8sl" secondAttribute="width" multiplier="0.9" id="bJd-EN-qtw"/>
