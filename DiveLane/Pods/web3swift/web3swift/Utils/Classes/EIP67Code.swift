@@ -276,6 +276,8 @@ extension Web3 {
                         } else if let val = BigUInt(value.stripHexPrefix(), radix: 16) {
                             nativeValue = val as AnyObject
                         }
+                    case .string:
+                        nativeValue = value as AnyObject
                     default:
                         continue
                     }

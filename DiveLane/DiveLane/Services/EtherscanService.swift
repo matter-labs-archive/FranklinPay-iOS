@@ -10,7 +10,7 @@ import Foundation
 
 class EtherscanService {
     func getAbi(forContractAddress contractAddress: String, completion: @escaping(Result<String>) -> Void) {
-        let urlString = "https://api.etherscan.io/api?module=contract&action=getabi&address=\(contractAddress)&apikey=YourApiKeyToken"
+        let urlString = "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=\(contractAddress)&apikey=YourApiKeyToken"
         guard let url = URL(string: urlString) else {
             completion(Result.Error(NetworkErrors.couldnotParseUrlString))
             return
@@ -36,11 +36,19 @@ class EtherscanService {
                         DispatchQueue.main.async {
                             completion(Result.Success(abi))
                         }
+                    } else {
+                        DispatchQueue.main.async {
+                            completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
+                        }
                     }
                 } catch {
                     DispatchQueue.main.async {
                         completion(Result.Error(error))
                     }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
                 }
             }
             
@@ -53,4 +61,5 @@ class EtherscanService {
 enum NetworkErrors: Error {
     case couldnotParseUrlString
     case couldnotParseJSON
+    case noSuchAPIOnTheEtherscan
 }

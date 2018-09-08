@@ -17,6 +17,7 @@ protocol ITransactionsService {
                                       contractAddress: String,
                                       method: String,
                                       amountString: String,
+                                      amount: BigUInt,
                                       gasLimit: BigUInt,
                                       completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
@@ -51,7 +52,8 @@ class TransactionsService: ITransactionsService {
                                       contractAbi: String,
                                       contractAddress: String,
                                       method: String,
-                                      amountString: String,
+                                      amountString: String = "0",
+                                      amount: BigUInt = 0,
                                       gasLimit: BigUInt = 27500,
                                       completion: @escaping (Result<TransactionIntermediate>) -> Void) {
         DispatchQueue.global().async {
@@ -60,7 +62,7 @@ class TransactionsService: ITransactionsService {
             let ethAddressFrom = EthereumAddress(address)
             let ethContractAddress = EthereumAddress(contractAddress)!
             
-            guard let amount = Web3.Utils.parseToBigUInt(amountString, units: .eth) else {
+            guard let amountFromString = Web3.Utils.parseToBigUInt(amountString, units: .eth) else {
                 DispatchQueue.main.async {
                     completion(Result.Error(SendErrors.invalidAmountFormat))
                 }
@@ -73,7 +75,11 @@ class TransactionsService: ITransactionsService {
             
             var options = Web3Options.defaultOptions()
             options.from = ethAddressFrom
-            options.value = amount
+            if amountFromString != 0 {
+                options.value = amountFromString
+            } else {
+                options.value = amount
+            }
             guard let contract = web3.contract(contractAbi,
                                                at: ethContractAddress,
                                                abiVersion: 2) else { return }

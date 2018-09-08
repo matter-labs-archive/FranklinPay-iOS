@@ -106,7 +106,7 @@ class AppController {
             etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
                 switch result {
                 case .Success(let abi):
-                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
+                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, amountString: "", amount: parsed.amount ?? 0) { (result) in
                         switch result {
                         case .Error(let error):
                             print(error)
@@ -118,6 +118,23 @@ class AppController {
                     }
                 case .Error(let error):
                     print(error)
+                    
+                    var contractAbi: String
+                    if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
+                        contractAbi = peepEthAbi
+                    } else {
+                        contractAbi = peepEthAbi
+                    }
+                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
+                        switch result {
+                        case .Error(let error):
+                            print(error)
+                        case .Success(let intermediate):
+                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                            window.rootViewController = controller
+                            window.makeKeyAndVisible()
+                        }
+                    }
                 }
             }
             
