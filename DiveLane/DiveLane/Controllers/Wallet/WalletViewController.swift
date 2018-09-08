@@ -29,6 +29,7 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
         
         self.title = "Wallet"
+        self.tabBarController?.tabBar.selectedItem?.title = nil
         
         self.getTokensList()
         self.currentWallet = KeysService().selectedWallet()?.address
