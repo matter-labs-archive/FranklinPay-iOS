@@ -37,6 +37,7 @@ class TokenCell: UITableViewCell {
         
         if token == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
             self.tokenAddress.text = forWallet
+            self.balance.text = "Loading..."
             Web3SwiftService().getETHbalance() { (result, error) in
                 DispatchQueue.main.async {
                     self.balance.text = result ?? ""
@@ -44,6 +45,7 @@ class TokenCell: UITableViewCell {
             }
         } else {
             self.tokenAddress.text = token.address
+            self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address, address: forWallet) { (result, error) in
                 guard let result = result else {return}
                 self.balance.text = result

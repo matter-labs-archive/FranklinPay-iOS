@@ -26,7 +26,7 @@
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xO-5S-uBI">
                             <rect key="frame" x="0.0" y="0.0" width="337.5" height="50"/>
-                            <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.1292608408" green="0.50588502349999998" blue="0.94152768779999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Fxz-sh-7eJ"/>
                             </constraints>
@@ -45,7 +45,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFq-jZ-J7Z">
                             <rect key="frame" x="0.0" y="70" width="337.5" height="50"/>
-                            <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.1292608408" green="0.50588502349999998" blue="0.94152768779999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <state key="normal" title="Create wallet">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

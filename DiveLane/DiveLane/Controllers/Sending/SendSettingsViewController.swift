@@ -43,7 +43,10 @@ class SendSettingsViewController: UIViewController {
         balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
         addressFromLabel.text = "From: \(walletAddress ?? "")"
         tokenNameLabel.text = CurrentToken.currentToken?.symbol.uppercased()
-        sendButton.isEnabled = true
+        sendButton.isEnabled = false
+        sendButton.alpha = 0.5
+        
+        self.title = "Transaction"
         
     }
     
@@ -253,41 +256,31 @@ extension SendSettingsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
-        //        sendButton.isEnabled = false
-        //
-        //        switch textField {
-        //        case enterAddressTextField:
-        //            if  !(amountTextField.text?.isEmpty ?? true) &&
-        //                !futureString.isEmpty {
-        //                sendButton.isEnabled = (Float((amountTextField.text ?? "")) != nil)
-        //            }
-        //        case amountTextField:
-        //            if !(enterAddressTextField.text?.isEmpty ?? true) &&
-        //                !futureString.isEmpty
-        //            {
-        //                sendButton.isEnabled =  (Float((futureString)) != nil)
-        //            }
-        //        case gasPriceTextField:
-        //            if !futureString.isEmpty && !(gasLimitTextField.text?.isEmpty ?? true) {
-        //                sendButton.isEnabled = true
-        //            }
-        //
-        //            if let floatRepresentation = Float(futureString) {
-        //                gasPriceSlider.value = floatRepresentation
-        //            }
-        //        case gasLimitTextField:
-        //            if !futureString.isEmpty && !(gasPriceTextField.text?.isEmpty ?? true) {
-        //                sendButton.isEnabled = true
-        //            }
-        //
-        //            if let floatRepresentation = Float(futureString) {
-        //                gasLimitSlider.value = floatRepresentation
-        //            }
-        //        default:
-        //            sendButton.isEnabled = false
-        //        }
-        //
-        //        sendButton.alpha = sendButton.isEnabled ? 1.0 : 0.5
+        sendButton.isEnabled = false
+
+        switch textField {
+        case enterAddressTextField:
+            if  !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true) {
+                sendButton.isEnabled = (Float((amountTextField.text ?? "")) != nil)
+            }
+        case amountTextField:
+            if !futureString.isEmpty && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true)
+            {
+                sendButton.isEnabled =  (Float((futureString)) != nil)
+            }
+        case gasPriceTextField:
+            if !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) {
+                sendButton.isEnabled = true
+            }
+        case gasLimitTextField:
+            if !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true) {
+                sendButton.isEnabled = true
+            }
+        default:
+            sendButton.isEnabled = false
+        }
+
+        sendButton.alpha = sendButton.isEnabled ? 1.0 : 0.5
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
         
         return true
@@ -313,6 +306,18 @@ extension SendSettingsViewController: UITextFieldDelegate {
         if textField == amountTextField {
             guard let _ = Float((amountTextField.text ?? "")) else {
                 amountTextField.textColor = UIColor.red
+                return true
+            }
+        }
+        if textField == gasLimitTextField {
+            guard let _ = Int((gasLimitTextField.text ?? "")) else {
+                gasLimitTextField.textColor = UIColor.red
+                return true
+            }
+        }
+        if textField == gasPriceTextField {
+            guard let _ = Int((gasPriceTextField.text ?? "")) else {
+                gasPriceTextField.textColor = UIColor.red
                 return true
             }
         }

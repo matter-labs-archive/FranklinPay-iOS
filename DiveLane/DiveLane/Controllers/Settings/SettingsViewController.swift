@@ -21,6 +21,7 @@ class SettingsViewController: UIViewController {
         getSettings()
         
         self.title = "Settings"
+        self.tabBarController?.tabBar.selectedItem?.title = nil
         
         self.settingsTableView.delegate = self
         self.settingsTableView.dataSource = self

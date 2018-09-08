@@ -41,6 +41,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         let nib = UINib.init(nibName: "ParameterCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "ParameterCell")
         
+        self.title = "Transaction"
         //TODO: - Setup outlets
         methodNameLabel.text = transactionInfo.methodName
         contractAddressTextField.text = transactionInfo.contractAddress
