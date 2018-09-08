@@ -12,7 +12,7 @@ import struct BigInt.BigUInt
 
 protocol ITransactionsService {
     
-    func prepareTransactionToContract(data: [Any],
+    func prepareTransactionToContract(data: [AnyObject],
                                       contractAbi: String,
                                       contractAddress: String,
                                       method: String,
@@ -47,7 +47,7 @@ class TransactionsService: ITransactionsService {
     
     static let keyservice = KeysService()
     
-    public func prepareTransactionToContract(data: [Any],
+    public func prepareTransactionToContract(data: [AnyObject],
                                       contractAbi: String,
                                       contractAddress: String,
                                       method: String,
@@ -80,8 +80,9 @@ class TransactionsService: ITransactionsService {
             options.gasPrice = gasPrice
             options.gasLimit = gasLimit
             guard let transaction = contract.method(method,
-                                                    parameters: data as [AnyObject],
+                                                    parameters: data,
                                                     options: options) else { return }
+            print("i am here")
             guard case .success(let estimate) = transaction.estimateGas(options: options) else {return}
             print("estimated cost: \(estimate)")
             DispatchQueue.main.async {

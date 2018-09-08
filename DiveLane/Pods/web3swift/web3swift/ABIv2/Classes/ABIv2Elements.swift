@@ -85,8 +85,8 @@ extension ABIv2 {
     }
 }
 
-extension ABIv2.Element {
-    func encodeParameters(_ parameters: [AnyObject]) -> Data? {
+public extension ABIv2.Element {
+    public func encodeParameters(_ parameters: [AnyObject]) -> Data? {
         switch self {
         case .constructor(let constructor):
             guard parameters.count == constructor.inputs.count else {return nil}

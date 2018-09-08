@@ -57,6 +57,7 @@
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
 		B25BD13B2143E61A0091C481 /* SendArbitraryTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B25BD1392143E61A0091C481 /* SendArbitraryTransactionViewController.xib */; };
 		B25BD13C2143E61A0091C481 /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B25BD13A2143E61A0091C481 /* ParameterCell.xib */; };
+		B25BD13E2144128C0091C481 /* EIP681Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD13D2144128C0091C481 /* EIP681Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -113,6 +114,7 @@
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
 		B25BD1392143E61A0091C481 /* SendArbitraryTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SendArbitraryTransactionViewController.xib; path = "../../../../../../Downloads/Telegram Desktop/MatterMask 2/MetamaskTest/Views/Sending/SendArbitraryTransactionViewController.xib"; sourceTree = "<group>"; };
 		B25BD13A2143E61A0091C481 /* ParameterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ParameterCell.xib; path = "../../../../../../Downloads/Telegram Desktop/MatterMask 2/MetamaskTest/Views/Sending/ParameterCell.xib"; sourceTree = "<group>"; };
+		B25BD13D2144128C0091C481 /* EIP681Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP681Extension.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,6 +352,7 @@
 				91B6A7CF2143B1640033A045 /* ParserEIP.swift */,
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
 				9197F3152143FD4100C358AA /* NetworkService.swift */,
+				B25BD13D2144128C0091C481 /* EIP681Extension.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B25BD13E2144128C0091C481 /* EIP681Extension.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,

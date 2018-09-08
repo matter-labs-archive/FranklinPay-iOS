@@ -49,15 +49,71 @@ class SendArbitraryTransactionViewController: UIViewController {
     
     @IBAction func sendButtonWasTapped(_ sender: Any) {
         //TODO: - Password
-//        TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: "") { (result) in
-//            switch result {
-//            case .Error(let error):
-//                print(error)
-//            case .Success(let success):
-//                print(success)
-//                //TODO: - Something
-//            }
-//        }
+        enterPassword()
+        
+    }
+    
+    func enterPassword() {
+        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addTextField { (textField) in
+            textField.isSecureTextEntry = true
+            textField.placeholder = "Enter your password"
+        }
+        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
+            let passwordText = alert.textFields![0].text!
+            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
+                
+                self.send(withPassword: passwordText)
+                
+            } else {
+                showErrorAlert(for: self, error: SendErrors.wrongPassword)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
+            
+        }
+        
+        alert.addAction(enterPasswordAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func send(withPassword password: String) {
+        guard let destinationAddress = contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else { return }
+        TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: password) { (result) in
+            switch result {
+            case .Error(let error):
+                print(error)
+            case .Success(let success):
+                print(success)
+                showSuccessAlert(for: self, completion: {
+                    let c = self.goToApp()
+                    c.view.backgroundColor = UIColor.white
+                    UIApplication.shared.keyWindow?.rootViewController = c
+                })
+            }
+        }
+        
+    }
+    
+    func goToApp() -> UITabBarController {
+        
+        var nav1 = UINavigationController()
+        var first = WalletViewController(nibName: nil, bundle: nil)
+        nav1.viewControllers = [first]
+        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"user"), tag: 1)
+        
+        var nav2 = UINavigationController()
+        var second = SettingsViewController(nibName: nil, bundle: nil)
+        nav2.viewControllers = [second]
+        nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
+        
+        var tabs = UITabBarController()
+        tabs.viewControllers = [nav1, nav2]
+        
+        return tabs
     }
     
 }
