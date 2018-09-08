@@ -27,15 +27,15 @@ protocol ITransactionsService {
                                            completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
     func prepareTransactionForSendingERC(destinationAddressString: String,
-                                      amountString: String,
-                                      gasLimit: BigUInt,
-                                      tokenAddress token: String,
-                                      completion: @escaping (Result<TransactionIntermediate>) -> Void)
+                                         amountString: String,
+                                         gasLimit: BigUInt,
+                                         tokenAddress token: String,
+                                         completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
     func sendToContract(transaction: TransactionIntermediate,
-                      with password: String,
-                      options: Web3Options?,
-                      completion: @escaping (Result<TransactionSendingResult>) -> Void)
+                        with password: String,
+                        options: Web3Options?,
+                        completion: @escaping (Result<TransactionSendingResult>) -> Void)
     
     func sendToken(transaction: TransactionIntermediate,
                    with password: String,
@@ -49,57 +49,58 @@ class TransactionsService: ITransactionsService {
     static let keyservice = KeysService()
     
     public func prepareTransactionToContract(data: [AnyObject],
-                                      contractAbi: String,
-                                      contractAddress: String,
-                                      method: String,
-                                      amountString: String = "0",
-                                      amount: BigUInt = 0,
-                                      gasLimit: BigUInt = 27500,
-                                      completion: @escaping (Result<TransactionIntermediate>) -> Void) {
-            let wallet = TransactionsService.keyservice.selectedWallet()
-            guard let address = wallet?.address else { return }
-            let ethAddressFrom = EthereumAddress(address)
-            let ethContractAddress = EthereumAddress(contractAddress)!
-            
-            guard let amountFromString = Web3.Utils.parseToBigUInt(amountString, units: .eth) else {
-                DispatchQueue.main.async {
-                    completion(Result.Error(SendErrors.invalidAmountFormat))
-                }
-                return
-            }
-            
-            //let web3 = Web3.InfuraMainnetWeb3()
-            let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
-            web3.addKeystoreManager(TransactionsService.keyservice.keystoreManager())
-            
-            var options = Web3Options.defaultOptions()
-            options.from = ethAddressFrom
-            if amountFromString != 0 {
-                options.value = amountFromString
-            } else {
-                options.value = amount
-            }
-            guard let contract = web3.contract(contractAbi,
-                                               at: ethContractAddress,
-                                               abiVersion: 2) else { return }
-            guard let gasPrice = web3.eth.getGasPrice().value else { return }
-            options.gasPrice = gasPrice
-            options.gasLimit = gasLimit
-            guard let transaction = contract.method(method,
-                                                    parameters: data,
-                                                    options: options) else { return }
-            print("i am here")
-            guard case .success(let estimate) = transaction.estimateGas(options: options) else {return}
-            print("estimated cost: \(estimate)")
+                                             contractAbi: String,
+                                             contractAddress: String,
+                                             method: String,
+                                             amountString: String = "0",
+                                             amount: BigUInt = 0,
+                                             gasLimit: BigUInt = 27500,
+                                             completion: @escaping (Result<TransactionIntermediate>) -> Void) {
+        let wallet = TransactionsService.keyservice.selectedWallet()
+        guard let address = wallet?.address else { return }
+        let ethAddressFrom = EthereumAddress(address)
+        let ethContractAddress = EthereumAddress(contractAddress)!
+        
+        guard let amountFromString = Web3.Utils.parseToBigUInt(amountString, units: .eth) else {
             DispatchQueue.main.async {
-                completion(Result.Success(transaction))
+                completion(Result.Error(SendErrors.invalidAmountFormat))
             }
+            return
+        }
+        
+        //let web3 = Web3.InfuraMainnetWeb3()
+        let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
+        web3.addKeystoreManager(TransactionsService.keyservice.keystoreManager())
+        
+        var options = Web3Options.defaultOptions()
+        options.from = ethAddressFrom
+        options.to = ethContractAddress
+        if amountFromString != 0 {
+            options.value = amountFromString
+        } else {
+            options.value = amount
+        }
+        guard let contract = web3.contract(contractAbi,
+                                           at: ethContractAddress,
+                                           abiVersion: 2) else { return }
+        guard let gasPrice = web3.eth.getGasPrice().value else { return }
+        options.gasPrice = gasPrice
+        options.gasLimit = gasLimit
+        guard let transaction = contract.method(method,
+                                                parameters: data,
+                                                options: options) else { return }
+        print("i am here")
+        guard case .success(let estimate) = transaction.estimateGas(options: options) else {return}
+        print("estimated cost: \(estimate)")
+        DispatchQueue.main.async {
+            completion(Result.Success(transaction))
+        }
     }
     
     public func prepareTransactionForSendingEther(destinationAddressString: String,
-                                           amountString: String,
-                                           gasLimit: BigUInt,
-                                           completion: @escaping (Result<TransactionIntermediate>) -> Void) {
+                                                  amountString: String,
+                                                  gasLimit: BigUInt,
+                                                  completion: @escaping (Result<TransactionIntermediate>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             guard let destinationEthAddress = EthereumAddress(destinationAddressString) else {
                 DispatchQueue.main.async {
@@ -165,10 +166,10 @@ class TransactionsService: ITransactionsService {
     }
     
     public func prepareTransactionForSendingERC(destinationAddressString: String,
-                                      amountString: String,
-                                      gasLimit: BigUInt,
-                                      tokenAddress token: String,
-                                      completion: @escaping (Result<TransactionIntermediate>) -> Void) {
+                                                amountString: String,
+                                                gasLimit: BigUInt,
+                                                tokenAddress token: String,
+                                                completion: @escaping (Result<TransactionIntermediate>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             guard let destinationEthAddress = EthereumAddress(destinationAddressString) else {
                 DispatchQueue.main.async {
@@ -245,9 +246,9 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToContract(transaction: TransactionIntermediate,
-                      with password: String,
-                      options: Web3Options? = nil,
-                      completion: @escaping (Result<TransactionSendingResult>) -> Void) {
+                               with password: String,
+                               options: Web3Options? = nil,
+                               completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let result = transaction.send(password: password,
                                           options: transaction.options)
@@ -270,9 +271,9 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToken(transaction: TransactionIntermediate,
-                   with password: String,
-                   options: Web3Options? = nil,
-                   completion: @escaping (Result<TransactionSendingResult>) -> Void) {
+                          with password: String,
+                          options: Web3Options? = nil,
+                          completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let result = transaction.send(password: password,
                                           options: options)
