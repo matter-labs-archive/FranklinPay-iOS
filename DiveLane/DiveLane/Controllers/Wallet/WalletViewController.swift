@@ -12,6 +12,16 @@ class WalletViewController: UIViewController {
     
     @IBOutlet weak var walletTableView: UITableView!
     
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(self.handleRefresh(_:)),
+                                 for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = UIColor.blue
+        
+        return refreshControl
+    }()
+    
     var listOfTokens = [ERC20TokenModel]()
     var currentWallet: String?
     
@@ -27,9 +37,17 @@ class WalletViewController: UIViewController {
         self.walletTableView.dataSource = self
         walletTableView.tableFooterView = UIView()
         
+        self.walletTableView.addSubview(self.refreshControl)
+        
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
         
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        
+        self.walletTableView.reloadData()
+        refreshControl.endRefreshing()
     }
     
     func getTokensList() {

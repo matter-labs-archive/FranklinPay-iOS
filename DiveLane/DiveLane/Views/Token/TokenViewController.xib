@@ -53,7 +53,7 @@
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZZM-2P-KIU">
                             <rect key="frame" x="0.0" y="110.5" width="262" height="40"/>
-                            <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.1292608408" green="0.50588502349999998" blue="0.94152768779999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="bWB-aS-SGL"/>
                             </constraints>
@@ -72,7 +72,7 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7iO-0h-MVP">
                             <rect key="frame" x="0.0" y="160.5" width="262" height="40"/>
-                            <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" red="0.1292608408" green="0.50588502349999998" blue="0.94152768779999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <state key="normal" title="Send token">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -100,7 +100,7 @@
                     </constraints>
                 </imageView>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.94696103899999995" green="0.94544369819999996" blue="0.9719478627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="ohB-ZN-42Y" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="boZ-aN-jwy" secondAttribute="bottom" constant="20" id="4Ve-jf-O9O"/>
                 <constraint firstItem="boZ-aN-jwy" firstAttribute="top" secondItem="yIV-RA-7Xh" secondAttribute="bottom" constant="20" id="69t-W9-JrY"/>

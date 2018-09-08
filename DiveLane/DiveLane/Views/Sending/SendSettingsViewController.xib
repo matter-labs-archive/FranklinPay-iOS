@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -43,12 +42,11 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Balance on wallet:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="xat-Cv-o9X">
                                     <rect key="frame" x="10" y="11" width="335" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="xat-Cv-o9X" secondAttribute="trailing" constant="10" id="G5t-0m-xB6"/>
                                 <constraint firstItem="xat-Cv-o9X" firstAttribute="centerY" secondItem="rMi-LJ-W9B" secondAttribute="centerY" id="fIH-BO-l9I"/>
@@ -60,12 +58,11 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="OTk-ll-WAB">
                                     <rect key="frame" x="10" y="11" width="335" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="OTk-ll-WAB" firstAttribute="centerY" secondItem="BpV-tG-abx" secondAttribute="centerY" id="Q7z-ec-Gru"/>
                                 <constraint firstAttribute="trailing" secondItem="OTk-ll-WAB" secondAttribute="trailing" constant="10" id="daC-6v-Qhu"/>
@@ -80,12 +77,12 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="30" id="4hY-sa-EHP"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Address" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="tlr-An-MtP">
-                                    <rect key="frame" x="40" y="11.5" width="247" height="17"/>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Address" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="tlr-An-MtP">
+                                    <rect key="frame" x="40" y="5" width="255" height="30"/>
                                     <accessibility key="accessibilityConfiguration" identifier="AddressTextField"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -94,10 +91,10 @@
                                         <outlet property="delegate" destination="-1" id="hGG-GV-jOa"/>
                                     </connections>
                                 </textField>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rH-HM-fji">
-                                    <rect key="frame" x="297" y="8" width="48" height="24"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6rH-HM-fji">
+                                    <rect key="frame" x="295" y="8" width="50" height="24"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" secondItem="6rH-HM-fji" secondAttribute="height" multiplier="2:1" id="E0S-Nh-KbH"/>
+                                        <constraint firstAttribute="width" constant="50" id="7rm-ff-n2K"/>
                                     </constraints>
                                     <state key="normal" image="qr"/>
                                     <userDefinedRuntimeAttributes>
@@ -116,15 +113,16 @@
                                     </connections>
                                 </button>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="tlr-An-MtP" firstAttribute="centerY" secondItem="fX5-75-ap4" secondAttribute="centerY" id="Bik-pq-nEl"/>
                                 <constraint firstItem="2Bm-RD-q4S" firstAttribute="leading" secondItem="fX5-75-ap4" secondAttribute="leading" constant="10" id="GGt-Ie-3fH"/>
                                 <constraint firstAttribute="trailing" secondItem="6rH-HM-fji" secondAttribute="trailing" constant="10" id="Gch-Rt-vJV"/>
+                                <constraint firstAttribute="bottom" secondItem="tlr-An-MtP" secondAttribute="bottom" constant="5" id="NTB-e2-alR"/>
+                                <constraint firstItem="tlr-An-MtP" firstAttribute="top" secondItem="fX5-75-ap4" secondAttribute="top" constant="5" id="O4v-9v-0uS"/>
                                 <constraint firstItem="6rH-HM-fji" firstAttribute="centerY" secondItem="fX5-75-ap4" secondAttribute="centerY" id="Owe-FD-CY2"/>
                                 <constraint firstItem="2Bm-RD-q4S" firstAttribute="centerY" secondItem="fX5-75-ap4" secondAttribute="centerY" id="cRj-hz-hP5"/>
                                 <constraint firstItem="tlr-An-MtP" firstAttribute="leading" secondItem="2Bm-RD-q4S" secondAttribute="trailing" id="dfE-lV-LsE"/>
-                                <constraint firstItem="6rH-HM-fji" firstAttribute="leading" secondItem="tlr-An-MtP" secondAttribute="trailing" constant="10" id="paB-Gg-fzN"/>
+                                <constraint firstItem="6rH-HM-fji" firstAttribute="leading" secondItem="tlr-An-MtP" secondAttribute="trailing" id="paB-Gg-fzN"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z2o-Ij-WRC">
@@ -135,21 +133,21 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="60" id="2wa-ig-wPw"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-aQ-2YI">
-                                    <rect key="frame" x="295" y="12" width="50" height="17"/>
+                                    <rect key="frame" x="295" y="11.5" width="50" height="18"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="50" id="Xub-pj-Pm6"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <color key="textColor" red="0.61176470589999998" green="0.65098039220000004" blue="0.68627450980000004" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Amount" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="2Hl-Hy-SAZ">
-                                    <rect key="frame" x="70" y="12" width="225" height="17"/>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Amount" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="2Hl-Hy-SAZ">
+                                    <rect key="frame" x="70" y="5" width="225" height="30"/>
                                     <accessibility key="accessibilityConfiguration" identifier="AmountTextField"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -159,7 +157,6 @@
                                     </connections>
                                 </textField>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstItem="2Hl-Hy-SAZ" firstAttribute="leading" secondItem="o6o-sz-hW2" secondAttribute="trailing" id="0Do-G3-qS9"/>
                                 <constraint firstAttribute="trailing" secondItem="eSc-aQ-2YI" secondAttribute="trailing" constant="10" id="Kzu-p1-PRY"/>
@@ -175,12 +172,11 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gas Price" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="He9-Ip-zGT">
                                     <rect key="frame" x="10" y="11" width="335" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="He9-Ip-zGT" firstAttribute="leading" secondItem="mSs-zj-A40" secondAttribute="leading" constant="10" id="5xD-tj-Rtm"/>
                                 <constraint firstAttribute="trailing" secondItem="He9-Ip-zGT" secondAttribute="trailing" constant="10" id="hLt-Xk-hDF"/>
@@ -190,8 +186,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eJc-XM-Fuj">
                             <rect key="frame" x="0.0" y="202" width="355" height="40.5"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="5-100" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="FtW-1l-mAM">
-                                    <rect key="frame" x="10" y="12.5" width="335" height="17"/>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="5-100" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="FtW-1l-mAM">
+                                    <rect key="frame" x="10" y="5.5" width="335" height="30"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -200,7 +196,6 @@
                                     </connections>
                                 </textField>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="FtW-1l-mAM" firstAttribute="centerY" secondItem="eJc-XM-Fuj" secondAttribute="centerY" id="5gA-H4-7nN"/>
                                 <constraint firstItem="FtW-1l-mAM" firstAttribute="leading" secondItem="eJc-XM-Fuj" secondAttribute="leading" constant="10" id="9b2-jp-USi"/>
@@ -212,12 +207,11 @@
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gas Limit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="GJd-0K-WMc">
                                     <rect key="frame" x="10" y="11" width="335" height="18"/>
-                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="GJd-0K-WMc" firstAttribute="centerY" secondItem="AVd-cQ-Sgn" secondAttribute="centerY" id="3YF-i1-V2H"/>
                                 <constraint firstAttribute="trailing" secondItem="GJd-0K-WMc" secondAttribute="trailing" constant="10" id="3aW-9H-pi9"/>
@@ -227,8 +221,8 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uBd-nv-Wgl">
                             <rect key="frame" x="0.0" y="283" width="355" height="40.5"/>
                             <subviews>
-                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="21000" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="RFX-hg-3mp">
-                                    <rect key="frame" x="10" y="12" width="335" height="17"/>
+                                <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="21000" textAlignment="natural" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="RFX-hg-3mp">
+                                    <rect key="frame" x="10" y="5.5" width="335" height="30"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                     <connections>
@@ -236,7 +230,6 @@
                                     </connections>
                                 </textField>
                             </subviews>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="RFX-hg-3mp" firstAttribute="centerY" secondItem="uBd-nv-Wgl" secondAttribute="centerY" id="Hfi-FF-GQa"/>
                                 <constraint firstItem="RFX-hg-3mp" firstAttribute="leading" secondItem="uBd-nv-Wgl" secondAttribute="leading" constant="10" id="IdB-NY-d2T"/>
@@ -248,7 +241,7 @@
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT4-ka-714">
                     <rect key="frame" x="40" y="383.5" width="295" height="40"/>
-                    <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.12926084081390696" green="0.50588502348071773" blue="0.94152768782383423" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                     <state key="normal" title="Send">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -263,7 +256,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.93725490570000003" green="0.93725490570000003" blue="0.95686274770000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="bT4-ka-714" firstAttribute="centerX" secondItem="9Ag-nj-Re3" secondAttribute="centerX" id="31b-7o-fyn"/>
                 <constraint firstItem="y4A-t9-eUe" firstAttribute="leading" secondItem="9Ag-nj-Re3" secondAttribute="leading" constant="10" id="9JZ-AP-fi7"/>

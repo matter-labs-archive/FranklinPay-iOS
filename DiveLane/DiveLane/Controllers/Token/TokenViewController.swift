@@ -42,13 +42,14 @@ class TokenViewController: UIViewController {
         copiedLabel.alpha = 0
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         guard let balance = BigUInt(tokenBalance!) else {
             return
         }
         guard balance > 0 else {
             sendTokenButton.isEnabled = false
+            sendTokenButton.alpha = 0.5
             return
         }
     }

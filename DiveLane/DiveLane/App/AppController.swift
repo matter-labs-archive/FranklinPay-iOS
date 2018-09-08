@@ -46,17 +46,19 @@ class AppController {
     }
     
     func goToApp() -> UITabBarController {
-        var nav1 = UINavigationController()
-        var first = WalletViewController(nibName: nil, bundle: nil)
+        let nav1 = UINavigationController()
+        let first = WalletViewController(nibName: nil, bundle: nil)
+        first.title = "Wallet"
         nav1.viewControllers = [first]
         nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"user"), tag: 1)
         
-        var nav2 = UINavigationController()
-        var second = SettingsViewController(nibName: nil, bundle: nil)
+        let nav2 = UINavigationController()
+        let second = SettingsViewController(nibName: nil, bundle: nil)
+        second.title = "Settings"
         nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
         
-        var tabs = UITabBarController()
+        let tabs = UITabBarController()
         tabs.viewControllers = [nav1, nav2]
         
         return tabs
