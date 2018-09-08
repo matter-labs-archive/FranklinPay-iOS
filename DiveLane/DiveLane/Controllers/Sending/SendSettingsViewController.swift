@@ -101,7 +101,7 @@ class SendSettingsViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
     
-    func enterPassword(){
+    func enterPassword() {
         let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
         
         alert.addTextField { (textField) in

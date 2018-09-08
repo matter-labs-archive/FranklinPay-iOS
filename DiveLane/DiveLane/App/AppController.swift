@@ -7,34 +7,37 @@
 //
 
 import UIKit
-
+import web3swift
+let peepEthAbi = """
+[ { "constant": false, "inputs": [ { "name": "_followee", "type": "address" } ], "name": "unFollow", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_ipfsHash", "type": "string" } ], "name": "updateAccount", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "isActive", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_isActive", "type": "bool" } ], "name": "setIsActive", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_followee", "type": "address" } ], "name": "follow", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_name", "type": "bytes16" } ], "name": "changeName", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "address" } ], "name": "names", "outputs": [ { "name": "", "type": "bytes32" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_ipfsHash", "type": "string" } ], "name": "reply", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "bytes32" } ], "name": "addresses", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_address", "type": "address" } ], "name": "setNewAddress", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_addr", "type": "address" } ], "name": "accountExists", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "bStr", "type": "bytes16" } ], "name": "isValidName", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "pure", "type": "function" }, { "constant": false, "inputs": [ { "name": "_ipfsHash", "type": "string" } ], "name": "share", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_ipfsHash", "type": "string" } ], "name": "saveBatch", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "cashout", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "owner", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_ipfsHash", "type": "string" } ], "name": "post", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_name", "type": "bytes16" }, { "name": "_ipfsHash", "type": "string" } ], "name": "createAccount", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "newMinPercentage", "type": "uint256" } ], "name": "setMinSiteTipPercentage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_author", "type": "address" }, { "name": "_messageID", "type": "string" }, { "name": "_ownerTip", "type": "uint256" }, { "name": "_ipfsHash", "type": "string" } ], "name": "tip", "outputs": [], "payable": true, "stateMutability": "payable", "type": "function" }, { "constant": true, "inputs": [], "name": "newAddress", "outputs": [ { "name": "", "type": "address" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [ { "name": "", "type": "uint256" } ], "name": "interfaceInstances", "outputs": [ { "name": "interfaceAddress", "type": "address" }, { "name": "startBlock", "type": "uint96" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_address", "type": "address" } ], "name": "transferAccount", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [], "name": "lockMinSiteTipPercentage", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "interfaceInstanceCount", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "minSiteTipPercentage", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "newOwner", "type": "address" } ], "name": "transferOwnership", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "tipPercentageLocked", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "payable": true, "stateMutability": "payable", "type": "fallback" }, { "anonymous": false, "inputs": [], "name": "PeepethEvent", "type": "event" } ]
+"""
 class AppController {
     
+    let parser = Parser()
+    let transactionsService = TransactionsService()
+    let etherscanService = EtherscanService()
+    
     convenience init(
-        window: UIWindow
-        ) {
+        window: UIWindow,
+        launchOptions: [UIApplicationLaunchOptionsKey: Any]?,
+        url: URL?) {
         self.init()
-        start(in: window)
+        start(in: window, launchOptions: launchOptions, url: url)
     }
     
-    func start(in window: UIWindow) {
-        var startViewController: UIViewController
-        
-        let isOnboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
-        let existingWallet = LocalDatabase().getWallet()
-        
-        if !isOnboardingPassed {
-            startViewController = OnboardingViewController()
-            startViewController.view.backgroundColor = UIColor.white
-        } else if existingWallet == nil {
-            startViewController = addWallet()
-            startViewController.view.backgroundColor = UIColor.white
+    func start(in window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?, url: URL?) {
+        if let launchOptions = launchOptions {
+            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+                navigateViaDeepLink(url: url, in: window)
+            } else {
+                startAsUsual(in: window)
+            }
+        } else if let url = url {
+            navigateViaDeepLink(url: url, in: window)
         } else {
-            startViewController = goToApp()
-            startViewController.view.backgroundColor = UIColor.white
+            startAsUsual(in: window)
         }
-        window.rootViewController = startViewController
-        window.makeKeyAndVisible()
+        
     }
     
     func addWallet() -> UINavigationController {
@@ -64,5 +67,63 @@ class AppController {
         return tabs
     }
     
+    func startAsUsual(in window: UIWindow) {
+        
+        var startViewController: UIViewController
+        
+        let isOnboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
+        let existingWallet = LocalDatabase().getWallet()
+        
+        if !isOnboardingPassed {
+            startViewController = OnboardingViewController()
+            startViewController.view.backgroundColor = UIColor.white
+        } else if existingWallet == nil {
+            startViewController = addWallet()
+            startViewController.view.backgroundColor = UIColor.white
+        } else {
+            startViewController = goToApp()
+            startViewController.view.backgroundColor = UIColor.white
+        }
+        window.rootViewController = startViewController
+        window.makeKeyAndVisible()
+    }
+    
+    private func navigateViaDeepLink(url: URL, in window: UIWindow) {
+        guard let index = url.absoluteString.index(of: ":") else { return }
+        let i = url.absoluteString.index(index, offsetBy: 1)
+        guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
+//        let fun = ABIv2.Element.function(parsed.function!)
+//        let data = fun.encodeParameters(parsed.parameters.compactMap{return $0.value})
+//        print(    data?.toHexString())
+        let parsedUrl = parser.genericlyParseURLethereum(url: String(url.absoluteString[i...]))
+        switch parsed.isPayRequest {
+        case false:
+            guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
+            guard let methodName = parsed.functionName else { return }
+            let params = parsed.parameters.map {
+                return Parameter(type: $0.type.abiRepresentation, value: "test")
+            }
+            etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
+                switch result {
+                case .Success(let abi):
+                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
+                        switch result {
+                        case .Error(let error):
+                            print(error)
+                        case .Success(let intermediate):
+                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                            window.rootViewController = controller
+                            window.makeKeyAndVisible()
+                        }
+                    }
+                case .Error(let error):
+                    print(error)
+                }
+            }
+            
+        case true:
+            print("TODO")
+        }
+    }
 }
 

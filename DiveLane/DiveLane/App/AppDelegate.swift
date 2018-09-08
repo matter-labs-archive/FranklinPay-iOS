@@ -15,14 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var controller: AppController!
     let parser = Parser()
+    let transactionsService: ITransactionsService = TransactionsService()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        
         CurrentNetwork.currentNetwork = (UserDefaults.standard.object(forKey: "currentNetwork") as? Networks) ?? Networks.Mainnet
         CurrentWeb.currentWeb = (UserDefaults.standard.object(forKey: "currentWeb") as? web3) ?? Web3.InfuraMainnetWeb3()
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        controller = AppController(window: window!)
+        controller = AppController(window: window!, launchOptions: launchOptions, url: nil)
         
         return true
     }
@@ -51,8 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         guard let index = url.absoluteString.index(of: ":") else { return true}
-        let i = url.absoluteString.index(index, offsetBy: 1)
+        let i = url.absoluteString.index(index, offsetBy: 3)
         let parsedUrl = parser.genericlyParseURLethereum(url: String(url.absoluteString[i...]))
+        controller = AppController(window: window!, launchOptions: nil, url: url)
         return true
     }
     
