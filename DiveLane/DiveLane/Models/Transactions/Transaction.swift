@@ -21,7 +21,7 @@ struct ETHTransactionModel {
 
 struct TransactionInfo {
     var contractAddress: String
-    var transactionIntermediate: TransactionIntermediate
+    //var transactionIntermediate: TransactionIntermediate
     var methodName: String
 }
 
