@@ -22,6 +22,10 @@
 		9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F62143BC1D00C358AA /* WalletTableViewSections.swift */; };
 		9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F82143BC8300C358AA /* CurrentToken.swift */; };
 		9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2FA2143BD7E00C358AA /* Assets.xcassets */; };
+		9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2FF2143BFC600C358AA /* TokenViewController.swift */; };
+		9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3002143BFC600C358AA /* TokenViewController.xib */; };
+		9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3062143C39C00C358AA /* SendSettingsViewController.swift */; };
+		9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3072143C39C00C358AA /* SendSettingsViewController.xib */; };
 		91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A79621435F5D0033A045 /* AppDelegate.swift */; };
 		91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */; };
 		91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AC214360F90033A045 /* Web3Service.swift */; };
@@ -61,6 +65,10 @@
 		9197F2F62143BC1D00C358AA /* WalletTableViewSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewSections.swift; sourceTree = "<group>"; };
 		9197F2F82143BC8300C358AA /* CurrentToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentToken.swift; sourceTree = "<group>"; };
 		9197F2FA2143BD7E00C358AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9197F2FF2143BFC600C358AA /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
+		9197F3002143BFC600C358AA /* TokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenViewController.xib; sourceTree = "<group>"; };
+		9197F3062143C39C00C358AA /* SendSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSettingsViewController.swift; sourceTree = "<group>"; };
+		9197F3072143C39C00C358AA /* SendSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendSettingsViewController.xib; sourceTree = "<group>"; };
 		91B6A79321435F5D0033A045 /* DiveLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiveLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B6A79621435F5D0033A045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -191,6 +199,45 @@
 			path = Wallet;
 			sourceTree = "<group>";
 		};
+		9197F2FC2143BF8300C358AA /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				9197F3002143BFC600C358AA /* TokenViewController.xib */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		9197F2FD2143BF9800C358AA /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				9197F2FF2143BFC600C358AA /* TokenViewController.swift */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		9197F2FE2143BF9F00C358AA /* Token */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		9197F3042143C33800C358AA /* Sending */ = {
+			isa = PBXGroup;
+			children = (
+				9197F3072143C39C00C358AA /* SendSettingsViewController.xib */,
+			);
+			path = Sending;
+			sourceTree = "<group>";
+		};
+		9197F30A2143C3A900C358AA /* Sending */ = {
+			isa = PBXGroup;
+			children = (
+				9197F3062143C39C00C358AA /* SendSettingsViewController.swift */,
+			);
+			path = Sending;
+			sourceTree = "<group>";
+		};
 		91B6A78A21435F5D0033A045 = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +273,7 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9197F2FE2143BF9F00C358AA /* Token */,
 				9197F2F42143BBFF00C358AA /* Wallet */,
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
@@ -270,6 +318,8 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9197F3042143C33800C358AA /* Sending */,
+				9197F2FC2143BF8300C358AA /* Token */,
 				9197F2EF2143B93400C358AA /* Wallet */,
 				9197F2E72143B66400C358AA /* WalletCreation */,
 				91B6A7E02143B3020033A045 /* AddWallet */,
@@ -282,6 +332,8 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9197F30A2143C3A900C358AA /* Sending */,
+				9197F2FD2143BF9800C358AA /* Token */,
 				9197F2EA2143B7A700C358AA /* Wallet */,
 				9197F2E22143B63100C358AA /* WalletCreation */,
 				91B6A7D92143B2A90033A045 /* AddWallet */,
@@ -367,6 +419,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9197F2E62143B65600C358AA /* WalletCreationViewController.xib in Resources */,
+				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
+				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
@@ -449,6 +503,8 @@
 				91B6A7D02143B1640033A045 /* ParserEIP.swift in Sources */,
 				91B6A7D62143B2340033A045 /* TabViewController.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
+				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
+				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
 				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,

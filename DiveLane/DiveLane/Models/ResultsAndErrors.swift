@@ -30,6 +30,7 @@ enum SendErrors: Error {
     case emptyResult
     case noAvailableKeys
     case contractLoadingError
+    case wrongPassword
 }
 
 enum BalanceError: Error {

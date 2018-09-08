@@ -90,7 +90,11 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         
         CurrentToken.currentToken = listOfTokens[indexPath.row]
         
-        
+        let tokenViewController = TokenViewController(
+            walletAddress: currentWallet ?? "",
+            walletName: selectedCell?.walletName.text ?? "",
+            tokenBalance: selectedCell?.balance.text ?? "0")
+        self.navigationController?.pushViewController(tokenViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
         
     }

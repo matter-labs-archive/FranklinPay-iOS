@@ -114,7 +114,10 @@ class TransactionsService: ITransactionsService {
                 return
             }
             
-            let web3 = Web3SwiftService.web3instance
+            
+            let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+            web3.addKeystoreManager(KeysService().keystoreManager())
+            
             let ethAddressFrom = EthereumAddress(selectedKey)
             var options = Web3Options.defaultOptions()
             //            options.gasLimit = BigUInt(gasLimit)
@@ -174,7 +177,9 @@ class TransactionsService: ITransactionsService {
                 return
             }
             
-            let web3 = Web3SwiftService.web3instance
+            let web3 = web3swift.web3(provider: InfuraProvider(Networks.Mainnet)!)
+            web3.addKeystoreManager(KeysService().keystoreManager())
+            
             let contract = self.contract(for: token, web3: web3)
             var options = Web3Options.defaultOptions()
             
@@ -211,7 +216,7 @@ class TransactionsService: ITransactionsService {
             
             options.from = Web3SwiftService.currentAddress
             options.gasPrice = gasPrice
-            options.gasLimit = estimatedGas
+            //options.gasLimit = estimatedGas
             options.value = 0
             options.to = EthereumAddress(token)
             let parameters = [destinationEthAddress,
