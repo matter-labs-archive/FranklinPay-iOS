@@ -24,6 +24,7 @@
 		91B6A7C2214365890033A045 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C1214365890033A045 /* Transaction.swift */; };
 		91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C3214365B30033A045 /* ERC20Token.swift */; };
 		91B6A7C62143660B0033A045 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C52143660B0033A045 /* AppController.swift */; };
+		91B6A7C8214368470033A045 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C7214368470033A045 /* Parameter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		91B6A7C1214365890033A045 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		91B6A7C3214365B30033A045 /* ERC20Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		91B6A7C52143660B0033A045 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
+		91B6A7C7214368470033A045 /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 				91B6A7BF214365580033A045 /* HDKey.swift */,
 				91B6A7C1214365890033A045 /* Transaction.swift */,
 				91B6A7C3214365B30033A045 /* ERC20Token.swift */,
+				91B6A7C7214368470033A045 /* Parameter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -278,6 +281,7 @@
 				91B6A7C0214365580033A045 /* HDKey.swift in Sources */,
 				91B6A7AF2143610C0033A045 /* Result.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
+				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
 				91B6A7B9214362080033A045 /* KeyWallet.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,

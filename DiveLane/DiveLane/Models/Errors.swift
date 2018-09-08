@@ -26,3 +26,9 @@ enum SendErrors: Error {
     case noAvailableKeys
     case contractLoadingError
 }
+
+enum BalanceError: Error {
+    case cantGetBalance
+    case wrongBalance
+    case wrongAddress
+}

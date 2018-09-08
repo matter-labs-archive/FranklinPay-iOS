@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import web3swift
 
 struct ETHTransactionModel {
     let from: String
@@ -16,4 +17,10 @@ struct ETHTransactionModel {
     let token: ERC20TokenModel
     let key: HDKey
     var isPending = false
+}
+
+struct TransactionInfo {
+    var contractAddress: String
+    var transactionIntermediate: TransactionIntermediate
+    var methodName: String
 }
