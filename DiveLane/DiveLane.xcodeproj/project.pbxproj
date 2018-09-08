@@ -26,6 +26,12 @@
 		9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3002143BFC600C358AA /* TokenViewController.xib */; };
 		9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3062143C39C00C358AA /* SendSettingsViewController.swift */; };
 		9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3072143C39C00C358AA /* SendSettingsViewController.xib */; };
+		9197F3162143FD4100C358AA /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3152143FD4100C358AA /* NetworkService.swift */; };
+		9197F321214403A400C358AA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F31F214403A400C358AA /* SettingsViewController.swift */; };
+		9197F322214403A400C358AA /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F320214403A400C358AA /* SettingsViewController.xib */; };
+		9197F3252144041400C358AA /* SettingsTableViewSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3242144041400C358AA /* SettingsTableViewSections.swift */; };
+		9197F3282144043500C358AA /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3262144043500C358AA /* SettingsCell.swift */; };
+		9197F3292144043500C358AA /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3272144043500C358AA /* SettingsCell.xib */; };
 		91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A79621435F5D0033A045 /* AppDelegate.swift */; };
 		91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */; };
 		91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7AC214360F90033A045 /* Web3Service.swift */; };
@@ -44,7 +50,6 @@
 		91B6A7D02143B1640033A045 /* ParserEIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7CF2143B1640033A045 /* ParserEIP.swift */; };
 		91B6A7D22143B1E80033A045 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */; };
 		91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D32143B2160033A045 /* FloatExtension.swift */; };
-		91B6A7D62143B2340033A045 /* TabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D52143B2340033A045 /* TabViewController.swift */; };
 		91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */; };
 		91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
@@ -74,6 +79,12 @@
 		9197F3002143BFC600C358AA /* TokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenViewController.xib; sourceTree = "<group>"; };
 		9197F3062143C39C00C358AA /* SendSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendSettingsViewController.swift; sourceTree = "<group>"; };
 		9197F3072143C39C00C358AA /* SendSettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendSettingsViewController.xib; sourceTree = "<group>"; };
+		9197F3152143FD4100C358AA /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		9197F31F214403A400C358AA /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		9197F320214403A400C358AA /* SettingsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
+		9197F3242144041400C358AA /* SettingsTableViewSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewSections.swift; sourceTree = "<group>"; };
+		9197F3262144043500C358AA /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		9197F3272144043500C358AA /* SettingsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingsCell.xib; sourceTree = "<group>"; };
 		91B6A79321435F5D0033A045 /* DiveLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiveLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B6A79621435F5D0033A045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -94,7 +105,6 @@
 		91B6A7CF2143B1640033A045 /* ParserEIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserEIP.swift; sourceTree = "<group>"; };
 		91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		91B6A7D32143B2160033A045 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
-		91B6A7D52143B2340033A045 /* TabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabViewController.swift; sourceTree = "<group>"; };
 		91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletViewController.swift; sourceTree = "<group>"; };
 		91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWalletViewController.xib; sourceTree = "<group>"; };
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +265,32 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
+		9197F31D2144038400C358AA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9197F320214403A400C358AA /* SettingsViewController.xib */,
+				9197F3272144043500C358AA /* SettingsCell.xib */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		9197F31E2144039000C358AA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9197F31F214403A400C358AA /* SettingsViewController.swift */,
+				9197F3262144043500C358AA /* SettingsCell.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		9197F323214403FA00C358AA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9197F3242144041400C358AA /* SettingsTableViewSections.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		91B6A78A21435F5D0033A045 = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +326,7 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9197F323214403FA00C358AA /* Settings */,
 				9197F30C2143EF3300C358AA /* Transactions */,
 				9197F30B2143EF0D00C358AA /* Tokens */,
 				9197F2F42143BBFF00C358AA /* Wallet */,
@@ -312,6 +349,7 @@
 				91B6A7B2214361730033A045 /* LocalDatabase.swift */,
 				91B6A7CF2143B1640033A045 /* ParserEIP.swift */,
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
+				9197F3152143FD4100C358AA /* NetworkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -322,7 +360,6 @@
 				91B6A79621435F5D0033A045 /* AppDelegate.swift */,
 				91B6A7C52143660B0033A045 /* AppController.swift */,
 				91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */,
-				91B6A7D52143B2340033A045 /* TabViewController.swift */,
 				91B6A7D32143B2160033A045 /* FloatExtension.swift */,
 				91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */,
 				91B6A7A221435F5E0033A045 /* Info.plist */,
@@ -334,6 +371,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
 				9197F2FC2143BF8300C358AA /* Token */,
 				9197F2EF2143B93400C358AA /* Wallet */,
@@ -347,6 +385,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				9197F31E2144039000C358AA /* Settings */,
 				9197F30A2143C3A900C358AA /* Sending */,
 				9197F2FD2143BF9800C358AA /* Token */,
 				9197F2EA2143B7A700C358AA /* Wallet */,
@@ -435,9 +474,11 @@
 			files = (
 				9197F2E62143B65600C358AA /* WalletCreationViewController.xib in Resources */,
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
+				9197F322214403A400C358AA /* SettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				B25BD13B2143E61A0091C481 /* SendArbitraryTransactionViewController.xib in Resources */,
+				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				B25BD13C2143E61A0091C481 /* ParameterCell.xib in Resources */,
@@ -462,7 +503,7 @@
 				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/libsodium/libsodium.framework",
+				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework",
 				"${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework",
 			);
@@ -474,7 +515,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libsodium.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_ios.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3swift.framework",
 			);
@@ -519,15 +560,16 @@
 				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				91B6A7D02143B1640033A045 /* ParserEIP.swift in Sources */,
-				91B6A7D62143B2340033A045 /* TabViewController.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
+				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
+				9197F3162143FD4100C358AA /* NetworkService.swift in Sources */,
 				9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */,
 				91B6A7CA214369D60033A045 /* GlobalTODO.swift in Sources */,
 				91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */,
@@ -542,6 +584,8 @@
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 				91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */,
 				B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */,
+				9197F3252144041400C358AA /* SettingsTableViewSections.swift in Sources */,
+				9197F321214403A400C358AA /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

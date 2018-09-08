@@ -34,7 +34,8 @@ class WalletViewController: UIViewController {
     
     func getTokensList() {
         listOfTokens.append(ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth"))
-        listOfTokens.append(ERC20TokenModel(name: "BKX", address: "0x45245bc59219eeaaf6cd3f382e078a461ff9de7b", decimals: "18", symbol: "BKX"))
+        listOfTokens.append(ERC20TokenModel(name: "BNB", address: "0xB8c77482e45F1F44dE1745F52C74426C631bDD52", decimals: "18", symbol: "BNB"))
+        listOfTokens.append(ERC20TokenModel(name: "SNT", address: "0x744d70fdbe2ba4cf95131626614a1763df805b9e", decimals: "18", symbol: "SNT"))
         walletTableView.reloadData()
     }
     

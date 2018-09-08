@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,10 +22,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="bVN-Yh-V2J">
-                    <rect key="frame" x="40" y="497" width="295" height="120"/>
+                    <rect key="frame" x="19" y="497" width="337.5" height="120"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xO-5S-uBI">
-                            <rect key="frame" x="0.0" y="0.0" width="295" height="50"/>
+                            <rect key="frame" x="0.0" y="0.0" width="337.5" height="50"/>
                             <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="Fxz-sh-7eJ"/>
@@ -43,7 +44,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFq-jZ-J7Z">
-                            <rect key="frame" x="0.0" y="70" width="295" height="50"/>
+                            <rect key="frame" x="0.0" y="70" width="337.5" height="50"/>
                             <color key="backgroundColor" red="0.1124557665" green="0.49252458760000001" blue="0.26253935589999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
                             <state key="normal" title="Create wallet">
@@ -67,13 +68,13 @@
                     <nil key="highlightedColor"/>
                 </label>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.94696103897561579" green="0.94544369816295803" blue="0.97194786269430056" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="5Oe-oL-Ck1"/>
                 <constraint firstItem="bVN-Yh-V2J" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="F78-M9-lkK"/>
                 <constraint firstItem="mOM-MJ-t3B" firstAttribute="bottom" secondItem="bVN-Yh-V2J" secondAttribute="bottom" constant="50" id="KgR-HL-8EJ"/>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="top" secondItem="mOM-MJ-t3B" secondAttribute="top" constant="150" id="YsJ-zH-vL4"/>
-                <constraint firstItem="mOM-MJ-t3B" firstAttribute="trailing" secondItem="bVN-Yh-V2J" secondAttribute="trailing" constant="40" id="thU-Dt-2GD"/>
+                <constraint firstItem="bVN-Yh-V2J" firstAttribute="width" secondItem="iEO-iG-X63" secondAttribute="width" multiplier="0.9" id="yJI-qf-PCi"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="mOM-MJ-t3B"/>
         </view>

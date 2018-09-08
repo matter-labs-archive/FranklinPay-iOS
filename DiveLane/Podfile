@@ -5,7 +5,7 @@ target 'DiveLane' do
   use_frameworks!
   # Pods for DiveLane
   #pod 'web3swift', :path => '../web3swift'
-  pod 'web3swift', '<= 1.1.1'
+  pod 'web3swift'
   pod 'QRCodeReader.swift', '~> 8.1.1'
 
 end

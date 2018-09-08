@@ -52,7 +52,7 @@ class AppController {
         nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"user"), tag: 1)
         
         var nav2 = UINavigationController()
-        var second = SecondViewController(nibName: nil, bundle: nil)
+        var second = SettingsViewController(nibName: nil, bundle: nil)
         nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
         

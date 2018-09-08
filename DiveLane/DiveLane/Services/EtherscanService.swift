@@ -8,8 +8,6 @@
 
 import Foundation
 
-import Foundation
-
 class EtherscanService {
     func getAbi(forContractAddress contractAddress: String, completion: @escaping(Result<String>) -> Void) {
         let urlString = "https://api.etherscan.io/api?module=contract&action=getabi&address=\(contractAddress)&apikey=YourApiKeyToken"

@@ -149,7 +149,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/libsodium/libsodium.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework"
 fi
@@ -160,7 +160,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Result/Result.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework"
-  install_framework "${BUILT_PRODUCTS_DIR}/libsodium/libsodium.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework"
 fi

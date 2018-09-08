@@ -8,7 +8,7 @@
 
 import Foundation
 import web3swift
-import BigInt
+import struct BigInt.BigUInt
 
 protocol IWeb3SwiftService {
     func sendTransaction(transaction: TransactionIntermediate, password: String, completion: @escaping (Result<TransactionSendingResult>) -> Void)

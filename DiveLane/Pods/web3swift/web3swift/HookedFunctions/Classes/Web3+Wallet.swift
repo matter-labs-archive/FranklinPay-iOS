@@ -40,13 +40,13 @@ extension web3.Web3Wallet {
                 return Result.failure(Web3Error.walletError)
             }
             try Web3Signer.signTX(transaction: &transaction, keystore: keystoreManager, account: account, password: password)
-            print(transaction)
+//            print(transaction)
             return Result(true)
         } catch {
             if error is AbstractKeystoreError {
-            return Result.failure(Web3Error.keystoreError(error as! AbstractKeystoreError))
+                return Result.failure(Web3Error.keystoreError(err: error as! AbstractKeystoreError))
             }
-            return Result.failure(Web3Error.generalError(error))
+            return Result.failure(Web3Error.generalError(err: error))
         }
     }
     
@@ -71,9 +71,9 @@ extension web3.Web3Wallet {
         }
         catch{
             if error is AbstractKeystoreError {
-                return Result.failure(Web3Error.keystoreError(error as! AbstractKeystoreError))
+                return Result.failure(Web3Error.keystoreError(err: error as! AbstractKeystoreError))
             }
-            return Result.failure(Web3Error.generalError(error))
+            return Result.failure(Web3Error.generalError(err: error))
         }
     }
 

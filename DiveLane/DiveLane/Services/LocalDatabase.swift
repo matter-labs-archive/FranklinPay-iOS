@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-import BigInt
+import struct BigInt.BigUInt
 
 protocol ILocalDatabase {
     func getWallet() -> KeyWalletModel?
