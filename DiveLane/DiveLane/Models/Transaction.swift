@@ -24,3 +24,8 @@ struct TransactionInfo {
     var transactionIntermediate: TransactionIntermediate
     var methodName: String
 }
+
+enum TransactionType {
+    case custom
+    case arbitraryMethodWithParams
+}
