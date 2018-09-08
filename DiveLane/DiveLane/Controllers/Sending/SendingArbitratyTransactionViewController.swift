@@ -37,7 +37,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
+        self.hideKeyboardWhenTappedAround()
         let nib = UINib.init(nibName: "ParameterCell", bundle: nil)
         self.tableView.register(nib, forCellReuseIdentifier: "ParameterCell")
         
