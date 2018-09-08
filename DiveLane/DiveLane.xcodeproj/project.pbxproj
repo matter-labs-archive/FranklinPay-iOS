@@ -238,6 +238,23 @@
 			path = Sending;
 			sourceTree = "<group>";
 		};
+		9197F30B2143EF0D00C358AA /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				91B6A7C3214365B30033A045 /* ERC20Token.swift */,
+				9197F2F82143BC8300C358AA /* CurrentToken.swift */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		9197F30C2143EF3300C358AA /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				91B6A7C1214365890033A045 /* Transaction.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
 		91B6A78A21435F5D0033A045 = {
 			isa = PBXGroup;
 			children = (
@@ -273,16 +290,15 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9197F30C2143EF3300C358AA /* Transactions */,
+				9197F30B2143EF0D00C358AA /* Tokens */,
 				9197F2F42143BBFF00C358AA /* Wallet */,
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
 				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
 				91B6A7B8214362080033A045 /* WalletAndKeys.swift */,
-				91B6A7C1214365890033A045 /* Transaction.swift */,
-				91B6A7C3214365B30033A045 /* ERC20Token.swift */,
 				91B6A7C7214368470033A045 /* Parameter.swift */,
 				91B6A7CD214370F00033A045 /* URL.swift */,
-				9197F2F82143BC8300C358AA /* CurrentToken.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
