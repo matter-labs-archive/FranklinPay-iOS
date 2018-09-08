@@ -95,7 +95,6 @@ class AppController {
 //        let fun = ABIv2.Element.function(parsed.function!)
 //        let data = fun.encodeParameters(parsed.parameters.compactMap{return $0.value})
 //        print(    data?.toHexString())
-        let parsedUrl = parser.genericlyParseURLethereum(url: String(url.absoluteString[i...]))
         switch parsed.isPayRequest {
         case false:
             guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }

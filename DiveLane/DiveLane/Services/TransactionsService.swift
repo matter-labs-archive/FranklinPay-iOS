@@ -56,7 +56,6 @@ class TransactionsService: ITransactionsService {
                                       amount: BigUInt = 0,
                                       gasLimit: BigUInt = 27500,
                                       completion: @escaping (Result<TransactionIntermediate>) -> Void) {
-        DispatchQueue.global().async {
             let wallet = TransactionsService.keyservice.selectedWallet()
             guard let address = wallet?.address else { return }
             let ethAddressFrom = EthereumAddress(address)
@@ -95,7 +94,6 @@ class TransactionsService: ITransactionsService {
             DispatchQueue.main.async {
                 completion(Result.Success(transaction))
             }
-        }
     }
     
     public func prepareTransactionForSendingEther(destinationAddressString: String,
