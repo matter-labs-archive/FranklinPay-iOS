@@ -1,6 +1,6 @@
 # DiveLane
 ## Freedom is important. Privacy Matter!
-<img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="500">
+<img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
 
 
 
