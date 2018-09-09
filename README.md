@@ -47,7 +47,8 @@ We have done it in PR: [Peepeth client PR](https://github.com/matterinc/PeepethC
 
 ### Web app:
 
-Generate QR code by the library (implemented in PR (@art64)
+[Pull request](https://github.com/ethereum/web3.js/pull/1929), that contains helper functions to work with ethereum links according to eip-681
+
 
 
 ## Smart contract interaction:
