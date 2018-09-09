@@ -1,4 +1,4 @@
-# DiveLane
+# DiveLane - Apple Pay for Ethereum.
 ## Freedom is important. Privacy Matter!
 <img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
 
@@ -30,7 +30,7 @@ We did all the hard-lifting cryptography job done for you!
 let urlString = "ethereum:0xaaf3A96b8f5E663Fc47bCc19f14e10A3FD9c414B/pay?uint256=100000&value=1000"
 UIApplication.shared.open(URL(string: urlString)!, options: [:], completionHandler: nil)
 ```
-We have done it in PR: (Peepeth client PR) hash commit
+We have done it in PR: [Peepeth client PR](https://github.com/matterinc/PeepethClient/pull/8)
 
 
 ### Web app:
