@@ -2,6 +2,9 @@
 
 <img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
 
+Check out our [presentation](https://github.com/matterinc/DiveLane/blob/master/DiveLanePresentation.pdf) and [screencast](https://www.youtube.com/watch?time_continue=7&v=Uidm5YccUas)
+It will give you a brief overview of Dive Lane and it's message.
+
 ## Freedom is **essential**. Privacy **Matter**!
 
 ### What is it?
