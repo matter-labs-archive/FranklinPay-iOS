@@ -1,12 +1,10 @@
-# DiveLane - Apple Pay for Ethereum.
-## Freedom is important. Privacy Matter!
+# DiveLane - Apple Pay for Ethereum
 <img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
+## Freedom is important. Privacy Matter!
 
-
-
-- Universal way to sign transacition from **anywhere**.
+- The universal way to sign transaction from **anywhere**.
 - Leave single secure place to store your private key.
-- Sign transacions and call arbitrary contract's methods via deeplinks
+- Sign transactions and call arbitrary contract's methods via deep links
 
 
 ## Features 
@@ -18,7 +16,10 @@
 
 ## Purpose
 
-### Bridge between scientists and crypto-geeks and regular programmers:
+The solution that we BUIDL: a single keystore that accessible from any other applications via deep links and QR codes. It is the most advanced regarding security, and also quite user-friendly.
+
+
+### Kinda bridge between scientists and crypto-geeks and regular programmers:
 Lots of experienced developers decline creation of DApps because of its technical hardness and, as a result, those apps are mostly written by scientific people, which don't know how to create excellent UX experience for their users. We want to provide a convenient way to avoid interaction with storing keys, signing and sending transactions, so great mobile developers could come into play and BUIDL amazing apps, without worrying about all that math around blockchain. 
 We did all the hard-lifting cryptography job done for you!
 
