@@ -1,6 +1,6 @@
 # DiveLane - sign transacions and call arbitrary contract's methods via deeplinks using EIP681 standard
 
-<img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" width="48">
+<img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="500">
 
 
 ## Features 
