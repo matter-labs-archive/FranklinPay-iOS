@@ -1,22 +1,30 @@
 # DiveLane - Apple Pay for Ethereum
+
 <img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
-## Freedom is important. Privacy Matter!
 
-- The universal way to sign transaction from **anywhere**.
-- Leave single secure place to store your private key.
-- Sign transactions and call arbitrary contract's methods via deep links
+## Freedom is **essential**. Privacy **Matter**!
 
+### What is it?
 
-## Features 
-- Freedom from hard-bonded solution like (`Laptop + Chrome + MetaMask + Private key`) binding. 
-- No private key sharing needed! Store it at one place, sign anywhere!
+- The universal way to sign transaction from **any apps**: 
+  - mobile
+  - web
+  - dApps
+- **Single and secure** place to store your private key.
+-  Transactions signer
+
+### So, let's go deeper into those statements:
+
+### Features
+- Let you be **free from hard-bonded solution** like (`Laptop + Chrome + MetaMask + Private key`) binding. 
+- **No private key sharing** needed! Store it at one place, sign anywhere!
 - Full support of [EIP-681](https://eips.ethereum.org/EIPS/eip-681) (URI scheme)
  Even more:
-- Sign transactions and call arbitrary contract's methods via deep links
+- Sign transactions and **call arbitrary contract's methods** via deep links
 
 ## Purpose
 
-The solution that we BUIDL: a single keystore that accessible from any other applications via deep links and QR codes. It is the most advanced regarding security, and also quite user-friendly.
+The solution that we **BUIDL**: a single keystore that accessible from any other applications via deep links and QR codes. It is the most advanced regarding security, and also quite user-friendly.
 
 
 ### Kinda bridge between scientists and crypto-geeks and regular programmers:
