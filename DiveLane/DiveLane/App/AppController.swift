@@ -138,7 +138,21 @@ class AppController {
             }
             
         case true:
-            print("TODO")
+            let methodName = parsed.functionName
+            let params = parsed.params.map {
+                return Parameter(type: $0.0, value: $0.1)
+            }
+            guard case .ethereumAddress(let targetAddress) = parsed.targetAddress else { return }
+            self.transactionsService.prepareTransactionForSendingEther(destinationAddressString: targetAddress.address, amountString: String(parsed.amount ?? 0), gasLimit: 21000, completion: { (result) in
+                switch result {
+                case .Error(let error):
+                    print(error)
+                case .Success(let intermediate):
+                    let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: targetAddress.address, transactionIntermediate: intermediate, methodName: methodName ?? "transfer"))
+                    window.rootViewController = controller
+                    window.makeKeyAndVisible()
+                }
+            })
         }
     }
 }
