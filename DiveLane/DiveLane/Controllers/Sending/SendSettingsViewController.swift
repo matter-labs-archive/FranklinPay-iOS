@@ -118,9 +118,19 @@ class SendSettingsViewController: UIViewController {
         TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { (result) in
             switch result {
             case .Success(let res):
-                showSuccessAlert(for: self, completion: {
-                    self.navigationController?.popViewController(animated: true)
-                })
+                CurrentToken.currentToken = nil
+                if self.isFromDeepLink{
+                    showSuccessAlert(for: self, completion: {
+                        let startViewController = AppController().goToApp()
+                        startViewController.view.backgroundColor = UIColor.white
+                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+                    })
+                } else {
+                    showSuccessAlert(for: self, completion: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }
+                
             case .Error(let error):
                 var valueToSend = ""
                 if let error = error as? Web3Error {

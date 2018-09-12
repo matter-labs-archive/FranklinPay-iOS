@@ -50,6 +50,7 @@ class AppController {
     }
     
     func goToApp() -> UITabBarController {
+        
         let nav1 = UINavigationController()
         let first = WalletViewController(nibName: nil, bundle: nil)
         first.title = "Wallet"
@@ -97,77 +98,86 @@ class AppController {
         switch parsed.isPayRequest {
             //Custom transaction
         case false:
-            //MARK: - Choose the right network, MAINNET by default, if no network provided.
-            switch parsed.chainID {
-            case 1?:
-                CurrentNetwork.currentNetwork = Networks.Mainnet
-            case 3?:
-                CurrentNetwork.currentNetwork = Networks.Ropsten
-            case 4?:
-                CurrentNetwork.currentNetwork = Networks.Rinkeby
-            case 42?:
-                CurrentNetwork.currentNetwork = Networks.Kovan
-            case .some(let value):
-                CurrentNetwork.currentNetwork = Networks.Custom(networkID: value)
-            default:
-                CurrentNetwork.currentNetwork = Networks.Mainnet
-            }
-            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
-            CurrentWeb.currentWeb = web3
-            
-            //Preparing the options
-            var options: Web3Options = Web3Options.defaultOptions()
-            options.gasLimit = parsed.gasLimit
-            options.gasPrice = parsed.gasPrice
-            options.value = parsed.amount
-            //TODO: - ENS parser
-            guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
-            guard let methodName = parsed.functionName else { return }
-            let params = parsed.params.map { return Parameter(type: $0.0, value: $0.1) }
-            etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
-                switch result {
-                case .Success(let abi):
-                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, predefinedOptions: options) { (result) in
-                        switch result {
-                        case .Error(let error):
-                            print(error)
-                            let controller = self.goToApp()
-                            window.rootViewController = controller
-                            window.makeKeyAndVisible()
-                            showErrorAlert(for: controller, error: error)
-                        case .Success(let intermediate):
-                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
-                            window.rootViewController = controller
-                            window.makeKeyAndVisible()
+            if parsed.functionName == "transfer" {
+                let params = parsed.params.map {
+                    return Parameter(type: $0.0, value: $0.1)
+                }
+                let tokenAddress = parsed.params[0].1
+                let amount = parsed.params[1].1
+                guard case .ethereumAddress(let targetAddress) = parsed.targetAddress else { return }
+                let controller = SendSettingsViewController(tokenAddress: tokenAddress, amount: BigUInt(amount)!, destinationAddress: targetAddress.address, isFromDeepLink: true)
+                window.rootViewController = controller
+                window.makeKeyAndVisible()
+            } else {
+                //MARK: - Choose the right network, MAINNET by default, if no network provided.
+                switch parsed.chainID {
+                case 1?:
+                    CurrentNetwork.currentNetwork = Networks.Mainnet
+                case 3?:
+                    CurrentNetwork.currentNetwork = Networks.Ropsten
+                case 4?:
+                    CurrentNetwork.currentNetwork = Networks.Rinkeby
+                case 42?:
+                    CurrentNetwork.currentNetwork = Networks.Kovan
+                case .some(let value):
+                    CurrentNetwork.currentNetwork = Networks.Custom(networkID: value)
+                default:
+                    CurrentNetwork.currentNetwork = Networks.Mainnet
+                }
+                let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
+                CurrentWeb.currentWeb = web3
+                
+                //Preparing the options
+                var options: Web3Options = Web3Options.defaultOptions()
+                options.gasLimit = parsed.gasLimit
+                options.gasPrice = parsed.gasPrice
+                options.value = parsed.amount
+                //TODO: - ENS parser
+                guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
+                guard let methodName = parsed.functionName else { return }
+                let params = parsed.params.map { return Parameter(type: $0.0, value: $0.1) }
+                etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
+                    switch result {
+                    case .Success(let abi):
+                        self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, predefinedOptions: options) { (result) in
+                            switch result {
+                            case .Error(let error):
+                                print(error)
+                                let controller = self.goToApp()
+                                window.rootViewController = controller
+                                window.makeKeyAndVisible()
+                                showErrorAlert(for: controller, error: error)
+                            case .Success(let intermediate):
+                                let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                                window.rootViewController = controller
+                                window.makeKeyAndVisible()
+                            }
+                        }
+                    case .Error(let error):
+                        print(error)
+                        //If there is no ABI posted on etherscan.
+                        var contractAbi: String
+                        if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
+                            contractAbi = peepEthAbi
+                        } else {
+                            contractAbi = peepEthAbi
+                        }
+                        self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{return $0.value}, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, predefinedOptions: options) { (result) in
+                            switch result {
+                            case .Error(let error):
+                                print(error)
+                            case .Success(let intermediate):
+                                let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                                window.rootViewController = controller
+                                window.makeKeyAndVisible()
+                            }
                         }
                     }
-                case .Error(let error):
-                    print(error)
-                    //If there is no ABI posted on etherscan.
-//                    var contractAbi: String
-//                    if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
-//                        contractAbi = peepEthAbi
-//                    } else {
-//                        contractAbi = peepEthAbi
-//                    }
-//                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{return $0.value}, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0", predefinedOptions: nil) { (result) in
-//                        switch result {
-//                        case .Error(let error):
-//                            print(error)
-//                        case .Success(let intermediate):
-//                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
-//                            window.rootViewController = controller
-//                            window.makeKeyAndVisible()
-//                        }
-//                    }
                 }
             }
+            
             //Regular sending of ETH
         case true:
-            let methodName = parsed.functionName
-            let params = parsed.params.map {
-                return Parameter(type: $0.0, value: $0.1)
-            }
             guard case .ethereumAddress(let targetAddress) = parsed.targetAddress else { return }
             let controller = SendSettingsViewController(tokenAddress: "", amount: parsed.amount ?? 0, destinationAddress: targetAddress.address, isFromDeepLink: true)
             window.rootViewController = controller
