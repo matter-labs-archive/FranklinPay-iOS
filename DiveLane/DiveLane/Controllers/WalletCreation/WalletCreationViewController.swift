@@ -27,6 +27,8 @@ class WalletCreationViewController: UIViewController {
     let localStorage = LocalDatabase()
     let web3service: Web3SwiftService = Web3SwiftService()
     
+    let animation = AnimationController()
+    
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
             $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
@@ -75,29 +77,48 @@ class WalletCreationViewController: UIViewController {
         }
         passwordsDontMatch.alpha = 0
         
+        DispatchQueue.main.async {
+            self.animation.waitAnimation(isEnabled: true,
+                                         notificationText: "Creating wallet",
+                                         on: self.view)
+        }
+        
         guard let additionMode = additionMode else {return}
         switch additionMode {
         case .createWallet:
             //Create new wallet
-            keysService.createNewWallet(withName: self.walletNameTextField.text, password: passwordTextField.text!) { [unowned self] (wallet, error) in
+            keysService.createNewWallet(withName: self.walletNameTextField.text,
+                                        password: passwordTextField.text!)
+            { [weak self] (wallet, error) in
+                DispatchQueue.main.async {
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 if let error = error {
-                    showErrorAlert(for: self, error: error)
+                    showErrorAlert(for: self!, error: error)
                 } else {
-                    self.savingWallet(wallet: wallet)
+                    self?.savingWallet(wallet: wallet)
                 }
             }
         default:
             //Import wallet
-            keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text, key: enterPrivateKeyTextField.text!, password: passwordTextField.text!) { [unowned self] (wallet, error) in
+            keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text,
+                                                   key: enterPrivateKeyTextField.text!,
+                                                   password: passwordTextField.text!)
+            { [weak self] (wallet, error) in
+                DispatchQueue.main.async {
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 if let error = error {
-                    showErrorAlert(for: self, error: error)
+                    showErrorAlert(for: self!, error: error)
                     return
                 } else {
                     guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
-                        showErrorAlert(for: self, error: error)
+                        showErrorAlert(for: self!, error: error)
                         return
                     }
-                    self.savingWallet(wallet: wallet)
+                    self?.savingWallet(wallet: wallet)
                 }
             }
         }
@@ -105,14 +126,23 @@ class WalletCreationViewController: UIViewController {
     }
     
     func savingWallet(wallet: KeyWalletModel?) {
-        self.localStorage.saveWallet(wallet: wallet) { (error) in
+        DispatchQueue.main.async {
+            self.animation.waitAnimation(isEnabled: true,
+                                         notificationText: "Saving wallet",
+                                         on: self.view)
+        }
+        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
             if error == nil {
                 print("Wallet imported")
+                DispatchQueue.main.async {
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 let tabViewController = AppController().goToApp()
                 tabViewController.view.backgroundColor = UIColor.white
-                self.present(tabViewController, animated: true, completion: nil)
+                self?.present(tabViewController, animated: true, completion: nil)
             } else {
-                showErrorAlert(for: self, error: error)
+                showErrorAlert(for: self!, error: error)
             }
         }
     }
