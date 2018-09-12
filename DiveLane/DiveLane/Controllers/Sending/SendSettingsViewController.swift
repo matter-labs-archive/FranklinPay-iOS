@@ -23,6 +23,7 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var sendButton: UIButton!
     @IBOutlet weak var qrButton: UIButton!
     @IBOutlet var textFields: [UITextField]!
+    @IBOutlet weak var closeView: UIView!
     
     var walletName: String?
     var walletAddress: String?
@@ -47,14 +48,15 @@ class SendSettingsViewController: UIViewController {
                      isFromDeepLink: Bool = true) {
         self.init()
         CurrentToken.currentToken?.address = tokenAddress ?? ""
-        let e18 = Float(10000000000)
+        let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
-        let resultAmount = Float(amountFloat/e18)
+        let resultAmount = Float(amountFloat/decimals)
         self.amountInString = String(resultAmount)
         self.destinationAddress = destinationAddress
         let wallet = LocalDatabase().getWallet()
         self.walletName = wallet?.name
         self.walletAddress = wallet?.address
+        self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
                                              address: KeysService().selectedWallet()?.address ?? "")
@@ -83,6 +85,8 @@ class SendSettingsViewController: UIViewController {
         
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
+        
+        closeView.isHidden = !self.isFromDeepLink
         
         self.title = "Transaction"
         
@@ -243,6 +247,11 @@ class SendSettingsViewController: UIViewController {
         enterPassword()
     }
     
+    @IBAction func closeAction(_ sender: UIButton) {
+        let startViewController = AppController().goToApp()
+        startViewController.view.backgroundColor = UIColor.white
+        UIApplication.shared.keyWindow?.rootViewController = startViewController
+    }
     
 }
 

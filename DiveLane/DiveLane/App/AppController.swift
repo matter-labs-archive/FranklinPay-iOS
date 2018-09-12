@@ -169,7 +169,7 @@ class AppController {
                 return Parameter(type: $0.0, value: $0.1)
             }
             guard case .ethereumAddress(let targetAddress) = parsed.targetAddress else { return }
-            let controller = SendSettingsViewController(tokenAddress: "", amount: parsed.amount ?? 0, destinationAddress: targetAddress.address)
+            let controller = SendSettingsViewController(tokenAddress: "", amount: parsed.amount ?? 0, destinationAddress: targetAddress.address, isFromDeepLink: true)
             window.rootViewController = controller
             window.makeKeyAndVisible()
             
