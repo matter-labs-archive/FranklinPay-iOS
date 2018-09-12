@@ -13,7 +13,6 @@ let peepEthAbi = """
 """
 class AppController {
     
-    let parser = Parser()
     let transactionsService = TransactionsService()
     let etherscanService = EtherscanService()
     
