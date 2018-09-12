@@ -35,6 +35,14 @@ Lots of experienced developers decline creation of DApps because of its technica
 We did all the hard-lifting cryptography job done for you!
 
 ## Usage:
+### Examples of EIP681 links:
+- If you want to specify gasPrice, gasLimit just add it to the end of the link:
+```
+"ethereum:0xaaf3A96b8f5E663Fc47bCc19f14e10A3FD9c414B@4/pay?uint256=100000&value=1000&gasPrice=700000&gasLimit=27500"
+```
+Here `pay` is just a method on smart contract with the given address and `@4` specifies network id(which is Rinkeby in that case).
+`uint256=1000000` is a parameter for the given method, `uint256` is a type of the parameter and `1000000` is a value of that parameter.
+`value=1000` is amount in Wei to send to smart contract. 1 ETH = 10^18 Wei.
 
 ### in swift app:
 ```
