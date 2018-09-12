@@ -9,7 +9,7 @@
 import UIKit
 import QRCodeReader
 import web3swift
-import BigInt
+import struct BigInt.BigUInt
 
 class SendSettingsViewController: UIViewController {
     
@@ -27,6 +27,10 @@ class SendSettingsViewController: UIViewController {
     var walletName: String?
     var walletAddress: String?
     var tokenBalance: String?
+    var isFromDeepLink: Bool = false
+    
+    var amountInString: String?
+    var destinationAddress: String?
     
     convenience init(walletName: String,
                      tokenBalance: String,
@@ -37,6 +41,37 @@ class SendSettingsViewController: UIViewController {
         self.walletAddress = walletAddress
     }
     
+    convenience init(tokenAddress: String?,
+                     amount: BigUInt,
+                     destinationAddress: String,
+                     isFromDeepLink: Bool = true) {
+        self.init()
+        CurrentToken.currentToken?.address = tokenAddress ?? ""
+        let e18 = Float(10000000000)
+        let amountFloat = Float(amount)
+        let resultAmount = Float(amountFloat/e18)
+        self.amountInString = String(resultAmount)
+        self.destinationAddress = destinationAddress
+        let wallet = LocalDatabase().getWallet()
+        self.walletName = wallet?.name
+        self.walletAddress = wallet?.address
+        if tokenAddress != nil {
+            Web3SwiftService().getERCBalance(for: tokenAddress!,
+                                             address: KeysService().selectedWallet()?.address ?? "")
+            { (result, error) in
+                DispatchQueue.main.async {
+                    self.tokenBalance = result ?? ""
+                }
+            }
+        } else {
+            Web3SwiftService().getETHbalance() { (result, error) in
+                DispatchQueue.main.async {
+                    self.tokenBalance = result ?? ""
+                }
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -45,6 +80,9 @@ class SendSettingsViewController: UIViewController {
         tokenNameLabel.text = CurrentToken.currentToken?.symbol.uppercased()
         sendButton.isEnabled = false
         sendButton.alpha = 0.5
+        
+        enterAddressTextField.text = destinationAddress
+        amountTextField.text = amountInString
         
         self.title = "Transaction"
         
@@ -129,12 +167,13 @@ class SendSettingsViewController: UIViewController {
     }
     
     func send(withPassword: String) {
+        
         guard let amount = amountTextField.text,
             let destinationAddress = enterAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
                 return
         }
         
-        if CurrentToken.currentToken == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
+        if CurrentToken.currentToken?.address == "" {
             TransactionsService().prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { (result) in
                 switch result {
                 case .Success(let transaction):
@@ -145,7 +184,7 @@ class SendSettingsViewController: UIViewController {
                         "gasPrice":gasPrice,
                         "gasLimit":gasLimit,
                         "transaction":transaction,
-                        "amount":amount,
+                        "amount": amount,
                         "name": name,
                         "fromAddress": self.walletAddress!,
                         "toAddress": destinationAddress]

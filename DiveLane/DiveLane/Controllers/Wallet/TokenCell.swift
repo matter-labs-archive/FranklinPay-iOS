@@ -56,8 +56,9 @@ class TokenCell: UITableViewCell {
             self.tokenAddress.text = token.address
             self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address, address: forWallet) { (result, error) in
-                guard let result = result else {return}
-                self.balance.text = result
+                DispatchQueue.main.async {
+                    self.balance.text = result ?? ""
+                }
             }
         }
     }
