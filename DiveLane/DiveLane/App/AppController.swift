@@ -89,54 +89,79 @@ class AppController {
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {
-        guard let index = url.absoluteString.index(of: ":") else { return }
-        let i = url.absoluteString.index(index, offsetBy: 1)
         guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
 //        let fun = ABIv2.Element.function(parsed.function!)
 //        let data = fun.encodeParameters(parsed.parameters.compactMap{return $0.value})
 //        print(    data?.toHexString())
         switch parsed.isPayRequest {
+            //Custom transaction
         case false:
+            //MARK: - Choose the right network, MAINNET by default, if no network provided.
+            switch parsed.chainID {
+            case 1?:
+                CurrentNetwork.currentNetwork = Networks.Mainnet
+            case 3?:
+                CurrentNetwork.currentNetwork = Networks.Ropsten
+            case 4?:
+                CurrentNetwork.currentNetwork = Networks.Rinkeby
+            case 42?:
+                CurrentNetwork.currentNetwork = Networks.Kovan
+            case .some(let value):
+                CurrentNetwork.currentNetwork = Networks.Custom(networkID: value)
+            default:
+                CurrentNetwork.currentNetwork = Networks.Mainnet
+            }
+            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
+            CurrentWeb.currentWeb = web3
+            
+            //Preparing the options
+            var options: Web3Options = Web3Options.defaultOptions()
+            options.gasLimit = parsed.gasLimit
+            options.gasPrice = parsed.gasPrice
+            options.value = parsed.amount
+            //TODO: - ENS parser
             guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
             guard let methodName = parsed.functionName else { return }
-            let params = parsed.params.map {
-                return Parameter(type: $0.0, value: $0.1)
-            }
+            let params = parsed.params.map { return Parameter(type: $0.0, value: $0.1) }
             etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
                 switch result {
                 case .Success(let abi):
-                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, amountString: "", amount: parsed.amount ?? 0) { (result) in
+                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{ return $0.value }, contractAbi: abi, contractAddress: contractAddress.address, method: methodName, predefinedOptions: options) { (result) in
                         switch result {
                         case .Error(let error):
                             print(error)
-                        case .Success(let intermediate):
-                            let controller = SendArbitraryTransactionViewController(params: parsed.params.map{return Parameter(type: $0.0, value: $0.1)}, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+                            let controller = self.goToApp()
                             window.rootViewController = controller
                             window.makeKeyAndVisible()
-                        }
-                    }
-                case .Error(let error):
-                    print(error)
-                    
-                    var contractAbi: String
-                    if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
-                        contractAbi = peepEthAbi
-                    } else {
-                        contractAbi = peepEthAbi
-                    }
-                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{return $0.value}, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0") { (result) in
-                        switch result {
-                        case .Error(let error):
-                            print(error)
+                            showErrorAlert(for: controller, error: error)
                         case .Success(let intermediate):
                             let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
                             window.rootViewController = controller
                             window.makeKeyAndVisible()
                         }
                     }
+                case .Error(let error):
+                    print(error)
+                    //If there is no ABI posted on etherscan.
+//                    var contractAbi: String
+//                    if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
+//                        contractAbi = peepEthAbi
+//                    } else {
+//                        contractAbi = peepEthAbi
+//                    }
+//                    self.transactionsService.prepareTransactionToContract(data: parsed.parameters.map{return $0.value}, contractAbi: contractAbi, contractAddress: contractAddress.address, method: methodName, amountString: "0", predefinedOptions: nil) { (result) in
+//                        switch result {
+//                        case .Error(let error):
+//                            print(error)
+//                        case .Success(let intermediate):
+//                            let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
+//                            window.rootViewController = controller
+//                            window.makeKeyAndVisible()
+//                        }
+//                    }
                 }
             }
-            
+            //Regular sending of ETH
         case true:
             let methodName = parsed.functionName
             let params = parsed.params.map {
