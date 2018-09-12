@@ -1,4 +1,4 @@
-# DiveLane - Apple Pay for Ethereum
+# DiveLane - Universal Ethereum payment system
 
 <img src="https://github.com/matterinc/DiveLane/blob/master/dive%20logo.png" align="center" width="300">
 
