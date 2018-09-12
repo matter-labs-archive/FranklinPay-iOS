@@ -14,7 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var controller: AppController!
-    let parser = Parser()
     let transactionsService: ITransactionsService = TransactionsService()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -50,9 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
-        guard let index = url.absoluteString.index(of: ":") else { return true}
-        let i = url.absoluteString.index(index, offsetBy: 3)
-        let parsedUrl = parser.genericlyParseURLethereum(url: String(url.absoluteString[i...]))
         controller = AppController(window: window!, launchOptions: nil, url: url)
         return true
     }

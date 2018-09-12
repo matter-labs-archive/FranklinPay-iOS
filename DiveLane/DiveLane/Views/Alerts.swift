@@ -9,7 +9,11 @@
 import UIKit
 
 func showErrorAlert(for viewController: UIViewController, error: Error?) {
-    let alert = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+    var text: String?
+    if let error = error as? TransactionErrors {
+        text = error.rawValue
+    }
+    let alert = UIAlertController(title: "Error", message: text ?? error?.localizedDescription, preferredStyle: .alert)
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
     alert.addAction(cancelAction)
     viewController.present(alert, animated: true, completion: nil)

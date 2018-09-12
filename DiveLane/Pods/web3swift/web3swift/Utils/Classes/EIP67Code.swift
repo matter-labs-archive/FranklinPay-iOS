@@ -248,6 +248,7 @@ extension Web3 {
             
             var code = EIP681Code(targetAddress)
             if chainIDString != nil {
+                chainIDString!.remove(at: chainIDString!.startIndex)
                 code.chainID = BigUInt(chainIDString!)
             }
             if tail == nil {

@@ -51,7 +51,6 @@
 		91B6A7C8214368470033A045 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C7214368470033A045 /* Parameter.swift */; };
 		91B6A7CA214369D60033A045 /* GlobalTODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C9214369D60033A045 /* GlobalTODO.swift */; };
 		91B6A7CE214370F00033A045 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7CD214370F00033A045 /* URL.swift */; };
-		91B6A7D02143B1640033A045 /* ParserEIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7CF2143B1640033A045 /* ParserEIP.swift */; };
 		91B6A7D22143B1E80033A045 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */; };
 		91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D32143B2160033A045 /* FloatExtension.swift */; };
 		91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */; };
@@ -61,7 +60,6 @@
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
-		B25BD13E2144128C0091C481 /* EIP681Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD13D2144128C0091C481 /* EIP681Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -111,7 +109,6 @@
 		91B6A7C7214368470033A045 /* Parameter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Parameter.swift; sourceTree = "<group>"; };
 		91B6A7C9214369D60033A045 /* GlobalTODO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalTODO.swift; sourceTree = "<group>"; };
 		91B6A7CD214370F00033A045 /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
-		91B6A7CF2143B1640033A045 /* ParserEIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserEIP.swift; sourceTree = "<group>"; };
 		91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		91B6A7D32143B2160033A045 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletViewController.swift; sourceTree = "<group>"; };
@@ -122,7 +119,6 @@
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
-		B25BD13D2144128C0091C481 /* EIP681Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP681Extension.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -375,10 +371,8 @@
 				91B6A7BD2143649A0033A045 /* TransactionsService.swift */,
 				91B6A7B4214361AE0033A045 /* KeysService.swift */,
 				91B6A7B2214361730033A045 /* LocalDatabase.swift */,
-				91B6A7CF2143B1640033A045 /* ParserEIP.swift */,
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
 				9197F3152143FD4100C358AA /* NetworkService.swift */,
-				B25BD13D2144128C0091C481 /* EIP681Extension.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -583,7 +577,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
-				B25BD13E2144128C0091C481 /* EIP681Extension.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
@@ -594,7 +587,6 @@
 				9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */,
 				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
-				91B6A7D02143B1640033A045 /* ParserEIP.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
