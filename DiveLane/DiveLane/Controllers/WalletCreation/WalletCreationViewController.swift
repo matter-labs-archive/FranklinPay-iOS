@@ -79,13 +79,8 @@ class WalletCreationViewController: UIViewController {
         switch additionMode {
         case .createWallet:
             //Create new wallet
-            keysService.createNewWallet(withName: self.walletNameTextField.text, password: passwordTextField.text!) { [unowned self] (wallet, error) in
-                if let error = error {
-                    showErrorAlert(for: self, error: error)
-                } else {
-                    self.savingWallet(wallet: wallet)
-                }
-            }
+            showChooseAlert()
+            
         default:
             //Import wallet
             keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text, key: enterPrivateKeyTextField.text!, password: passwordTextField.text!) { [unowned self] (wallet, error) in
@@ -117,6 +112,27 @@ class WalletCreationViewController: UIViewController {
                 showErrorAlert(for: self, error: error)
             }
         }
+    }
+    
+    func showChooseAlert() {
+        let alertController = UIAlertController(title: "Wallet type", message: "How would you like to create your wallet?", preferredStyle: .alert)
+        let actionMnemonics = UIAlertAction(title: "Mnemonics", style: .default) { (_) in
+            let mnemonicsViewController = MnemonicsViewController(name: self.walletNameTextField.text!, password: self.passwordTextField.text!)
+            self.navigationController?.pushViewController(mnemonicsViewController, animated: true)
+        }
+        
+        let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { _ in
+            self.keysService.createNewWallet(withName: self.walletNameTextField.text, password: self.passwordTextField.text!) { [unowned self] (wallet, error) in
+                if let error = error {
+                    showErrorAlert(for: self, error: error)
+                } else {
+                    self.savingWallet(wallet: wallet)
+                }
+            }
+        }
+        alertController.addAction(actionMnemonics)
+        alertController.addAction(actionPrivateKey)
+        self.present(alertController, animated: true, completion: nil)
     }
 }
 

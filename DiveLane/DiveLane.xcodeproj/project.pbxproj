@@ -65,6 +65,8 @@
 		B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091509214A60A700C8B408 /* ExportWalletViewController.xib */; };
 		B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
 		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
+		B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091510214AA58100C8B408 /* MnemonicsViewController.swift */; };
+		B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091511214AA58100C8B408 /* MnemonicsViewController.xib */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
@@ -132,6 +134,8 @@
 		B2091509214A60A700C8B408 /* ExportWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportWalletViewController.xib; sourceTree = "<group>"; };
 		B209150C214A659500C8B408 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
 		B209150D214A659500C8B408 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
+		B2091510214AA58100C8B408 /* MnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsViewController.swift; sourceTree = "<group>"; };
+		B2091511214AA58100C8B408 /* MnemonicsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicsViewController.xib; sourceTree = "<group>"; };
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 		9197F2E22143B63100C358AA /* WalletCreation */ = {
 			isa = PBXGroup;
 			children = (
+				B2091510214AA58100C8B408 /* MnemonicsViewController.swift */,
 				9197F2E32143B65600C358AA /* WalletCreationViewController.swift */,
 			);
 			path = WalletCreation;
@@ -204,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				9197F2E42143B65600C358AA /* WalletCreationViewController.xib */,
+				B2091511214AA58100C8B408 /* MnemonicsViewController.xib */,
 			);
 			path = WalletCreation;
 			sourceTree = "<group>";
@@ -547,6 +553,7 @@
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */,
+				B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */,
 				B20914FF214A564500C8B408 /* WalletsViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
@@ -650,6 +657,7 @@
 				91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */,
 				9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
+				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */,
