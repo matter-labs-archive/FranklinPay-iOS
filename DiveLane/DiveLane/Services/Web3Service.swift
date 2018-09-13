@@ -13,6 +13,7 @@ import struct BigInt.BigUInt
 protocol IWeb3SwiftService {
     func sendTransaction(transaction: TransactionIntermediate, password: String, completion: @escaping (Result<TransactionSendingResult>) -> Void)
     func getETHbalance(completion: @escaping (String?,Error?) -> Void)
+    func getETHbalance(forAddress address: String, completion: @escaping (String?, Error?) -> Void)
     func getERCBalance(for token: String,
                     address: String,
                     completion: @escaping (String?,Error?)->Void)
@@ -59,7 +60,27 @@ class Web3SwiftService: IWeb3SwiftService {
             let wallet = KeysService().localStorage.getWallet()
             guard let address = wallet?.address else { return }
             let ETHaddress = EthereumAddress(address)!
-            //let web3Main = Web3.InfuraMainnetWeb3()
+            let web3Main = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
+            let balanceResult = web3Main.eth.getBalance(address: ETHaddress)
+            guard case .success(let balance) = balanceResult else {
+                DispatchQueue.main.async {
+                    completion(nil,balanceResult.error)
+                }
+                return
+            }
+            DispatchQueue.main.async {
+                let ethUnits = Web3Utils.formatToEthereumUnits(balance,
+                                                               toUnits: .eth,
+                                                               decimals: 6,
+                                                               decimalSeparator: ".")
+                completion(ethUnits,nil)
+            }
+        }
+    }
+    
+    public func getETHbalance(forAddress address: String, completion: @escaping (String?, Error?) -> Void) {
+        DispatchQueue.global().async {
+            let ETHaddress = EthereumAddress(address)!
             let web3Main = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
             let balanceResult = web3Main.eth.getBalance(address: ETHaddress)
             guard case .success(let balance) = balanceResult else {

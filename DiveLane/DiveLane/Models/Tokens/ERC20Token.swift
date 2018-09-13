@@ -9,10 +9,10 @@
 import Foundation
 
 class ERC20TokenModel {
-    let name: String
-    let address: String
-    let decimals: String
-    let symbol: String
+    var name: String
+    var address: String
+    var decimals: String
+    var symbol: String
     
     init(token: ERC20Token) {
         self.name = token.name ?? ""

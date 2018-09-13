@@ -85,7 +85,9 @@ class SendArbitraryTransactionViewController: UIViewController {
                 self.send(withPassword: passwordText)
                 
             } else {
-                showErrorAlert(for: self, error: SendErrors.wrongPassword)
+                showErrorAlert(for: self, error: SendErrors.wrongPassword, completion: {
+                    
+                })
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in

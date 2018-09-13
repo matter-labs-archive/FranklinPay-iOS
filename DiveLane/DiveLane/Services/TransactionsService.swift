@@ -16,9 +16,7 @@ protocol ITransactionsService {
                                       contractAbi: String,
                                       contractAddress: String,
                                       method: String,
-                                      amountString: String,
-                                      amount: BigUInt,
-                                      gasLimit: BigUInt,
+                                      predefinedOptions: Web3Options?,
                                       completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
     func prepareTransactionForSendingEther(destinationAddressString: String,
@@ -33,14 +31,17 @@ protocol ITransactionsService {
                                          completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
     func sendToContract(transaction: TransactionIntermediate,
-                        with password: String,
+                        with password: String?,
                         options: Web3Options?,
                         completion: @escaping (Result<TransactionSendingResult>) -> Void)
     
     func sendToken(transaction: TransactionIntermediate,
-                   with password: String,
+                   with password: String?,
                    options: Web3Options?,
                    completion: @escaping (Result<TransactionSendingResult>) -> Void)
+    
+    func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate,
+        options: Web3Options)
     
 }
 
@@ -52,45 +53,38 @@ class TransactionsService: ITransactionsService {
                                              contractAbi: String,
                                              contractAddress: String,
                                              method: String,
-                                             amountString: String = "0",
-                                             amount: BigUInt = 0,
-                                             gasLimit: BigUInt = 27500,
+                                             predefinedOptions: Web3Options? = nil,
                                              completion: @escaping (Result<TransactionIntermediate>) -> Void) {
         let wallet = TransactionsService.keyservice.selectedWallet()
         guard let address = wallet?.address else { return }
         let ethAddressFrom = EthereumAddress(address)
         let ethContractAddress = EthereumAddress(contractAddress)!
         
-        guard let amountFromString = Web3.Utils.parseToBigUInt(amountString, units: .eth) else {
-            DispatchQueue.main.async {
-                completion(Result.Error(SendErrors.invalidAmountFormat))
-            }
-            return
-        }
-        
-        //let web3 = Web3.InfuraMainnetWeb3()
         let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
         web3.addKeystoreManager(TransactionsService.keyservice.keystoreManager())
-        
-        var options = Web3Options.defaultOptions()
+        var options = predefinedOptions ?? Web3Options.defaultOptions()
         options.from = ethAddressFrom
         options.to = ethContractAddress
-        if amountFromString != 0 {
-            options.value = amountFromString
-        } else {
-            options.value = amount
-        }
+        options.value = options.value ?? 0
         guard let contract = web3.contract(contractAbi,
                                            at: ethContractAddress,
-                                           abiVersion: 2) else { return }
+                                           abiVersion: 2) else {
+                                            return
+                                                DispatchQueue.main.async {
+                                                    completion(Result.Error(TransactionErrors.init(rawValue: "Can not create a contract with given abi and address.")!))
+                                            }
+        }
         guard let gasPrice = web3.eth.getGasPrice().value else { return }
-        options.gasPrice = gasPrice
-        options.gasLimit = gasLimit
+        options.gasPrice = predefinedOptions?.gasPrice ?? gasPrice
         guard let transaction = contract.method(method,
                                                 parameters: data,
                                                 options: options) else { return }
-        print("i am here")
-        guard case .success(let estimate) = transaction.estimateGas(options: options) else {return}
+        guard case .success(let estimate) = transaction.estimateGas(options: options) else {
+            DispatchQueue.main.async {
+                completion(Result.Error(TransactionErrors.PreparingError))
+            }
+            return
+        }
         print("estimated cost: \(estimate)")
         DispatchQueue.main.async {
             completion(Result.Success(transaction))
@@ -246,11 +240,11 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToContract(transaction: TransactionIntermediate,
-                               with password: String,
+                               with password: String? = "BANKEXFOUNDATION",
                                options: Web3Options? = nil,
                                completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = transaction.send(password: password,
+            let result = transaction.send(password: password ?? "BANKEXFOUNDATION",
                                           options: transaction.options)
             if let error = result.error {
                 DispatchQueue.main.async {
@@ -271,11 +265,11 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToken(transaction: TransactionIntermediate,
-                          with password: String,
+                          with password: String? = "BANKEXFOUNDATION",
                           options: Web3Options? = nil,
                           completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = transaction.send(password: password,
+            let result = transaction.send(password: password ?? "BANKEXFOUNDATION",
                                           options: options)
             if let error = result.error {
                 DispatchQueue.main.async {
@@ -302,5 +296,23 @@ class TransactionsService: ITransactionsService {
         }
         return web3.contract(Web3.Utils.erc20ABI, at: ethAddress)
     }
+    
+    public func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate, options: Web3Options) {
+        let token  = CurrentToken.currentToken
+        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
+        var options = Web3Options.defaultOptions()
+        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
+        let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))
+        options.gasPrice = gp
+        let transaction = dict["transaction"] as! TransactionIntermediate
+        options.from = transaction.options?.from
+        options.to = transaction.options?.to
+        options.value = transaction.options?.value
+        return (transaction: transaction, options: options)
+    }
+}
+
+enum TransactionErrors: String, Error {
+    case PreparingError = "Couldn't prepare transaction with such parameters"
 }
 

@@ -21,14 +21,17 @@ class NetworksViewController: UIViewController {
         
         getNetworks()
         
-        self.title = "Networks"
-        
         self.networksTableView.delegate = self
         self.networksTableView.dataSource = self
         networksTableView.tableFooterView = UIView()
         
         let nib = UINib.init(nibName: "NetworksCell", bundle: nil)
         self.networksTableView.register(nib, forCellReuseIdentifier: "NetworksCell")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.title = "Networks"
     }
     
     func getNetworks() {

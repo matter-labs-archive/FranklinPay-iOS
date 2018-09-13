@@ -18,9 +18,10 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Settings"
+        
         getSettings()
         
-        self.title = "Settings"
         self.tabBarController?.tabBar.selectedItem?.title = nil
         
         self.settingsTableView.delegate = self
@@ -40,6 +41,7 @@ class SettingsViewController: UIViewController {
         getSettings()
         self.settingsTableView.reloadData()
     }
+    
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
@@ -79,9 +81,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SettingsCell", for: indexPath) as! SettingsCell
             switch indexPath.row {
             case 0:
-                cell.configure(param: "Network", value: settings["currentNetwork"] as Any)
+                cell.configure(param: "Networks", value: settings["currentNetwork"] as Any)
             default:
-                cell.configure(param: "Wallet", value: settings["currentWallet"] as Any)
+                cell.configure(param: "Wallets", value: settings["currentWallet"] as Any)
             }
             return cell
         default:
@@ -95,9 +97,12 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {return}
         let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? SettingsCell
         
-        if selectedCell?.param.text == "Network" {
+        if selectedCell?.param.text == "Networks" {
             let networksViewController = NetworksViewController()
             self.navigationController?.pushViewController(networksViewController, animated: true)
+        } else if selectedCell?.param.text == "Wallets" {
+            let walletsViewController = WalletsViewController()
+            self.navigationController?.pushViewController(walletsViewController, animated: true)
         }
         tableView.deselectRow(at: indexPath, animated: true)
         

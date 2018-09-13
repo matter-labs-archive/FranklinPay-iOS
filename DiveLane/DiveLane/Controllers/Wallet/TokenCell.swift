@@ -44,20 +44,28 @@ class TokenCell: UITableViewCell {
         self.walletName.text = (walletName ?? "") + " on " + (networkName ?? "")
         self.tokenShortName.text = token.symbol.uppercased()
         
-        if token == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
+        if token == ERC20TokenModel(name: "Ether",
+                                    address: "",
+                                    decimals: "18",
+                                    symbol: "Eth")
+        {
             self.tokenAddress.text = forWallet
             self.balance.text = "Loading..."
-            Web3SwiftService().getETHbalance() { (result, error) in
+            Web3SwiftService().getETHbalance()
+                { [weak self] (result, error) in
                 DispatchQueue.main.async {
-                    self.balance.text = result ?? ""
+                    self?.balance.text = result ?? ""
                 }
             }
         } else {
             self.tokenAddress.text = token.address
             self.balance.text = "Loading..."
-            Web3SwiftService().getERCBalance(for: token.address, address: forWallet) { (result, error) in
-                guard let result = result else {return}
-                self.balance.text = result
+            Web3SwiftService().getERCBalance(for: token.address,
+                                             address: forWallet)
+            { [weak self] (result, error) in
+                DispatchQueue.main.async {
+                    self?.balance.text = result ?? ""
+                }
             }
         }
     }
