@@ -120,9 +120,11 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
                 }
-                let tabViewController = AppController().goToApp()
-                tabViewController.view.backgroundColor = UIColor.white
-                self?.present(tabViewController, animated: true, completion: nil)
+                self?.localStorage.selectWallet(wallet: wallet, completion: {
+                    let tabViewController = AppController().goToApp()
+                    tabViewController.view.backgroundColor = UIColor.white
+                    self?.present(tabViewController, animated: true, completion: nil)
+                })
             } else {
                 showErrorAlert(for: self!, error: error)
             }
