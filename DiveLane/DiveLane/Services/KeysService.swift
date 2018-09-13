@@ -21,9 +21,15 @@ protocol IKeysService {
     func createNewWallet(withName: String?,
                          password: String,
                          completion: @escaping (KeyWalletModel?, Error?) -> Void)
+    func createNewHDWallet(withName: String,
+                           password: String,
+                           mnemonics: String,
+                           completion: @escaping (KeyWalletModel?, Error?) -> Void)
     func getWalletPrivateKey(password: String) -> String?
     func getPrivateKey(forWallet wallet: KeyWalletModel, password: String) -> String?
+    func generateMnemonics(bitsOfEntropy: Int) -> String
 }
+
 
 class KeysService: IKeysService {
     
@@ -41,10 +47,14 @@ class KeysService: IKeysService {
     }
     
     public func keystoreManager() -> KeystoreManager {
-        guard let selectedAddress = selectedWallet(), let data = selectedAddress.data else {
+        guard let selectedWallet = selectedWallet(), let data = selectedWallet.data else {
             return KeystoreManager.defaultManager!
         }
-        return KeystoreManager([EthereumKeystoreV3(data)!])
+        if selectedWallet.isHD {
+            return KeystoreManager([BIP32Keystore(data)!])
+        } else {
+            return KeystoreManager([EthereumKeystoreV3(data)!])
+        }
     }
     
     public func addNewWalletWithPrivateKey(withName: String?,
@@ -74,7 +84,7 @@ class KeysService: IKeysService {
             completion(nil, WalletSavingError.couldNotSaveTheWallet)
             return
         }
-        let walletModel = KeyWalletModel(address: address, data: keyData, name: withName ?? "")
+        let walletModel = KeyWalletModel(address: address, data: keyData, name: withName ?? "", isHD: false)
         completion(walletModel, nil)
     }
     
@@ -97,7 +107,24 @@ class KeysService: IKeysService {
             completion(nil, WalletSavingError.couldNotCreateTheWallet)
             return
         }
-        let walletModel = KeyWalletModel(address: address, data: keydata, name: withName ?? "")
+        let walletModel = KeyWalletModel(address: address, data: keydata, name: withName ?? "", isHD: false)
+        completion(walletModel, nil)
+    }
+    
+    func createNewHDWallet(withName name: String, password: String, mnemonics: String, completion: @escaping (KeyWalletModel?, Error?) -> Void) {
+        guard let keystore = try? BIP32Keystore(mnemonics: mnemonics,
+                                                password: password,
+                                                mnemonicsPassword: "",
+                                                language: .english), let wallet = keystore else { return }
+        guard let address = wallet.addresses?.first?.address else {
+            completion(nil, WalletSavingError.couldNotCreateTheWallet)
+            return
+        }
+        guard let keyData = try? JSONEncoder().encode(wallet.keystoreParams) else {
+            completion(nil, WalletSavingError.couldNotCreateTheWallet)
+            return
+        }
+        let walletModel = KeyWalletModel(address: address, data: keyData, name: name, isHD: true)
         completion(walletModel, nil)
     }
     
@@ -120,5 +147,13 @@ class KeysService: IKeysService {
             print(error)
             return nil
         }
+    }
+    
+    public func generateMnemonics(bitsOfEntropy: Int) -> String {
+        guard let mnemonics = try? BIP39.generateMnemonics(bitsOfEntropy: bitsOfEntropy),
+            let unwrapped = mnemonics else {
+                return ""
+        }
+        return unwrapped
     }
 }

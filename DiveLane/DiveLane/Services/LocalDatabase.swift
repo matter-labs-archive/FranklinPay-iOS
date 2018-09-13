@@ -66,6 +66,7 @@ class LocalDatabase: ILocalDatabase {
             entity.address = wallet.address
             entity.data = wallet.data
             entity.name = wallet.name
+            entity.isHD = wallet.isHD
             do {
                 try context.save()
                 DispatchQueue.main.async {
