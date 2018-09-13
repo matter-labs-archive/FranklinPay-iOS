@@ -88,6 +88,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
     }
     
     func createWallet() {
+        UserDefaults.standard.set(true, forKey: "atLeastOneWalletExists")
         do {
             let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName,
                                                     account: "THEMATTER",
@@ -104,23 +105,19 @@ class CreateWalletPincodeViewController: PincodeViewController {
     }
     
     func savingWallet() {
-        guard let wallet = self.wallet else {
-            showErrorAlert(for: self, error: WalletSavingError.couldNotCreateTheWallet)
-            return
-        }
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
                                          notificationText: "Saving wallet",
                                          on: (self?.view)!)
         }
-        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
+        self.localStorage.saveWallet(wallet: self.wallet) { [weak self] (error) in
             if error == nil {
                 print("Wallet imported")
                 DispatchQueue.main.async { [weak self] in
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
                 }
-                self?.localStorage.selectWallet(wallet: wallet, completion: {
+                self?.localStorage.selectWallet(wallet: self?.wallet, completion: {
                     let tabViewController = AppController().goToApp()
                     tabViewController.view.backgroundColor = UIColor.white
                     self?.present(tabViewController, animated: true, completion: nil)

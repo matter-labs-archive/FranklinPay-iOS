@@ -93,6 +93,8 @@ class WalletCreationViewController: UIViewController {
         }
         passwordsDontMatch.alpha = 0
         
+        let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
+        
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
                                          notificationText: "Creating wallet",
@@ -114,8 +116,12 @@ class WalletCreationViewController: UIViewController {
                     showErrorAlert(for: self!, error: error)
                 } else {
                     
-                    self?.addPincode(toWallet: wallet)
-                    //self?.savingWallet(wallet: wallet)
+                    switch isAtLeastOneWalletExists {
+                    case true:
+                        self?.savingWallet(wallet: wallet)
+                    case false:
+                        self?.addPincode(toWallet: wallet)
+                    }
                 }
             }
         default:
@@ -137,8 +143,12 @@ class WalletCreationViewController: UIViewController {
                         return
                     }
                     
-                    self?.addPincode(toWallet: wallet)
-                    //self?.savingWallet(wallet: wallet)
+                    switch isAtLeastOneWalletExists {
+                    case true:
+                        self?.savingWallet(wallet: wallet)
+                    case false:
+                        self?.addPincode(toWallet: wallet)
+                    }
                 }
             }
         }
@@ -147,16 +157,25 @@ class WalletCreationViewController: UIViewController {
     
 
     func savingWallet(wallet: KeyWalletModel?) {
-        self.localStorage.saveWallet(wallet: wallet) { (error) in
+        DispatchQueue.main.async { [weak self] in
+            self?.animation.waitAnimation(isEnabled: true,
+                                          notificationText: "Saving wallet",
+                                          on: (self?.view)!)
+        }
+        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
             if error == nil {
                 print("Wallet imported")
-                self.localStorage.selectWallet(wallet: wallet, completion: {
+                DispatchQueue.main.async { [weak self] in
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
+                self?.localStorage.selectWallet(wallet: wallet, completion: {
                     let tabViewController = AppController().goToApp()
                     tabViewController.view.backgroundColor = UIColor.white
-                    self.present(tabViewController, animated: true, completion: nil)
+                    self?.present(tabViewController, animated: true, completion: nil)
                 })
             } else {
-                showErrorAlert(for: self, error: error)
+                showErrorAlert(for: self!, error: error)
             }
         }
     }
