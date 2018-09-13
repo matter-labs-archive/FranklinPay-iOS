@@ -14,6 +14,9 @@ protocol ILocalDatabase {
     func getWallet() -> KeyWalletModel?
     func saveWallet(wallet: KeyWalletModel?, completion: @escaping (Error?)-> Void)
     func deleteWallet(completion: @escaping (Error?)-> Void)
+    func getAllWallets() -> [KeyWalletModel]
+    func selectWallet(wallet: KeyWalletModel?, completion: @escaping() -> Void)
+    func deleteWallet(wallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
 }
 
 class LocalDatabase: ILocalDatabase {
@@ -31,7 +34,7 @@ class LocalDatabase: ILocalDatabase {
     
     public func getWallet() -> KeyWalletModel? {
         let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
-        
+        requestWallet.predicate = NSPredicate(format: "isSelected = %@", NSNumber(value: true))
         do {
             let results = try mainContext.fetch(requestWallet)
             guard let result = results.first else { return nil }
@@ -42,7 +45,18 @@ class LocalDatabase: ILocalDatabase {
             return nil
         }
         
-        
+    }
+    
+    public func getAllWallets() -> [KeyWalletModel] {
+        let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
+        do {
+            let results = try mainContext.fetch(requestWallet)
+            return results.map{ return KeyWalletModel.fromCoreData(crModel: $0)}
+            
+        } catch {
+            print(error)
+            return []
+        }
     }
     
     public func saveWallet(wallet: KeyWalletModel?, completion: @escaping (Error?)-> Void) {
@@ -55,12 +69,16 @@ class LocalDatabase: ILocalDatabase {
             do {
                 try context.save()
                 DispatchQueue.main.async {
-                    completion(nil)
+                    self.selectWallet(wallet: wallet, completion: {
+                        completion(nil)
+                    })
                 }
                 
             } catch {
                 DispatchQueue.main.async {
-                    completion(error)
+                    self.selectWallet(wallet: wallet, completion: {
+                        completion(error)
+                    })
                 }
             }
         }
@@ -69,7 +87,6 @@ class LocalDatabase: ILocalDatabase {
     public func deleteWallet(completion: @escaping (Error?)-> Void) {
         
         let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
-        
         do {
             let results = try mainContext.fetch(requestWallet)
             
@@ -83,4 +100,39 @@ class LocalDatabase: ILocalDatabase {
             completion(error)
         }
     }
+    
+    public func selectWallet(wallet: KeyWalletModel?, completion: @escaping() -> Void) {
+        let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
+        do {
+            let results = try mainContext.fetch(requestWallet)
+            for item in results {
+                item.isSelected = item.address == wallet?.address
+            }
+            try mainContext.save()
+            completion()
+        } catch {
+            completion()
+        }
+    }
+    
+    public func deleteWallet(wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
+        let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
+        requestWallet.predicate = NSPredicate(format: "address = %@", wallet.address)
+        do {
+            let results = try mainContext.fetch(requestWallet)
+            guard let result = results.first else {
+                completion(DataBaseError.noSuchWalletInStorage)
+                return
+            }
+            mainContext.delete(result)
+            try mainContext.save()
+            completion(nil)
+        } catch {
+            completion(error)
+        }
+    }
+}
+
+enum DataBaseError: Error {
+    case noSuchWalletInStorage
 }
