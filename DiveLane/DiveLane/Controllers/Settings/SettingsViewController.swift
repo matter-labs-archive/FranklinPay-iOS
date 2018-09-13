@@ -18,9 +18,10 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "Settings"
+        
         getSettings()
         
-        self.title = "Settings"
         self.tabBarController?.tabBar.selectedItem?.title = nil
         
         self.settingsTableView.delegate = self
@@ -40,6 +41,7 @@ class SettingsViewController: UIViewController {
         getSettings()
         self.settingsTableView.reloadData()
     }
+    
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
