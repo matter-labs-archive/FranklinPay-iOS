@@ -49,6 +49,8 @@ class WalletsViewController: UIViewController {
                 if error == nil {
                     self.wallets.remove(at: indexPath.row)
                     if self.wallets.first == nil {
+                        UserDefaults.standard.set(false, forKey: "atLeastOneWalletExists")
+                        UserDefaults.standard.set(false, forKey: "pincodeExists")
                         let nav = UINavigationController()
                         nav.viewControllers = [AddWalletViewController()]
                         UIApplication.shared.keyWindow?.rootViewController = nav

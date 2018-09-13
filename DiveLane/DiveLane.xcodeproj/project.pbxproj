@@ -19,6 +19,7 @@
 		914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22992149C0F600ED58E6 /* PincodeEnterStatus.swift */; };
 		914F229D2149C8F000ED58E6 /* BiometricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F229C2149C8F000ED58E6 /* BiometricsService.swift */; };
 		914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */; };
+		914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */; };
 		9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */; };
 		9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */; };
 		9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */; };
@@ -97,6 +98,7 @@
 		914F22992149C0F600ED58E6 /* PincodeEnterStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeEnterStatus.swift; sourceTree = "<group>"; };
 		914F229C2149C8F000ED58E6 /* BiometricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsService.swift; sourceTree = "<group>"; };
 		914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterPincodeViewController.xib; sourceTree = "<group>"; };
+		914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPincodeFromCases.swift; sourceTree = "<group>"; };
 		9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAdditionMode.swift; sourceTree = "<group>"; };
 		9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentViewController.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 			children = (
 				914F22942149A24C00ED58E6 /* PincodeCreationStatus.swift */,
 				914F22992149C0F600ED58E6 /* PincodeEnterStatus.swift */,
+				914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */,
 			);
 			path = Pincode;
 			sourceTree = "<group>";
@@ -698,6 +701,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
+				914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,

@@ -154,7 +154,9 @@ class AppController {
                                 let controller = self.goToApp()
                                 window.rootViewController = controller
                                 window.makeKeyAndVisible()
-                                showErrorAlert(for: controller, error: error)
+                                showErrorAlert(for: controller, error: error, completion: {
+                                    
+                                })
                             case .Success(let intermediate):
                                 let controller = SendArbitraryTransactionViewController(params: params, transactionInfo: TransactionInfo(contractAddress: contractAddress.address, transactionIntermediate: intermediate, methodName: methodName))
                                 window.rootViewController = controller

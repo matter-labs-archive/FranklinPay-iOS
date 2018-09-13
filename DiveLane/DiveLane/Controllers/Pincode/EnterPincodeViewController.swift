@@ -8,11 +8,27 @@
 
 import UIKit
 import LocalAuthentication
+import web3swift
 
 class EnterPincodeViewController: PincodeViewController {
     
     var pincode: String = ""
     var status: pincodeEnterStatus = .enter
+    
+    var fromCase: EnterPincodeFromCases?
+    var data: [String:Any]?
+    var password: String?
+    var isFromDeepLink: Bool = false
+    
+    var transactionService = TransactionsService()
+    
+    convenience init(from: EnterPincodeFromCases, for data: [String:Any], withPassword: String, isFromDeepLink: Bool) {
+        self.init()
+        fromCase = from
+        self.data = data
+        self.password = withPassword
+        self.isFromDeepLink = isFromDeepLink
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,8 +66,8 @@ class EnterPincodeViewController: PincodeViewController {
     
     func checkPin(_ passcode: String) -> Bool {
         do {
-            let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName,
-                                                    account: "THEMATTER",
+            let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
+                                                    account: "pincode",
                                                     accessGroup: KeychainConfiguration.accessGroup)
             let keychainPincode = try pincodeItem.readPassword()
             return pincode == keychainPincode
@@ -61,8 +77,55 @@ class EnterPincodeViewController: PincodeViewController {
     }
     
     func enter() {
-        DispatchQueue.main.async {
-           
+        
+        switch fromCase ?? .enterWallet {
+        case .transaction:
+            let transactionData = transactionService.getDataForTransaction(dict: data!)
+            send(with: transactionData)
+        default:
+            let startViewController = AppController().goToApp()
+            startViewController.view.backgroundColor = UIColor.white
+            UIApplication.shared.keyWindow?.rootViewController = startViewController
+        }
+    }
+    
+    func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
+        transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+            switch result {
+            case .Success(let res):
+                CurrentToken.currentToken = nil
+                if (self?.isFromDeepLink)! {
+                    showSuccessAlert(for: self!, completion: {
+                        let startViewController = AppController().goToApp()
+                        startViewController.view.backgroundColor = UIColor.white
+                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+                    })
+                } else {
+                    showSuccessAlert(for: self!, completion: {
+                        let startViewController = AppController().goToApp()
+                        startViewController.view.backgroundColor = UIColor.white
+                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+                        //self?.navigationController?.popViewController(animated: true)
+                    })
+                }
+
+            case .Error(let error):
+                var valueToSend = ""
+                if let error = error as? Web3Error {
+                    switch error {
+                    case .nodeError(let text):
+                        valueToSend = text
+                    default:
+                        break
+                    }
+                }
+                print("\(error)")
+                showErrorAlert(for: self!, error: error, completion: {
+                    let startViewController = AppController().goToApp()
+                    startViewController.view.backgroundColor = UIColor.white
+                    UIApplication.shared.keyWindow?.rootViewController = startViewController
+                })
+            }
         }
     }
     
