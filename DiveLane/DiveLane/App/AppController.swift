@@ -62,14 +62,14 @@ class AppController {
         nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"user"), tag: 1)
         
         let nav2 = UINavigationController()
-        let second = SettingsViewController(nibName: nil, bundle: nil)
-        second.title = "Settings"
-        nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
         nav2.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
         nav2.navigationBar.tintColor = UIColor.white
         nav2.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         nav2.navigationBar.barStyle = .black
+        let second = SettingsViewController(nibName: nil, bundle: nil)
+        second.title = "Settings"
+        nav2.viewControllers = [second]
         
         let tabs = UITabBarController()
         tabs.viewControllers = [nav1, nav2]

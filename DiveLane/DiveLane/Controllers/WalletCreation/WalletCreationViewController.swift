@@ -149,28 +149,28 @@ class WalletCreationViewController: UIViewController {
         switch additionMode {
         case .createWallet:
             //Create new wallet
-            keysService.createNewWallet(withName: self.walletNameTextField.text,
-                                        password: password)
-            { [weak self] (wallet, error) in
-                DispatchQueue.main.async {
-                    self?.animation.waitAnimation(isEnabled: false,
-                                                  on: (self?.view)!)
-                }
-                if let error = error {
-                    showErrorAlert(for: self!, error: error, completion: {
-                        
-                    })
-                } else {
-                    
-                    switch isAtLeastOneWalletExists {
-                    case true:
-                        self?.savingWallet(wallet: wallet)
-                    case false:
-                        self?.addPincode(toWallet: wallet, with: password)
-                    }
-                }
-            }
-            //showChooseAlert()
+//            keysService.createNewWallet(withName: self.walletNameTextField.text,
+//                                        password: password)
+//            { [weak self] (wallet, error) in
+//                DispatchQueue.main.async {
+//                    self?.animation.waitAnimation(isEnabled: false,
+//                                                  on: (self?.view)!)
+//                }
+//                if let error = error {
+//                    showErrorAlert(for: self!, error: error, completion: {
+//
+//                    })
+//                } else {
+//
+//                    switch isAtLeastOneWalletExists {
+//                    case true:
+//                        self?.savingWallet(wallet: wallet)
+//                    case false:
+//                        self?.addPincode(toWallet: wallet, with: password)
+//                    }
+//                }
+//            }
+            showChooseAlert(withPassword: password)
             
         default:
             //Import wallet
@@ -255,30 +255,33 @@ class WalletCreationViewController: UIViewController {
         }
     }
     
-    func showChooseAlert() {
+    func showChooseAlert(withPassword: String) {
+        let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
         let alertController = UIAlertController(title: "Wallet type", message: "How would you like to create your wallet?", preferredStyle: .alert)
-        let actionMnemonics = UIAlertAction(title: "Mnemonics", style: .default) { (_) in
-            let mnemonicsViewController = MnemonicsViewController(name: self.walletNameTextField.text!, password: self.passwordTextField.text!)
-            self.navigationController?.pushViewController(mnemonicsViewController, animated: true)
+        let actionMnemonics = UIAlertAction(title: "Mnemonics", style: .default) { [weak self] (_) in
+            let mnemonicsViewController = MnemonicsViewController(name: (self?.walletNameTextField.text!)!, password: withPassword)
+            self?.navigationController?.pushViewController(mnemonicsViewController, animated: true)
         }
         
-        let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { _ in
-            self.keysService.createNewWallet(withName: self.walletNameTextField.text,
-                                             password: self.passwordTextField.text!)
+        let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { [weak self] _ in
+            self?.keysService.createNewWallet(withName: self?.walletNameTextField.text,
+                                        password: withPassword)
             { [weak self] (wallet, error) in
                 DispatchQueue.main.async {
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
                 }
                 if let error = error {
-                    showErrorAlert(for: self!, error: error)
+                    showErrorAlert(for: self!, error: error, completion: {
+                        
+                    })
                 } else {
-                    let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
+                    
                     switch isAtLeastOneWalletExists {
                     case true:
                         self?.savingWallet(wallet: wallet)
                     case false:
-                        self?.addPincode(toWallet: wallet)
+                        self?.addPincode(toWallet: wallet, with: withPassword)
                     }
                 }
             }
@@ -350,7 +353,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
             }
         default:
             if UserDefaults.standard.bool(forKey: "atLeastOneWalletExists") {
-                if additionMode! == .importWallet {
+                if additionMode == .importWallet {
                     if !futureString.isEmpty && !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
                         enterButton.isEnabled = true
                     } else {
@@ -363,7 +366,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
                 }
                 
             } else {
-                if additionMode! == .importWallet {
+                if additionMode == .importWallet {
                     if !futureString.isEmpty && passwordTextField.text == repeatPasswordTextField.text &&
                         !(passwordTextField.text?.isEmpty ?? true) &&
                         !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
