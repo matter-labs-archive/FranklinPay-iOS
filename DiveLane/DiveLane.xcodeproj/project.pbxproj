@@ -67,6 +67,7 @@
 		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091510214AA58100C8B408 /* MnemonicsViewController.swift */; };
 		B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091511214AA58100C8B408 /* MnemonicsViewController.xib */; };
+		B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091516214AB04800C8B408 /* WalletImportMode.swift */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
@@ -136,6 +137,7 @@
 		B209150D214A659500C8B408 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		B2091510214AA58100C8B408 /* MnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsViewController.swift; sourceTree = "<group>"; };
 		B2091511214AA58100C8B408 /* MnemonicsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicsViewController.xib; sourceTree = "<group>"; };
+		B2091516214AB04800C8B408 /* WalletImportMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletImportMode.swift; sourceTree = "<group>"; };
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */,
+				B2091516214AB04800C8B408 /* WalletImportMode.swift */,
 			);
 			path = WalletCreation;
 			sourceTree = "<group>";
@@ -653,6 +656,7 @@
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
 				9197F3162143FD4100C358AA /* NetworkService.swift in Sources */,
 				9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */,
+				B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */,
 				91B6A7CA214369D60033A045 /* GlobalTODO.swift in Sources */,
 				91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */,
 				9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */,

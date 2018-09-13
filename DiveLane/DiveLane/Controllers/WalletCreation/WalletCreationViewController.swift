@@ -21,7 +21,8 @@ class WalletCreationViewController: UIViewController {
     @IBOutlet weak var qrCodeButton: UIButton!
     @IBOutlet weak var walletNameTextField: UITextField!
     
-    var additionMode: WalletAdditionMode?
+    var additionMode: WalletAdditionMode
+    var importMode: WalletImportMode?
     
     let keysService: KeysService = KeysService()
     let localStorage = LocalDatabase()
@@ -35,17 +36,31 @@ class WalletCreationViewController: UIViewController {
         return QRCodeReaderViewController(builder: builder)
     }()
     
-    convenience init(additionType: WalletAdditionMode) {
-        self.init()
+    init(additionType: WalletAdditionMode, importType: WalletImportMode?) {
         additionMode = additionType
+        importMode = importType
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = additionMode?.title()
+        switch importMode {
+        case .mnemonics?:
+            enterPrivateKeyTextField.placeholder = "Enter mnemonics"
+            qrCodeButton.isHidden = true
+        case .privateKey?:
+            enterPrivateKeyTextField.placeholder = "Enter Private Key"
+        default:
+            print("Creation")
+        }
+        self.title = additionMode.title()
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.hideKeyboardWhenTappedAround()
-        enterButton.setTitle(additionMode?.title(), for: .normal)
+        enterButton.setTitle(additionMode.title(), for: .normal)
         enterButton.isEnabled = false
         enterButton.alpha = 0.5
         passwordsDontMatch.alpha = 0
@@ -75,7 +90,6 @@ class WalletCreationViewController: UIViewController {
         }
         passwordsDontMatch.alpha = 0
         
-        guard let additionMode = additionMode else {return}
         switch additionMode {
         case .createWallet:
             //Create new wallet
@@ -83,18 +97,32 @@ class WalletCreationViewController: UIViewController {
             
         default:
             //Import wallet
-            keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text, key: enterPrivateKeyTextField.text!, password: passwordTextField.text!) { [unowned self] (wallet, error) in
-                if let error = error {
-                    showErrorAlert(for: self, error: error)
-                    return
-                } else {
-                    guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
+            guard let importMode = importMode else { return }
+            
+            switch importMode {
+            case .mnemonics:
+                keysService.createNewHDWallet(withName: walletNameTextField.text!, password: enterPrivateKeyTextField.text!, mnemonics: enterPrivateKeyTextField.text!) { (keyWalletModel, error) in
+                    if let error = error {
+                        print(error)
+                    } else {
+                        self.savingWallet(wallet: keyWalletModel)
+                    }
+                }
+            case .privateKey:
+                keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text, key: enterPrivateKeyTextField.text!, password: passwordTextField.text!) { [unowned self] (wallet, error) in
+                    if let error = error {
                         showErrorAlert(for: self, error: error)
                         return
+                    } else {
+                        guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
+                            showErrorAlert(for: self, error: error)
+                            return
+                        }
+                        self.savingWallet(wallet: wallet)
                     }
-                    self.savingWallet(wallet: wallet)
                 }
             }
+            
         }
         
     }
@@ -132,7 +160,14 @@ class WalletCreationViewController: UIViewController {
         }
         alertController.addAction(actionMnemonics)
         alertController.addAction(actionPrivateKey)
-        self.present(alertController, animated: true, completion: nil)
+        self.present(alertController, animated: true) {
+            alertController.view.superview?.isUserInteractionEnabled = true
+            alertController.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
+        }
+    }
+    
+    @objc func alertControllerBackgroundTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

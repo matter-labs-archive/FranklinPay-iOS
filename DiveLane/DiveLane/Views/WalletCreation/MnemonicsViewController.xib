@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Mnemonics" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jMQ-at-SMa">
-                    <rect key="frame" x="20" y="160" width="335" height="345"/>
+                    <rect key="frame" x="20" y="160" width="335" height="325"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dGh-a5-0Ck">
-                    <rect key="frame" x="40" y="565" width="295" height="36"/>
+                    <rect key="frame" x="40" y="545" width="295" height="36"/>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="36" id="fz8-Wq-LIP"/>
@@ -51,7 +51,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w0Y-mh-XkA">
-                    <rect key="frame" x="40" y="611" width="295" height="36"/>
+                    <rect key="frame" x="40" y="591" width="295" height="36"/>
                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                     <state key="normal" title="Create wallet">
@@ -72,7 +72,7 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="jMQ-at-SMa" secondAttribute="trailing" constant="20" id="J00-v9-bnX"/>
                 <constraint firstItem="w0Y-mh-XkA" firstAttribute="height" secondItem="dGh-a5-0Ck" secondAttribute="height" id="coU-rg-zyY"/>
                 <constraint firstItem="jMQ-at-SMa" firstAttribute="top" secondItem="Rn8-R9-Gp9" secondAttribute="bottom" id="ctA-AF-zBa"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="w0Y-mh-XkA" secondAttribute="bottom" constant="20" id="hCi-bJ-i3K"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="w0Y-mh-XkA" secondAttribute="bottom" constant="40" id="hCi-bJ-i3K"/>
                 <constraint firstItem="Rn8-R9-Gp9" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="80" id="jGD-ah-E7P"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="dGh-a5-0Ck" secondAttribute="trailing" constant="40" id="lyB-Qj-9ou"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Rn8-R9-Gp9" secondAttribute="trailing" constant="20" id="pdv-g8-5to"/>
