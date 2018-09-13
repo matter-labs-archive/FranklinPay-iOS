@@ -22,6 +22,7 @@ protocol IKeysService {
                          password: String,
                          completion: @escaping (KeyWalletModel?, Error?) -> Void)
     func getWalletPrivateKey(password: String) -> String?
+    func getPrivateKey(forWallet wallet: KeyWalletModel, password: String) -> String?
 }
 
 class KeysService: IKeysService {
@@ -104,6 +105,17 @@ class KeysService: IKeysService {
         do {
             let data = try keystoreManager().UNSAFE_getPrivateKeyData(password: password, account: EthereumAddress((selectedWallet()?.address)!)!)
             return data.toHexString()
+        } catch {
+            print(error)
+            return nil
+        }
+    }
+    
+    public func getPrivateKey(forWallet wallet: KeyWalletModel, password: String) -> String? {
+        do {
+            guard let ethereumAddress = EthereumAddress(wallet.address) else { return nil }
+            let pkData = try keystoreManager().UNSAFE_getPrivateKeyData(password: password, account: ethereumAddress)
+            return pkData.toHexString()
         } catch {
             print(error)
             return nil
