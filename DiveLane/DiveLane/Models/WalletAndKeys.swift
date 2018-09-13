@@ -12,11 +12,13 @@ struct KeyWalletModel {
     let address: String
     let data: Data?
     let name: String
+    let isHD: Bool
     
     static func fromCoreData(crModel: KeyWallet) -> KeyWalletModel {
         let model = KeyWalletModel(address: crModel.address ?? "",
                                    data: crModel.data,
-                                   name: crModel.name ?? "")
+                                   name: crModel.name ?? "",
+                                   isHD: crModel.isHD)
         return model
     }
 }
