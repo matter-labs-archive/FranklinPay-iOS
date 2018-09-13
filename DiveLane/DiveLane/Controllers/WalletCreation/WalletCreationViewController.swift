@@ -76,14 +76,40 @@ class WalletCreationViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
     
-    func addPincode(toWallet: KeyWalletModel?) {
+    func addPincode(toWallet: KeyWalletModel?, with password: String) {
         guard let wallet = toWallet else {
-            showErrorAlert(for: self, error: WalletSavingError.couldNotCreateTheWallet)
+            showErrorAlert(for: self, error: WalletSavingError.couldNotCreateTheWallet, completion: {
+                
+            })
             return
         }
-        let addPincode = CreateWalletPincodeViewController(forWallet: wallet)
+        let addPincode = CreateWalletPincodeViewController(forWallet: wallet, with: password)
         self.navigationController?.pushViewController(addPincode, animated: true)
         
+    }
+    
+    func checkExistingPassword() -> String {
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
+                                                   account: "password",
+                                                   accessGroup: KeychainConfiguration.accessGroup)
+            let keychainPassword = try passwordItem.readPassword()
+            return keychainPassword
+        } catch {
+//            fatalError("Error reading password from keychain - \(error)")
+            return passwordTextField.text ?? ""
+        }
+    }
+    
+    func createPassword() {
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
+                                                   account: "password",
+                                                   accessGroup: KeychainConfiguration.accessGroup)
+            try passwordItem.savePassword(passwordTextField.text ?? "")
+        } catch {
+            fatalError("Error updating keychain - \(error)")
+        }
     }
     
     @IBAction func addWalletButtonTapped(_ sender: Any) {
@@ -94,6 +120,7 @@ class WalletCreationViewController: UIViewController {
         passwordsDontMatch.alpha = 0
         
         let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
+        let password = isAtLeastOneWalletExists ? checkExistingPassword() : (passwordTextField.text ?? "")
         
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
@@ -106,21 +133,23 @@ class WalletCreationViewController: UIViewController {
         case .createWallet:
             //Create new wallet
             keysService.createNewWallet(withName: self.walletNameTextField.text,
-                                        password: passwordTextField.text!)
+                                        password: password)
             { [weak self] (wallet, error) in
                 DispatchQueue.main.async {
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
                 }
                 if let error = error {
-                    showErrorAlert(for: self!, error: error)
+                    showErrorAlert(for: self!, error: error, completion: {
+                        
+                    })
                 } else {
                     
                     switch isAtLeastOneWalletExists {
                     case true:
                         self?.savingWallet(wallet: wallet)
                     case false:
-                        self?.addPincode(toWallet: wallet)
+                        self?.addPincode(toWallet: wallet, with: password)
                     }
                 }
             }
@@ -135,11 +164,15 @@ class WalletCreationViewController: UIViewController {
                                                   on: (self?.view)!)
                 }
                 if let error = error {
-                    showErrorAlert(for: self!, error: error)
+                    showErrorAlert(for: self!, error: error, completion: {
+                        
+                    })
                     return
                 } else {
                     guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
-                        showErrorAlert(for: self!, error: error)
+                        showErrorAlert(for: self!, error: error, completion: {
+                            
+                        })
                         return
                     }
                     
@@ -147,7 +180,7 @@ class WalletCreationViewController: UIViewController {
                     case true:
                         self?.savingWallet(wallet: wallet)
                     case false:
-                        self?.addPincode(toWallet: wallet)
+                        self?.addPincode(toWallet: wallet, with: password)
                     }
                 }
             }
@@ -164,7 +197,7 @@ class WalletCreationViewController: UIViewController {
         }
         self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
             if error == nil {
-                print("Wallet imported")
+                self?.createPassword()
                 DispatchQueue.main.async { [weak self] in
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
@@ -175,7 +208,9 @@ class WalletCreationViewController: UIViewController {
                     self?.present(tabViewController, animated: true, completion: nil)
                 })
             } else {
-                showErrorAlert(for: self!, error: error)
+                showErrorAlert(for: self!, error: error, completion: {
+                    
+                })
             }
         }
     }

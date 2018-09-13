@@ -22,10 +22,12 @@ class CreateWalletPincodeViewController: PincodeViewController {
     //var newWallet: Bool = false
     
     var wallet: KeyWalletModel?
+    var password: String?
     
-    convenience init (forWallet: KeyWalletModel) {
+    convenience init (forWallet: KeyWalletModel, with password: String) {
         self.init()
         wallet = forWallet
+        self.password = password
     }
     
     override func viewDidLoad() {
@@ -87,11 +89,22 @@ class CreateWalletPincodeViewController: PincodeViewController {
         }
     }
     
+    func createPassword() {
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
+                                                    account: "password",
+                                                    accessGroup: KeychainConfiguration.accessGroup)
+            try passwordItem.savePassword(password ?? "")
+        } catch {
+            fatalError("Error updating keychain - \(error)")
+        }
+    }
+    
     func createWallet() {
         UserDefaults.standard.set(true, forKey: "atLeastOneWalletExists")
         do {
-            let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceName,
-                                                    account: "THEMATTER",
+            let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
+                                                    account: "pincode",
                                                     accessGroup: KeychainConfiguration.accessGroup)
             try pincodeItem.savePassword(pincode)
         } catch {
@@ -112,7 +125,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
         }
         self.localStorage.saveWallet(wallet: self.wallet) { [weak self] (error) in
             if error == nil {
-                print("Wallet imported")
+                self?.createPassword()
                 DispatchQueue.main.async { [weak self] in
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
@@ -123,7 +136,9 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     self?.present(tabViewController, animated: true, completion: nil)
                 })
             } else {
-                showErrorAlert(for: self!, error: error)
+                showErrorAlert(for: self!, error: error, completion: {
+                    
+                })
             }
         }
     }

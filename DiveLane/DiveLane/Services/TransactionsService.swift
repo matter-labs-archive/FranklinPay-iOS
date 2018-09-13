@@ -31,14 +31,17 @@ protocol ITransactionsService {
                                          completion: @escaping (Result<TransactionIntermediate>) -> Void)
     
     func sendToContract(transaction: TransactionIntermediate,
-                        with password: String,
+                        with password: String?,
                         options: Web3Options?,
                         completion: @escaping (Result<TransactionSendingResult>) -> Void)
     
     func sendToken(transaction: TransactionIntermediate,
-                   with password: String,
+                   with password: String?,
                    options: Web3Options?,
                    completion: @escaping (Result<TransactionSendingResult>) -> Void)
+    
+    func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate,
+        options: Web3Options)
     
 }
 
@@ -237,11 +240,11 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToContract(transaction: TransactionIntermediate,
-                               with password: String,
+                               with password: String? = "BANKEXFOUNDATION",
                                options: Web3Options? = nil,
                                completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = transaction.send(password: password,
+            let result = transaction.send(password: password ?? "BANKEXFOUNDATION",
                                           options: transaction.options)
             if let error = result.error {
                 DispatchQueue.main.async {
@@ -262,11 +265,11 @@ class TransactionsService: ITransactionsService {
     }
     
     public func sendToken(transaction: TransactionIntermediate,
-                          with password: String,
+                          with password: String? = "BANKEXFOUNDATION",
                           options: Web3Options? = nil,
                           completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
-            let result = transaction.send(password: password,
+            let result = transaction.send(password: password ?? "BANKEXFOUNDATION",
                                           options: options)
             if let error = result.error {
                 DispatchQueue.main.async {
@@ -292,6 +295,20 @@ class TransactionsService: ITransactionsService {
             return nil
         }
         return web3.contract(Web3.Utils.erc20ABI, at: ethAddress)
+    }
+    
+    public func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate, options: Web3Options) {
+        let token  = CurrentToken.currentToken
+        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
+        var options = Web3Options.defaultOptions()
+        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
+        let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))
+        options.gasPrice = gp
+        let transaction = dict["transaction"] as! TransactionIntermediate
+        options.from = transaction.options?.from
+        options.to = transaction.options?.to
+        options.value = transaction.options?.value
+        return (transaction: transaction, options: options)
     }
 }
 
