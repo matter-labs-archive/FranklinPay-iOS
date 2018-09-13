@@ -214,7 +214,7 @@ class WalletCreationViewController: UIViewController {
                 if let error = error {
                     showErrorAlert(for: self!, error: error)
                 } else {
-                    
+                    let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
                     switch isAtLeastOneWalletExists {
                     case true:
                         self?.savingWallet(wallet: wallet)
