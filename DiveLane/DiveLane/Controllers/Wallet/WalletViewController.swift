@@ -28,7 +28,6 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Wallet"
         self.tabBarController?.tabBar.selectedItem?.title = nil
         
     }
@@ -37,8 +36,10 @@ class WalletViewController: UIViewController {
         
         listOfTokens.removeAll()
         getTokensList()
-        
+
+        self.title = "Wallet"
         self.currentWallet = KeysService().selectedWallet()?.address
+        self.tabBarController?.tabBar.selectedItem?.title = nil
         
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self

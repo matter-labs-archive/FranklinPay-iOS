@@ -33,6 +33,8 @@ class SendSettingsViewController: UIViewController {
     var amountInString: String?
     var destinationAddress: String?
     
+    let animation = AnimationController()
+    
     convenience init(walletName: String,
                      tokenBalance: String,
                      walletAddress: String) {
@@ -61,14 +63,14 @@ class SendSettingsViewController: UIViewController {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
                                              address: KeysService().selectedWallet()?.address ?? "")
             { (result, error) in
-                DispatchQueue.main.async {
-                    self.tokenBalance = result ?? ""
+                DispatchQueue.main.async { [weak self] in
+                    self?.tokenBalance = result ?? ""
                 }
             }
         } else {
             Web3SwiftService().getETHbalance() { (result, error) in
-                DispatchQueue.main.async {
-                    self.tokenBalance = result ?? ""
+                DispatchQueue.main.async { [weak self] in
+                    self?.tokenBalance = result ?? ""
                 }
             }
         }
@@ -88,8 +90,11 @@ class SendSettingsViewController: UIViewController {
         
         closeView.isHidden = !self.isFromDeepLink
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         self.title = "Transaction"
-        
     }
     
     // MARK: QR Code scan
@@ -115,19 +120,19 @@ class SendSettingsViewController: UIViewController {
         options.from = transaction.options?.from
         options.to = transaction.options?.to
         options.value = transaction.options?.value
-        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { (result) in
+        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { [weak self] (result) in
             switch result {
             case .Success(let res):
                 CurrentToken.currentToken = nil
-                if self.isFromDeepLink{
-                    showSuccessAlert(for: self, completion: {
+                if (self?.isFromDeepLink)!{
+                    showSuccessAlert(for: self!, completion: {
                         let startViewController = AppController().goToApp()
                         startViewController.view.backgroundColor = UIColor.white
                         UIApplication.shared.keyWindow?.rootViewController = startViewController
                     })
                 } else {
-                    showSuccessAlert(for: self, completion: {
-                        self.navigationController?.popViewController(animated: true)
+                    showSuccessAlert(for: self!, completion: {
+                        self?.navigationController?.popViewController(animated: true)
                     })
                 }
                 
@@ -142,7 +147,7 @@ class SendSettingsViewController: UIViewController {
                     }
                 }
                 print("\(error)")
-                showErrorAlert(for: self, error: error)
+                showErrorAlert(for: self!, error: error)
             }
         }
     }
@@ -160,14 +165,14 @@ class SendSettingsViewController: UIViewController {
             textField.isSecureTextEntry = true
             textField.placeholder = "Enter your password"
         }
-        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
+        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { [weak self] (alertAction) in
             let passwordText = alert.textFields![0].text!
             if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
                 
-                self.send(withPassword: passwordText)
+                self?.send(withPassword: passwordText)
                 
             } else {
-                showErrorAlert(for: self, error: SendErrors.wrongPassword)
+                showErrorAlert(for: self!, error: SendErrors.wrongPassword)
             }
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
@@ -188,22 +193,22 @@ class SendSettingsViewController: UIViewController {
         }
         
         if CurrentToken.currentToken?.address == "" {
-            TransactionsService().prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { (result) in
+            TransactionsService().prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
-                    guard let gasPrice = self.gasPriceTextField.text else { return }
-                    guard let gasLimit = self.gasLimitTextField.text else { return }
-                    guard let name = self.walletName else { return }
+                    guard let gasPrice = self?.gasPriceTextField.text else { return }
+                    guard let gasLimit = self?.gasLimitTextField.text else { return }
+                    guard let name = self?.walletName else { return }
                     let dict:[String:Any] = [
                         "gasPrice":gasPrice,
                         "gasLimit":gasLimit,
                         "transaction":transaction,
                         "amount": amount,
                         "name": name,
-                        "fromAddress": self.walletAddress!,
+                        "fromAddress": self!.walletAddress!,
                         "toAddress": destinationAddress]
                     
-                    self.sendFunds(dict: dict, enteredPassword: withPassword)
+                    self?.sendFunds(dict: dict, enteredPassword: withPassword)
                     
                 case .Error(let error):
                     var textToSend = ""
@@ -216,26 +221,26 @@ class SendSettingsViewController: UIViewController {
                         }
                     }
                     
-                    showErrorAlert(for: self, error: error)
+                    showErrorAlert(for: self!, error: error)
                 }
             }
         } else {
-            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (CurrentToken.currentToken?.address)!) { (result) in
+            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (CurrentToken.currentToken?.address)!) { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
-                    guard let gasPrice = self.gasPriceTextField.text else { return }
-                    guard let gasLimit = self.gasLimitTextField.text else { return }
-                    guard let name = self.walletName else { return }
+                    guard let gasPrice = self?.gasPriceTextField.text else { return }
+                    guard let gasLimit = self?.gasLimitTextField.text else { return }
+                    guard let name = self?.walletName else { return }
                     let dict:[String:Any] = [
                         "gasPrice":gasPrice,
                         "gasLimit":gasLimit,
                         "transaction":transaction,
                         "amount":amount,
                         "name": name,
-                        "fromAddress": self.walletAddress!,
+                        "fromAddress": self!.walletAddress!,
                         "toAddress": destinationAddress]
                     
-                    self.sendFunds(dict: dict, enteredPassword: withPassword)
+                    self?.sendFunds(dict: dict, enteredPassword: withPassword)
                 case .Error(let error):
                     var textToSend = ""
                     if let error = error as? SendErrors {
@@ -247,7 +252,7 @@ class SendSettingsViewController: UIViewController {
                         }
                     }
                     
-                    showErrorAlert(for: self, error: error)
+                    showErrorAlert(for: self!, error: error)
                 }
             }
         }

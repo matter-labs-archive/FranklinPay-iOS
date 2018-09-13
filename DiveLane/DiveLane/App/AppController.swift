@@ -52,6 +52,10 @@ class AppController {
     func goToApp() -> UITabBarController {
         
         let nav1 = UINavigationController()
+        nav1.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
+        nav1.navigationBar.tintColor = UIColor.white
+        nav1.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        nav1.navigationBar.barStyle = .black
         let first = WalletViewController(nibName: nil, bundle: nil)
         first.title = "Wallet"
         nav1.viewControllers = [first]
@@ -62,6 +66,10 @@ class AppController {
         second.title = "Settings"
         nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
+        nav2.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
+        nav2.navigationBar.tintColor = UIColor.white
+        nav2.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        nav2.navigationBar.barStyle = .black
         
         let tabs = UITabBarController()
         tabs.viewControllers = [nav1, nav2]

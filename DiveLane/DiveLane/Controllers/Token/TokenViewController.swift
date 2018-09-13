@@ -35,25 +35,68 @@ class TokenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Token"
         qrImageView.image = generateQRCode(from: walletAddress ?? "")
         addressLabel.text = walletAddress?.lowercased()
-        tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
+        tokenNameBalanceLabel.text = "Loading..."
         copiedLabel.alpha = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.title = "Token"
+        checkBalanceAndEnableSend()
+    }
+    
+    func checkBalanceAndEnableSend() {
         guard let balance = Float(tokenBalance!) else {
+            tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
             sendTokenButton.isEnabled = false
             sendTokenButton.alpha = 0.5
             return
         }
         guard balance > 0 else {
+            tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
             sendTokenButton.isEnabled = false
             sendTokenButton.alpha = 0.5
             return
         }
+        tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
+        sendTokenButton.isEnabled = true
+        sendTokenButton.alpha = 1.0
+    }
+    
+    func getBalance() {
+        if CurrentToken.currentToken == ERC20TokenModel(name: "Ether",
+                                                        address: "",
+                                                        decimals: "18",
+                                                        symbol: "Eth")
+        {
+            Web3SwiftService().getETHbalance()
+                { [weak self] (result, error) in
+                    if error == nil && result != nil {
+                        self?.tokenBalance = result!
+                        self?.checkBalanceAndEnableSend()
+                    } else {
+                        self?.getBalance()
+                    }
+            }
+        } else {
+            Web3SwiftService().getERCBalance(for: (CurrentToken.currentToken?.address) ?? "",
+                                             address: walletAddress ?? "")
+            { [weak self] (result, error) in
+                if error == nil && result != nil {
+                    self?.tokenBalance = result!
+                    self?.checkBalanceAndEnableSend()
+                } else {
+                    self?.getBalance()
+                }
+            }
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.getBalance()
     }
     
     func generateQRCode(from string: String?) -> UIImage? {
