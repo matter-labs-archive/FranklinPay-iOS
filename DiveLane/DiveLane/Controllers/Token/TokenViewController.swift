@@ -35,7 +35,6 @@ class TokenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Token"
         qrImageView.image = generateQRCode(from: walletAddress ?? "")
         addressLabel.text = walletAddress?.lowercased()
         tokenNameBalanceLabel.text = "Loading..."
@@ -44,6 +43,7 @@ class TokenViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.title = "Token"
         checkBalanceAndEnableSend()
     }
     

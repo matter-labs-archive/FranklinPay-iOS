@@ -44,8 +44,6 @@ class WalletCreationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = additionMode?.title()
-        self.navigationController?.navigationBar.prefersLargeTitles = true
         self.hideKeyboardWhenTappedAround()
         enterButton.setTitle(additionMode?.title(), for: .normal)
         enterButton.isEnabled = false
@@ -55,11 +53,19 @@ class WalletCreationViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.title = additionMode?.title()
         self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
         if additionMode == .createWallet {
             enterPrivateKeyTextField.isHidden = true
             qrCodeButton.isHidden = true
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
     
     @IBAction func qrScanTapped(_ sender: Any) {
@@ -70,6 +76,16 @@ class WalletCreationViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
     
+    func addPincode(toWallet: KeyWalletModel?) {
+        guard let wallet = toWallet else {
+            showErrorAlert(for: self, error: WalletSavingError.couldNotCreateTheWallet)
+            return
+        }
+        let addPincode = CreateWalletPincodeViewController(forWallet: wallet)
+        self.navigationController?.pushViewController(addPincode, animated: true)
+        
+    }
+    
     @IBAction func addWalletButtonTapped(_ sender: Any) {
         guard passwordTextField.text == repeatPasswordTextField.text else {
             passwordsDontMatch.alpha = 1
@@ -77,12 +93,12 @@ class WalletCreationViewController: UIViewController {
         }
         passwordsDontMatch.alpha = 0
         
-        DispatchQueue.main.async {
-            self.animation.waitAnimation(isEnabled: true,
+        DispatchQueue.main.async { [weak self] in
+            self?.animation.waitAnimation(isEnabled: true,
                                          notificationText: "Creating wallet",
-                                         on: self.view)
+                                         on: (self?.view)!)
         }
-        
+
         guard let additionMode = additionMode else {return}
         switch additionMode {
         case .createWallet:
@@ -97,7 +113,9 @@ class WalletCreationViewController: UIViewController {
                 if let error = error {
                     showErrorAlert(for: self!, error: error)
                 } else {
-                    self?.savingWallet(wallet: wallet)
+                    
+                    self?.addPincode(toWallet: wallet)
+                    //self?.savingWallet(wallet: wallet)
                 }
             }
         default:
@@ -118,34 +136,36 @@ class WalletCreationViewController: UIViewController {
                         showErrorAlert(for: self!, error: error)
                         return
                     }
-                    self?.savingWallet(wallet: wallet)
+                    
+                    self?.addPincode(toWallet: wallet)
+                    //self?.savingWallet(wallet: wallet)
                 }
             }
         }
         
     }
     
-    func savingWallet(wallet: KeyWalletModel?) {
-        DispatchQueue.main.async {
-            self.animation.waitAnimation(isEnabled: true,
-                                         notificationText: "Saving wallet",
-                                         on: self.view)
-        }
-        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
-            if error == nil {
-                print("Wallet imported")
-                DispatchQueue.main.async {
-                    self?.animation.waitAnimation(isEnabled: false,
-                                                  on: (self?.view)!)
-                }
-                let tabViewController = AppController().goToApp()
-                tabViewController.view.backgroundColor = UIColor.white
-                self?.present(tabViewController, animated: true, completion: nil)
-            } else {
-                showErrorAlert(for: self!, error: error)
-            }
-        }
-    }
+//    func savingWallet(wallet: KeyWalletModel?) {
+//        DispatchQueue.main.async {
+//            self.animation.waitAnimation(isEnabled: true,
+//                                         notificationText: "Saving wallet",
+//                                         on: self.view)
+//        }
+//        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
+//            if error == nil {
+//                print("Wallet imported")
+//                DispatchQueue.main.async {
+//                    self?.animation.waitAnimation(isEnabled: false,
+//                                                  on: (self?.view)!)
+//                }
+//                let tabViewController = AppController().goToApp()
+//                tabViewController.view.backgroundColor = UIColor.white
+//                self?.present(tabViewController, animated: true, completion: nil)
+//            } else {
+//                showErrorAlert(for: self!, error: error)
+//            }
+//        }
+//    }
 }
 
 extension WalletCreationViewController: UITextFieldDelegate {
@@ -261,3 +281,4 @@ extension WalletCreationViewController: QRCodeReaderViewControllerDelegate {
     }
     
 }
+

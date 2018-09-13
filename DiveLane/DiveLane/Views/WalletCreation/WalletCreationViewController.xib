@@ -86,12 +86,18 @@
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-vC-EBo">
                                     <rect key="frame" x="264" y="0.0" width="24" height="36"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="pO5-op-ZQW"/>
+                                    </constraints>
                                     <state key="normal" image="qr"/>
                                     <connections>
                                         <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="2fV-is-Vdm"/>
                                     </connections>
                                 </button>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="BvH-vC-EBo" firstAttribute="leading" secondItem="sEL-uz-4PL" secondAttribute="trailing" constant="15" id="h99-vv-kMM"/>
+                            </constraints>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QIL-j5-LYS">
                             <rect key="frame" x="0.0" y="280" width="288" height="36"/>
