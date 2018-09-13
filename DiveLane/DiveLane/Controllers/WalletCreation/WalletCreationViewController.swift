@@ -49,6 +49,8 @@ class WalletCreationViewController: UIViewController {
         enterButton.isEnabled = false
         enterButton.alpha = 0.5
         passwordsDontMatch.alpha = 0
+        passwordTextField.isHidden = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
+        repeatPasswordTextField.isHidden = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -233,12 +235,21 @@ extension WalletCreationViewController: UITextFieldDelegate {
         
         switch textField {
         case enterPrivateKeyTextField:
-            if passwordTextField.text == repeatPasswordTextField.text &&
-                !(passwordTextField.text?.isEmpty ?? true) &&
-                !futureString.isEmpty {
-                enterButton.isEnabled = true
+            if UserDefaults.standard.bool(forKey: "atLeastOneWalletExists") {
+                if !(walletNameTextField.text?.isEmpty ?? true) &&
+                    !futureString.isEmpty {
+                    enterButton.isEnabled = true
+                } else {
+                    enterButton.isEnabled = false
+                }
             } else {
-                enterButton.isEnabled = false
+                if passwordTextField.text == repeatPasswordTextField.text &&
+                    !(passwordTextField.text?.isEmpty ?? true) &&
+                    !futureString.isEmpty && !(walletNameTextField.text?.isEmpty ?? true) {
+                    enterButton.isEnabled = true
+                } else {
+                    enterButton.isEnabled = false
+                }
             }
         case passwordTextField:
             if !futureString.isEmpty &&
@@ -259,13 +270,36 @@ extension WalletCreationViewController: UITextFieldDelegate {
                 enterButton.isEnabled = false
             }
         default:
-            if passwordTextField.text == repeatPasswordTextField.text &&
-                !(passwordTextField.text?.isEmpty ?? true) &&
-                !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
-                enterButton.isEnabled = true
+            if UserDefaults.standard.bool(forKey: "atLeastOneWalletExists") {
+                if additionMode! == .importWallet {
+                    if !futureString.isEmpty && !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
+                        enterButton.isEnabled = true
+                    } else {
+                        enterButton.isEnabled = false
+                    }
+                } else if !futureString.isEmpty {
+                    enterButton.isEnabled = true
+                } else {
+                    enterButton.isEnabled = false
+                }
+                
             } else {
-                enterButton.isEnabled = false
+                if additionMode! == .importWallet {
+                    if !futureString.isEmpty && passwordTextField.text == repeatPasswordTextField.text &&
+                        !(passwordTextField.text?.isEmpty ?? true) &&
+                        !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
+                        enterButton.isEnabled = true
+                    } else {
+                        enterButton.isEnabled = false
+                    }
+                } else if !futureString.isEmpty {
+                    enterButton.isEnabled = true
+                } else {
+                    enterButton.isEnabled = false
+                }
+                
             }
+            
         }
         
         enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
