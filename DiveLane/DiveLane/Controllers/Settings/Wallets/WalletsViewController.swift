@@ -75,6 +75,7 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell else { return UITableViewCell() }
+        
         cell.configureCell(model: wallets[indexPath.row])
         return cell
     }
