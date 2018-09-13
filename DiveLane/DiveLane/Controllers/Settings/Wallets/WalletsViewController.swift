@@ -38,8 +38,32 @@ class WalletsViewController: UIViewController {
     }
     
     @objc func addButtonTapped() {
-        let addWalletViewController = AddWalletViewController()
+        let addWalletViewController = AddWalletViewController(isNavigationBarNeeded: true)
         self.navigationController?.pushViewController(addWalletViewController, animated: true)
+    }
+    
+    func showAttentionAlert(wallet: KeyWalletModel, indexPath: IndexPath) {
+        let alertController = UIAlertController(title: "Attention!", message: "Are you sure that you want to delete wallet \"\(wallet.name)\"?", preferredStyle: .actionSheet)
+        let acceptAction = UIAlertAction(title: "Yes", style: .destructive) { (_) in
+            self.localDatabase.deleteWallet(wallet: wallet) { (error) in
+                if error == nil {
+                    self.wallets.remove(at: indexPath.row)
+                    if self.wallets.first == nil {
+                        let nav = UINavigationController()
+                        nav.viewControllers = [AddWalletViewController()]
+                        UIApplication.shared.keyWindow?.rootViewController = nav
+                    } else {
+                        self.localDatabase.selectWallet(wallet: self.wallets.first, completion: {
+                            self.tableView.deleteRows(at: [indexPath], with: .left)
+                        })
+                    }
+                }
+            }
+        }
+        let declaneAction = UIAlertAction(title: "No", style: .default) { (_) in }
+        alertController.addAction(acceptAction)
+        alertController.addAction(declaneAction)
+        self.present(alertController, animated: true, completion: nil)
     }
 
 }
@@ -59,6 +83,16 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
             let exportWalletViewController = ExportWalletViewController(model: self.wallets[indexPath.row])
             self.navigationController?.pushViewController(exportWalletViewController, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.showAttentionAlert(wallet: wallets[indexPath.row], indexPath: indexPath)
         }
     }
 }

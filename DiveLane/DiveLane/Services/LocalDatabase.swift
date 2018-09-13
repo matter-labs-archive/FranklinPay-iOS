@@ -16,6 +16,7 @@ protocol ILocalDatabase {
     func deleteWallet(completion: @escaping (Error?)-> Void)
     func getAllWallets() -> [KeyWalletModel]
     func selectWallet(wallet: KeyWalletModel?, completion: @escaping() -> Void)
+    func deleteWallet(wallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
 }
 
 class LocalDatabase: ILocalDatabase {
@@ -113,4 +114,25 @@ class LocalDatabase: ILocalDatabase {
             completion()
         }
     }
+    
+    public func deleteWallet(wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
+        let requestWallet: NSFetchRequest<KeyWallet> = KeyWallet.fetchRequest()
+        requestWallet.predicate = NSPredicate(format: "address = %@", wallet.address)
+        do {
+            let results = try mainContext.fetch(requestWallet)
+            guard let result = results.first else {
+                completion(DataBaseError.noSuchWalletInStorage)
+                return
+            }
+            mainContext.delete(result)
+            try mainContext.save()
+            completion(nil)
+        } catch {
+            completion(error)
+        }
+    }
+}
+
+enum DataBaseError: Error {
+    case noSuchWalletInStorage
 }
