@@ -68,6 +68,14 @@
 		91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */; };
 		B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */; };
 		B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141C214464EF00C8B408 /* ParameterCell.xib */; };
+		B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20914FC214A564500C8B408 /* WalletsViewController.swift */; };
+		B20914FF214A564500C8B408 /* WalletsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20914FD214A564500C8B408 /* WalletsViewController.xib */; };
+		B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091504214A5AD000C8B408 /* WalletCell.swift */; };
+		B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091505214A5AD000C8B408 /* WalletCell.xib */; };
+		B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091508214A60A700C8B408 /* ExportWalletViewController.swift */; };
+		B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091509214A60A700C8B408 /* ExportWalletViewController.xib */; };
+		B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
+		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
@@ -138,6 +146,14 @@
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendArbitraryTransactionViewController.xib; sourceTree = "<group>"; };
 		B209141C214464EF00C8B408 /* ParameterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParameterCell.xib; sourceTree = "<group>"; };
+		B20914FC214A564500C8B408 /* WalletsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsViewController.swift; sourceTree = "<group>"; };
+		B20914FD214A564500C8B408 /* WalletsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletsViewController.xib; sourceTree = "<group>"; };
+		B2091504214A5AD000C8B408 /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
+		B2091505214A5AD000C8B408 /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
+		B2091508214A60A700C8B408 /* ExportWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWalletViewController.swift; sourceTree = "<group>"; };
+		B2091509214A60A700C8B408 /* ExportWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportWalletViewController.xib; sourceTree = "<group>"; };
+		B209150C214A659500C8B408 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
+		B209150D214A659500C8B408 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
@@ -333,6 +349,7 @@
 		9197F31D2144038400C358AA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B2091500214A5A4D00C8B408 /* Wallets */,
 				9197F320214403A400C358AA /* SettingsViewController.xib */,
 				9197F3272144043500C358AA /* SettingsCell.xib */,
 			);
@@ -342,6 +359,7 @@
 		9197F31E2144039000C358AA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				B2091501214A5A9F00C8B408 /* Wallets */,
 				9197F31F214403A400C358AA /* SettingsViewController.swift */,
 				9197F3262144043500C358AA /* SettingsCell.swift */,
 			);
@@ -502,6 +520,28 @@
 			path = AddWallet;
 			sourceTree = "<group>";
 		};
+		B2091500214A5A4D00C8B408 /* Wallets */ = {
+			isa = PBXGroup;
+			children = (
+				B20914FD214A564500C8B408 /* WalletsViewController.xib */,
+				B2091509214A60A700C8B408 /* ExportWalletViewController.xib */,
+				B2091505214A5AD000C8B408 /* WalletCell.xib */,
+				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
+			);
+			path = Wallets;
+			sourceTree = "<group>";
+		};
+		B2091501214A5A9F00C8B408 /* Wallets */ = {
+			isa = PBXGroup;
+			children = (
+				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
+				B20914FC214A564500C8B408 /* WalletsViewController.swift */,
+				B2091508214A60A700C8B408 /* ExportWalletViewController.swift */,
+				B2091504214A5AD000C8B408 /* WalletCell.swift */,
+			);
+			path = Wallets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -566,17 +606,21 @@
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
 				9197F322214403A400C358AA /* SettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
+				B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */,
 				914F228B21499ACC00ED58E6 /* CreateWalletPincodeViewController.xib in Resources */,
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
+				B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */,
+				B20914FF214A564500C8B408 /* WalletsViewController.xib in Resources */,
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
+				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -651,6 +695,7 @@
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
+				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
 				9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */,
@@ -660,11 +705,14 @@
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				914F22862149800800ED58E6 /* AnimationController.swift in Sources */,
+				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
+				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
 				914F22982149BF2400ED58E6 /* EnterPincodeViewController.swift in Sources */,
+				B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,

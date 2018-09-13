@@ -18,7 +18,7 @@ class SettingsCell: UITableViewCell {
         self.param.text = param
         let name: String?
         switch param {
-        case "Network":
+        case "Networks":
             let network = value as! Networks
             switch network {
             case .Mainnet:

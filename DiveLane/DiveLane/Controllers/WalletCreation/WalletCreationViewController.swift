@@ -145,27 +145,22 @@ class WalletCreationViewController: UIViewController {
         
     }
     
-//    func savingWallet(wallet: KeyWalletModel?) {
-//        DispatchQueue.main.async {
-//            self.animation.waitAnimation(isEnabled: true,
-//                                         notificationText: "Saving wallet",
-//                                         on: self.view)
-//        }
-//        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
-//            if error == nil {
-//                print("Wallet imported")
-//                DispatchQueue.main.async {
-//                    self?.animation.waitAnimation(isEnabled: false,
-//                                                  on: (self?.view)!)
-//                }
-//                let tabViewController = AppController().goToApp()
-//                tabViewController.view.backgroundColor = UIColor.white
-//                self?.present(tabViewController, animated: true, completion: nil)
-//            } else {
-//                showErrorAlert(for: self!, error: error)
-//            }
-//        }
-//    }
+
+    func savingWallet(wallet: KeyWalletModel?) {
+        self.localStorage.saveWallet(wallet: wallet) { (error) in
+            if error == nil {
+                print("Wallet imported")
+                self.localStorage.selectWallet(wallet: wallet, completion: {
+                    let tabViewController = AppController().goToApp()
+                    tabViewController.view.backgroundColor = UIColor.white
+                    self.present(tabViewController, animated: true, completion: nil)
+                })
+            } else {
+                showErrorAlert(for: self, error: error)
+            }
+        }
+    }
+  
 }
 
 extension WalletCreationViewController: UITextFieldDelegate {

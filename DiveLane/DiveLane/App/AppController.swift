@@ -43,7 +43,7 @@ class AppController {
     
     func addWallet() -> UINavigationController {
         let nav = UINavigationController()
-        let addWalletViewController = AddWalletViewController(nibName: "AddWalletViewController", bundle: nil)
+        let addWalletViewController = AddWalletViewController()
         nav.viewControllers.append(addWalletViewController)
         
         return nav

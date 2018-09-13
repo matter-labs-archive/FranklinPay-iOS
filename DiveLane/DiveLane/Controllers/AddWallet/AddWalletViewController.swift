@@ -18,10 +18,22 @@ class AddWalletViewController: UIViewController {
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         self.navigationController?.navigationBar.barStyle = .black
     }
+  
+    let isNavigationBarNeeded: Bool
+    
+    
+    init(isNavigationBarNeeded: Bool = false) {
+        self.isNavigationBarNeeded = isNavigationBarNeeded
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = !isNavigationBarNeeded
     }
     
     @IBAction func importWallet(_ sender: UIButton) {

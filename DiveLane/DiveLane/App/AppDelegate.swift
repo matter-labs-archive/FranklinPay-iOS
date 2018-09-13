@@ -57,7 +57,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 func addWallet() -> UINavigationController {
     let nav = UINavigationController()
-    let addWalletViewController = AddWalletViewController(nibName: "AddWalletViewController", bundle: nil)
+    let addWalletViewController = AddWalletViewController()
     //addWalletViewController.title = "Add Wallet"
     nav.viewControllers.append(addWalletViewController)
     
