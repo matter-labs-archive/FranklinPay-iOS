@@ -47,7 +47,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   web3swift:
-    :commit: 77ca6387b1dc59aab33b44cb3d4fa2cd6d717956
+    :commit: 44830839c86de0c6831379d3ba52a13d7c48575b
     :git: https://github.com/matterinc/web3swift
 
 SPEC CHECKSUMS:
