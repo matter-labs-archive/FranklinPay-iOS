@@ -200,9 +200,8 @@ class TransactionsService: ITransactionsService {
                 completion(Result.Success(intermediate))
             }
             
-            return
             //MARK: - Just to check that everything is all right
-            guard let estimatedGas = contract?.method(options: options)?.estimateGas(options: options).value else {
+            guard let _ = contract?.method(options: options)?.estimateGas(options: options).value else {
                 DispatchQueue.main.async {
                     completion(Result.Error(SendErrors.retrievingEstimatedGasError))
                 }
@@ -298,8 +297,8 @@ class TransactionsService: ITransactionsService {
     }
     
     public func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate, options: Web3Options) {
-        let token  = CurrentToken.currentToken
-        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
+        //let token  = CurrentToken.currentToken
+        //let model = ETHTransactionModel(transactionHash: "", from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, isPending: true)
         var options = Web3Options.defaultOptions()
         options.gasLimit = BigUInt(dict["gasLimit"] as! String)
         let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))

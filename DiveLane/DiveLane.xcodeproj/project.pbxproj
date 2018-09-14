@@ -83,6 +83,12 @@
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
+		B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */; };
+		B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF94214BAD730023FC18 /* TransactionsHistoryViewController.swift */; };
+		B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */; };
+		B271CF9B214BAEDB0023FC18 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF99214BAEDB0023FC18 /* TransactionCell.swift */; };
+		B271CF9C214BAEDB0023FC18 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */; };
+		B271CF9E214BB2890023FC18 /* TransactionsHistoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF9D214BB2890023FC18 /* TransactionsHistoryState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -165,6 +171,12 @@
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
+		B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsHistoryService.swift; sourceTree = "<group>"; };
+		B271CF94214BAD730023FC18 /* TransactionsHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsHistoryViewController.swift; sourceTree = "<group>"; };
+		B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionsHistoryViewController.xib; sourceTree = "<group>"; };
+		B271CF99214BAEDB0023FC18 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionCell.xib; sourceTree = "<group>"; };
+		B271CF9D214BB2890023FC18 /* TransactionsHistoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsHistoryState.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -354,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				91B6A7C1214365890033A045 /* Transaction.swift */,
+				B271CF9D214BB2890023FC18 /* TransactionsHistoryState.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -463,6 +476,7 @@
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
 				9197F3152143FD4100C358AA /* NetworkService.swift */,
 				914F228F21499EDD00ED58E6 /* KeychainService.swift */,
+				B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -484,6 +498,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B271CF91214BAD080023FC18 /* Transactions History */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				914F228421497F9200ED58E6 /* Animators */,
 				9197F32B2144210400C358AA /* Networks */,
@@ -501,6 +516,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				B271CF98214BADD00023FC18 /* TransactionsHistory */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
@@ -560,6 +576,24 @@
 				91B6A7D82143B2940033A045 /* Controllers */,
 			);
 			path = "Presentation Layer";
+			sourceTree = "<group>";
+		};
+		B271CF91214BAD080023FC18 /* Transactions History */ = {
+			isa = PBXGroup;
+			children = (
+				B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */,
+				B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */,
+			);
+			path = "Transactions History";
+			sourceTree = "<group>";
+		};
+		B271CF98214BADD00023FC18 /* TransactionsHistory */ = {
+			isa = PBXGroup;
+			children = (
+				B271CF94214BAD730023FC18 /* TransactionsHistoryViewController.swift */,
+				B271CF99214BAEDB0023FC18 /* TransactionCell.swift */,
+			);
+			path = TransactionsHistory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -628,6 +662,7 @@
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
+				B271CF9C214BAEDB0023FC18 /* TransactionCell.xib in Resources */,
 				B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */,
 				914F228B21499ACC00ED58E6 /* CreateWalletPincodeViewController.xib in Resources */,
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
@@ -638,6 +673,7 @@
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
+				B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
@@ -716,6 +752,7 @@
 				B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
+				B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
@@ -727,6 +764,8 @@
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				914F22862149800800ED58E6 /* AnimationController.swift in Sources */,
+				B271CF9E214BB2890023FC18 /* TransactionsHistoryState.swift in Sources */,
+				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
@@ -747,6 +786,7 @@
 				91B6A7CA214369D60033A045 /* GlobalTODO.swift in Sources */,
 				91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */,
 				9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */,
+				B271CF9B214BAEDB0023FC18 /* TransactionCell.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreateWalletPincodeViewController.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,

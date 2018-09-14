@@ -10,12 +10,14 @@ import Foundation
 import web3swift
 
 struct ETHTransactionModel {
+    let transactionHash: String
     let from: String
     let to: String
     let amount: String
     let date: Date
-    let token: ERC20TokenModel
-    let key: HDKey
+    let data: Data?
+    let token: ERC20TokenModel? // nil if it is custom ETH transaction
+    let networkID: Int64
     var isPending = false
 }
 
@@ -29,3 +31,4 @@ enum TransactionType {
     case custom
     case arbitraryMethodWithParams
 }
+

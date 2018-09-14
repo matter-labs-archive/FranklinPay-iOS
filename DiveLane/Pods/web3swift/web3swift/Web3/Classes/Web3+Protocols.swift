@@ -50,7 +50,7 @@ public enum Networks {
         }
     }
     
-    var chainID: BigUInt {
+    public var chainID: BigUInt {
         switch self {
         case .Custom(let networkID): return networkID
         case .Mainnet: return BigUInt(1)
