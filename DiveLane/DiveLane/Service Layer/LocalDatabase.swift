@@ -135,10 +135,10 @@ class LocalDatabase: ILocalDatabase {
     
     public func saveTransactions(transactions: [ETHTransactionModel], forWallet wallet: KeyWalletModel, completion: @escaping(Error?) -> Void) {
         container.performBackgroundTask { (context) in
-            for transaction in transactions {
-                let fr: NSFetchRequest<ETHTransaction> = ETHTransaction.fetchRequest()
-                fr.predicate = NSPredicate(format: "transactionHash = %@", transaction.transactionHash)
-                do {
+            do {
+                for transaction in transactions {
+                    let fr: NSFetchRequest<ETHTransaction> = ETHTransaction.fetchRequest()
+                    fr.predicate = NSPredicate(format: "transactionHash = %@", transaction.transactionHash)
                     let result = try context.fetch(fr).first
                     //Update information stored in local storage.
                     if let result = result {
@@ -196,16 +196,13 @@ class LocalDatabase: ILocalDatabase {
                             newWallet?.isSelected = true
                         }
                     }
-                    try context.save()
-                    DispatchQueue.main.async {
-                        completion(nil)
-                    }
-                } catch {
-                    print(error)
-                    DispatchQueue.main.async {
-                        completion(error)
-                    }
                 }
+                try context.save()
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
+            } catch {
+                print(error)
             }
         }
     }
