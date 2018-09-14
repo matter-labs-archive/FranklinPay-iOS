@@ -17,17 +17,17 @@ PODS:
     - CryptoSwift (~> 0.11)
   - secp256k1_ios (0.1.3)
   - SipHash (1.2.2)
-  - web3swift (1.1.6):
+  - web3swift (1.1.8):
     - BigInt (~> 3.1)
     - CryptoSwift (~> 0.11)
     - PromiseKit (~> 6.3)
     - Result (~> 3.0)
-    - scrypt (~> 1.6)
+    - scrypt (~> 1.7)
     - secp256k1_ios (~> 0.1)
 
 DEPENDENCIES:
   - QRCodeReader.swift (~> 8.1.1)
-  - web3swift
+  - web3swift (from `https://github.com/matterinc/web3swift`, branch `master`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -39,7 +39,16 @@ SPEC REPOS:
     - scrypt
     - secp256k1_ios
     - SipHash
-    - web3swift
+
+EXTERNAL SOURCES:
+  web3swift:
+    :branch: master
+    :git: https://github.com/matterinc/web3swift
+
+CHECKOUT OPTIONS:
+  web3swift:
+    :commit: 77ca6387b1dc59aab33b44cb3d4fa2cd6d717956
+    :git: https://github.com/matterinc/web3swift
 
 SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
@@ -50,8 +59,8 @@ SPEC CHECKSUMS:
   scrypt: a828bd579086977f6db7f9798d1c6332ccaaed4e
   secp256k1_ios: ac9ef04e761f43c58012b28548afa91493761f17
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
-  web3swift: 669f16455d2dffb7bab4b61f39b16f3633d37c7d
+  web3swift: 2163f6bd5c48178eb53284728f059fc94221c9bd
 
-PODFILE CHECKSUM: 5e866e0619ebe12bdc932f5352c1a460b2c57e1e
+PODFILE CHECKSUM: 951877128cab13affaaa46b33018bfc475009a0c
 
 COCOAPODS: 1.5.3

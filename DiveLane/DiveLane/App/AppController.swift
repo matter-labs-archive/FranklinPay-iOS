@@ -115,11 +115,9 @@ class AppController {
             //Custom transaction
         case false:
             if parsed.functionName == "transfer" {
-                let params = parsed.params.map {
-                    return Parameter(type: $0.0, value: $0.1)
-                }
-                let tokenAddress = parsed.params[0].1
-                let amount = parsed.params[1].1
+                
+                let tokenAddress = parsed.function?.inputs[0].name
+                guard let amount = parsed.function?.inputs[1].name else { return }
                 guard case .ethereumAddress(let targetAddress) = parsed.targetAddress else { return }
                 let controller = SendSettingsViewController(tokenAddress: tokenAddress, amount: BigUInt(amount)!, destinationAddress: targetAddress.address, isFromDeepLink: true)
                 window.rootViewController = controller
@@ -151,7 +149,8 @@ class AppController {
                 //TODO: - ENS parser
                 guard case .ethereumAddress(let contractAddress) = parsed.targetAddress else { return }
                 guard let methodName = parsed.functionName else { return }
-                let params = parsed.params.map { return Parameter(type: $0.0, value: $0.1) }
+                guard let params = parsed.function?.inputs.map({return Parameter(type: $0.type.abiRepresentation, value: $0.name)}) else { return }
+                //let params = parsed.params.map { return Parameter(type: $0.0, value: $0.1) }
                 etherscanService.getAbi(forContractAddress: contractAddress.address) { (result) in
                     switch result {
                     case .Success(let abi):
