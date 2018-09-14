@@ -92,8 +92,8 @@ class CreateWalletPincodeViewController: PincodeViewController {
     func createPassword() {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                    account: "password",
-                                                    accessGroup: KeychainConfiguration.accessGroup)
+                                                    account: "\(self.wallet?.name ?? "")-password",
+                accessGroup: KeychainConfiguration.accessGroup)
             try passwordItem.savePassword(password ?? "")
         } catch {
             fatalError("Error updating keychain - \(error)")
@@ -104,8 +104,8 @@ class CreateWalletPincodeViewController: PincodeViewController {
         UserDefaults.standard.set(true, forKey: "atLeastOneWalletExists")
         do {
             let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
-                                                    account: "pincode",
-                                                    accessGroup: KeychainConfiguration.accessGroup)
+                                                   account: "pincode",
+                                                   accessGroup: KeychainConfiguration.accessGroup)
             try pincodeItem.savePassword(pincode)
         } catch {
             fatalError("Error updating keychain - \(error)")
@@ -120,8 +120,8 @@ class CreateWalletPincodeViewController: PincodeViewController {
     func savingWallet() {
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
-                                         notificationText: "Saving wallet",
-                                         on: (self?.view)!)
+                                          notificationText: "Saving wallet",
+                                          on: (self?.view)!)
         }
         self.localStorage.saveWallet(wallet: self.wallet) { [weak self] (error) in
             if error == nil {

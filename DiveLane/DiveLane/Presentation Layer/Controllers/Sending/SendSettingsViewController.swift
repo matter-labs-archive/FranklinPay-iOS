@@ -108,49 +108,49 @@ class SendSettingsViewController: UIViewController {
         return QRCodeReaderViewController(builder: builder)
     }()
     
-//    func sendFunds(dict: [String:Any], enteredPassword: String) {
-//        //let sendEthService: SendEthService = self.tokenService.selectedERC20Token().address.isEmpty ? SendEthServiceImplementation() : ERC20TokenContractMethodsServiceImplementation()
-//        let token  = CurrentToken.currentToken
-//        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
-//        var options = Web3Options.defaultOptions()
-//        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
-//        let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))
-//        options.gasPrice = gp
-//        let transaction = dict["transaction"] as! TransactionIntermediate
-//        options.from = transaction.options?.from
-//        options.to = transaction.options?.to
-//        options.value = transaction.options?.value
-//        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { [weak self] (result) in
-//            switch result {
-//            case .Success(let res):
-//                CurrentToken.currentToken = nil
-//                if (self?.isFromDeepLink)!{
-//                    showSuccessAlert(for: self!, completion: {
-//                        let startViewController = AppController().goToApp()
-//                        startViewController.view.backgroundColor = UIColor.white
-//                        UIApplication.shared.keyWindow?.rootViewController = startViewController
-//                    })
-//                } else {
-//                    showSuccessAlert(for: self!, completion: {
-//                        self?.navigationController?.popViewController(animated: true)
-//                    })
-//                }
-//                
-//            case .Error(let error):
-//                var valueToSend = ""
-//                if let error = error as? Web3Error {
-//                    switch error {
-//                    case .nodeError(let text):
-//                        valueToSend = text
-//                    default:
-//                        break
-//                    }
-//                }
-//                print("\(error)")
-//                showErrorAlert(for: self!, error: error)
-//            }
-//        }
-//    }
+    //    func sendFunds(dict: [String:Any], enteredPassword: String) {
+    //        //let sendEthService: SendEthService = self.tokenService.selectedERC20Token().address.isEmpty ? SendEthServiceImplementation() : ERC20TokenContractMethodsServiceImplementation()
+    //        let token  = CurrentToken.currentToken
+    //        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
+    //        var options = Web3Options.defaultOptions()
+    //        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
+    //        let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))
+    //        options.gasPrice = gp
+    //        let transaction = dict["transaction"] as! TransactionIntermediate
+    //        options.from = transaction.options?.from
+    //        options.to = transaction.options?.to
+    //        options.value = transaction.options?.value
+    //        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { [weak self] (result) in
+    //            switch result {
+    //            case .Success(let res):
+    //                CurrentToken.currentToken = nil
+    //                if (self?.isFromDeepLink)!{
+    //                    showSuccessAlert(for: self!, completion: {
+    //                        let startViewController = AppController().goToApp()
+    //                        startViewController.view.backgroundColor = UIColor.white
+    //                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+    //                    })
+    //                } else {
+    //                    showSuccessAlert(for: self!, completion: {
+    //                        self?.navigationController?.popViewController(animated: true)
+    //                    })
+    //                }
+    //
+    //            case .Error(let error):
+    //                var valueToSend = ""
+    //                if let error = error as? Web3Error {
+    //                    switch error {
+    //                    case .nodeError(let text):
+    //                        valueToSend = text
+    //                    default:
+    //                        break
+    //                    }
+    //                }
+    //                print("\(error)")
+    //                showErrorAlert(for: self!, error: error)
+    //            }
+    //        }
+    //    }
     
     @IBAction func scanQR(_ sender: UIButton) {
         readerVC.delegate = self
@@ -158,34 +158,34 @@ class SendSettingsViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
     
-//    func enterPassword() {
-//        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-//        
-//        alert.addTextField { (textField) in
-//            textField.isSecureTextEntry = true
-//            textField.placeholder = "Enter your password"
-//        }
-//        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { [weak self] (alertAction) in
-//            let passwordText = alert.textFields![0].text!
-//            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
-//                
-//                self?.prepareTransation(withPassword: passwordText)
-//                
-//            } else {
-//                showErrorAlert(for: self!, error: SendErrors.wrongPassword, completion: {
-//                    
-//                })
-//            }
-//        }
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
-//            
-//        }
-//        
-//        alert.addAction(enterPasswordAction)
-//        alert.addAction(cancelAction)
-//        
-//        self.present(alert, animated: true, completion: nil)
-//    }
+    //    func enterPassword() {
+    //        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+    //
+    //        alert.addTextField { (textField) in
+    //            textField.isSecureTextEntry = true
+    //            textField.placeholder = "Enter your password"
+    //        }
+    //        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { [weak self] (alertAction) in
+    //            let passwordText = alert.textFields![0].text!
+    //            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
+    //
+    //                self?.prepareTransation(withPassword: passwordText)
+    //
+    //            } else {
+    //                showErrorAlert(for: self!, error: SendErrors.wrongPassword, completion: {
+    //
+    //                })
+    //            }
+    //        }
+    //        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
+    //
+    //        }
+    //
+    //        alert.addAction(enterPasswordAction)
+    //        alert.addAction(cancelAction)
+    //
+    //        self.present(alert, animated: true, completion: nil)
+    //    }
     
     func prepareTransation(withPassword: String?) {
         
@@ -286,20 +286,22 @@ class SendSettingsViewController: UIViewController {
     @IBAction func send(_ sender: UIButton) {
         //enterPassword()
         //enterPincode()
-        let password = checkPassword()
-        prepareTransation(withPassword: password)
+        checkPassword { [weak self] (password) in
+            self?.prepareTransation(withPassword: password)
+        }
+        
     }
     
-    func checkPassword() -> String {
+    func checkPassword(completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                    account: "password",
-                                                    accessGroup: KeychainConfiguration.accessGroup)
+                                                    account: "\(self.walletName ?? "")-password",
+                accessGroup: KeychainConfiguration.accessGroup)
             let keychainPassword = try passwordItem.readPassword()
-            return keychainPassword
+            completion(keychainPassword)
         } catch {
             //            fatalError("Error reading password from keychain - \(error)")
-            return ""
+            completion(nil)
         }
     }
     
@@ -372,7 +374,7 @@ extension SendSettingsViewController: UITextFieldDelegate {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
         sendButton.isEnabled = false
-
+        
         switch textField {
         case enterAddressTextField:
             if  !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true) {
@@ -394,7 +396,7 @@ extension SendSettingsViewController: UITextFieldDelegate {
         default:
             sendButton.isEnabled = false
         }
-
+        
         sendButton.alpha = sendButton.isEnabled ? 1.0 : 0.5
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
         
@@ -403,8 +405,9 @@ extension SendSettingsViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .done && sendButton.isEnabled {
-            let password = checkPassword()
-            prepareTransation(withPassword: password)
+            checkPassword { [weak self] (password) in
+                self?.prepareTransation(withPassword: password)
+            }
         } else if textField.returnKeyType == .next {
             let index = textFields.index(of: textField) ?? 0
             let nextIndex = (index == textFields.count - 1) ? 0 : index + 1
