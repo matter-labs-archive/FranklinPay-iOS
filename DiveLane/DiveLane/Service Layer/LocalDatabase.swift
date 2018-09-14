@@ -210,10 +210,11 @@ class LocalDatabase: ILocalDatabase {
         }
     }
     
-    public func getAllTransactions(forWallet wallet: KeyWalletModel) -> [ETHTransactionModel] {
+    public func getAllTransactions(forWallet wallet: KeyWalletModel, andNetwork networkID: Int64) -> [ETHTransactionModel] {
         do {
             guard let result = try mainContext.fetch(self.fetchWalletRequest(withAddress: wallet.address)).first else {return []}
-            guard let transactions = result.transactions?.allObjects as? [ETHTransaction] else {return []}
+            guard var transactions = result.transactions?.allObjects as? [ETHTransaction] else {return []}
+            transactions = transactions.filter{$0.networkID == networkID}
             return transactions.map{
                 return ETHTransactionModel(transactionHash: $0.transactionHash!, from: $0.from!, to: $0.to!, amount: $0.amount!, date: $0.date!, data: $0.data, token: $0.token.flatMap{ return ERC20TokenModel(name: $0.name!, address: $0.address!, decimals: $0.decimals!, symbol: $0.symbol!) }, networkID: $0.networkID, isPending: $0.isPending)
             }

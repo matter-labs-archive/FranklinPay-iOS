@@ -38,6 +38,10 @@ class TransactionsHistoryViewController: UIViewController {
         setupTableView()
         uploadTransactions()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        uploadTransactions()
+    }
     
     private func setupTableView() {
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
@@ -72,7 +76,8 @@ class TransactionsHistoryViewController: UIViewController {
                     if let error = error {
                         showErrorAlert(for: self, error: error, completion: {})
                     } else {
-                        self.prepareTransactionsForView(transactions: self.localDatabase.getAllTransactions(forWallet: wallet))
+                        guard let networkID = CurrentNetwork.currentNetwork?.chainID else { return }
+                        self.prepareTransactionsForView(transactions: self.localDatabase.getAllTransactions(forWallet: wallet, andNetwork: Int64(networkID)))
                     }
                 })
             }
