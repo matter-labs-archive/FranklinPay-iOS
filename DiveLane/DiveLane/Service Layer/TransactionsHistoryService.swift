@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import web3swift
+import BigInt
 
 class TransactionsHistoryService {
     func loadTransactions(forAddress address: String, type: TransactionType, inNetwork networkId: Int64, completion: @escaping(Result<[ETHTransactionModel]>) -> Void) {
@@ -68,7 +70,9 @@ class TransactionsHistoryService {
                     } else {
                         tokenModel = nil
                     }
-                    let transaction = ETHTransactionModel(transactionHash: hash, from: from, to: to, amount: value, date: date, data: Data.fromHex(data), token: tokenModel, networkID: networkId, isPending: false)
+                    guard let amount = BigUInt(value) else { return }
+                    guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else { return }
+                    let transaction = ETHTransactionModel(transactionHash: hash, from: from, to: to, amount: amountString, date: date, data: Data.fromHex(data), token: tokenModel, networkID: networkId, isPending: false)
                     transactions.append(transaction)
                 }
                 DispatchQueue.main.async {

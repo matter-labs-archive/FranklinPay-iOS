@@ -70,9 +70,17 @@ class AppController {
         let second = SettingsViewController(nibName: nil, bundle: nil)
         second.title = "Settings"
         nav2.viewControllers = [second]
-        
+        let transactionHistory = TransactionsHistoryViewController()
+        transactionHistory.title = "Transactions History"
+        let nav3 = UINavigationController()
+        nav3.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"history"), tag: 3)
+        nav3.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
+        nav3.navigationBar.tintColor = UIColor.white
+        nav3.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        nav3.navigationBar.barStyle = .black
+        nav3.viewControllers = [transactionHistory]
         let tabs = UITabBarController()
-        tabs.viewControllers = [nav1, nav2]
+        tabs.viewControllers = [nav1, nav3, nav2]
         
         return tabs
     }

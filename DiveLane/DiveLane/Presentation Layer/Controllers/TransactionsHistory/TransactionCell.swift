@@ -23,11 +23,11 @@ class TransactionCell: UITableViewCell {
     
     func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: KeyWalletModel) {
         amountLabel.text = model.amount + " " + (model.token?.symbol.uppercased() ?? "ETH")
-        if model.from == currentWalet.address {
+        if model.from.lowercased() == currentWalet.address.lowercased() {
             //Sent
             transactionTypeLabel.text = "Sent"
             addressLabel.text = "To:" + model.to
-        } else if model.to == currentWalet.address {
+        } else if model.to.lowercased() == currentWalet.address.lowercased() {
             //Received
             transactionTypeLabel.text = "Received"
             addressLabel.text = "From:" + model.from

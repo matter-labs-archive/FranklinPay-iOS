@@ -148,6 +148,7 @@ class LocalDatabase: ILocalDatabase {
                         result.from = transaction.from
                         result.networkID = transaction.networkID
                         result.to = transaction.to
+                        result.isPending = false
                     } else {
                         guard let newTransaction = NSEntityDescription.insertNewObject(forEntityName: "ETHTransaction", into: context) as? ETHTransaction else {
                             DispatchQueue.main.async {
@@ -161,6 +162,7 @@ class LocalDatabase: ILocalDatabase {
                         newTransaction.from = transaction.from
                         newTransaction.networkID = transaction.networkID
                         newTransaction.to = transaction.to
+                        newTransaction.isPending = false
                         
                         if let contractAddress =  transaction.token?.address {
                             //In case of ERC20 tokens
@@ -177,6 +179,7 @@ class LocalDatabase: ILocalDatabase {
                                 newTransaction.token = newToken
                             }
                         } else {
+                            //In case of custom ETH transaction
                             newTransaction.token = nil
                         }
                         newTransaction.transactionHash = transaction.transactionHash
@@ -192,16 +195,31 @@ class LocalDatabase: ILocalDatabase {
                             newWallet?.name = wallet.name
                             newWallet?.isSelected = true
                         }
-                        
-                        
-                        
+                    }
+                    try context.save()
+                    DispatchQueue.main.async {
+                        completion(nil)
                     }
                 } catch {
+                    print(error)
                     DispatchQueue.main.async {
                         completion(error)
                     }
                 }
             }
+        }
+    }
+    
+    public func getAllTransactions(forWallet wallet: KeyWalletModel) -> [ETHTransactionModel] {
+        do {
+            guard let result = try mainContext.fetch(self.fetchWalletRequest(withAddress: wallet.address)).first else {return []}
+            guard let transactions = result.transactions?.allObjects as? [ETHTransaction] else {return []}
+            return transactions.map{
+                return ETHTransactionModel(transactionHash: $0.transactionHash!, from: $0.from!, to: $0.to!, amount: $0.amount!, date: $0.date!, data: $0.data, token: $0.token.flatMap{ return ERC20TokenModel(name: $0.name!, address: $0.address!, decimals: $0.decimals!, symbol: $0.symbol!) }, networkID: $0.networkID, isPending: $0.isPending)
+            }
+        } catch {
+            print(error)
+            return []
         }
     }
     

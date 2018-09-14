@@ -15,11 +15,16 @@ class TransactionsHistoryViewController: UIViewController {
     
     //MARK: - Services
     let keysService: IKeysService = KeysService()
-    let transactionsService = TransactionsService()
+    let transactionsHistoryService = TransactionsHistoryService()
+    let localDatabase = LocalDatabase()
     
     //MARK: - Variables
     var transactions = [[ETHTransactionModel]]()
-    var state: TransactionsHistoryState = .all
+    var state: TransactionsHistoryState = .all {
+        didSet {
+            uploadTransactions()
+        }
+    }
     
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -30,10 +35,93 @@ class TransactionsHistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupTableView()
+        uploadTransactions()
+    }
+    
+    private func setupTableView() {
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TransactionCell")
         tableView.delegate = self
         tableView.dataSource = self
+    }
+    @IBAction func changedState(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            state = .all
+        case 1:
+            state = .sent
+        case 2:
+            state = .received
+        case 3:
+            state = .confirming
+        default:
+            state = .all
+        }
+    }
+    
+    private func uploadTransactions() {
+        guard let wallet = keysService.selectedWallet() else { return }
+        guard let networkId = CurrentNetwork.currentNetwork?.chainID else { return }
+        transactionsHistoryService.loadTransactions(forAddress: wallet.address, type: .custom, inNetwork: Int64(networkId)) { (result) in
+            switch result {
+            case .Error(let error):
+                showErrorAlert(for: self, error: error, completion: {})
+            case .Success(let transactions):
+                self.localDatabase.saveTransactions(transactions: transactions, forWallet: wallet, completion: { (error) in
+                    if let error = error {
+                        showErrorAlert(for: self, error: error, completion: {})
+                    } else {
+                        self.prepareTransactionsForView(transactions: self.localDatabase.getAllTransactions(forWallet: wallet))
+                    }
+                })
+            }
+        }
+    }
+    
+    private func prepareTransactionsForView(transactions: [ETHTransactionModel]) {
+        var transactions = transactions
+        self.transactions.removeAll()
+        //TODO: - Sort transactions by day and put them in ascending order into array
+        transactions.sort { (first, second) -> Bool in
+            return first.date > second.date
+        }
+        guard let selectedWallet = keysService.selectedWallet() else { return }
+        switch state {
+        case .all:
+            print("All right")
+        case .sent:
+            transactions = transactions.filter{ $0.from.lowercased() == selectedWallet.address.lowercased() && !$0.isPending }
+        case .received:
+            transactions = transactions.filter{ $0.from.lowercased() != selectedWallet.address.lowercased() && !$0.isPending}
+        case .confirming:
+            transactions = transactions.filter{ $0.isPending }
+        }
+        for transaction in transactions {
+            let transactionCalendarDate = calendarDate(date: transaction.date)
+            if self.transactions.isEmpty {
+                self.transactions.append([transaction])
+            } else {
+                guard let lastTransaction = self.transactions.last?.last else { return }
+                let previousTransactionCalendarDate = calendarDate(date: lastTransaction.date)
+                if transactionCalendarDate.day == previousTransactionCalendarDate.day
+                    && transactionCalendarDate.month == previousTransactionCalendarDate.month
+                    && transactionCalendarDate.year == previousTransactionCalendarDate.year {
+                    self.transactions[self.transactions.count - 1].append(transaction)
+                } else {
+                    self.transactions.append([transaction])
+                }
+            }
+        }
+        tableView.reloadData()
+    }
+    
+    private func calendarDate(date: Date) -> (day: Int, month: Int, year: Int) {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        return (day, month, year)
     }
 }
 
