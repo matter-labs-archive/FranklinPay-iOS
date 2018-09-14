@@ -299,7 +299,7 @@ class TransactionsService: ITransactionsService {
     
     public func getDataForTransaction(dict: [String:Any]) -> (transaction: TransactionIntermediate, options: Web3Options) {
         let token  = CurrentToken.currentToken
-        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
+        //let model = ETHTransactionModel(transactionHash: "", from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, isPending: true)
         var options = Web3Options.defaultOptions()
         options.gasLimit = BigUInt(dict["gasLimit"] as! String)
         let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))

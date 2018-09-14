@@ -16,11 +16,6 @@ class WalletCell: UITableViewCell {
     
     let web3SwiftService: IWeb3SwiftService = Web3SwiftService()
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
     func configureCell(model: KeyWalletModel) {
         walletName.text = "Name: " + model.name
         walletAddress.text = "Address: " + model.address
@@ -28,7 +23,7 @@ class WalletCell: UITableViewCell {
             if let error = error {
                 print(error)
             } else {
-                self.walletBalance.text = balance ?? "0" + " ETH"
+                self.walletBalance.text = (balance ?? "0") + " ETH"
             }
         }
     }

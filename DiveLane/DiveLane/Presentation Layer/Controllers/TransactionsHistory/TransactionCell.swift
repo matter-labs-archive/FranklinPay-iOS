@@ -1,0 +1,38 @@
+//
+//  TransactionCell.swift
+//  DiveLane
+//
+//  Created by NewUser on 14/09/2018.
+//  Copyright © 2018 Matter Inc. All rights reserved.
+//
+
+import UIKit
+
+class TransactionCell: UITableViewCell {
+
+    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var transactionTypeLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    
+    lazy var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm:SS"
+        return dateFormatter
+    }()
+    
+    func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: KeyWalletModel) {
+        amountLabel.text = model.amount + " " + (model.token?.symbol.uppercased() ?? "ETH")
+        if model.from == currentWalet.address {
+            //Sent
+            transactionTypeLabel.text = "Sent"
+            addressLabel.text = "To:" + model.to
+        } else if model.to == currentWalet.address {
+            //Received
+            transactionTypeLabel.text = "Received"
+            addressLabel.text = "From:" + model.from
+        }
+        timeLabel.text = dateFormatter.string(from: model.date)
+    }
+    
+}
