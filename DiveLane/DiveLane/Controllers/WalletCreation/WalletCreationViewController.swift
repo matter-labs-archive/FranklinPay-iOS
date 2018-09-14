@@ -137,39 +137,11 @@ class WalletCreationViewController: UIViewController {
             return
         }
         passwordsDontMatch.alpha = 0
-        
         let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
         let password = isAtLeastOneWalletExists ? checkExistingPassword() : (passwordTextField.text ?? "")
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: true,
-                                          notificationText: "Creating wallet",
-                                          on: (self?.view)!)
-        }
         switch additionMode {
         case .createWallet:
             //Create new wallet
-//            keysService.createNewWallet(withName: self.walletNameTextField.text,
-//                                        password: password)
-//            { [weak self] (wallet, error) in
-//                DispatchQueue.main.async {
-//                    self?.animation.waitAnimation(isEnabled: false,
-//                                                  on: (self?.view)!)
-//                }
-//                if let error = error {
-//                    showErrorAlert(for: self!, error: error, completion: {
-//
-//                    })
-//                } else {
-//
-//                    switch isAtLeastOneWalletExists {
-//                    case true:
-//                        self?.savingWallet(wallet: wallet)
-//                    case false:
-//                        self?.addPincode(toWallet: wallet, with: password)
-//                    }
-//                }
-//            }
             showChooseAlert(withPassword: password)
             
         default:
