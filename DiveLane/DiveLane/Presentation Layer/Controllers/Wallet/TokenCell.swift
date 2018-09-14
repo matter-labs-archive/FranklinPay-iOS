@@ -41,7 +41,7 @@ class TokenCell: UITableViewCell {
         case .Kovan: networkName = "Kovan"
         case .Custom: networkName = ""
         }
-        self.walletName.text = (walletName ?? "") + " on " + (networkName ?? "")
+        self.walletName.text = (walletName ?? "")
         self.tokenShortName.text = token.symbol.uppercased()
         
         if token == ERC20TokenModel(name: "Ether",
@@ -53,9 +53,9 @@ class TokenCell: UITableViewCell {
             self.balance.text = "Loading..."
             Web3SwiftService().getETHbalance()
                 { [weak self] (result, error) in
-                DispatchQueue.main.async {
-                    self?.balance.text = result ?? ""
-                }
+                    DispatchQueue.main.async {
+                        self?.balance.text = result ?? ""
+                    }
             }
         } else {
             self.tokenAddress.text = token.address
