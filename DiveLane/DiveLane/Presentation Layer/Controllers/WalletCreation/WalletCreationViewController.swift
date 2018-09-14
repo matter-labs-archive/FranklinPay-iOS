@@ -66,8 +66,6 @@ class WalletCreationViewController: UIViewController {
         enterButton.isEnabled = false
         enterButton.alpha = 0.5
         passwordsDontMatch.alpha = 0
-        passwordTextField.isHidden = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
-        repeatPasswordTextField.isHidden = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,25 +105,25 @@ class WalletCreationViewController: UIViewController {
         
     }
     
-    func checkExistingPassword() -> String {
+    func checkExistingPassword(completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                   account: "password",
-                                                   accessGroup: KeychainConfiguration.accessGroup)
+                                                    account: "password",
+                                                    accessGroup: KeychainConfiguration.accessGroup)
             let keychainPassword = try passwordItem.readPassword()
-            return keychainPassword
+            completion(keychainPassword)
         } catch {
-//            fatalError("Error reading password from keychain - \(error)")
-            return passwordTextField.text ?? ""
+            //            fatalError("Error reading password from keychain - \(error)")
+            completion(passwordTextField.text ?? "")
         }
     }
     
-    func createPassword() {
+    func createPassword(_ password: String, forWallet: KeyWalletModel?) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                   account: "password",
-                                                   accessGroup: KeychainConfiguration.accessGroup)
-            try passwordItem.savePassword(passwordTextField.text ?? "")
+                                                    account: "\(forWallet?.name ?? "")-password",
+                accessGroup: KeychainConfiguration.accessGroup)
+            try passwordItem.savePassword(password)
         } catch {
             fatalError("Error updating keychain - \(error)")
         }
@@ -137,12 +135,24 @@ class WalletCreationViewController: UIViewController {
             return
         }
         passwordsDontMatch.alpha = 0
+        
+        guard let walletKey = enterPrivateKeyTextField.text else {
+            return
+        }
+        
         let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
-        let password = isAtLeastOneWalletExists ? checkExistingPassword() : (passwordTextField.text ?? "")
+        let password = passwordTextField.text ?? ""
+        let walletName = walletNameTextField.text ?? ""
+        self.addWalletDependingOnMode(walletName, withKey: walletKey, withPassword: password, isAtLeastOneExists: isAtLeastOneWalletExists)
+        
+    }
+    
+    func addWalletDependingOnMode(_ walletName: String, withKey: String, withPassword: String, isAtLeastOneExists: Bool) {
+        
         switch additionMode {
         case .createWallet:
             //Create new wallet
-            showChooseAlert(withPassword: password)
+            showChooseAlert(forWallet: walletName, withPassword: withPassword)
             
         default:
             //Import wallet
@@ -150,7 +160,7 @@ class WalletCreationViewController: UIViewController {
             
             switch importMode {
             case .mnemonics:
-                keysService.createNewHDWallet(withName: walletNameTextField.text!, password: enterPrivateKeyTextField.text!, mnemonics: enterPrivateKeyTextField.text!) { [weak self] (keyWalletModel, error) in
+                keysService.createNewHDWallet(withName: walletName, password: withPassword, mnemonics: withKey) { [weak self] (keyWalletModel, error) in
                     DispatchQueue.main.async {
                         self?.animation.waitAnimation(isEnabled: false,
                                                       on: (self?.view)!)
@@ -158,50 +168,50 @@ class WalletCreationViewController: UIViewController {
                     if let error = error {
                         print(error)
                     } else {
-                        switch isAtLeastOneWalletExists {
+                        switch isAtLeastOneExists {
                         case true:
-                            self?.savingWallet(wallet: keyWalletModel)
+                            self?.savingWallet(wallet: keyWalletModel, withPassword: withPassword)
                         case false:
-                            self?.addPincode(toWallet: keyWalletModel, with: password)
+                            self?.addPincode(toWallet: keyWalletModel, with: withPassword)
                         }
                     }
                 }
             case .privateKey:
-                keysService.addNewWalletWithPrivateKey(withName: self.walletNameTextField.text,
-                                                       key: enterPrivateKeyTextField.text!,
-                                                       password: passwordTextField.text!) 
+                keysService.addNewWalletWithPrivateKey(withName: walletName,
+                                                       key: withKey,
+                                                       password: withPassword)
                 { [weak self] (wallet, error) in
                     DispatchQueue.main.async {
                         self?.animation.waitAnimation(isEnabled: false,
-                                                  on: (self?.view)!)
-                    } 
+                                                      on: (self?.view)!)
+                    }
                     if let error = error {
                         showErrorAlert(for: self!, error: error, completion: {
-                        
+                            
                         })
                         return
                     } else {
                         guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
                             showErrorAlert(for: self!, error: error, completion: {
-
+                                
                             })
                             return
                         }
-
-                        switch isAtLeastOneWalletExists {
+                        
+                        switch isAtLeastOneExists {
                         case true:
-                            self?.savingWallet(wallet: wallet)
+                            self?.savingWallet(wallet: wallet, withPassword: withPassword)
                         case false:
-                            self?.addPincode(toWallet: wallet, with: password)
+                            self?.addPincode(toWallet: wallet, with: withPassword)
                         }
                     }
                 }
-            }  
+            }
         }
     }
     
     
-    func savingWallet(wallet: KeyWalletModel?) {
+    func savingWallet(wallet: KeyWalletModel?, withPassword: String) {
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
                                           notificationText: "Saving wallet",
@@ -209,7 +219,7 @@ class WalletCreationViewController: UIViewController {
         }
         self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
             if error == nil {
-                self?.createPassword()
+                self?.createPassword(withPassword, forWallet: wallet)
                 DispatchQueue.main.async { [weak self] in
                     self?.animation.waitAnimation(isEnabled: false,
                                                   on: (self?.view)!)
@@ -227,17 +237,17 @@ class WalletCreationViewController: UIViewController {
         }
     }
     
-    func showChooseAlert(withPassword: String) {
+    func showChooseAlert(forWallet withName: String, withPassword: String) {
         let isAtLeastOneWalletExists = UserDefaults.standard.bool(forKey: "atLeastOneWalletExists")
         let alertController = UIAlertController(title: "Wallet type", message: "How would you like to create your wallet?", preferredStyle: .alert)
         let actionMnemonics = UIAlertAction(title: "Mnemonics", style: .default) { [weak self] (_) in
-            let mnemonicsViewController = MnemonicsViewController(name: (self?.walletNameTextField.text!)!, password: withPassword)
+            let mnemonicsViewController = MnemonicsViewController(name: withName, password: withPassword)
             self?.navigationController?.pushViewController(mnemonicsViewController, animated: true)
         }
         
         let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { [weak self] _ in
-            self?.keysService.createNewWallet(withName: self?.walletNameTextField.text,
-                                        password: withPassword)
+            self?.keysService.createNewWallet(withName: withName,
+                                              password: withPassword)
             { [weak self] (wallet, error) in
                 DispatchQueue.main.async {
                     self?.animation.waitAnimation(isEnabled: false,
@@ -251,7 +261,7 @@ class WalletCreationViewController: UIViewController {
                     
                     switch isAtLeastOneWalletExists {
                     case true:
-                        self?.savingWallet(wallet: wallet)
+                        self?.savingWallet(wallet: wallet, withPassword: withPassword)
                     case false:
                         self?.addPincode(toWallet: wallet, with: withPassword)
                     }
@@ -289,21 +299,12 @@ extension WalletCreationViewController: UITextFieldDelegate {
         
         switch textField {
         case enterPrivateKeyTextField:
-            if UserDefaults.standard.bool(forKey: "atLeastOneWalletExists") {
-                if !(walletNameTextField.text?.isEmpty ?? true) &&
-                    !futureString.isEmpty {
-                    enterButton.isEnabled = true
-                } else {
-                    enterButton.isEnabled = false
-                }
+            if passwordTextField.text == repeatPasswordTextField.text &&
+                !(passwordTextField.text?.isEmpty ?? true) &&
+                !futureString.isEmpty && !(walletNameTextField.text?.isEmpty ?? true) {
+                enterButton.isEnabled = true
             } else {
-                if passwordTextField.text == repeatPasswordTextField.text &&
-                    !(passwordTextField.text?.isEmpty ?? true) &&
-                    !futureString.isEmpty && !(walletNameTextField.text?.isEmpty ?? true) {
-                    enterButton.isEnabled = true
-                } else {
-                    enterButton.isEnabled = false
-                }
+                enterButton.isEnabled = false
             }
         case passwordTextField:
             if !futureString.isEmpty &&
@@ -324,34 +325,18 @@ extension WalletCreationViewController: UITextFieldDelegate {
                 enterButton.isEnabled = false
             }
         default:
-            if UserDefaults.standard.bool(forKey: "atLeastOneWalletExists") {
-                if additionMode == .importWallet {
-                    if !futureString.isEmpty && !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
-                        enterButton.isEnabled = true
-                    } else {
-                        enterButton.isEnabled = false
-                    }
-                } else if !futureString.isEmpty {
+            if additionMode == .importWallet {
+                if !futureString.isEmpty && passwordTextField.text == repeatPasswordTextField.text &&
+                    !(passwordTextField.text?.isEmpty ?? true) &&
+                    !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
                     enterButton.isEnabled = true
                 } else {
                     enterButton.isEnabled = false
                 }
-                
+            } else if !futureString.isEmpty {
+                enterButton.isEnabled = true
             } else {
-                if additionMode == .importWallet {
-                    if !futureString.isEmpty && passwordTextField.text == repeatPasswordTextField.text &&
-                        !(passwordTextField.text?.isEmpty ?? true) &&
-                        !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
-                        enterButton.isEnabled = true
-                    } else {
-                        enterButton.isEnabled = false
-                    }
-                } else if !futureString.isEmpty {
-                    enterButton.isEnabled = true
-                } else {
-                    enterButton.isEnabled = false
-                }
-                
+                enterButton.isEnabled = false
             }
             
         }
