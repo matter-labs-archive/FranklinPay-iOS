@@ -160,7 +160,7 @@ class SendSettingsViewController: UIViewController {
         switch manager {
         case .Tokens:
             guard let wallet = localStorage.getWallet() else { return UIView() }
-            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet)
+            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 0))
         case .Wallets:
             walletDropdownManager.wallets = localStorage.getAllWallets()
         }

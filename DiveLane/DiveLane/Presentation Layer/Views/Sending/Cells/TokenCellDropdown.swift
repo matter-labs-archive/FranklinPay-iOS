@@ -14,7 +14,9 @@ class TokenCellDropdown: UITableViewCell {
     @IBOutlet weak var tokenName: UILabel!
     
     let web3Service = Web3SwiftService()
+    var currentToken: ERC20TokenModel?
     func configure(_ token: ERC20TokenModel, wallet: KeyWalletModel) {
+        currentToken = token
         tokenName.text = token.name
         web3Service.getERCBalance(for: token.address, address: wallet.address) { (balance, error) in
             if error != nil {
@@ -22,13 +24,24 @@ class TokenCellDropdown: UITableViewCell {
                     if let error = error {
                         print(error)
                     } else {
-                        self.tokenBalance.text = "Balance: " + (balance ?? "0") + " " + token.symbol.uppercased()
+                        if let currentAddress = self.currentToken?.address, currentAddress == token.address {
+                            self.tokenBalance.text = "Balance: " + (balance ?? "0") + " " + token.symbol.uppercased()
+                        }
                     }
                 })
             } else {
-                self.tokenBalance.text = "Balance: " + (balance ?? "0") + " " + token.symbol.uppercased()
+                if let currentAddress = self.currentToken?.address, currentAddress == token.address {
+                    self.tokenBalance.text = "Balance: " + (balance ?? "0") + " " + token.symbol.uppercased()
+                }
             }
         }
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        tokenBalance.text = "Loading..."
+    }
+    
+
     
 }

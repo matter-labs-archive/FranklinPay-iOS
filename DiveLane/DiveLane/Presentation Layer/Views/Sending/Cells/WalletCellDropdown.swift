@@ -14,8 +14,10 @@ class WalletCellDropdown: UITableViewCell {
     @IBOutlet weak var walletName: UILabel!
     
     let web3SwiftService = Web3SwiftService()
+    var currentWallet: KeyWalletModel?
     
     func configure(_ wallet: KeyWalletModel) {
+        currentWallet = wallet
         walletAddress.text = wallet.address
         walletName.text = wallet.name
         if let tokenAddress = CurrentToken.currentToken?.address, !tokenAddress.isEmpty {
@@ -23,7 +25,9 @@ class WalletCellDropdown: UITableViewCell {
                 if let error = error {
                     print(error)
                 } else {
-                    self.walletBalance.text = (balance ?? "0") + " " + (CurrentToken.currentToken?.symbol.uppercased() ?? "")
+                    if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
+                        self.walletBalance.text = (balance ?? "0") + " " + (CurrentToken.currentToken?.symbol.uppercased() ?? "")
+                    }
                 }
             }
         } else {
@@ -31,12 +35,17 @@ class WalletCellDropdown: UITableViewCell {
                 if let error = error {
                     print(error)
                 } else {
-                    self.walletBalance.text = (balance ?? "0") + " ETH"
+                    if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
+                        self.walletBalance.text = (balance ?? "0") + " ETH"
+                    }
                 }
             }
         }
-        
-        
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        walletBalance.text = "Loading..."
     }
     
 }
