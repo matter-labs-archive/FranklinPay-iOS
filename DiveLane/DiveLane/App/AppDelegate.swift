@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         CurrentWeb.currentWeb = (UserDefaults.standard.object(forKey: "currentWeb") as? web3) ?? Web3.InfuraMainnetWeb3()
         
         window = UIWindow(frame: UIScreen.main.bounds)
+        
         controller = AppController(window: window!, launchOptions: launchOptions, url: nil)
         
         return true
