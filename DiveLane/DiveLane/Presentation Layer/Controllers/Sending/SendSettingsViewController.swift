@@ -13,7 +13,7 @@ import struct BigInt.BigUInt
 
 class SendSettingsViewController: UIViewController {
     
-    @IBOutlet weak var balanceOnWalletLabel: UILabel!
+    @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var addressFromLabel: UILabel!
     @IBOutlet weak var enterAddressTextField: UITextField!
     @IBOutlet weak var amountTextField: UITextField!
@@ -24,16 +24,34 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var qrButton: UIButton!
     @IBOutlet var textFields: [UITextField]!
     @IBOutlet weak var closeView: UIView!
+    @IBOutlet weak var addressFromView: UIView!
+    @IBOutlet weak var stackView: UIStackView!
     
     var walletName: String?
     var walletAddress: String?
     var tokenBalance: String?
     var isFromDeepLink: Bool = false
+    var height = NSLayoutConstraint()
+    var dropDownView = UIView() {
+        willSet {
+            dropDownView.removeFromSuperview()
+        }
+    }
     
     var amountInString: String?
     var destinationAddress: String?
+    let localStorage = LocalDatabase()
     
     let animation = AnimationController()
+    
+    var screenState: AppState = .ETH {
+        didSet {
+            print(screenState)
+        }
+    }
+    
+    let tokenDropdownManager = TokenDropdownManager()
+    let walletDropdownManager = WalletDropdownManager()
     
     convenience init(walletName: String,
                      tokenBalance: String,
@@ -78,23 +96,93 @@ class SendSettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+    }
+    
+    func setup() {
         self.hideKeyboardWhenTappedAround()
-        balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
-        addressFromLabel.text = "From: \(walletAddress ?? "")"
+        addressFromLabel.text = "From: " + (localStorage.getWallet()?.address ?? "")
+        addGestureRecognizer()
+        closeButton.isHidden = true
+        //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
         tokenNameLabel.text = CurrentToken.currentToken?.symbol.uppercased()
         sendButton.isEnabled = false
         sendButton.alpha = 0.5
-        
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
-        
-        closeView.isHidden = !self.isFromDeepLink
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Transaction"
+        self.title = "Send"
+    }
+    
+    @IBAction func didChangeState(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            screenState = .ETH
+        } else {
+            screenState = .Plasma
+        }
+    }
+    
+    func addGestureRecognizer() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapFrom))
+        addressFromLabel.addGestureRecognizer(tap)
+        addressFromLabel.isUserInteractionEnabled = true
+        let tokenTap = UITapGestureRecognizer(target: self, action: #selector(didTapToken))
+        tokenNameLabel.addGestureRecognizer(tokenTap)
+        tokenNameLabel.isUserInteractionEnabled = true
+    }
+    
+    //MARK: - Dropdown
+    @objc func didTapFrom() {
+        dropDownView = createDropdownView(withManager: .Wallets)
+        self.view.addSubview(dropDownView)
+        stackView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5, animations: {
+            self.dropDownView.alpha = 1.0
+        }, completion: nil)
+    }
+    
+    @objc func didTapToken() {
+        dropDownView = createDropdownView(withManager: .Tokens)
+        self.view.addSubview(dropDownView)
+        stackView.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.5, animations: {
+            self.dropDownView.alpha = 1.0
+        }, completion: nil)
+    }
+    
+    func createDropdownView(withManager manager: ManagerType) -> UIView {
+        guard let sv = addressFromView.superview else { return UIView() }
+        let frame = CGRect(x: sv.frame.origin.x, y: addressFromView.frame.origin.y + addressFromView.frame.height + sv.frame.origin.y, width:  addressFromView.frame.width, height: 150)
+        dropDownView = UIView(frame: frame)
+        switch manager {
+        case .Tokens:
+            guard let wallet = localStorage.getWallet() else { return UIView() }
+            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet)
+        case .Wallets:
+            walletDropdownManager.wallets = localStorage.getAllWallets()
+        }
+        let tableView = UITableView()
+        tableView.separatorStyle = .none
+        let cellToRegister = manager == .Wallets ? "WalletCellDropdown" : "TokenCellDropdown"
+        let nib = UINib(nibName: cellToRegister, bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: cellToRegister)
+        tableView.delegate = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
+        tableView.dataSource = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
+        walletDropdownManager.delegate = self
+        tokenDropdownManager.delegate = self
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        dropDownView.addSubview(tableView)
+        tableView.leftAnchor.constraint(equalTo: dropDownView.leftAnchor).isActive = true
+        tableView.rightAnchor.constraint(equalTo: dropDownView.rightAnchor).isActive = true
+        tableView.topAnchor.constraint(equalTo: dropDownView.topAnchor).isActive = true
+        tableView.bottomAnchor.constraint(equalTo: dropDownView.bottomAnchor).isActive = true
+        dropDownView.alpha = 0
+        dropDownView.layer.cornerRadius = 5.0
+        dropDownView.clipsToBounds = true
+        return dropDownView
     }
     
     // MARK: QR Code scan
@@ -289,7 +377,6 @@ class SendSettingsViewController: UIViewController {
         checkPassword { [weak self] (password) in
             self?.prepareTransation(withPassword: password)
         }
-        
     }
     
     func checkPassword(completion: @escaping (String?) -> Void) {
@@ -321,14 +408,37 @@ class SendSettingsViewController: UIViewController {
         startViewController.view.backgroundColor = UIColor.white
         UIApplication.shared.keyWindow?.rootViewController = startViewController
     }
-    
 }
 
+//MARK: - Dropdowns Delegates
+extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDelegate {
+    func didSelectWallet(wallet: KeyWalletModel) {
+        localStorage.selectWallet(wallet: wallet) {
+            self.addressFromLabel.text = "From: " + wallet.address
+            UIView.animate(withDuration: 0.5, animations: {
+                self.dropDownView.alpha = 0.0
+            }, completion: { (_) in
+                self.stackView.isUserInteractionEnabled = true
+                self.dropDownView.removeFromSuperview()
+            })
+        }
+    }
+    
+    func didSelectToken(token: ERC20TokenModel) {
+        self.tokenNameLabel.text = token.symbol.uppercased()
+        CurrentToken.currentToken = token
+        UIView.animate(withDuration: 0.5, animations: {
+            self.dropDownView.alpha = 0.0
+        }) { (_) in
+            self.stackView.isUserInteractionEnabled = true
+            self.dropDownView.removeFromSuperview()
+        }
+    }
+
+}
+
+// MARK: - QRCodeReaderViewController Delegate Methods
 extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
-    
-    
-    // MARK: - QRCodeReaderViewController Delegate Methods
-    
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
         let value = result.value

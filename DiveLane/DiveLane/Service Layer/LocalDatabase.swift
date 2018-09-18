@@ -188,7 +188,18 @@ class LocalDatabase: ILocalDatabase {
                             }
                         } else {
                             //In case of custom ETH transaction
-                            newTransaction.token = nil
+                            let result = try context.fetch(self.fetchTokenRequest(withAddress: ""))
+                            if let ethToken = result.first {
+                                newTransaction.token = ethToken
+                            } else {
+                                let newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token", into: context) as? ERC20Token
+                                newToken?.address = ""
+                                newToken?.name = "Ether"
+                                newToken?.decimals = "18"
+                                newToken?.symbol = "ETH"
+                                newTransaction.token = newToken
+                            }
+                            
                         }
                         newTransaction.transactionHash = transaction.transactionHash
                         //MARK: - Fetch wallet from core data, and if there is no one wallet - create.
