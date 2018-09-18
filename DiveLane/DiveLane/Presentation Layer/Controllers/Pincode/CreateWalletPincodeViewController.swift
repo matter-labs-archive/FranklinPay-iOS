@@ -117,13 +117,6 @@ class CreateWalletPincodeViewController: PincodeViewController {
         savingWallet()
     }
     
-    func addFirstToken(completion: @escaping (Error?) -> Void) {
-        let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
-        localStorage.saveCustomToken(with: etherToken) { (error) in
-            completion(error)
-        }
-    }
-    
     func savingWallet() {
         DispatchQueue.main.async { 
             self.animation.waitAnimation(isEnabled: true,
@@ -153,7 +146,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     let dispatchGroup = DispatchGroup()
                     dispatchGroup.enter()
                     if !UserDefaults.standard.bool(forKey: "etherAdded") {
-                        self.addFirstToken(completion: { (error) in
+                        AppController().addFirstToken(completion: { (error) in
                             if error == nil {
                                 UserDefaults.standard.set(true, forKey: "etherAdded")
                                 UserDefaults.standard.synchronize()

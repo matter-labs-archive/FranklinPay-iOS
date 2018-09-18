@@ -87,17 +87,17 @@ class AppController {
     
     func startAsUsual(in window: UIWindow) {
         
-        var startViewController: UIViewController
+        var startViewController: UIViewController?
         
         let isOnboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
         let existingWallet = LocalDatabase().getWallet()
         
         if !isOnboardingPassed {
             startViewController = OnboardingViewController()
-            startViewController.view.backgroundColor = UIColor.white
+            startViewController?.view.backgroundColor = UIColor.white
         } else if existingWallet == nil {
             startViewController = addWallet()
-            startViewController.view.backgroundColor = UIColor.white
+            startViewController?.view.backgroundColor = UIColor.white
         } else {
             DispatchQueue.global().async {
                 if !UserDefaults.standard.bool(forKey: "tokensDownloaded") {
@@ -109,11 +109,35 @@ class AppController {
                     })
                 }
             }
-            startViewController = goToApp()
-            startViewController.view.backgroundColor = UIColor.white
+            DispatchQueue.global().async { [unowned self] in
+                if !UserDefaults.standard.bool(forKey: "etherAdded") {
+                    self.addFirstToken(completion: { (error) in
+                        if error == nil {
+                            UserDefaults.standard.set(true, forKey: "etherAdded")
+                            UserDefaults.standard.synchronize()
+                            startViewController = self.goToApp()
+                            startViewController?.view.backgroundColor = UIColor.white
+                            window.rootViewController = startViewController ?? UIViewController()
+                            window.makeKeyAndVisible()
+                            
+                        } else {
+                            fatalError("Can't add ether - \(String(describing: error))")
+                        }
+                    })
+                }
+            }
+            
         }
-        window.rootViewController = startViewController
+        window.rootViewController = startViewController ?? UIViewController()
         window.makeKeyAndVisible()
+        
+    }
+    
+    func addFirstToken(completion: @escaping (Error?) -> Void) {
+        let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
+        LocalDatabase().saveCustomToken(with: etherToken) { (error) in
+            completion(error)
+        }
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {
