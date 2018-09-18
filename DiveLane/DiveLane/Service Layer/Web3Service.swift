@@ -17,6 +17,8 @@ protocol IWeb3SwiftService {
     func getERCBalance(for token: String,
                     address: String,
                     completion: @escaping (String?,Error?)->Void)
+    func defaultOptions() -> Web3Options 
+    func contract(for address: String) -> web3.web3contract?
 }
 
 class Web3SwiftService: IWeb3SwiftService {
@@ -137,7 +139,7 @@ class Web3SwiftService: IWeb3SwiftService {
         }
     }
     
-    private func contract(for address: String) -> web3.web3contract? {
+    public func contract(for address: String) -> web3.web3contract? {
         let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
         web3.addKeystoreManager(KeysService().keystoreManager())
         guard let ethAddress = EthereumAddress(address) else {
@@ -149,7 +151,7 @@ class Web3SwiftService: IWeb3SwiftService {
          0x5b0095100c1ce9736cdcb449a3199935a545ccce*/
     }
     
-    private func defaultOptions() -> Web3Options {
+    public func defaultOptions() -> Web3Options {
         var options = Web3Options.defaultOptions()
         //        options.gasLimit = BigUInt(250000)
         //        options.gasPrice = BigUInt(250000000)

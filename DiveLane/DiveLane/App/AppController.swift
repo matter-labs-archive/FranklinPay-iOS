@@ -99,6 +99,16 @@ class AppController {
             startViewController = addWallet()
             startViewController.view.backgroundColor = UIColor.white
         } else {
+            DispatchQueue.global().async {
+                if !UserDefaults.standard.bool(forKey: "tokensDownloaded") {
+                    TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
+                        if error == nil {
+                            UserDefaults.standard.set(true, forKey: "tokensDownloaded")
+                            UserDefaults.standard.synchronize()
+                        }
+                    })
+                }
+            }
             startViewController = goToApp()
             startViewController.view.backgroundColor = UIColor.white
         }

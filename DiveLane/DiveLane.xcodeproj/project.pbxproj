@@ -67,6 +67,14 @@
 		91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7D32143B2160033A045 /* FloatExtension.swift */; };
 		91B6A7DE2143B2F30033A045 /* AddWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */; };
 		91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */; };
+		91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */; };
+		91E72552214FDD1E003FAD76 /* SearchTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */; };
+		91E72556214FE104003FAD76 /* SearchTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E72554214FE104003FAD76 /* SearchTokenCell.swift */; };
+		91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E72555214FE104003FAD76 /* SearchTokenCell.xib */; };
+		91E7255B214FEDE3003FAD76 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E72559214FEDE3003FAD76 /* AddressTableViewCell.swift */; };
+		91E7255C214FEDE3003FAD76 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */; };
+		91E7256221506700003FAD76 /* TokensService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7256121506700003FAD76 /* TokensService.swift */; };
+		91E7256421507D16003FAD76 /* FiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7256321507D16003FAD76 /* FiatService.swift */; };
 		B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */; };
 		B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141C214464EF00C8B408 /* ParameterCell.xib */; };
 		B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20914FC214A564500C8B408 /* WalletsViewController.swift */; };
@@ -154,6 +162,14 @@
 		91B6A7D32143B2160033A045 /* FloatExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletViewController.swift; sourceTree = "<group>"; };
 		91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddWalletViewController.xib; sourceTree = "<group>"; };
+		91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTokenViewController.swift; sourceTree = "<group>"; };
+		91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTokenViewController.xib; sourceTree = "<group>"; };
+		91E72554214FE104003FAD76 /* SearchTokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTokenCell.swift; sourceTree = "<group>"; };
+		91E72555214FE104003FAD76 /* SearchTokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchTokenCell.xib; sourceTree = "<group>"; };
+		91E72559214FEDE3003FAD76 /* AddressTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressTableViewCell.swift; sourceTree = "<group>"; };
+		91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressTableViewCell.xib; sourceTree = "<group>"; };
+		91E7256121506700003FAD76 /* TokensService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensService.swift; sourceTree = "<group>"; };
+		91E7256321507D16003FAD76 /* FiatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiatService.swift; sourceTree = "<group>"; };
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendArbitraryTransactionViewController.xib; sourceTree = "<group>"; };
 		B209141C214464EF00C8B408 /* ParameterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParameterCell.xib; sourceTree = "<group>"; };
@@ -295,7 +311,6 @@
 			isa = PBXGroup;
 			children = (
 				9197F2EB2143B92B00C358AA /* WalletViewController.swift */,
-				9197F2F02143B9D600C358AA /* TokenCell.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -305,6 +320,7 @@
 			children = (
 				9197F2EC2143B92B00C358AA /* WalletViewController.xib */,
 				9197F2F12143B9D600C358AA /* TokenCell.xib */,
+				9197F2F02143B9D600C358AA /* TokenCell.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -338,6 +354,7 @@
 			children = (
 				9197F3072143C39C00C358AA /* SendSettingsViewController.xib */,
 				B209141C214464EF00C8B408 /* ParameterCell.xib */,
+				B25BD1372143E5BC0091C481 /* ParameterCell.swift */,
 				B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */,
 			);
 			path = Sending;
@@ -348,7 +365,6 @@
 			children = (
 				9197F3062143C39C00C358AA /* SendSettingsViewController.swift */,
 				B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */,
-				B25BD1372143E5BC0091C481 /* ParameterCell.swift */,
 			);
 			path = Sending;
 			sourceTree = "<group>";
@@ -377,6 +393,7 @@
 				B2091500214A5A4D00C8B408 /* Wallets */,
 				9197F320214403A400C358AA /* SettingsViewController.xib */,
 				9197F3272144043500C358AA /* SettingsCell.xib */,
+				9197F3262144043500C358AA /* SettingsCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -386,7 +403,6 @@
 			children = (
 				B2091501214A5A9F00C8B408 /* Wallets */,
 				9197F31F214403A400C358AA /* SettingsViewController.swift */,
-				9197F3262144043500C358AA /* SettingsCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -404,6 +420,7 @@
 			children = (
 				9197F32E2144213000C358AA /* NetworksViewController.xib */,
 				9197F3322144228B00C358AA /* NetworksCell.xib */,
+				9197F3312144228B00C358AA /* NetworksCell.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -412,7 +429,6 @@
 			isa = PBXGroup;
 			children = (
 				9197F32D2144213000C358AA /* NetworksViewController.swift */,
-				9197F3312144228B00C358AA /* NetworksCell.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -477,6 +493,8 @@
 				9197F3152143FD4100C358AA /* NetworkService.swift */,
 				914F228F21499EDD00ED58E6 /* KeychainService.swift */,
 				B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */,
+				91E7256121506700003FAD76 /* TokensService.swift */,
+				91E7256321507D16003FAD76 /* FiatService.swift */,
 			);
 			path = "Service Layer";
 			sourceTree = "<group>";
@@ -498,6 +516,8 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				91E72558214FEDCE003FAD76 /* AddressCell */,
+				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				914F228421497F9200ED58E6 /* Animators */,
@@ -516,6 +536,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
@@ -546,12 +567,40 @@
 			path = AddWallet;
 			sourceTree = "<group>";
 		};
+		91E7254E214FDCED003FAD76 /* SearchToken */ = {
+			isa = PBXGroup;
+			children = (
+				91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */,
+			);
+			path = SearchToken;
+			sourceTree = "<group>";
+		};
+		91E72553214FDD24003FAD76 /* SearchToken */ = {
+			isa = PBXGroup;
+			children = (
+				91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */,
+				91E72554214FE104003FAD76 /* SearchTokenCell.swift */,
+				91E72555214FE104003FAD76 /* SearchTokenCell.xib */,
+			);
+			path = SearchToken;
+			sourceTree = "<group>";
+		};
+		91E72558214FEDCE003FAD76 /* AddressCell */ = {
+			isa = PBXGroup;
+			children = (
+				91E72559214FEDE3003FAD76 /* AddressTableViewCell.swift */,
+				91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */,
+			);
+			path = AddressCell;
+			sourceTree = "<group>";
+		};
 		B2091500214A5A4D00C8B408 /* Wallets */ = {
 			isa = PBXGroup;
 			children = (
 				B20914FD214A564500C8B408 /* WalletsViewController.xib */,
 				B2091509214A60A700C8B408 /* ExportWalletViewController.xib */,
 				B2091505214A5AD000C8B408 /* WalletCell.xib */,
+				B2091504214A5AD000C8B408 /* WalletCell.swift */,
 				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
 			);
 			path = Wallets;
@@ -563,7 +612,6 @@
 				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
 				B20914FC214A564500C8B408 /* WalletsViewController.swift */,
 				B2091508214A60A700C8B408 /* ExportWalletViewController.swift */,
-				B2091504214A5AD000C8B408 /* WalletCell.swift */,
 			);
 			path = Wallets;
 			sourceTree = "<group>";
@@ -583,6 +631,7 @@
 			children = (
 				B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */,
 				B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */,
+				B271CF99214BAEDB0023FC18 /* TransactionCell.swift */,
 			);
 			path = "Transactions History";
 			sourceTree = "<group>";
@@ -591,7 +640,6 @@
 			isa = PBXGroup;
 			children = (
 				B271CF94214BAD730023FC18 /* TransactionsHistoryViewController.swift */,
-				B271CF99214BAEDB0023FC18 /* TransactionCell.swift */,
 			);
 			path = TransactionsHistory;
 			sourceTree = "<group>";
@@ -658,6 +706,7 @@
 			files = (
 				9197F2E62143B65600C358AA /* WalletCreationViewController.xib in Resources */,
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
+				91E7255C214FEDE3003FAD76 /* AddressTableViewCell.xib in Resources */,
 				9197F322214403A400C358AA /* SettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */,
@@ -674,8 +723,10 @@
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
 				B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */,
+				91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
+				91E72552214FDD1E003FAD76 /* SearchTokenViewController.xib in Resources */,
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
@@ -752,13 +803,16 @@
 				B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
+				91E7255B214FEDE3003FAD76 /* AddressTableViewCell.swift in Sources */,
 				B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
+				91E7256221506700003FAD76 /* TokensService.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
 				9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */,
 				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
+				91E72556214FE104003FAD76 /* SearchTokenCell.swift in Sources */,
 				914F229021499EDD00ED58E6 /* KeychainService.swift in Sources */,
 				914F229D2149C8F000ED58E6 /* BiometricsService.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
@@ -769,6 +823,7 @@
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
+				91E7256421507D16003FAD76 /* FiatService.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
@@ -776,6 +831,7 @@
 				B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
+				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,

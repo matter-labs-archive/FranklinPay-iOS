@@ -30,6 +30,14 @@ class ERC20TokenModel {
         self.decimals = decimals
         self.symbol = symbol
     }
+    
+    static func fromCoreData(crModel: ERC20Token) -> ERC20TokenModel {
+        let model = ERC20TokenModel(name: crModel.name ?? "",
+                                    address: crModel.address ?? "",
+                                    decimals: crModel.decimals ?? "",
+                                    symbol: crModel.symbol ?? "")
+        return model
+    }
 }
 
 extension ERC20TokenModel: Equatable {

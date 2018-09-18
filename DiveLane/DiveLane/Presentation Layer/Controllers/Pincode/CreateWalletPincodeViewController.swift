@@ -117,29 +117,73 @@ class CreateWalletPincodeViewController: PincodeViewController {
         savingWallet()
     }
     
-    func savingWallet() {
-        DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: true,
-                                          notificationText: "Saving wallet",
-                                          on: (self?.view)!)
+    func addFirstToken(completion: @escaping (Error?) -> Void) {
+        let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
+        localStorage.saveCustomToken(with: etherToken) { (error) in
+            completion(error)
         }
-        self.localStorage.saveWallet(wallet: self.wallet) { [weak self] (error) in
+    }
+    
+    func savingWallet() {
+        DispatchQueue.main.async { 
+            self.animation.waitAnimation(isEnabled: true,
+                                          notificationText: "Saving wallet",
+                                          on: (self.view)!)
+        }
+        self.localStorage.saveWallet(wallet: self.wallet) {  (error) in
             if error == nil {
-                self?.createPassword()
-                DispatchQueue.main.async { [weak self] in
-                    self?.animation.waitAnimation(isEnabled: false,
-                                                  on: (self?.view)!)
+                self.createPassword()
+                DispatchQueue.main.async { 
+                    self.animation.waitAnimation(isEnabled: false,
+                                                  on: (self.view)!)
                 }
-                self?.localStorage.selectWallet(wallet: self?.wallet, completion: {
-                    let tabViewController = AppController().goToApp()
-                    tabViewController.view.backgroundColor = UIColor.white
-                    self?.present(tabViewController, animated: true, completion: nil)
-                })
-            } else {
-                showErrorAlert(for: self!, error: error, completion: {
+                self.localStorage.selectWallet(wallet: self.wallet, completion: {
+                    
+                    DispatchQueue.global().async {
+                        if !UserDefaults.standard.bool(forKey: "tokensDownloaded") {
+                            TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
+                                if error == nil {
+                                    UserDefaults.standard.set(true, forKey: "tokensDownloaded")
+                                    UserDefaults.standard.synchronize()
+                                }
+                            })
+                        }
+                    }
+                    
+                    let dispatchGroup = DispatchGroup()
+                    dispatchGroup.enter()
+                    if !UserDefaults.standard.bool(forKey: "etherAdded") {
+                        self.addFirstToken(completion: { (error) in
+                            if error == nil {
+                                UserDefaults.standard.set(true, forKey: "etherAdded")
+                                UserDefaults.standard.synchronize()
+                                dispatchGroup.leave()
+                            } else {
+                                fatalError("Can't add ether - \(String(describing: error))")
+                            }
+                        })
+                    }
+                    dispatchGroup.notify(queue: .main) {
+                        if UserDefaults.standard.bool(forKey: "etherAdded") {
+                            self.goToApp()
+                        } else {
+                            showErrorAlert(for: self, error: NetworkErrors.couldnotParseUrlString, completion: {
+                                self.navigationController?.popViewController(animated: true)
+                            })
+                        }
+                    }
+                    
                     
                 })
+            } else {
+                fatalError("Error saving wallet - \(String(describing: error))")
             }
         }
+    }
+    
+    func goToApp() {
+        let tabViewController = AppController().goToApp()
+        tabViewController.view.backgroundColor = UIColor.white
+        self.present(tabViewController, animated: true, completion: nil)
     }
 }
