@@ -110,10 +110,10 @@ class AppController {
                 }
             }
             DispatchQueue.global().async { [unowned self] in
-                if !UserDefaults.standard.bool(forKey: "etherAdded") {
+                if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
                     self.addFirstToken(completion: { (error) in
                         if error == nil {
-                            UserDefaults.standard.set(true, forKey: "etherAdded")
+                            UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)")
                             UserDefaults.standard.synchronize()
                             
                         } else {

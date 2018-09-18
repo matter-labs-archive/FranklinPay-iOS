@@ -225,6 +225,18 @@ class WalletCreationViewController: UIViewController {
                                                   on: (self?.view)!)
                 }
                 self?.localStorage.selectWallet(wallet: wallet, completion: {
+                    DispatchQueue.global().async {
+                        if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
+                            AppController().addFirstToken(completion: { (error) in
+                                if error == nil {
+                                    UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)")
+                                    UserDefaults.standard.synchronize()
+                                } else {
+                                    fatalError("Can't add ether - \(String(describing: error))")
+                                }
+                            })
+                        }
+                    }
                     let tabViewController = AppController().goToApp()
                     tabViewController.view.backgroundColor = UIColor.white
                     self?.present(tabViewController, animated: true, completion: nil)

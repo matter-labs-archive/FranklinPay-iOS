@@ -145,10 +145,10 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     
                     let dispatchGroup = DispatchGroup()
                     dispatchGroup.enter()
-                    if !UserDefaults.standard.bool(forKey: "etherAdded") {
+                    if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
                         AppController().addFirstToken(completion: { (error) in
                             if error == nil {
-                                UserDefaults.standard.set(true, forKey: "etherAdded")
+                                UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)")
                                 UserDefaults.standard.synchronize()
                                 dispatchGroup.leave()
                             } else {
@@ -157,7 +157,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
                         })
                     }
                     dispatchGroup.notify(queue: .main) {
-                        if UserDefaults.standard.bool(forKey: "etherAdded") {
+                        if UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
                             self.goToApp()
                         } else {
                             showErrorAlert(for: self, error: NetworkErrors.couldnotParseUrlString, completion: {
