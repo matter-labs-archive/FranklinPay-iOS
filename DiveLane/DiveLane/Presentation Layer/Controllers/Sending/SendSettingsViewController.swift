@@ -114,7 +114,7 @@ class SendSettingsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.title = "Transaction"
+        self.title = "Send"
     }
     
     @IBAction func didChangeState(_ sender: UISegmentedControl) {
