@@ -115,10 +115,6 @@ class AppController {
                         if error == nil {
                             UserDefaults.standard.set(true, forKey: "etherAdded")
                             UserDefaults.standard.synchronize()
-                            startViewController = self.goToApp()
-                            startViewController?.view.backgroundColor = UIColor.white
-                            window.rootViewController = startViewController ?? UIViewController()
-                            window.makeKeyAndVisible()
                             
                         } else {
                             fatalError("Can't add ether - \(String(describing: error))")
@@ -126,6 +122,8 @@ class AppController {
                     })
                 }
             }
+            startViewController = self.goToApp()
+            startViewController?.view.backgroundColor = UIColor.white
             
         }
         window.rootViewController = startViewController ?? UIViewController()
