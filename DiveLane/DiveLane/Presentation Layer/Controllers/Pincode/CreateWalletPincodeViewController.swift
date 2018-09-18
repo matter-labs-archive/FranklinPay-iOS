@@ -152,7 +152,8 @@ class CreateWalletPincodeViewController: PincodeViewController {
                                 UserDefaults.standard.synchronize()
                                 dispatchGroup.leave()
                             } else {
-                                fatalError("Can't add ether - \(String(describing: error))")
+                                dispatchGroup.leave()
+                                //fatalError("Can't add ether - \(String(describing: error))")
                             }
                         })
                     }

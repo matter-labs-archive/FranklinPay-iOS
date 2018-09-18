@@ -117,7 +117,7 @@ class AppController {
                             UserDefaults.standard.synchronize()
                             
                         } else {
-                            fatalError("Can't add ether - \(String(describing: error))")
+                            //fatalError("Can't add ether - \(String(describing: error))")
                         }
                     })
                 }
@@ -135,8 +135,9 @@ class AppController {
         guard let currentWallet = KeysService().selectedWallet() else {
             return
         }
+        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
         let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
-        LocalDatabase().saveCustomToken(with: etherToken, forWallet: currentWallet) { (error) in
+        LocalDatabase().saveCustomToken(with: etherToken, forWallet: currentWallet, forNetwork: networkID) { (error) in
             completion(error)
         }
     }

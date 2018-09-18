@@ -85,7 +85,8 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             return
         }
         //TODO: - works just this way for now. need to work with addToken()
-        LocalDatabase().saveCustomToken(with: self.tokensList?[indexPath.row], forWallet: currentWallet, completion: { (error) in
+        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        LocalDatabase().saveCustomToken(with: self.tokensList?[indexPath.row], forWallet: currentWallet, forNetwork: networkID, completion: { (error) in
             if error == nil {
                 print("wow")
             }

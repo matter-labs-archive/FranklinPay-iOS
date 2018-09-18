@@ -81,7 +81,8 @@ class WalletViewController: UIViewController {
         guard let currentWallet = KeysService().selectedWallet() else {
             return
         }
-        let tokens = LocalDatabase().getAllTokens(for: currentWallet)
+        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        let tokens = LocalDatabase().getAllTokens(for: currentWallet, forNetwork: networkID)
         listOfTokens = tokens
         walletTableView.reloadData()
     }

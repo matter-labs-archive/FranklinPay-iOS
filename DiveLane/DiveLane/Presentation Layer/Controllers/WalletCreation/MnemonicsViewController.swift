@@ -38,14 +38,26 @@ class MnemonicsViewController: UIViewController {
         UIPasteboard.general.string = mnemonics
     }
     
+    func goToApp() {
+        let tabViewController = AppController().goToApp()
+        //tabViewController.view.backgroundColor = UIColor.white
+        self.navigationController?.present(tabViewController, animated: true, completion: {
+            UIApplication.shared.keyWindow?.rootViewController = tabViewController
+        })
+    }
+    
     @IBAction func createWalletButtonTapped(_ sender: Any) {
         keysService.createNewHDWallet(withName: name, password: password, mnemonics: mnemonics) { (keyWalletModel, error) in
             if let error = error {
-                print(error)
+                showErrorAlert(for: self, error: error, completion: {
+                    self.goToApp()
+                })
             } else {
                 self.localStorage.saveWallet(wallet: keyWalletModel, completion: { (error) in
                     if let error = error {
-                        print(error)
+                        showErrorAlert(for: self, error: error, completion: {
+                            self.goToApp()
+                        })
                     } else {
                         DispatchQueue.global().async {
                             if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
@@ -53,17 +65,15 @@ class MnemonicsViewController: UIViewController {
                                     if error == nil {
                                         UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                                         UserDefaults.standard.synchronize()
+                                        self.goToApp()
                                     } else {
                                         fatalError("Can't add ether - \(String(describing: error))")
                                     }
                                 })
+                            } else {
+                                self.goToApp()
                             }
                         }
-                        let tabViewController = AppController().goToApp()
-                        //tabViewController.view.backgroundColor = UIColor.white
-                        self.navigationController?.present(tabViewController, animated: true, completion: {
-                            UIApplication.shared.keyWindow?.rootViewController = tabViewController
-                        })
                     }
                 })
             }

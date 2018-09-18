@@ -17,14 +17,14 @@ protocol ILocalDatabase {
     func getAllWallets() -> [KeyWalletModel]
     func selectWallet(wallet: KeyWalletModel?, completion: @escaping() -> Void)
     func deleteWallet(wallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
-    func addToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
-    func getAllTokens(for wallet: KeyWalletModel) -> [ERC20TokenModel]
-    func saveCustomToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, completion: @escaping(Error?) -> Void)
+    //func addToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
+    func getAllTokens(for wallet: KeyWalletModel, forNetwork: Int64) -> [ERC20TokenModel]
+    func saveCustomToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, forNetwork: Int64, completion: @escaping(Error?) -> Void)
     func getToken(token: ERC20TokenModel?) -> ERC20TokenModel?
     func getTokensList(for searchingString: String) -> [ERC20TokenModel]?
     func saveTransactions(transactions: [ETHTransactionModel], forWallet wallet: KeyWalletModel, completion: @escaping(Error?) -> Void)
     func getAllTransactions(forWallet wallet: KeyWalletModel, andNetwork networkID: Int64) -> [ETHTransactionModel]
-    func deleteToken(token: ERC20TokenModel, forWallet: KeyWalletModel, completion: @escaping (Error?) -> Void)
+    func deleteToken(token: ERC20TokenModel, forWallet: KeyWalletModel, forNetwork: Int64, completion: @escaping (Error?) -> Void)
 }
 
 class LocalDatabase: ILocalDatabase {
@@ -247,7 +247,7 @@ class LocalDatabase: ILocalDatabase {
                 newToken.symbol = dict["symbol"] as? String
                 newToken.name = newToken.symbol
                 newToken.decimals = String((dict["decimal"] as? Int) ?? 0)
-                newToken.networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+                newToken.networkID = 0
                 newToken.isAdded = false
                 newToken.walletAddress = ""
             
@@ -259,7 +259,10 @@ class LocalDatabase: ILocalDatabase {
         }
     }
     
-    public func saveCustomToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, completion: @escaping(Error?) -> Void) {
+    public func saveCustomToken(with token: ERC20TokenModel?,
+                                forWallet: KeyWalletModel,
+                                forNetwork: Int64,
+                                completion: @escaping(Error?) -> Void) {
 
         container.performBackgroundTask { (context) in
             do {
@@ -284,7 +287,8 @@ class LocalDatabase: ILocalDatabase {
                 entity.walletAddress = wallet.address
 
                 //TODO
-                let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+                //let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+                let networkID = forNetwork
                 entity.networkID = networkID
 
             
@@ -296,37 +300,42 @@ class LocalDatabase: ILocalDatabase {
         }
     }
     
-    public func addToken(with token: ERC20TokenModel?, forWallet: KeyWalletModel, completion: @escaping(Error?) -> Void) {
-        
-        container.performBackgroundTask { (context) in
-            do {
-                guard let wallet = try self.mainContext.fetch(self.fetchWalletRequest(withAddress: forWallet.address)).first else {
-                    completion (NetworkErrors.couldnotParseJSON)
-                    return
-                }
-                
-                let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
-                requestToken.predicate = NSPredicate(format: "address = %@", (token?.address) ?? "")
-            
-                let entity = try self.mainContext.fetch(requestToken).first
-                entity?.setValue(true, forKey: "isAdded")
-                entity?.setValue(wallet.address, forKey: "walletAddress")
-                let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
-                entity?.setValue(networkID, forKey: "networkID")
-                try context.save()
-                completion(nil)
-            } catch {
-                completion(error)
-            }
-        }
-    }
+//    public func addToken(with token: ERC20TokenModel?,
+//                         forWallet: KeyWalletModel,
+//                         forNetwork: Int64,
+//                         completion: @escaping(Error?) -> Void) {
+//
+//        container.performBackgroundTask { (context) in
+//            do {
+//                guard let wallet = try self.mainContext.fetch(self.fetchWalletRequest(withAddress: forWallet.address)).first else {
+//                    completion (NetworkErrors.couldnotParseJSON)
+//                    return
+//                }
+//
+//                let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
+//                requestToken.predicate = NSPredicate(format: "address = %@ && networkID = %@", (token?.address) ?? "")
+//
+//                let entity = try self.mainContext.fetch(requestToken).first
+//                entity?.setValue(true, forKey: "isAdded")
+//                entity?.setValue(wallet.address, forKey: "walletAddress")
+//                //let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+//                let networkID = forNetwork
+//                entity?.setValue(networkID, forKey: "networkID")
+//                try context.save()
+//                completion(nil)
+//            } catch {
+//                completion(error)
+//            }
+//        }
+//    }
     
     
-    public func getAllTokens(for wallet: KeyWalletModel) -> [ERC20TokenModel] {
+    public func getAllTokens(for wallet: KeyWalletModel, forNetwork: Int64) -> [ERC20TokenModel] {
         do {
             guard let wallet = try mainContext.fetch(self.fetchWalletRequest(withAddress: wallet.address)).first else {return []}
             let requestTokens: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
-            let networkID: Int64 = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+            let networkID = forNetwork
+            //let networkID: Int64 = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
         
             requestTokens.predicate = NSPredicate(format: "networkID == %@ && isAdded == %@", NSNumber(value: networkID), NSNumber(value: true))
             let results = try mainContext.fetch(requestTokens)
@@ -362,7 +371,10 @@ class LocalDatabase: ILocalDatabase {
         }
     }
     
-    public func deleteToken(token: ERC20TokenModel, forWallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
+    public func deleteToken(token: ERC20TokenModel,
+                            forWallet: KeyWalletModel,
+                            forNetwork: Int64,
+                            completion: @escaping (Error?) -> Void) {
         do {
             
             guard let wallet = try self.mainContext.fetch(self.fetchWalletRequest(withAddress: forWallet.address)).first else {
@@ -371,7 +383,7 @@ class LocalDatabase: ILocalDatabase {
             }
             
             let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
-            requestToken.predicate = NSPredicate(format: "address = %@", token.address)
+            requestToken.predicate = NSPredicate(format: "address = %@ && networkID = %@", token.address, forNetwork)
         
             let results = try mainContext.fetch(requestToken)
             let tokens = results.filter{$0.walletAddress == wallet.address}

@@ -231,22 +231,29 @@ class WalletCreationViewController: UIViewController {
                                 if error == nil {
                                     UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                                     UserDefaults.standard.synchronize()
+                                    self?.goToApp()
                                 } else {
-                                    fatalError("Can't add ether - \(String(describing: error))")
+                                    showErrorAlert(for: self!, error: error, completion: {
+                                        self?.goToApp()
+                                    })
                                 }
                             })
+                        } else {
+                            self?.goToApp()
                         }
                     }
-                    let tabViewController = AppController().goToApp()
-                    tabViewController.view.backgroundColor = UIColor.white
-                    self?.present(tabViewController, animated: true, completion: nil)
-                })
-            } else {
-                showErrorAlert(for: self!, error: error, completion: {
                     
                 })
+            } else {
+                fatalError("String(describing: error)")
             }
         }
+    }
+    
+    func goToApp() {
+        let tabViewController = AppController().goToApp()
+        tabViewController.view.backgroundColor = UIColor.white
+        self.present(tabViewController, animated: true, completion: nil)
     }
     
     func showChooseAlert(forWallet withName: String, withPassword: String) {

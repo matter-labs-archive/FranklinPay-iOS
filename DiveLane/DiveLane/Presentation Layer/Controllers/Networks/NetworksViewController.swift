@@ -75,6 +75,8 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
                     if error == nil {
                         UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                         UserDefaults.standard.synchronize()
+                        
+                        self.navigationController?.popViewController(animated: true)
                     } else {
                         fatalError("Can't add ether - \(String(describing: error))")
                     }
@@ -82,7 +84,6 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        self.navigationController?.popViewController(animated: true)
         
     }
     
