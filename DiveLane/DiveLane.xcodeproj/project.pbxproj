@@ -103,6 +103,7 @@
 		B2E668D82150FA0500C3CC2D /* TokenDropdownManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D72150FA0500C3CC2D /* TokenDropdownManager.swift */; };
 		B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */; };
 		B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */; };
+		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -205,6 +206,7 @@
 		B2E668D72150FA0500C3CC2D /* TokenDropdownManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenDropdownManager.swift; sourceTree = "<group>"; };
 		B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellDropdown.swift; sourceTree = "<group>"; };
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
+		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -478,6 +480,7 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B2E668DD2151237400C3CC2D /* Sending */,
 				914F22932149A23600ED58E6 /* Pincode */,
 				9197F323214403FA00C358AA /* Settings */,
 				9197F30C2143EF3300C358AA /* Transactions */,
@@ -663,8 +666,8 @@
 				B25BD1372143E5BC0091C481 /* ParameterCell.swift */,
 				B2E668D02150ED6000C3CC2D /* WalletCellDropdown.xib */,
 				B2E668CF2150ED6000C3CC2D /* WalletCellDropdown.swift */,
-				B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */,
 				B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */,
+				B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -676,6 +679,14 @@
 				B2E668D72150FA0500C3CC2D /* TokenDropdownManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		B2E668DD2151237400C3CC2D /* Sending */ = {
+			isa = PBXGroup;
+			children = (
+				B2E668DE2151238200C3CC2D /* Enumerations.swift */,
+			);
+			path = Sending;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -834,6 +845,7 @@
 				B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */,
 				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
 				914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */,
+				B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
@@ -1036,7 +1048,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				DEVELOPMENT_TEAM = U8FZ3UYF69;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1057,7 +1069,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				DEVELOPMENT_TEAM = U8FZ3UYF69;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

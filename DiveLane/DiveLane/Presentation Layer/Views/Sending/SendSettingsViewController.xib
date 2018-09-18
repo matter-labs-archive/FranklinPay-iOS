@@ -14,6 +14,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendSettingsViewController" customModule="DiveLane" customModuleProvider="target">
             <connections>
                 <outlet property="addressFromLabel" destination="OTk-ll-WAB" id="xNr-Ih-BGU"/>
+                <outlet property="addressFromView" destination="BpV-tG-abx" id="qor-Iq-8pr"/>
                 <outlet property="amountTextField" destination="2Hl-Hy-SAZ" id="RFH-2y-KTn"/>
                 <outlet property="closeButton" destination="XzI-32-fYq" id="yMz-oo-hXn"/>
                 <outlet property="closeView" destination="408-tj-cCm" id="gbJ-ob-yxJ"/>
@@ -22,6 +23,7 @@
                 <outlet property="gasPriceTextField" destination="FtW-1l-mAM" id="M5R-g7-dDv"/>
                 <outlet property="qrButton" destination="6rH-HM-fji" id="BxN-mA-sXS"/>
                 <outlet property="sendButton" destination="bT4-ka-714" id="9ub-gC-9kt"/>
+                <outlet property="stackView" destination="y4A-t9-eUe" id="JRa-7b-P7h"/>
                 <outlet property="tokenNameLabel" destination="eSc-aQ-2YI" id="cVH-8G-mQn"/>
                 <outlet property="view" destination="T8V-5D-bFN" id="yhT-oR-cph"/>
                 <outletCollection property="textFields" destination="RFX-hg-3mp" collectionClass="NSMutableArray" id="K4E-lw-uUm"/>

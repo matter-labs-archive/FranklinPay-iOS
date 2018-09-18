@@ -14,6 +14,8 @@ protocol TokenSelectionDelegate: class {
 class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: TokenSelectionDelegate?
     
+    let localStorage = LocalDatabase()
+    
     var tokens = [ERC20TokenModel]()
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -21,7 +23,8 @@ class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCellDropdown") as? TokenCellDropdown else { return UITableViewCell() }
-        cell.configure(tokens[indexPath.row])
+        guard let wallet = localStorage.getWallet() else { return UITableViewCell() }
+        cell.configure(tokens[indexPath.row], wallet: wallet)
         return cell
     }
     

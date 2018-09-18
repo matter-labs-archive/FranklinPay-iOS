@@ -13,45 +13,44 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletCellDropdown" id="KGk-i7-Jjw" customClass="WalletCellDropdown" customModule="DiveLane" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="321" height="44"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WalletCellDropdown" rowHeight="76" id="KGk-i7-Jjw" customClass="WalletCellDropdown" customModule="DiveLane" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="321" height="76"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="321" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="321" height="75.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvA-bG-E6V">
-                        <rect key="frame" x="16" y="11" width="45" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AvA-bG-E6V">
+                        <rect key="frame" x="16" y="11" width="39.5" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="xOt-Dp-Gje"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3 ETH" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2fx-za-2Qf">
-                        <rect key="frame" x="257" y="12" width="48" height="21"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="48" id="ei0-XF-INI"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fx-za-2Qf">
+                        <rect key="frame" x="238" y="11" width="67" height="24"/>
+                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B4m-oe-1hL">
-                        <rect key="frame" x="69" y="11" width="180" height="21"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <nil key="textColor"/>
+                        <rect key="frame" x="16" y="39" width="39.5" height="26"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="2dx-lg-xEl"/>
+                    <constraint firstItem="2fx-za-2Qf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="2dx-lg-xEl"/>
                     <constraint firstItem="AvA-bG-E6V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="3hF-DH-Y5F"/>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="Kde-Tb-Re9"/>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="leading" secondItem="B4m-oe-1hL" secondAttribute="trailing" constant="8" id="L09-di-caI"/>
-                    <constraint firstItem="B4m-oe-1hL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="Yl3-Tn-Pnl"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="AvA-bG-E6V" secondAttribute="bottom" constant="1" id="ccQ-FP-abw"/>
+                    <constraint firstItem="2fx-za-2Qf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AvA-bG-E6V" secondAttribute="trailing" constant="8" id="FFx-cT-wM9"/>
+                    <constraint firstItem="B4m-oe-1hL" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="HXQ-bJ-lJl"/>
+                    <constraint firstItem="B4m-oe-1hL" firstAttribute="top" secondItem="AvA-bG-E6V" secondAttribute="bottom" constant="4" id="LrC-iA-2vQ"/>
+                    <constraint firstItem="2fx-za-2Qf" firstAttribute="bottom" secondItem="AvA-bG-E6V" secondAttribute="bottom" id="QT5-fa-0PQ"/>
+                    <constraint firstItem="B4m-oe-1hL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Ta3-HD-OVn"/>
                     <constraint firstItem="AvA-bG-E6V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="gK2-QA-5mh"/>
-                    <constraint firstItem="B4m-oe-1hL" firstAttribute="leading" secondItem="AvA-bG-E6V" secondAttribute="trailing" constant="8" id="hnT-ir-EFy"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="B4m-oe-1hL" secondAttribute="bottom" constant="1" id="m0S-wl-OfC"/>
                     <constraint firstItem="2fx-za-2Qf" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="r9m-1N-Qc8"/>
                 </constraints>
             </tableViewCellContentView>
@@ -61,7 +60,7 @@
                 <outlet property="walletBalance" destination="2fx-za-2Qf" id="M47-po-g9Z"/>
                 <outlet property="walletName" destination="AvA-bG-E6V" id="HSu-NM-nxK"/>
             </connections>
-            <point key="canvasLocation" x="46.5" y="54"/>
+            <point key="canvasLocation" x="46.5" y="70"/>
         </tableViewCell>
     </objects>
 </document>

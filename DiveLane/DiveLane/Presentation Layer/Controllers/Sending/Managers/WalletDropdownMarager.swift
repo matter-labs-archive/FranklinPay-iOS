@@ -16,6 +16,7 @@ class WalletDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSourc
     
     var wallets = [KeyWalletModel]()
     
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return wallets.count
     }
