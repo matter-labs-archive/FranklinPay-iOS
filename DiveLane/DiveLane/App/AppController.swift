@@ -79,8 +79,16 @@ class AppController {
         nav3.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         nav3.navigationBar.barStyle = .black
         nav3.viewControllers = [transactionHistory]
+        let sendViewController = SendSettingsViewController()
+        let navSend = UINavigationController()
+        navSend.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "send"), tag: 4)
+        navSend.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
+        navSend.navigationBar.tintColor = UIColor.white
+        navSend.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        navSend.navigationBar.barStyle = .black
+        navSend.viewControllers = [sendViewController]
         let tabs = UITabBarController()
-        tabs.viewControllers = [nav1, nav3, nav2]
+        tabs.viewControllers = [nav1, nav3, nav2, navSend]
         
         return tabs
     }
