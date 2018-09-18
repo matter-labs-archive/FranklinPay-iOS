@@ -81,17 +81,15 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        //TODO: - works just this way for now. need to work with addToken()
-        LocalDatabase().deleteToken(token: (tokensList?[indexPath.row])!) { (error) in
-            if error == nil {
-                LocalDatabase().saveCustomToken(with: self.tokensList?[indexPath.row], completion: { (error) in
-                    if error == nil {
-                        print("wow")
-                    }
-                })
-            }
+        guard let currentWallet = KeysService().selectedWallet() else {
+            return
         }
+        //TODO: - works just this way for now. need to work with addToken()
+        LocalDatabase().saveCustomToken(with: self.tokensList?[indexPath.row], forWallet: currentWallet, completion: { (error) in
+            if error == nil {
+                print("wow")
+            }
+        })
         
         tableView.deselectRow(at: indexPath, animated: true)
         

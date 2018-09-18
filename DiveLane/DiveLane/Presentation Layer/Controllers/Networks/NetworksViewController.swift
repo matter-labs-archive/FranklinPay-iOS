@@ -70,10 +70,10 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
         CurrentNetwork.currentNetwork = networks[indexPath.row]
         CurrentWeb.currentWeb = webs[indexPath.row]
         DispatchQueue.global().async {
-            if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
+            if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
                 AppController().addFirstToken(completion: { (error) in
                     if error == nil {
-                        UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)")
+                        UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                         UserDefaults.standard.synchronize()
                     } else {
                         fatalError("Can't add ether - \(String(describing: error))")

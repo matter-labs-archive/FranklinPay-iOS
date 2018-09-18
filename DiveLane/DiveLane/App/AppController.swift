@@ -110,10 +110,10 @@ class AppController {
                 }
             }
             DispatchQueue.global().async { [unowned self] in
-                if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)") {
+                if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
                     self.addFirstToken(completion: { (error) in
                         if error == nil {
-                            UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)")
+                            UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                             UserDefaults.standard.synchronize()
                             
                         } else {
@@ -132,8 +132,11 @@ class AppController {
     }
     
     func addFirstToken(completion: @escaping (Error?) -> Void) {
+        guard let currentWallet = KeysService().selectedWallet() else {
+            return
+        }
         let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
-        LocalDatabase().saveCustomToken(with: etherToken) { (error) in
+        LocalDatabase().saveCustomToken(with: etherToken, forWallet: currentWallet) { (error) in
             completion(error)
         }
     }

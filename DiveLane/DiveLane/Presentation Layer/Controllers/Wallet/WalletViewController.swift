@@ -78,7 +78,10 @@ class WalletViewController: UIViewController {
     
     
     func getTokensList() {
-        let tokens = LocalDatabase().getAllTokens()
+        guard let currentWallet = KeysService().selectedWallet() else {
+            return
+        }
+        let tokens = LocalDatabase().getAllTokens(for: currentWallet)
         listOfTokens = tokens
         walletTableView.reloadData()
     }
