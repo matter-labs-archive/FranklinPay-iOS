@@ -185,17 +185,23 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-//        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {return}
-//        let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
-//
-//        CurrentToken.currentToken = listOfTokens[indexPath.row]
-//
-//        let tokenViewController = TokenViewController(
-//            walletAddress: currentWallet ?? "",
-//            walletName: selectedCell?.walletName.text ?? "",
-//            tokenBalance: selectedCell?.balance.text ?? "0")
-//        self.navigationController?.pushViewController(tokenViewController, animated: true)
-//        tableView.deselectRow(at: indexPath, animated: true)
+        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {return}
+        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+        
+        guard let selectedCell = cell else {
+            return
+        }
+        
+        guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else { return }
+        
+        let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
+        
+        let tokenViewController = TokenViewController(
+            wallet: token.inWallet,
+            token: token.token,
+            tokenBalance: selectedCell.balance.text ?? "0")
+        self.navigationController?.pushViewController(tokenViewController, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     

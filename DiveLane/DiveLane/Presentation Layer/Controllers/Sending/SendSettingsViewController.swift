@@ -27,8 +27,8 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var addressFromView: UIView!
     @IBOutlet weak var stackView: UIStackView!
     
-    var walletName: String?
-    var walletAddress: String?
+    var wallet: KeyWalletModel?
+    var token: ERC20TokenModel?
     var tokenBalance: String?
     var isFromDeepLink: Bool = false
     var height = NSLayoutConstraint()
@@ -53,13 +53,13 @@ class SendSettingsViewController: UIViewController {
     let tokenDropdownManager = TokenDropdownManager()
     let walletDropdownManager = WalletDropdownManager()
     
-    convenience init(walletName: String,
+    convenience init(wallet: KeyWalletModel,
                      tokenBalance: String,
-                     walletAddress: String) {
+                     token: ERC20TokenModel) {
         self.init()
-        self.walletName = walletName
+        self.wallet = wallet
         self.tokenBalance = tokenBalance
-        self.walletAddress = walletAddress
+        self.token = token
     }
     
     convenience init(tokenAddress: String?,
@@ -67,19 +67,18 @@ class SendSettingsViewController: UIViewController {
                      destinationAddress: String,
                      isFromDeepLink: Bool = true) {
         self.init()
-        CurrentToken.currentToken?.address = tokenAddress ?? ""
+        token?.address = tokenAddress ?? ""
         let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
         let resultAmount = Float(amountFloat/decimals)
         self.amountInString = String(resultAmount)
         self.destinationAddress = destinationAddress
         let wallet = LocalDatabase().getWallet()
-        self.walletName = wallet?.name
-        self.walletAddress = wallet?.address
+        self.wallet = wallet
         self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
-                                             address: KeysService().selectedWallet()?.address ?? "")
+                                             address: wallet?.address ?? "")
             { (result, error) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
@@ -105,7 +104,7 @@ class SendSettingsViewController: UIViewController {
         addGestureRecognizer()
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
-        tokenNameLabel.text = CurrentToken.currentToken?.symbol.uppercased()
+        tokenNameLabel.text = token?.symbol.uppercased()
         sendButton.isEnabled = false
         sendButton.alpha = 0.5
         enterAddressTextField.text = destinationAddress
@@ -198,7 +197,7 @@ class SendSettingsViewController: UIViewController {
     
     //    func sendFunds(dict: [String:Any], enteredPassword: String) {
     //        //let sendEthService: SendEthService = self.tokenService.selectedERC20Token().address.isEmpty ? SendEthServiceImplementation() : ERC20TokenContractMethodsServiceImplementation()
-    //        let token  = CurrentToken.currentToken
+    //        let token  = token
     //        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
     //        var options = Web3Options.defaultOptions()
     //        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
@@ -211,7 +210,7 @@ class SendSettingsViewController: UIViewController {
     //        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { [weak self] (result) in
     //            switch result {
     //            case .Success(let res):
-    //                CurrentToken.currentToken = nil
+    //                token = nil
     //                if (self?.isFromDeepLink)!{
     //                    showSuccessAlert(for: self!, completion: {
     //                        let startViewController = AppController().goToApp()
@@ -282,20 +281,20 @@ class SendSettingsViewController: UIViewController {
                 return
         }
         
-        if CurrentToken.currentToken?.address == "" {
+        if token?.address == "" {
             TransactionsService().prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else { return }
                     guard let gasLimit = self?.gasLimitTextField.text else { return }
-                    guard let name = self?.walletName else { return }
+                    guard let name = self?.wallet?.name else { return }
                     let dict:[String:Any] = [
                         "gasPrice":gasPrice,
                         "gasLimit":gasLimit,
                         "transaction":transaction,
                         "amount": amount,
                         "name": name,
-                        "fromAddress": self!.walletAddress!,
+                        "fromAddress": self!.wallet?.address ?? "",
                         "toAddress": destinationAddress]
                     
                     showAccessAlert(for: self!, with: "Send the transaction?", completion: { (result) in
@@ -326,19 +325,19 @@ class SendSettingsViewController: UIViewController {
                 }
             }
         } else {
-            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (CurrentToken.currentToken?.address)!) { [weak self] (result) in
+            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (token?.address)!) { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else { return }
                     guard let gasLimit = self?.gasLimitTextField.text else { return }
-                    guard let name = self?.walletName else { return }
+                    guard let name = self?.wallet?.name else { return }
                     let dict:[String:Any] = [
                         "gasPrice":gasPrice,
                         "gasLimit":gasLimit,
                         "transaction":transaction,
                         "amount":amount,
                         "name": name,
-                        "fromAddress": self!.walletAddress!,
+                        "fromAddress": self!.wallet?.address ?? "",
                         "toAddress": destinationAddress]
                     
                     //self?.sendFunds(dict: dict, enteredPassword: withPassword)
@@ -382,7 +381,7 @@ class SendSettingsViewController: UIViewController {
     func checkPassword(completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                    account: "\(self.walletName ?? "")-password",
+                                                    account: "\(self.wallet?.name ?? "")-password",
                 accessGroup: KeychainConfiguration.accessGroup)
             let keychainPassword = try passwordItem.readPassword()
             completion(keychainPassword)
@@ -426,7 +425,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
     
     func didSelectToken(token: ERC20TokenModel) {
         self.tokenNameLabel.text = token.symbol.uppercased()
-        CurrentToken.currentToken = token
+        self.token = token
         UIView.animate(withDuration: 0.5, animations: {
             self.dropDownView.alpha = 0.0
         }) { (_) in
@@ -446,8 +445,8 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
         if let parsed = Web3.EIP67CodeParser.parse(value) {
             enterAddressTextField.text = parsed.address.address
             if let amount = parsed.amount {
-                if CurrentToken.currentToken != ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
-                    CurrentToken.currentToken = ERC20TokenModel(name: "", address: "", decimals: "", symbol: "")
+                if token != ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
+                    token = ERC20TokenModel(name: "", address: "", decimals: "", symbol: "")
                 }
                 amountTextField.text = Web3.Utils.formatToEthereumUnits(
                     amount,
