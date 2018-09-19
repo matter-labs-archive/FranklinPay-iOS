@@ -12,17 +12,17 @@ PODS:
   - PromiseKit/UIKit (6.4.0):
     - PromiseKit/CorePromise
   - QRCodeReader.swift (8.1.1)
-  - Result (3.2.4)
-  - scrypt (1.8):
+  - Result (4.0.0)
+  - scrypt (2.0):
     - CryptoSwift (~> 0.11)
   - secp256k1_ios (0.1.3)
   - SipHash (1.2.2)
-  - web3swift (1.1.8):
+  - web3swift (1.1.9):
     - BigInt (~> 3.1)
     - CryptoSwift (~> 0.11)
     - PromiseKit (~> 6.3)
-    - Result (~> 3.0)
-    - scrypt (~> 1.7)
+    - Result (~> 4.0)
+    - scrypt (~> 2.0)
     - secp256k1_ios (~> 0.1)
 
 DEPENDENCIES:
@@ -47,7 +47,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   web3swift:
-    :commit: fb46ac5d4d41cc9ad7f94816997419af21eba81b
+    :commit: e6af4b58554920e3c0a6fcfa68581ee015b869e6
     :git: https://github.com/matterinc/web3swift
 
 SPEC CHECKSUMS:
@@ -55,11 +55,11 @@ SPEC CHECKSUMS:
   CryptoSwift: 1c07ca50843dd48bc54e6ea53d7a4dba3b645716
   PromiseKit: ae3616f45d7bb9bf4ff1e91abc9b7a8c48a340e0
   QRCodeReader.swift: b164a681887de276d405ff02bce854d82cd6360b
-  Result: d2d07204ce72856f1fd9130bbe42c35a7b0fea10
-  scrypt: cc8333b4338b9d4127743e3f7b1304e309d8061c
+  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  scrypt: 3fe5b1a3b0976f97cd87488673a8f7c65708cc84
   secp256k1_ios: ac9ef04e761f43c58012b28548afa91493761f17
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
-  web3swift: 2163f6bd5c48178eb53284728f059fc94221c9bd
+  web3swift: 4895c765c9858eb4737ef222eb8643bb5fc7fdb3
 
 PODFILE CHECKSUM: 951877128cab13affaaa46b33018bfc475009a0c
 

@@ -41,7 +41,4 @@ class TokenCellDropdown: UITableViewCell {
         super.prepareForReuse()
         tokenBalance.text = "Loading..."
     }
-    
-
-    
 }
