@@ -53,7 +53,7 @@ class WalletViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = "Wallet"
+        self.title = "Wallets"
         self.tabBarController?.tabBar.selectedItem?.title = nil
         
     }
@@ -120,10 +120,10 @@ class WalletViewController: UIViewController {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let button = UIButton(type: .system)
-        button.setTitle("Close", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .blue
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 100))
+        button.setTitle(twoDimensionalTokensArray[section].tokens.first?.inWallet.name, for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .lightGray
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
 
         button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
@@ -147,7 +147,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let isExpanded = twoDimensionalTokensArray[section].isExpanded
         twoDimensionalTokensArray[section].isExpanded = !isExpanded
         
-        button.setTitle(isExpanded ? "Open" : "Close", for: .normal)
+        //button.setTitle(isExpanded ? "Open" : "Close", for: .normal)
         
         if isExpanded {
             walletTableView.deleteRows(at: indexPaths, with: .fade)
