@@ -15,8 +15,9 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var balance: UILabel!
     @IBOutlet weak var tokenShortName: UILabel!
     @IBOutlet weak var tokenIcon: UIImageView!
-    @IBOutlet weak var walletName: UILabel!
     @IBOutlet weak var tokenAddress: UILabel!
+    
+    var link: WalletViewController?
     
     let keysService: KeysService = KeysService()
     
@@ -25,13 +26,12 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
     
-    func configure(token: ERC20TokenModel?, forWallet: String) {
+    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
         
         guard let token = token else {
             return
         }
         
-        let walletName = LocalDatabase().getWallet()?.name
         var networkName: String?
         guard CurrentNetwork.currentNetwork != nil else {return}
         switch CurrentNetwork.currentNetwork! {
@@ -41,7 +41,6 @@ class TokenCell: UITableViewCell {
         case .Kovan: networkName = "Kovan"
         case .Custom: networkName = ""
         }
-        self.walletName.text = (walletName ?? "")
         self.tokenShortName.text = token.symbol.uppercased()
         
         if token == ERC20TokenModel(name: "Ether",
@@ -49,7 +48,7 @@ class TokenCell: UITableViewCell {
                                     decimals: "18",
                                     symbol: "Eth")
         {
-            self.tokenAddress.text = forWallet
+            self.tokenAddress.text = "Wallet: \(forWallet.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getETHbalance()
                 { [weak self] (result, error) in
@@ -58,16 +57,30 @@ class TokenCell: UITableViewCell {
                     }
             }
         } else {
-            self.tokenAddress.text = token.address
+            self.tokenAddress.text = "Token: \(token.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address,
-                                             address: forWallet)
+                                             address: forWallet.name)
             { [weak self] (result, error) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
                 }
             }
         }
+        
+        //select token
+        let starButton = UIButton(type: .system)
+        starButton.setImage(UIImage(named: "qr"), for: .normal)
+        starButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        
+        starButton.tintColor = .red
+        starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
+        
+        accessoryView = starButton
+    }
+    
+    @objc private func handleMarkAsSelected() {
+        link?.selectToken(cell: self)
     }
     
     override func prepareForReuse()
@@ -76,7 +89,6 @@ class TokenCell: UITableViewCell {
         
         self.balance.text = ""
         self.tokenShortName.text = ""
-        self.walletName.text = ""
         self.tokenAddress.text = ""
         self.tokenIcon.image = UIImage(named: "ether")
     }

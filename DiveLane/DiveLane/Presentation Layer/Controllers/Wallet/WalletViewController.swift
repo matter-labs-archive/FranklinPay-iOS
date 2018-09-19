@@ -12,6 +12,12 @@ class WalletViewController: UIViewController {
     
     @IBOutlet weak var walletTableView: UITableView!
     
+    var localDatabase: ILocalDatabase?
+    var keysService: IKeysService?
+    var wallets: [KeyWalletModel]?
+    var twoDimensionalTokensArray: [ExpandableTableTokens] = []
+    
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -21,31 +27,34 @@ class WalletViewController: UIViewController {
         
         return refreshControl
     }()
-    
-    var listOfTokens = [ERC20TokenModel]()
-    var currentWallet: String?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
-        walletTableView.tableFooterView = UIView()
-        
+        self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
-        
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
         
+        initDatabase()
+        
         self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
+    }
+    
+    func initDatabase() {
+        localDatabase = LocalDatabase()
+        wallets = localDatabase?.getAllWallets()
+        keysService = KeysService()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         self.title = "Wallet"
         self.tabBarController?.tabBar.selectedItem?.title = nil
-        
-        
         
     }
     
@@ -54,15 +63,29 @@ class WalletViewController: UIViewController {
         updateData()
     }
     
+    func selectToken(cell: UITableViewCell) {
+        
+        guard let indexPathTapped = walletTableView.indexPath(for: cell) else { return }
+        
+        let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
+        print(token)
+        
+        let isSelected = token.isSelected
+        CurrentToken.currentToken = token.token
+        twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = !isSelected
+        
+        cell.accessoryView?.tintColor = isSelected ? UIColor.lightGray : .red
+    }
+    
     func updateData() {
-        self.currentWallet = KeysService().selectedWallet()?.address
-        listOfTokens.removeAll()
-        getTokensList()
+        twoDimensionalTokensArray.removeAll()
+        getTokensList { [weak self] in
+            self?.walletTableView.reloadData()
+        }
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         updateData()
-        self.walletTableView.reloadData()
         refreshControl.endRefreshing()
     }
     
@@ -77,74 +100,102 @@ class WalletViewController: UIViewController {
     }
     
     
-    func getTokensList() {
-        guard let currentWallet = KeysService().selectedWallet() else {
-            return
-        }
+    func getTokensList(completion: @escaping ()->()) {
+        guard let wallets = wallets else { return }
+        
         let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
-        let tokens = LocalDatabase().getAllTokens(for: currentWallet, forNetwork: networkID)
-        listOfTokens = tokens
-        walletTableView.reloadData()
+        
+        for wallet in wallets {
+            let tokensForWallet = localDatabase?.getAllTokens(for: wallet, forNetwork: networkID)
+            if let tokens = tokensForWallet {
+                let expandableTokens = ExpandableTableTokens(isExpanded: true,
+                                                             tokens: tokens.map{ TableToken(token: $0, inWallet: wallet, isSelected: false)})
+                twoDimensionalTokensArray.append(expandableTokens)
+            }
+        }
     }
     
 }
 
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch section {
-        case WalletTableViewSections.tokensList.rawValue:
-            return listOfTokens.count
-        default:
-            return 0
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let button = UIButton(type: .system)
+        button.setTitle("Close", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .blue
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+
+        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+
+        button.tag = section
+
+        return button
+    }
+    
+    @objc func handleExpandClose(button: UIButton) {
+        
+        let section = button.tag
+        
+        var indexPaths = [IndexPath]()
+        for row in twoDimensionalTokensArray[section].tokens.indices {
+            print(0, row)
+            let indexPath = IndexPath(row: row, section: section)
+            indexPaths.append(indexPath)
+        }
+        
+        let isExpanded = twoDimensionalTokensArray[section].isExpanded
+        twoDimensionalTokensArray[section].isExpanded = !isExpanded
+        
+        button.setTitle(isExpanded ? "Open" : "Close", for: .normal)
+        
+        if isExpanded {
+            walletTableView.deleteRows(at: indexPaths, with: .fade)
+        } else {
+            walletTableView.insertRows(at: indexPaths, with: .fade)
         }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return twoDimensionalTokensArray.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.section {
-        case WalletTableViewSections.tokensList.rawValue:
-            return 100
-        default:
-            return 0
-        }
+        return 100
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == WalletTableViewSections.tokensList.rawValue {
-            return "Tokens list"
-        } else {
-            return "..."
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if !twoDimensionalTokensArray[section].isExpanded {
+            return 0
         }
+        
+        return twoDimensionalTokensArray[section].tokens.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.section {
-        case WalletTableViewSections.tokensList.rawValue :
-            let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell", for: indexPath) as! TokenCell
-            cell.configure(token: listOfTokens[indexPath.row], forWallet: currentWallet ?? "")
-            return cell
-        default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EmptySectionCell", for: indexPath)
-            return cell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell", for: indexPath) as! TokenCell
+        cell.link = self
+        let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
+        cell.configure(token: token.token, forWallet: token.inWallet)
+        
+        cell.accessoryView?.tintColor = token.isSelected ? UIColor.red : .lightGray
+    
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {return}
-        let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
-        
-        CurrentToken.currentToken = listOfTokens[indexPath.row]
-        
-        let tokenViewController = TokenViewController(
-            walletAddress: currentWallet ?? "",
-            walletName: selectedCell?.walletName.text ?? "",
-            tokenBalance: selectedCell?.balance.text ?? "0")
-        self.navigationController?.pushViewController(tokenViewController, animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
+//        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {return}
+//        let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+//
+//        CurrentToken.currentToken = listOfTokens[indexPath.row]
+//
+//        let tokenViewController = TokenViewController(
+//            walletAddress: currentWallet ?? "",
+//            walletName: selectedCell?.walletName.text ?? "",
+//            tokenBalance: selectedCell?.balance.text ?? "0")
+//        self.navigationController?.pushViewController(tokenViewController, animated: true)
+//        tableView.deselectRow(at: indexPath, animated: true)
         
     }
     
