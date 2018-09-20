@@ -39,7 +39,6 @@ class WalletViewController: UIViewController {
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
-        
         self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
     }
     
@@ -59,11 +58,9 @@ class WalletViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         initDatabase { [weak self] in
             self?.updateData()
         }
-        
     }
     
     func unselectAll() {
@@ -137,6 +134,7 @@ class WalletViewController: UIViewController {
                                                                            inWallet: wallet,
                                                                            isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet )})
                 twoDimensionalTokensArray.append(expandableTokens)
+                completion()
             }
         }
     }
