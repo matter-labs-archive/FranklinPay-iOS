@@ -67,25 +67,28 @@ class SendSettingsViewController: UIViewController {
                      destinationAddress: String,
                      isFromDeepLink: Bool = true) {
         self.init()
-        token?.address = tokenAddress ?? ""
+        token = ERC20TokenModel(name: "", address: tokenAddress ?? "", decimals: "18", symbol: "")
         let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
         let resultAmount = Float(amountFloat/decimals)
         self.amountInString = String(resultAmount)
         self.destinationAddress = destinationAddress
-        let wallet = LocalDatabase().getWallet()
+        let walletFromDatabase = LocalDatabase().getWallet()
+        guard let wallet = walletFromDatabase else {
+            return
+        }
         self.wallet = wallet
         self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
-                                             address: wallet?.address ?? "")
+                                             address: wallet.address)
             { (result, error) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
                 }
             }
         } else {
-            Web3SwiftService().getETHbalance() { (result, error) in
+            Web3SwiftService().getETHbalance(for: wallet) { (result, error) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
                 }
@@ -100,7 +103,7 @@ class SendSettingsViewController: UIViewController {
     
     func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "From: " + (localStorage.getWallet()?.address ?? "")
+        addressFromLabel.text = "From: \(wallet?.address ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
@@ -114,6 +117,26 @@ class SendSettingsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Send"
+        
+        if token == nil {
+            token = CurrentToken.currentToken
+            
+        }
+        if wallet == nil {
+            wallet = KeysService().selectedWallet()
+            
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let wallet = wallet else {return}
+        Web3SwiftService().getETHbalance(for: wallet)
+        { [weak self] (result, error) in
+            DispatchQueue.main.async {
+                self?.tokenBalance = result ?? ""
+            }
+        }
     }
     
     @IBAction func didChangeState(_ sender: UISegmentedControl) {
@@ -158,8 +181,9 @@ class SendSettingsViewController: UIViewController {
         dropDownView = UIView(frame: frame)
         switch manager {
         case .Tokens:
-            guard let wallet = localStorage.getWallet() else { return UIView() }
+            guard let wallet = wallet else { return UIView() }
             tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 0))
+            tokenDropdownManager.wallet = self.wallet
         case .Wallets:
             walletDropdownManager.wallets = localStorage.getAllWallets()
         }
@@ -325,7 +349,8 @@ class SendSettingsViewController: UIViewController {
                 }
             }
         } else {
-            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (token?.address)!) { [weak self] (result) in
+            print(token?.address)
+            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (token?.address) ?? "") { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else { return }
@@ -373,9 +398,15 @@ class SendSettingsViewController: UIViewController {
     @IBAction func send(_ sender: UIButton) {
         //enterPassword()
         //enterPincode()
-        checkPassword { [weak self] (password) in
-            self?.prepareTransation(withPassword: password)
+        guard let wallet = wallet else {return}
+        guard let token = token else {return}
+        localStorage.selectWallet(wallet: wallet) { [weak self] in
+            CurrentToken.currentToken = token
+            self?.checkPassword { (password) in
+                self?.prepareTransation(withPassword: password)
+            }
         }
+        
     }
     
     func checkPassword(completion: @escaping (String?) -> Void) {
@@ -412,6 +443,7 @@ class SendSettingsViewController: UIViewController {
 //MARK: - Dropdowns Delegates
 extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDelegate {
     func didSelectWallet(wallet: KeyWalletModel) {
+        self.wallet = wallet
         localStorage.selectWallet(wallet: wallet) {
             self.addressFromLabel.text = "From: " + wallet.address
             UIView.animate(withDuration: 0.5, animations: {
@@ -426,6 +458,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
     func didSelectToken(token: ERC20TokenModel) {
         self.tokenNameLabel.text = token.symbol.uppercased()
         self.token = token
+        CurrentToken.currentToken = token
         UIView.animate(withDuration: 0.5, animations: {
             self.dropDownView.alpha = 0.0
         }) { (_) in
@@ -486,20 +519,43 @@ extension SendSettingsViewController: UITextFieldDelegate {
         
         switch textField {
         case enterAddressTextField:
-            if  !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true) {
+            if  !futureString.isEmpty
+                && !(amountTextField.text?.isEmpty ?? true)
+                && !(gasLimitTextField.text?.isEmpty ?? true)
+                && !(gasPriceTextField.text?.isEmpty ?? true)
+                && (token != nil) && (wallet != nil)
+                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+            {
                 sendButton.isEnabled = (Float((amountTextField.text ?? "")) != nil)
             }
         case amountTextField:
-            if !futureString.isEmpty && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true)
+            if !futureString.isEmpty
+                && !(enterAddressTextField.text?.isEmpty ?? true)
+                && !(gasLimitTextField.text?.isEmpty ?? true)
+                && !(gasPriceTextField.text?.isEmpty ?? true)
+                && (token != nil) && (wallet != nil)
+                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
             {
                 sendButton.isEnabled =  (Float((futureString)) != nil)
             }
         case gasPriceTextField:
-            if !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasLimitTextField.text?.isEmpty ?? true) {
+            if !futureString.isEmpty
+                && !(amountTextField.text?.isEmpty ?? true)
+                && !(enterAddressTextField.text?.isEmpty ?? true)
+                && !(gasLimitTextField.text?.isEmpty ?? true)
+                && (token != nil) && (wallet != nil)
+                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+            {
                 sendButton.isEnabled = true
             }
         case gasLimitTextField:
-            if !futureString.isEmpty && !(amountTextField.text?.isEmpty ?? true) && !(enterAddressTextField.text?.isEmpty ?? true) && !(gasPriceTextField.text?.isEmpty ?? true) {
+            if !futureString.isEmpty
+                && !(amountTextField.text?.isEmpty ?? true)
+                && !(enterAddressTextField.text?.isEmpty ?? true)
+                && !(gasPriceTextField.text?.isEmpty ?? true)
+                && (token != nil) && (wallet != nil)
+                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+            {
                 sendButton.isEnabled = true
             }
         default:

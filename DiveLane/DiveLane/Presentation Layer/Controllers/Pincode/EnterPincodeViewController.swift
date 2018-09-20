@@ -93,7 +93,6 @@ class EnterPincodeViewController: PincodeViewController {
         transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
             switch result {
             case .Success(let res):
-                CurrentToken.currentToken = nil
                 if (self?.isFromDeepLink)! {
                     showSuccessAlert(for: self!, completion: {
                         let startViewController = AppController().goToApp()

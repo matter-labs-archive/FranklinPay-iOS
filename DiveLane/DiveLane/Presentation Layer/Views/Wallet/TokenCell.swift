@@ -50,7 +50,7 @@ class TokenCell: UITableViewCell {
         {
             self.tokenAddress.text = "Wallet: \(forWallet.address)"
             self.balance.text = "Loading..."
-            Web3SwiftService().getETHbalance()
+            Web3SwiftService().getETHbalance(for: forWallet)
                 { [weak self] (result, error) in
                     DispatchQueue.main.async {
                         self?.balance.text = result ?? ""

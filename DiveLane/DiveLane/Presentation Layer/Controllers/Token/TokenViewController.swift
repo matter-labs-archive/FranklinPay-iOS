@@ -69,12 +69,15 @@ class TokenViewController: UIViewController {
         guard let token = token else {
             return
         }
+        guard let wallet = wallet else {
+            return
+        }
         if token == ERC20TokenModel(name: "Ether",
                                                         address: "",
                                                         decimals: "18",
                                                         symbol: "Eth")
         {
-            Web3SwiftService().getETHbalance()
+            Web3SwiftService().getETHbalance(for: wallet)
                 { [weak self] (result, error) in
                     if error == nil && result != nil {
                         self?.tokenBalance = result!
@@ -85,7 +88,7 @@ class TokenViewController: UIViewController {
             }
         } else {
             Web3SwiftService().getERCBalance(for: token.address,
-                                             address: wallet?.address ?? "")
+                                             address: wallet.address)
             { [weak self] (result, error) in
                 if error == nil && result != nil {
                     self?.tokenBalance = result!

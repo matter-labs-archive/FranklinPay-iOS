@@ -17,13 +17,14 @@ class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource
     let localStorage = LocalDatabase()
     
     var tokens = [ERC20TokenModel]()
+    var wallet: KeyWalletModel?
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tokens.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCellDropdown") as? TokenCellDropdown else { return UITableViewCell() }
-        guard let wallet = localStorage.getWallet() else { return UITableViewCell() }
+        guard let wallet = wallet else { return UITableViewCell() }
         cell.configure(tokens[indexPath.row], wallet: wallet)
         return cell
     }

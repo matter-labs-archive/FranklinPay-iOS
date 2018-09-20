@@ -40,15 +40,14 @@ class WalletViewController: UIViewController {
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
         
-        initDatabase()
-        
         self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
     }
     
-    func initDatabase() {
+    func initDatabase(complection: @escaping ()->()) {
         localDatabase = LocalDatabase()
         wallets = localDatabase?.getAllWallets()
         keysService = KeysService()
+        complection()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -60,21 +59,41 @@ class WalletViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateData()
+        
+        initDatabase { [weak self] in
+            self?.updateData()
+        }
+        
+    }
+    
+    func unselectAll() {
+        var indexPath = IndexPath(row: 0, section: 0)
+        for wallet in twoDimensionalTokensArray {
+            for _ in wallet.tokens {
+                self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].isSelected = false
+                walletTableView.cellForRow(at: indexPath)?.accessoryView?.tintColor = .gray
+                indexPath.row += 1
+            }
+            indexPath.section += 1
+            indexPath.row = 0
+        }
     }
     
     func selectToken(cell: UITableViewCell) {
+        
+        unselectAll()
         
         guard let indexPathTapped = walletTableView.indexPath(for: cell) else { return }
         
         let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
         print(token)
         
-        let isSelected = token.isSelected
         CurrentToken.currentToken = token.token
-        twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = !isSelected
         
-        cell.accessoryView?.tintColor = isSelected ? UIColor.lightGray : .red
+        localDatabase?.selectWallet(wallet: token.inWallet, completion: { [weak self] in
+            self?.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
+            cell.accessoryView?.tintColor = .red
+        })
     }
     
     func updateData() {
@@ -85,8 +104,10 @@ class WalletViewController: UIViewController {
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        updateData()
-        refreshControl.endRefreshing()
+        initDatabase { [weak self] in
+            self?.updateData()
+            refreshControl.endRefreshing()
+        }
     }
     
     func addTokenBarItem() -> UIBarButtonItem {
@@ -107,9 +128,14 @@ class WalletViewController: UIViewController {
         
         for wallet in wallets {
             let tokensForWallet = localDatabase?.getAllTokens(for: wallet, forNetwork: networkID)
+            let isSelectedWallet = wallet == keysService?.selectedWallet() ? true : false
             if let tokens = tokensForWallet {
+                
                 let expandableTokens = ExpandableTableTokens(isExpanded: true,
-                                                             tokens: tokens.map{ TableToken(token: $0, inWallet: wallet, isSelected: false)})
+                                                             tokens: tokens.map{
+                                                                TableToken(token: $0,
+                                                                           inWallet: wallet,
+                                                                           isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet )})
                 twoDimensionalTokensArray.append(expandableTokens)
             }
         }
