@@ -39,7 +39,7 @@ class WalletViewController: UIViewController {
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
-        self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
+        //self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
     }
     
     func initDatabase(complection: @escaping ()->()) {
@@ -107,10 +107,10 @@ class WalletViewController: UIViewController {
         }
     }
     
-    func addTokenBarItem() -> UIBarButtonItem {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
-        return addButton
-    }
+//    func addTokenBarItem() -> UIBarButtonItem {
+//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
+//        return addButton
+//    }
     
     @objc func addToken() {
         let searchTokenController = SearchTokenViewController()
@@ -144,17 +144,71 @@ class WalletViewController: UIViewController {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 100))
-        button.setTitle(twoDimensionalTokensArray[section].tokens.first?.inWallet.name, for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .lightGray
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-
-        button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
-
-        button.tag = section
-
-        return button
+        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 30))
+        
+        let walletButton = UIButton(frame: CGRect(x: 0, y: 0, width: (self.view.bounds.width*3/4), height: 30))
+        walletButton.setTitle(twoDimensionalTokensArray[section].tokens.first?.inWallet.name, for: .normal)
+        walletButton.setTitleColor(.white, for: .normal)
+        walletButton.backgroundColor = .lightGray
+        walletButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+        walletButton.tag = section
+        
+        backgroundView.addSubview(walletButton)
+        
+        let addButton = UIButton(frame: CGRect(x: (self.view.bounds.width*3/4), y: 0, width: (self.view.bounds.width*1/4), height: 30))
+        addButton.setTitle("+", for: .normal)
+        addButton.setTitleColor(.white, for: .normal)
+        addButton.backgroundColor = .green
+        addButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
+        addButton.tag = section
+        
+        backgroundView.addSubview(addButton)
+        
+//        let leftWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
+//                                                            attribute: .left,
+//                                                            relatedBy: .equal,
+//                                                            toItem: backgroundView,
+//                                                            attribute: .left,
+//                                                            multiplier: 1,
+//                                                            constant: 0)
+//        let topWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
+//                                                            attribute: .top,
+//                                                            relatedBy: .equal,
+//                                                            toItem: backgroundView,
+//                                                            attribute: .top,
+//                                                            multiplier: 1,
+//                                                            constant: 0)
+//        let rightWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
+//                                                           attribute: .right,
+//                                                           relatedBy: .equal,
+//                                                           toItem: addButton,
+//                                                           attribute: .left,
+//                                                           multiplier: 1,
+//                                                           constant: 0)
+//        let rightAddButtonConstraint = NSLayoutConstraint(item: addButton,
+//                                                           attribute: .right,
+//                                                           relatedBy: .equal,
+//                                                           toItem: backgroundView,
+//                                                           attribute: .right,
+//                                                           multiplier: 1,
+//                                                           constant: 0)
+//        let topAddButtonConstraint = NSLayoutConstraint(item: addButton,
+//                                                          attribute: .top,
+//                                                          relatedBy: .equal,
+//                                                          toItem: backgroundView,
+//                                                          attribute: .top,
+//                                                          multiplier: 1,
+//                                                          constant: 0)
+//
+//        walletButton.addConstraints([leftWalletButtonConstraint,
+//                                    topWalletButtonConstraint,
+//                                    rightWalletButtonConstraint])
+//        addButton.addConstraints([rightAddButtonConstraint,
+//                                topAddButtonConstraint])
+        
+        return backgroundView
     }
     
     @objc func handleExpandClose(button: UIButton) {
@@ -178,6 +232,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             walletTableView.insertRows(at: indexPaths, with: .fade)
         }
+    }
+    
+    @objc func handleAddToken(button: UIButton) {
+        
+        let section = button.tag
+        
+        let wallet = twoDimensionalTokensArray[section].tokens.first?.inWallet
+        
+        let searchTokenController = SearchTokenViewController(for: wallet)
+        self.navigationController?.pushViewController(searchTokenController, animated: true)
+        
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
