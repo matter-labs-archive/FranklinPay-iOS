@@ -96,36 +96,14 @@ class SendSettingsViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setup()
-    }
-    
-    func setup() {
-        self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "From: \(wallet?.address ?? "")"
-        addGestureRecognizer()
-        closeButton.isHidden = true
-        //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
-        tokenNameLabel.text = token?.symbol.uppercased()
-        sendButton.isEnabled = false
-        sendButton.alpha = 0.5
-        enterAddressTextField.text = destinationAddress
-        amountTextField.text = amountInString
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Send"
-        
-        if token == nil {
+        if !isFromDeepLink {
             token = CurrentToken.currentToken
-            
         }
-        if wallet == nil {
-            wallet = KeysService().selectedWallet()
-            
-        }
+        wallet = localStorage.getWallet()
+        setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -137,6 +115,25 @@ class SendSettingsViewController: UIViewController {
                 self?.tokenBalance = result ?? ""
             }
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.stackView.isUserInteractionEnabled = true
+        self.dropDownView.removeFromSuperview()
+    }
+    
+    private func setup() {
+        self.hideKeyboardWhenTappedAround()
+        addressFromLabel.text = "From: \(wallet?.address ?? "")"
+        addGestureRecognizer()
+        closeButton.isHidden = true
+        //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
+        tokenNameLabel.text = token?.symbol.uppercased() ?? "ETH"
+        sendButton.isEnabled = false
+        sendButton.alpha = 0.5
+        enterAddressTextField.text = destinationAddress
+        amountTextField.text = amountInString
     }
     
     @IBAction func didChangeState(_ sender: UISegmentedControl) {
@@ -168,6 +165,8 @@ class SendSettingsViewController: UIViewController {
     
     @objc func didTapToken() {
         dropDownView = createDropdownView(withManager: .Tokens)
+        guard let wallet = localStorage.getWallet() else { return }
+        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
         self.view.addSubview(dropDownView)
         stackView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, animations: {
