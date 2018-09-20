@@ -82,8 +82,19 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tokensList != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell", for: indexPath) as! SearchTokenCell
-            //let added = tokenIsAdded![indexPath.row]
-            cell.configure(with: (tokensList?[indexPath.row])!, isAdded: false)
+            
+            let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+            guard let wallet = wallet else {return cell}
+            let tokensInWallet = LocalDatabase().getAllTokens(for: wallet, forNetwork: networkID)
+            var isAdded = false
+            for token in tokensInWallet {
+                if token == (tokensList?[indexPath.row])! {
+                    isAdded = true
+                }
+            }
+            tokensIsAdded?.append(isAdded)
+            
+            cell.configure(with: (tokensList?[indexPath.row])!, isAdded: isAdded)
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddressTableViewCell", for: indexPath) as! AddressTableViewCell
@@ -95,13 +106,29 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         guard let currentWallet = wallet else {
             return
         }
-        //TODO: - works just this way for now. need to work with addToken()
+        
         let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
-        LocalDatabase().saveCustomToken(with: self.tokensList?[indexPath.row], forWallet: currentWallet, forNetwork: networkID, completion: { (error) in
-            if error == nil {
-                print("wow")
-            }
-        })
+        
+        guard let token = self.tokensList?[indexPath.row] else {return}
+        
+        if tokensIsAdded?[indexPath.row] ?? true {
+            LocalDatabase().deleteToken(token: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
+                if error == nil {
+                    DispatchQueue.main.async {
+                        self?.tokensTableView.reloadData()
+                    }
+                }
+            })
+        } else {
+            LocalDatabase().saveCustomToken(with: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
+                if error == nil {
+                    DispatchQueue.main.async {
+                        self?.tokensTableView.reloadData()
+                    }
+                }
+            })
+        }
+        
         
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -117,6 +144,27 @@ extension SearchTokenViewController: UISearchResultsUpdating {
 
 extension SearchTokenViewController: UISearchBarDelegate {
     
+    func searchTokens(string: String) {
+        
+        TokensService().getFullTokensList(for: string, completion: { (result) in
+            if let list = result {
+                self.tokensIsAdded = []
+                self.tokensList = list
+                DispatchQueue.main.async {
+                    self.tokensTableView.reloadData()
+                }
+                //self.updateListForAlreadyAddedTokens()
+            } else {
+                self.tokensList = nil
+                self.tokensIsAdded = nil
+                DispatchQueue.main.async {
+                    self.tokensTableView.reloadData()
+                }
+                
+            }
+        })
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         if searchText == "" {
@@ -125,30 +173,9 @@ extension SearchTokenViewController: UISearchBarDelegate {
             tokensTableView.reloadData()
             
         } else {
-            
             let token = searchText
             print(token)
-            
-            TokensService().getFullTokensList(for: token, completion: { (result) in
-                if let list = result {
-                    self.tokensIsAdded = []
-                    self.tokensList = list
-                    for _ in 0...list.count-1 {
-                        self.tokensIsAdded?.append(false)
-                    }
-                    DispatchQueue.main.async {
-                        self.tokensTableView.reloadData()
-                    }
-                    //self.updateListForAlreadyAddedTokens()
-                } else {
-                    self.tokensList = nil
-                    self.tokensIsAdded = nil
-                    DispatchQueue.main.async {
-                        self.tokensTableView.reloadData()
-                    }
-                    
-                }
-            })
+            searchTokens(string: token)
             
         }
     }
