@@ -294,4 +294,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+            localDatabase?.deleteToken(token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token, forWallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet, forNetwork: networkID, completion: { [weak self] (error) in
+                if error == nil {
+                    self?.initDatabase {
+                        self?.updateData()
+                    }
+                }
+            })
+        }
+    }
+    
 }
