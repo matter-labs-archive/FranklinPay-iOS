@@ -295,6 +295,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {return}
         if editingStyle == .delete {
             let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
             localDatabase?.deleteToken(token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token, forWallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet, forNetwork: networkID, completion: { [weak self] (error) in
