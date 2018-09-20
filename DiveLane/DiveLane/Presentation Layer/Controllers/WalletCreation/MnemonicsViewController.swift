@@ -40,10 +40,8 @@ class MnemonicsViewController: UIViewController {
     
     func goToApp() {
         let tabViewController = AppController().goToApp()
-        //tabViewController.view.backgroundColor = UIColor.white
-        self.navigationController?.present(tabViewController, animated: true, completion: {
-            UIApplication.shared.keyWindow?.rootViewController = tabViewController
-        })
+        tabViewController.view.backgroundColor = UIColor.white
+        self.present(tabViewController, animated: true, completion: nil)
     }
     
     @IBAction func createWalletButtonTapped(_ sender: Any) {

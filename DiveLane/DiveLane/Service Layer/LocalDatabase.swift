@@ -148,7 +148,6 @@ class LocalDatabase: ILocalDatabase {
                     let fr: NSFetchRequest<ETHTransaction> = ETHTransaction.fetchRequest()
                     fr.predicate = NSPredicate(format: "transactionHash = %@", transaction.transactionHash)
                     let result = try context.fetch(fr).first
-                    //Update information stored in local storage.
                     if let result = result {
                         result.amount = transaction.amount
                         result.data = transaction.data
@@ -157,6 +156,7 @@ class LocalDatabase: ILocalDatabase {
                         result.networkID = transaction.networkID
                         result.to = transaction.to
                         result.isPending = false
+                        //Update information stored in local storage.
                         
                     } else {
                         guard let newTransaction = NSEntityDescription.insertNewObject(forEntityName: "ETHTransaction", into: context) as? ETHTransaction else {
