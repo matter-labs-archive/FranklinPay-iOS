@@ -388,22 +388,17 @@ class LocalDatabase: ILocalDatabase {
                             forNetwork: Int64,
                             completion: @escaping (Error?) -> Void) {
         do {
-            
-            guard let wallet = try self.mainContext.fetch(self.fetchWalletRequest(withAddress: forWallet.address)).first else {
-                completion (NetworkErrors.couldnotParseJSON)
-                return
-            }
-            
             let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
-            requestToken.predicate = NSPredicate(format: "address = %@ && networkID = %@", token.address, forNetwork)
+            requestToken.predicate = NSPredicate(format: "walletAddress = %@", forWallet.address)
         
             let results = try mainContext.fetch(requestToken)
-            let tokens = results.filter{$0.walletAddress == wallet.address}
-            guard let token = tokens.first else {
+            let tokens = results.filter{$0.address == token.address}
+            let tokensInNetwork = tokens.filter{$0.networkID == forNetwork}
+            guard let t = tokensInNetwork.first else {
                 completion(nil)
                 return
             }
-            mainContext.delete(token)
+            mainContext.delete(t)
             try mainContext.save()
             completion(nil)
         } catch {
