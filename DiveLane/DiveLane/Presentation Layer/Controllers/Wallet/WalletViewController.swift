@@ -39,7 +39,7 @@ class WalletViewController: UIViewController {
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
-        //self.navigationItem.setRightBarButton(addTokenBarItem(), animated: false)
+        self.navigationItem.setRightBarButton(addWalletBarItem(), animated: false)
     }
     
     func initDatabase(complection: @escaping ()->()) {
@@ -107,14 +107,14 @@ class WalletViewController: UIViewController {
         }
     }
     
-//    func addTokenBarItem() -> UIBarButtonItem {
-//        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addToken))
-//        return addButton
-//    }
+    func addWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWallet))
+        return addButton
+    }
     
-    @objc func addToken() {
-        let searchTokenController = SearchTokenViewController()
-        self.navigationController?.pushViewController(searchTokenController, animated: true)
+    @objc func addWallet() {
+        let walletsViewController = WalletsViewController()
+        self.navigationController?.pushViewController(walletsViewController, animated: true)
     }
     
     
