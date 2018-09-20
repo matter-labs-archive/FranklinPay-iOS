@@ -77,15 +77,14 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell else { return UITableViewCell() }
-        
+        cell.delegate = self
         cell.configureCell(model: wallets[indexPath.row])
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.localDatabase.selectWallet(wallet: wallets[indexPath.row]) {
-            let exportWalletViewController = ExportWalletViewController(model: self.wallets[indexPath.row])
-            self.navigationController?.pushViewController(exportWalletViewController, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
+            self.navigationController?.popViewController(animated: true)
         }
     }
     
@@ -96,6 +95,15 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.showAttentionAlert(wallet: wallets[indexPath.row], indexPath: indexPath)
+        }
+    }
+}
+
+extension WalletsViewController: InfoButtonDelegate {
+    func infoButtonPressed(forWallet wallet: KeyWalletModel) {
+        self.localDatabase.selectWallet(wallet: wallet) {
+            let exportWalletViewController = ExportWalletViewController(model: wallet)
+            self.navigationController?.pushViewController(exportWalletViewController, animated: true)
         }
     }
 }

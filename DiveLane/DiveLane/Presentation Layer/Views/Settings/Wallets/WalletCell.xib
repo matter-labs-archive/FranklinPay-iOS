@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,15 +37,28 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cvb-tZ-npI">
+                        <rect key="frame" x="271" y="77" width="30" height="21"/>
+                        <state key="normal" title="Info">
+                            <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </state>
+                        <connections>
+                            <action selector="infoButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="NFf-mM-Ypp"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Cvb-tZ-npI" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DrC-nl-3cw" secondAttribute="trailing" id="3s8-ck-S1N"/>
+                    <constraint firstItem="Cvb-tZ-npI" firstAttribute="top" secondItem="DrC-nl-3cw" secondAttribute="top" id="A0S-Ob-WgT"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="4MW-2a-qCa" secondAttribute="trailing" constant="8" id="M6f-LU-BX6"/>
                     <constraint firstItem="4MW-2a-qCa" firstAttribute="top" secondItem="1ku-ZN-Eq5" secondAttribute="bottom" constant="8" id="Tlo-UL-Lj8"/>
                     <constraint firstItem="DrC-nl-3cw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Wbj-Zj-Cs8"/>
+                    <constraint firstItem="Cvb-tZ-npI" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="YCb-QV-iY2"/>
                     <constraint firstItem="4MW-2a-qCa" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="ZNG-Db-kbd"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="1ku-ZN-Eq5" secondAttribute="trailing" constant="8" id="dVz-zm-q7j"/>
                     <constraint firstItem="1ku-ZN-Eq5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="8" id="gFC-eV-UoR"/>
                     <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="DrC-nl-3cw" secondAttribute="trailing" constant="8" id="heu-zN-A1x"/>
+                    <constraint firstItem="Cvb-tZ-npI" firstAttribute="bottom" secondItem="DrC-nl-3cw" secondAttribute="bottom" id="qZe-nV-8kS"/>
                     <constraint firstAttribute="bottomMargin" secondItem="DrC-nl-3cw" secondAttribute="bottom" constant="6" id="sHf-Jn-lAx"/>
                     <constraint firstItem="DrC-nl-3cw" firstAttribute="top" secondItem="4MW-2a-qCa" secondAttribute="bottom" constant="8" id="wKC-iV-eYd"/>
                     <constraint firstItem="1ku-ZN-Eq5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="xYg-KZ-fcX"/>
