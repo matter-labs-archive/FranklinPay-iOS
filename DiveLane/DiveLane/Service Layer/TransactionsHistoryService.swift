@@ -68,7 +68,7 @@ class TransactionsHistoryService {
                         }
                         tokenModel = ERC20TokenModel(name: tokenName, address: tokenAddress, decimals: tokenDecimal, symbol: tokenSymbol)
                     } else {
-                        tokenModel = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "ETH")
+                        tokenModel = nil
                     }
                     guard let amount = BigUInt(value) else { return }
                     guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else { return }

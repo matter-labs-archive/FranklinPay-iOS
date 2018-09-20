@@ -157,6 +157,7 @@ class LocalDatabase: ILocalDatabase {
                         result.networkID = transaction.networkID
                         result.to = transaction.to
                         result.isPending = false
+                        
                     } else {
                         guard let newTransaction = NSEntityDescription.insertNewObject(forEntityName: "ETHTransaction", into: context) as? ETHTransaction else {
                             DispatchQueue.main.async {
@@ -413,7 +414,7 @@ class LocalDatabase: ILocalDatabase {
     private func fetchTokenRequest(withAddress address: String) -> NSFetchRequest<ERC20Token> {
         let fr: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         fr.predicate = NSPredicate(format: "address = %@", address)
-        return ERC20Token.fetchRequest()
+        return fr
     }
     
     private func fetchWalletRequest(withAddress address: String) -> NSFetchRequest<KeyWallet> {
