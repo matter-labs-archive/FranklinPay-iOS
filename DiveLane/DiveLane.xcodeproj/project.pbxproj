@@ -31,7 +31,6 @@
 		9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2EC2143B92B00C358AA /* WalletViewController.xib */; };
 		9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F02143B9D600C358AA /* TokenCell.swift */; };
 		9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2F12143B9D600C358AA /* TokenCell.xib */; };
-		9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F62143BC1D00C358AA /* WalletTableViewSections.swift */; };
 		9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F82143BC8300C358AA /* CurrentToken.swift */; };
 		9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2FA2143BD7E00C358AA /* Assets.xcassets */; };
 		9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2FF2143BFC600C358AA /* TokenViewController.swift */; };
@@ -104,6 +103,7 @@
 		B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */; };
 		B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */; };
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
+		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -131,7 +131,6 @@
 		9197F2EC2143B92B00C358AA /* WalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletViewController.xib; sourceTree = "<group>"; };
 		9197F2F02143B9D600C358AA /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		9197F2F12143B9D600C358AA /* TokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCell.xib; sourceTree = "<group>"; };
-		9197F2F62143BC1D00C358AA /* WalletTableViewSections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTableViewSections.swift; sourceTree = "<group>"; };
 		9197F2F82143BC8300C358AA /* CurrentToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentToken.swift; sourceTree = "<group>"; };
 		9197F2FA2143BD7E00C358AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9197F2FF2143BFC600C358AA /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
@@ -208,6 +207,7 @@
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
 		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
+		E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableTokens.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -342,7 +342,7 @@
 		9197F2F42143BBFF00C358AA /* Wallet */ = {
 			isa = PBXGroup;
 			children = (
-				9197F2F62143BC1D00C358AA /* WalletTableViewSections.swift */,
+				91B6A7B8214362080033A045 /* WalletAndKeys.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -388,6 +388,7 @@
 			children = (
 				91B6A7C3214365B30033A045 /* ERC20Token.swift */,
 				9197F2F82143BC8300C358AA /* CurrentToken.swift */,
+				E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */,
 			);
 			path = Tokens;
 			sourceTree = "<group>";
@@ -489,7 +490,6 @@
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
 				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
-				91B6A7B8214362080033A045 /* WalletAndKeys.swift */,
 				91B6A7C7214368470033A045 /* Parameter.swift */,
 				91B6A7CD214370F00033A045 /* URL.swift */,
 			);
@@ -894,12 +894,12 @@
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				91E7256421507D16003FAD76 /* FiatService.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
+				E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */,
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
 				914F22982149BF2400ED58E6 /* EnterPincodeViewController.swift in Sources */,
 				B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
-				9197F2F72143BC1D00C358AA /* WalletTableViewSections.swift in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
@@ -1072,7 +1072,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -1093,7 +1093,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

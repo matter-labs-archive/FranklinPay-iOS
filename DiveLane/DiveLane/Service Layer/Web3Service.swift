@@ -12,7 +12,7 @@ import struct BigInt.BigUInt
 
 protocol IWeb3SwiftService {
     func sendTransaction(transaction: TransactionIntermediate, password: String, completion: @escaping (Result<TransactionSendingResult>) -> Void)
-    func getETHbalance(completion: @escaping (String?,Error?) -> Void)
+    func getETHbalance(for wallet: KeyWalletModel, completion: @escaping (String?,Error?) -> Void)
     func getETHbalance(forAddress address: String, completion: @escaping (String?, Error?) -> Void)
     func getERCBalance(for token: String,
                     address: String,
@@ -57,10 +57,9 @@ class Web3SwiftService: IWeb3SwiftService {
     
     
     //MARK: - Get ETH balance
-    public func getETHbalance(completion: @escaping (String?,Error?) -> Void) {
+    public func getETHbalance(for wallet: KeyWalletModel, completion: @escaping (String?,Error?) -> Void) {
         DispatchQueue.global().async {
-            let wallet = KeysService().localStorage.getWallet()
-            guard let address = wallet?.address else { return }
+            let address = wallet.address
             let ETHaddress = EthereumAddress(address)!
             let web3Main = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
             let balanceResult = web3Main.eth.getBalance(address: ETHaddress)

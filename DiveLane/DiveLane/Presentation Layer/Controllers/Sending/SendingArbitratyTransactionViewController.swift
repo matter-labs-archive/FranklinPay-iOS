@@ -25,6 +25,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     init(params: [Parameter], transactionInfo: TransactionInfo) {
         self.params = params
         self.transactionInfo = transactionInfo
+        CurrentToken.currentToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -48,7 +49,11 @@ class SendArbitraryTransactionViewController: UIViewController {
             fromTextField.text = "From: \(address)"
         }
         
-        Web3SwiftService().getETHbalance { (balance, error) in
+        guard let wallet = LocalDatabase().getWallet() else {
+            return
+        }
+        
+        Web3SwiftService().getETHbalance(for: wallet) { (balance, error) in
             if let balance = balance {
                 self.balanceOnWalletTextField.text = "Wallet balance: " + balance + " ETH"
             }

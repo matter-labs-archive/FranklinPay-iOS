@@ -23,6 +23,12 @@ struct KeyWalletModel {
     }
 }
 
+extension KeyWalletModel: Equatable {
+    static func == (lhs: KeyWalletModel, rhs: KeyWalletModel) -> Bool {
+        return lhs.address == rhs.address
+    }
+}
+
 struct HDKey {
     let name: String?
     let address: String

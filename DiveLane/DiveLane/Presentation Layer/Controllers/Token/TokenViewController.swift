@@ -21,22 +21,22 @@ class TokenViewController: UIViewController {
     
     
     var tokenBalance: String?
-    var walletName: String?
-    var walletAddress: String?
+    var wallet: KeyWalletModel?
+    var token: ERC20TokenModel?
     
-    convenience init(walletAddress: String,
-                     walletName: String,
+    convenience init(wallet: KeyWalletModel,
+                     token: ERC20TokenModel,
                      tokenBalance: String) {
         self.init()
-        self.walletAddress = walletAddress
-        self.walletName = walletName
+        self.wallet = wallet
+        self.token = token
         self.tokenBalance = tokenBalance
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        qrImageView.image = generateQRCode(from: walletAddress ?? "")
-        addressLabel.text = walletAddress?.lowercased()
+        qrImageView.image = generateQRCode(from: wallet?.address)
+        addressLabel.text = wallet?.address.lowercased()
         tokenNameBalanceLabel.text = "Loading..."
         copiedLabel.alpha = 0
     }
@@ -49,29 +49,35 @@ class TokenViewController: UIViewController {
     
     func checkBalanceAndEnableSend() {
         guard let balance = Float(tokenBalance!) else {
-            tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
+            tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
             sendTokenButton.isEnabled = false
             sendTokenButton.alpha = 0.5
             return
         }
         guard balance > 0 else {
-            tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
+            tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
             sendTokenButton.isEnabled = false
             sendTokenButton.alpha = 0.5
             return
         }
-        tokenNameBalanceLabel.text = "\(CurrentToken.currentToken?.symbol ?? ""): \(tokenBalance ?? "0")"
+        tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
         sendTokenButton.isEnabled = true
         sendTokenButton.alpha = 1.0
     }
     
     func getBalance() {
-        if CurrentToken.currentToken == ERC20TokenModel(name: "Ether",
+        guard let token = token else {
+            return
+        }
+        guard let wallet = wallet else {
+            return
+        }
+        if token == ERC20TokenModel(name: "Ether",
                                                         address: "",
                                                         decimals: "18",
                                                         symbol: "Eth")
         {
-            Web3SwiftService().getETHbalance()
+            Web3SwiftService().getETHbalance(for: wallet)
                 { [weak self] (result, error) in
                     if error == nil && result != nil {
                         self?.tokenBalance = result!
@@ -81,8 +87,8 @@ class TokenViewController: UIViewController {
                     }
             }
         } else {
-            Web3SwiftService().getERCBalance(for: (CurrentToken.currentToken?.address) ?? "",
-                                             address: walletAddress ?? "")
+            Web3SwiftService().getERCBalance(for: token.address,
+                                             address: wallet.address)
             { [weak self] (result, error) in
                 if error == nil && result != nil {
                     self?.tokenBalance = result!
@@ -123,7 +129,7 @@ class TokenViewController: UIViewController {
     }
     
     @IBAction func copyAddress(_ sender: UIButton) {
-        UIPasteboard.general.string = walletAddress ?? ""
+        UIPasteboard.general.string = wallet?.address
         
         DispatchQueue.main.async {
             self.copiedLabel.alpha = 0.0
@@ -139,10 +145,12 @@ class TokenViewController: UIViewController {
     }
     
     @IBAction func sendToken(_ sender: UIButton) {
+        guard let wallet = wallet else {return}
+        guard let token = token else {return}
         let sendSettingsViewController = SendSettingsViewController(
-            walletName: walletName ?? "",
+            wallet: wallet,
             tokenBalance: tokenBalance ?? "",
-            walletAddress: walletAddress ?? "")
+            token: token)
         self.navigationController?.pushViewController(sendSettingsViewController, animated: true)
     }
     

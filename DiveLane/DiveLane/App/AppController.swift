@@ -27,6 +27,7 @@ class AppController {
     }
     
     func start(in window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?, url: URL?) {
+        selectNetwork()
         if let launchOptions = launchOptions {
             if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
                 navigateViaDeepLink(url: url, in: window)
@@ -50,6 +51,14 @@ class AppController {
     }
     
     func goToApp() -> UITabBarController {
+        
+        let tabs = UITabBarController()
+        
+        selectWallet { [unowned self] (wallet) in
+            if let wallet = wallet {
+                self.selectToken(for: wallet)
+            }
+        }
         
         let nav1 = UINavigationController()
         nav1.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
@@ -87,7 +96,7 @@ class AppController {
         navSend.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         navSend.navigationBar.barStyle = .black
         navSend.viewControllers = [sendViewController]
-        let tabs = UITabBarController()
+        
         tabs.viewControllers = [nav1, nav3, nav2, navSend]
         
         return tabs
@@ -119,7 +128,8 @@ class AppController {
             }
             DispatchQueue.global().async { [unowned self] in
                 if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
-                    self.addFirstToken(completion: { (error) in
+                    guard let wallet = KeysService().selectedWallet() else {return}
+                    self.addFirstToken(for: wallet, completion: { (error) in
                         if error == nil {
                             UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
                             UserDefaults.standard.synchronize()
@@ -139,13 +149,34 @@ class AppController {
         
     }
     
-    func addFirstToken(completion: @escaping (Error?) -> Void) {
-        guard let currentWallet = KeysService().selectedWallet() else {
+    func selectNetwork() {
+        CurrentNetwork.currentNetwork = (UserDefaults.standard.object(forKey: "currentNetwork") as? Networks) ?? Networks.Mainnet
+        CurrentWeb.currentWeb = (UserDefaults.standard.object(forKey: "currentWeb") as? web3) ?? Web3.InfuraMainnetWeb3()
+    }
+    
+    func selectWallet(completion: @escaping (KeyWalletModel?)->()) {
+        guard let firstWallet = LocalDatabase().getWallet() else {
+            completion(nil)
             return
         }
+        completion(firstWallet)
+        
+    }
+    
+    func selectToken(for wallet: KeyWalletModel) {
+        LocalDatabase().selectWallet(wallet: wallet) {
+            let token = LocalDatabase().getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1)).first
+            CurrentToken.currentToken = token
+        }
+    }
+    
+    func addFirstToken(for wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
         let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
         let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
-        LocalDatabase().saveCustomToken(with: etherToken, forWallet: currentWallet, forNetwork: networkID) { (error) in
+        LocalDatabase().saveCustomToken(with: etherToken, forWallet: wallet, forNetwork: networkID) { (error) in
+            if error == nil {
+                CurrentToken.currentToken = etherToken
+            }
             completion(error)
         }
     }
