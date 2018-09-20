@@ -17,8 +17,19 @@ class SearchTokenViewController: UIViewController {
     
     var searchController: UISearchController!
     
+    var wallet: KeyWalletModel?
+    
+    convenience init (for wallet: KeyWalletModel?) {
+        self.init()
+        self.wallet = wallet
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if wallet == nil {
+            wallet = KeysService().selectedWallet()
+        }
         
         self.tokensTableView.delegate = self
         self.tokensTableView.dataSource = self
@@ -81,7 +92,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let currentWallet = KeysService().selectedWallet() else {
+        guard let currentWallet = wallet else {
             return
         }
         //TODO: - works just this way for now. need to work with addToken()
