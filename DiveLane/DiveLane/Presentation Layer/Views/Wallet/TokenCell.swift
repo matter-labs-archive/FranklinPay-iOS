@@ -16,6 +16,7 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var tokenShortName: UILabel!
     @IBOutlet weak var tokenIcon: UIImageView!
     @IBOutlet weak var tokenAddress: UILabel!
+    @IBOutlet weak var balanceInDollars: UILabel!
     
     var link: WalletViewController?
     
@@ -26,7 +27,7 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
     
-    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
+    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel, withConversionRate: Double = 0) {
         
         guard let token = token else {
             return
@@ -54,6 +55,9 @@ class TokenCell: UITableViewCell {
                 { [weak self] (result, error) in
                     DispatchQueue.main.async {
                         self?.balance.text = result ?? ""
+                        
+                        let convertedAmount = withConversionRate == 0.0 ? NSLocalizedString("No data from CryptoCompare", comment: "") : String(format: NSLocalizedString("$%f at the rate of CryptoCompare", comment: ""), withConversionRate * Double(result ?? "0")!)
+                        self?.balanceInDollars.text = convertedAmount
                     }
             }
         } else {
@@ -64,9 +68,13 @@ class TokenCell: UITableViewCell {
             { [weak self] (result, error) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
+                    
+                    let convertedAmount = withConversionRate == 0.0 ? NSLocalizedString("No data from CryptoCompare", comment: "") : String(format: NSLocalizedString("$%f at the rate of CryptoCompare", comment: ""), withConversionRate * Double(result ?? "0")!)
+                    self?.balanceInDollars.text = convertedAmount
                 }
             }
         }
+        
         
         //select token
         let starButton = UIButton(type: .system)

@@ -360,6 +360,17 @@ class LocalDatabase: ILocalDatabase {
         }
     }
     
+    public func getAllTokens() -> [ERC20TokenModel]? {
+        let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
+        requestToken.predicate = NSPredicate(format: "walletAddress = %@", "")
+        do {
+            let results = try mainContext.fetch(requestToken)
+            return results.map{return ERC20TokenModel.fromCoreData(crModel: $0)}
+        } catch {
+            return nil
+        }
+    }
+    
     public func getToken(token: ERC20TokenModel?) -> ERC20TokenModel? {
         let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         requestToken.predicate = NSPredicate(format: "address = %@", (token?.address) ?? "")

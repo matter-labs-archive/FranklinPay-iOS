@@ -19,6 +19,8 @@ class TokensService {
     
     let web3service = Web3SwiftService()
     
+    let conversionService = FiatServiceImplementation.service
+    
     public func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void)  {
         var tokensList: [ERC20TokenModel] = []
         DispatchQueue.global().async {
@@ -189,6 +191,15 @@ class TokensService {
             }
         }
         task.resume()
+    }
+    
+    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?)->()) {
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.conversionService.updateConversionRate(for: token.symbol.uppercased()) { (rate) in
+                completion(rate)
+            }
+        }
+        
     }
     
 }

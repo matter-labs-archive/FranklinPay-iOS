@@ -18,3 +18,11 @@ struct TableToken {
     let inWallet: KeyWalletModel
     var isSelected: Bool
 }
+
+extension TableToken: Equatable {
+    static func == (lhs: TableToken, rhs: TableToken) -> Bool {
+        return
+            lhs.token == rhs.token &&
+                lhs.inWallet == rhs.inWallet
+    }
+}

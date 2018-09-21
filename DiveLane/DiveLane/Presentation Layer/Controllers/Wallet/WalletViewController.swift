@@ -12,6 +12,8 @@ class WalletViewController: UIViewController {
     
     @IBOutlet weak var walletTableView: UITableView!
     
+    let conversionService = FiatServiceImplementation.service
+    
     var localDatabase: ILocalDatabase?
     var keysService: IKeysService?
     var wallets: [KeyWalletModel]?
@@ -96,7 +98,21 @@ class WalletViewController: UIViewController {
     func updateData() {
         twoDimensionalTokensArray.removeAll()
         getTokensList { [weak self] in
-            self?.walletTableView.reloadData()
+            DispatchQueue.main.async {
+                self?.walletTableView.reloadData()
+            }
+            guard let tokensArray = self?.twoDimensionalTokensArray else {return}
+            for wallet in tokensArray {
+                for token in wallet.tokens {
+                    TokensService().updateConversion(for: token.token, completion: { (rate) in
+                        if token == wallet.tokens.last {
+                            DispatchQueue.main.async {
+                                self?.walletTableView.reloadData()
+                            }
+                        }
+                    })
+                }
+            }
         }
     }
     
@@ -265,7 +281,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell", for: indexPath) as! TokenCell
         cell.link = self
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
-        cell.configure(token: token.token, forWallet: token.inWallet)
+        cell.configure(token: token.token, forWallet: token.inWallet, withConversionRate: conversionService.currentConversionRate(for: token.token.symbol.uppercased()))
         
         cell.accessoryView?.tintColor = token.isSelected ? UIColor.red : .lightGray
     
