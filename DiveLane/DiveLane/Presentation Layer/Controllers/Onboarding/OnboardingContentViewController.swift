@@ -15,6 +15,8 @@ class OnboardingContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+        
         let lb = UILabel()
         lb.textAlignment = .center
         lb.text = PAGES[self.pageIndex].title
@@ -24,8 +26,7 @@ class OnboardingContentViewController: UIViewController {
         iv.image = PAGES[self.pageIndex].image
         
         let views = [
-            "iv": iv,
-            "lb": lb
+            "iv": iv
         ]
         for (_, v) in views {
             v.translatesAutoresizingMaskIntoConstraints = false
@@ -33,15 +34,11 @@ class OnboardingContentViewController: UIViewController {
         }
         
         NSLayoutConstraint.activate(
-            NSLayoutConstraint.constraints(withVisualFormat: "H:|-[lb]-|",
-                                           options: .alignAllCenterX,
-                                           metrics: [:],
-                                           views: views) +
                 NSLayoutConstraint.constraints(withVisualFormat: "H:|-[iv]-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
                                                views: views) +
-                NSLayoutConstraint.constraints(withVisualFormat: "V:|-[lb]-[iv]-|",
+                NSLayoutConstraint.constraints(withVisualFormat: "V:|-[iv]-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
                                                views: views)

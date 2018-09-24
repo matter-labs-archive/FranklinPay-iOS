@@ -20,10 +20,11 @@ class OnboardingViewController: UIViewController {
     
     var pageViewController: UIPageViewController!
     let onboardingBtn = UIButton(type: .system)
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.white
+        self.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
         
         createPages()
     }
@@ -33,7 +34,7 @@ class OnboardingViewController: UIViewController {
         let pc = UIPageControl.appearance()
         pc.pageIndicatorTintColor = UIColor.lightGray
         pc.currentPageIndicatorTintColor = UIColor.black
-        pc.backgroundColor = UIColor.white
+        pc.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
         
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                        navigationOrientation: .horizontal,
@@ -49,6 +50,7 @@ class OnboardingViewController: UIViewController {
         self.onboardingBtn.addTarget(self,
                                      action: #selector(onboardingAction(sender:)),
                                      for: .touchUpInside)
+        self.onboardingBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
         self.onboardingBtn.setTitle("NEXT", for: .normal)
         
         let views = [
@@ -74,7 +76,7 @@ class OnboardingViewController: UIViewController {
                                                options: .alignAllCenterX,
                                                metrics: [:],
                                                views: views) +
-                NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[pg]-[btn]-15-|",
+                NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[pg]-[btn]-50-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
                                                views: views)
@@ -113,7 +115,7 @@ class OnboardingViewController: UIViewController {
     func changeOnboardingButtonTitle(for page: Int){
         switch page {
         case 2:
-            self.onboardingBtn.setTitle("GO TO APP", for: .normal)
+            self.onboardingBtn.setTitle("LETS GO!", for: .normal)
         default:
             self.onboardingBtn.setTitle("NEXT", for: .normal)
         }

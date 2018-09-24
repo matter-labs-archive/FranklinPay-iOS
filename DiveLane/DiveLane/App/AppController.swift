@@ -111,7 +111,7 @@ class AppController {
         
         if !isOnboardingPassed {
             startViewController = OnboardingViewController()
-            startViewController?.view.backgroundColor = UIColor.white
+            startViewController?.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
         } else if existingWallet == nil {
             startViewController = addWallet()
             startViewController?.view.backgroundColor = UIColor.white
