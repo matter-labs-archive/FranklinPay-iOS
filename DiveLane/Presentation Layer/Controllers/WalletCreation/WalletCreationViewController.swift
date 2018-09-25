@@ -331,8 +331,8 @@ extension WalletCreationViewController: UITextFieldDelegate {
             }
         case passwordTextField:
             if !futureString.isEmpty &&
-                futureString == repeatPasswordTextField.text {
-                showPasswordWarningLabel(true)
+                futureString == repeatPasswordTextField.text || (repeatPasswordTextField.text?.isEmpty ?? true) {
+                hidePasswordWarningLabel(true)
                 enterButton.isEnabled = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
             } else {
                 showPasswordWarningLabel(false)
