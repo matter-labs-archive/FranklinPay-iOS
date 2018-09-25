@@ -65,7 +65,7 @@ class WalletCreationViewController: UIViewController {
         enterButton.setTitle(additionMode.title(), for: .normal)
         enterButton.isEnabled = false
         enterButton.alpha = 0.5
-        showPasswordWarningLabel(true)
+        hidePasswordWarning(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,10 +131,10 @@ class WalletCreationViewController: UIViewController {
     
     @IBAction func addWalletButtonTapped(_ sender: Any) {
         guard passwordTextField.text == repeatPasswordTextField.text else {
-            showPasswordWarningLabel(false)
+            hidePasswordWarning(false)
             return
         }
-        showPasswordWarningLabel(true)
+        hidePasswordWarning(true)
         
         guard let walletKey = enterPrivateKeyTextField.text else {
             return
@@ -147,8 +147,9 @@ class WalletCreationViewController: UIViewController {
         
     }
 
-    private func showPasswordWarningLabel(_ visible : Bool = true) {
-        passwordsDontMatch.alpha = visible ? 0 : 1
+    private func hidePasswordWarning(_ hidden: Bool = true) {
+        passwordsDontMatch.alpha = hidden ? 0 : 1
+
     }
 
     func addWalletDependingOnMode(_ walletName: String, withKey: String, withPassword: String, isAtLeastOneExists: Bool) {
@@ -311,10 +312,10 @@ extension WalletCreationViewController: UITextFieldDelegate {
         textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
         textField.textColor = UIColor.blue
         if textField == passwordTextField || textField == repeatPasswordTextField {
-            showPasswordWarningLabel(true)
+            hidePasswordWarning(true)
         }
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
@@ -332,17 +333,17 @@ extension WalletCreationViewController: UITextFieldDelegate {
         case passwordTextField:
             if !futureString.isEmpty &&
                 futureString == repeatPasswordTextField.text || (repeatPasswordTextField.text?.isEmpty ?? true) {
-                hidePasswordWarningLabel(true)
+                hidePasswordWarning(true)
                 enterButton.isEnabled = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
             } else {
-                showPasswordWarningLabel(false)
+                hidePasswordWarning(false)
                 enterButton.isEnabled = false
             }
         case repeatPasswordTextField:
-            let b = !futureString.isEmpty &&
+            let passwordMatching = !futureString.isEmpty &&
                     futureString == passwordTextField.text
-            showPasswordWarningLabel(b)
-            if b {
+            hidePasswordWarning(passwordMatching)
+            if passwordMatching {
                 enterButton.isEnabled = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
             } else {
                 enterButton.isEnabled = false
@@ -377,7 +378,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         if (!(passwordTextField.text?.isEmpty ?? true) ||
             !(repeatPasswordTextField.text?.isEmpty ?? true)) &&
             passwordTextField.text != repeatPasswordTextField.text {
-            showPasswordWarningLabel(false)
+            hidePasswordWarning(false)
             repeatPasswordTextField.textColor = UIColor.red
             passwordTextField.textColor = UIColor.red
         } else {
