@@ -349,17 +349,14 @@ extension WalletCreationViewController: UITextFieldDelegate {
             }
         default:
             if additionMode == .importWallet {
-                if !futureString.isEmpty && passwordTextField.text == repeatPasswordTextField.text &&
-                    !(passwordTextField.text?.isEmpty ?? true) &&
-                    !(enterPrivateKeyTextField.text?.isEmpty ?? true) {
-                    enterButton.isEnabled = true
-                } else {
-                    enterButton.isEnabled = false
-                }
-            } else if !futureString.isEmpty {
-                enterButton.isEnabled = true
+                let hardExpression = !futureString.isEmpty &&
+                        passwordTextField.text == repeatPasswordTextField.text &&
+                        !(passwordTextField.text?.isEmpty ?? true) &&
+                        !(enterPrivateKeyTextField.text?.isEmpty ?? true)
+
+                enterButton.isEnabled = hardExpression
             } else {
-                enterButton.isEnabled = false
+                enterButton.isEnabled = !futureString.isEmpty
             }
             
         }
