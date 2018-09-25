@@ -64,7 +64,7 @@ class WalletCreationViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         enterButton.setTitle(additionMode.title(), for: .normal)
         enterButton.isEnabled = false
-        enterButton.alpha = 0.5
+        changeEnterButtonAlpha()
         hidePasswordWarning(true)
     }
     
