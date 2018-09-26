@@ -87,7 +87,7 @@ class AppController {
     
     func navigationController(withTitle: String?, withImage: UIImage?, withController: UIViewController, tag: Int) -> UINavigationController {
         let nav = UINavigationController()
-        nav.navigationBar.barTintColor = Colors().mainNavigationBarTintColor
+        nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
         nav.navigationBar.tintColor = UIColor.white
         nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
         nav.navigationBar.barStyle = .black
@@ -107,7 +107,7 @@ class AppController {
         
         if !isOnboardingPassed {
             startViewController = OnboardingViewController()
-            startViewController?.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+            startViewController?.view.backgroundColor = Colors.BackgroundColors.main
         } else if existingWallet == nil {
             startViewController = addWallet()
             startViewController?.view.backgroundColor = UIColor.white
