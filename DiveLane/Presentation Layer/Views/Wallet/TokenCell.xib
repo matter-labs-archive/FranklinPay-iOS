@@ -30,6 +30,9 @@
                                             <imageView userInteractionEnabled="NO" alpha="0.30000001192092896" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ether" translatesAutoresizingMaskIntoConstraints="NO" id="XOD-Rb-EG1">
                                                 <rect key="frame" x="0.0" y="0.0" width="60" height="117.5"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="TokenIcon">
+                                                    <bool key="isElement" value="YES"/>
+                                                </accessibility>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="60" id="D37-1f-qpj"/>
                                                 </constraints>
@@ -124,6 +127,9 @@
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" identifier="TokenCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
             <connections>
                 <outlet property="balance" destination="3f7-lk-WzA" id="1CH-Kz-v7C"/>
                 <outlet property="balanceInDollars" destination="aXc-5i-b5s" id="xZz-gk-QU6"/>
