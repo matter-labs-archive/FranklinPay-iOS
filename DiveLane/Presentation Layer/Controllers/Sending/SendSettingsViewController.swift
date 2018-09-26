@@ -524,17 +524,15 @@ extension SendSettingsViewController: UITextFieldDelegate {
         hardExpression = hardExpression && !futureString.isEmpty
             && (token != nil) && (wallet != nil)
             && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-        for i in textFields {
-            if textField != amountTextField {
-                hardExpression = hardExpression
-                    && !futureString.isEmpty
-                    && !(amountTextField.text?.isEmpty ?? true)
-                    && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
-            } else {
-                hardExpression = hardExpression
-                    && !futureString.isEmpty
-                    && ((Float(futureString) ?? 0.0) > Float(0))
-            }
+        if textField != amountTextField {
+            hardExpression = hardExpression
+                && !futureString.isEmpty
+                && !(amountTextField.text?.isEmpty ?? true)
+                && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
+        } else {
+            hardExpression = hardExpression
+                && !futureString.isEmpty
+                && ((Float(futureString) ?? 0.0) > Float(0))
         }
         
         hideSendButton(!hardExpression)
