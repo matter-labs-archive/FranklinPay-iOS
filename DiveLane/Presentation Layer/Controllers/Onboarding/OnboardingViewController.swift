@@ -6,14 +6,6 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 
-//
-//  OnboardingViewController.swift
-//  MetamaskTest
-//
-//  Created by Антон Григорьев on 01.09.2018.
-//  Copyright © 2018 Антон Григорьев. All rights reserved.
-//
-
 import UIKit
 
 class OnboardingViewController: UIViewController {
@@ -21,12 +13,9 @@ class OnboardingViewController: UIViewController {
     var pageViewController: UIPageViewController!
     let onboardingBtn = UIButton(type: .system)
     
-    let colors = Colors()
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = colors.mainBackgroundColor
+        self.view.backgroundColor = Colors.BackgroundColors.main
         
         createPages()
     }
@@ -36,7 +25,7 @@ class OnboardingViewController: UIViewController {
         let pc = UIPageControl.appearance()
         pc.pageIndicatorTintColor = UIColor.lightGray
         pc.currentPageIndicatorTintColor = UIColor.black
-        pc.backgroundColor = colors.mainBackgroundColor
+        pc.backgroundColor = Colors.BackgroundColors.main
         
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                        navigationOrientation: .horizontal,
