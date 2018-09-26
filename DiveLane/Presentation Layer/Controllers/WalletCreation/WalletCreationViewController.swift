@@ -64,7 +64,7 @@ class WalletCreationViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         enterButton.setTitle(additionMode.title(), for: .normal)
         enterButton.isEnabled = false
-        changeEnterButtonAlpha()
+        updateEnterButtonAlpha()
         hidePasswordWarning(true)
     }
     
@@ -152,7 +152,7 @@ class WalletCreationViewController: UIViewController {
 
     }
     
-    private func changeEnterButtonAlpha() {
+    private func updateEnterButtonAlpha() {
         enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
     }
     
@@ -375,7 +375,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         
         isEnterButtonEnabled(afterChanging: textField, with: futureString)
     
-        changeEnterButtonAlpha()
+        updateEnterButtonAlpha()
         
         textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
         
