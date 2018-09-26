@@ -90,4 +90,26 @@ class AnimationController: UIView {
     }
     
     
+    func pressButtonStartedAnimation(for sender: UIButton) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.05,
+                           animations: {
+                            sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)},
+                           completion: nil)
+        }
+        
+    }
+    
+    func pressButtonCanceledAnimation(for sender: UIButton) {
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.05) {
+                sender.transform = CGAffineTransform.identity
+            }
+        }
+        
+    }
+    
+    
+    
+    
 }

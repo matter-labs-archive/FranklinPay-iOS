@@ -31,6 +31,13 @@ class ERC20TokenModel {
         self.symbol = symbol
     }
     
+    init(isEther: Bool) {
+        self.name = isEther ? "Ether" : ""
+        self.address = isEther ? "" : ""
+        self.decimals = isEther ? "18" : "18"
+        self.symbol = isEther ? "Eth" : ""
+    }
+    
     static func fromCoreData(crModel: ERC20Token) -> ERC20TokenModel {
         let model = ERC20TokenModel(name: crModel.name ?? "",
                                     address: crModel.address ?? "",

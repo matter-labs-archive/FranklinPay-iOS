@@ -67,7 +67,7 @@ class SendSettingsViewController: UIViewController {
                      destinationAddress: String,
                      isFromDeepLink: Bool = true) {
         self.init()
-        token = ERC20TokenModel(name: "", address: tokenAddress ?? "", decimals: "18", symbol: "")
+        token = ERC20TokenModel(isEther: false)
         let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
         let resultAmount = Float(amountFloat/decimals)
@@ -123,6 +123,11 @@ class SendSettingsViewController: UIViewController {
         self.dropDownView.removeFromSuperview()
     }
     
+    private func hideSendButton(_ hidden: Bool = true) {
+        sendButton.alpha = hidden ? 0.5 : 1
+        sendButton.isEnabled = hidden ? false: true
+    }
+    
     private func setup() {
         self.hideKeyboardWhenTappedAround()
         addressFromLabel.text = "From: \(wallet?.address ?? "")"
@@ -130,8 +135,7 @@ class SendSettingsViewController: UIViewController {
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
         tokenNameLabel.text = token?.symbol.uppercased() ?? "ETH"
-        sendButton.isEnabled = false
-        sendButton.alpha = 0.5
+        hideSendButton(true)
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
     }
@@ -166,7 +170,7 @@ class SendSettingsViewController: UIViewController {
     @objc func didTapToken() {
         dropDownView = createDropdownView(withManager: .Tokens)
         guard let wallet = localStorage.getWallet() else { return }
-        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
+        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork:  Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
         self.view.addSubview(dropDownView)
         stackView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, animations: {
@@ -181,7 +185,7 @@ class SendSettingsViewController: UIViewController {
         switch manager {
         case .Tokens:
             guard let wallet = wallet else { return UIView() }
-            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 0))
+            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: CurrentNetwork().getNetworkID())
             tokenDropdownManager.wallet = self.wallet
         case .Wallets:
             walletDropdownManager.wallets = localStorage.getAllWallets()
@@ -514,54 +518,47 @@ extension SendSettingsViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
-        sendButton.isEnabled = false
+        hideSendButton(true)
         
         switch textField {
         case enterAddressTextField:
-            if  !futureString.isEmpty
+            let hardExpression = !futureString.isEmpty
                 && !(amountTextField.text?.isEmpty ?? true)
                 && !(gasLimitTextField.text?.isEmpty ?? true)
                 && !(gasPriceTextField.text?.isEmpty ?? true)
                 && (token != nil) && (wallet != nil)
                 && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            {
-                sendButton.isEnabled = (Float((amountTextField.text ?? "")) != nil)
-            }
+                && (Float((amountTextField.text ?? "")) != nil)
+            hideSendButton(!hardExpression)
         case amountTextField:
-            if !futureString.isEmpty
+            let hardExpression = !futureString.isEmpty
                 && !(enterAddressTextField.text?.isEmpty ?? true)
                 && !(gasLimitTextField.text?.isEmpty ?? true)
                 && !(gasPriceTextField.text?.isEmpty ?? true)
                 && (token != nil) && (wallet != nil)
                 && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            {
-                sendButton.isEnabled =  (Float((futureString)) != nil)
-            }
+                && (Float((futureString)) != nil)
+            hideSendButton(!hardExpression)
         case gasPriceTextField:
-            if !futureString.isEmpty
+            let hardExpression = !futureString.isEmpty
                 && !(amountTextField.text?.isEmpty ?? true)
                 && !(enterAddressTextField.text?.isEmpty ?? true)
                 && !(gasLimitTextField.text?.isEmpty ?? true)
                 && (token != nil) && (wallet != nil)
                 && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            {
-                sendButton.isEnabled = true
-            }
+            hideSendButton(!hardExpression)
         case gasLimitTextField:
-            if !futureString.isEmpty
+            let hardExpression = !futureString.isEmpty
                 && !(amountTextField.text?.isEmpty ?? true)
                 && !(enterAddressTextField.text?.isEmpty ?? true)
                 && !(gasPriceTextField.text?.isEmpty ?? true)
                 && (token != nil) && (wallet != nil)
                 && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            {
-                sendButton.isEnabled = true
-            }
+            hideSendButton(!hardExpression)
         default:
-            sendButton.isEnabled = false
+            hideSendButton(true)
         }
         
-        sendButton.alpha = sendButton.isEnabled ? 1.0 : 0.5
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
         
         return true
@@ -597,11 +594,13 @@ extension SendSettingsViewController: UITextFieldDelegate {
                 gasLimitTextField.textColor = UIColor.red
                 return true
             }
-            if Int((gasLimitTextField.text ?? "0"))! > 21000 {
+            guard Int((gasLimitTextField.text ?? "0"))! < 21000 else {
                 gasLimitTextField.text = "21000"
+                return true
             }
-            if Int((gasLimitTextField.text ?? "0"))! < 5 {
+            guard Int((gasLimitTextField.text ?? "0"))! > 5 else {
                 gasLimitTextField.text = "5"
+                return true
             }
         }
         if textField == gasPriceTextField {
@@ -609,11 +608,13 @@ extension SendSettingsViewController: UITextFieldDelegate {
                 gasPriceTextField.textColor = UIColor.red
                 return true
             }
-            if Int((gasPriceTextField.text ?? "0"))! > 100 {
+            guard Int((gasPriceTextField.text ?? "0"))! < 100 else {
                 gasPriceTextField.text = "100"
+                return true
             }
-            if Int((gasPriceTextField.text ?? "0"))! < 5 {
+            guard Int((gasPriceTextField.text ?? "0"))! > 5 else {
                 gasPriceTextField.text = "5"
+                return true
             }
         }
         return true

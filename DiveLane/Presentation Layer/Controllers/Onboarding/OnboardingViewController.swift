@@ -20,11 +20,13 @@ class OnboardingViewController: UIViewController {
     
     var pageViewController: UIPageViewController!
     let onboardingBtn = UIButton(type: .system)
+    
+    let colors = Colors()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+        self.view.backgroundColor = colors.mainBackgroundColor
         
         createPages()
     }
@@ -34,7 +36,7 @@ class OnboardingViewController: UIViewController {
         let pc = UIPageControl.appearance()
         pc.pageIndicatorTintColor = UIColor.lightGray
         pc.currentPageIndicatorTintColor = UIColor.black
-        pc.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+        pc.backgroundColor = colors.mainBackgroundColor
         
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                                                        navigationOrientation: .horizontal,

@@ -22,7 +22,7 @@ class FiatServiceImplementation: FiatService {
     static let service = FiatServiceImplementation()
     var conversionRates = [String: Double]()
     
-    let urlFormat = "https://min-api.cryptocompare.com/data/price?fsym=%@&tsyms=USD"
+    let urlFormat = URLs.urlPricesFromCryptocompare
     
     func updateConversionRate(for tokenName: String, completion: @escaping (Double) -> Void) {
         

@@ -19,6 +19,8 @@ class WalletViewController: UIViewController {
     var wallets: [KeyWalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     
+    let design = DesignElements()
+    let colors = Colors()
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -137,7 +139,7 @@ class WalletViewController: UIViewController {
     func getTokensList(completion: @escaping ()->()) {
         guard let wallets = wallets else { return }
         
-        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        let networkID = CurrentNetwork().getNetworkID()
         
         for wallet in wallets {
             let tokensForWallet = localDatabase?.getAllTokens(for: wallet, forNetwork: networkID)
@@ -160,69 +162,18 @@ class WalletViewController: UIViewController {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let backgroundView = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 30))
+        let backgroundView = design.tableViewHeaderBackground(in: self.view)
         
-        let walletButton = UIButton(frame: CGRect(x: 0, y: 0, width: (self.view.bounds.width*3/4), height: 30))
-        walletButton.setTitle(twoDimensionalTokensArray[section].tokens.first?.inWallet.name, for: .normal)
-        walletButton.setTitleColor(.white, for: .normal)
-        walletButton.backgroundColor = .lightGray
-        walletButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        let walletButton = design.tableViewHeaderWalletButton(in: self.view,
+                                                              withTitle: twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "",
+                                                              withTag: section)
         walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
-        walletButton.tag = section
-        
         backgroundView.addSubview(walletButton)
         
-        let addButton = UIButton(frame: CGRect(x: (self.view.bounds.width*3/4), y: 0, width: (self.view.bounds.width*1/4), height: 30))
-        addButton.setTitle("+", for: .normal)
-        addButton.setTitleColor(.white, for: .normal)
-        addButton.backgroundColor = .green
-        addButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        let addButton = design.tableViewAddTokenButton(in: self.view, withTitle: "+", withTag: section)
         addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
-        addButton.tag = section
-        
         backgroundView.addSubview(addButton)
         
-//        let leftWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
-//                                                            attribute: .left,
-//                                                            relatedBy: .equal,
-//                                                            toItem: backgroundView,
-//                                                            attribute: .left,
-//                                                            multiplier: 1,
-//                                                            constant: 0)
-//        let topWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
-//                                                            attribute: .top,
-//                                                            relatedBy: .equal,
-//                                                            toItem: backgroundView,
-//                                                            attribute: .top,
-//                                                            multiplier: 1,
-//                                                            constant: 0)
-//        let rightWalletButtonConstraint = NSLayoutConstraint(item: walletButton,
-//                                                           attribute: .right,
-//                                                           relatedBy: .equal,
-//                                                           toItem: addButton,
-//                                                           attribute: .left,
-//                                                           multiplier: 1,
-//                                                           constant: 0)
-//        let rightAddButtonConstraint = NSLayoutConstraint(item: addButton,
-//                                                           attribute: .right,
-//                                                           relatedBy: .equal,
-//                                                           toItem: backgroundView,
-//                                                           attribute: .right,
-//                                                           multiplier: 1,
-//                                                           constant: 0)
-//        let topAddButtonConstraint = NSLayoutConstraint(item: addButton,
-//                                                          attribute: .top,
-//                                                          relatedBy: .equal,
-//                                                          toItem: backgroundView,
-//                                                          attribute: .top,
-//                                                          multiplier: 1,
-//                                                          constant: 0)
-//
-//        walletButton.addConstraints([leftWalletButtonConstraint,
-//                                    topWalletButtonConstraint,
-//                                    rightWalletButtonConstraint])
-//        addButton.addConstraints([rightAddButtonConstraint,
-//                                topAddButtonConstraint])
         
         return backgroundView
     }
@@ -233,15 +184,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         
         var indexPaths = [IndexPath]()
         for row in twoDimensionalTokensArray[section].tokens.indices {
-            print(0, row)
             let indexPath = IndexPath(row: row, section: section)
             indexPaths.append(indexPath)
         }
         
         let isExpanded = twoDimensionalTokensArray[section].isExpanded
         twoDimensionalTokensArray[section].isExpanded = !isExpanded
-        
-        //button.setTitle(isExpanded ? "Open" : "Close", for: .normal)
         
         if isExpanded {
             walletTableView.deleteRows(at: indexPaths, with: .fade)
@@ -283,7 +231,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
         cell.configure(token: token.token, forWallet: token.inWallet, withConversionRate: conversionService.currentConversionRate(for: token.token.symbol.uppercased()))
         
-        cell.accessoryView?.tintColor = token.isSelected ? UIColor.red : .lightGray
+        cell.accessoryView?.tintColor = colors.changeSelectionColor(dependingOnChoise: token.isSelected)
     
         return cell
     }
@@ -311,9 +259,9 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {return}
+        if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true) {return}
         if editingStyle == .delete {
-            let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+            let networkID = CurrentNetwork().getNetworkID()
             localDatabase?.deleteToken(token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token, forWallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet, forNetwork: networkID, completion: { [weak self] (error) in
                 if error == nil {
                     self?.initDatabase {

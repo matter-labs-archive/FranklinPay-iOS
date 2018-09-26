@@ -17,7 +17,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
     var pincodeItems: [KeychainPasswordItem] = []
     
     let localStorage = LocalDatabase()
-    let animation = AnimationController()
+    let animationController = AnimationController()
     
     //var newWallet: Bool = false
     
@@ -33,10 +33,20 @@ class CreateWalletPincodeViewController: PincodeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.prefersLargeTitles = false
-        biometricsButton.alpha = 0.0
-        biometricsButton.isUserInteractionEnabled = false
+        disableBiometricsButton(true)
         changePincodeStatus(.new)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
+    }
+    
+    func disableBiometrics() {
+        biometricsButton.alpha = 0.0
+        biometricsButton.isUserInteractionEnabled = false
+    }
+    
+    
+    func disableBiometricsButton(_ disable: Bool = false) {
+        biometricsButton.alpha = disable ? 0.0 : 1.0
+        biometricsButton.isUserInteractionEnabled = !disable
     }
     
     override func numberPressedAction(number: String) {
@@ -119,7 +129,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
     
     func savingWallet() {
         DispatchQueue.main.async { 
-            self.animation.waitAnimation(isEnabled: true,
+            self.animationController.waitAnimation(isEnabled: true,
                                           notificationText: "Saving wallet",
                                           on: (self.view)!)
         }
@@ -127,7 +137,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
             if error == nil {
                 self.createPassword()
                 DispatchQueue.main.async { 
-                    self.animation.waitAnimation(isEnabled: false,
+                    self.animationController.waitAnimation(isEnabled: false,
                                                   on: (self.view)!)
                 }
                 self.localStorage.selectWallet(wallet: self.wallet, completion: {

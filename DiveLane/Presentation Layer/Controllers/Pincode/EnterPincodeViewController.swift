@@ -47,10 +47,14 @@ class EnterPincodeViewController: PincodeViewController {
         let context = LAContext()
         var error: NSError?
         if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            biometricsButton.alpha = 0.0
+            hideBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
         
+    }
+    
+    func hideBiometricsButton(_ hidden: Bool = false) {
+        biometricsButton.alpha = hidden ? 0.0 : 1.0
     }
     
     func changePincodeStatus(_ newStatus: pincodeEnterStatus) {
@@ -95,15 +99,11 @@ class EnterPincodeViewController: PincodeViewController {
             case .Success(let res):
                 if (self?.isFromDeepLink)! {
                     showSuccessAlert(for: self!, completion: {
-                        let startViewController = AppController().goToApp()
-                        startViewController.view.backgroundColor = UIColor.white
-                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+                        self?.returnToStartTab()
                     })
                 } else {
                     showSuccessAlert(for: self!, completion: {
-                        let startViewController = AppController().goToApp()
-                        startViewController.view.backgroundColor = UIColor.white
-                        UIApplication.shared.keyWindow?.rootViewController = startViewController
+                        self?.returnToStartTab()
                         //self?.navigationController?.popViewController(animated: true)
                     })
                 }
@@ -120,12 +120,16 @@ class EnterPincodeViewController: PincodeViewController {
                 }
                 print("\(error)")
                 showErrorAlert(for: self!, error: error, completion: {
-                    let startViewController = AppController().goToApp()
-                    startViewController.view.backgroundColor = UIColor.white
-                    UIApplication.shared.keyWindow?.rootViewController = startViewController
+                    self?.returnToStartTab()
                 })
             }
         }
+    }
+    
+    func returnToStartTab() {
+        let startViewController = AppController().goToApp()
+        startViewController.view.backgroundColor = UIColor.white
+        UIApplication.shared.keyWindow?.rootViewController = startViewController
     }
     
     override func numberPressedAction(number: String) {
