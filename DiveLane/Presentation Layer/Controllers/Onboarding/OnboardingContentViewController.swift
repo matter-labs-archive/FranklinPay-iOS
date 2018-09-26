@@ -10,14 +10,12 @@ import UIKit
 
 class OnboardingContentViewController: UIViewController {
     
-    let colors = Colors()
-    
     var pageIndex: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = colors.mainBackgroundColor
+        self.view.backgroundColor = Colors.BackgroundColors.main
         
         let lb = UILabel()
         lb.textAlignment = .center
