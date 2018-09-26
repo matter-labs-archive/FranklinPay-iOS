@@ -20,7 +20,6 @@ class WalletViewController: UIViewController {
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     
     let design = DesignElements()
-    let colors = Colors()
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -231,7 +230,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
         cell.configure(token: token.token, forWallet: token.inWallet, withConversionRate: conversionService.currentConversionRate(for: token.token.symbol.uppercased()))
         
-        cell.accessoryView?.tintColor = colors.changeSelectionColor(dependingOnChoise: token.isSelected)
+        cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
     
         return cell
     }
