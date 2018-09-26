@@ -16,7 +16,7 @@ class CurrentToken: ERC20TokenModel {
         get {
             
             if (_currentToken == nil) {
-                _currentToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
+                _currentToken = ERC20TokenModel(isEther: true)
             }
             return _currentToken
         }

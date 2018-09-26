@@ -48,7 +48,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case SettingsTableViewSections.main.rawValue:
-            return 2
+            return settings.count
         default:
             return 0
         }
@@ -61,7 +61,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case SettingsTableViewSections.main.rawValue:
-            return 100
+            return CGFloat(Constants.hightForRowInSettingsTableView)
         default:
             return 0
         }

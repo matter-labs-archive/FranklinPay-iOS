@@ -83,7 +83,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         if tokensList != nil {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell", for: indexPath) as! SearchTokenCell
             
-            let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+            let networkID = CurrentNetwork().getNetworkID()
             guard let wallet = wallet else {return cell}
             let tokensInWallet = LocalDatabase().getAllTokens(for: wallet, forNetwork: networkID)
             var isAdded = false
@@ -107,7 +107,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             return
         }
         
-        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        let networkID = CurrentNetwork().getNetworkID()
         
         guard let token = self.tokensList?[indexPath.row] else {return}
         

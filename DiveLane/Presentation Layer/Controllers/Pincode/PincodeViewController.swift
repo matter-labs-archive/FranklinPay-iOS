@@ -19,6 +19,8 @@ class PincodeViewController: UIViewController {
     
     @IBOutlet weak var biometricsButton: UIButton!
     
+    let animation = AnimationController()
+    
     var numsIcons: [UIImageView]?
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -51,54 +53,34 @@ class PincodeViewController: UIViewController {
     }
     
     @IBAction func buttonTouchedDown(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05,
-                       animations: {
-                        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)},
-                       completion: nil)
+        animation.pressButtonStartedAnimation(for: sender)
     }
     
     @IBAction func buttonTouchCanceled(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05) {
-            sender.transform = CGAffineTransform.identity
-        }
+        animation.pressButtonCanceledAnimation(for: sender)
     }
     
     @IBAction func buttonTouchDragInside(_ sender: UIButton) {
-        UIView.animate(withDuration: 0.05,
-                       animations: {
-                        sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)},
-                       completion: nil)
+        animation.pressButtonStartedAnimation(for: sender)
     }
     
     @IBAction func buttonPressed(_ sender: PinCodeNumberButton) {
         let number = sender.currentTitle!
         
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.05) {
-                sender.transform = CGAffineTransform.identity
-            }
-        }
+        animation.pressButtonCanceledAnimation(for: sender)
         
         numberPressedAction(number: number)
         
     }
     
     @IBAction func deletePressed(_ sender: UIButton) {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.05) {
-                sender.transform = CGAffineTransform.identity
-            }
-        }
+        animation.pressButtonCanceledAnimation(for: sender)
         
         deletePressedAction()
     }
     
     @IBAction func biometricsPressed(_ sender: UIButton) {
-        DispatchQueue.main.async {
-            UIView.animate(withDuration: 0.05) {
-                sender.transform = CGAffineTransform.identity
-            }
-        }
+        animation.pressButtonCanceledAnimation(for: sender)
         
         biometricsPressedAction()
     }

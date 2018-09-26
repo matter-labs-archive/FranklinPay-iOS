@@ -58,10 +58,10 @@ class MnemonicsViewController: UIViewController {
                         })
                     } else {
                         DispatchQueue.global().async {
-                            if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
+                            if !UserDefaultKeys().isEtherAdded {
                                 AppController().addFirstToken(for: keyWalletModel!, completion: { (error) in
                                     if error == nil {
-                                        UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
+                                        UserDefaultKeys().setEtherAdded()
                                         UserDefaults.standard.synchronize()
                                         self.goToApp()
                                     } else {

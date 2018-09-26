@@ -60,53 +60,49 @@ class AppController {
             }
         }
         
-        let nav1 = UINavigationController()
-        nav1.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
-        nav1.navigationBar.tintColor = UIColor.white
-        nav1.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        nav1.navigationBar.barStyle = .black
-        let first = WalletViewController(nibName: nil, bundle: nil)
-        first.title = "Wallet"
-        nav1.viewControllers = [first]
-        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"user"), tag: 1)
+        let nav1 = navigationController(withTitle: "Wallet",
+                                        withImage: UIImage(named: "user"),
+                                        withController: WalletViewController(nibName: nil, bundle: nil),
+                                        tag: 1)
         
-        let nav2 = UINavigationController()
-        nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"settings"), tag: 2)
-        nav2.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
-        nav2.navigationBar.tintColor = UIColor.white
-        nav2.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        nav2.navigationBar.barStyle = .black
-        let second = SettingsViewController(nibName: nil, bundle: nil)
-        second.title = "Settings"
-        nav2.viewControllers = [second]
-        let transactionHistory = TransactionsHistoryViewController()
-        transactionHistory.title = "Transactions History"
-        let nav3 = UINavigationController()
-        nav3.tabBarItem = UITabBarItem(title: nil, image: UIImage(named:"history"), tag: 3)
-        nav3.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
-        nav3.navigationBar.tintColor = UIColor.white
-        nav3.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        nav3.navigationBar.barStyle = .black
-        nav3.viewControllers = [transactionHistory]
-        let sendViewController = SendSettingsViewController()
-        let navSend = UINavigationController()
-        navSend.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "send"), tag: 4)
-        navSend.navigationBar.barTintColor = UIColor(displayP3Red: 13/255, green: 92/255, blue: 182/255, alpha: 1)
-        navSend.navigationBar.tintColor = UIColor.white
-        navSend.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
-        navSend.navigationBar.barStyle = .black
-        navSend.viewControllers = [sendViewController]
+        let nav2 = navigationController(withTitle: "Settings",
+                                        withImage: UIImage(named:"settings"),
+                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+                                        tag: 2)
         
-        tabs.viewControllers = [nav1, nav3, nav2, navSend]
+        let nav3 = navigationController(withTitle: "Transactions History",
+                                        withImage: UIImage(named:"history"),
+                                        withController: TransactionsHistoryViewController(),
+                                        tag: 3)
+        
+        let nav4 = navigationController(withTitle: "Send",
+                                        withImage: UIImage(named:"send"),
+                                        withController: SendSettingsViewController(),
+                                        tag: 4)
+        
+        tabs.viewControllers = [nav1, nav3, nav2, nav4]
         
         return tabs
+    }
+    
+    func navigationController(withTitle: String?, withImage: UIImage?, withController: UIViewController, tag: Int) -> UINavigationController {
+        let nav = UINavigationController()
+        nav.navigationBar.barTintColor = Colors().mainNavigationBarTintColor
+        nav.navigationBar.tintColor = UIColor.white
+        nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor.white]
+        nav.navigationBar.barStyle = .black
+        let controller = withController
+        controller.title = withTitle
+        nav.viewControllers = [controller]
+        nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
+        return nav
     }
     
     func startAsUsual(in window: UIWindow) {
         
         var startViewController: UIViewController?
         
-        let isOnboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
+        let isOnboardingPassed = UserDefaultKeys().isOnboardingPassed
         let existingWallet = LocalDatabase().getWallet()
         
         if !isOnboardingPassed {
@@ -117,21 +113,21 @@ class AppController {
             startViewController?.view.backgroundColor = UIColor.white
         } else {
             DispatchQueue.global().async {
-                if !UserDefaults.standard.bool(forKey: "tokensDownloaded") {
+                if !UserDefaultKeys().tokensDownloaded {
                     TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
                         if error == nil {
-                            UserDefaults.standard.set(true, forKey: "tokensDownloaded")
+                            UserDefaultKeys().setTokensDownloaded()
                             UserDefaults.standard.synchronize()
                         }
                     })
                 }
             }
             DispatchQueue.global().async { [unowned self] in
-                if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
+                if !UserDefaultKeys().isEtherAdded {
                     guard let wallet = KeysService().selectedWallet() else {return}
                     self.addFirstToken(for: wallet, completion: { (error) in
                         if error == nil {
-                            UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
+                            UserDefaultKeys().setEtherAdded()
                             UserDefaults.standard.synchronize()
                             
                         } else {
@@ -150,8 +146,8 @@ class AppController {
     }
     
     func selectNetwork() {
-        CurrentNetwork.currentNetwork = (UserDefaults.standard.object(forKey: "currentNetwork") as? Networks) ?? Networks.Mainnet
-        CurrentWeb.currentWeb = (UserDefaults.standard.object(forKey: "currentWeb") as? web3) ?? Web3.InfuraMainnetWeb3()
+        CurrentNetwork.currentNetwork = (UserDefaultKeys().currentNetwork as? Networks) ?? Networks.Mainnet
+        CurrentWeb.currentWeb = (UserDefaultKeys().currentWeb as? web3) ?? Web3.InfuraMainnetWeb3()
     }
     
     func selectWallet(completion: @escaping (KeyWalletModel?)->()) {
@@ -171,13 +167,19 @@ class AppController {
     }
     
     func addFirstToken(for wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
-        let networkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
-        let etherToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
-        LocalDatabase().saveCustomToken(with: etherToken, forWallet: wallet, forNetwork: networkID) { (error) in
-            if error == nil {
-                CurrentToken.currentToken = etherToken
+        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        for networkID in 1...42 {
+            let etherToken = ERC20TokenModel(isEther: true)
+            LocalDatabase().saveCustomToken(with: etherToken, forWallet: wallet, forNetwork: Int64(networkID)) { (error) in
+                if error == nil && Int64(networkID) == currentNetworkID {
+                    CurrentToken.currentToken = etherToken
+                } else if error != nil && Int64(networkID) == currentNetworkID {
+                    completion(error)
+                }
+                if networkID == 42 {
+                    completion(error)
+                }
             }
-            completion(error)
         }
     }
     

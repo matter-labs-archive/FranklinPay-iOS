@@ -38,7 +38,7 @@ class TokenViewController: UIViewController {
         qrImageView.image = generateQRCode(from: wallet?.address)
         addressLabel.text = wallet?.address.lowercased()
         tokenNameBalanceLabel.text = "Loading..."
-        copiedLabel.alpha = 0
+        hideCopiedLabel(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,19 +47,29 @@ class TokenViewController: UIViewController {
         checkBalanceAndEnableSend()
     }
     
+    func hideCopiedLabel(_ hidden: Bool = false) {
+        copiedLabel.alpha = hidden ? 0.0 : 1.0
+    }
+    
     func checkBalanceAndEnableSend() {
         guard let balance = Float(tokenBalance!) else {
-            tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
-            sendTokenButton.isEnabled = false
-            sendTokenButton.alpha = 0.5
+            disableSendButton()
             return
         }
         guard balance > 0 else {
-            tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
-            sendTokenButton.isEnabled = false
-            sendTokenButton.alpha = 0.5
+            disableSendButton()
             return
         }
+        enableSendButton()
+    }
+    
+    func disableSendButton() {
+        tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
+        sendTokenButton.isEnabled = false
+        sendTokenButton.alpha = 0.5
+    }
+    
+    func enableSendButton() {
         tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
         sendTokenButton.isEnabled = true
         sendTokenButton.alpha = 1.0
@@ -131,14 +141,14 @@ class TokenViewController: UIViewController {
     @IBAction func copyAddress(_ sender: UIButton) {
         UIPasteboard.general.string = wallet?.address
         
-        DispatchQueue.main.async {
-            self.copiedLabel.alpha = 0.0
+        DispatchQueue.main.async { [weak self] in
+            self?.hideCopiedLabel(true)
             UIView.animate(withDuration: 1.0,
                            animations: {
-                            self.copiedLabel.alpha = 1.0
+                            self?.hideCopiedLabel(false)
             }, completion: { _ in
                 UIView.animate(withDuration: 2.0, animations: {
-                    self.copiedLabel.alpha = 0.0
+                    self?.hideCopiedLabel(true)
                 })
             })
         }

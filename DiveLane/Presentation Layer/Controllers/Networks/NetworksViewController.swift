@@ -55,7 +55,7 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+        return CGFloat(Constants.heightForRowInNetworksTableView)
     }
     
     
@@ -69,20 +69,21 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
         
         CurrentNetwork.currentNetwork = networks[indexPath.row]
         CurrentWeb.currentWeb = webs[indexPath.row]
-        DispatchQueue.global().async {
-            if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
-                guard let wallet = KeysService().selectedWallet() else {return}
-                AppController().addFirstToken(for: wallet, completion: { (error) in
-                    if error == nil {
-                        UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
-                        UserDefaults.standard.synchronize()
-                        
-                        self.navigationController?.popViewController(animated: true)
-                    } else {
-                        fatalError("Can't add ether - \(String(describing: error))")
-                    }
-                })
-            }
+        DispatchQueue.global().async { [weak self] in
+            self?.navigationController?.popViewController(animated: true)
+//            if !UserDefaultKeys().isEtherAdded {
+//                guard let wallet = KeysService().selectedWallet() else {return}
+//                AppController().addFirstToken(for: wallet, completion: { (error) in
+//                    if error == nil {
+//                        UserDefaultKeys().setEtherAdded()
+//                        UserDefaults.standard.synchronize()
+//
+//                        self.navigationController?.popViewController(animated: true)
+//                    } else {
+//                        fatalError("Can't add ether - \(String(describing: error))")
+//                    }
+//                })
+//            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
         

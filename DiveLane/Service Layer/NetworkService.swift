@@ -48,4 +48,8 @@ class CurrentNetwork {
             _currentNetwork = network
         }
     }
+    
+    func getNetworkID() -> Int64 {
+        return Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+    }
 }
