@@ -167,13 +167,19 @@ class AppController {
     }
     
     func addFirstToken(for wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
-        let networkID = CurrentNetwork().getNetworkID()
-        let etherToken = ERC20TokenModel(isEther: true)
-        LocalDatabase().saveCustomToken(with: etherToken, forWallet: wallet, forNetwork: networkID) { (error) in
-            if error == nil {
-                CurrentToken.currentToken = etherToken
+        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        for networkID in 1...42 {
+            let etherToken = ERC20TokenModel(isEther: true)
+            LocalDatabase().saveCustomToken(with: etherToken, forWallet: wallet, forNetwork: Int64(networkID)) { (error) in
+                if error == nil && Int64(networkID) == currentNetworkID {
+                    CurrentToken.currentToken = etherToken
+                } else if error != nil && Int64(networkID) == currentNetworkID {
+                    completion(error)
+                }
+                if networkID == 42 {
+                    completion(error)
+                }
             }
-            completion(error)
         }
     }
     

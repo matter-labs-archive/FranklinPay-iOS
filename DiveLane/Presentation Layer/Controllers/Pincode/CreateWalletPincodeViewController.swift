@@ -143,10 +143,10 @@ class CreateWalletPincodeViewController: PincodeViewController {
                 self.localStorage.selectWallet(wallet: self.wallet, completion: {
                     
                     DispatchQueue.global().async {
-                        if !UserDefaults.standard.bool(forKey: "tokensDownloaded") {
+                        if !UserDefaultKeys().tokensDownloaded {
                             TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
                                 if error == nil {
-                                    UserDefaults.standard.set(true, forKey: "tokensDownloaded")
+                                    UserDefaultKeys().setTokensDownloaded()
                                     UserDefaults.standard.synchronize()
                                 }
                             })
@@ -155,10 +155,10 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     
                     let dispatchGroup = DispatchGroup()
                     dispatchGroup.enter()
-                    if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
+                    if !UserDefaultKeys().isEtherAdded {
                         AppController().addFirstToken(for: self.wallet!, completion: { (error) in
                             if error == nil {
-                                UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
+                                UserDefaultKeys().setEtherAdded()
                                 UserDefaults.standard.synchronize()
                                 dispatchGroup.leave()
                             } else {
@@ -168,7 +168,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
                         })
                     }
                     dispatchGroup.notify(queue: .main) {
-                        if UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
+                        if UserDefaultKeys().isEtherAdded {
                             self.goToApp()
                         } else {
                             showErrorAlert(for: self, error: NetworkErrors.couldnotParseUrlString, completion: {
