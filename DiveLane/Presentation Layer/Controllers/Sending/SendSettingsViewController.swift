@@ -520,44 +520,24 @@ extension SendSettingsViewController: UITextFieldDelegate {
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
         hideSendButton(true)
         
-        switch textField {
-        case enterAddressTextField:
-            let hardExpression = !futureString.isEmpty
-                && !(amountTextField.text?.isEmpty ?? true)
-                && !(gasLimitTextField.text?.isEmpty ?? true)
-                && !(gasPriceTextField.text?.isEmpty ?? true)
-                && (token != nil) && (wallet != nil)
-                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-                && (Float((amountTextField.text ?? "")) != nil)
-            hideSendButton(!hardExpression)
-        case amountTextField:
-            let hardExpression = !futureString.isEmpty
-                && !(enterAddressTextField.text?.isEmpty ?? true)
-                && !(gasLimitTextField.text?.isEmpty ?? true)
-                && !(gasPriceTextField.text?.isEmpty ?? true)
-                && (token != nil) && (wallet != nil)
-                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-                && (Float((futureString)) != nil)
-            hideSendButton(!hardExpression)
-        case gasPriceTextField:
-            let hardExpression = !futureString.isEmpty
-                && !(amountTextField.text?.isEmpty ?? true)
-                && !(enterAddressTextField.text?.isEmpty ?? true)
-                && !(gasLimitTextField.text?.isEmpty ?? true)
-                && (token != nil) && (wallet != nil)
-                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            hideSendButton(!hardExpression)
-        case gasLimitTextField:
-            let hardExpression = !futureString.isEmpty
-                && !(amountTextField.text?.isEmpty ?? true)
-                && !(enterAddressTextField.text?.isEmpty ?? true)
-                && !(gasPriceTextField.text?.isEmpty ?? true)
-                && (token != nil) && (wallet != nil)
-                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-            hideSendButton(!hardExpression)
-        default:
-            hideSendButton(true)
+        var hardExpression = true
+        hardExpression = hardExpression && !futureString.isEmpty
+            && (token != nil) && (wallet != nil)
+            && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+        for i in textFields {
+            if textField != amountTextField {
+                hardExpression = hardExpression
+                    && !futureString.isEmpty
+                    && !(amountTextField.text?.isEmpty ?? true)
+                    && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
+            } else {
+                hardExpression = hardExpression
+                    && !futureString.isEmpty
+                    && ((Float(futureString) ?? 0.0) > Float(0))
+            }
         }
+        
+        hideSendButton(!hardExpression)
         
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
         
