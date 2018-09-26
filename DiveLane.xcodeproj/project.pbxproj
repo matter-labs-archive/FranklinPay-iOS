@@ -103,7 +103,11 @@
 		B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */; };
 		B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */; };
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
+		E2724B99215ABD9100E99901 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B98215ABD9100E99901 /* Constants.swift */; };
+		E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */; };
 		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
+		E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA091215A8ACF001755A4 /* Colors.swift */; };
+		E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA093215A8C41001755A4 /* DesignElements.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -207,7 +211,11 @@
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
 		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
+		E2724B98215ABD9100E99901 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableTokens.swift; sourceTree = "<group>"; };
+		E2EBA091215A8ACF001755A4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E2EBA093215A8C41001755A4 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -237,14 +245,6 @@
 				A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		914F228421497F9200ED58E6 /* Animators */ = {
-			isa = PBXGroup;
-			children = (
-				914F22852149800700ED58E6 /* AnimationController.swift */,
-			);
-			path = Animators;
 			sourceTree = "<group>";
 		};
 		914F228721499AA900ED58E6 /* Pincode */ = {
@@ -490,8 +490,13 @@
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
 				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
+				E2724B98215ABD9100E99901 /* Constants.swift */,
+				E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */,
 				91B6A7C7214368470033A045 /* Parameter.swift */,
 				91B6A7CD214370F00033A045 /* URL.swift */,
+				E2EBA093215A8C41001755A4 /* DesignElements.swift */,
+				E2EBA091215A8ACF001755A4 /* Colors.swift */,
+				914F22852149800700ED58E6 /* AnimationController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -535,7 +540,6 @@
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
 				914F228721499AA900ED58E6 /* Pincode */,
-				914F228421497F9200ED58E6 /* Animators */,
 				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
@@ -864,11 +868,14 @@
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
 				B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */,
+				E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
 				91E7255B214FEDE3003FAD76 /* AddressTableViewCell.swift in Sources */,
+				E2724B99215ABD9100E99901 /* Constants.swift in Sources */,
 				B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
+				E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91E7256221506700003FAD76 /* TokensService.swift in Sources */,
@@ -910,6 +917,7 @@
 				B271CF9B214BAEDB0023FC18 /* TransactionCell.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreateWalletPincodeViewController.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
+				E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */,
 				B2E668D62150F9F700C3CC2D /* WalletDropdownMarager.swift in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
@@ -1062,13 +1070,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8DB897QKJA;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -1083,13 +1091,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 8DB897QKJA;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

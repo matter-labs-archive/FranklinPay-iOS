@@ -15,7 +15,7 @@ class OnboardingContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(red: 249/255, green: 249/255, blue: 249/255, alpha: 1)
+        self.view.backgroundColor = Colors.BackgroundColors.main
         
         let lb = UILabel()
         lb.textAlignment = .center

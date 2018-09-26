@@ -10,7 +10,7 @@ import Foundation
 
 class EtherscanService {
     func getAbi(forContractAddress contractAddress: String, completion: @escaping(Result<String>) -> Void) {
-        let urlString = "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=\(contractAddress)&apikey=YourApiKeyToken"
+        let urlString = getURL(forContractAddress: contractAddress)
         guard let url = URL(string: urlString) else {
             completion(Result.Error(NetworkErrors.couldnotParseUrlString))
             return
