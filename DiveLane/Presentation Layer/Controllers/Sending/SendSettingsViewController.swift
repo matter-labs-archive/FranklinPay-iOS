@@ -515,25 +515,30 @@ extension SendSettingsViewController: UITextFieldDelegate {
         return true
     }
     
+    private func isSendButtonEnabled(afterChanging textField: UITextField, with string: String) -> Bool {
+        var hardExpression = true
+        hardExpression = hardExpression && !string.isEmpty
+            && (token != nil) && (wallet != nil)
+            && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+        if textField != amountTextField {
+            hardExpression = hardExpression
+                && !string.isEmpty
+                && !(amountTextField.text?.isEmpty ?? true)
+                && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
+        } else {
+            hardExpression = hardExpression
+                && !string.isEmpty
+                && ((Float(string) ?? 0.0) > Float(0))
+        }
+        return hardExpression
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
         hideSendButton(true)
         
-        var hardExpression = true
-        hardExpression = hardExpression && !futureString.isEmpty
-            && (token != nil) && (wallet != nil)
-            && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-        if textField != amountTextField {
-            hardExpression = hardExpression
-                && !futureString.isEmpty
-                && !(amountTextField.text?.isEmpty ?? true)
-                && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
-        } else {
-            hardExpression = hardExpression
-                && !futureString.isEmpty
-                && ((Float(futureString) ?? 0.0) > Float(0))
-        }
+        let hardExpression = isSendButtonEnabled(afterChanging: textField, with: futureString)
         
         hideSendButton(!hardExpression)
         
