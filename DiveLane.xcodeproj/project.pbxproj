@@ -87,6 +87,8 @@
 		B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091510214AA58100C8B408 /* MnemonicsViewController.swift */; };
 		B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091511214AA58100C8B408 /* MnemonicsViewController.xib */; };
 		B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091516214AB04800C8B408 /* WalletImportMode.swift */; };
+		B219DC2C215B77A80035BF94 /* DiveLaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */; };
+		B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC33215B786D0035BF94 /* SnapshotHelper.swift */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
@@ -105,6 +107,16 @@
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
 		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B219DC2E215B77A80035BF94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91B6A78B21435F5D0033A045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91B6A79221435F5D0033A045;
+			remoteInfo = DiveLane;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
@@ -190,6 +202,10 @@
 		B2091510214AA58100C8B408 /* MnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsViewController.swift; sourceTree = "<group>"; };
 		B2091511214AA58100C8B408 /* MnemonicsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicsViewController.xib; sourceTree = "<group>"; };
 		B2091516214AB04800C8B408 /* WalletImportMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletImportMode.swift; sourceTree = "<group>"; };
+		B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneUITests.swift; sourceTree = "<group>"; };
+		B219DC2D215B77A80035BF94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B219DC33215B786D0035BF94 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
@@ -216,6 +232,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B219DC26215B77A80035BF94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +475,7 @@
 			isa = PBXGroup;
 			children = (
 				91B6A79521435F5D0033A045 /* DiveLane */,
+				B219DC2A215B77A80035BF94 /* DiveLaneUITests */,
 				91B6A79421435F5D0033A045 /* Products */,
 				01C0C7BFEA430D8AD09D7D4D /* Pods */,
 				6DE660421B91D607B06623B4 /* Frameworks */,
@@ -462,6 +486,7 @@
 			isa = PBXGroup;
 			children = (
 				91B6A79321435F5D0033A045 /* DiveLane.app */,
+				B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -641,6 +666,16 @@
 			path = "Presentation Layer";
 			sourceTree = "<group>";
 		};
+		B219DC2A215B77A80035BF94 /* DiveLaneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */,
+				B219DC33215B786D0035BF94 /* SnapshotHelper.swift */,
+				B219DC2D215B77A80035BF94 /* Info.plist */,
+			);
+			path = DiveLaneUITests;
+			sourceTree = "<group>";
+		};
 		B271CF91214BAD080023FC18 /* Transactions History */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,18 +747,40 @@
 			productReference = 91B6A79321435F5D0033A045 /* DiveLane.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B219DC28215B77A80035BF94 /* DiveLaneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B219DC32215B77A80035BF94 /* Build configuration list for PBXNativeTarget "DiveLaneUITests" */;
+			buildPhases = (
+				B219DC25215B77A80035BF94 /* Sources */,
+				B219DC26215B77A80035BF94 /* Frameworks */,
+				B219DC27215B77A80035BF94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B219DC2F215B77A80035BF94 /* PBXTargetDependency */,
+			);
+			name = DiveLaneUITests;
+			productName = DiveLaneUITests;
+			productReference = B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		91B6A78B21435F5D0033A045 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Matter Inc";
 				TargetAttributes = {
 					91B6A79221435F5D0033A045 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					B219DC28215B77A80035BF94 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 91B6A79221435F5D0033A045;
 					};
 				};
 			};
@@ -741,6 +798,7 @@
 			projectRoot = "";
 			targets = (
 				91B6A79221435F5D0033A045 /* DiveLane */,
+				B219DC28215B77A80035BF94 /* DiveLaneUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -778,6 +836,13 @@
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B219DC27215B77A80035BF94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -927,7 +992,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B219DC25215B77A80035BF94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B219DC2C215B77A80035BF94 /* DiveLaneUITests.swift in Sources */,
+				B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B219DC2F215B77A80035BF94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91B6A79221435F5D0033A045 /* DiveLane */;
+			targetProxy = B219DC2E215B77A80035BF94 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */ = {
@@ -1097,6 +1179,49 @@
 			};
 			name = Release;
 		};
+		B219DC30215B77A80035BF94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				INFOPLIST_FILE = DiveLaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiveLane;
+			};
+			name = Debug;
+		};
+		B219DC31215B77A80035BF94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				INFOPLIST_FILE = DiveLaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiveLane;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1114,6 +1239,15 @@
 			buildConfigurations = (
 				91B6A7A621435F5E0033A045 /* Debug */,
 				91B6A7A721435F5E0033A045 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B219DC32215B77A80035BF94 /* Build configuration list for PBXNativeTarget "DiveLaneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B219DC30215B77A80035BF94 /* Debug */,
+				B219DC31215B77A80035BF94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
