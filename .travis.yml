@@ -1,0 +1,4 @@
+language: swift
+xcode_project: DiveLane.xcworkspace # path to your xcodeproj folder
+xcode_scheme: DiveLane
+xcode_destination: platform=iOS Simulator,OS=10.1,name=iPad Pro (9.7-inch)
