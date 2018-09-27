@@ -307,7 +307,7 @@ class WalletCreationViewController: UIViewController {
         repeatPasswordTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true
     }
     
-    func passwordsMatch(_ match: Bool) {
+    func setColor(_ match: Bool) {
         let color = match ? UIColor.darkGray : UIColor.red
         repeatPasswordTextField.textColor = color
         passwordTextField.textColor = color
