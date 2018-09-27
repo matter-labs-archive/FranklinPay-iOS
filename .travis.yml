@@ -1,4 +1,11 @@
-language: swift
+language: objective-c
+osx_image: xcode10
 xcode_project: DiveLane.xcworkspace # path to your xcodeproj folder
 xcode_scheme: DiveLane
 xcode_destination: platform=iOS Simulator,OS=10.1,name=iPad Pro (9.7-inch)
+before_install:
+  - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
+script:
+  - xcodebuild -scheme DiveLane -workspace DiveLane.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator,name=iPhone 6S,OS=10.1' build test
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
