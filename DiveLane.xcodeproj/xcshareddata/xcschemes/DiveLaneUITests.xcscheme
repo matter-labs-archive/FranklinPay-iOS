@@ -38,6 +38,16 @@
                ReferencedContainer = "container:DiveLane.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1CF54A71215CCF0E009CC78F"
+               BuildableName = "DiveLaneTests.xctest"
+               BlueprintName = "DiveLaneTests"
+               ReferencedContainer = "container:DiveLane.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

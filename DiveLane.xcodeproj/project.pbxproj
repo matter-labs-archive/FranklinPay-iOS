@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F22862149800800ED58E6 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22852149800700ED58E6 /* AnimationController.swift */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
@@ -113,6 +114,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		1CF54A77215CCF0E009CC78F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91B6A78B21435F5D0033A045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91B6A79221435F5D0033A045;
+			remoteInfo = DiveLane;
+		};
 		B219DC2E215B77A80035BF94 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 91B6A78B21435F5D0033A045 /* Project object */;
@@ -123,6 +131,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
+		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
 		914F22852149800700ED58E6 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		914F228821499ACC00ED58E6 /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +246,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1CF54A6F215CCF0E009CC78F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A79021435F5D0033A045 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -260,6 +278,15 @@
 				B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		1CF54A73215CCF0E009CC78F /* DiveLaneTests */ = {
+			isa = PBXGroup;
+			children = (
+				1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */,
+				1CF54A76215CCF0E009CC78F /* Info.plist */,
+			);
+			path = DiveLaneTests;
 			sourceTree = "<group>";
 		};
 		6DE660421B91D607B06623B4 /* Frameworks */ = {
@@ -476,6 +503,7 @@
 			children = (
 				91B6A79521435F5D0033A045 /* DiveLane */,
 				B219DC2A215B77A80035BF94 /* DiveLaneUITests */,
+				1CF54A73215CCF0E009CC78F /* DiveLaneTests */,
 				91B6A79421435F5D0033A045 /* Products */,
 				01C0C7BFEA430D8AD09D7D4D /* Pods */,
 				6DE660421B91D607B06623B4 /* Frameworks */,
@@ -487,6 +515,7 @@
 			children = (
 				91B6A79321435F5D0033A045 /* DiveLane.app */,
 				B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */,
+				1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -731,6 +760,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1CF54A71215CCF0E009CC78F /* DiveLaneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1CF54A7B215CCF0E009CC78F /* Build configuration list for PBXNativeTarget "DiveLaneTests" */;
+			buildPhases = (
+				1CF54A6E215CCF0E009CC78F /* Sources */,
+				1CF54A6F215CCF0E009CC78F /* Frameworks */,
+				1CF54A70215CCF0E009CC78F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1CF54A78215CCF0E009CC78F /* PBXTargetDependency */,
+			);
+			name = DiveLaneTests;
+			productName = DiveLaneTests;
+			productReference = 1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		91B6A79221435F5D0033A045 /* DiveLane */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91B6A7A521435F5E0033A045 /* Build configuration list for PBXNativeTarget "DiveLane" */;
@@ -779,6 +826,10 @@
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Matter Inc";
 				TargetAttributes = {
+					1CF54A71215CCF0E009CC78F = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 91B6A79221435F5D0033A045;
+					};
 					91B6A79221435F5D0033A045 = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
@@ -803,11 +854,19 @@
 			targets = (
 				91B6A79221435F5D0033A045 /* DiveLane */,
 				B219DC28215B77A80035BF94 /* DiveLaneUITests */,
+				1CF54A71215CCF0E009CC78F /* DiveLaneTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1CF54A70215CCF0E009CC78F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A79121435F5D0033A045 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -921,6 +980,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1CF54A6E215CCF0E009CC78F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A78F21435F5D0033A045 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1012,6 +1079,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		1CF54A78215CCF0E009CC78F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91B6A79221435F5D0033A045 /* DiveLane */;
+			targetProxy = 1CF54A77215CCF0E009CC78F /* PBXContainerItemProxy */;
+		};
 		B219DC2F215B77A80035BF94 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 91B6A79221435F5D0033A045 /* DiveLane */;
@@ -1031,6 +1103,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1CF54A79215CCF0E009CC78F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DiveLaneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = MT.DiveLaneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiveLane.app/DiveLane";
+			};
+			name = Debug;
+		};
+		1CF54A7A215CCF0E009CC78F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DiveLaneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = MT.DiveLaneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiveLane.app/DiveLane";
+			};
+			name = Release;
+		};
 		91B6A7A321435F5E0033A045 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1233,6 +1348,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1CF54A7B215CCF0E009CC78F /* Build configuration list for PBXNativeTarget "DiveLaneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CF54A79215CCF0E009CC78F /* Debug */,
+				1CF54A7A215CCF0E009CC78F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		91B6A78E21435F5D0033A045 /* Build configuration list for PBXProject "DiveLane" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
