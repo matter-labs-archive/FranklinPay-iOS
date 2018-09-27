@@ -44,14 +44,14 @@ func getURL(forType type: TransactionType, address: String, networkId: Int64) ->
     default:
         urlNetworkParameter = ""
     }
-    
+
     var url: URL?
     switch type {
     case .custom:
         url = URL(string: "https://api\(urlNetworkParameter).etherscan.io/api?module=account&action=txlist&address=\(address)&startblock=0&endblock=99999999&sort=asc")
     case .arbitraryMethodWithParams:
         url = URL(string: "https://api\(urlNetworkParameter).etherscan.io/api?module=account&action=tokentx&address=\(address)&startblock=0&endblock=99999999&sort=asc")
-        
+
     }
     return url
 }

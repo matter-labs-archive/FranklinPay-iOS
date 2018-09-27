@@ -9,13 +9,13 @@
 import Foundation
 import LocalAuthentication
 
-typealias SuccessCallback = (()->())
-typealias FailureCallback = ((LocAError)->())
+typealias SuccessCallback = (() -> ())
+typealias FailureCallback = ((LocAError) -> ())
 
 public enum LocAError {
-    case userCancelled,failed,systemCancelled,biometryNotAvailable,biometryLockedOut,other
-    
-    static func initError(_ error:LAError) -> LocAError {
+    case userCancelled, failed, systemCancelled, biometryNotAvailable, biometryLockedOut, other
+
+    static func initError(_ error: LAError) -> LocAError {
         switch Int32(error.errorCode) {
         case kLAErrorAuthenticationFailed:
             return failed
@@ -30,11 +30,11 @@ public enum LocAError {
         default: return other
         }
     }
-    
-    
+
+
     func getErrorMessage() -> String {
         switch self {
-        case .biometryNotAvailable: return  biometricsNotAvailableReason
+        case .biometryNotAvailable: return biometricsNotAvailableReason
         case .biometryLockedOut: return biometricsPincodeAuthenticationStringReason
         case .userCancelled, .systemCancelled: return ""
         default: return defaultBiometricsAuthenticationStringReason
@@ -54,74 +54,81 @@ let biometricsNotAvailableReason = "Authentication not available on your devaice
 
 
 public class BiometricsManager: NSObject {
-    
+
     public static let shared = BiometricsManager()
-    
+
     class func canAuth() -> Bool {
         var isAvailableAuthentication = false
-        var error:NSError? = nil
-        
+        var error: NSError? = nil
+
         isAvailableAuthentication = LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
         return error == nil ? true : false
     }
-    
-    
+
+
     /// Check for authentication
-    class func authenticateBioMetrics(reason:String,cancelString:String? = nil,fallbackString:String? = "",success:@escaping SuccessCallback, failure:@escaping FailureCallback) {
-        
-        let stringReason:String = reason.isEmpty ? BiometricsManager.shared.defaultReason() : reason
-        
+    class func authenticateBioMetrics(reason: String, cancelString: String? = nil, fallbackString: String? = "", success: @escaping SuccessCallback, failure: @escaping FailureCallback) {
+
+        let stringReason: String = reason.isEmpty ? BiometricsManager.shared.defaultReason() : reason
+
         let context = LAContext()
-        
+
         context.localizedFallbackTitle = fallbackString
-        
+
         if #available(iOS 10.0, *) {
             context.localizedCancelTitle = cancelString
         }
-        
+
         BiometricsManager.shared.evaluate(context: context, reason: stringReason, policy: LAPolicy.deviceOwnerAuthenticationWithBiometrics, sucess: success, failure: failure)
     }
-    
-    class func authenticatePasscode(reason: String, cancelTitle: String? = "", success:@escaping SuccessCallback, failure:@escaping FailureCallback) {
+
+    class func authenticatePasscode(reason: String, cancelTitle: String? = "", success: @escaping SuccessCallback, failure: @escaping FailureCallback) {
         let stringReason = reason.isEmpty ? BiometricsManager.shared.defaultPincodeReason() : reason
-        
+
         let context = LAContext()
-        
+
         if #available(iOS 10.0, *) {
             context.localizedCancelTitle = cancelTitle
         }
-        
+
         if #available(iOS 9.0, *) {
             BiometricsManager.shared.evaluate(context: context, reason: stringReason, policy: LAPolicy.deviceOwnerAuthentication, sucess: success, failure: failure)
         } else {
             BiometricsManager.shared.evaluate(context: context, reason: stringReason, policy: LAPolicy.deviceOwnerAuthenticationWithBiometrics, sucess: success, failure: failure)
         }
-        
+
     }
-    
+
     /// Get authentication reason
     private func defaultReason() -> String {
         return biometricsAuthenticationStringReason
     }
-    
+
     private func defaultPincodeReason() -> String {
         return biometricsPincodeAuthenticationStringReason
     }
-    
+
     ///Evaluate with policy
-    private func evaluate(context:LAContext,reason:String,policy:LAPolicy,sucess successBlock:@escaping SuccessCallback,failure failBlock:@escaping FailureCallback) {
+    private func evaluate(context: LAContext,
+                          reason: String,
+                          policy: LAPolicy,
+                          sucess successBlock: @escaping SuccessCallback,
+                          failure failBlock: @escaping FailureCallback) {
         context.evaluatePolicy(policy, localizedReason: reason) { (success, error) in
             DispatchQueue.main.async {
                 if success {
                     successBlock()
-                }else {
+                } else {
                     DispatchQueue.main.async {
-                        let typeError = LocAError.initError(error as! LAError)
+                        guard let error = error as? LAError else {
+                            return
+                        }
+                        let typeError = LocAError.initError(error)
                         failBlock(typeError)
                     }
                 }
             }
         }
     }
-    
+
 }

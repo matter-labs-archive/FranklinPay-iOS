@@ -9,22 +9,22 @@
 import UIKit
 
 class OnboardingContentViewController: UIViewController {
-    
+
     var pageIndex: Int!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.view.backgroundColor = Colors.BackgroundColors.main
-        
+
         let lb = UILabel()
         lb.textAlignment = .center
         lb.text = PAGES[self.pageIndex].title
-        
+
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.image = PAGES[self.pageIndex].image
-        
+
         let views = [
             "iv": iv
         ]
@@ -32,16 +32,16 @@ class OnboardingContentViewController: UIViewController {
             v.translatesAutoresizingMaskIntoConstraints = false
             self.view.addSubview(v)
         }
-        
+
         NSLayoutConstraint.activate(
                 NSLayoutConstraint.constraints(withVisualFormat: "H:|-[iv]-|",
-                                               options: .alignAllCenterX,
-                                               metrics: [:],
-                                               views: views) +
-                NSLayoutConstraint.constraints(withVisualFormat: "V:|-[iv]-|",
-                                               options: .alignAllCenterX,
-                                               metrics: [:],
-                                               views: views)
+                        options: .alignAllCenterX,
+                        metrics: [:],
+                        views: views) +
+                        NSLayoutConstraint.constraints(withVisualFormat: "V:|-[iv]-|",
+                                options: .alignAllCenterX,
+                                metrics: [:],
+                                views: views)
         )
     }
 }

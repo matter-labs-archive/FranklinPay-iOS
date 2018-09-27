@@ -9,10 +9,10 @@
 import Foundation
 
 enum WalletAdditionMode {
-    
+
     case importWallet
     case createWallet
-    
+
     func title() -> String {
         switch self {
         case .importWallet:

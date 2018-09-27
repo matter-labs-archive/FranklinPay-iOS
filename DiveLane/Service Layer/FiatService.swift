@@ -9,39 +9,39 @@
 import UIKit
 
 protocol FiatService {
-    
-    func updateConversionRate(for tokenName: String,completion: @escaping (Double) -> Void)
-    
+
+    func updateConversionRate(for tokenName: String, completion: @escaping (Double) -> Void)
+
     func currentConversionRate(for tokenName: String) -> Double
-    
+
 }
 
 
 class FiatServiceImplementation: FiatService {
-    
+
     static let service = FiatServiceImplementation()
     var conversionRates = [String: Double]()
-    
+
     let urlFormat = URLs.urlPricesFromCryptocompare
-    
+
     func updateConversionRate(for tokenName: String, completion: @escaping (Double) -> Void) {
-        
+
         let fullURLString = String(format: urlFormat, tokenName)
-        
+
         guard let url = URL(string: fullURLString) else {
             completion(0)
             return
         }
-        
+
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-            
+
             if let data = data {
                 do {
                     // Convert the data to JSON
-                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String : Any]
-                    
+                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+
                     if let json = jsonSerialized {
-                        
+
                         if let conversionRate = json["USD"] as? Double {
                             DispatchQueue.main.async {
                                 self.conversionRates[tokenName] = conversionRate
@@ -54,7 +54,7 @@ class FiatServiceImplementation: FiatService {
                             }
                         }
                     }
-                }  catch let error as NSError {
+                } catch let error as NSError {
                     print(error.localizedDescription)
                     DispatchQueue.main.async {
                         completion(0)
@@ -67,10 +67,10 @@ class FiatServiceImplementation: FiatService {
                 }
             }
         }
-        
+
         task.resume()
     }
-    
+
     func currentConversionRate(for tokenName: String) -> Double {
         return conversionRates[tokenName] ?? 0
     }

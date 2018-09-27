@@ -47,32 +47,44 @@ class TransactionsHistoryService {
                 var transactions = [ETHTransactionModel]()
                 for result in results {
                     guard let from = result["from"] as? String,
-                        let to = result["to"] as? String,
-                        let timestamp = Double(result["timeStamp"] as! String),
-                        let value = result["value"] as? String,
-                        let hash = result["hash"] as? String,
-                        let data = result["input"] as? String else {
-                            DispatchQueue.main.async {
-                                completion(Result.Error(NetworkErrors.couldnotParseJSON))
-                            }
-                            return
+                          let to = result["to"] as? String,
+                          let timestamp = Double((result["timeStamp"] as? String)!),
+                          let value = result["value"] as? String,
+                          let hash = result["hash"] as? String,
+                          let data = result["input"] as? String else {
+                        DispatchQueue.main.async {
+                            completion(Result.Error(NetworkErrors.couldnotParseJSON))
+                        }
+                        return
                     }
                     let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
                     var tokenModel: ERC20TokenModel?
                     if type == .arbitraryMethodWithParams {
                         guard let tokenName = result["tokenName"] as? String,
-                            let tokenSymbol = result["tokenSymbol"] as? String,
-                            let tokenDecimal = result["tokenDecimal"] as? String,
-                            let tokenAddress = result["contractAddress"] as? String else {
-                                return
+                              let tokenSymbol = result["tokenSymbol"] as? String,
+                              let tokenDecimal = result["tokenDecimal"] as? String,
+                              let tokenAddress = result["contractAddress"] as? String else {
+                            return
                         }
                         tokenModel = ERC20TokenModel(name: tokenName, address: tokenAddress, decimals: tokenDecimal, symbol: tokenSymbol)
                     } else {
                         tokenModel = nil
                     }
-                    guard let amount = BigUInt(value) else { return }
-                    guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else { return }
-                    let transaction = ETHTransactionModel(transactionHash: hash, from: from, to: to, amount: amountString, date: date, data: Data.fromHex(data), token: tokenModel, networkID: networkId, isPending: false)
+                    guard let amount = BigUInt(value) else {
+                        return
+                    }
+                    guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else {
+                        return
+                    }
+                    let transaction = ETHTransactionModel(transactionHash: hash,
+                                                          from: from,
+                                                          to: to,
+                                                          amount: amountString,
+                                                          date: date,
+                                                          data: Data.fromHex(data),
+                                                          token: tokenModel,
+                                                          networkID: networkId,
+                                                          isPending: false)
                     transactions.append(transaction)
                 }
                 DispatchQueue.main.async {
@@ -86,5 +98,5 @@ class TransactionsHistoryService {
         }
         dataTask.resume()
     }
-    
+
 }

@@ -12,7 +12,7 @@ import web3swift
 class NetworksCell: UITableViewCell {
 
     @IBOutlet weak var networkLabel: UILabel!
-    
+
     func configure(network: Networks) {
         var name: String?
         switch network {
@@ -26,19 +26,18 @@ class NetworksCell: UITableViewCell {
             name = "Ropsten"
         }
         self.networkLabel.text = name ?? ""
-        
+
     }
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-    
-    override func prepareForReuse()
-    {
+
+    override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         self.networkLabel.text = ""
     }
-    
+
 }

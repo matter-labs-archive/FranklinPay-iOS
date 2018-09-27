@@ -51,10 +51,10 @@ class EtherscanService {
                     completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
                 }
             }
-            
+
         }
         dataTask.resume()
-        
+
     }
 }
 

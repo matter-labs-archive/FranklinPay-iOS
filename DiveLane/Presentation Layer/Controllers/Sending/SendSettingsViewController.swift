@@ -12,7 +12,7 @@ import web3swift
 import struct BigInt.BigUInt
 
 class SendSettingsViewController: UIViewController {
-    
+
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var addressFromLabel: UILabel!
     @IBOutlet weak var enterAddressTextField: UITextField!
@@ -26,7 +26,7 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var closeView: UIView!
     @IBOutlet weak var addressFromView: UIView!
     @IBOutlet weak var stackView: UIStackView!
-    
+
     var wallet: KeyWalletModel?
     var token: ERC20TokenModel?
     var tokenBalance: String?
@@ -37,22 +37,23 @@ class SendSettingsViewController: UIViewController {
             dropDownView.removeFromSuperview()
         }
     }
-    
+
     var amountInString: String?
     var destinationAddress: String?
     let localStorage = LocalDatabase()
-    
+    let transactionsService = TransactionsService()
+
     let animation = AnimationController()
-    
+
     var screenState: AppState = .ETH {
         didSet {
             print(screenState)
         }
     }
-    
+
     let tokenDropdownManager = TokenDropdownManager()
     let walletDropdownManager = WalletDropdownManager()
-    
+
     convenience init(wallet: KeyWalletModel,
                      tokenBalance: String,
                      token: ERC20TokenModel) {
@@ -61,7 +62,7 @@ class SendSettingsViewController: UIViewController {
         self.tokenBalance = tokenBalance
         self.token = token
     }
-    
+
     convenience init(tokenAddress: String?,
                      amount: BigUInt,
                      destinationAddress: String,
@@ -70,7 +71,7 @@ class SendSettingsViewController: UIViewController {
         token = ERC20TokenModel(isEther: false)
         let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
-        let resultAmount = Float(amountFloat/decimals)
+        let resultAmount = Float(amountFloat / decimals)
         self.amountInString = String(resultAmount)
         self.destinationAddress = destinationAddress
         let walletFromDatabase = LocalDatabase().getWallet()
@@ -81,7 +82,7 @@ class SendSettingsViewController: UIViewController {
         self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
-                                             address: wallet.address)
+                    address: wallet.address)
             { (result, error) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
@@ -95,7 +96,7 @@ class SendSettingsViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Send"
@@ -105,10 +106,12 @@ class SendSettingsViewController: UIViewController {
         wallet = localStorage.getWallet()
         setup()
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard let wallet = wallet else {return}
+        guard let wallet = wallet else {
+            return
+        }
         Web3SwiftService().getETHbalance(for: wallet)
         { [weak self] (result, error) in
             DispatchQueue.main.async {
@@ -116,18 +119,18 @@ class SendSettingsViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.stackView.isUserInteractionEnabled = true
         self.dropDownView.removeFromSuperview()
     }
-    
+
     private func hideSendButton(_ hidden: Bool = true) {
         sendButton.alpha = hidden ? 0.5 : 1
-        sendButton.isEnabled = hidden ? false: true
+        sendButton.isEnabled = hidden ? false : true
     }
-    
+
     private func setup() {
         self.hideKeyboardWhenTappedAround()
         addressFromLabel.text = "From: \(wallet?.address ?? "")"
@@ -139,7 +142,7 @@ class SendSettingsViewController: UIViewController {
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
     }
-    
+
     @IBAction func didChangeState(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             screenState = .ETH
@@ -147,7 +150,7 @@ class SendSettingsViewController: UIViewController {
             screenState = .Plasma
         }
     }
-    
+
     func addGestureRecognizer() {
         let tap = UITapGestureRecognizer(target: self, action: #selector(didTapFrom))
         addressFromLabel.addGestureRecognizer(tap)
@@ -156,7 +159,7 @@ class SendSettingsViewController: UIViewController {
         tokenNameLabel.addGestureRecognizer(tokenTap)
         tokenNameLabel.isUserInteractionEnabled = true
     }
-    
+
     //MARK: - Dropdown
     @objc func didTapFrom() {
         dropDownView = createDropdownView(withManager: .Wallets)
@@ -166,25 +169,31 @@ class SendSettingsViewController: UIViewController {
             self.dropDownView.alpha = 1.0
         }, completion: nil)
     }
-    
+
     @objc func didTapToken() {
         dropDownView = createDropdownView(withManager: .Tokens)
-        guard let wallet = localStorage.getWallet() else { return }
-        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork:  Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
+        guard let wallet = localStorage.getWallet() else {
+            return
+        }
+        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
         self.view.addSubview(dropDownView)
         stackView.isUserInteractionEnabled = false
         UIView.animate(withDuration: 0.5, animations: {
             self.dropDownView.alpha = 1.0
         }, completion: nil)
     }
-    
+
     func createDropdownView(withManager manager: ManagerType) -> UIView {
-        guard let sv = addressFromView.superview else { return UIView() }
-        let frame = CGRect(x: sv.frame.origin.x, y: addressFromView.frame.origin.y + addressFromView.frame.height + sv.frame.origin.y, width:  addressFromView.frame.width, height: 150)
+        guard let sv = addressFromView.superview else {
+            return UIView()
+        }
+        let frame = CGRect(x: sv.frame.origin.x, y: addressFromView.frame.origin.y + addressFromView.frame.height + sv.frame.origin.y, width: addressFromView.frame.width, height: 150)
         dropDownView = UIView(frame: frame)
         switch manager {
         case .Tokens:
-            guard let wallet = wallet else { return UIView() }
+            guard let wallet = wallet else {
+                return UIView()
+            }
             tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: CurrentNetwork().getNetworkID())
             tokenDropdownManager.wallet = self.wallet
         case .Wallets:
@@ -210,131 +219,64 @@ class SendSettingsViewController: UIViewController {
         dropDownView.clipsToBounds = true
         return dropDownView
     }
-    
+
     // MARK: QR Code scan
     lazy var readerVC: QRCodeReaderViewController = {
-        
+
         let builder = QRCodeReaderViewControllerBuilder {
             $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
             $0.showSwitchCameraButton = false
         }
-        
+
         return QRCodeReaderViewController(builder: builder)
     }()
-    
-    //    func sendFunds(dict: [String:Any], enteredPassword: String) {
-    //        //let sendEthService: SendEthService = self.tokenService.selectedERC20Token().address.isEmpty ? SendEthServiceImplementation() : ERC20TokenContractMethodsServiceImplementation()
-    //        let token  = token
-    //        let model = ETHTransactionModel(from: dict["fromAddress"] as! String, to: dict["toAddress"] as! String, amount: dict["amount"] as! String, date: Date(), token: token!, key: KeysService().selectedKey()!, isPending: true)
-    //        var options = Web3Options.defaultOptions()
-    //        options.gasLimit = BigUInt(dict["gasLimit"] as! String)
-    //        let gp = BigUInt(Double(dict["gasPrice"] as! String)! * pow(10, 9))
-    //        options.gasPrice = gp
-    //        let transaction = dict["transaction"] as! TransactionIntermediate
-    //        options.from = transaction.options?.from
-    //        options.to = transaction.options?.to
-    //        options.value = transaction.options?.value
-    //        TransactionsService().sendToken(transaction: transaction, with: enteredPassword, options: options) { [weak self] (result) in
-    //            switch result {
-    //            case .Success(let res):
-    //                token = nil
-    //                if (self?.isFromDeepLink)!{
-    //                    showSuccessAlert(for: self!, completion: {
-    //                        let startViewController = AppController().goToApp()
-    //                        startViewController.view.backgroundColor = UIColor.white
-    //                        UIApplication.shared.keyWindow?.rootViewController = startViewController
-    //                    })
-    //                } else {
-    //                    showSuccessAlert(for: self!, completion: {
-    //                        self?.navigationController?.popViewController(animated: true)
-    //                    })
-    //                }
-    //
-    //            case .Error(let error):
-    //                var valueToSend = ""
-    //                if let error = error as? Web3Error {
-    //                    switch error {
-    //                    case .nodeError(let text):
-    //                        valueToSend = text
-    //                    default:
-    //                        break
-    //                    }
-    //                }
-    //                print("\(error)")
-    //                showErrorAlert(for: self!, error: error)
-    //            }
-    //        }
-    //    }
-    
+
     @IBAction func scanQR(_ sender: UIButton) {
         readerVC.delegate = self
         readerVC.modalPresentationStyle = .formSheet
         present(readerVC, animated: true, completion: nil)
     }
-    
-    //    func enterPassword() {
-    //        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
-    //
-    //        alert.addTextField { (textField) in
-    //            textField.isSecureTextEntry = true
-    //            textField.placeholder = "Enter your password"
-    //        }
-    //        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { [weak self] (alertAction) in
-    //            let passwordText = alert.textFields![0].text!
-    //            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
-    //
-    //                self?.prepareTransation(withPassword: passwordText)
-    //
-    //            } else {
-    //                showErrorAlert(for: self!, error: SendErrors.wrongPassword, completion: {
-    //
-    //                })
-    //            }
-    //        }
-    //        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
-    //
-    //        }
-    //
-    //        alert.addAction(enterPasswordAction)
-    //        alert.addAction(cancelAction)
-    //
-    //        self.present(alert, animated: true, completion: nil)
-    //    }
-    
+
     func prepareTransation(withPassword: String?) {
-        
+
         guard let amount = amountTextField.text,
-            let destinationAddress = enterAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
-                return
+              let destinationAddress = enterAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+            return
         }
-        
+
         if token?.address == "" {
-            TransactionsService().prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
+            transactionsService.prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
-                    guard let gasPrice = self?.gasPriceTextField.text else { return }
-                    guard let gasLimit = self?.gasLimitTextField.text else { return }
-                    guard let name = self?.wallet?.name else { return }
-                    let dict:[String:Any] = [
-                        "gasPrice":gasPrice,
-                        "gasLimit":gasLimit,
-                        "transaction":transaction,
+                    guard let gasPrice = self?.gasPriceTextField.text else {
+                        return
+                    }
+                    guard let gasLimit = self?.gasLimitTextField.text else {
+                        return
+                    }
+                    guard let name = self?.wallet?.name else {
+                        return
+                    }
+                    let dict: [String: Any] = [
+                        "gasPrice": gasPrice,
+                        "gasLimit": gasLimit,
+                        "transaction": transaction,
                         "amount": amount,
                         "name": name,
                         "fromAddress": self!.wallet?.address ?? "",
                         "toAddress": destinationAddress]
-                    
+
                     showAccessAlert(for: self!, with: "Send the transaction?", completion: { (result) in
                         if result {
                             self?.enterPincode(for: dict, withPassword: withPassword)
                         } else {
                             showErrorAlert(for: self!, error: TransactionErrors.PreparingError, completion: {
-                                
+
                             })
                         }
                     })
-                    //self?.sendFunds(dict: dict, enteredPassword: withPassword)
-                    
+                        //self?.sendFunds(dict: dict, enteredPassword: withPassword)
+
                 case .Error(let error):
                     var textToSend = ""
                     if let error = error as? SendErrors {
@@ -345,39 +287,47 @@ class SendSettingsViewController: UIViewController {
                             break
                         }
                     }
-                    
+
                     showErrorAlert(for: self!, error: error, completion: {
-                        
+
                     })
                 }
             }
         } else {
-            print(token?.address)
-            TransactionsService().prepareTransactionForSendingERC(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000, tokenAddress: (token?.address) ?? "") { [weak self] (result) in
+            transactionsService.prepareTransactionForSendingERC(destinationAddressString: destinationAddress,
+                                                                amountString: amount,
+                                                                gasLimit: 21000,
+                                                                tokenAddress: (token?.address) ?? "") { [weak self] (result) in
                 switch result {
                 case .Success(let transaction):
-                    guard let gasPrice = self?.gasPriceTextField.text else { return }
-                    guard let gasLimit = self?.gasLimitTextField.text else { return }
-                    guard let name = self?.wallet?.name else { return }
-                    let dict:[String:Any] = [
-                        "gasPrice":gasPrice,
-                        "gasLimit":gasLimit,
-                        "transaction":transaction,
-                        "amount":amount,
+                    guard let gasPrice = self?.gasPriceTextField.text else {
+                        return
+                    }
+                    guard let gasLimit = self?.gasLimitTextField.text else {
+                        return
+                    }
+                    guard let name = self?.wallet?.name else {
+                        return
+                    }
+                    let dict: [String: Any] = [
+                        "gasPrice": gasPrice,
+                        "gasLimit": gasLimit,
+                        "transaction": transaction,
+                        "amount": amount,
                         "name": name,
                         "fromAddress": self!.wallet?.address ?? "",
                         "toAddress": destinationAddress]
-                    
+
                     //self?.sendFunds(dict: dict, enteredPassword: withPassword)
                     showAccessAlert(for: self!, with: "Send the transaction?", completion: { (result) in
                         if result {
                             self?.enterPincode(for: dict, withPassword: withPassword)
                         } else {
                             showErrorAlert(for: self!, error: TransactionErrors.PreparingError, completion: {
-                                
+
                             })
                         }
-                        
+
                     })
                 case .Error(let error):
                     var textToSend = ""
@@ -389,34 +339,38 @@ class SendSettingsViewController: UIViewController {
                             break
                         }
                     }
-                    
+
                     showErrorAlert(for: self!, error: error, completion: {
-                        
+
                     })
                 }
             }
         }
     }
-    
+
     @IBAction func send(_ sender: UIButton) {
         //enterPassword()
         //enterPincode()
-        guard let wallet = wallet else {return}
-        guard let token = token else {return}
+        guard let wallet = wallet else {
+            return
+        }
+        guard let token = token else {
+            return
+        }
         localStorage.selectWallet(wallet: wallet) { [weak self] in
             CurrentToken.currentToken = token
             self?.checkPassword { (password) in
                 self?.prepareTransation(withPassword: password)
             }
         }
-        
+
     }
-    
+
     func checkPassword(completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                    account: "\(self.wallet?.name ?? "")-password",
-                accessGroup: KeychainConfiguration.accessGroup)
+                    account: "\(self.wallet?.name ?? "")-password",
+                    accessGroup: KeychainConfiguration.accessGroup)
             let keychainPassword = try passwordItem.readPassword()
             completion(keychainPassword)
         } catch {
@@ -424,18 +378,18 @@ class SendSettingsViewController: UIViewController {
             completion(nil)
         }
     }
-    
-    func enterPincode(for data: [String:Any]?, withPassword: String?) {
+
+    func enterPincode(for data: [String: Any]?, withPassword: String?) {
         guard let data = data else {
             showErrorAlert(for: self, error: TransactionErrors.PreparingError, completion: {
-                
+
             })
             return
         }
         let enterPincode = EnterPincodeViewController(from: .transaction, for: data, withPassword: withPassword ?? "", isFromDeepLink: isFromDeepLink)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
-    
+
     @IBAction func closeAction(_ sender: UIButton) {
         let startViewController = AppController().goToApp()
         startViewController.view.backgroundColor = UIColor.white
@@ -443,7 +397,7 @@ class SendSettingsViewController: UIViewController {
     }
 }
 
-//MARK: - Dropdowns Delegates
+// MARK: - Dropdowns Delegates
 extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDelegate {
     func didSelectWallet(wallet: KeyWalletModel) {
         self.wallet = wallet
@@ -457,7 +411,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
             })
         }
     }
-    
+
     func didSelectToken(token: ERC20TokenModel) {
         self.tokenNameLabel.text = token.symbol.uppercased()
         self.token = token
@@ -477,7 +431,7 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
         let value = result.value
-        
+
         if let parsed = Web3.EIP67CodeParser.parse(value) {
             enterAddressTextField.text = parsed.address.address
             if let amount = parsed.amount {
@@ -485,21 +439,20 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
                     token = ERC20TokenModel(name: "", address: "", decimals: "", symbol: "")
                 }
                 amountTextField.text = Web3.Utils.formatToEthereumUnits(
-                    amount,
-                    toUnits: .eth,
-                    decimals: 4)
+                        amount,
+                        toUnits: .eth,
+                        decimals: 4)
             }
-        }
-        else  {
+        } else {
             if let _ = EthereumAddress(value) {
                 enterAddressTextField.text = value
             }
         }
-        
+
         dismiss(animated: true, completion: nil)
     }
-    
-    
+
+
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
         reader.stopScanning()
         dismiss(animated: true, completion: nil)
@@ -508,45 +461,45 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
 
 // MARK: TextField Delegate
 extension SendSettingsViewController: UITextFieldDelegate {
-    
+
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
         textField.textColor = UIColor.black
         return true
     }
-    
+
     private func isSendButtonEnabled(afterChanging textField: UITextField, with string: String) -> Bool {
         var hardExpression = true
         hardExpression = hardExpression && !string.isEmpty
-            && (token != nil) && (wallet != nil)
-            && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
+                && (token != nil) && (wallet != nil)
+                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
         if textField != amountTextField {
             hardExpression = hardExpression
-                && !string.isEmpty
-                && !(amountTextField.text?.isEmpty ?? true)
-                && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
+                    && !string.isEmpty
+                    && !(amountTextField.text?.isEmpty ?? true)
+                    && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
         } else {
             hardExpression = hardExpression
-                && !string.isEmpty
-                && ((Float(string) ?? 0.0) > Float(0))
+                    && !string.isEmpty
+                    && ((Float(string) ?? 0.0) > Float(0))
         }
         return hardExpression
     }
-    
+
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text ?? "")  as NSString
+        let currentText = (textField.text ?? "") as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
         hideSendButton(true)
-        
+
         let hardExpression = isSendButtonEnabled(afterChanging: textField, with: futureString)
-        
+
         hideSendButton(!hardExpression)
-        
+
         textField.returnKeyType = sendButton.isEnabled ? UIReturnKeyType.done : .next
-        
+
         return true
     }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .done && sendButton.isEnabled {
             checkPassword { [weak self] (password) in
@@ -561,11 +514,11 @@ extension SendSettingsViewController: UITextFieldDelegate {
         }
         return true
     }
-    
+
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        
+
         textField.textColor = UIColor.darkText
-        
+
         if textField == amountTextField {
             guard let _ = Float((amountTextField.text ?? "")) else {
                 amountTextField.textColor = UIColor.red

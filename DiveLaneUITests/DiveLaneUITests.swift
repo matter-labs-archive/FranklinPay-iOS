@@ -35,16 +35,13 @@ class DiveLaneUITests: XCTestCase {
         walletsNavigationBar.buttons["Add"].tap()
         snapshot("Wallets")
         let tablesQuery = app.tables
-        tablesQuery/*@START_MENU_TOKEN@*/.buttons["Info"]/*[[".cells.buttons[\"Info\"]",".buttons[\"Info\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        tablesQuery.buttons["Info"].tap()
         snapshot("WalletInfo")
         app.navigationBars["Wallet"].buttons["Wallets"].tap()
         walletsNavigationBar.buttons["Wallets"].tap()
         tablesQuery.buttons["+"].tap()
         tablesQuery.searchFields["Search"].tap()
         snapshot("TokenSearch")
-        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["0x1ca43a170bad619322e6f54d46b57e504db663aa"]/*[[".cells.staticTexts[\"0x1ca43a170bad619322e6f54d46b57e504db663aa\"]",".staticTexts[\"0x1ca43a170bad619322e6f54d46b57e504db663aa\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.navigationBars["Search token"].buttons["Wallets"].tap()
-        
     }
 
 }

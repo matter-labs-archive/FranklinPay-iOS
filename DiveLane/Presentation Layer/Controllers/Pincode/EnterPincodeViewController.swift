@@ -11,36 +11,36 @@ import LocalAuthentication
 import web3swift
 
 class EnterPincodeViewController: PincodeViewController {
-    
+
     var pincode: String = ""
-    var status: pincodeEnterStatus = .enter
-    
+    var status: PincodeEnterStatus = .enter
+
     var fromCase: EnterPincodeFromCases?
-    var data: [String:Any]?
+    var data: [String: Any]?
     var password: String?
     var isFromDeepLink: Bool = false
-    
+
     var transactionService = TransactionsService()
-    
-    convenience init(from: EnterPincodeFromCases, for data: [String:Any], withPassword: String, isFromDeepLink: Bool) {
+
+    convenience init(from: EnterPincodeFromCases, for data: [String: Any], withPassword: String, isFromDeepLink: Bool) {
         self.init()
         fromCase = from
         self.data = data
         self.password = withPassword
         self.isFromDeepLink = isFromDeepLink
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         changePincodeStatus(.enter)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         enterWithBiometrics()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         super.viewWillAppear(animated)
@@ -50,14 +50,14 @@ class EnterPincodeViewController: PincodeViewController {
             hideBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
-        
+
     }
-    
+
     func hideBiometricsButton(_ hidden: Bool = false) {
         biometricsButton.alpha = hidden ? 0.0 : 1.0
     }
-    
-    func changePincodeStatus(_ newStatus: pincodeEnterStatus) {
+
+    func changePincodeStatus(_ newStatus: PincodeEnterStatus) {
         status = newStatus
         messageLabel.text = status.rawValue
         if status == .wrong {
@@ -67,21 +67,21 @@ class EnterPincodeViewController: PincodeViewController {
             enter()
         }
     }
-    
+
     func checkPin(_ passcode: String) -> Bool {
         do {
             let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
-                                                    account: "pincode",
-                                                    accessGroup: KeychainConfiguration.accessGroup)
+                    account: "pincode",
+                    accessGroup: KeychainConfiguration.accessGroup)
             let keychainPincode = try pincodeItem.readPassword()
             return pincode == keychainPincode
         } catch {
             fatalError("Error reading password from keychain - \(error)")
         }
     }
-    
+
     func enter() {
-        
+
         switch fromCase ?? .enterWallet {
         case .transaction:
             let transactionData = transactionService.getDataForTransaction(dict: data!)
@@ -92,7 +92,7 @@ class EnterPincodeViewController: PincodeViewController {
             UIApplication.shared.keyWindow?.rootViewController = startViewController
         }
     }
-    
+
     func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
         transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
             switch result {
@@ -125,19 +125,19 @@ class EnterPincodeViewController: PincodeViewController {
             }
         }
     }
-    
+
     func returnToStartTab() {
         let startViewController = AppController().goToApp()
         startViewController.view.backgroundColor = UIColor.white
         UIApplication.shared.keyWindow?.rootViewController = startViewController
     }
-    
+
     override func numberPressedAction(number: String) {
         if status == .enter {
             pincode += number
             changeNumsIcons(pincode.count)
             if pincode.count == 4 {
-                let newStatus: pincodeEnterStatus = checkPin(pincode) ? .ready : .wrong
+                let newStatus: PincodeEnterStatus = checkPin(pincode) ? .ready : .wrong
                 changePincodeStatus(newStatus)
             }
         } else if status == .wrong {
@@ -146,26 +146,26 @@ class EnterPincodeViewController: PincodeViewController {
             changeNumsIcons(pincode.count)
         }
     }
-    
+
     override func deletePressedAction() {
         if pincode != "" {
             pincode.removeLast()
             changeNumsIcons(pincode.count)
         }
     }
-    
+
     override func biometricsPressedAction() {
         enterWithBiometrics()
     }
-    
+
     func enterWithBiometrics() {
-        
+
         let context = LAContext()
         var error: NSError?
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
             var type = "Touch ID"
             if #available(iOS 11, *) {
-                switch(context.biometryType) {
+                switch (context.biometryType) {
                 case .touchID:
                     type = "Touch ID"
                 case .faceID:
@@ -174,19 +174,19 @@ class EnterPincodeViewController: PincodeViewController {
                     type = "Error"
                 }
             }
-            
+
             let reason = "Authenticate with " + type
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
-                                   localizedReason: reason,
-                                   reply:
-                { [weak self] (succes, error) in
-                    
-                    if succes {
-                        self?.enter()
-                    }
-                    
-            })
+                    localizedReason: reason,
+                    reply:
+                    { [weak self] (succes, error) in
+
+                        if succes {
+                            self?.enter()
+                        }
+
+                    })
         }
     }
-    
+
 }

@@ -14,13 +14,13 @@ class TransactionCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var transactionTypeLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    
+
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:SS"
         return dateFormatter
     }()
-    
+
     func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: KeyWalletModel) {
         amountLabel.text = model.amount + " " + (model.token?.symbol.uppercased() ?? "ETH")
         if model.from.lowercased() == currentWalet.address.lowercased() {
@@ -34,5 +34,5 @@ class TransactionCell: UITableViewCell {
         }
         timeLabel.text = dateFormatter.string(from: model.date)
     }
-    
+
 }

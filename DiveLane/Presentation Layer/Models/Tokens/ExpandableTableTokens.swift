@@ -20,9 +20,9 @@ struct TableToken {
 }
 
 extension TableToken: Equatable {
-    static func == (lhs: TableToken, rhs: TableToken) -> Bool {
+    static func ==(lhs: TableToken, rhs: TableToken) -> Bool {
         return
-            lhs.token == rhs.token &&
+        lhs.token == rhs.token &&
                 lhs.inWallet == rhs.inWallet
     }
 }

@@ -12,28 +12,28 @@ import web3swift
 class NetworksViewController: UIViewController {
 
     @IBOutlet weak var networksTableView: UITableView!
-    
+
     var networks = [Networks]()
     var webs = [web3]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         getNetworks()
-        
+
         self.networksTableView.delegate = self
         self.networksTableView.dataSource = self
         networksTableView.tableFooterView = UIView()
-        
+
         let nib = UINib.init(nibName: "NetworksCell", bundle: nil)
         self.networksTableView.register(nib, forCellReuseIdentifier: "NetworksCell")
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.title = "Networks"
     }
-    
+
     func getNetworks() {
         self.networks = [.Mainnet,
                          .Rinkeby,
@@ -49,24 +49,27 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return networks.count
     }
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CGFloat(Constants.heightForRowInNetworksTableView)
     }
-    
-    
+
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell", for: indexPath) as! NetworksCell
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
+                                                       for: indexPath) as? NetworksCell else {
+                                                        return UITableViewCell()
+        }
         cell.configure(network: networks[indexPath.row])
         return cell
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+
         CurrentNetwork.currentNetwork = networks[indexPath.row]
         CurrentWeb.currentWeb = webs[indexPath.row]
         DispatchQueue.global().async { [weak self] in
@@ -86,7 +89,7 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
 //            }
         }
         tableView.deselectRow(at: indexPath, animated: true)
-        
+
     }
-    
+
 }
