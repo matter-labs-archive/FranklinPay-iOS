@@ -17,7 +17,7 @@ class CurrentWeb {
     class var currentWeb: web3? {
         get {
 
-            if (_currentWeb == nil) {
+            if _currentWeb == nil {
                 _currentWeb = Web3.InfuraMainnetWeb3()
             }
             return _currentWeb
@@ -37,7 +37,7 @@ class CurrentNetwork {
     class var currentNetwork: Networks? {
         get {
 
-            if (_currentNetwork == nil) {
+            if _currentNetwork == nil {
                 _currentNetwork = Networks.Mainnet
             }
             return _currentNetwork

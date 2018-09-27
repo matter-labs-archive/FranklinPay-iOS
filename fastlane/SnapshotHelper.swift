@@ -92,7 +92,6 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-        
         let path = cacheDirectory.appendingPathComponent("language.txt")
 
         do {
@@ -109,7 +108,6 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-        
         let path = cacheDirectory.appendingPathComponent("locale.txt")
 
         do {
@@ -129,7 +127,6 @@ open class Snapshot: NSObject {
             print("CacheDirectory is not set - probably running on a physical device?")
             return
         }
-        
         let path = cacheDirectory.appendingPathComponent("snapshot-launch_arguments.txt")
         app.launchArguments += ["-FASTLANE_SNAPSHOT", "YES", "-ui_testing"]
 

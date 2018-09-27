@@ -419,11 +419,11 @@ class LocalDatabase: ILocalDatabase {
             let tokensInNetwork = tokens.filter {
                 $0.networkID == forNetwork
             }
-            guard let t = tokensInNetwork.first else {
+            guard let token = tokensInNetwork.first else {
                 completion(nil)
                 return
             }
-            mainContext.delete(t)
+            mainContext.delete(token)
             try mainContext.save()
             completion(nil)
         } catch {

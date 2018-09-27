@@ -53,7 +53,7 @@ class SendArbitraryTransactionViewController: UIViewController {
             return
         }
 
-        Web3SwiftService().getETHbalance(for: wallet) { (balance, error) in
+        Web3SwiftService().getETHbalance(for: wallet) { (balance, _) in
             if let balance = balance {
                 self.balanceOnWalletTextField.text = "Wallet balance: " + balance + " ETH"
             }
@@ -62,7 +62,6 @@ class SendArbitraryTransactionViewController: UIViewController {
         gasPriceTextField.text = transactionInfo.transactionIntermediate.transaction.gasPrice.description
         gasLimitTextField.text = transactionInfo.transactionIntermediate.transaction.gasLimit.description
     }
-
 
     @IBAction func sendButtonWasTapped(_ sender: Any) {
         //TODO: - Password

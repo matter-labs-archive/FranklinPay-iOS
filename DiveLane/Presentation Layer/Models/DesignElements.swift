@@ -24,7 +24,11 @@ class DesignElements: UIView {
     }
 
     func tableViewAddTokenButton(in selfView: UIView, withTitle: String, withTag: Int) -> UIButton {
-        let button = UIButton(frame: CGRect(x: (selfView.bounds.width * 3 / 4), y: 0, width: (selfView.bounds.width * 1 / 4), height: 30))
+        let button = UIButton(frame:
+            CGRect(x: (selfView.bounds.width * 3 / 4),
+                   y: 0,
+                   width: (selfView.bounds.width * 1 / 4),
+                   height: 30))
         button.setTitle(withTitle, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .green

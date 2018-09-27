@@ -238,7 +238,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         }
         cell.link = self
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
-        cell.configure(token: token.token, forWallet: token.inWallet, withConversionRate: conversionService.currentConversionRate(for: token.token.symbol.uppercased()))
+        cell.configure(token: token.token,
+                       forWallet: token.inWallet,
+                       withConversionRate: conversionService.currentConversionRate(for:
+                        token.token.symbol.uppercased()))
 
         cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
 
