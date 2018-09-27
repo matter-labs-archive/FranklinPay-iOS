@@ -6,6 +6,6 @@ xcode_destination: platform=iOS Simulator, OS=12.0, name=iPhone X
 before_install:
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
 script:
-  - xcodebuild -scheme DiveLane -workspace DiveLane.xcworkspace -sdk iphonesimulator -destination 'platform=iOS Simulator, OS=12.0, name=iPhone X' build test
+  - xcodebuild -scheme DiveLane -workspace DiveLane.xcworkspace -sdk iphonesimulator build test
 after_success:
   - bash <(curl -s https://codecov.io/bash)
