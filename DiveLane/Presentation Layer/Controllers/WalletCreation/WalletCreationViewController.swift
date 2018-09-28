@@ -151,15 +151,15 @@ class WalletCreationViewController: UIViewController {
         passwordsDontMatch.alpha = hidden ? 0 : 1
 
     }
-    
+
     private func updateEnterButtonAlpha() {
         enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
     }
-    
+
     private func isEnterButtonEnabled(afterChanging textField: UITextField, with string: String) {
-        
+
         enterButton.isEnabled = false
-        
+
         switch textField {
         case enterPrivateKeyTextField:
             let everyFieldIsOK = passwordTextField.text == repeatPasswordTextField.text &&
@@ -195,15 +195,15 @@ class WalletCreationViewController: UIViewController {
                 || additionMode == .createWallet
                 ? true
                 : false
-            
+
             let everyFieldIsOK = !string.isEmpty &&
                 passwordTextField.text == repeatPasswordTextField.text &&
                 !(passwordTextField.text?.isEmpty ?? true) && privateKeyFieldIsOk
-            
+
             enterButton.isEnabled = everyFieldIsOK
-            
+
         }
-        
+
     }
 
     func addWalletDependingOnMode(_ walletName: String, withKey: String, withPassword: String, isAtLeastOneExists: Bool) {
@@ -354,10 +354,23 @@ class WalletCreationViewController: UIViewController {
         }
     }
     
+    func checkPasswordsMatch() -> Bool {
+        return !((!(passwordTextField.text?.isEmpty ?? true) ||
+            !(repeatPasswordTextField.text?.isEmpty ?? true)) &&
+            passwordTextField.text != repeatPasswordTextField.text) ||
+        repeatPasswordTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true
+    }
+
+    func setPaswordFieldsColorByMatch(_ match: Bool) {
+        let color = match ? UIColor.darkGray : UIColor.red
+        repeatPasswordTextField.textColor = color
+        passwordTextField.textColor = color
+    }
+
     @objc func alertControllerBackgroundTapped() {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
 }
 
 extension WalletCreationViewController: UITextFieldDelegate {
@@ -366,6 +379,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         textField.textColor = UIColor.blue
         if textField == passwordTextField || textField == repeatPasswordTextField {
             hidePasswordWarning(true)
+            setPaswordFieldsColorByMatch(true)
         }
     }
 
@@ -374,9 +388,9 @@ extension WalletCreationViewController: UITextFieldDelegate {
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
         
         isEnterButtonEnabled(afterChanging: textField, with: futureString)
-    
+
         updateEnterButtonAlpha()
-        
+
         textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
         
         return true
@@ -389,16 +403,9 @@ extension WalletCreationViewController: UITextFieldDelegate {
             textField == passwordTextField else {
                 return true
         }
-        if (!(passwordTextField.text?.isEmpty ?? true) ||
-            !(repeatPasswordTextField.text?.isEmpty ?? true)) &&
-            passwordTextField.text != repeatPasswordTextField.text {
-            hidePasswordWarning(false)
-            repeatPasswordTextField.textColor = UIColor.red
-            passwordTextField.textColor = UIColor.red
-        } else {
-            repeatPasswordTextField.textColor = UIColor.darkGray
-            passwordTextField.textColor = UIColor.darkGray
-        }
+        let match = checkPasswordsMatch()
+        hidePasswordWarning(match)
+        setPaswordFieldsColorByMatch(match)
         return true
     }
     
