@@ -81,7 +81,7 @@ class SendArbitraryTransactionViewController: UIViewController {
             textField.isSecureTextEntry = true
             textField.placeholder = "Enter your password"
         }
-        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
+        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
             if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
 
@@ -93,7 +93,7 @@ class SendArbitraryTransactionViewController: UIViewController {
                 })
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
 
         }
 

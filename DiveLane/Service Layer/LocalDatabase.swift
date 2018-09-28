@@ -11,6 +11,7 @@ import CoreData
 import struct BigInt.BigUInt
 
 protocol ILocalDatabase {
+
     func getWallet() -> KeyWalletModel?
     func saveWallet(wallet: KeyWalletModel?, completion: @escaping (Error?) -> Void)
     func deleteWallet(completion: @escaping (Error?) -> Void)
@@ -33,7 +34,7 @@ class LocalDatabase: ILocalDatabase {
     private lazy var mainContext = self.container.viewContext
 
     init() {
-        container.loadPersistentStores { (storeDescription, error) in
+        container.loadPersistentStores { (_, error) in
             if let error = error {
                 fatalError("Failed to load store: \(error)")
             }

@@ -45,7 +45,7 @@ class ExportWalletViewController: UIViewController {
             textField.placeholder = "Enter your password"
         }
 
-        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (alertAction) in
+        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
             if let _ = KeysService().getWalletPrivateKey(password: passwordText) {
                 self.showPK(withPassword: passwordText)
@@ -57,7 +57,7 @@ class ExportWalletViewController: UIViewController {
                 })
             }
         }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
 
         }
 

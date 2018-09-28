@@ -82,13 +82,13 @@ class SendSettingsViewController: UIViewController {
         self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
-                    address: wallet.address) { (result, error) in
+                    address: wallet.address) { (result, _) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
                 }
             }
         } else {
-            Web3SwiftService().getETHbalance(for: wallet) { (result, error) in
+            Web3SwiftService().getETHbalance(for: wallet) { (result, _) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
                 }
@@ -111,7 +111,7 @@ class SendSettingsViewController: UIViewController {
         guard let wallet = wallet else {
             return
         }
-        Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, error) in
+        Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, _) in
             DispatchQueue.main.async {
                 self?.tokenBalance = result ?? ""
             }

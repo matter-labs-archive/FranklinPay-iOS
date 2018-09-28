@@ -164,7 +164,7 @@ class TokensService {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let data = data {
                 do {
                     if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
@@ -172,7 +172,7 @@ class TokensService {
                         var counter = 0
                         try jsonSerialized.forEach({ (dict) in
                             counter += 1
-                            LocalDatabase().saveToken(from: dict, completion: { (error) in
+                            LocalDatabase().saveToken(from: dict, completion: { (_) in
                                 if counter == dictsCount {
                                     completion(nil)
                                 }

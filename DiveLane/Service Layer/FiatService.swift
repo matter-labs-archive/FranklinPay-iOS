@@ -32,7 +32,7 @@ class FiatServiceImplementation: FiatService {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
 
             if let data = data {
                 do {

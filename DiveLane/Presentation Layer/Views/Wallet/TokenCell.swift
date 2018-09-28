@@ -52,7 +52,7 @@ class TokenCell: UITableViewCell {
                 symbol: "Eth") {
             self.tokenAddress.text = "Wallet: \(forWallet.address)"
             self.balance.text = "Loading..."
-            Web3SwiftService().getETHbalance(for: forWallet) { [weak self] (result, error) in
+            Web3SwiftService().getETHbalance(for: forWallet) { [weak self] (result, _) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
 
@@ -67,7 +67,7 @@ class TokenCell: UITableViewCell {
             self.tokenAddress.text = "Token: \(token.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address,
-                    address: forWallet.address) { [weak self] (result, error) in
+                    address: forWallet.address) { [weak self] (result, _) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
 

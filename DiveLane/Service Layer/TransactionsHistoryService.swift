@@ -18,7 +18,7 @@ class TransactionsHistoryService {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, response, error) in
+        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let error = error {
                 DispatchQueue.main.async {
                     completion(Result.Error(error))

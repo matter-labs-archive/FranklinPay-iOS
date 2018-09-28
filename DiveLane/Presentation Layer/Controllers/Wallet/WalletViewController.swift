@@ -108,7 +108,7 @@ class WalletViewController: UIViewController {
             }
             for wallet in tokensArray {
                 for token in wallet.tokens {
-                    TokensService().updateConversion(for: token.token, completion: { (rate) in
+                    TokensService().updateConversion(for: token.token, completion: { (_) in
                         if token == wallet.tokens.last {
                             DispatchQueue.main.async {
                                 self?.walletTableView.reloadData()
