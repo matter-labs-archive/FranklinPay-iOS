@@ -19,7 +19,6 @@ class TokenViewController: UIViewController {
     @IBOutlet weak var copyAddressButton: UIButton!
     @IBOutlet weak var sendTokenButton: UIButton!
 
-
     var tokenBalance: String?
     var wallet: KeyWalletModel?
     var token: ERC20TokenModel?
@@ -86,8 +85,7 @@ class TokenViewController: UIViewController {
                 address: "",
                 decimals: "18",
                 symbol: "Eth") {
-            Web3SwiftService().getETHbalance(for: wallet)
-            { [weak self] (result, error) in
+            Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, error) in
                 if error == nil && result != nil {
                     self?.tokenBalance = result!
                     self?.checkBalanceAndEnableSend()
@@ -97,8 +95,7 @@ class TokenViewController: UIViewController {
             }
         } else {
             Web3SwiftService().getERCBalance(for: token.address,
-                    address: wallet.address)
-            { [weak self] (result, error) in
+                    address: wallet.address) { [weak self] (result, error) in
                 if error == nil && result != nil {
                     self?.tokenBalance = result!
                     self?.checkBalanceAndEnableSend()
@@ -168,4 +165,3 @@ class TokenViewController: UIViewController {
     }
 
 }
-

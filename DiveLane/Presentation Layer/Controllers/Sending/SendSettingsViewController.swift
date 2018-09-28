@@ -82,8 +82,7 @@ class SendSettingsViewController: UIViewController {
         self.isFromDeepLink = isFromDeepLink
         if tokenAddress != nil {
             Web3SwiftService().getERCBalance(for: tokenAddress!,
-                    address: wallet.address)
-            { (result, error) in
+                    address: wallet.address) { (result, error) in
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = result ?? ""
                 }
@@ -112,8 +111,7 @@ class SendSettingsViewController: UIViewController {
         guard let wallet = wallet else {
             return
         }
-        Web3SwiftService().getETHbalance(for: wallet)
-        { [weak self] (result, error) in
+        Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, error) in
             DispatchQueue.main.async {
                 self?.tokenBalance = result ?? ""
             }
@@ -160,7 +158,7 @@ class SendSettingsViewController: UIViewController {
         tokenNameLabel.isUserInteractionEnabled = true
     }
 
-    //MARK: - Dropdown
+    // MARK: - Dropdown
     @objc func didTapFrom() {
         dropDownView = createDropdownView(withManager: .Wallets)
         self.view.addSubview(dropDownView)
@@ -451,7 +449,6 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
 
         dismiss(animated: true, completion: nil)
     }
-
 
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
         reader.stopScanning()

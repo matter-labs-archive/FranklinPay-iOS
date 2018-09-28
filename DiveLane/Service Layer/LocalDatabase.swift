@@ -211,7 +211,7 @@ class LocalDatabase: ILocalDatabase {
 
                         }
                         newTransaction.transactionHash = transaction.transactionHash
-                        //MARK: - Fetch wallet from core data, and if there is no one wallet - create.
+                        // MARK: - Fetch wallet from core data, and if there is no one wallet - create.
                         let walletCD = try context.fetch(self.fetchWalletRequest(withAddress: wallet.address)).first
                         if let walletCD = walletCD {
                             newTransaction.wallet = walletCD

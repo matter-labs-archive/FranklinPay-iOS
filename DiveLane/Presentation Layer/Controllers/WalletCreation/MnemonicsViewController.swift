@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class MnemonicsViewController: UIViewController {
     @IBOutlet weak var mnemonicsLabel: UILabel!
 

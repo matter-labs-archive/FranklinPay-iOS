@@ -137,7 +137,6 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             })
         }
 
-
         tableView.deselectRow(at: indexPath, animated: true)
 
     }

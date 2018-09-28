@@ -20,5 +20,3 @@ class ParameterCell: UITableViewCell {
         valueLabel.text = parameter.value
     }
 }
-
-

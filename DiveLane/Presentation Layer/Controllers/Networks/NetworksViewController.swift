@@ -58,7 +58,6 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
         return CGFloat(Constants.heightForRowInNetworksTableView)
     }
 
-
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
                                                        for: indexPath) as? NetworksCell else {

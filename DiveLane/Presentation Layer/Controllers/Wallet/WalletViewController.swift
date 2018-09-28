@@ -31,7 +31,6 @@ class WalletViewController: UIViewController {
         return refreshControl
     }()
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -45,7 +44,7 @@ class WalletViewController: UIViewController {
         self.navigationItem.setRightBarButton(addWalletBarItem(), animated: false)
     }
 
-    func initDatabase(complection: @escaping () -> ()) {
+    func initDatabase(complection: @escaping () -> Void) {
         localDatabase = LocalDatabase()
         wallets = localDatabase?.getAllWallets()
         keysService = KeysService()
@@ -138,8 +137,7 @@ class WalletViewController: UIViewController {
         self.navigationController?.pushViewController(walletsViewController, animated: true)
     }
 
-
-    func getTokensList(completion: @escaping () -> ()) {
+    func getTokensList(completion: @escaping () -> Void) {
         guard let wallets = wallets else {
             return
         }
@@ -179,7 +177,6 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let addButton = design.tableViewAddTokenButton(in: self.view, withTitle: "+", withTag: section)
         addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
         backgroundView.addSubview(addButton)
-
 
         return backgroundView
     }

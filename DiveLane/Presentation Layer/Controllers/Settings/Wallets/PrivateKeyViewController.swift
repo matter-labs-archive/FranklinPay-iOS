@@ -49,7 +49,6 @@ class PrivateKeyViewController: UIViewController {
         return nil
     }
 
-
     @IBAction func copyButtonTapped(_ sender: UIButton) {
         UIPasteboard.general.string = privateKeyLabel.text
     }

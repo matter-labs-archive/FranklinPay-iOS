@@ -13,12 +13,12 @@ class TransactionsHistoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
 
-    //MARK: - Services
+    // MARK: - Services
     let keysService: IKeysService = KeysService()
     let transactionsHistoryService = TransactionsHistoryService()
     let localDatabase = LocalDatabase()
 
-    //MARK: - Variables
+    // MARK: - Variables
     var transactions = [[ETHTransactionModel]]()
     var state: TransactionsHistoryState = .all {
         didSet {

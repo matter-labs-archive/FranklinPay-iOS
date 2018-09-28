@@ -121,7 +121,6 @@ class TransactionsService: ITransactionsService {
                 return
             }
 
-
             let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
             web3.addKeystoreManager(KeysService().keystoreManager())
 
@@ -206,7 +205,7 @@ class TransactionsService: ITransactionsService {
                 completion(Result.Success(intermediate))
             }
 
-            //MARK: - Just to check that everything is all right
+            // MARK: - Just to check that everything is all right
             guard let _ = contract?.method(options: options)?.estimateGas(options: options).value else {
                 DispatchQueue.main.async {
                     completion(Result.Error(SendErrors.retrievingEstimatedGasError))

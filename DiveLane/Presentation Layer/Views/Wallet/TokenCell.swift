@@ -67,8 +67,7 @@ class TokenCell: UITableViewCell {
             self.tokenAddress.text = "Token: \(token.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address,
-                    address: forWallet.address)
-            { [weak self] (result, error) in
+                    address: forWallet.address) { [weak self] (result, error) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
 
@@ -80,7 +79,6 @@ class TokenCell: UITableViewCell {
                 }
             }
         }
-
 
         //select token
         let starButton = UIButton(type: .system)

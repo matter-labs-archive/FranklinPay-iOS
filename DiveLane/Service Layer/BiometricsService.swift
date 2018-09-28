@@ -9,8 +9,8 @@
 import Foundation
 import LocalAuthentication
 
-typealias SuccessCallback = (() -> ())
-typealias FailureCallback = ((LocAError) -> ())
+typealias SuccessCallback = (() -> Void)
+typealias FailureCallback = ((LocAError) -> Void)
 
 public enum LocAError {
     case userCancelled, failed, systemCancelled, biometryNotAvailable, biometryLockedOut, other
@@ -31,7 +31,6 @@ public enum LocAError {
         }
     }
 
-
     func getErrorMessage() -> String {
         switch self {
         case .biometryNotAvailable: return biometricsNotAvailableReason
@@ -46,12 +45,9 @@ let biometricsAuthenticationStringReason = "Confirm your biometrics to authentic
 
 let biometricsPincodeAuthenticationStringReason = "Your biometrics locked. You did too many attempts, enter pincode for order to unlock biometrics"
 
-
 let defaultBiometricsAuthenticationStringReason = "Biometrics do not recognize you, please try again"
 
-
 let biometricsNotAvailableReason = "Authentication not available on your devaice "
-
 
 public class BiometricsManager: NSObject {
 
@@ -64,7 +60,6 @@ public class BiometricsManager: NSObject {
         isAvailableAuthentication = LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
         return error == nil ? true : false
     }
-
 
     /// Check for authentication
     class func authenticateBioMetrics(reason: String, cancelString: String? = nil, fallbackString: String? = "", success: @escaping SuccessCallback, failure: @escaping FailureCallback) {

@@ -39,7 +39,7 @@ class Web3SwiftService: IWeb3SwiftService {
         return ethAddressFrom
     }
 
-    //MARK: - Send transaction
+    // MARK: - Send transaction
     public func sendTransaction(transaction: TransactionIntermediate, password: String, completion: @escaping (Result<TransactionSendingResult>) -> Void) {
         DispatchQueue.global().async {
             //sending
@@ -57,8 +57,7 @@ class Web3SwiftService: IWeb3SwiftService {
         }
     }
 
-
-    //MARK: - Get ETH balance
+    // MARK: - Get ETH balance
     public func getETHbalance(for wallet: KeyWalletModel, completion: @escaping (String?, Error?) -> Void) {
         DispatchQueue.global().async {
             let address = wallet.address
@@ -102,7 +101,7 @@ class Web3SwiftService: IWeb3SwiftService {
         }
     }
 
-    //MARK: - Get token balance
+    // MARK: - Get token balance
     public func getERCBalance(for token: String,
                               address: String,
                               completion: @escaping (String?, Error?) -> Void) {

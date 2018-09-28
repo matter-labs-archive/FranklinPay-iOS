@@ -38,7 +38,7 @@ func snapshot(_ name: String, timeWaitingForIdle timeout: TimeInterval = 20) {
 }
 
 func testCreateSnaphots() {
-    
+
 }
 
 enum SnapshotError: Error, CustomDebugStringConvertible {
@@ -73,7 +73,7 @@ open class Snapshot: NSObject {
     }
 
     open class func setupSnapshot(_ app: XCUIApplication) {
-        
+
         Snapshot.app = app
 
         do {
@@ -155,12 +155,12 @@ open class Snapshot: NSObject {
         #if os(OSX)
             XCUIApplication().typeKey(XCUIKeyboardKeySecondaryFn, modifierFlags: [])
         #else
-            
+
             guard let app = self.app else {
                 print("XCUIApplication is not set. Please call setupSnapshot(app) before snapshot().")
                 return
             }
-            
+
             let window = app.windows.firstMatch
             let screenshot = window.screenshot()
             guard let simulator = ProcessInfo().environment["SIMULATOR_DEVICE_NAME"], let screenshotsDir = screenshotsDirectory else { return }

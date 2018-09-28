@@ -11,4 +11,3 @@ import Foundation
 enum SettingsTableViewSections: Int {
     case main = 0
 }
-

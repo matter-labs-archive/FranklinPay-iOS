@@ -16,7 +16,6 @@ protocol FiatService {
 
 }
 
-
 class FiatServiceImplementation: FiatService {
 
     static let service = FiatServiceImplementation()

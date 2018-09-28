@@ -178,8 +178,7 @@ class EnterPincodeViewController: PincodeViewController {
             let reason = "Authenticate with " + type
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                     localizedReason: reason,
-                    reply:
-                    { [weak self] (succes, error) in
+                    reply: { [weak self] (succes, error) in
 
                         if succes {
                             self?.enter()

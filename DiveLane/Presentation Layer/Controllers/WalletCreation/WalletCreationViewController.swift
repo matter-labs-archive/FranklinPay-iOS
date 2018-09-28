@@ -271,7 +271,6 @@ class WalletCreationViewController: UIViewController {
         }
     }
 
-
     func savingWallet(wallet: KeyWalletModel?, withPassword: String) {
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: true,
@@ -403,7 +402,6 @@ extension WalletCreationViewController: UITextFieldDelegate {
         return true
     }
 
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .done && enterButton.isEnabled {
             addWalletButtonTapped(self)
@@ -418,7 +416,6 @@ extension WalletCreationViewController: UITextFieldDelegate {
     }
 }
 
-
 extension WalletCreationViewController: QRCodeReaderViewControllerDelegate {
 
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
@@ -432,11 +429,9 @@ extension WalletCreationViewController: QRCodeReaderViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
         reader.stopScanning()
         dismiss(animated: true, completion: nil)
     }
 
 }
-

@@ -21,7 +21,6 @@ class AddWalletViewController: UIViewController {
 
     let isNavigationBarNeeded: Bool
 
-
     init(isNavigationBarNeeded: Bool = false) {
         self.isNavigationBarNeeded = isNavigationBarNeeded
         super.init(nibName: nil, bundle: nil)
@@ -70,4 +69,3 @@ class AddWalletViewController: UIViewController {
     }
 
 }
-

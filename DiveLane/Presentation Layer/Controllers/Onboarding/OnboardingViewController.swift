@@ -61,7 +61,7 @@ class OnboardingViewController: UIViewController {
                         toItem: self.view,
                         attribute: .centerX,
                         multiplier: 1,
-                        constant: 0),
+                        constant: 0)
                 ] +
                         NSLayoutConstraint.constraints(withVisualFormat: "H:|[pg]|",
                                 options: .alignAllCenterX,
@@ -111,7 +111,6 @@ class OnboardingViewController: UIViewController {
             self.onboardingBtn.setTitle("NEXT", for: .normal)
         }
     }
-
 
 }
 

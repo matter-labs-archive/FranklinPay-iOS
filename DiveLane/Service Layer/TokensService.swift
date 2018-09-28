@@ -52,7 +52,6 @@ class TokensService {
 
     }
 
-
     private func name(for token: String, completion: @escaping (String?) -> Void) {
         let contract = web3service.contract(for: token)
         if let transaction = contract?.method("name", parameters: [AnyObject](), options: web3service.defaultOptions()) {
@@ -190,7 +189,7 @@ class TokensService {
         task.resume()
     }
 
-    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?) -> ()) {
+    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.conversionService.updateConversionRate(for: token.symbol.uppercased()) { (rate) in
                 completion(rate)

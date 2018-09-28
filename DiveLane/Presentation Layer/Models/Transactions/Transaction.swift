@@ -31,4 +31,3 @@ enum TransactionType {
     case custom
     case arbitraryMethodWithParams
 }
-

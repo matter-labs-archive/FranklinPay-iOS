@@ -43,7 +43,6 @@ class CreateWalletPincodeViewController: PincodeViewController {
         biometricsButton.isUserInteractionEnabled = false
     }
 
-
     func disableBiometricsButton(_ disable: Bool = false) {
         biometricsButton.alpha = disable ? 0.0 : 1.0
         biometricsButton.isUserInteractionEnabled = !disable
@@ -176,7 +175,6 @@ class CreateWalletPincodeViewController: PincodeViewController {
                             })
                         }
                     }
-
 
                 })
             } else {

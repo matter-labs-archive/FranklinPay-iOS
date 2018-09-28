@@ -30,7 +30,6 @@ protocol IKeysService {
     func generateMnemonics(bitsOfEntropy: Int) -> String
 }
 
-
 class KeysService: IKeysService {
 
     let localStorage = LocalDatabase()

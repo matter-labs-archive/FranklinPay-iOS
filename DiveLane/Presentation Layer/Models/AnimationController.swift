@@ -58,7 +58,6 @@ class AnimationController: UIView {
                     notification.text = ""
                 }
 
-
                 let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
                 var frame: CGRect = animation.frame
                 frame.origin.x = centerX - 10
@@ -89,7 +88,6 @@ class AnimationController: UIView {
 
     }
 
-
     func pressButtonStartedAnimation(for sender: UIButton) {
         DispatchQueue.main.async {
             UIView.animate(withDuration: 0.05,
@@ -109,6 +107,5 @@ class AnimationController: UIView {
         }
 
     }
-
 
 }
