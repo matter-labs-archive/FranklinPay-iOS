@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ app: UIApplication,
-//                     open url: URL,
+                     open url: URL,
                      options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
         controller = AppController(window: window!, launchOptions: nil, url: url)
         return true

@@ -196,11 +196,9 @@ class WalletCreationViewController: UIViewController {
                             || additionMode == .createWallet
                             ? true
                             : false
-
             let everyFieldIsOK = !string.isEmpty &&
                     passwordTextField.text == repeatPasswordTextField.text &&
                     !(passwordTextField.text?.isEmpty ?? true) && privateKeyFieldIsOk
-
             enterButton.isEnabled = everyFieldIsOK
 
         }
@@ -353,7 +351,18 @@ class WalletCreationViewController: UIViewController {
             alertController.view.superview?.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(self.alertControllerBackgroundTapped)))
         }
     }
+func checkPasswordsMatch() -> Bool {
+        return !((!(passwordTextField.text?.isEmpty ?? true) ||
+            !(repeatPasswordTextField.text?.isEmpty ?? true)) &&
+            passwordTextField.text != repeatPasswordTextField.text) ||
+        repeatPasswordTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true
+    }
 
+    func setPaswordFieldsColorByMatch(_ match: Bool) {
+        let color = match ? UIColor.darkGray : UIColor.red
+        repeatPasswordTextField.textColor = color
+        passwordTextField.textColor = color
+    }
     @objc func alertControllerBackgroundTapped() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -366,6 +375,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         textField.textColor = UIColor.blue
         if textField == passwordTextField || textField == repeatPasswordTextField {
             hidePasswordWarning(true)
+            setPaswordFieldsColorByMatch(true)
         }
     }
 
@@ -389,16 +399,9 @@ extension WalletCreationViewController: UITextFieldDelegate {
                       textField == passwordTextField else {
             return true
         }
-        if (!(passwordTextField.text?.isEmpty ?? true) ||
-                !(repeatPasswordTextField.text?.isEmpty ?? true)) &&
-                   passwordTextField.text != repeatPasswordTextField.text {
-            hidePasswordWarning(false)
-            repeatPasswordTextField.textColor = UIColor.red
-            passwordTextField.textColor = UIColor.red
-        } else {
-            repeatPasswordTextField.textColor = UIColor.darkGray
-            passwordTextField.textColor = UIColor.darkGray
-        }
+        let match = checkPasswordsMatch()
+        hidePasswordWarning(match)
+        setPaswordFieldsColorByMatch(match)
         return true
     }
 
