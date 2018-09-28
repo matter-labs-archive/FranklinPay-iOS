@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum pincodeEnterStatus: String {
+enum PincodeEnterStatus: String {
     case enter = "Touch ID or Enter Passcode"
     case wrong = "Wrong passcode"
     case ready = "Ready"

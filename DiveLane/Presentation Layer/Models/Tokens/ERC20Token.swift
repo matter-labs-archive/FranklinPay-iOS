@@ -13,14 +13,14 @@ class ERC20TokenModel {
     var address: String
     var decimals: String
     var symbol: String
-    
+
     init(token: ERC20Token) {
         self.name = token.name ?? ""
         self.address = token.address ?? ""
         self.decimals = token.decimals ?? ""
         self.symbol = token.symbol ?? ""
     }
-    
+
     init(name: String,
          address: String,
          decimals: String,
@@ -30,27 +30,27 @@ class ERC20TokenModel {
         self.decimals = decimals
         self.symbol = symbol
     }
-    
+
     init(isEther: Bool) {
         self.name = isEther ? "Ether" : ""
         self.address = isEther ? "" : ""
         self.decimals = isEther ? "18" : "18"
         self.symbol = isEther ? "Eth" : ""
     }
-    
+
     static func fromCoreData(crModel: ERC20Token) -> ERC20TokenModel {
         let model = ERC20TokenModel(name: crModel.name ?? "",
-                                    address: crModel.address ?? "",
-                                    decimals: crModel.decimals ?? "",
-                                    symbol: crModel.symbol ?? "")
+                address: crModel.address ?? "",
+                decimals: crModel.decimals ?? "",
+                symbol: crModel.symbol ?? "")
         return model
     }
 }
 
 extension ERC20TokenModel: Equatable {
-    static func == (lhs: ERC20TokenModel, rhs: ERC20TokenModel) -> Bool {
+    static func ==(lhs: ERC20TokenModel, rhs: ERC20TokenModel) -> Bool {
         return
-            lhs.name == rhs.name &&
+        lhs.name == rhs.name &&
                 lhs.address == rhs.address &&
                 lhs.decimals == rhs.decimals &&
                 lhs.symbol == rhs.symbol

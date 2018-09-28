@@ -14,11 +14,13 @@ struct UserDefaultKeys {
     public var tokensDownloaded = UserDefaults.standard.bool(forKey: "tokensDownloaded")
     public var currentNetwork = UserDefaults.standard.object(forKey: "currentNetwork")
     public var currentWeb = UserDefaults.standard.object(forKey: "currentWeb")
+
     public func setEtherAdded() {
         UserDefaults.standard.set(true, forKey: "etherAddedForWallet\(KeysService().selectedWallet()?.address ?? "")")
     }
+
     public func setTokensDownloaded() {
         UserDefaults.standard.set(true, forKey: "tokensDownloaded")
     }
-    
+
 }

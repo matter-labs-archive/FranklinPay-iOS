@@ -12,10 +12,10 @@ class WalletCellDropdown: UITableViewCell {
     @IBOutlet weak var walletBalance: UILabel!
     @IBOutlet weak var walletAddress: UILabel!
     @IBOutlet weak var walletName: UILabel!
-    
+
     let web3SwiftService = Web3SwiftService()
     var currentWallet: KeyWalletModel?
-    
+
     func configure(_ wallet: KeyWalletModel) {
         currentWallet = wallet
         walletAddress.text = wallet.address
@@ -42,10 +42,10 @@ class WalletCellDropdown: UITableViewCell {
             }
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         walletBalance.text = "Loading..."
     }
-    
+
 }

@@ -9,19 +9,19 @@
 import UIKit
 
 class WalletCell: UITableViewCell {
-    
+
     @IBOutlet weak var walletName: UILabel!
     @IBOutlet weak var walletBalance: UILabel!
     @IBOutlet weak var walletAddress: UILabel!
-    
+
     weak var delegate: InfoButtonDelegate?
     var wallet: KeyWalletModel?
     let web3SwiftService: IWeb3SwiftService = Web3SwiftService()
-    
+
     @IBAction func infoButtonPressed(_ sender: UIButton) {
         delegate?.infoButtonPressed(forWallet: wallet!)
     }
-    
+
     func configureCell(model: KeyWalletModel) {
         wallet = model
         walletName.text = "Name: " + model.name
@@ -34,7 +34,7 @@ class WalletCell: UITableViewCell {
             }
         }
     }
-    
+
 }
 
 protocol InfoButtonDelegate: class {

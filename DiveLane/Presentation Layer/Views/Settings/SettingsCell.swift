@@ -10,22 +10,22 @@ import UIKit
 import web3swift
 
 class SettingsCell: UITableViewCell {
-    
+
     @IBOutlet weak var param: UILabel!
     @IBOutlet weak var value: UILabel!
-    
+
     func configure(param: String, value: Any) {
         self.param.text = param
         let name: String?
         switch param {
         case "Networks":
-            let network = value as! Networks
+            let network = value as? Networks
             switch network {
-            case .Mainnet:
+            case .Mainnet?:
                 name = "Mainnet"
-            case .Kovan:
+            case .Kovan?:
                 name = "Kovan"
-            case .Ropsten:
+            case .Ropsten?:
                 name = "Ropsten"
             default:
                 name = "Rinkeby"
@@ -36,16 +36,10 @@ class SettingsCell: UITableViewCell {
         }
         self.value.text = name ?? ""
     }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func prepareForReuse()
-    {
+
+    override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         self.param.text = ""
         self.value.text = ""
     }

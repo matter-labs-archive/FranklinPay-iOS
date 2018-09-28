@@ -12,16 +12,16 @@ import struct BigInt.BigUInt
 
 protocol ITokensService {
     func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void)
-    func downloadAllAvailableTokensIfNeeded( completion: @escaping (Error?)-> Void)
+    func downloadAllAvailableTokensIfNeeded(completion: @escaping (Error?) -> Void)
 }
 
 class TokensService {
-    
+
     let web3service = Web3SwiftService()
-    
+
     let conversionService = FiatServiceImplementation.service
-    
-    public func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void)  {
+
+    public func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
         var tokensList: [ERC20TokenModel] = []
         DispatchQueue.global().async {
             let tokensFromCD = LocalDatabase().getTokensList(for: searchString)
@@ -30,14 +30,14 @@ class TokensService {
                     DispatchQueue.main.async {
                         for token in tokens {
                             let tokenModel = ERC20TokenModel(name: token.name,
-                                                             address: token.address,
-                                                             decimals: token.decimals,
-                                                             symbol: token.symbol)
+                                    address: token.address,
+                                    decimals: token.decimals,
+                                    symbol: token.symbol)
                             tokensList.append(tokenModel)
                         }
                         completion(tokensList)
                     }
-                    
+
                 } else {
                     self.getOnlineTokensList(with: searchString, completion: { (list) in
                         completion(list)
@@ -49,10 +49,9 @@ class TokensService {
                 })
             }
         }
-        
+
     }
-    
-    
+
     private func name(for token: String, completion: @escaping (String?) -> Void) {
         let contract = web3service.contract(for: token)
         if let transaction = contract?.method("name", parameters: [AnyObject](), options: web3service.defaultOptions()) {
@@ -61,8 +60,7 @@ class TokensService {
                 DispatchQueue.main.async {
                     if let name = result.value?["0"] as? String, !name.isEmpty {
                         completion(name)
-                    }
-                    else {
+                    } else {
                         completion(nil)
                     }
                 }
@@ -71,23 +69,22 @@ class TokensService {
             completion(nil)
         }
     }
-    
+
     private func symbol(for token: String, completion: @escaping (String?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let contract = self.web3service.contract(for: token)
             let transaction = contract?.method("symbol", parameters: [AnyObject](), options: self.web3service.defaultOptions())
             let balance = transaction?.call(options: self.web3service.defaultOptions())
             DispatchQueue.main.async {
-                if let symbol = balance?.value?["0"] as? String, !symbol.isEmpty  {
+                if let symbol = balance?.value?["0"] as? String, !symbol.isEmpty {
                     completion(symbol)
-                }
-                else {
+                } else {
                     completion(nil)
                 }
             }
         }
     }
-    
+
     private func decimals(for token: String, completion: @escaping (BigUInt?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             let contract = self.web3service.contract(for: token)
@@ -96,24 +93,23 @@ class TokensService {
             DispatchQueue.main.async {
                 if let balance = bkxBalance?.value?["0"] as? BigUInt {
                     completion(balance)
-                }
-                else {
+                } else {
                     completion(nil)
                 }
             }
         }
     }
-    
+
     private func getOnlineTokensList(with address: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
-        
+
         guard let _ = EthereumAddress(address) else {
             completion(nil)
             return
         }
-        
+
         DispatchQueue.global(qos: .userInitiated).async {
             let dispatchGroup = DispatchGroup()
-            
+
             dispatchGroup.enter()
             var name: String = ""
             self.name(for: address, completion: { (result) in
@@ -124,7 +120,7 @@ class TokensService {
                 }
                 dispatchGroup.leave()
             })
-            
+
             dispatchGroup.enter()
             var decimals: BigUInt = BigUInt()
             self.decimals(for: address, completion: { (result) in
@@ -133,9 +129,9 @@ class TokensService {
                 } else {
                     decimals = ""
                 }
-                
+
             })
-            
+
             dispatchGroup.enter()
             var symbol: String = ""
             self.symbol(for: address, completion: { (result) in
@@ -146,60 +142,60 @@ class TokensService {
                 }
                 dispatchGroup.leave()
             })
-            
+
             dispatchGroup.notify(queue: .main) {
                 guard !name.isEmpty, !symbol.isEmpty else {
                     completion(nil)
                     return
                 }
                 completion([ERC20TokenModel(name: name,
-                                            address: address,
-                                            decimals: decimals.description,
-                                            symbol: symbol)])
-                
+                        address: address,
+                        decimals: decimals.description,
+                        symbol: symbol)])
+
             }
         }
     }
-    
-    public func downloadAllAvailableTokensIfNeeded( completion: @escaping (Error?)-> Void) {
-        
+
+    public func downloadAllAvailableTokensIfNeeded(completion: @escaping (Error?) -> Void) {
+
         guard let url = URL(string: URLs.urlDownloadTOkensList) else {
             completion(NetworkErrors.couldnotParseUrlString)
             return
         }
-        
-        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
             if let data = data {
                 do {
-                    if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String : Any]] {
+                    if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
                         let dictsCount = jsonSerialized.count
                         var counter = 0
                         try jsonSerialized.forEach({ (dict) in
                             counter += 1
-                            LocalDatabase().saveToken(from: dict, completion: { (error) in
+                            LocalDatabase().saveToken(from: dict, completion: { (_) in
                                 if counter == dictsCount {
                                     completion(nil)
                                 }
                             })
                         })
                     }
-                }  catch  {
+                } catch {
                     completion(error)
                 }
-            } else  {
+            } else {
                 completion(error)
             }
         }
         task.resume()
     }
-    
-    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?)->()) {
+
+    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?) -> Void) {
         DispatchQueue.global(qos: .userInitiated).async {
             self.conversionService.updateConversionRate(for: token.symbol.uppercased()) { (rate) in
                 completion(rate)
             }
         }
-        
+
     }
-    
+
 }

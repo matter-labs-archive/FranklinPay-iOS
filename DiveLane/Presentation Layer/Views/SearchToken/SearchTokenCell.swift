@@ -14,18 +14,17 @@ class SearchTokenCell: UITableViewCell {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var tokenIcon: UIImageView!
     @IBOutlet weak var addedIcon: UIImageView!
-    
+
     func configure(with token: ERC20TokenModel, isAdded: Bool = false) {
         nameLabel.text = token.name + " (\(token.symbol))"
         //tokenIcon.image =
         addressLabel.text = token.address
         addedIcon.alpha = isAdded ? 1.0 : 0.0
     }
-    
-    override func prepareForReuse()
-    {
+
+    override func prepareForReuse() {
         super.prepareForReuse()
-        
+
         self.nameLabel.text = ""
         self.addressLabel.text = ""
         self.tokenIcon.image = UIImage(named: "ether")

@@ -12,9 +12,10 @@ class TokenCellDropdown: UITableViewCell {
 
     @IBOutlet weak var tokenBalance: UILabel!
     @IBOutlet weak var tokenName: UILabel!
-    
+
     let web3Service = Web3SwiftService()
     var currentToken: ERC20TokenModel?
+
     func configure(_ token: ERC20TokenModel, wallet: KeyWalletModel) {
         currentToken = token
         tokenName.text = token.name
@@ -36,7 +37,7 @@ class TokenCellDropdown: UITableViewCell {
             }
         }
     }
-    
+
     override func prepareForReuse() {
         super.prepareForReuse()
         tokenBalance.text = "Loading..."
