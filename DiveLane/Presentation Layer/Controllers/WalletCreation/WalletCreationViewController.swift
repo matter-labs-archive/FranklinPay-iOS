@@ -379,7 +379,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         textField.textColor = UIColor.blue
         if textField == passwordTextField || textField == repeatPasswordTextField {
             hidePasswordWarning(true)
-            passwordsMatch(true)
+            setColor(true)
         }
     }
 
@@ -405,7 +405,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         }
         let match = checkPasswordsMatch()
         hidePasswordWarning(match)
-        passwordsMatch(match)
+        setColor(match)
         return true
     }
     
