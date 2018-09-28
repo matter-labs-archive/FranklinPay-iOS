@@ -361,7 +361,7 @@ class WalletCreationViewController: UIViewController {
         repeatPasswordTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true
     }
 
-    func setColor(_ match: Bool) {
+    func setPaswordFieldsColorByMatch(_ match: Bool) {
         let color = match ? UIColor.darkGray : UIColor.red
         repeatPasswordTextField.textColor = color
         passwordTextField.textColor = color
@@ -379,7 +379,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         textField.textColor = UIColor.blue
         if textField == passwordTextField || textField == repeatPasswordTextField {
             hidePasswordWarning(true)
-            setColor(true)
+            setPaswordFieldsColorByMatch(true)
         }
     }
 
@@ -405,7 +405,7 @@ extension WalletCreationViewController: UITextFieldDelegate {
         }
         let match = checkPasswordsMatch()
         hidePasswordWarning(match)
-        setColor(match)
+        setPaswordFieldsColorByMatch(match)
         return true
     }
     
