@@ -64,7 +64,7 @@ class WalletCreationViewController: UIViewController {
         self.hideKeyboardWhenTappedAround()
         enterButton.setTitle(additionMode.title(), for: .normal)
         enterButton.isEnabled = false
-        enterButton.alpha = 0.5
+        updateEnterButtonAlpha()
         hidePasswordWarning(true)
     }
     
@@ -152,6 +152,60 @@ class WalletCreationViewController: UIViewController {
 
     }
 
+    private func updateEnterButtonAlpha() {
+        enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
+    }
+
+    private func isEnterButtonEnabled(afterChanging textField: UITextField, with string: String) {
+
+        enterButton.isEnabled = false
+
+        switch textField {
+        case enterPrivateKeyTextField:
+            let everyFieldIsOK = passwordTextField.text == repeatPasswordTextField.text &&
+                !(passwordTextField.text?.isEmpty ?? true) &&
+                !string.isEmpty && !(walletNameTextField.text?.isEmpty ?? true)
+            enterButton.isEnabled = everyFieldIsOK
+        case passwordTextField:
+            let repeatPasswordIsEmpty = (repeatPasswordTextField.text?.isEmpty ?? true)
+            let passwordIsEmpty = string.isEmpty
+            let passwordMatching = !passwordIsEmpty &&
+                string == repeatPasswordTextField.text &&
+                !repeatPasswordIsEmpty
+            hidePasswordWarning(passwordMatching || repeatPasswordIsEmpty || passwordIsEmpty)
+            let privateKeyIsOK = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
+            let everyFieldIsOK = passwordMatching && privateKeyIsOK
+            enterButton.isEnabled = everyFieldIsOK
+        case repeatPasswordTextField:
+            let passwordIsEmpty = (passwordTextField.text?.isEmpty ?? true)
+            let repeatPasswordIsEmpty = string.isEmpty
+            let passwordMatching = !repeatPasswordIsEmpty &&
+                string == passwordTextField.text &&
+                !passwordIsEmpty
+            hidePasswordWarning(passwordMatching || passwordIsEmpty || repeatPasswordIsEmpty)
+            let privateKeyIsOK = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
+            let everyFieldIsOK = passwordMatching && privateKeyIsOK
+            enterButton.isEnabled = everyFieldIsOK
+        default:
+            let privateKeyFieldIsOk =
+                (
+                additionMode == .importWallet
+                && !(enterPrivateKeyTextField.text?.isEmpty ?? true)
+                )
+                || additionMode == .createWallet
+                ? true
+                : false
+
+            let everyFieldIsOK = !string.isEmpty &&
+                passwordTextField.text == repeatPasswordTextField.text &&
+                !(passwordTextField.text?.isEmpty ?? true) && privateKeyFieldIsOk
+
+            enterButton.isEnabled = everyFieldIsOK
+
+        }
+
+    }
+
     func addWalletDependingOnMode(_ walletName: String, withKey: String, withPassword: String, isAtLeastOneExists: Bool) {
         
         switch additionMode {
@@ -231,10 +285,10 @@ class WalletCreationViewController: UIViewController {
                 }
                 self?.localStorage.selectWallet(wallet: wallet, completion: {
                     DispatchQueue.global().async {
-                        if !UserDefaults.standard.bool(forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")") {
+                        if !UserDefaultKeys().isEtherAdded {
                             AppController().addFirstToken(for: wallet!, completion: { (error) in
                                 if error == nil {
-                                    UserDefaults.standard.set(true, forKey: "etherAddedForNetwork\(CurrentNetwork.currentNetwork?.chainID ?? 0)ForWallet\(KeysService().selectedWallet()?.address ?? "")")
+                                    UserDefaultKeys().setEtherAdded()
                                     UserDefaults.standard.synchronize()
                                     self?.goToApp()
                                 } else {
@@ -306,18 +360,17 @@ class WalletCreationViewController: UIViewController {
             passwordTextField.text != repeatPasswordTextField.text) ||
         repeatPasswordTextField.text?.isEmpty ?? true || passwordTextField.text?.isEmpty ?? true
     }
-    
+
     func setColor(_ match: Bool) {
         let color = match ? UIColor.darkGray : UIColor.red
         repeatPasswordTextField.textColor = color
         passwordTextField.textColor = color
     }
-    
+
     @objc func alertControllerBackgroundTapped() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    
+
 }
 
 extension WalletCreationViewController: UITextFieldDelegate {
@@ -333,47 +386,11 @@ extension WalletCreationViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "")  as NSString
         let futureString = currentText.replacingCharacters(in: range, with: string) as String
-        enterButton.isEnabled = false
         
-        switch textField {
-        case enterPrivateKeyTextField:
-            if passwordTextField.text == repeatPasswordTextField.text &&
-                !(passwordTextField.text?.isEmpty ?? true) &&
-                !futureString.isEmpty && !(walletNameTextField.text?.isEmpty ?? true) {
-                enterButton.isEnabled = true
-            } else {
-                enterButton.isEnabled = false
-            }
-        case passwordTextField:
-            if !futureString.isEmpty &&
-                futureString == repeatPasswordTextField.text || (repeatPasswordTextField.text?.isEmpty ?? true) {
-                enterButton.isEnabled = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
-            } else {
-                enterButton.isEnabled = false
-            }
-        case repeatPasswordTextField:
-            let passwordMatching = !futureString.isEmpty &&
-                    futureString == passwordTextField.text
-            if passwordMatching {
-                enterButton.isEnabled = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
-            } else {
-                enterButton.isEnabled = false
-            }
-        default:
-            if additionMode == .importWallet {
-                let hardExpression = !futureString.isEmpty &&
-                        passwordTextField.text == repeatPasswordTextField.text &&
-                        !(passwordTextField.text?.isEmpty ?? true) &&
-                        !(enterPrivateKeyTextField.text?.isEmpty ?? true)
+        isEnterButtonEnabled(afterChanging: textField, with: futureString)
 
-                enterButton.isEnabled = hardExpression
-            } else {
-                enterButton.isEnabled = !futureString.isEmpty
-            }
-            
-        }
-        
-        enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
+        updateEnterButtonAlpha()
+
         textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
         
         return true

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F22862149800800ED58E6 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22852149800700ED58E6 /* AnimationController.swift */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
@@ -87,6 +88,8 @@
 		B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091510214AA58100C8B408 /* MnemonicsViewController.swift */; };
 		B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091511214AA58100C8B408 /* MnemonicsViewController.xib */; };
 		B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091516214AB04800C8B408 /* WalletImportMode.swift */; };
+		B219DC2C215B77A80035BF94 /* DiveLaneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */; };
+		B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC33215B786D0035BF94 /* SnapshotHelper.swift */; };
 		B25BD1342143E43A0091C481 /* EtherscanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1332143E43A0091C481 /* EtherscanService.swift */; };
 		B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */; };
 		B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B25BD1372143E5BC0091C481 /* ParameterCell.swift */; };
@@ -103,10 +106,34 @@
 		B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */; };
 		B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */; };
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
+		E2724B99215ABD9100E99901 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B98215ABD9100E99901 /* Constants.swift */; };
+		E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */; };
 		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
+		E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA091215A8ACF001755A4 /* Colors.swift */; };
+		E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA093215A8C41001755A4 /* DesignElements.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		1CF54A77215CCF0E009CC78F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91B6A78B21435F5D0033A045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91B6A79221435F5D0033A045;
+			remoteInfo = DiveLane;
+		};
+		B219DC2E215B77A80035BF94 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 91B6A78B21435F5D0033A045 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 91B6A79221435F5D0033A045;
+			remoteInfo = DiveLane;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
+		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
 		914F22852149800700ED58E6 /* AnimationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimationController.swift; sourceTree = "<group>"; };
 		914F228821499ACC00ED58E6 /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
@@ -190,6 +217,10 @@
 		B2091510214AA58100C8B408 /* MnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsViewController.swift; sourceTree = "<group>"; };
 		B2091511214AA58100C8B408 /* MnemonicsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MnemonicsViewController.xib; sourceTree = "<group>"; };
 		B2091516214AB04800C8B408 /* WalletImportMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletImportMode.swift; sourceTree = "<group>"; };
+		B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneUITests.swift; sourceTree = "<group>"; };
+		B219DC2D215B77A80035BF94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B219DC33215B786D0035BF94 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		B25BD1332143E43A0091C481 /* EtherscanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EtherscanService.swift; sourceTree = "<group>"; };
 		B25BD1352143E5440091C481 /* SendingArbitratyTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendingArbitratyTransactionViewController.swift; sourceTree = "<group>"; };
 		B25BD1372143E5BC0091C481 /* ParameterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterCell.swift; sourceTree = "<group>"; };
@@ -207,15 +238,33 @@
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
 		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
+		E2724B98215ABD9100E99901 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableTokens.swift; sourceTree = "<group>"; };
+		E2EBA091215A8ACF001755A4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		E2EBA093215A8C41001755A4 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1CF54A6F215CCF0E009CC78F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A79021435F5D0033A045 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B219DC26215B77A80035BF94 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,20 +280,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		1CF54A73215CCF0E009CC78F /* DiveLaneTests */ = {
+			isa = PBXGroup;
+			children = (
+				1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */,
+				1CF54A76215CCF0E009CC78F /* Info.plist */,
+			);
+			path = DiveLaneTests;
+			sourceTree = "<group>";
+		};
 		6DE660421B91D607B06623B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		914F228421497F9200ED58E6 /* Animators */ = {
-			isa = PBXGroup;
-			children = (
-				914F22852149800700ED58E6 /* AnimationController.swift */,
-			);
-			path = Animators;
 			sourceTree = "<group>";
 		};
 		914F228721499AA900ED58E6 /* Pincode */ = {
@@ -452,6 +502,8 @@
 			isa = PBXGroup;
 			children = (
 				91B6A79521435F5D0033A045 /* DiveLane */,
+				B219DC2A215B77A80035BF94 /* DiveLaneUITests */,
+				1CF54A73215CCF0E009CC78F /* DiveLaneTests */,
 				91B6A79421435F5D0033A045 /* Products */,
 				01C0C7BFEA430D8AD09D7D4D /* Pods */,
 				6DE660421B91D607B06623B4 /* Frameworks */,
@@ -462,6 +514,8 @@
 			isa = PBXGroup;
 			children = (
 				91B6A79321435F5D0033A045 /* DiveLane.app */,
+				B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */,
+				1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -490,8 +544,13 @@
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
 				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
+				E2724B98215ABD9100E99901 /* Constants.swift */,
+				E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */,
 				91B6A7C7214368470033A045 /* Parameter.swift */,
 				91B6A7CD214370F00033A045 /* URL.swift */,
+				E2EBA093215A8C41001755A4 /* DesignElements.swift */,
+				E2EBA091215A8ACF001755A4 /* Colors.swift */,
+				914F22852149800700ED58E6 /* AnimationController.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -535,7 +594,6 @@
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
 				914F228721499AA900ED58E6 /* Pincode */,
-				914F228421497F9200ED58E6 /* Animators */,
 				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
@@ -641,6 +699,16 @@
 			path = "Presentation Layer";
 			sourceTree = "<group>";
 		};
+		B219DC2A215B77A80035BF94 /* DiveLaneUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B219DC2B215B77A80035BF94 /* DiveLaneUITests.swift */,
+				B219DC33215B786D0035BF94 /* SnapshotHelper.swift */,
+				B219DC2D215B77A80035BF94 /* Info.plist */,
+			);
+			path = DiveLaneUITests;
+			sourceTree = "<group>";
+		};
 		B271CF91214BAD080023FC18 /* Transactions History */ = {
 			isa = PBXGroup;
 			children = (
@@ -692,6 +760,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		1CF54A71215CCF0E009CC78F /* DiveLaneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1CF54A7B215CCF0E009CC78F /* Build configuration list for PBXNativeTarget "DiveLaneTests" */;
+			buildPhases = (
+				1CF54A6E215CCF0E009CC78F /* Sources */,
+				1CF54A6F215CCF0E009CC78F /* Frameworks */,
+				1CF54A70215CCF0E009CC78F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1CF54A78215CCF0E009CC78F /* PBXTargetDependency */,
+			);
+			name = DiveLaneTests;
+			productName = DiveLaneTests;
+			productReference = 1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		91B6A79221435F5D0033A045 /* DiveLane */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91B6A7A521435F5E0033A045 /* Build configuration list for PBXNativeTarget "DiveLane" */;
@@ -712,18 +798,44 @@
 			productReference = 91B6A79321435F5D0033A045 /* DiveLane.app */;
 			productType = "com.apple.product-type.application";
 		};
+		B219DC28215B77A80035BF94 /* DiveLaneUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B219DC32215B77A80035BF94 /* Build configuration list for PBXNativeTarget "DiveLaneUITests" */;
+			buildPhases = (
+				B219DC25215B77A80035BF94 /* Sources */,
+				B219DC26215B77A80035BF94 /* Frameworks */,
+				B219DC27215B77A80035BF94 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B219DC2F215B77A80035BF94 /* PBXTargetDependency */,
+			);
+			name = DiveLaneUITests;
+			productName = DiveLaneUITests;
+			productReference = B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		91B6A78B21435F5D0033A045 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1000;
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Matter Inc";
 				TargetAttributes = {
+					1CF54A71215CCF0E009CC78F = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 91B6A79221435F5D0033A045;
+					};
 					91B6A79221435F5D0033A045 = {
 						CreatedOnToolsVersion = 9.4.1;
+					};
+					B219DC28215B77A80035BF94 = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 91B6A79221435F5D0033A045;
 					};
 				};
 			};
@@ -741,11 +853,20 @@
 			projectRoot = "";
 			targets = (
 				91B6A79221435F5D0033A045 /* DiveLane */,
+				B219DC28215B77A80035BF94 /* DiveLaneUITests */,
+				1CF54A71215CCF0E009CC78F /* DiveLaneTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		1CF54A70215CCF0E009CC78F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A79121435F5D0033A045 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -778,6 +899,13 @@
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B219DC27215B77A80035BF94 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,6 +980,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1CF54A6E215CCF0E009CC78F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		91B6A78F21435F5D0033A045 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -864,11 +1000,14 @@
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
 				B25BD1362143E5440091C481 /* SendingArbitratyTransactionViewController.swift in Sources */,
+				E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				91B6A7D42143B2160033A045 /* FloatExtension.swift in Sources */,
 				91E7255B214FEDE3003FAD76 /* AddressTableViewCell.swift in Sources */,
+				E2724B99215ABD9100E99901 /* Constants.swift in Sources */,
 				B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
+				E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91E7256221506700003FAD76 /* TokensService.swift in Sources */,
@@ -910,6 +1049,7 @@
 				B271CF9B214BAEDB0023FC18 /* TransactionCell.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreateWalletPincodeViewController.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
+				E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */,
 				B2E668D62150F9F700C3CC2D /* WalletDropdownMarager.swift in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
@@ -927,7 +1067,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B219DC25215B77A80035BF94 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B219DC2C215B77A80035BF94 /* DiveLaneUITests.swift in Sources */,
+				B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1CF54A78215CCF0E009CC78F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91B6A79221435F5D0033A045 /* DiveLane */;
+			targetProxy = 1CF54A77215CCF0E009CC78F /* PBXContainerItemProxy */;
+		};
+		B219DC2F215B77A80035BF94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 91B6A79221435F5D0033A045 /* DiveLane */;
+			targetProxy = B219DC2E215B77A80035BF94 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */ = {
@@ -941,6 +1103,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		1CF54A79215CCF0E009CC78F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DiveLaneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = MT.DiveLaneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiveLane.app/DiveLane";
+			};
+			name = Debug;
+		};
+		1CF54A7A215CCF0E009CC78F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = DiveLaneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = MT.DiveLaneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiveLane.app/DiveLane";
+			};
+			name = Release;
+		};
 		91B6A7A321435F5E0033A045 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1062,13 +1267,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -1083,13 +1288,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -1097,9 +1302,61 @@
 			};
 			name = Release;
 		};
+		B219DC30215B77A80035BF94 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				INFOPLIST_FILE = DiveLaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiveLane;
+			};
+			name = Debug;
+		};
+		B219DC31215B77A80035BF94 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				INFOPLIST_FILE = DiveLaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiveLane;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		1CF54A7B215CCF0E009CC78F /* Build configuration list for PBXNativeTarget "DiveLaneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1CF54A79215CCF0E009CC78F /* Debug */,
+				1CF54A7A215CCF0E009CC78F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		91B6A78E21435F5D0033A045 /* Build configuration list for PBXProject "DiveLane" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1114,6 +1371,15 @@
 			buildConfigurations = (
 				91B6A7A621435F5E0033A045 /* Debug */,
 				91B6A7A721435F5E0033A045 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B219DC32215B77A80035BF94 /* Build configuration list for PBXNativeTarget "DiveLaneUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B219DC30215B77A80035BF94 /* Debug */,
+				B219DC31215B77A80035BF94 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
