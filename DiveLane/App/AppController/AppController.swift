@@ -57,7 +57,7 @@ class AppController {
             }
         }
         let nav1 = navigationController(withTitle: "Wallet",
-                withImage: UIImage(named: "user"),
+                withImage: UIImage(named: "wallet"),
                 withController: WalletViewController(nibName: nil, bundle: nil),
                 tag: 1)
         let nav2 = navigationController(withTitle: "Settings",
@@ -81,16 +81,17 @@ class AppController {
                               withController: UIViewController,
                               tag: Int) -> UINavigationController {
         let nav = UINavigationController()
-        nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
-        nav.navigationBar.tintColor = UIColor.white
-        nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        nav.navigationBar.barStyle = .black
+        //nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
+        //nav.navigationBar.tintColor = UIColor.black
+        //nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+        //nav.navigationBar.barStyle = .default
         let controller = withController
         controller.title = withTitle
         nav.viewControllers = [controller]
         nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
         return nav
     }
+    
     func startAsUsual(in window: UIWindow) {
 
         var startViewController: UIViewController?

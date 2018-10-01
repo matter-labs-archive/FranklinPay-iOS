@@ -128,7 +128,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         var nav1 = UINavigationController()
         var first = WalletViewController(nibName: nil, bundle: nil)
         nav1.viewControllers = [first]
-        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
+        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "wallet"), tag: 1)
 
         var nav2 = UINavigationController()
         var second = SettingsViewController(nibName: nil, bundle: nil)

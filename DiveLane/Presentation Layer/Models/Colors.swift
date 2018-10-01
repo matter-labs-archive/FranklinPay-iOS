@@ -10,7 +10,7 @@ import UIKit
 
 struct Colors {
     struct BackgroundColors {
-        static let main = UIColor(red: 249 / 255, green: 249 / 255, blue: 249 / 255, alpha: 1)
+        static let main = UIColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
     }
 
     struct NavBarColors {

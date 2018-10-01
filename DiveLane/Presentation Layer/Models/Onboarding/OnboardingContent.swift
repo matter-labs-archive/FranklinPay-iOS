@@ -10,11 +10,12 @@ import UIKit
 
 struct OnboardingContentModel {
     var title: String
+    var subtitle: String
     var image: UIImage
 }
 
 let PAGES = [
-    OnboardingContentModel(title: "Onboarding 1", image: UIImage(named: "onboarding1")!),
-    OnboardingContentModel(title: "Onboarding 2", image: UIImage(named: "onboarding2")!),
-    OnboardingContentModel(title: "Onboarding 3", image: UIImage(named: "onboarding3")!)
+    OnboardingContentModel(title: "As secure as hard-wallet", subtitle: "No private key sharing needed", image: UIImage(named: "onboarding1")!),
+    OnboardingContentModel(title: "ERC-20 Support", subtitle: "Use any Ether network token", image: UIImage(named: "onboarding2")!),
+    OnboardingContentModel(title: "Be free from hard-bonded solutions", subtitle: "Sign transactions and call arbitrary contract's methods via deep links", image: UIImage(named: "onboarding3")!)
 ]

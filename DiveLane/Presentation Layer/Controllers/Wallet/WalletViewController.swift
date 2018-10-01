@@ -169,7 +169,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let backgroundView = design.tableViewHeaderBackground(in: self.view)
 
         let walletButton = design.tableViewHeaderWalletButton(in: self.view,
-                withTitle: twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "",
+                withTitle: "\(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "") wallet",
                 withTag: section)
         walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         backgroundView.addSubview(walletButton)
@@ -218,6 +218,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 45
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

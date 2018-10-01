@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtc-Qe-pOG">
-                        <rect key="frame" x="20" y="6" width="60" height="30"/>
+                        <rect key="frame" x="40" y="7" width="60" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" secondItem="mtc-Qe-pOG" secondAttribute="height" multiplier="2:1" id="UjB-hQ-cM5"/>
                             <constraint firstAttribute="height" constant="30" id="uSc-7F-0b2"/>
@@ -29,8 +28,8 @@
                         <state key="normal" image="qr"/>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWc-cg-CHh">
-                        <rect key="frame" x="110" y="6" width="60" height="30"/>
-                        <color key="backgroundColor" red="0.11372549019607843" green="0.37647058823529411" blue="0.69019607843137254" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <rect key="frame" x="140" y="7" width="150" height="30"/>
+                        <color key="backgroundColor" red="0.082352941176470587" green="0.49411764705882355" blue="0.98431372549019602" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <state key="normal" title="Paste">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
@@ -45,15 +44,15 @@
                     <constraint firstItem="mtc-Qe-pOG" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="E3Q-HZ-1xW"/>
                     <constraint firstItem="AWc-cg-CHh" firstAttribute="height" secondItem="mtc-Qe-pOG" secondAttribute="height" id="Fig-Ky-HWJ"/>
                     <constraint firstItem="AWc-cg-CHh" firstAttribute="centerY" secondItem="mtc-Qe-pOG" secondAttribute="centerY" id="GKF-pP-7NK"/>
-                    <constraint firstItem="AWc-cg-CHh" firstAttribute="width" secondItem="mtc-Qe-pOG" secondAttribute="width" id="HFj-YE-8Si"/>
-                    <constraint firstItem="mtc-Qe-pOG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="LWW-Yf-N64"/>
-                    <constraint firstItem="AWc-cg-CHh" firstAttribute="leading" secondItem="mtc-Qe-pOG" secondAttribute="trailing" constant="30" id="sHE-4K-XSv"/>
+                    <constraint firstItem="mtc-Qe-pOG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="40" id="LWW-Yf-N64"/>
+                    <constraint firstAttribute="trailing" secondItem="AWc-cg-CHh" secondAttribute="trailing" constant="30" id="pBJ-cx-hHK"/>
+                    <constraint firstItem="AWc-cg-CHh" firstAttribute="leading" secondItem="mtc-Qe-pOG" secondAttribute="trailing" constant="40" id="sHE-4K-XSv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="qr" width="24" height="24"/>
+        <image name="qr" width="34" height="34"/>
     </resources>
 </document>
