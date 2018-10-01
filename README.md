@@ -34,6 +34,11 @@ The solution that we **BUIDL**: a single keystore that accessible from any other
 Lots of experienced developers decline creation of DApps because of its technical hardness and, as a result, those apps are mostly written by scientific people, which don't know how to create excellent UX experience for their users. We want to provide a convenient way to avoid interaction with storing keys, signing and sending transactions, so great mobile developers could come into play and BUIDL amazing apps, without worrying about all that math around blockchain. 
 We did all the hard-lifting cryptography job done for you!
 
+## Contribution:
+We are using Swiftlit along with Travis in our project, so you should better have swiftlint installed locally on your machine before contributing. Don't be afraid, it's really simple to install. Just run  `brew install swiftlint`. If you don't have homebrew installed - run `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"` firstly.
+
+In order to manually run autocorrection, print `swiftlint autocorrect` in the project folder via terminal. However, every time you build the project this command will be called automatically.
+
 ## Usage:
 ### Examples of EIP681 links:
 - If you want to specify gasPrice, gasLimit just add it to the end of the link:
