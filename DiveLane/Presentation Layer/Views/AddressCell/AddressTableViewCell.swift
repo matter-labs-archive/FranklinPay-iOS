@@ -9,7 +9,10 @@
 import UIKit
 
 class AddressTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var qr: UIButton!
+    @IBOutlet weak var paste: UIButton!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

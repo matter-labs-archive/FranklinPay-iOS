@@ -70,7 +70,7 @@ class WalletViewController: UIViewController {
         for wallet in twoDimensionalTokensArray {
             for _ in wallet.tokens {
                 self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].isSelected = false
-                walletTableView.cellForRow(at: indexPath)?.accessoryView?.tintColor = .gray
+                walletTableView.cellForRow(at: indexPath)?.accessoryView?.tintColor = .lightGray
                 indexPath.row += 1
             }
             indexPath.section += 1
@@ -93,7 +93,7 @@ class WalletViewController: UIViewController {
 
         localDatabase?.selectWallet(wallet: token.inWallet, completion: { [weak self] in
             self?.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
-            cell.accessoryView?.tintColor = .red
+            cell.accessoryView?.tintColor = Colors.NavBarColors.mainTint
         })
     }
 
@@ -217,7 +217,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return 80
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

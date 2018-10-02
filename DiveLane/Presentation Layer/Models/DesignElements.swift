@@ -11,6 +11,7 @@ import UIKit
 class DesignElements: UIView {
     func tableViewHeaderBackground(in selfView: UIView) -> UIView {
         let background = UIView(frame: CGRect(x: 20, y: 0, width: selfView.bounds.width, height: 45))
+        background.backgroundColor = .white
         
         let topSeparator = UIView(frame: CGRect(x: 20, y: 0, width: selfView.bounds.width - 25, height: 1))
         topSeparator.backgroundColor = .lightGray

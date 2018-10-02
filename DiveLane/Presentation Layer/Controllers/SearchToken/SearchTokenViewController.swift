@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QRCodeReader
 
 class SearchTokenViewController: UIViewController {
 
@@ -19,6 +20,15 @@ class SearchTokenViewController: UIViewController {
     var searchController: UISearchController!
 
     var wallet: KeyWalletModel?
+    
+    let interactor = Interactor()
+    
+    lazy var readerVC:QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes:[.qr],captureDevicePosition: .back)
+        }
+        return QRCodeReaderViewController(builder: builder)
+    }()
 
     convenience init(for wallet: KeyWalletModel?) {
         self.init()
@@ -27,6 +37,10 @@ class SearchTokenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.hideKeyboardWhenTappedAround()
+        
+        self.title = "Search token"
 
         if wallet == nil {
             wallet = KeysService().selectedWallet()
@@ -49,6 +63,7 @@ class SearchTokenViewController: UIViewController {
         tokensTableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.delegate = self
         searchController.searchBar.barTintColor = UIColor.white
+        searchController.delegate = self
         searchController.searchBar.tintColor = UIColor.darkText
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
@@ -56,18 +71,48 @@ class SearchTokenViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = "Search token"
+        self.tokensTableView.reloadData()
 
+    }
+    
+    @objc func scanTapped() {
+        readerVC.delegate = self
+        self.readerVC.modalPresentationStyle = .formSheet
+        self.present(readerVC, animated: true)
+    }
+    
+    @objc func textFromBuffer() {
+        let searchBar = searchController.searchBar
+        if let string = UIPasteboard.general.string  {
+            searchController.searchBar.text = string
+            DispatchQueue.main.async { [weak self] in
+                self?.searchBar(searchBar, textDidChange: string)
+            }
+        }
+    }
+    
+    func isTokensListEmpty() -> Bool {
+        if tokensList == nil || tokensList == [] {
+            return true
+        }
+        return false
     }
 
 }
 
+extension SearchTokenViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.searchController.searchBar.endEditing(true)
+    }
+}
+
 extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tokensList != nil {
-            return (tokensList?.count)!
-        } else {
+        if isTokensListEmpty() {
             return 1
+        } else {
+            return (tokensList?.count)!
         }
     }
 
@@ -80,7 +125,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tokensList != nil {
+        if !isTokensListEmpty() {
             
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell",
                                                            for: indexPath) as? SearchTokenCell else {
@@ -106,6 +151,8 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
                                                            for: indexPath) as? AddressTableViewCell else {
                                                             return UITableViewCell()
             }
+            cell.qr.addTarget(self, action: #selector(self.scanTapped), for: .touchUpInside)
+            cell.paste.addTarget(self, action: #selector(self.textFromBuffer), for: .touchUpInside)
             return cell
         }
     }
@@ -116,7 +163,15 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             return
         }
         
-        change(token: token, fromCurrentStatus: tokensIsAdded?[indexPath.row] ?? true)
+//        change(token: token, fromCurrentStatus: tokensIsAdded?[indexPath.row] ?? true)
+        
+        let tokenInfoViewController = TokenInfoViewController(token: token,
+                                                              isAdded: tokensIsAdded?[indexPath.row] ?? true,
+                                                              interactor: interactor)
+        
+        tokenInfoViewController.transitioningDelegate = self
+        
+        self.present(tokenInfoViewController, animated: true, completion: nil)
         
         tableView.deselectRow(at: indexPath, animated: true)
 
@@ -155,6 +210,12 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
 
 }
 
+extension SearchTokenViewController: UISearchControllerDelegate {
+    func didPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.showsCancelButton = false
+    }
+}
+
 extension SearchTokenViewController: UISearchBarDelegate {
 
     func searchTokens(string: String) {
@@ -188,28 +249,6 @@ extension SearchTokenViewController: UISearchBarDelegate {
         }
     }
     
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        
-        guard let searchText = searchBar.text else {
-            emptyTokensList()
-            makeHelpLabel(enabled: true)
-            return
-        }
-        
-        if searchText == "" {
-            
-            emptyTokensList()
-            makeHelpLabel(enabled: true)
-            
-        } else {
-            
-            let token = searchText
-            makeHelpLabel(enabled: false)
-            searchTokens(string: token)
-            
-        }
-    }
-
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         if searchText == "" {
@@ -240,4 +279,34 @@ extension SearchTokenViewController: UISearchBarDelegate {
         self.tokensList = nil
         self.tokensTableView.reloadData()
     }
+}
+
+extension SearchTokenViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+    
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
+}
+
+extension SearchTokenViewController: QRCodeReaderViewControllerDelegate {
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+        reader.stopScanning()
+        let searchBar = searchController.searchBar
+        let searchText = result.value.lowercased()
+        self.searchController.searchBar.text = searchText
+        reader.dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.searchBar(searchBar, textDidChange: searchText)
+        }
+        
+    }
+    
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+        reader.stopScanning()
+        reader.dismiss(animated: true)
+    }
+    
 }

@@ -82,10 +82,10 @@ class TokenCell: UITableViewCell {
 
         //select token
         let starButton = UIButton(type: .system)
-        starButton.setImage(UIImage(named: "qr"), for: .normal)
-        starButton.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        starButton.setImage(UIImage(named: "SuccessIcon"), for: .normal)
+        starButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
 
-        starButton.tintColor = .red
+        starButton.tintColor = .lightGray
         starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
 
         accessoryView = starButton

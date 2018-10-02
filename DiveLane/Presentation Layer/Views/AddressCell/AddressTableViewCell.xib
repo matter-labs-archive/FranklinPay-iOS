@@ -50,6 +50,10 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="paste" destination="AWc-cg-CHh" id="BRI-vH-is8"/>
+                <outlet property="qr" destination="mtc-Qe-pOG" id="Eeg-M3-OkR"/>
+            </connections>
         </tableViewCell>
     </objects>
     <resources>

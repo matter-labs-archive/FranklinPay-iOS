@@ -18,7 +18,7 @@ struct Colors {
     }
 
     struct ButtonColors {
-        static let selectedColor = UIColor.red
+        static let selectedColor = NavBarColors.mainTint
         static let deselectedColor = UIColor.lightGray
 
         func changeSelectionColor(dependingOnChoise: Bool) -> UIColor {
