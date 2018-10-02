@@ -9,5 +9,6 @@ target 'DiveLane' do
   pod 'QRCodeReader.swift', '~> 8.1.1'
   pod 'Fabric'
   pod 'Crashlytics'
+  pod 'Alamofire', '~> 4.7'
 
 end
