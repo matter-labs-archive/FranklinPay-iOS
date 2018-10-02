@@ -91,7 +91,7 @@ class AppController {
         nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
         return nav
     }
-    
+
     func startAsUsual(in window: UIWindow) {
 
         var startViewController: UIViewController?

@@ -13,11 +13,11 @@ class TokenInfoCell: UITableViewCell {
     @IBOutlet weak var paramLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
     @IBOutlet weak var measurementLabel: UILabel!
-    
+
     func configure(with parameter: String?, value: String?, measurment: String?) {
         paramLabel.text = parameter ?? ""
         valueLabel.text = value ?? ""
         measurementLabel.text = measurment ?? ""
     }
-    
+
 }
