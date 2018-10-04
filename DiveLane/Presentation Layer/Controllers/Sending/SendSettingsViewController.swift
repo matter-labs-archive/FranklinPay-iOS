@@ -144,8 +144,25 @@ class SendSettingsViewController: UIViewController {
     @IBAction func didChangeState(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             screenState = .ETH
+            if !stackView.arrangedSubviews.contains(dropDownView) {
+                dropDownView = createDropdownView(withManager: .Tokens)
+                guard let wallet = localStorage.getWallet() else {
+                    return
+                }
+                dropDownView.alpha = 1.0
+                tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
+                dropDownView.isHidden = true
+                self.stackView.insertArrangedSubview(self.dropDownView, at: 3)
+
+                UIView.animate(withDuration: 1.0, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+                    self.dropDownView.isHidden = false
+                }, completion: nil)
+            }
         } else {
             screenState = .Plasma
+            if stackView.arrangedSubviews.contains(dropDownView) {
+                stackView.removeArrangedSubview(dropDownView)
+            }
         }
     }
 
@@ -161,10 +178,9 @@ class SendSettingsViewController: UIViewController {
     // MARK: - Dropdown
     @objc func didTapFrom() {
         dropDownView = createDropdownView(withManager: .Wallets)
-        self.view.addSubview(dropDownView)
-        stackView.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.5, animations: {
-            self.dropDownView.alpha = 1.0
+        stackView.insertArrangedSubview(self.dropDownView, at: 2)
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseInOut, animations: {
+            self.dropDownView.isHidden = false
         }, completion: nil)
     }
 
@@ -212,9 +228,9 @@ class SendSettingsViewController: UIViewController {
         tableView.rightAnchor.constraint(equalTo: dropDownView.rightAnchor).isActive = true
         tableView.topAnchor.constraint(equalTo: dropDownView.topAnchor).isActive = true
         tableView.bottomAnchor.constraint(equalTo: dropDownView.bottomAnchor).isActive = true
-        dropDownView.alpha = 0
         dropDownView.layer.cornerRadius = 5.0
         dropDownView.clipsToBounds = true
+        dropDownView.addConstraint(NSLayoutConstraint(item: dropDownView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 100))
         return dropDownView
     }
 
@@ -402,7 +418,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
         localStorage.selectWallet(wallet: wallet) {
             self.addressFromLabel.text = "From: " + wallet.address
             UIView.animate(withDuration: 0.5, animations: {
-                self.dropDownView.alpha = 0.0
+                self.dropDownView.isHidden = true
             }, completion: { (_) in
                 self.stackView.isUserInteractionEnabled = true
                 self.dropDownView.removeFromSuperview()
@@ -415,7 +431,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
         self.token = token
         CurrentToken.currentToken = token
         UIView.animate(withDuration: 0.5, animations: {
-            self.dropDownView.alpha = 0.0
+            self.dropDownView.isHidden = true
         }) { (_) in
             self.stackView.isUserInteractionEnabled = true
             self.dropDownView.removeFromSuperview()
