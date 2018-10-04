@@ -47,7 +47,7 @@
                     </connections>
                 </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qHH-NJ-AdC">
-                    <rect key="frame" x="0.0" y="109" width="375" height="453"/>
+                    <rect key="frame" x="0.0" y="109" width="375" height="456"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="2es-8e-0tI"/>
@@ -55,10 +55,11 @@
                     </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-E6-Bvh">
-                    <rect key="frame" x="20" y="582" width="335" height="35"/>
+                    <rect key="frame" x="115.5" y="585" width="144" height="32"/>
                     <color key="backgroundColor" red="0.16078431372549021" green="0.51764705882352946" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="35" id="SKy-9z-Yzu"/>
+                        <constraint firstAttribute="width" constant="144" id="R3u-Qh-FRk"/>
+                        <constraint firstAttribute="height" constant="32" id="SKy-9z-Yzu"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <state key="normal" title="Add">
@@ -66,7 +67,7 @@
                     </state>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                            <integer key="value" value="8"/>
+                            <integer key="value" value="16"/>
                         </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
@@ -78,7 +79,6 @@
             <gestureRecognizers/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jI5-E6-Bvh" secondAttribute="bottom" constant="50" id="8S0-J1-kgk"/>
-                <constraint firstItem="jI5-E6-Bvh" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="8sJ-nL-9ov"/>
                 <constraint firstItem="yKW-3R-Nns" firstAttribute="top" secondItem="isU-qg-Qqx" secondAttribute="bottom" constant="10" id="9dF-rb-UD0"/>
                 <constraint firstItem="jI5-E6-Bvh" firstAttribute="top" secondItem="qHH-NJ-AdC" secondAttribute="bottom" constant="20" id="BhF-JH-Cdg"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yKW-3R-Nns" secondAttribute="trailing" constant="20" id="QHb-Te-1xk"/>
