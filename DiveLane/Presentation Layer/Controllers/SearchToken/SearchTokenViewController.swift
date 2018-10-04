@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import QRCodeReader
 
 class SearchTokenViewController: UIViewController {
 
     @IBOutlet weak var tokensTableView: UITableView!
+    @IBOutlet weak var helpLabel: UILabel!
 
     var tokensList: [ERC20TokenModel]?
     var tokensIsAdded: [Bool]?
@@ -19,6 +21,15 @@ class SearchTokenViewController: UIViewController {
 
     var wallet: KeyWalletModel?
 
+    let interactor = Interactor()
+
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+        }
+        return QRCodeReaderViewController(builder: builder)
+    }()
+
     convenience init(for wallet: KeyWalletModel?) {
         self.init()
         self.wallet = wallet
@@ -26,6 +37,10 @@ class SearchTokenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.hideKeyboardWhenTappedAround()
+
+        self.title = "Search token"
 
         if wallet == nil {
             wallet = KeysService().selectedWallet()
@@ -44,11 +59,11 @@ class SearchTokenViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         searchController = UISearchController(searchResultsController: nil)
-        searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         tokensTableView.tableHeaderView = searchController.searchBar
         searchController.searchBar.delegate = self
         searchController.searchBar.barTintColor = UIColor.white
+        searchController.delegate = self
         searchController.searchBar.tintColor = UIColor.darkText
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
@@ -56,18 +71,48 @@ class SearchTokenViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.title = "Search token"
+        self.tokensTableView.reloadData()
 
+    }
+
+    @objc func scanTapped() {
+        readerVC.delegate = self
+        self.readerVC.modalPresentationStyle = .formSheet
+        self.present(readerVC, animated: true)
+    }
+
+    @objc func textFromBuffer() {
+        let searchBar = searchController.searchBar
+        if let string = UIPasteboard.general.string {
+            searchController.searchBar.text = string
+            DispatchQueue.main.async { [weak self] in
+                self?.searchBar(searchBar, textDidChange: string)
+            }
+        }
+    }
+
+    func isTokensListEmpty() -> Bool {
+        if tokensList == nil || tokensList == [] {
+            return true
+        }
+        return false
     }
 
 }
 
+extension SearchTokenViewController: UIScrollViewDelegate {
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        self.searchController.searchBar.endEditing(true)
+    }
+}
+
 extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource {
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tokensList != nil {
-            return (tokensList?.count)!
-        } else {
+        if isTokensListEmpty() {
             return 1
+        } else {
+            return (tokensList?.count)!
         }
     }
 
@@ -80,7 +125,8 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if tokensList != nil {
+        if !isTokensListEmpty() {
+
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell",
                                                            for: indexPath) as? SearchTokenCell else {
                 return UITableViewCell()
@@ -99,29 +145,52 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
 
             cell.configure(with: (tokensList?[indexPath.row])!, isAdded: isAdded)
             return cell
+
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddressTableViewCell",
                                                            for: indexPath) as? AddressTableViewCell else {
                                                             return UITableViewCell()
             }
+            cell.qr.addTarget(self, action: #selector(self.scanTapped), for: .touchUpInside)
+            cell.paste.addTarget(self, action: #selector(self.textFromBuffer), for: .touchUpInside)
             return cell
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+
+        guard let token = self.tokensList?[indexPath.row] else {
+            return
+        }
+
+//        change(token: token, fromCurrentStatus: tokensIsAdded?[indexPath.row] ?? true)
+
+        let tokenInfoViewController = TokenInfoViewController(token: token,
+                                                              isAdded: tokensIsAdded?[indexPath.row] ?? true,
+                                                              interactor: interactor)
+
+        tokenInfoViewController.transitioningDelegate = self
+
+        self.present(tokenInfoViewController, animated: true, completion: nil)
+
+        tableView.deselectRow(at: indexPath, animated: true)
+
+    }
+
+    func change(token: ERC20TokenModel, fromCurrentStatus isEnabled: Bool) {
+
         guard let currentWallet = wallet else {
             return
         }
 
         let networkID = CurrentNetwork().getNetworkID()
 
-        guard let token = self.tokensList?[indexPath.row] else {
-            return
-        }
+        tokensIsAdded = []
 
-        if tokensIsAdded?[indexPath.row] ?? true {
+        if isEnabled {
             LocalDatabase().deleteToken(token: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
                 if error == nil {
+
                     DispatchQueue.main.async {
                         self?.tokensTableView.reloadData()
                     }
@@ -130,22 +199,20 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             LocalDatabase().saveCustomToken(with: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
                 if error == nil {
+
                     DispatchQueue.main.async {
                         self?.tokensTableView.reloadData()
                     }
                 }
             })
         }
-
-        tableView.deselectRow(at: indexPath, animated: true)
-
     }
 
 }
 
-extension SearchTokenViewController: UISearchResultsUpdating {
-    func updateSearchResults(for searchController: UISearchController) {
-
+extension SearchTokenViewController: UISearchControllerDelegate {
+    func didPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.showsCancelButton = false
     }
 }
 
@@ -153,63 +220,50 @@ extension SearchTokenViewController: UISearchBarDelegate {
 
     func searchTokens(string: String) {
 
-        TokensService().getFullTokensList(for: string, completion: { (result) in
+        TokensService().getFullTokensList(for: string, completion: { [weak self] (result) in
             if let list = result {
-                self.tokensIsAdded = []
-                self.tokensList = list
-                DispatchQueue.main.async {
-                    self.tokensTableView.reloadData()
-                }
-                //self.updateListForAlreadyAddedTokens()
+                self?.updateTokensList(with: list)
             } else {
-                self.tokensList = nil
-                self.tokensIsAdded = nil
-                DispatchQueue.main.async {
-                    self.tokensTableView.reloadData()
-                }
-
+                self?.emptyTokensList()
             }
         })
+    }
+
+    func makeHelpLabel(enabled: Bool) {
+        helpLabel.alpha = enabled ? 1 : 0
+    }
+
+    func emptyTokensList() {
+        tokensList = []
+        tokensIsAdded = nil
+        DispatchQueue.main.async { [weak self] in
+            self?.tokensTableView.reloadData()
+        }
+    }
+
+    func updateTokensList(with list: [ERC20TokenModel]) {
+        tokensIsAdded = []
+        tokensList = list
+        DispatchQueue.main.async { [weak self] in
+            self?.tokensTableView.reloadData()
+        }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 
         if searchText == "" {
 
-            tokensList = nil
-            tokensTableView.reloadData()
+            emptyTokensList()
+            makeHelpLabel(enabled: true)
 
         } else {
+
             let token = searchText
-            print(token)
+            makeHelpLabel(enabled: false)
             searchTokens(string: token)
 
         }
     }
-
-//    func updateListForAlreadyAddedTokens() {
-//        let dataQueue = DispatchQueue.global(qos: .background)
-//        dataQueue.async {
-//            self.walletData.update(callback: { (etherToken, transactions, availableTokens) in
-//                if self.tokensList != nil{
-//                    var i = 0
-//                    for token in self.tokensList! {
-//                        for availableToken in availableTokens {
-//                            if token == availableToken {
-//                                self.tokensAvailability![i] = true
-//                                break
-//                            }
-//                        }
-//                        i += 1
-//                    }
-//                    DispatchQueue.main.async {
-//                        self.tableView.reloadData()
-//                    }
-//                }
-//
-//            })
-//        }
-//    }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         if searchBar.text != nil && searchBar.text! != "" && (self.tokensList != nil) {
@@ -223,6 +277,35 @@ extension SearchTokenViewController: UISearchBarDelegate {
         self.tokensTableView.setContentOffset(.zero, animated: true)
         self.tokensList = nil
         self.tokensTableView.reloadData()
-        //self.getPeepsList(older: false)
     }
+}
+
+extension SearchTokenViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return DismissAnimator()
+    }
+
+    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+        return interactor.hasStarted ? interactor : nil
+    }
+}
+
+extension SearchTokenViewController: QRCodeReaderViewControllerDelegate {
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+        reader.stopScanning()
+        let searchBar = searchController.searchBar
+        let searchText = result.value.lowercased()
+        self.searchController.searchBar.text = searchText
+        reader.dismiss(animated: true)
+        DispatchQueue.main.async { [weak self] in
+            self?.searchBar(searchBar, textDidChange: searchText)
+        }
+
+    }
+
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+        reader.stopScanning()
+        reader.dismiss(animated: true)
+    }
+
 }

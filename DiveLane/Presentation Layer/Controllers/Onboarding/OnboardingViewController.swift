@@ -63,11 +63,11 @@ class OnboardingViewController: UIViewController {
                         multiplier: 1,
                         constant: 0)
                 ] +
-                        NSLayoutConstraint.constraints(withVisualFormat: "H:|[pg]|",
+                        NSLayoutConstraint.constraints(withVisualFormat: "H:|-[pg]-|",
                                 options: .alignAllCenterX,
                                 metrics: [:],
                                 views: views) +
-                        NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[pg]-[btn]-50-|",
+                        NSLayoutConstraint.constraints(withVisualFormat: "V:|-[pg]-[btn]-50-|",
                                 options: .alignAllCenterX,
                                 metrics: [:],
                                 views: views)
