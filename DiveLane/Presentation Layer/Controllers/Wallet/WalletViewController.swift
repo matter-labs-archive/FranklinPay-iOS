@@ -41,7 +41,7 @@ class WalletViewController: UIViewController {
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
-        self.navigationItem.setRightBarButton(addWalletBarItem(), animated: false)
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
     func initDatabase(complection: @escaping () -> Void) {
@@ -127,14 +127,22 @@ class WalletViewController: UIViewController {
         }
     }
 
-    func addWalletBarItem() -> UIBarButtonItem {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWallet))
+    func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
         return addButton
     }
 
-    @objc func addWallet() {
+    @objc func settingsWallet() {
         let walletsViewController = WalletsViewController()
         self.navigationController?.pushViewController(walletsViewController, animated: true)
+    }
+
+    @IBAction func addWallet(_ sender: UIButton) {
+        let addWalletViewController = AddWalletViewController(isNavigationBarNeeded: true)
+        self.navigationController?.pushViewController(addWalletViewController, animated: true)
     }
 
     func getTokensList(completion: @escaping () -> Void) {
@@ -169,12 +177,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let backgroundView = design.tableViewHeaderBackground(in: self.view)
 
         let walletButton = design.tableViewHeaderWalletButton(in: self.view,
-                withTitle: "\(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "") wallet",
+                withTitle: "Wallet \(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "")",
                 withTag: section)
         walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         backgroundView.addSubview(walletButton)
 
-        let addButton = design.tableViewAddTokenButton(in: self.view, withTitle: "+", withTag: section)
+        let addButton = design.tableViewAddTokenButton(in: self.view, withTag: section)
         addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
         backgroundView.addSubview(addButton)
 

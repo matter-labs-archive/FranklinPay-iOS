@@ -50,32 +50,28 @@ class TokenCell: UITableViewCell {
                 address: "",
                 decimals: "18",
                 symbol: "Eth") {
-            self.tokenAddress.text = "Wallet: \(forWallet.address)"
+            self.tokenAddress.text = "Wallet address: \(forWallet.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getETHbalance(for: forWallet) { [weak self] (result, _) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
 
-                    let convertedAmount = withConversionRate == 0.0 ?
-                        NSLocalizedString("No data from CryptoCompare", comment: "") :
-                        String(format: NSLocalizedString("$%f at the rate of CryptoCompare", comment: ""),
-                               withConversionRate * Double(result ?? "0")!)
-                    self?.balanceInDollars.text = convertedAmount
+                    let convertedAmount = Double(round(100*(withConversionRate * Double(result ?? "0")!))/100)
+                    let stringAmount = withConversionRate == Double(0) ? "No data from CryptoCompare" : String(convertedAmount)
+                    self?.balanceInDollars.text = stringAmount + "$"
                 }
             }
         } else {
-            self.tokenAddress.text = "Token: \(token.address)"
+            self.tokenAddress.text = "Token address: \(token.address)"
             self.balance.text = "Loading..."
             Web3SwiftService().getERCBalance(for: token.address,
                     address: forWallet.address) { [weak self] (result, _) in
                 DispatchQueue.main.async {
                     self?.balance.text = result ?? ""
 
-                    let convertedAmount = withConversionRate == 0.0 ?
-                        NSLocalizedString("No data from CryptoCompare", comment: "") :
-                        String(format: NSLocalizedString("$%f at the rate of CryptoCompare", comment: ""),
-                               withConversionRate * Double(result ?? "0")!)
-                    self?.balanceInDollars.text = convertedAmount
+                    let convertedAmount = Double(round(100*(withConversionRate * Double(result ?? "0")!))/100)
+                    let stringAmount = withConversionRate == Double(0) ? "No data from CryptoCompare" : String(convertedAmount)
+                    self?.balanceInDollars.text = stringAmount + "$"
                 }
             }
         }
