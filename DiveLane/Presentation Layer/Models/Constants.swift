@@ -9,7 +9,7 @@
 import Foundation
 
 struct Constants {
-    static let hightForRowInSettingsTableView = 100
+    static let hightForRowInSettingsTableView = 60
     static let heightForRowInNetworksTableView = 60
 }
 

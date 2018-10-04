@@ -12,8 +12,9 @@ import web3swift
 class NetworksCell: UITableViewCell {
 
     @IBOutlet weak var networkLabel: UILabel!
+    @IBOutlet weak var successIcon: UIImageView!
 
-    func configure(network: Networks) {
+    func configure(network: Networks, isChosen: Bool = false) {
         var name: String?
         switch network {
         case .Mainnet:
@@ -26,7 +27,7 @@ class NetworksCell: UITableViewCell {
             name = "Ropsten"
         }
         self.networkLabel.text = name ?? ""
-
+        successIcon.alpha = isChosen ? 1.0 : 0.0
     }
 
     override func awakeFromNib() {
@@ -36,7 +37,7 @@ class NetworksCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
+        successIcon.alpha = 0.0
         self.networkLabel.text = ""
     }
 

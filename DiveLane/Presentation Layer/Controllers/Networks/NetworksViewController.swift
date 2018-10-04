@@ -59,11 +59,17 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let currentNetwork = CurrentNetwork.currentNetwork else {return UITableViewCell()}
+        var isChosen = false
+        if networks[indexPath.row].chainID == currentNetwork.chainID {
+            isChosen = true
+        }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
                                                        for: indexPath) as? NetworksCell else {
                                                         return UITableViewCell()
         }
-        cell.configure(network: networks[indexPath.row])
+
+        cell.configure(network: networks[indexPath.row], isChosen: isChosen)
         return cell
     }
 
@@ -71,21 +77,8 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
 
         CurrentNetwork.currentNetwork = networks[indexPath.row]
         CurrentWeb.currentWeb = webs[indexPath.row]
-        DispatchQueue.global().async { [weak self] in
-            self?.navigationController?.popViewController(animated: true)
-//            if !UserDefaultKeys().isEtherAdded {
-//                guard let wallet = KeysService().selectedWallet() else {return}
-//                AppController().addFirstToken(for: wallet, completion: { (error) in
-//                    if error == nil {
-//                        UserDefaultKeys().setEtherAdded()
-//                        UserDefaults.standard.synchronize()
-//
-//                        self.navigationController?.popViewController(animated: true)
-//                    } else {
-//                        fatalError("Can't add ether - \(String(describing: error))")
-//                    }
-//                })
-//            }
+        DispatchQueue.main.async { [weak self] in
+            self?.networksTableView.reloadData()
         }
         tableView.deselectRow(at: indexPath, animated: true)
 
