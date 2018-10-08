@@ -33,7 +33,6 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self

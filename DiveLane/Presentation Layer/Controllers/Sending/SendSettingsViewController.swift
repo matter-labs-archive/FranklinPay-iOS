@@ -13,6 +13,7 @@ import struct BigInt.BigUInt
 
 class SendSettingsViewController: UIViewController {
 
+    // MARK: Outlets
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var addressFromLabel: UILabel!
     @IBOutlet weak var enterAddressTextField: UITextField!
@@ -27,17 +28,18 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var addressFromView: UIView!
     @IBOutlet weak var stackView: UIStackView!
 
+    // MARK: - Dropdown Outlets
+    @IBOutlet weak var heightWalletsConstraint: NSLayoutConstraint!
+    @IBOutlet weak var walletsDropdownTableView: UITableView!
+    @IBOutlet weak var heightTokensConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tokensDropdownTableView: UITableView!
+    @IBOutlet weak var arrowDownWalletsImageView: UIImageView!
+    @IBOutlet weak var arrowDownTokensImageView: UIImageView!
+    // MARK: Variables
     var wallet: KeyWalletModel?
     var token: ERC20TokenModel?
     var tokenBalance: String?
     var isFromDeepLink: Bool = false
-    var height = NSLayoutConstraint()
-    var dropDownView = UIView() {
-        willSet {
-            dropDownView.removeFromSuperview()
-        }
-    }
-
     var amountInString: String?
     var destinationAddress: String?
     let localStorage = LocalDatabase()
@@ -54,6 +56,7 @@ class SendSettingsViewController: UIViewController {
     let tokenDropdownManager = TokenDropdownManager()
     let walletDropdownManager = WalletDropdownManager()
 
+    // MARK: Initializers for launching from deeplink
     convenience init(wallet: KeyWalletModel,
                      tokenBalance: String,
                      token: ERC20TokenModel) {
@@ -96,8 +99,20 @@ class SendSettingsViewController: UIViewController {
         }
     }
 
+    // MARK: Lyfecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        arrowDownWalletsImageView.addGestureRecognizer(
+            UITapGestureRecognizer(
+                target: self,
+                action: #selector(didTapFrom)))
+        arrowDownWalletsImageView.isUserInteractionEnabled = true
+        arrowDownTokensImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToken)))
+        arrowDownTokensImageView.isUserInteractionEnabled = true
+    }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         self.title = "Send"
         if !isFromDeepLink {
             token = CurrentToken.currentToken
@@ -105,9 +120,9 @@ class SendSettingsViewController: UIViewController {
         wallet = localStorage.getWallet()
         setup()
     }
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+
         guard let wallet = wallet else {
             return
         }
@@ -121,7 +136,6 @@ class SendSettingsViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.stackView.isUserInteractionEnabled = true
-        self.dropDownView.removeFromSuperview()
     }
 
     private func hideSendButton(_ hidden: Bool = true) {
@@ -131,7 +145,7 @@ class SendSettingsViewController: UIViewController {
 
     private func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "From: \(wallet?.address ?? "")"
+        addressFromLabel.text = "\(wallet?.address ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
@@ -160,45 +174,44 @@ class SendSettingsViewController: UIViewController {
 
     // MARK: - Dropdown
     @objc func didTapFrom() {
-        dropDownView = createDropdownView(withManager: .Wallets)
-        self.view.addSubview(dropDownView)
-        stackView.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.5, animations: {
-            self.dropDownView.alpha = 1.0
-        }, completion: nil)
+        UIView.animate(withDuration: 0.5) {
+            self.arrowDownWalletsImageView.transform = self.heightWalletsConstraint.constant > 0 ?
+                CGAffineTransform.identity :
+                CGAffineTransform(rotationAngle: .pi)
+        }
+        prepareDropdownView(withManager: .Wallets)
+        self.heightWalletsConstraint.constant = self.heightWalletsConstraint.constant > 0 ? 0 : 100
+        UIView.animate(withDuration: 1) {
+            self.view.layoutIfNeeded()
+        }
     }
 
     @objc func didTapToken() {
-        dropDownView = createDropdownView(withManager: .Tokens)
-        guard let wallet = localStorage.getWallet() else {
-            return
+        UIView.animate(withDuration: 0.5) {
+            self.arrowDownTokensImageView.transform = self.heightTokensConstraint.constant > 0 ?
+                CGAffineTransform.identity :
+                CGAffineTransform(rotationAngle: .pi)
         }
-        tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1))
-        self.view.addSubview(dropDownView)
-        stackView.isUserInteractionEnabled = false
+        prepareDropdownView(withManager: .Tokens)
+        self.heightTokensConstraint.constant = self.heightTokensConstraint.constant > 0 ? 0 : 100
         UIView.animate(withDuration: 0.5, animations: {
-            self.dropDownView.alpha = 1.0
+            self.view.layoutIfNeeded()
         }, completion: nil)
     }
 
-    func createDropdownView(withManager manager: ManagerType) -> UIView {
-        guard let sv = addressFromView.superview else {
-            return UIView()
-        }
-        let frame = CGRect(x: sv.frame.origin.x, y: addressFromView.frame.origin.y + addressFromView.frame.height + sv.frame.origin.y, width: addressFromView.frame.width, height: 150)
-        dropDownView = UIView(frame: frame)
+    func prepareDropdownView(withManager manager: ManagerType) {
         switch manager {
         case .Tokens:
             guard let wallet = wallet else {
-                return UIView()
+                return
             }
-            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet, forNetwork: CurrentNetwork().getNetworkID())
+            tokenDropdownManager.tokens = localStorage.getAllTokens(for: wallet,
+                                                                    forNetwork: CurrentNetwork().getNetworkID())
             tokenDropdownManager.wallet = self.wallet
         case .Wallets:
             walletDropdownManager.wallets = localStorage.getAllWallets()
         }
-        let tableView = UITableView()
-        tableView.separatorStyle = .none
+        let tableView = (manager == .Wallets ? walletsDropdownTableView : tokensDropdownTableView)!
         let cellToRegister = manager == .Wallets ? "WalletCellDropdown" : "TokenCellDropdown"
         let nib = UINib(nibName: cellToRegister, bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cellToRegister)
@@ -206,16 +219,6 @@ class SendSettingsViewController: UIViewController {
         tableView.dataSource = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
         walletDropdownManager.delegate = self
         tokenDropdownManager.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        dropDownView.addSubview(tableView)
-        tableView.leftAnchor.constraint(equalTo: dropDownView.leftAnchor).isActive = true
-        tableView.rightAnchor.constraint(equalTo: dropDownView.rightAnchor).isActive = true
-        tableView.topAnchor.constraint(equalTo: dropDownView.topAnchor).isActive = true
-        tableView.bottomAnchor.constraint(equalTo: dropDownView.bottomAnchor).isActive = true
-        dropDownView.alpha = 0
-        dropDownView.layer.cornerRadius = 5.0
-        dropDownView.clipsToBounds = true
-        return dropDownView
     }
 
     // MARK: QR Code scan
@@ -400,13 +403,11 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
     func didSelectWallet(wallet: KeyWalletModel) {
         self.wallet = wallet
         localStorage.selectWallet(wallet: wallet) {
-            self.addressFromLabel.text = "From: " + wallet.address
+            self.addressFromLabel.text = wallet.address
+            self.heightWalletsConstraint.constant = 0
             UIView.animate(withDuration: 0.5, animations: {
-                self.dropDownView.alpha = 0.0
-            }, completion: { (_) in
-                self.stackView.isUserInteractionEnabled = true
-                self.dropDownView.removeFromSuperview()
-            })
+                self.view.layoutIfNeeded()
+            }, completion: nil)
         }
     }
 
@@ -414,12 +415,10 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
         self.tokenNameLabel.text = token.symbol.uppercased()
         self.token = token
         CurrentToken.currentToken = token
+        self.heightTokensConstraint.constant = 0
         UIView.animate(withDuration: 0.5, animations: {
-            self.dropDownView.alpha = 0.0
-        }) { (_) in
-            self.stackView.isUserInteractionEnabled = true
-            self.dropDownView.removeFromSuperview()
-        }
+            self.view.layoutIfNeeded()
+        }, completion: nil)
     }
 
 }
