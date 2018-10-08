@@ -33,21 +33,21 @@ class DesignElements: UIView {
                    height: 45)
         )
         button.setTitle(withTitle, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
         button.setTitleColor(.black, for: .normal)
         button.contentHorizontalAlignment = .left
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         button.tag = withTag
         return button
     }
 
-    func tableViewAddTokenButton(in selfView: UIView, withTitle: String, withTag: Int) -> UIButton {
+    func tableViewAddTokenButton(in selfView: UIView, withTag: Int) -> UIButton {
         let button = UIButton(frame:
             CGRect(x: selfView.bounds.width - 45,
                    y: 0,
                    width: 45,
                    height: 45)
         )
-        button.setTitle(withTitle, for: .normal)
+        button.setImage(UIImage(named: "gray_plus"), for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 25, weight: .light)
         button.tag = withTag

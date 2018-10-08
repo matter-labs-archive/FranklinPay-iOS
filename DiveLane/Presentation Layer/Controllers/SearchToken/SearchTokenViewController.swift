@@ -64,7 +64,7 @@ class SearchTokenViewController: UIViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.barTintColor = UIColor.white
         searchController.delegate = self
-        searchController.searchBar.tintColor = UIColor.darkText
+        searchController.searchBar.tintColor = UIColor.lightGray
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
     }

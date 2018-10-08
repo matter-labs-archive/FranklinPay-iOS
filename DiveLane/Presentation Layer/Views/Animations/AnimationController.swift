@@ -14,6 +14,7 @@ class AnimationController: UIView {
         case background = 776
         case notification = 775
         case animation = 777
+        case imageView = 778
     }
 
     /*
@@ -27,6 +28,9 @@ class AnimationController: UIView {
         DispatchQueue.main.async {
             if (isEnabled) {
 
+                let centerX = UIScreen.main.bounds.size.width / 2
+                let centerY = UIScreen.main.bounds.size.height / 2
+
                 view.alpha = 1.0
 
                 let rect: CGRect = CGRect(x: 0,
@@ -34,9 +38,14 @@ class AnimationController: UIView {
                         width: UIScreen.main.bounds.size.width,
                         height: UIScreen.main.bounds.size.height)
                 let background: UIView = UIView(frame: rect)
-                background.backgroundColor = UIColor.lightGray
-                background.alpha = 0.4
+                background.backgroundColor = UIColor.white
+                background.alpha = 1
                 background.tag = TagsForViews.background.rawValue
+
+                let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 134, height: 117))
+                imageView.image = UIImage(named: "onboarding2")
+                imageView.center = CGPoint(x: centerX, y: centerY - 70)
+                imageView.tag = TagsForViews.imageView.rawValue
 
                 let notification: UILabel = UILabel.init(frame: CGRect(x: 0,
                         y: 0,
@@ -44,13 +53,9 @@ class AnimationController: UIView {
                         height: 15))
                 notification.textColor = UIColor.white
                 notification.textAlignment = NSTextAlignment.center
-                notification.font = UIFont(name: "Apple SD Gothic Neo", size: 15)
+                notification.font = UIFont(name: "Helvetica", size: 17)
                 notification.numberOfLines = 1
-
-                let centerX = UIScreen.main.bounds.size.width / 2
-                let centerY = UIScreen.main.bounds.size.height / 2
-
-                notification.center = CGPoint(x: centerX, y: centerY - 10)
+                notification.center = CGPoint(x: centerX, y: centerY + 10)
                 notification.tag = TagsForViews.notification.rawValue
                 if (notificationText != nil) {
                     notification.text = notificationText
@@ -58,23 +63,27 @@ class AnimationController: UIView {
                     notification.text = ""
                 }
 
-                let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+                let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
                 var frame: CGRect = animation.frame
                 frame.origin.x = centerX - 10
-                frame.origin.y = centerY - 50
+                frame.origin.y = centerY + 50
                 frame.size.width = 20
                 frame.size.height = 20
                 animation.frame = frame
                 animation.tag = TagsForViews.animation.rawValue
 
                 view.insertSubview(background, at: 5)
-                view.insertSubview(animation, at: 6)
-                view.insertSubview(notification, at: 7)
+                view.insertSubview(imageView, at: 6)
+                view.insertSubview(animation, at: 7)
+                view.insertSubview(notification, at: 8)
 
                 animation.startAnimating()
             } else {
                 view.alpha = 1.0
                 if let viewWithTag = view.viewWithTag(TagsForViews.notification.rawValue) {
+                    viewWithTag.removeFromSuperview()
+                }
+                if let viewWithTag = view.viewWithTag(TagsForViews.imageView.rawValue) {
                     viewWithTag.removeFromSuperview()
                 }
                 if let viewWithTag = view.viewWithTag(TagsForViews.background.rawValue) {

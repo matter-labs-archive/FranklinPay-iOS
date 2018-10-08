@@ -609,6 +609,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E20DEED221667C3A00CA492E /* Animations */,
 				E20DEEC82162D01F00CA492E /* TokenInfo */,
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
@@ -817,11 +818,18 @@
 		E20DEECD2162DD1800CA492E /* Animators */ = {
 			isa = PBXGroup;
 			children = (
-				914F22852149800700ED58E6 /* AnimationController.swift */,
 				E20DEECE2162DD3700CA492E /* Interactor.swift */,
 				E20DEED02162DD4D00CA492E /* DismissAnimator.swift */,
 			);
 			path = Animators;
+			sourceTree = "<group>";
+		};
+		E20DEED221667C3A00CA492E /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				914F22852149800700ED58E6 /* AnimationController.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
