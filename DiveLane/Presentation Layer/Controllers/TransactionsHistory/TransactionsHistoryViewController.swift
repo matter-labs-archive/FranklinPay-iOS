@@ -180,6 +180,10 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let transaction = transactions[indexPath.section][indexPath.row]
+        let transactionInfoVC = TransactionInfoController(transaction: transaction)
+        navigationController?.pushViewController(transactionInfoVC, animated: true)
     }
 
 }

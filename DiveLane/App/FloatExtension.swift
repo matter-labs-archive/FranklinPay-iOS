@@ -6,11 +6,17 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public extension Float {
     func roundToDecimals(decimals: Int = 2) -> Float {
         let multiplier = Float(10 ^ decimals)
         return (multiplier * self).rounded() / multiplier
+    }
+}
+
+public extension CGFloat {
+    static var zero: CGFloat {
+        return 0.0
     }
 }
