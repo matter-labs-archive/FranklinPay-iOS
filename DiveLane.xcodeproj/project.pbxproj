@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130FC21C2171FC7D00377358 /* TransactionInfoWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130FC21A2171FC7D00377358 /* TransactionInfoWebController.swift */; };
+		130FC21D2171FC7D00377358 /* TransactionInfoWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 130FC21B2171FC7D00377358 /* TransactionInfoWebController.xib */; };
 		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F22862149800800ED58E6 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22852149800700ED58E6 /* AnimationController.swift */; };
@@ -140,6 +142,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130FC21A2171FC7D00377358 /* TransactionInfoWebController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoWebController.swift; sourceTree = "<group>"; };
+		130FC21B2171FC7D00377358 /* TransactionInfoWebController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionInfoWebController.xib; sourceTree = "<group>"; };
 		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -296,6 +300,22 @@
 				B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		130FC2192171FC3E00377358 /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130FC21A2171FC7D00377358 /* TransactionInfoWebController.swift */,
+			);
+			path = TransactionInfoWeb;
+			sourceTree = "<group>";
+		};
+		130FC21E2171FC8600377358 /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130FC21B2171FC7D00377358 /* TransactionInfoWebController.xib */,
+			);
+			path = TransactionInfoWeb;
 			sourceTree = "<group>";
 		};
 		1CF54A73215CCF0E009CC78F /* DiveLaneTests */ = {
@@ -613,6 +633,7 @@
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
+				130FC21E2171FC8600377358 /* TransactionInfoWeb */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
@@ -632,6 +653,7 @@
 				E20DEEC92162D03200CA492E /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
+				130FC2192171FC3E00377358 /* TransactionInfoWeb */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
@@ -960,6 +982,7 @@
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
 				B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */,
+				130FC21D2171FC7D00377358 /* TransactionInfoWebController.xib in Resources */,
 				B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */,
 				91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
@@ -1143,6 +1166,7 @@
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
 				E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */,
 				B2495E0D215D0FF0005B18F2 /* EIP681Model.swift in Sources */,
+				130FC21C2171FC7D00377358 /* TransactionInfoWebController.swift in Sources */,
 				B2E668D62150F9F700C3CC2D /* WalletDropdownMarager.swift in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,

@@ -56,4 +56,12 @@ extension UIViewController {
             debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
         }
     }
+
+    func topViewController() -> UIViewController? {
+        var topController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        while (topController?.presentedViewController != nil) {
+            topController = topController?.presentedViewController
+        }
+        return topController
+    }
 }
