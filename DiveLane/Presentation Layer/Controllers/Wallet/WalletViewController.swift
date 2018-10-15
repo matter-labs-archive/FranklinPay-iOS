@@ -105,17 +105,17 @@ class WalletViewController: UIViewController {
             guard let tokensArray = self?.twoDimensionalTokensArray else {
                 return
             }
-            for wallet in tokensArray {
-                for token in wallet.tokens {
-                    TokensService().updateConversion(for: token.token, completion: { (_) in
-                        if token == wallet.tokens.last {
-                            DispatchQueue.main.async {
-                                self?.walletTableView.reloadData()
-                            }
-                        }
-                    })
-                }
-            }
+//            for wallet in tokensArray {
+//                for token in wallet.tokens {
+//                    TokensService().updateConversion(for: token.token, completion: { (_) in
+//                        if token == wallet.tokens.last {
+//                            DispatchQueue.main.async {
+//                                self?.walletTableView.reloadData()
+//                            }
+//                        }
+//                    })
+//                }
+//            }
         }
     }
 
@@ -247,9 +247,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         cell.link = self
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
         cell.configure(token: token.token,
-                       forWallet: token.inWallet,
-                       withConversionRate: conversionService.currentConversionRate(for:
-                        token.token.symbol.uppercased()))
+                       forWallet: token.inWallet)
 
         cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
 

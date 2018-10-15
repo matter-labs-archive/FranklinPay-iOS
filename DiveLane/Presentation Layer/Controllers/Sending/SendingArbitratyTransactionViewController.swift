@@ -25,7 +25,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     init(params: [Parameter], transactionInfo: TransactionInfo) {
         self.params = params
         self.transactionInfo = transactionInfo
-        CurrentToken.currentToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
+        CurrentToken.currentToken = ERC20TokenModel(isEther: true)
         super.init(nibName: nil, bundle: nil)
     }
 

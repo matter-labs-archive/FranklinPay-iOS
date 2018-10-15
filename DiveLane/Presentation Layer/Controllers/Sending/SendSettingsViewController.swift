@@ -432,7 +432,7 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
         if let parsed = Web3.EIP67CodeParser.parse(value) {
             enterAddressTextField.text = parsed.address.address
             if let amount = parsed.amount {
-                if token != ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
+                if token != ERC20TokenModel(isEther: true) {
                     token = ERC20TokenModel(name: "", address: "", decimals: "", symbol: "")
                 }
                 amountTextField.text = Web3.Utils.formatToEthereumUnits(
