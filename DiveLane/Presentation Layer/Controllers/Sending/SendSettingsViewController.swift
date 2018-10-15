@@ -145,7 +145,7 @@ class SendSettingsViewController: UIViewController {
 
     private func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "\(wallet?.address ?? "")"
+        addressFromLabel.text = "\(wallet?.address.hideExtraSymbolsInAddress() ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"

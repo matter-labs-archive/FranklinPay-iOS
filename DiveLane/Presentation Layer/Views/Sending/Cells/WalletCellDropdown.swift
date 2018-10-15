@@ -18,7 +18,7 @@ class WalletCellDropdown: UITableViewCell {
 
     func configure(_ wallet: KeyWalletModel) {
         currentWallet = wallet
-        walletAddress.text = wallet.address
+        walletAddress.text = wallet.address.hideExtraSymbolsInAddress()
         walletName.text = wallet.name
         if let tokenAddress = CurrentToken.currentToken?.address, !tokenAddress.isEmpty {
             web3SwiftService.getERCBalance(for: CurrentToken.currentToken?.address ?? "", address: wallet.address) { (balance, error) in
