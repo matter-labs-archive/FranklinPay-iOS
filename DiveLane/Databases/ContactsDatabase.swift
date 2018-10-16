@@ -89,12 +89,16 @@ class ContactsDatabase: IContactsDatabase {
     public func deleteContact(contact: ContactModel, completion: @escaping (Error?) -> Void) {
 
         let requestContact: NSFetchRequest<Contact> = Contact.fetchRequest()
+        requestContact.predicate = NSPredicate(format: "address CONTAINS[c] %@ || name CONTAINS[c] %@",
+                                               contact.address,
+                                               contact.name)
         do {
             let results = try mainContext.fetch(requestContact)
-
-            for item in results {
-                mainContext.delete(item)
+            guard let item = results.first else {
+                completion(ContactsDataBaseError.noSuchContactInStorage)
+                return
             }
+            mainContext.delete(item)
             try mainContext.save()
             completion(nil)
 

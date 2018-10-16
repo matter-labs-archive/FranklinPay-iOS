@@ -17,6 +17,7 @@ class ContactCell: UITableViewCell {
     func configure(with contact: ContactModel) {
         contactAddress.text = contact.address
         contactName.text = contact.name
+        contactImage.image = UIImage(named: "contacts_gray")
     }
 
     override func prepareForReuse() {

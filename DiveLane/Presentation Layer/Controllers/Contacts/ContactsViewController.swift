@@ -19,23 +19,32 @@ class ContactsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.title = "Contacts"
-
-        self.contactsTableView.delegate = self
-        self.contactsTableView.dataSource = self
-        self.contactsTableView.tableFooterView = UIView()
-
-        self.navigationItem.setRightBarButton(addContactBarItem(), animated: false)
-
+        setNavigation()
+        setTableView()
         self.hideKeyboardWhenTappedAround()
-
-        let nibSearch = UINib.init(nibName: "ContactCell", bundle: nil)
-        self.contactsTableView.register(nibSearch, forCellReuseIdentifier: "ContactCell")
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        setSearchController()
+        self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
+        makeHelpLabel(enabled: false)
+    }
+
+    func setNavigation() {
+        self.title = "Contacts"
+        self.navigationItem.setRightBarButton(addContactBarItem(), animated: false)
+    }
+
+    func setTableView() {
+        self.contactsTableView.delegate = self
+        self.contactsTableView.dataSource = self
+        self.contactsTableView.tableFooterView = UIView()
+        let nibSearch = UINib.init(nibName: "ContactCell", bundle: nil)
+        self.contactsTableView.register(nibSearch, forCellReuseIdentifier: "ContactCell")
+    }
+
+    func setSearchController() {
         searchController = UISearchController(searchResultsController: nil)
         searchController.dimsBackgroundDuringPresentation = false
         contactsTableView.tableHeaderView = searchController.searchBar
@@ -45,14 +54,11 @@ class ContactsViewController: UIViewController {
         searchController.searchBar.tintColor = UIColor.lightGray
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
-
-         self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         getAllContacts()
-
     }
 
     func getAllContacts() {
@@ -131,6 +137,20 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard let contact = contactsList?[indexPath.row] else {return}
+        if editingStyle == .delete {
+            ContactsDatabase().deleteContact(contact: contact) { [weak self] (_) in
+                let searchText = self?.searchController.searchBar.text ?? ""
+                if searchText != "" {
+                    self?.searchContact(string: searchText)
+                } else {
+                    self?.getAllContacts()
+                }
+            }
+        }
+    }
+
 }
 
 extension ContactsViewController: UISearchControllerDelegate {
@@ -153,7 +173,9 @@ extension ContactsViewController: UISearchBarDelegate {
     }
 
     func makeHelpLabel(enabled: Bool) {
-        helpLabel.alpha = enabled ? 1 : 0
+        DispatchQueue.main.async { [weak self] in
+            self?.helpLabel.alpha = enabled ? 1 : 0
+        }
     }
 
     func emptyContactsList() {
@@ -164,33 +186,21 @@ extension ContactsViewController: UISearchBarDelegate {
     }
 
     func updateContactsList(with list: [ContactModel]) {
-        contactsList = list
         DispatchQueue.main.async { [weak self] in
+            self?.contactsList = list
+            if list.count == 0 && self?.searchController.searchBar.text == "" {
+                self?.makeHelpLabel(enabled: true)
+            }
             self?.contactsTableView.reloadData()
         }
     }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-
         if searchText == "" {
-
             getAllContacts()
-            makeHelpLabel(enabled: true)
-
         } else {
-
             let token = searchText
-            makeHelpLabel(enabled: false)
             searchContact(string: token)
-
-        }
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if searchBar.text != nil && searchBar.text! != "" && (self.contactsList != nil) {
-            //            let tokenToAdd = self.tokensList?.first
-            //            chosenToken = tokenToAdd
-            //            performSegue(withIdentifier: "addChosenToken", sender: self)
         }
     }
 
