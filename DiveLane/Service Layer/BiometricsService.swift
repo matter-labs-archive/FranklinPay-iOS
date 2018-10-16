@@ -58,7 +58,7 @@ public class BiometricsManager: NSObject {
         var error: NSError?
 
         isAvailableAuthentication = LAContext().canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error)
-        return error == nil ? true : false
+        return error == nil ? isAvailableAuthentication : false
     }
 
     /// Check for authentication

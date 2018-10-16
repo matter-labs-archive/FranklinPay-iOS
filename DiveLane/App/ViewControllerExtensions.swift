@@ -23,16 +23,16 @@ extension UIViewController {
     func setupViewResizerOnKeyboardShown() {
         NotificationCenter.default.addObserver(self,
                 selector: #selector(UIViewController.keyboardWillShowForResizing),
-                name: Notification.Name.UIKeyboardWillShow,
+                name: UIResponder.keyboardWillShowNotification,
                 object: nil)
         NotificationCenter.default.addObserver(self,
                 selector: #selector(UIViewController.keyboardWillHideForResizing),
-                name: Notification.Name.UIKeyboardWillHide,
+                name: UIResponder.keyboardWillHideNotification,
                 object: nil)
     }
 
     @objc func keyboardWillShowForResizing(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue,
            let window = self.view.window?.frame {
             // We're not just minusing the kb height from the view height because
             // the view could already have been resized for the keyboard before
@@ -46,7 +46,7 @@ extension UIViewController {
     }
 
     @objc func keyboardWillHideForResizing(notification: Notification) {
-        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             let viewHeight = self.view.frame.height
             self.view.frame = CGRect(x: self.view.frame.origin.x,
                     y: self.view.frame.origin.y,

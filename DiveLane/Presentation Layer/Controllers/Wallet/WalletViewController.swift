@@ -19,13 +19,15 @@ class WalletViewController: UIViewController {
     var wallets: [KeyWalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
 
+    let animation = AnimationController()
+
     let design = DesignElements()
 
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
         #selector(self.handleRefresh(_:)),
-                for: UIControlEvents.valueChanged)
+                for: UIControl.Event.valueChanged)
         refreshControl.tintColor = UIColor.blue
 
         return refreshControl
@@ -33,6 +35,7 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
@@ -101,21 +104,22 @@ class WalletViewController: UIViewController {
         getTokensList { [weak self] in
             DispatchQueue.main.async {
                 self?.walletTableView.reloadData()
+                self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
             }
-            guard let tokensArray = self?.twoDimensionalTokensArray else {
-                return
-            }
-            for wallet in tokensArray {
-                for token in wallet.tokens {
-                    TokensService().updateConversion(for: token.token, completion: { (_) in
-                        if token == wallet.tokens.last {
-                            DispatchQueue.main.async {
-                                self?.walletTableView.reloadData()
-                            }
-                        }
-                    })
-                }
-            }
+//            guard let tokensArray = self?.twoDimensionalTokensArray else {
+//                return
+//            }
+//            for wallet in tokensArray {
+//                for token in wallet.tokens {
+//                    TokensService().updateConversion(for: token.token, completion: { (_) in
+//                        if token == wallet.tokens.last {
+//                            DispatchQueue.main.async {
+//                                self?.walletTableView.reloadData()
+//                            }
+//                        }
+//                    })
+//                }
+//            }
         }
     }
 
@@ -247,9 +251,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         cell.link = self
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
         cell.configure(token: token.token,
-                       forWallet: token.inWallet,
-                       withConversionRate: conversionService.currentConversionRate(for:
-                        token.token.symbol.uppercased()))
+                       forWallet: token.inWallet)
 
         cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
 
@@ -282,7 +284,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true) {
             return
         }

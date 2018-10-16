@@ -14,18 +14,13 @@ class WalletCell: UITableViewCell {
     @IBOutlet weak var walletBalance: UILabel!
     @IBOutlet weak var walletAddress: UILabel!
 
-    weak var delegate: InfoButtonDelegate?
     var wallet: KeyWalletModel?
     let web3SwiftService: IWeb3SwiftService = Web3SwiftService()
 
-    @IBAction func infoButtonPressed(_ sender: UIButton) {
-        delegate?.infoButtonPressed(forWallet: wallet!)
-    }
-
     func configureCell(model: KeyWalletModel) {
         wallet = model
-        walletName.text = "Name: " + model.name
-        walletAddress.text = "Address: " + model.address
+        walletName.text = "Wallet " + model.name
+        walletAddress.text = "Address: " + model.address.hideExtraSymbolsInAddress()
         web3SwiftService.getETHbalance(forAddress: model.address) { (balance, error) in
             if let error = error {
                 print(error)
@@ -35,8 +30,4 @@ class WalletCell: UITableViewCell {
         }
     }
 
-}
-
-protocol InfoButtonDelegate: class {
-    func infoButtonPressed(forWallet wallet: KeyWalletModel)
 }

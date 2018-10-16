@@ -37,7 +37,7 @@ class OnboardingViewController: UIViewController {
                 direction: .forward,
                 animated: true,
                 completion: nil)
-        self.addChildViewController(self.pageViewController)
+        self.addChild(self.pageViewController)
 
         self.nextBtn.addTarget(self,
                 action: #selector(onboardingAction(sender:)),
@@ -88,7 +88,7 @@ class OnboardingViewController: UIViewController {
                                                views: views)
         )
 
-        self.pageViewController.didMove(toParentViewController: self)
+        self.pageViewController.didMove(toParent: self)
     }
 
     @objc func onboardingAction(sender: UIButton) {
@@ -141,7 +141,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let vc = (viewController as? OnboardingContentViewController)!
         var index = vc.pageIndex as Int
-        if (index == 0 || index == NSNotFound) {
+        if index == 0 || index == NSNotFound {
             return nil
         }
         index -= 1
@@ -151,11 +151,11 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let vc = (viewController as? OnboardingContentViewController)!
         var index = vc.pageIndex as Int
-        if (index == NSNotFound) {
+        if index == NSNotFound {
             return nil
         }
         index += 1
-        if (index == PAGES.count) {
+        if index == PAGES.count {
             return nil
         }
         return self.viewControllerAtIndex(index: index)
@@ -176,9 +176,9 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
 
-        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
-            //changeOnboardingButtonTitle(for: vc.pageIndex)
-        }
+//        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
+//            //changeOnboardingButtonTitle(for: vc.pageIndex)
+//        }
     }
 
 }

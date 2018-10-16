@@ -12,11 +12,11 @@ class AddWalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationController?.navigationBar.barTintColor = Colors.NavBarColors.mainTint
-        self.navigationController?.navigationBar.tintColor = UIColor.white
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        self.navigationController?.navigationBar.barStyle = .black
+//
+//        self.navigationController?.navigationBar.barTintColor = UIColor.white
+//        self.navigationController?.navigationBar.tintColor = UIColor.lightGray
+//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
+//        self.navigationController?.navigationBar.barStyle = .black
     }
 
     let isNavigationBarNeeded: Bool

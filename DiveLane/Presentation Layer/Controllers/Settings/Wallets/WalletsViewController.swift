@@ -80,34 +80,73 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCell", for: indexPath) as? WalletCell else {
             return UITableViewCell()
         }
-        cell.delegate = self
         cell.configureCell(model: wallets[indexPath.row])
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.localDatabase.selectWallet(wallet: wallets[indexPath.row]) {
-            tableView.deselectRow(at: indexPath, animated: true)
-            self.navigationController?.popViewController(animated: true)
+//        self.localDatabase.selectWallet(wallet: wallets[indexPath.row]) {
+//            tableView.deselectRow(at: indexPath, animated: true)
+//            self.navigationController?.popViewController(animated: true)
+//        }
+        tableView.deselectRow(at: indexPath, animated: true)
+        let wallet = wallets[indexPath.row]
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let exportAction = UIAlertAction(title: "Export private key", style: .destructive) { [weak self] (_) in
+            self?.enterPassword(for: wallet)
         }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+        }
+        alertController.addAction(exportAction)
+        alertController.addAction(cancelAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func enterPassword(for wallet: KeyWalletModel) {
+        let alert = UIAlertController(title: "Show private key", message: nil, preferredStyle: .alert)
+
+        alert.addTextField { (textField) in
+            textField.isSecureTextEntry = true
+            textField.placeholder = "Enter your password"
+        }
+
+        let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
+            let passwordText = alert.textFields![0].text!
+            if KeysService().getWalletPrivateKey(for: wallet, password: passwordText) != nil {
+                self.showPK(for: wallet, withPassword: passwordText)
+
+            } else {
+                //showErrorAlert(for: self, error: SendErrors.wrongPassword,
+                showErrorAlert(for: self, error: SendErrors.wrongPassword, completion: {
+
+                })
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+
+        }
+
+        alert.addAction(enterPasswordAction)
+        alert.addAction(cancelAction)
+
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    func showPK(for wallet: KeyWalletModel, withPassword password: String) {
+        guard let pk = keysService.getPrivateKey(forWallet: wallet, password: password) else {
+            return
+        }
+        let privateKeyViewController = PrivateKeyViewController(pk: pk)
+        self.navigationController?.pushViewController(privateKeyViewController, animated: true)
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             self.showAttentionAlert(wallet: wallets[indexPath.row], indexPath: indexPath)
-        }
-    }
-}
-
-extension WalletsViewController: InfoButtonDelegate {
-    func infoButtonPressed(forWallet wallet: KeyWalletModel) {
-        self.localDatabase.selectWallet(wallet: wallet) {
-            let exportWalletViewController = ExportWalletViewController(model: wallet)
-            self.navigationController?.pushViewController(exportWalletViewController, animated: true)
         }
     }
 }

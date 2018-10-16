@@ -15,13 +15,13 @@ class OnboardingContentViewController: UIViewController {
     func setViews() {
 
         let titleAttr = [
-            NSAttributedStringKey.foregroundColor: UIColor.black,
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17, weight: .bold)
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)
         ]
 
         let subtitleAttr = [
-            NSAttributedStringKey.foregroundColor: UIColor.black,
-            NSAttributedStringKey.font: UIFont.systemFont(ofSize: 17, weight: .light)
+            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light)
         ]
 
         let tv = UILabel()

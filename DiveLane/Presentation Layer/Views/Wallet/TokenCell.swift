@@ -27,54 +27,18 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
 
-    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel, withConversionRate: Double = 0) {
+    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
 
         guard let token = token else {
             return
         }
 
-        var networkName: String?
-        guard CurrentNetwork.currentNetwork != nil else {
-            return
-        }
-        switch CurrentNetwork.currentNetwork! {
-        case .Rinkeby: networkName = "Rinkeby"
-        case .Ropsten: networkName = "Ropsten"
-        case .Mainnet: networkName = "Mainnet"
-        case .Kovan: networkName = "Kovan"
-        case .Custom: networkName = ""
-        }
         self.tokenShortName.text = token.symbol.uppercased()
+//
+//        self.balance.text = "Loading..."
+//        self.balanceInDollars.text = "Loading..."
 
-        if token == ERC20TokenModel(name: "Ether",
-                address: "",
-                decimals: "18",
-                symbol: "Eth") {
-            self.tokenAddress.text = "Wallet address: \(forWallet.address)"
-            self.balance.text = "Loading..."
-            Web3SwiftService().getETHbalance(for: forWallet) { [weak self] (result, _) in
-                DispatchQueue.main.async {
-                    self?.balance.text = result ?? ""
-
-                    let convertedAmount = Double(round(100*(withConversionRate * Double(result ?? "0")!))/100)
-                    let stringAmount = withConversionRate == Double(0) ? "No data from CryptoCompare" : String(convertedAmount)
-                    self?.balanceInDollars.text = stringAmount + "$"
-                }
-            }
-        } else {
-            self.tokenAddress.text = "Token address: \(token.address)"
-            self.balance.text = "Loading..."
-            Web3SwiftService().getERCBalance(for: token.address,
-                    address: forWallet.address) { [weak self] (result, _) in
-                DispatchQueue.main.async {
-                    self?.balance.text = result ?? ""
-
-                    let convertedAmount = Double(round(100*(withConversionRate * Double(result ?? "0")!))/100)
-                    let stringAmount = withConversionRate == Double(0) ? "No data from CryptoCompare" : String(convertedAmount)
-                    self?.balanceInDollars.text = stringAmount + "$"
-                }
-            }
-        }
+        updateBalanceAndAddress(for: token, forWallet: forWallet)
 
         //select token
         let starButton = UIButton(type: .system)
@@ -85,6 +49,39 @@ class TokenCell: UITableViewCell {
         starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
 
         accessoryView = starButton
+    }
+
+    func updateBalanceAndAddress(for token: ERC20TokenModel, forWallet: KeyWalletModel) {
+        if token == ERC20TokenModel(isEther: true) {
+            self.tokenAddress.text = "Wallet address: \(forWallet.address.hideExtraSymbolsInAddress())"
+            Web3SwiftService().getETHbalance(for: forWallet) { [weak self] (result, _) in
+                DispatchQueue.main.async {
+                    self?.balance.text = result ?? "0"
+                    self?.updateBalanceInDollars(for: token, withBalance: result)
+                }
+            }
+        } else {
+            self.tokenAddress.text = "Token address: \(token.address.hideExtraSymbolsInAddress())"
+            Web3SwiftService().getERCBalance(for: token.address,
+                                             address: forWallet.address) { [weak self] (result, _) in
+                DispatchQueue.main.async {
+                    self?.balance.text = result ?? "0"
+                    self?.updateBalanceInDollars(for: token, withBalance: result)
+                }
+            }
+        }
+    }
+
+    func updateBalanceInDollars(for token: ERC20TokenModel, withBalance: String?) {
+        TokensService().updateConversion(for: token, completion: { (conversion) in
+            DispatchQueue.main.async { [weak self] in
+                let conv: Double = conversion ?? 0
+                let resultInDouble: Double = Double(withBalance ?? "0") ?? 0
+                let convertedAmount = Double(round(100*(conv * resultInDouble))/100)
+                let stringAmount =  String(convertedAmount)
+                self?.balanceInDollars.text = stringAmount + "$"
+            }
+        })
     }
 
     @objc private func handleMarkAsSelected() {

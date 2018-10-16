@@ -49,10 +49,9 @@ class ERC20TokenModel {
 
 extension ERC20TokenModel: Equatable {
     static func ==(lhs: ERC20TokenModel, rhs: ERC20TokenModel) -> Bool {
-        return
-        lhs.name == rhs.name &&
-                lhs.address == rhs.address &&
-                lhs.decimals == rhs.decimals &&
-                lhs.symbol == rhs.symbol
+        return lhs.name == rhs.name &&
+            lhs.address == rhs.address &&
+            lhs.decimals == rhs.decimals &&
+            lhs.symbol == rhs.symbol
     }
 }
