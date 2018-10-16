@@ -22,7 +22,6 @@ class ContactCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-
         self.contactName.text = ""
         self.contactAddress.text = ""
         self.contactImage.image = UIImage(named: "contacts_gray")
