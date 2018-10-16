@@ -106,9 +106,9 @@ class WalletViewController: UIViewController {
                 self?.walletTableView.reloadData()
                 self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
             }
-            guard let tokensArray = self?.twoDimensionalTokensArray else {
-                return
-            }
+//            guard let tokensArray = self?.twoDimensionalTokensArray else {
+//                return
+//            }
 //            for wallet in tokensArray {
 //                for token in wallet.tokens {
 //                    TokensService().updateConversion(for: token.token, completion: { (_) in

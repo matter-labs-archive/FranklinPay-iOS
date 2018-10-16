@@ -103,7 +103,7 @@ class TokensService {
 
     private func getOnlineTokensList(with address: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
 
-        guard let _ = EthereumAddress(address) else {
+        guard EthereumAddress(address) != nil else {
             completion(nil)
             return
         }

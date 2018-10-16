@@ -104,7 +104,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     }
 
     func send(withPassword password: String) {
-        guard let destinationAddress = contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+        guard (contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) != nil else {
             return
         }
         TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: password) { (result) in

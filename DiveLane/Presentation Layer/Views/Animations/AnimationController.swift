@@ -26,7 +26,7 @@ class AnimationController: UIView {
     func waitAnimation(isEnabled: Bool, notificationText: String? = nil, on view: UIView) {
 
         DispatchQueue.main.async {
-            if (isEnabled) {
+            if isEnabled {
 
                 let centerX = UIScreen.main.bounds.size.width / 2
                 let centerY = UIScreen.main.bounds.size.height / 2

@@ -283,15 +283,15 @@ class SendSettingsViewController: UIViewController {
                         //self?.sendFunds(dict: dict, enteredPassword: withPassword)
 
                 case .Error(let error):
-                    var textToSend = ""
-                    if let error = error as? SendErrors {
-                        switch error {
-                        case .invalidDestinationAddress:
-                            textToSend = "invalidAddress"
-                        default:
-                            break
-                        }
-                    }
+//                    var textToSend = ""
+//                    if let error = error as? SendErrors {
+//                        switch error {
+//                        case .invalidDestinationAddress:
+//                            textToSend = "invalidAddress"
+//                        default:
+//                            break
+//                        }
+//                    }
 
                     showErrorAlert(for: self!, error: error, completion: {
 
@@ -339,15 +339,15 @@ class SendSettingsViewController: UIViewController {
 
                     })
                 case .Error(let error):
-                    var textToSend = ""
-                    if let error = error as? SendErrors {
-                        switch error {
-                        case .invalidDestinationAddress:
-                            textToSend = "invalidAddress"
-                        default:
-                            break
-                        }
-                    }
+//                    var textToSend = ""
+//                    if let error = error as? SendErrors {
+//                        switch error {
+//                        case .invalidDestinationAddress:
+//                            textToSend = "invalidAddress"
+//                        default:
+//                            break
+//                        }
+//                    }
 
                     showErrorAlert(for: self!, error: error, completion: {
 
@@ -453,7 +453,7 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
                         decimals: 4)
             }
         } else {
-            if let _ = EthereumAddress(value) {
+            if EthereumAddress(value) != nil {
                 enterAddressTextField.text = value
             }
         }
@@ -528,13 +528,13 @@ extension SendSettingsViewController: UITextFieldDelegate {
         textField.textColor = UIColor.darkText
 
         if textField == amountTextField {
-            guard let _ = Float((amountTextField.text ?? "")) else {
+            guard Float(amountTextField.text ?? "") != nil else {
                 amountTextField.textColor = UIColor.red
                 return true
             }
         }
         if textField == gasLimitTextField {
-            guard let _ = Int((gasLimitTextField.text ?? "")) else {
+            guard Int(gasLimitTextField.text ?? "") != nil else {
                 gasLimitTextField.textColor = UIColor.red
                 return true
             }
@@ -548,7 +548,7 @@ extension SendSettingsViewController: UITextFieldDelegate {
             }
         }
         if textField == gasPriceTextField {
-            guard let _ = Int((gasPriceTextField.text ?? "")) else {
+            guard Int(gasPriceTextField.text ?? "") != nil else {
                 gasPriceTextField.textColor = UIColor.red
                 return true
             }
