@@ -110,7 +110,6 @@
 		E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A292174D08700F38E50 /* StringExtension.swift */; };
 		E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2C2174D1CC00F38E50 /* Interactor.swift */; };
 		E2B45A2F2174D1CD00F38E50 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */; };
-		E2B45A322174D1E100F38E50 /* TokenInfoControllerRaws.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A312174D1E100F38E50 /* TokenInfoControllerRaws.swift */; };
 		E2B45A352174D21100F38E50 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A342174D21100F38E50 /* AnimationController.swift */; };
 		E2B45A3A2174D27E00F38E50 /* TokenInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A372174D27E00F38E50 /* TokenInfoCell.xib */; };
 		E2B45A3B2174D27E00F38E50 /* TokenInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A382174D27E00F38E50 /* TokenInfoViewController.xib */; };
@@ -907,7 +906,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1000;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Matter Inc";
 				TargetAttributes = {
 					1CF54A71215CCF0E009CC78F = {
@@ -1125,7 +1124,6 @@
 				914F229D2149C8F000ED58E6 /* BiometricsService.swift in Sources */,
 				B2E668D82150FA0500C3CC2D /* TokenDropdownManager.swift in Sources */,
 				B2E668D12150ED6000C3CC2D /* WalletCellDropdown.swift in Sources */,
-				E2B45A322174D1E100F38E50 /* TokenInfoControllerRaws.swift in Sources */,
 				B2495E0B215D0F5A005B18F2 /* EIP681Router.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
