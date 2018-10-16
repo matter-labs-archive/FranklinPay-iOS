@@ -26,6 +26,8 @@ class ContactsViewController: UIViewController {
         self.contactsTableView.dataSource = self
         self.contactsTableView.tableFooterView = UIView()
 
+        self.navigationItem.setRightBarButton(addContactBarItem(), animated: false)
+
         self.hideKeyboardWhenTappedAround()
 
         let nibSearch = UINib.init(nibName: "ContactCell", bundle: nil)
@@ -49,9 +51,23 @@ class ContactsViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        getAllContacts()
 
-        self.contactsTableView.reloadData()
+    }
 
+    func getAllContacts() {
+        let contacts = ContactsDatabase().getAllContacts()
+        updateContactsList(with: contacts)
+    }
+
+    func addContactBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: #selector(addContact))
+        return addButton
+    }
+
+    @objc func addContact() {
+        let addContactController = AddContactController()
+        self.navigationController?.pushViewController(addContactController, animated: true)
     }
 
     func isContactsListEmpty() -> Bool {
@@ -87,8 +103,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
                                                            for: indexPath) as? ContactCell else {
                                                             return UITableViewCell()
             }
-//
-//            cell.configure(with: (tokensList?[indexPath.row])!, isAdded: isAdded)
+            cell.configure(with: contactsList?[indexPath.row] ?? ContactModel(address: "Unknown", name: "Unknown"))
             return cell
 
         } else {
@@ -132,7 +147,7 @@ extension ContactsViewController: UISearchBarDelegate {
             if let list = result {
                 self?.updateContactsList(with: list)
             } else {
-                self?.emptyContactsList()
+                self?.getAllContacts()
             }
         })
     }
@@ -159,7 +174,7 @@ extension ContactsViewController: UISearchBarDelegate {
 
         if searchText == "" {
 
-            emptyContactsList()
+            getAllContacts()
             makeHelpLabel(enabled: true)
 
         } else {
@@ -181,7 +196,6 @@ extension ContactsViewController: UISearchBarDelegate {
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.contactsTableView.setContentOffset(.zero, animated: true)
-        self.contactsList = nil
-        self.contactsTableView.reloadData()
+        getAllContacts()
     }
 }

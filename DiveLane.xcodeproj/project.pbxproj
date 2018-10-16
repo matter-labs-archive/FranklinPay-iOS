@@ -124,6 +124,8 @@
 		E2B45A5521762AD100F38E50 /* ContactsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5421762AD100F38E50 /* ContactsDatabase.swift */; };
 		E2B45A5821762DC200F38E50 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5721762DC200F38E50 /* ContactsService.swift */; };
 		E2B45A5A2176330E00F38E50 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A592176330E00F38E50 /* SearchControllerExtension.swift */; };
+		E2B45A602176379100F38E50 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5E2176379100F38E50 /* AddContactController.swift */; };
+		E2B45A612176379100F38E50 /* AddContactController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A5F2176379100F38E50 /* AddContactController.xib */; };
 		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
 		E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA091215A8ACF001755A4 /* Colors.swift */; };
 		E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA093215A8C41001755A4 /* DesignElements.swift */; };
@@ -273,6 +275,8 @@
 		E2B45A5421762AD100F38E50 /* ContactsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDatabase.swift; sourceTree = "<group>"; };
 		E2B45A5721762DC200F38E50 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
 		E2B45A592176330E00F38E50 /* SearchControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerExtension.swift; sourceTree = "<group>"; };
+		E2B45A5E2176379100F38E50 /* AddContactController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactController.swift; sourceTree = "<group>"; };
+		E2B45A5F2176379100F38E50 /* AddContactController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddContactController.xib; sourceTree = "<group>"; };
 		E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableTokens.swift; sourceTree = "<group>"; };
 		E2EBA091215A8ACF001755A4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2EBA093215A8C41001755A4 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
@@ -621,6 +625,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A5B2176374B00F38E50 /* AddContact */,
 				E2B45A4821761F1D00F38E50 /* Contacts */,
 				E2B45A332174D21100F38E50 /* Animations */,
 				91E72558214FEDCE003FAD76 /* AddressCell */,
@@ -642,6 +647,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A622176379A00F38E50 /* AddContact */,
 				E2B45A4721761F0400F38E50 /* Contacts */,
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
@@ -911,6 +917,22 @@
 			path = Databases;
 			sourceTree = "<group>";
 		};
+		E2B45A5B2176374B00F38E50 /* AddContact */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A5F2176379100F38E50 /* AddContactController.xib */,
+			);
+			path = AddContact;
+			sourceTree = "<group>";
+		};
+		E2B45A622176379A00F38E50 /* AddContact */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A5E2176379100F38E50 /* AddContactController.swift */,
+			);
+			path = AddContact;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1029,6 +1051,7 @@
 			files = (
 				9197F2E62143B65600C358AA /* WalletCreationViewController.xib in Resources */,
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
+				E2B45A612176379100F38E50 /* AddContactController.xib in Resources */,
 				91E7255C214FEDE3003FAD76 /* AddressTableViewCell.xib in Resources */,
 				9197F322214403A400C358AA /* SettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
@@ -1204,6 +1227,7 @@
 				B2E668D12150ED6000C3CC2D /* WalletCellDropdown.swift in Sources */,
 				B2495E0B215D0F5A005B18F2 /* EIP681Router.swift in Sources */,
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
+				E2B45A602176379100F38E50 /* AddContactController.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
 				B271CF9E214BB2890023FC18 /* TransactionsHistoryState.swift in Sources */,
 				E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */,
