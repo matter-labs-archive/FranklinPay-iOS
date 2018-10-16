@@ -21,13 +21,10 @@ class ContactsViewController: UIViewController {
         super.viewDidLoad()
         setNavigation()
         setTableView()
-        self.hideKeyboardWhenTappedAround()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        setSearchController()
-        self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
         makeHelpLabel(enabled: false)
     }
 
@@ -56,8 +53,15 @@ class ContactsViewController: UIViewController {
         definesPresentationContext = true
     }
 
+    func keyboardExtensions() {
+        self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
+        self.hideKeyboardWhenTappedAround()
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        setSearchController()
+        keyboardExtensions()
         getAllContacts()
     }
 
@@ -72,6 +76,7 @@ class ContactsViewController: UIViewController {
     }
 
     @objc func addContact() {
+        self.searchController.searchBar.endEditing(true)
         let addContactController = AddContactController()
         self.navigationController?.pushViewController(addContactController, animated: true)
     }
@@ -104,37 +109,22 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if !isContactsListEmpty() {
-
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell",
                                                            for: indexPath) as? ContactCell else {
                                                             return UITableViewCell()
             }
             cell.configure(with: contactsList?[indexPath.row] ?? ContactModel(address: "Unknown", name: "Unknown"))
             return cell
-
         } else {
             return UITableViewCell()
         }
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-//        guard let token = self.tokensList?[indexPath.row] else {
-//            return
-//        }
-//
-//        //        change(token: token, fromCurrentStatus: tokensIsAdded?[indexPath.row] ?? true)
-//
-//        let tokenInfoViewController = TokenInfoViewController(token: token,
-//                                                              isAdded: tokensIsAdded?[indexPath.row] ?? true,
-//                                                              interactor: interactor)
-//
-//        tokenInfoViewController.transitioningDelegate = self
-//
-//        self.present(tokenInfoViewController, animated: true, completion: nil)
-//
+        guard let contact = contactsList?[indexPath.row] else {return}
+        let sendController = SendSettingsViewController(destinationAddress: contact.address)
+        self.navigationController?.pushViewController(sendController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
-
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -167,7 +157,7 @@ extension ContactsViewController: UISearchBarDelegate {
             if let list = result {
                 self?.updateContactsList(with: list)
             } else {
-                self?.getAllContacts()
+                self?.emptyContactsList()
             }
         })
     }
@@ -199,8 +189,8 @@ extension ContactsViewController: UISearchBarDelegate {
         if searchText == "" {
             getAllContacts()
         } else {
-            let token = searchText
-            searchContact(string: token)
+            let contact = searchText
+            searchContact(string: contact)
         }
     }
 

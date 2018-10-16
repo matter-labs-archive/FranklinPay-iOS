@@ -11,7 +11,7 @@ import UIKit
 extension UISearchController {
     func hideKeyboardWhenTappedOutsideSearchBar(for controller: UIViewController) {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(UIViewController.dismissKeyboard))
+                                                                 action: #selector(UISearchController.dismissKeyboard))
         tap.cancelsTouchesInView = false
         controller.view.addGestureRecognizer(tap)
     }

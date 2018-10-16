@@ -66,6 +66,12 @@ class SendSettingsViewController: UIViewController {
         self.token = token
     }
 
+    // MARK: Initializers for launching from deeplink
+    convenience init(destinationAddress: String) {
+        self.init()
+        self.destinationAddress = destinationAddress
+    }
+
     convenience init(tokenAddress: String?,
                      amount: BigUInt,
                      destinationAddress: String,
