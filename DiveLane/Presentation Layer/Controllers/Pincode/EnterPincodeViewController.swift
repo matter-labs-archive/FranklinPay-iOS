@@ -22,6 +22,8 @@ class EnterPincodeViewController: PincodeViewController {
 
     var transactionService = TransactionsService()
 
+    let animationController = AnimationController()
+
     convenience init(from: EnterPincodeFromCases, for data: [String: Any], withPassword: String, isFromDeepLink: Bool) {
         self.init()
         fromCase = from
@@ -84,6 +86,7 @@ class EnterPincodeViewController: PincodeViewController {
 
         switch fromCase ?? .enterWallet {
         case .transaction:
+            animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
             let transactionData = transactionService.getDataForTransaction(dict: data!)
             send(with: transactionData)
         default:
@@ -95,6 +98,9 @@ class EnterPincodeViewController: PincodeViewController {
 
     func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
         transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+            DispatchQueue.main.async { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+            }
             switch result {
             case .Success(let res):
                 if (self?.isFromDeepLink)! {

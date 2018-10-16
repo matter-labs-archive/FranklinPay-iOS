@@ -19,6 +19,8 @@ class WalletViewController: UIViewController {
     var wallets: [KeyWalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
 
+    let animation = AnimationController()
+
     let design = DesignElements()
 
     lazy var refreshControl: UIRefreshControl = {
@@ -33,6 +35,7 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
@@ -101,6 +104,7 @@ class WalletViewController: UIViewController {
         getTokensList { [weak self] in
             DispatchQueue.main.async {
                 self?.walletTableView.reloadData()
+                self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
             }
             guard let tokensArray = self?.twoDimensionalTokensArray else {
                 return

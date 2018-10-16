@@ -51,17 +51,13 @@ class AnimationController: UIView {
                         y: 0,
                         width: UIScreen.main.bounds.size.width,
                         height: 15))
-                notification.textColor = UIColor.white
+                notification.textColor = UIColor.darkGray
                 notification.textAlignment = NSTextAlignment.center
                 notification.font = UIFont(name: "Helvetica", size: 17)
                 notification.numberOfLines = 1
                 notification.center = CGPoint(x: centerX, y: centerY + 10)
                 notification.tag = TagsForViews.notification.rawValue
-                if (notificationText != nil) {
-                    notification.text = notificationText
-                } else {
-                    notification.text = ""
-                }
+                notification.text = notificationText ?? ""
 
                 let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
                 var frame: CGRect = animation.frame

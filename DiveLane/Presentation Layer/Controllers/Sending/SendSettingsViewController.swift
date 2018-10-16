@@ -247,6 +247,10 @@ class SendSettingsViewController: UIViewController {
 
         if token?.address == "" {
             transactionsService.prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else {
@@ -299,6 +303,10 @@ class SendSettingsViewController: UIViewController {
                                                                 amountString: amount,
                                                                 gasLimit: 21000,
                                                                 tokenAddress: (token?.address) ?? "") { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else {
@@ -358,6 +366,10 @@ class SendSettingsViewController: UIViewController {
         guard let token = token else {
             return
         }
+
+        animation.waitAnimation(isEnabled: true,
+                                notificationText: "Preparing transaction",
+                                on: self.view)
         localStorage.selectWallet(wallet: wallet) { [weak self] in
             CurrentToken.currentToken = token
             self?.checkPassword { (password) in
