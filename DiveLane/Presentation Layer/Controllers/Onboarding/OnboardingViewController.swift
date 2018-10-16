@@ -37,7 +37,7 @@ class OnboardingViewController: UIViewController {
                 direction: .forward,
                 animated: true,
                 completion: nil)
-        self.addChildViewController(self.pageViewController)
+        self.addChild(self.pageViewController)
 
         self.nextBtn.addTarget(self,
                 action: #selector(onboardingAction(sender:)),
@@ -88,7 +88,7 @@ class OnboardingViewController: UIViewController {
                                                views: views)
         )
 
-        self.pageViewController.didMove(toParentViewController: self)
+        self.pageViewController.didMove(toParent: self)
     }
 
     @objc func onboardingAction(sender: UIButton) {

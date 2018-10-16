@@ -75,7 +75,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     }
 
     func enterPassword() {
-        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertController.Style.alert)
 
         alert.addTextField { (textField) in
             textField.isSecureTextEntry = true

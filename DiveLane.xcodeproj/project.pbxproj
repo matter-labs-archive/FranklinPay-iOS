@@ -916,6 +916,7 @@
 					};
 					91B6A79221435F5D0033A045 = {
 						CreatedOnToolsVersion = 9.4.1;
+						LastSwiftMigration = 1000;
 					};
 					B219DC28215B77A80035BF94 = {
 						CreatedOnToolsVersion = 10.0;
@@ -1388,7 +1389,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1409,7 +1410,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = io.thematter.DiveLane;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

@@ -59,7 +59,7 @@ class AnimationController: UIView {
                 notification.tag = TagsForViews.notification.rawValue
                 notification.text = notificationText ?? ""
 
-                let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                let animation: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
                 var frame: CGRect = animation.frame
                 frame.origin.x = centerX - 10
                 frame.origin.y = centerY + 50

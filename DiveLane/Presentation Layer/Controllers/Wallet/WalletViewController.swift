@@ -27,7 +27,7 @@ class WalletViewController: UIViewController {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
         #selector(self.handleRefresh(_:)),
-                for: UIControlEvents.valueChanged)
+                for: UIControl.Event.valueChanged)
         refreshControl.tintColor = UIColor.blue
 
         return refreshControl
@@ -284,7 +284,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true) {
             return
         }
