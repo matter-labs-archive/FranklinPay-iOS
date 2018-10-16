@@ -145,7 +145,7 @@ class SendSettingsViewController: UIViewController {
 
     private func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "\(wallet?.address ?? "")"
+        addressFromLabel.text = "\(wallet?.address.hideExtraSymbolsInAddress() ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
         //balanceOnWalletLabel.text = "Balance of \(walletName ?? "") wallet: \(tokenBalance ?? "0")"
@@ -247,6 +247,10 @@ class SendSettingsViewController: UIViewController {
 
         if token?.address == "" {
             transactionsService.prepareTransactionForSendingEther(destinationAddressString: destinationAddress, amountString: amount, gasLimit: 21000) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else {
@@ -279,15 +283,15 @@ class SendSettingsViewController: UIViewController {
                         //self?.sendFunds(dict: dict, enteredPassword: withPassword)
 
                 case .Error(let error):
-                    var textToSend = ""
-                    if let error = error as? SendErrors {
-                        switch error {
-                        case .invalidDestinationAddress:
-                            textToSend = "invalidAddress"
-                        default:
-                            break
-                        }
-                    }
+//                    var textToSend = ""
+//                    if let error = error as? SendErrors {
+//                        switch error {
+//                        case .invalidDestinationAddress:
+//                            textToSend = "invalidAddress"
+//                        default:
+//                            break
+//                        }
+//                    }
 
                     showErrorAlert(for: self!, error: error, completion: {
 
@@ -299,6 +303,10 @@ class SendSettingsViewController: UIViewController {
                                                                 amountString: amount,
                                                                 gasLimit: 21000,
                                                                 tokenAddress: (token?.address) ?? "") { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animation.waitAnimation(isEnabled: false,
+                                                  on: (self?.view)!)
+                }
                 switch result {
                 case .Success(let transaction):
                     guard let gasPrice = self?.gasPriceTextField.text else {
@@ -331,15 +339,15 @@ class SendSettingsViewController: UIViewController {
 
                     })
                 case .Error(let error):
-                    var textToSend = ""
-                    if let error = error as? SendErrors {
-                        switch error {
-                        case .invalidDestinationAddress:
-                            textToSend = "invalidAddress"
-                        default:
-                            break
-                        }
-                    }
+//                    var textToSend = ""
+//                    if let error = error as? SendErrors {
+//                        switch error {
+//                        case .invalidDestinationAddress:
+//                            textToSend = "invalidAddress"
+//                        default:
+//                            break
+//                        }
+//                    }
 
                     showErrorAlert(for: self!, error: error, completion: {
 
@@ -358,6 +366,10 @@ class SendSettingsViewController: UIViewController {
         guard let token = token else {
             return
         }
+
+        animation.waitAnimation(isEnabled: true,
+                                notificationText: "Preparing transaction",
+                                on: self.view)
         localStorage.selectWallet(wallet: wallet) { [weak self] in
             CurrentToken.currentToken = token
             self?.checkPassword { (password) in
@@ -432,7 +444,7 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
         if let parsed = Web3.EIP67CodeParser.parse(value) {
             enterAddressTextField.text = parsed.address.address
             if let amount = parsed.amount {
-                if token != ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth") {
+                if token != ERC20TokenModel(isEther: true) {
                     token = ERC20TokenModel(name: "", address: "", decimals: "", symbol: "")
                 }
                 amountTextField.text = Web3.Utils.formatToEthereumUnits(
@@ -441,7 +453,7 @@ extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
                         decimals: 4)
             }
         } else {
-            if let _ = EthereumAddress(value) {
+            if EthereumAddress(value) != nil {
                 enterAddressTextField.text = value
             }
         }
@@ -516,13 +528,13 @@ extension SendSettingsViewController: UITextFieldDelegate {
         textField.textColor = UIColor.darkText
 
         if textField == amountTextField {
-            guard let _ = Float((amountTextField.text ?? "")) else {
+            guard Float(amountTextField.text ?? "") != nil else {
                 amountTextField.textColor = UIColor.red
                 return true
             }
         }
         if textField == gasLimitTextField {
-            guard let _ = Int((gasLimitTextField.text ?? "")) else {
+            guard Int(gasLimitTextField.text ?? "") != nil else {
                 gasLimitTextField.textColor = UIColor.red
                 return true
             }
@@ -536,7 +548,7 @@ extension SendSettingsViewController: UITextFieldDelegate {
             }
         }
         if textField == gasPriceTextField {
-            guard let _ = Int((gasPriceTextField.text ?? "")) else {
+            guard Int(gasPriceTextField.text ?? "") != nil else {
                 gasPriceTextField.textColor = UIColor.red
                 return true
             }

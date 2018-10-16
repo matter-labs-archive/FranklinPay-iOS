@@ -26,7 +26,7 @@ class AnimationController: UIView {
     func waitAnimation(isEnabled: Bool, notificationText: String? = nil, on view: UIView) {
 
         DispatchQueue.main.async {
-            if (isEnabled) {
+            if isEnabled {
 
                 let centerX = UIScreen.main.bounds.size.width / 2
                 let centerY = UIScreen.main.bounds.size.height / 2
@@ -51,19 +51,15 @@ class AnimationController: UIView {
                         y: 0,
                         width: UIScreen.main.bounds.size.width,
                         height: 15))
-                notification.textColor = UIColor.white
+                notification.textColor = UIColor.darkGray
                 notification.textAlignment = NSTextAlignment.center
                 notification.font = UIFont(name: "Helvetica", size: 17)
                 notification.numberOfLines = 1
                 notification.center = CGPoint(x: centerX, y: centerY + 10)
                 notification.tag = TagsForViews.notification.rawValue
-                if (notificationText != nil) {
-                    notification.text = notificationText
-                } else {
-                    notification.text = ""
-                }
+                notification.text = notificationText ?? ""
 
-                let animation: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+                let animation: UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
                 var frame: CGRect = animation.frame
                 frame.origin.x = centerX - 10
                 frame.origin.y = centerY + 50

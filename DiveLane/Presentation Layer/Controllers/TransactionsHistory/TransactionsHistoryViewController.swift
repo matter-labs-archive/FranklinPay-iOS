@@ -13,6 +13,8 @@ class TransactionsHistoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
 
+    let animationController = AnimationController()
+
     // MARK: - Services
     let keysService: IKeysService = KeysService()
     let transactionsHistoryService = TransactionsHistoryService()
@@ -67,6 +69,9 @@ class TransactionsHistoryViewController: UIViewController {
     }
 
     private func uploadTransactions() {
+        animationController.waitAnimation(isEnabled: true,
+                                notificationText: "Downloading transactions",
+                                on: self.view)
         guard let wallet = keysService.selectedWallet() else {
             return
         }
@@ -74,6 +79,10 @@ class TransactionsHistoryViewController: UIViewController {
             return
         }
         transactionsHistoryService.loadTransactions(forAddress: wallet.address, type: .custom, inNetwork: Int64(networkId)) { (result) in
+            DispatchQueue.main.async { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false,
+                                              on: (self?.view)!)
+            }
             switch result {
             case .Error(let error):
                 showErrorAlert(for: self, error: error, completion: {})

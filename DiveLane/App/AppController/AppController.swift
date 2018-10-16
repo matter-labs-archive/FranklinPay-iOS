@@ -19,16 +19,16 @@ class AppController {
 
     convenience init(
             window: UIWindow,
-            launchOptions: [UIApplicationLaunchOptionsKey: Any]?,
+            launchOptions: [UIApplication.LaunchOptionsKey: Any]?,
             url: URL?) {
         self.init()
         start(in: window, launchOptions: launchOptions, url: url)
     }
 
-    func start(in window: UIWindow, launchOptions: [UIApplicationLaunchOptionsKey: Any]?, url: URL?) {
+    func start(in window: UIWindow, launchOptions: [UIApplication.LaunchOptionsKey: Any]?, url: URL?) {
         selectNetwork()
         if let launchOptions = launchOptions {
-            if let url = launchOptions[UIApplicationLaunchOptionsKey.url] as? URL {
+            if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
                 navigateViaDeepLink(url: url, in: window)
             } else {
                 startAsUsual(in: window)

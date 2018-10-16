@@ -430,7 +430,7 @@
                 <constraint firstItem="wrL-Aw-SQT" firstAttribute="top" secondItem="T8V-5D-bFN" secondAttribute="top" id="WzK-sH-KpF"/>
                 <constraint firstItem="wrL-Aw-SQT" firstAttribute="leading" secondItem="9Ag-nj-Re3" secondAttribute="leading" id="X02-i4-9Kb"/>
                 <constraint firstItem="4VJ-Rh-dm8" firstAttribute="width" secondItem="T8V-5D-bFN" secondAttribute="width" id="dP5-It-QEK"/>
-                <constraint firstItem="4VJ-Rh-dm8" firstAttribute="height" secondItem="T8V-5D-bFN" secondAttribute="height" priority="250" id="dbe-SJ-hJd"/>
+                <constraint firstItem="4VJ-Rh-dm8" firstAttribute="height" secondItem="wrL-Aw-SQT" secondAttribute="height" priority="250" id="dbe-SJ-hJd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="9Ag-nj-Re3"/>
             <point key="canvasLocation" x="31.875" y="51.760563380281688"/>

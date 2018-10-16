@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -75,7 +74,7 @@
                             <rect key="frame" x="0.0" y="224" width="288" height="36"/>
                             <subviews>
                                 <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Private Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sEL-uz-4PL">
-                                    <rect key="frame" x="0.0" y="0.0" width="249" height="36"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="239" height="36"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <accessibility key="accessibilityConfiguration" identifier="WalletPasswordTextFieldPassphrase"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -85,10 +84,7 @@
                                     </connections>
                                 </textField>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BvH-vC-EBo">
-                                    <rect key="frame" x="264" y="0.0" width="24" height="36"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="24" id="pO5-op-ZQW"/>
-                                    </constraints>
+                                    <rect key="frame" x="254" y="0.0" width="34" height="36"/>
                                     <state key="normal" image="qr"/>
                                     <connections>
                                         <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="2fV-is-Vdm"/>
@@ -129,6 +125,6 @@
         </view>
     </objects>
     <resources>
-        <image name="qr" width="24" height="24"/>
+        <image name="qr" width="34" height="34"/>
     </resources>
 </document>
