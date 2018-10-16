@@ -80,8 +80,6 @@
 		B20914FF214A564500C8B408 /* WalletsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20914FD214A564500C8B408 /* WalletsViewController.xib */; };
 		B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091504214A5AD000C8B408 /* WalletCell.swift */; };
 		B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091505214A5AD000C8B408 /* WalletCell.xib */; };
-		B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091508214A60A700C8B408 /* ExportWalletViewController.swift */; };
-		B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091509214A60A700C8B408 /* ExportWalletViewController.xib */; };
 		B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
 		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091510214AA58100C8B408 /* MnemonicsViewController.swift */; };
@@ -220,8 +218,6 @@
 		B20914FD214A564500C8B408 /* WalletsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletsViewController.xib; sourceTree = "<group>"; };
 		B2091504214A5AD000C8B408 /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		B2091505214A5AD000C8B408 /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
-		B2091508214A60A700C8B408 /* ExportWalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportWalletViewController.swift; sourceTree = "<group>"; };
-		B2091509214A60A700C8B408 /* ExportWalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportWalletViewController.xib; sourceTree = "<group>"; };
 		B209150C214A659500C8B408 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
 		B209150D214A659500C8B408 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		B2091510214AA58100C8B408 /* MnemonicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MnemonicsViewController.swift; sourceTree = "<group>"; };
@@ -419,20 +415,22 @@
 			path = Wallet;
 			sourceTree = "<group>";
 		};
-		9197F2FC2143BF8300C358AA /* ReceiveToken */ = {
+		9197F2FC2143BF8300C358AA /* QR */ = {
 			isa = PBXGroup;
 			children = (
 				9197F3002143BFC600C358AA /* TokenViewController.xib */,
+				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
 			);
-			path = ReceiveToken;
+			path = QR;
 			sourceTree = "<group>";
 		};
-		9197F2FD2143BF9800C358AA /* ReceiveToken */ = {
+		9197F2FD2143BF9800C358AA /* QR */ = {
 			isa = PBXGroup;
 			children = (
 				9197F2FF2143BFC600C358AA /* TokenViewController.swift */,
+				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
 			);
-			path = ReceiveToken;
+			path = QR;
 			sourceTree = "<group>";
 		};
 		9197F3042143C33800C358AA /* Sending */ = {
@@ -624,7 +622,7 @@
 				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
 				E2B45A362174D27E00F38E50 /* TokenInfo */,
-				9197F2FC2143BF8300C358AA /* ReceiveToken */,
+				9197F2FC2143BF8300C358AA /* QR */,
 				9197F2EF2143B93400C358AA /* Wallet */,
 				9197F2E72143B66400C358AA /* WalletCreation */,
 				91B6A7E02143B3020033A045 /* AddWallet */,
@@ -643,7 +641,7 @@
 				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
 				9197F30A2143C3A900C358AA /* Sending */,
-				9197F2FD2143BF9800C358AA /* ReceiveToken */,
+				9197F2FD2143BF9800C358AA /* QR */,
 				9197F2EA2143B7A700C358AA /* Wallet */,
 				9197F2E22143B63100C358AA /* WalletCreation */,
 				91B6A7D92143B2A90033A045 /* AddWallet */,
@@ -699,10 +697,8 @@
 			isa = PBXGroup;
 			children = (
 				B20914FD214A564500C8B408 /* WalletsViewController.xib */,
-				B2091509214A60A700C8B408 /* ExportWalletViewController.xib */,
 				B2091505214A5AD000C8B408 /* WalletCell.xib */,
 				B2091504214A5AD000C8B408 /* WalletCell.swift */,
-				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
 			);
 			path = Wallets;
 			sourceTree = "<group>";
@@ -710,9 +706,7 @@
 		B2091501214A5A9F00C8B408 /* Wallets */ = {
 			isa = PBXGroup;
 			children = (
-				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
 				B20914FC214A564500C8B408 /* WalletsViewController.swift */,
-				B2091508214A60A700C8B408 /* ExportWalletViewController.swift */,
 			);
 			path = Wallets;
 			sourceTree = "<group>";
@@ -966,7 +960,6 @@
 				91E7255C214FEDE3003FAD76 /* AddressTableViewCell.xib in Resources */,
 				9197F322214403A400C358AA /* SettingsViewController.xib in Resources */,
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
-				B209150B214A60A700C8B408 /* ExportWalletViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				B271CF9C214BAEDB0023FC18 /* TransactionCell.xib in Resources */,
 				B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */,
@@ -1150,7 +1143,6 @@
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
 				914F22982149BF2400ED58E6 /* EnterPincodeViewController.swift in Sources */,
-				B209150A214A60A700C8B408 /* ExportWalletViewController.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URL.swift in Sources */,

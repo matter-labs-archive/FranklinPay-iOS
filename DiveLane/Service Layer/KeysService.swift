@@ -25,7 +25,7 @@ protocol IKeysService {
                            password: String,
                            mnemonics: String,
                            completion: @escaping (KeyWalletModel?, Error?) -> Void)
-    func getWalletPrivateKey(password: String) -> String?
+    func getWalletPrivateKey(for wallet: KeyWalletModel, password: String) -> String?
     func getPrivateKey(forWallet wallet: KeyWalletModel, password: String) -> String?
     func generateMnemonics(bitsOfEntropy: Int) -> String
 }
@@ -129,9 +129,9 @@ class KeysService: IKeysService {
         completion(walletModel, nil)
     }
 
-    public func getWalletPrivateKey(password: String) -> String? {
+    public func getWalletPrivateKey(for wallet: KeyWalletModel, password: String) -> String? {
         do {
-            let data = try keystoreManager().UNSAFE_getPrivateKeyData(password: password, account: EthereumAddress((selectedWallet()?.address)!)!)
+            let data = try keystoreManager().UNSAFE_getPrivateKeyData(password: password, account: EthereumAddress((wallet.address))!)
             return data.toHexString()
         } catch {
             print(error)

@@ -12,6 +12,7 @@ import web3swift
 class PrivateKeyViewController: UIViewController {
     @IBOutlet weak var privateQRimageView: UIImageView!
     @IBOutlet weak var privateKeyLabel: UILabel!
+    @IBOutlet weak var notificationLabel: UILabel!
 
     var pk: String
 
@@ -26,6 +27,7 @@ class PrivateKeyViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        hideCopiedLabel(true)
         privateQRimageView.image = generateQRCode(from: pk)
         privateKeyLabel.text = pk
     }
@@ -49,8 +51,24 @@ class PrivateKeyViewController: UIViewController {
         return nil
     }
 
+    func hideCopiedLabel(_ hidden: Bool = false) {
+        notificationLabel.alpha = hidden ? 0.0 : 1.0
+    }
+
     @IBAction func copyButtonTapped(_ sender: UIButton) {
         UIPasteboard.general.string = privateKeyLabel.text
+
+        DispatchQueue.main.async { [weak self] in
+            self?.hideCopiedLabel(true)
+            UIView.animate(withDuration: 1.0,
+                           animations: {
+                            self?.hideCopiedLabel(false)
+            }, completion: { _ in
+                UIView.animate(withDuration: 2.0, animations: {
+                    self?.hideCopiedLabel(true)
+                })
+            })
+        }
     }
 
 }

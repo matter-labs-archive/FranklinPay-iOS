@@ -83,7 +83,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         }
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
-            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
+            if let privateKey = KeysService().getWalletPrivateKey(for: KeysService().selectedWallet()!, password: passwordText) {
 
                 self.send(withPassword: passwordText)
 
