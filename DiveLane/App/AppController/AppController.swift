@@ -57,22 +57,26 @@ class AppController {
             }
         }
         let nav1 = navigationController(withTitle: "Wallet",
-                withImage: UIImage(named: "wallet_gray"),
-                withController: WalletViewController(nibName: nil, bundle: nil),
-                tag: 1)
-        let nav2 = navigationController(withTitle: "Settings",
-                withImage: UIImage(named: "settings_gray"),
-                withController: SettingsViewController(nibName: nil, bundle: nil),
-                tag: 2)
-        let nav3 = navigationController(withTitle: "Transactions History",
-                withImage: UIImage(named: "transactions_gray"),
-                withController: TransactionsHistoryViewController(),
-                tag: 3)
-        let nav4 = navigationController(withTitle: "Send",
-                withImage: UIImage(named: "send_gray"),
-                withController: SendSettingsViewController(),
-                tag: 4)
-        tabs.viewControllers = [nav1, nav3, nav2, nav4]
+                                        withImage: UIImage(named: "wallet_gray"),
+                                        withController: WalletViewController(nibName: nil, bundle: nil),
+                                        tag: 1)
+        let nav2 = navigationController(withTitle: "Transactions History",
+                                        withImage: UIImage(named: "transactions_gray"),
+                                        withController: TransactionsHistoryViewController(),
+                                        tag: 2)
+        let nav3 = navigationController(withTitle: "Send",
+                                        withImage: UIImage(named: "send_gray"),
+                                        withController: SendSettingsViewController(),
+                                        tag: 3)
+        let nav4 = navigationController(withTitle: "Settings",
+                                        withImage: UIImage(named: "settings_gray"),
+                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+                                        tag: 4)
+        let nav5 = navigationController(withTitle: "Contacts",
+                                        withImage: UIImage(named: "contacts_gray"),
+                                        withController: ContactsViewController(nibName: nil, bundle: nil),
+                                        tag: 5)
+        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
 
         return tabs
     }

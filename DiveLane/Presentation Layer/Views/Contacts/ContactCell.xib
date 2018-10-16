@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactCell" id="KGk-i7-Jjw" customClass="ContactCell" customModule="DiveLane" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZEe-i0-T5B">
+                        <rect key="frame" x="5" y="6" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="ZEe-i0-T5B" secondAttribute="height" multiplier="1:1" id="E92-jH-lWr"/>
+                            <constraint firstAttribute="width" constant="32" id="gZ1-CR-6I5"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUe-0B-qnH">
+                        <rect key="frame" x="52" y="12" width="50" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="K9d-ag-xci"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cO1-8n-w75">
+                        <rect key="frame" x="260" y="13" width="50" height="17.5"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="MXL-aX-dGy"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="15"/>
+                        <color key="textColor" red="0.43529411759999997" green="0.4431372549" blue="0.47450980390000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="cO1-8n-w75" secondAttribute="trailing" constant="10" id="2db-Dc-Xz7"/>
+                    <constraint firstItem="cO1-8n-w75" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="xUe-0B-qnH" secondAttribute="trailing" constant="10" id="T1K-qo-iCh"/>
+                    <constraint firstItem="cO1-8n-w75" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="WOU-FL-GE8"/>
+                    <constraint firstItem="xUe-0B-qnH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Wez-xP-Hi5"/>
+                    <constraint firstItem="ZEe-i0-T5B" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="piv-ed-ni7"/>
+                    <constraint firstItem="ZEe-i0-T5B" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="sXl-3e-87z"/>
+                    <constraint firstItem="xUe-0B-qnH" firstAttribute="leading" secondItem="ZEe-i0-T5B" secondAttribute="trailing" constant="15" id="vYI-qr-pX4"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="contactAddress" destination="cO1-8n-w75" id="ATY-TU-V5R"/>
+                <outlet property="contactImage" destination="ZEe-i0-T5B" id="Xk5-PT-wmq"/>
+                <outlet property="contactName" destination="xUe-0B-qnH" id="caM-FF-vTv"/>
+            </connections>
+            <point key="canvasLocation" x="116.8" y="48.575712143928037"/>
+        </tableViewCell>
+    </objects>
+</document>
