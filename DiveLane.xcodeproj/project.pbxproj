@@ -116,6 +116,14 @@
 		E2B45A3C2174D27E00F38E50 /* TokenInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A392174D27E00F38E50 /* TokenInfoCell.swift */; };
 		E2B45A3F2174D29200F38E50 /* TokenInfoControllerRaws.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A3E2174D29200F38E50 /* TokenInfoControllerRaws.swift */; };
 		E2B45A422174D2B500F38E50 /* TokenInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */; };
+		E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4921761F4000F38E50 /* ContactsViewController.swift */; };
+		E2B45A4C21761F4000F38E50 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */; };
+		E2B45A4F217620D500F38E50 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4D217620D500F38E50 /* ContactCell.swift */; };
+		E2B45A50217620D500F38E50 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4E217620D500F38E50 /* ContactCell.xib */; };
+		E2B45A5321762A3400F38E50 /* ContactModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5221762A3400F38E50 /* ContactModel.swift */; };
+		E2B45A5521762AD100F38E50 /* ContactsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5421762AD100F38E50 /* ContactsDatabase.swift */; };
+		E2B45A5821762DC200F38E50 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5721762DC200F38E50 /* ContactsService.swift */; };
+		E2B45A5A2176330E00F38E50 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A592176330E00F38E50 /* SearchControllerExtension.swift */; };
 		E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */; };
 		E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA091215A8ACF001755A4 /* Colors.swift */; };
 		E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2EBA093215A8C41001755A4 /* DesignElements.swift */; };
@@ -257,6 +265,14 @@
 		E2B45A392174D27E00F38E50 /* TokenInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenInfoCell.swift; sourceTree = "<group>"; };
 		E2B45A3E2174D29200F38E50 /* TokenInfoControllerRaws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenInfoControllerRaws.swift; sourceTree = "<group>"; };
 		E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenInfoViewController.swift; sourceTree = "<group>"; };
+		E2B45A4921761F4000F38E50 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
+		E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
+		E2B45A4D217620D500F38E50 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
+		E2B45A4E217620D500F38E50 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
+		E2B45A5221762A3400F38E50 /* ContactModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactModel.swift; sourceTree = "<group>"; };
+		E2B45A5421762AD100F38E50 /* ContactsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsDatabase.swift; sourceTree = "<group>"; };
+		E2B45A5721762DC200F38E50 /* ContactsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsService.swift; sourceTree = "<group>"; };
+		E2B45A592176330E00F38E50 /* SearchControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchControllerExtension.swift; sourceTree = "<group>"; };
 		E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableTokens.swift; sourceTree = "<group>"; };
 		E2EBA091215A8ACF001755A4 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		E2EBA093215A8C41001755A4 /* DesignElements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignElements.swift; sourceTree = "<group>"; };
@@ -543,10 +559,12 @@
 			isa = PBXGroup;
 			children = (
 				91B6A7C9214369D60033A045 /* GlobalTODO.swift */,
+				E2B45A5621762D9B00F38E50 /* Databases */,
+				E2B45A4621761EB900F38E50 /* Extensions */,
+				E2B45A4421761E5C00F38E50 /* Helpers */,
 				91B6A7AB2143608B0033A045 /* App */,
 				91B6A7A9214360720033A045 /* Service Layer */,
 				B2091518214BA5D800C8B408 /* Presentation Layer */,
-				91B6A7BA2143621E0033A045 /* CoreDataModel.xcdatamodeld */,
 			);
 			path = DiveLane;
 			sourceTree = "<group>";
@@ -554,6 +572,7 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A5121762A2200F38E50 /* Contact */,
 				E2B45A302174D1E100F38E50 /* TokenInfo */,
 				E2B45A2B2174D1CC00F38E50 /* Animators */,
 				B2E668DD2151237400C3CC2D /* Sending */,
@@ -565,13 +584,6 @@
 				9197F2F42143BBFF00C358AA /* Wallet */,
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
 				9197F2DB2143B56400C358AA /* Onboarding */,
-				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
-				E2724B98215ABD9100E99901 /* Constants.swift */,
-				E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */,
-				91B6A7C7214368470033A045 /* Parameter.swift */,
-				91B6A7CD214370F00033A045 /* URL.swift */,
-				E2EBA093215A8C41001755A4 /* DesignElements.swift */,
-				E2EBA091215A8ACF001755A4 /* Colors.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -582,8 +594,8 @@
 				91B6A7AC214360F90033A045 /* Web3Service.swift */,
 				91B6A7BD2143649A0033A045 /* TransactionsService.swift */,
 				91B6A7B4214361AE0033A045 /* KeysService.swift */,
+				E2B45A5721762DC200F38E50 /* ContactsService.swift */,
 				914F229C2149C8F000ED58E6 /* BiometricsService.swift */,
-				91B6A7B2214361730033A045 /* LocalDatabase.swift */,
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
 				9197F3152143FD4100C358AA /* NetworkService.swift */,
 				914F228F21499EDD00ED58E6 /* KeychainService.swift */,
@@ -599,9 +611,6 @@
 			children = (
 				B2495E09215D0F48005B18F2 /* AppController */,
 				91B6A79621435F5D0033A045 /* AppDelegate.swift */,
-				E2B45A292174D08700F38E50 /* StringExtension.swift */,
-				91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */,
-				91B6A7D32143B2160033A045 /* FloatExtension.swift */,
 				91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */,
 				91B6A7A221435F5E0033A045 /* Info.plist */,
 				9197F2FA2143BD7E00C358AA /* Assets.xcassets */,
@@ -612,6 +621,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A4821761F1D00F38E50 /* Contacts */,
 				E2B45A332174D21100F38E50 /* Animations */,
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
@@ -625,7 +635,6 @@
 				9197F2EF2143B93400C358AA /* Wallet */,
 				9197F2E72143B66400C358AA /* WalletCreation */,
 				91B6A7E02143B3020033A045 /* AddWallet */,
-				9197F2E82143B75600C358AA /* Alerts.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -633,6 +642,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A4721761F0400F38E50 /* Contacts */,
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
@@ -839,6 +849,68 @@
 			path = TokenInfo;
 			sourceTree = "<group>";
 		};
+		E2B45A4421761E5C00F38E50 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				9197F2E82143B75600C358AA /* Alerts.swift */,
+				E2724B98215ABD9100E99901 /* Constants.swift */,
+				E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */,
+				91B6A7C7214368470033A045 /* Parameter.swift */,
+				91B6A7AE2143610C0033A045 /* ResultsAndErrors.swift */,
+				91B6A7CD214370F00033A045 /* URL.swift */,
+				E2EBA093215A8C41001755A4 /* DesignElements.swift */,
+				E2EBA091215A8ACF001755A4 /* Colors.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E2B45A4621761EB900F38E50 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				91B6A7D32143B2160033A045 /* FloatExtension.swift */,
+				E2B45A292174D08700F38E50 /* StringExtension.swift */,
+				91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */,
+				E2B45A592176330E00F38E50 /* SearchControllerExtension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E2B45A4721761F0400F38E50 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A4921761F4000F38E50 /* ContactsViewController.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		E2B45A4821761F1D00F38E50 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
+				E2B45A4D217620D500F38E50 /* ContactCell.swift */,
+				E2B45A4E217620D500F38E50 /* ContactCell.xib */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		E2B45A5121762A2200F38E50 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A5221762A3400F38E50 /* ContactModel.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		E2B45A5621762D9B00F38E50 /* Databases */ = {
+			isa = PBXGroup;
+			children = (
+				E2B45A5421762AD100F38E50 /* ContactsDatabase.swift */,
+				91B6A7B2214361730033A045 /* LocalDatabase.swift */,
+				91B6A7BA2143621E0033A045 /* CoreDataModel.xcdatamodeld */,
+			);
+			path = Databases;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -974,10 +1046,12 @@
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
+				E2B45A4C21761F4000F38E50 /* ContactsViewController.xib in Resources */,
 				B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */,
 				B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */,
 				E2B45A3B2174D27E00F38E50 /* TokenInfoViewController.xib in Resources */,
 				91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */,
+				E2B45A50217620D500F38E50 /* ContactCell.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 				91E72552214FDD1E003FAD76 /* SearchTokenViewController.xib in Resources */,
@@ -1096,11 +1170,13 @@
 			files = (
 				B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */,
 				E2B45A3C2174D27E00F38E50 /* TokenInfoCell.swift in Sources */,
+				E2B45A5321762A3400F38E50 /* ContactModel.swift in Sources */,
 				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
 				914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */,
 				B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */,
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				E2B45A3F2174D29200F38E50 /* TokenInfoControllerRaws.swift in Sources */,
+				E2B45A5821762DC200F38E50 /* ContactsService.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				E2B45A2F2174D1CD00F38E50 /* DismissAnimator.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
@@ -1114,6 +1190,7 @@
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
 				E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
+				E2B45A5A2176330E00F38E50 /* SearchControllerExtension.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91E7256221506700003FAD76 /* TokensService.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
@@ -1121,6 +1198,7 @@
 				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
 				91E72556214FE104003FAD76 /* SearchTokenCell.swift in Sources */,
 				914F229021499EDD00ED58E6 /* KeychainService.swift in Sources */,
+				E2B45A5521762AD100F38E50 /* ContactsDatabase.swift in Sources */,
 				914F229D2149C8F000ED58E6 /* BiometricsService.swift in Sources */,
 				B2E668D82150FA0500C3CC2D /* TokenDropdownManager.swift in Sources */,
 				B2E668D12150ED6000C3CC2D /* WalletCellDropdown.swift in Sources */,
@@ -1157,12 +1235,14 @@
 				B271CF9B214BAEDB0023FC18 /* TransactionCell.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreateWalletPincodeViewController.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
+				E2B45A4F217620D500F38E50 /* ContactCell.swift in Sources */,
 				E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */,
 				B2495E0D215D0FF0005B18F2 /* EIP681Model.swift in Sources */,
 				B2E668D62150F9F700C3CC2D /* WalletDropdownMarager.swift in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
+				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
 				91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */,
 				91B6A7BE2143649A0033A045 /* TransactionsService.swift in Sources */,
 				91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */,
