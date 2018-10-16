@@ -83,7 +83,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         }
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
-            if let privateKey = KeysService().getWalletPrivateKey(for: KeysService().selectedWallet()!, password: passwordText) {
+            if KeysService().getWalletPrivateKey(for: KeysService().selectedWallet()!, password: passwordText) != nil {
 
                 self.send(withPassword: passwordText)
 
@@ -125,17 +125,17 @@ class SendArbitraryTransactionViewController: UIViewController {
 
     func goToApp() -> UITabBarController {
 
-        var nav1 = UINavigationController()
-        var first = WalletViewController(nibName: nil, bundle: nil)
+        let nav1 = UINavigationController()
+        let first = WalletViewController(nibName: nil, bundle: nil)
         nav1.viewControllers = [first]
         nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "wallet"), tag: 1)
 
-        var nav2 = UINavigationController()
-        var second = SettingsViewController(nibName: nil, bundle: nil)
+        let nav2 = UINavigationController()
+        let second = SettingsViewController(nibName: nil, bundle: nil)
         nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "settings"), tag: 2)
 
-        var tabs = UITabBarController()
+        let tabs = UITabBarController()
         tabs.viewControllers = [nav1, nav2]
 
         return tabs
