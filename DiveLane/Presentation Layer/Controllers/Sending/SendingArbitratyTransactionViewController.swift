@@ -25,7 +25,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     init(params: [Parameter], transactionInfo: TransactionInfo) {
         self.params = params
         self.transactionInfo = transactionInfo
-        CurrentToken.currentToken = ERC20TokenModel(name: "Ether", address: "", decimals: "18", symbol: "Eth")
+        CurrentToken.currentToken = ERC20TokenModel(isEther: true)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -75,7 +75,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     }
 
     func enterPassword() {
-        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertControllerStyle.alert)
+        let alert = UIAlertController(title: "Send transaction", message: nil, preferredStyle: UIAlertController.Style.alert)
 
         alert.addTextField { (textField) in
             textField.isSecureTextEntry = true
@@ -83,7 +83,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         }
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
-            if let privateKey = KeysService().getWalletPrivateKey(password: passwordText) {
+            if KeysService().getWalletPrivateKey(for: KeysService().selectedWallet()!, password: passwordText) != nil {
 
                 self.send(withPassword: passwordText)
 
@@ -104,7 +104,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     }
 
     func send(withPassword password: String) {
-        guard let destinationAddress = contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+        guard (contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) != nil else {
             return
         }
         TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: password) { (result) in
@@ -125,17 +125,17 @@ class SendArbitraryTransactionViewController: UIViewController {
 
     func goToApp() -> UITabBarController {
 
-        var nav1 = UINavigationController()
-        var first = WalletViewController(nibName: nil, bundle: nil)
+        let nav1 = UINavigationController()
+        let first = WalletViewController(nibName: nil, bundle: nil)
         nav1.viewControllers = [first]
-        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "user"), tag: 1)
+        nav1.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "wallet"), tag: 1)
 
-        var nav2 = UINavigationController()
-        var second = SettingsViewController(nibName: nil, bundle: nil)
+        let nav2 = UINavigationController()
+        let second = SettingsViewController(nibName: nil, bundle: nil)
         nav2.viewControllers = [second]
         nav2.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "settings"), tag: 2)
 
-        var tabs = UITabBarController()
+        let tabs = UITabBarController()
         tabs.viewControllers = [nav1, nav2]
 
         return tabs

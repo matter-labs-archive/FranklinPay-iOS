@@ -8,6 +8,7 @@
 
 import Foundation
 import web3swift
+import Alamofire
 import struct BigInt.BigUInt
 
 protocol ITokensService {
@@ -102,7 +103,7 @@ class TokensService {
 
     private func getOnlineTokensList(with address: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
 
-        guard let _ = EthereumAddress(address) else {
+        guard EthereumAddress(address) != nil else {
             completion(nil)
             return
         }
@@ -164,29 +165,31 @@ class TokensService {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
-            if let data = data {
-                do {
-                    if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
-                        let dictsCount = jsonSerialized.count
-                        var counter = 0
-                        try jsonSerialized.forEach({ (dict) in
-                            counter += 1
-                            LocalDatabase().saveToken(from: dict, completion: { (_) in
-                                if counter == dictsCount {
-                                    completion(nil)
-                                }
-                            })
-                        })
-                    }
-                } catch {
-                    completion(error)
-                }
-            } else {
-                completion(error)
-            }
-        }
-        task.resume()
+		Alamofire.request(url).responseJSON { response in
+			guard response.result.isSuccess else {
+				completion(response.result.error!)
+				return
+			}
+
+			guard response.data != nil else {
+				completion(response.result.error!)
+				return
+			}
+				guard let value = response.result.value as? [[String: Any]] else {
+					completion(response.result.error!)
+					return
+				}
+				let dictsCount = value.count
+				var counter = 0
+				value.forEach({ (dict) in
+					counter += 1
+					LocalDatabase().saveToken(from: dict, completion: {(_) in
+						if counter == dictsCount {
+							completion(nil)
+						}
+					})
+				})
+		}
     }
 
     func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?) -> Void) {

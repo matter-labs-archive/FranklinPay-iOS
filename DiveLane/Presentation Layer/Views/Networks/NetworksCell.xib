@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,7 +20,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Networks" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5dz-8Z-QQd">
-                        <rect key="frame" x="36" y="12" width="73" height="21"/>
+                        <rect key="frame" x="36" y="11.5" width="73" height="21"/>
                         <constraints>
                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="73" id="lsd-Ab-Toc"/>
                         </constraints>
@@ -29,16 +28,29 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SuccessIcon" translatesAutoresizingMaskIntoConstraints="NO" id="OHm-Oq-GTh">
+                        <rect key="frame" x="275" y="9.5" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="OHm-Oq-GTh" secondAttribute="height" multiplier="1:1" id="SZL-Vy-kdV"/>
+                            <constraint firstAttribute="width" constant="25" id="sf4-ep-v6k"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="OHm-Oq-GTh" firstAttribute="centerY" secondItem="5dz-8Z-QQd" secondAttribute="centerY" id="BUt-uk-qsj"/>
                     <constraint firstItem="5dz-8Z-QQd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="LAI-at-BFg"/>
                     <constraint firstItem="5dz-8Z-QQd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="20" id="Ste-cQ-Av3"/>
+                    <constraint firstAttribute="trailing" secondItem="OHm-Oq-GTh" secondAttribute="trailing" constant="20" id="c1q-dq-aIK"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="networkLabel" destination="5dz-8Z-QQd" id="wOw-k0-yA5"/>
+                <outlet property="successIcon" destination="OHm-Oq-GTh" id="YYw-mD-9kW"/>
             </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="SuccessIcon" width="34" height="34"/>
+    </resources>
 </document>

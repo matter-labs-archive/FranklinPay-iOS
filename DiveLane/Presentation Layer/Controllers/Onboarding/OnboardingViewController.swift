@@ -11,7 +11,8 @@ import UIKit
 class OnboardingViewController: UIViewController {
 
     var pageViewController: UIPageViewController!
-    let onboardingBtn = UIButton(type: .system)
+    let nextBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
+    let skipBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,17 +37,22 @@ class OnboardingViewController: UIViewController {
                 direction: .forward,
                 animated: true,
                 completion: nil)
-        self.addChildViewController(self.pageViewController)
+        self.addChild(self.pageViewController)
 
-        self.onboardingBtn.addTarget(self,
+        self.nextBtn.addTarget(self,
                 action: #selector(onboardingAction(sender:)),
                 for: .touchUpInside)
-        self.onboardingBtn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        self.onboardingBtn.setTitle("NEXT", for: .normal)
+        self.nextBtn.setImage(UIImage(named: "next"), for: .normal)
+
+        self.skipBtn.addTarget(self,
+                               action: #selector(skipAction(sender:)),
+                               for: .touchUpInside)
+        self.skipBtn.setImage(UIImage(named: "skip"), for: .normal)
 
         let views = [
             "pg": self.pageViewController.view,
-            "btn": onboardingBtn
+            "next": nextBtn,
+            "skip": skipBtn
         ]
         for (_, v) in views {
             v?.translatesAutoresizingMaskIntoConstraints = false
@@ -55,35 +61,41 @@ class OnboardingViewController: UIViewController {
 
         NSLayoutConstraint.activate(
                 [NSLayoutConstraint(
-                        item: self.onboardingBtn,
-                        attribute: .centerX,
-                        relatedBy: .equal,
-                        toItem: self.view,
-                        attribute: .centerX,
-                        multiplier: 1,
-                        constant: 0)
+                                    item: self.nextBtn,
+                                    attribute: .centerX,
+                                    relatedBy: .equal,
+                                    toItem: self.view,
+                                    attribute: .centerX,
+                                    multiplier: 1,
+                                    constant: 0)
                 ] +
-                        NSLayoutConstraint.constraints(withVisualFormat: "H:|[pg]|",
-                                options: .alignAllCenterX,
-                                metrics: [:],
-                                views: views) +
-                        NSLayoutConstraint.constraints(withVisualFormat: "V:|-30-[pg]-[btn]-50-|",
-                                options: .alignAllCenterX,
-                                metrics: [:],
-                                views: views)
+                [NSLayoutConstraint(
+                                    item: self.skipBtn,
+                                    attribute: .centerX,
+                                    relatedBy: .equal,
+                                    toItem: self.view,
+                                    attribute: .centerX,
+                                    multiplier: 1,
+                                    constant: 0)
+                ] +
+                NSLayoutConstraint.constraints(withVisualFormat: "H:|-[pg]-|",
+                                               options: .alignAllCenterX,
+                                               metrics: [:],
+                                               views: views) +
+                NSLayoutConstraint.constraints(withVisualFormat: "V:|-[pg]-30-[next]-30-[skip]-105-|",
+                                               options: .alignAllCenterX,
+                                               metrics: [:],
+                                               views: views)
         )
 
-        self.pageViewController.didMove(toParentViewController: self)
+        self.pageViewController.didMove(toParent: self)
     }
 
     @objc func onboardingAction(sender: UIButton) {
         if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
             switch vc.pageIndex {
             case 2:
-                UserDefaults.standard.set(true, forKey: "isOnboardingPassed")
-                let navViewController = addWallet()
-                navViewController.view.backgroundColor = UIColor.white
-                self.present(navViewController, animated: true, completion: nil)
+                goToApp()
             default:
                 self.pageViewController.setViewControllers([self.viewControllerAtIndex(index: vc.pageIndex + 1)],
                         direction: .forward,
@@ -92,6 +104,17 @@ class OnboardingViewController: UIViewController {
             }
         }
 
+    }
+
+    func goToApp() {
+        UserDefaults.standard.set(true, forKey: "isOnboardingPassed")
+        let navViewController = addWallet()
+        navViewController.view.backgroundColor = UIColor.white
+        self.present(navViewController, animated: true, completion: nil)
+    }
+
+    @objc func skipAction(sender: UIButton) {
+        goToApp()
     }
 
     func viewControllerAtIndex(index: Int) -> OnboardingContentViewController {
@@ -106,9 +129,9 @@ class OnboardingViewController: UIViewController {
     func changeOnboardingButtonTitle(for page: Int) {
         switch page {
         case 2:
-            self.onboardingBtn.setTitle("LETS GO!", for: .normal)
+            self.nextBtn.setTitle("LETS GO!", for: .normal)
         default:
-            self.onboardingBtn.setTitle("NEXT", for: .normal)
+            self.nextBtn.setTitle("NEXT", for: .normal)
         }
     }
 
@@ -118,7 +141,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         let vc = (viewController as? OnboardingContentViewController)!
         var index = vc.pageIndex as Int
-        if (index == 0 || index == NSNotFound) {
+        if index == 0 || index == NSNotFound {
             return nil
         }
         index -= 1
@@ -128,11 +151,11 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         let vc = (viewController as? OnboardingContentViewController)!
         var index = vc.pageIndex as Int
-        if (index == NSNotFound) {
+        if index == NSNotFound {
             return nil
         }
         index += 1
-        if (index == PAGES.count) {
+        if index == PAGES.count {
             return nil
         }
         return self.viewControllerAtIndex(index: index)
@@ -142,7 +165,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
         guard let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController else {
             return 0
         }
-        changeOnboardingButtonTitle(for: vc.pageIndex)
+        //changeOnboardingButtonTitle(for: vc.pageIndex)
         return vc.pageIndex
 
     }
@@ -153,9 +176,9 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
 
-        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
-            changeOnboardingButtonTitle(for: vc.pageIndex)
-        }
+//        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
+//            //changeOnboardingButtonTitle(for: vc.pageIndex)
+//        }
     }
 
 }

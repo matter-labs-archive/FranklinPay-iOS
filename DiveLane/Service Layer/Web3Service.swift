@@ -107,7 +107,7 @@ class Web3SwiftService: IWeb3SwiftService {
                               completion: @escaping (String?, Error?) -> Void) {
         DispatchQueue.global().async {
 
-            let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
+            _ = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
             guard let ethAddress = EthereumAddress(address) else {
                 DispatchQueue.main.async {
                     completion(nil, BalanceError.wrongAddress)

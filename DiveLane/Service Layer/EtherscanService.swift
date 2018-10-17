@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class EtherscanService {
     func getAbi(forContractAddress contractAddress: String, completion: @escaping(Result<String>) -> Void) {
@@ -15,46 +16,39 @@ class EtherscanService {
             completion(Result.Error(NetworkErrors.couldnotParseUrlString))
             return
         }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
-            if let error = error {
-                DispatchQueue.main.async {
-                    completion(Result.Error(error))
-                }
-                return
-            }
-            if let data = data {
-                do {
-                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] else {
-                        DispatchQueue.main.async {
-                            completion(Result.Error(NetworkErrors.couldnotParseJSON))
-                        }
-                        return
-                    }
-                    if let message = json["message"], message == "OK", let abi = json["result"] {
-                        DispatchQueue.main.async {
-                            completion(Result.Success(abi))
-                        }
-                    } else {
-                        DispatchQueue.main.async {
-                            completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
-                        }
-                    }
-                } catch {
-                    DispatchQueue.main.async {
-                        completion(Result.Error(error))
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
-                }
-            }
 
-        }
-        dataTask.resume()
+		Alamofire.request(url, method: .get).responseJSON { response in
+			guard response.result.isSuccess else {
+				DispatchQueue.main.async {
+					completion(Result.Error(response.result.error!))
+				}
+				return
+			}
 
+			guard response.data != nil else {
+				DispatchQueue.main.async {
+					completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
+				}
+				return
+			}
+
+			guard let value = response.result.value as? [String: String] else {
+				DispatchQueue.main.async {
+					completion(Result.Error(NetworkErrors.couldnotParseJSON))
+				}
+				return
+			}
+
+			guard let message = value["message"], message == "OK", let abi = value["result"] else {
+				DispatchQueue.main.async {
+					completion(Result.Error(NetworkErrors.noSuchAPIOnTheEtherscan))
+				}
+				return
+			}
+			DispatchQueue.main.async {
+				completion(Result.Success(abi))
+			}
+		}
     }
 }
 
