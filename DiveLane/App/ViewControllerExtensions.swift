@@ -56,5 +56,4 @@ extension UIViewController {
             debugPrint("We're about to hide the keyboard and the keyboard size is nil. Now is the rapture.")
         }
     }
-
 }
