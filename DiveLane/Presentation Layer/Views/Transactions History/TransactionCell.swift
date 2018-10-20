@@ -8,12 +8,23 @@
 
 import UIKit
 
+protocol LongPressDelegate: class {
+    func didLongPressCell(transaction: ETHTransactionModel?)
+}
+
 class TransactionCell: UITableViewCell {
+
+    enum Constants {
+        static let minimumPressDuration = Double(0.5)
+    }
 
     @IBOutlet weak var amountLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var transactionTypeLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
+
+    weak var longPressDelegate: LongPressDelegate?
+    private var transaction: ETHTransactionModel?
 
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
@@ -21,7 +32,13 @@ class TransactionCell: UITableViewCell {
         return dateFormatter
     }()
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        addGestureRecognizer(longPressGesture())
+    }
+
     func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: KeyWalletModel) {
+        transaction = model
         amountLabel.text = model.amount + " " + (model.token?.symbol.uppercased() ?? "ETH")
         if model.from.lowercased() == currentWalet.address.lowercased() {
             //Sent
@@ -33,6 +50,16 @@ class TransactionCell: UITableViewCell {
             addressLabel.text = "From:" + model.from
         }
         timeLabel.text = dateFormatter.string(from: model.date)
+    }
+
+    func longPressGesture() -> UILongPressGestureRecognizer {
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressAction))
+        longPress.minimumPressDuration = Constants.minimumPressDuration
+        return longPress
+    }
+
+    @objc func longPressAction(_ sender: UILongPressGestureRecognizer) {
+        longPressDelegate?.didLongPressCell(transaction: transaction)
     }
 
 }
