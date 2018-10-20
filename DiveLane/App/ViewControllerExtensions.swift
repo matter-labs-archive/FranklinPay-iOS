@@ -58,13 +58,3 @@ extension UIViewController {
     }
 
 }
-
-extension UIViewController {
-    func topViewController() -> UIViewController? {
-        var topController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
-        while (topController?.presentedViewController != nil) {
-            topController = topController?.presentedViewController
-        }
-        return topController
-    }
-}

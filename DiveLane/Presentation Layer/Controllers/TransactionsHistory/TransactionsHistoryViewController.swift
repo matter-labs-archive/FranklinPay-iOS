@@ -198,4 +198,12 @@ extension TransactionsHistoryViewController: LongPressDelegate {
         guard let topController = self.topViewController() else { return }
         topController.present(navigationController, animated: true, completion: nil)
     }
+
+    private func topViewController() -> UIViewController? {
+        var topController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        while topController?.presentedViewController != nil {
+            topController = topController?.presentedViewController
+        }
+        return topController
+    }
 }
