@@ -8,10 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		136DD30C216A3F5600F554F0 /* TransactionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD30B216A3F5600F554F0 /* TransactionInfoController.swift */; };
-		136DD30E216A402100F554F0 /* MaterialLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD30D216A402100F554F0 /* MaterialLabel.swift */; };
-		136DD313216A408A00F554F0 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD312216A408A00F554F0 /* UIView+Extensions.swift */; };
-		13FB98292170B8BF008F1E4E /* TransactionInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13FB98282170B8BF008F1E4E /* TransactionInfoView.xib */; };
-		13FB982B2170BA81008F1E4E /* TransactionInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB982A2170BA81008F1E4E /* TransactionInfoView.swift */; };
+		13D3B0C2217C6F4C00C5507D /* TransactionInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */; };
+		13D3B0C5217C71A100C5507D /* TransactionInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */; };
+		13D3B0CC217C81DE00C5507D /* TransactionInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */; };
 		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F22862149800800ED58E6 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22852149800700ED58E6 /* AnimationController.swift */; };
@@ -146,10 +145,9 @@
 
 /* Begin PBXFileReference section */
 		136DD30B216A3F5600F554F0 /* TransactionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoController.swift; sourceTree = "<group>"; };
-		136DD30D216A402100F554F0 /* MaterialLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaterialLabel.swift; sourceTree = "<group>"; };
-		136DD312216A408A00F554F0 /* UIView+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		13FB98282170B8BF008F1E4E /* TransactionInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionInfoView.xib; sourceTree = "<group>"; };
-		13FB982A2170BA81008F1E4E /* TransactionInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoView.swift; sourceTree = "<group>"; };
+		13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionInfoController.xib; sourceTree = "<group>"; };
+		13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoCell.swift; sourceTree = "<group>"; };
+		13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoCell.xib; sourceTree = "<group>"; };
 		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -319,9 +317,9 @@
 		136DD30F216A402A00F554F0 /* TransactionInfo */ = {
 			isa = PBXGroup;
 			children = (
-				136DD30D216A402100F554F0 /* MaterialLabel.swift */,
-				13FB982A2170BA81008F1E4E /* TransactionInfoView.swift */,
-				13FB98282170B8BF008F1E4E /* TransactionInfoView.xib */,
+				13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */,
+				13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */,
+				13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */,
 			);
 			path = TransactionInfo;
 			sourceTree = "<group>";
@@ -627,7 +625,6 @@
 				91B6A79621435F5D0033A045 /* AppDelegate.swift */,
 				91B6A7D12143B1E80033A045 /* ViewControllerExtensions.swift */,
 				91B6A7D32143B2160033A045 /* FloatExtension.swift */,
-				136DD312216A408A00F554F0 /* UIView+Extensions.swift */,
 				91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */,
 				91B6A7A221435F5E0033A045 /* Info.plist */,
 				9197F2FA2143BD7E00C358AA /* Assets.xcassets */,
@@ -983,7 +980,6 @@
 				914F228B21499ACC00ED58E6 /* CreateWalletPincodeViewController.xib in Resources */,
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
-				13FB98292170B8BF008F1E4E /* TransactionInfoView.xib in Resources */,
 				B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */,
 				B2E668D22150ED6000C3CC2D /* WalletCellDropdown.xib in Resources */,
 				B2091513214AA58100C8B408 /* MnemonicsViewController.xib in Resources */,
@@ -997,10 +993,12 @@
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 				91E72552214FDD1E003FAD76 /* SearchTokenViewController.xib in Resources */,
+				13D3B0CC217C81DE00C5507D /* TransactionInfoCell.xib in Resources */,
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
 				E20DEEC32162CD3300CA492E /* TokenInfoViewController.xib in Resources */,
+				13D3B0C2217C6F4C00C5507D /* TransactionInfoController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1127,12 +1125,10 @@
 				B271CF93214BAD4F0023FC18 /* TransactionsHistoryService.swift in Sources */,
 				914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */,
 				E2EBA092215A8ACF001755A4 /* Colors.swift in Sources */,
-				136DD313216A408A00F554F0 /* UIView+Extensions.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				91E7256221506700003FAD76 /* TokensService.swift in Sources */,
 				91B6A7C2214365890033A045 /* Transaction.swift in Sources */,
-				13FB982B2170BA81008F1E4E /* TransactionInfoView.swift in Sources */,
 				E20DEEC22162CD3300CA492E /* TokenInfoViewController.swift in Sources */,
 				9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */,
 				91B6A7AF2143610C0033A045 /* ResultsAndErrors.swift in Sources */,
@@ -1152,7 +1148,6 @@
 				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
-				136DD30E216A402100F554F0 /* MaterialLabel.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				91E7256421507D16003FAD76 /* FiatService.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
@@ -1167,6 +1162,7 @@
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
 				9197F3162143FD4100C358AA /* NetworkService.swift in Sources */,
+				13D3B0C5217C71A100C5507D /* TransactionInfoCell.swift in Sources */,
 				9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */,
 				B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */,
 				914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */,

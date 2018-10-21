@@ -182,7 +182,9 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
         tableView.deselectRow(at: indexPath, animated: true)
 
         let transaction = transactions[indexPath.section][indexPath.row]
-        let transactionInfoVC = TransactionInfoController(transaction: transaction)
+
+        let transactionInfoVC = TransactionInfoController(nibName: TransactionInfoController.nibName, bundle: nil)
+        transactionInfoVC.transactionModel = transaction
         navigationController?.pushViewController(transactionInfoVC, animated: true)
     }
 

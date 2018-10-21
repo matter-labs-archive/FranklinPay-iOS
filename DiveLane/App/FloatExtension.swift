@@ -14,9 +14,3 @@ public extension Float {
         return (multiplier * self).rounded() / multiplier
     }
 }
-
-public extension CGFloat {
-    static var zero: CGFloat {
-        return 0.0
-    }
-}
