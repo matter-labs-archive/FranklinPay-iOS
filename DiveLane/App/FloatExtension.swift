@@ -6,7 +6,7 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 public extension Float {
     func roundToDecimals(decimals: Int = 2) -> Float {
