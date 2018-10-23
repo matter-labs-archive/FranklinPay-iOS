@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */; };
+		130C88EC217BC86600FC165C /* TransactionInfoWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */; };
 		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
@@ -149,6 +151,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoWebController.swift; sourceTree = "<group>"; };
+		130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoWebController.xib; sourceTree = "<group>"; };
 		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -316,6 +320,24 @@
 			);
 			name = Pods;
 			sourceTree = "<group>";
+		};
+		130C88E7217BC83700FC165C /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */,
+			);
+			name = TransactionInfoWeb;
+			path = "DiveLane/Presentation Layer/Controllers/TransactionInfoWeb";
+			sourceTree = SOURCE_ROOT;
+		};
+		130C88EA217BC86600FC165C /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */,
+			);
+			name = TransactionInfoWeb;
+			path = "DiveLane/Presentation Layer/Views/TransactionInfoWeb";
+			sourceTree = SOURCE_ROOT;
 		};
 		1CF54A73215CCF0E009CC78F /* DiveLaneTests */ = {
 			isa = PBXGroup;
@@ -631,6 +653,7 @@
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
+				130C88EA217BC86600FC165C /* TransactionInfoWeb */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
@@ -652,6 +675,7 @@
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
+				130C88E7217BC83700FC165C /* TransactionInfoWeb */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
@@ -1057,6 +1081,7 @@
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				B271CF9C214BAEDB0023FC18 /* TransactionCell.xib in Resources */,
+				130C88EC217BC86600FC165C /* TransactionInfoWebController.xib in Resources */,
 				B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */,
 				914F228B21499ACC00ED58E6 /* CreateWalletPincodeViewController.xib in Resources */,
 				E2B45A3A2174D27E00F38E50 /* TokenInfoCell.xib in Resources */,
@@ -1234,6 +1259,7 @@
 				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
 				E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */,
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
+				130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				E2B45A352174D21100F38E50 /* AnimationController.swift in Sources */,
