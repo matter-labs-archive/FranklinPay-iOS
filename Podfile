@@ -10,5 +10,6 @@ target 'DiveLane' do
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'Alamofire', '~> 4.7'
+  pod 'PlasmaSwiftLib'
 
 end
