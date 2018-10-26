@@ -11,6 +11,7 @@ import UIKit
 class WalletViewController: UIViewController {
 
     @IBOutlet weak var walletTableView: UITableView!
+    @IBOutlet weak var blockchainControl: UISegmentedControl!
 
     let conversionService = FiatServiceImplementation.service
 
@@ -62,9 +63,7 @@ class WalletViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        initDatabase { [weak self] in
-            self?.updateData()
-        }
+        updateTable()
     }
 
     func unselectAll() {
@@ -99,34 +98,17 @@ class WalletViewController: UIViewController {
         })
     }
 
-    func updateData() {
-        twoDimensionalTokensArray.removeAll()
-        getTokensList { [weak self] in
-            DispatchQueue.main.async {
-                self?.walletTableView.reloadData()
-                self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
-            }
-//            guard let tokensArray = self?.twoDimensionalTokensArray else {
-//                return
-//            }
-//            for wallet in tokensArray {
-//                for token in wallet.tokens {
-//                    TokensService().updateConversion(for: token.token, completion: { (_) in
-//                        if token == wallet.tokens.last {
-//                            DispatchQueue.main.async {
-//                                self?.walletTableView.reloadData()
-//                            }
-//                        }
-//                    })
-//                }
-//            }
-        }
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        updateTable()
     }
 
-    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        initDatabase { [weak self] in
-            self?.updateData()
-            refreshControl.endRefreshing()
+    func updateTable() {
+        twoDimensionalTokensArray.removeAll()
+        switch blockchainControl.selectedSegmentIndex {
+        case 0:
+            updateEtherBlockchain()
+        default:
+            updatePlasmaBlockchain()
         }
     }
 
@@ -148,7 +130,7 @@ class WalletViewController: UIViewController {
         self.navigationController?.pushViewController(addWalletViewController, animated: true)
     }
 
-    func getTokensList(completion: @escaping () -> Void) {
+    func getTokensListForEtherBlockchain(completion: @escaping () -> Void) {
         guard let wallets = wallets else {
             return
         }
@@ -170,6 +152,42 @@ class WalletViewController: UIViewController {
                 completion()
             }
         }
+    }
+
+    func updatePlasmaBlockchain() {
+        guard let wallets = wallets else {
+            return
+        }
+        for wallet in wallets {
+            let plasmaToken = ERC20TokenModel(name: "Matter Plasma Ether", address: "", decimals: "18", symbol: "ETH")
+            let tokens = [plasmaToken]
+            let expandableTokens = ExpandableTableTokens(isExpanded: true,
+                                                         tokens: tokens.map {
+                                                            TableToken(token: $0,
+                                                                       inWallet: wallet,
+                                                                       isSelected: ($0.name == plasmaToken.name))
+            })
+            twoDimensionalTokensArray.append(expandableTokens)
+            refreshControl.endRefreshing()
+            walletTableView.reloadData()
+        }
+    }
+
+    func updateEtherBlockchain() {
+        initDatabase { [weak self] in
+            self?.twoDimensionalTokensArray.removeAll()
+            self?.getTokensListForEtherBlockchain { [weak self] in
+                DispatchQueue.main.async {
+                    self?.refreshControl.endRefreshing()
+                    self?.walletTableView.reloadData()
+                    self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
+                }
+            }
+        }
+    }
+
+    @IBAction func blockchainChanged(_ sender: UISegmentedControl) {
+        updateTable()
     }
 
 }
@@ -296,9 +314,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
                 forNetwork: networkID,
                 completion: { [weak self] (error) in
                 if error == nil {
-                    self?.initDatabase {
-                        self?.updateData()
-                    }
+                    self?.updateTable()
                 }
             })
         }
