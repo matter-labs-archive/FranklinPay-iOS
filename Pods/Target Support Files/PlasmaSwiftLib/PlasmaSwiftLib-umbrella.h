@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "PlasmaSwiftLib.h"
 
 FOUNDATION_EXPORT double PlasmaSwiftLibVersionNumber;
 FOUNDATION_EXPORT const unsigned char PlasmaSwiftLibVersionString[];

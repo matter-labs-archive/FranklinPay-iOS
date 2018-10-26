@@ -9,8 +9,8 @@
 import Foundation
 import BigInt
 
-extension Transaction {
-    func mergeOutputs(untilMaxAmount: BigUInt) -> Transaction? {
+public extension Transaction {
+    public func mergeOutputs(untilMaxAmount: BigUInt) -> Transaction? {
         let receiverAddress = self.outputs[0].receiverEthereumAddress
         
         var sortedOutputs: Array<TransactionOutput> = self.outputs.sorted { $0.amount <= $1.amount }
@@ -47,7 +47,7 @@ extension Transaction {
         return fixedTx
     }
     
-    func mergeOutputs(forMaxNumber: BigUInt) -> Transaction? {
+    public func mergeOutputs(forMaxNumber: BigUInt) -> Transaction? {
         let outputsCount = BigUInt(self.outputs.count)
         guard forMaxNumber < outputsCount && forMaxNumber != 0 else {return nil}
         let outputsCountToMerge: BigUInt = outputsCount - forMaxNumber + 1

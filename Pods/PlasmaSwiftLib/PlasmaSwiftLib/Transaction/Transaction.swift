@@ -63,7 +63,7 @@ public class Transaction {
         self.outputs = [TransactionOutput]()
     }
     
-    public init?(txType: TransactionType, inputs: Array<TransactionInput>, outputs: Array<TransactionOutput>){
+    public init?(txType: TransactionType, inputs: Array<TransactionInput>, outputs: Array<TransactionOutput>) {
         guard inputs.count <= inputsArrayMax else {return nil}
         guard outputs.count <= outputsArrayMax else {return nil}
         
@@ -114,7 +114,7 @@ public class Transaction {
             if let signature = signature(privateKey: privateKey, useExtraEntropy: useExtraEntropy) {
                 var v = BigUInt(signature.v)
                 if (v < 27) {
-                    v = v + BigUInt(27)
+                    v += BigUInt(27)
                 }
                 let r = signature.r
                 let s = signature.s

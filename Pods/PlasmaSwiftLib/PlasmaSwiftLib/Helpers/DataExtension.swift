@@ -22,7 +22,7 @@ public extension Data {
         }
     }
     
-    public func constantTimeComparisonTo(_ other:Data?) -> Bool {
+    public func constantTimeComparisonTo(_ other: Data?) -> Bool {
         guard let rhs = other else {return false}
         guard self.count == rhs.count else {return false}
         var difference = UInt8(0x00)
@@ -67,8 +67,7 @@ public extension Data {
         return Data(array)
     }
     
-    
-    func bitsInRange(_ startingBit:Int, _ length:Int) -> UInt64? { //return max of 8 bytes for simplicity, non-public
+    func bitsInRange(_ startingBit: Int, _ length: Int) -> UInt64? { //return max of 8 bytes for simplicity, non-public
         if startingBit + length / 8 > self.count, length > 64, startingBit > 0, length >= 1 {return nil}
         let bytes = self[(startingBit/8) ..< (startingBit+length+7)/8]
         let padding = Data(repeating: 0, count: 8 - bytes.count)
@@ -82,14 +81,14 @@ public extension Data {
 }
 
 extension Data {
-    func setLengthLeft(_ toBytes: UInt64, isNegative:Bool = false ) -> Data? {
+    func setLengthLeft(_ toBytes: UInt64, isNegative: Bool = false ) -> Data? {
         let existingLength = UInt64(self.count)
         if (existingLength == toBytes) {
             return Data(self)
         } else if (existingLength > toBytes) {
             return nil
         }
-        var data:Data
+        var data: Data
         if (isNegative) {
             data = Data(repeating: UInt8(255), count: Int(toBytes - existingLength))
         } else {
@@ -99,19 +98,19 @@ extension Data {
         return data
     }
     
-    func setLengthRight(_ toBytes: UInt64, isNegative:Bool = false ) -> Data? {
+    func setLengthRight(_ toBytes: UInt64, isNegative: Bool = false ) -> Data? {
         let existingLength = UInt64(self.count)
         if (existingLength == toBytes) {
             return Data(self)
         } else if (existingLength > toBytes) {
             return nil
         }
-        var data:Data = Data()
+        var data: Data = Data()
         data.append(self)
         if (isNegative) {
             data.append(Data(repeating: UInt8(255), count: Int(toBytes - existingLength)))
         } else {
-            data.append(Data(repeating: UInt8(0), count:Int(toBytes - existingLength)))
+            data.append(Data(repeating: UInt8(0), count: Int(toBytes - existingLength)))
         }
         return data
     }

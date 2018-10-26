@@ -5,11 +5,20 @@ PODS:
   - Crashlytics (3.11.0):
     - Fabric (~> 1.8.0)
   - CryptoSwift (0.13.0)
+  - EthereumABI (1.0.1):
+    - BigInt (~> 3.1)
+    - CryptoSwift (~> 0.13)
+    - EthereumAddress (~> 1.0.0)
+  - EthereumAddress (1.0.0):
+    - CryptoSwift (~> 0.13)
   - Fabric (1.8.0)
-  - PlasmaSwiftLib (1.0.0):
+  - PlasmaSwiftLib (1.0.5):
     - BigInt
     - CryptoSwift
+    - EthereumABI
+    - EthereumAddress
     - secp256k1_swift
+    - SipHash
     - SwiftRLP
   - PromiseKit (6.5.2):
     - PromiseKit/CorePromise (= 6.5.2)
@@ -41,7 +50,7 @@ DEPENDENCIES:
   - Alamofire (~> 4.7)
   - Crashlytics
   - Fabric
-  - PlasmaSwiftLib
+  - PlasmaSwiftLib (~> 1.0.5)
   - QRCodeReader.swift (~> 8.1.1)
   - web3swift (from `https://github.com/matterinc/web3swift`, branch `master`)
 
@@ -51,6 +60,8 @@ SPEC REPOS:
     - BigInt
     - Crashlytics
     - CryptoSwift
+    - EthereumABI
+    - EthereumAddress
     - Fabric
     - PlasmaSwiftLib
     - PromiseKit
@@ -76,8 +87,10 @@ SPEC CHECKSUMS:
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: 1448070c1d2731ab71ea7c3faf84ac0f69657287
   CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
+  EthereumABI: 028d8b8b525e739d3ed3ef192ee559a288f6bcaa
+  EthereumAddress: f476e1320dca3a0024431e713ede7a09c7eb7796
   Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
-  PlasmaSwiftLib: 80db48766b5e2f3d4a21ea3bcb1fe46ddadb9755
+  PlasmaSwiftLib: 1ecd02220978184d0f343c3bd8bc3e734d64f7da
   PromiseKit: 27c1601bfb73405871b805bcb8cf7e55c4dad3db
   QRCodeReader.swift: b164a681887de276d405ff02bce854d82cd6360b
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
@@ -87,6 +100,6 @@ SPEC CHECKSUMS:
   SwiftRLP: 5512899925f1a9e1c78c902ed3bf857880e814a0
   web3swift: d80d1b9a3feca16e614acec9eea47ec26310d37d
 
-PODFILE CHECKSUM: 7f322045366d9888038bc5be08a111034c6e9fa1
+PODFILE CHECKSUM: af63e3e3106769373afd1a514e0698f69eb9e0d7
 
 COCOAPODS: 1.6.0.beta.1

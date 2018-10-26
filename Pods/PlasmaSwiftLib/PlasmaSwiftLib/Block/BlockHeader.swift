@@ -23,7 +23,7 @@ public struct BlockHeader {
         return self.serialize()
     }
     
-    public init?(blockNumber: BigUInt, numberOfTxInBlock: BigUInt, parentHash: Data, merkleRootOfTheTxTree: Data, v: BigUInt, r: Data, s: Data){
+    public init?(blockNumber: BigUInt, numberOfTxInBlock: BigUInt, parentHash: Data, merkleRootOfTheTxTree: Data, v: BigUInt, r: Data, s: Data) {
         guard blockNumber.bitWidth <= blockNumberMaxWidth else {return nil}
         guard numberOfTxInBlock.bitWidth <= numberOfTxInBlockMaxWidth else {return nil}
         guard parentHash.count == parentHashByteLength else {return nil}

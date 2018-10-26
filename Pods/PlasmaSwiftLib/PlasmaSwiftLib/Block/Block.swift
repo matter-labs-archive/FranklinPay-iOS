@@ -12,14 +12,14 @@ import Foundation
 import SwiftRLP
 import BigInt
 
-class Block {
+public class Block {
     public var blockHeader: BlockHeader
     public var signedTransactions: [SignedTransaction]
     public var data: Data {
         return self.serialize()
     }
     
-    public init?(blockHeader: BlockHeader, signedTransactions: [SignedTransaction]){
+    public init?(blockHeader: BlockHeader, signedTransactions: [SignedTransaction]) {
         
         self.blockHeader = blockHeader
         self.signedTransactions = signedTransactions

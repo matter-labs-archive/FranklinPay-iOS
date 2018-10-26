@@ -52,7 +52,6 @@ public struct TransactionInput {
         guard outputNumberInTx.bitWidth <= outputNumberInTxMaxWidth else {return nil}
         guard amount.bitWidth <= amountMaxWidth else {return nil}
         
-        
         self.blockNumber = blockNumber
         self.txNumberInBlock = txNumberInBlock
         self.outputNumberInTx = outputNumberInTx

@@ -10,7 +10,7 @@ import Foundation
 import SwiftRLP
 import BigInt
 
-class BlockHelpers {
+public class BlockHelpers {
     
 //    func serializeBlock(dataArray: RLP.RLPItem) -> Block? {
 //        guard let blockHeaderData = dataArray[0] else {return nil}
