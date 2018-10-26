@@ -108,7 +108,7 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
       addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[ttb(70)]", options: [], metrics: nil, views: views))
     }
 
-    for attribute in Array<NSLayoutAttribute>([.left, .top, .right, .bottom]) {
+    for attribute in Array<NSLayoutConstraint.Attribute>([.left, .top, .right, .bottom]) {
       addConstraint(NSLayoutConstraint(item: ov, attribute: attribute, relatedBy: .equal, toItem: cameraView, attribute: attribute, multiplier: 1, constant: 0))
     }
   }
@@ -145,7 +145,7 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
     }
   }
 
-  @objc func orientationDidChange() {
+  @objc public func setNeedsUpdateOrientation() {
     setNeedsDisplay()
 
     overlayView?.setNeedsDisplay()
@@ -162,7 +162,13 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
   // MARK: - Convenience Methods
 
   private func addComponents() {
-    NotificationCenter.default.addObserver(self, selector: #selector(QRCodeReaderView.orientationDidChange), name: .UIDeviceOrientationDidChange, object: nil)
+    #if swift(>=4.2)
+    let notificationName = UIDevice.orientationDidChangeNotification
+    #else
+    let notificationName = NSNotification.Name.UIDeviceOrientationDidChange
+    #endif
+
+    NotificationCenter.default.addObserver(self, selector: #selector(self.setNeedsUpdateOrientation), name: notificationName, object: nil)
 
     addSubview(cameraView)
 
@@ -183,17 +189,16 @@ final public class QRCodeReaderView: UIView, QRCodeReaderDisplayable {
     }
 
     if let reader = reader {
-      print("reader", reader.previewLayer)
       cameraView.layer.insertSublayer(reader.previewLayer, at: 0)
       
-      orientationDidChange()
+      setNeedsUpdateOrientation()
     }
   }
 }
 
 extension QRCodeReaderView: QRCodeReaderLifeCycleDelegate {
   func readerDidStartScanning() {
-    orientationDidChange()
+    setNeedsUpdateOrientation()
   }
 
   func readerDidStopScanning() {}

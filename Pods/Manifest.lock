@@ -29,7 +29,7 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.5.2):
     - PromiseKit/CorePromise
-  - QRCodeReader.swift (8.1.1)
+  - QRCodeReader.swift (9.0.1)
   - Result (4.0.0)
   - scrypt (2.0):
     - CryptoSwift (~> 0.11)
@@ -47,11 +47,11 @@ PODS:
     - SwiftRLP (~> 1.1)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.7)
+  - Alamofire
   - Crashlytics
   - Fabric
-  - PlasmaSwiftLib (~> 1.0.5)
-  - QRCodeReader.swift (~> 8.1.1)
+  - PlasmaSwiftLib
+  - QRCodeReader.swift
   - web3swift (from `https://github.com/matterinc/web3swift`, branch `master`)
 
 SPEC REPOS:
@@ -92,7 +92,7 @@ SPEC CHECKSUMS:
   Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
   PlasmaSwiftLib: 1ecd02220978184d0f343c3bd8bc3e734d64f7da
   PromiseKit: 27c1601bfb73405871b805bcb8cf7e55c4dad3db
-  QRCodeReader.swift: b164a681887de276d405ff02bce854d82cd6360b
+  QRCodeReader.swift: 96292a5612fbc2fd9a0b26f93fa5164c8d02f59d
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   scrypt: 3fe5b1a3b0976f97cd87488673a8f7c65708cc84
   secp256k1_swift: 4fc5c4b2d2c6d21ee8ccb868cdc92da12f38bed9
@@ -100,6 +100,6 @@ SPEC CHECKSUMS:
   SwiftRLP: 5512899925f1a9e1c78c902ed3bf857880e814a0
   web3swift: d80d1b9a3feca16e614acec9eea47ec26310d37d
 
-PODFILE CHECKSUM: af63e3e3106769373afd1a514e0698f69eb9e0d7
+PODFILE CHECKSUM: 5eea5734856d55fb4d2d98ba106dc01f39f4f673
 
 COCOAPODS: 1.6.0.beta.1

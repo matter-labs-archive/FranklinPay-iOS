@@ -6,10 +6,10 @@ target 'DiveLane' do
   # Pods for DiveLane
   #pod 'web3swift', :path => '../web3swift'
   pod 'web3swift', :git => 'https://github.com/matterinc/web3swift', :branch => 'master'
-  pod 'QRCodeReader.swift', '~> 8.1.1'
+  pod 'QRCodeReader.swift'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Alamofire', '~> 4.7'
-  pod 'PlasmaSwiftLib', '~> 1.0.5'
+  pod 'Alamofire'
+  pod 'PlasmaSwiftLib'
 
 end
