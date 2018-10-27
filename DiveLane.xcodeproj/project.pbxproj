@@ -110,7 +110,6 @@
 		E2065FFE21836BDF00701068 /* UTXOCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2065FFC21836BDF00701068 /* UTXOCell.swift */; };
 		E2065FFF21836BDF00701068 /* UTXOCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2065FFD21836BDF00701068 /* UTXOCell.xib */; };
 		E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */; };
-		E20660042183DE1600701068 /* CurrentUTXO.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660032183DE1600701068 /* CurrentUTXO.swift */; };
 		E2724B99215ABD9100E99901 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B98215ABD9100E99901 /* Constants.swift */; };
 		E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */; };
 		E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A292174D08700F38E50 /* StringExtension.swift */; };
@@ -266,7 +265,6 @@
 		E2065FFC21836BDF00701068 /* UTXOCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXOCell.swift; sourceTree = "<group>"; };
 		E2065FFD21836BDF00701068 /* UTXOCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UTXOCell.xib; sourceTree = "<group>"; };
 		E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableUTXOs.swift; sourceTree = "<group>"; };
-		E20660032183DE1600701068 /* CurrentUTXO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUTXO.swift; sourceTree = "<group>"; };
 		E2724B98215ABD9100E99901 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		E2B45A292174D08700F38E50 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -843,7 +841,6 @@
 			isa = PBXGroup;
 			children = (
 				E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */,
-				E20660032183DE1600701068 /* CurrentUTXO.swift */,
 			);
 			path = UTXO;
 			sourceTree = "<group>";
@@ -1328,7 +1325,6 @@
 				B2E668D62150F9F700C3CC2D /* WalletDropdownMarager.swift in Sources */,
 				B2091512214AA58100C8B408 /* MnemonicsViewController.swift in Sources */,
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
-				E20660042183DE1600701068 /* CurrentUTXO.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
 				91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */,

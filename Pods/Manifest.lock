@@ -49,6 +49,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Crashlytics
+  - EthereumAddress
   - Fabric
   - PlasmaSwiftLib
   - QRCodeReader.swift
@@ -100,6 +101,6 @@ SPEC CHECKSUMS:
   SwiftRLP: 5512899925f1a9e1c78c902ed3bf857880e814a0
   web3swift: d80d1b9a3feca16e614acec9eea47ec26310d37d
 
-PODFILE CHECKSUM: 5eea5734856d55fb4d2d98ba106dc01f39f4f673
+PODFILE CHECKSUM: 36521b3a5ae4740af007bc3f802f5c3c014874d2
 
 COCOAPODS: 1.6.0.beta.1

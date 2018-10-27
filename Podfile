@@ -11,5 +11,6 @@ target 'DiveLane' do
   pod 'Crashlytics'
   pod 'Alamofire'
   pod 'PlasmaSwiftLib'
+  pod 'EthereumAddress'
 
 end

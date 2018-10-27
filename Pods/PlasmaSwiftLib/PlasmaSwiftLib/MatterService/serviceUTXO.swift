@@ -28,9 +28,17 @@ public final class ServiceUTXO {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 completion(Result.Error(error!))
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(Result.Error(MatterErrors.noData))
+                return
+            }
+            guard httpResponse.statusCode == 500 else {
+                completion(Result.Error(MatterErrors.noData))
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
