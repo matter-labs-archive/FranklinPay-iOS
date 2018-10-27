@@ -8,6 +8,7 @@
 
 import UIKit
 import web3swift
+import PlasmaSwiftLib
 
 class TokenCell: UITableViewCell {
 
@@ -27,7 +28,7 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
 
-    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
+    func configureForEtherBlockchain(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
 
         guard let token = token else {
             return
@@ -40,16 +41,49 @@ class TokenCell: UITableViewCell {
 
         updateBalanceAndAddress(for: token, forWallet: forWallet)
 
-        //select token
+        addSelectButton()
+    }
+//    
+//    func configureForPlasmaBlockchain(token: ERC20TokenModel?, for Wallet: KeyWalletModel) {
+//        guard let token = token else {
+//            return
+//        }
+//        
+//        self.tokenShortName.text = token.symbol.uppercased()
+//        
+//        getUTXOs(for: Wallet.address, token: token)
+//        
+//        addSelectButton()
+//    }
+    
+    func addSelectButton() {
         let starButton = UIButton(type: .system)
         starButton.setImage(UIImage(named: "SuccessIcon"), for: .normal)
         starButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-
+        
         starButton.tintColor = .lightGray
         starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
-
+        
         accessoryView = starButton
     }
+//
+//    func getUTXOs(for address: String, token: ERC20TokenModel) {
+//        guard let ethAddress = EthereumAddress(address) else {return}
+//        ServiceUTXO().getListUTXOs(for: ethAddress, onTestnet: true) { (result) in
+//            switch result {
+//            case .Success(let utxos):
+//                DispatchQueue.main.async { [weak self] in
+//                    self?.utxos = utxos
+//                    self?.tableView.reloadData()
+//                }
+//            case .Error(let error):
+//                DispatchQueue.main.async { [weak self] in
+//                    guard let alert = self?.alert(title: "Cant load UTXOs", message: "Error: \(error.localizedDescription). Please, contact antongrigorjev2010@gmail.com") else {return}
+//                    self?.present(alert, animated: true, completion: nil)
+//                }
+//            }
+//        }
+//    }
 
     func updateBalanceAndAddress(for token: ERC20TokenModel, forWallet: KeyWalletModel) {
         if token == ERC20TokenModel(isEther: true) {

@@ -19,10 +19,16 @@ class WalletViewController: UIViewController {
     var keysService: IKeysService?
     var wallets: [KeyWalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
+    var twoDimensionalUTXOsArray: [ExpandableTableUTXOs] = []
 
     let animation = AnimationController()
 
     let design = DesignElements()
+
+    private enum Blockchain: Int {
+        case ether = 0
+        case plasma = 1
+    }
 
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -38,12 +44,14 @@ class WalletViewController: UIViewController {
         super.viewDidLoad()
         animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
-        let nib = UINib.init(nibName: "TokenCell", bundle: nil)
+        let nibToken = UINib.init(nibName: "TokenCell", bundle: nil)
+        let nibUTXO = UINib.init(nibName: "UTXOCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
-        self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
+        self.walletTableView.register(nibToken, forCellReuseIdentifier: "TokenCell")
+        self.walletTableView.register(nibUTXO, forCellReuseIdentifier: "UTXOCell")
         self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
@@ -77,6 +85,16 @@ class WalletViewController: UIViewController {
             indexPath.section += 1
             indexPath.row = 0
         }
+        
+        for wallet in twoDimensionalUTXOsArray {
+            for _ in wallet.utxos {
+                self.twoDimensionalUTXOsArray[indexPath.section].utxos[indexPath.row].isSelected = false
+                walletTableView.cellForRow(at: indexPath)?.accessoryView?.tintColor = .lightGray
+                indexPath.row += 1
+            }
+            indexPath.section += 1
+            indexPath.row = 0
+        }
     }
 
     func selectToken(cell: UITableViewCell) {
@@ -97,6 +115,25 @@ class WalletViewController: UIViewController {
             cell.accessoryView?.tintColor = Colors.NavBarColors.mainTint
         })
     }
+    
+    func selectUTXO(cell: UITableViewCell) {
+        
+        unselectAll()
+        
+        guard let indexPathTapped = walletTableView.indexPath(for: cell) else {
+            return
+        }
+        
+        let utxo = twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row]
+        print(utxo)
+        
+        CurrentUTXO.currentUTXO = utxo.utxo
+        
+        localDatabase?.selectWallet(wallet: utxo.inWallet, completion: { [weak self] in
+            self?.twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected = true
+            cell.accessoryView?.tintColor = Colors.NavBarColors.mainTint
+        })
+    }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         updateTable()
@@ -104,8 +141,9 @@ class WalletViewController: UIViewController {
 
     func updateTable() {
         twoDimensionalTokensArray.removeAll()
+        twoDimensionalUTXOsArray.removeAll()
         switch blockchainControl.selectedSegmentIndex {
-        case 0:
+        case Blockchain.ether.rawValue:
             updateEtherBlockchain()
         default:
             updatePlasmaBlockchain()
@@ -159,15 +197,15 @@ class WalletViewController: UIViewController {
             return
         }
         for wallet in wallets {
-            let plasmaToken = ERC20TokenModel(name: "Matter Plasma Ether", address: "", decimals: "18", symbol: "ETH")
-            let tokens = [plasmaToken]
-            let expandableTokens = ExpandableTableTokens(isExpanded: true,
-                                                         tokens: tokens.map {
-                                                            TableToken(token: $0,
-                                                                       inWallet: wallet,
-                                                                       isSelected: ($0.name == plasmaToken.name))
-            })
-            twoDimensionalTokensArray.append(expandableTokens)
+//            let plasmaToken = ERC20TokenModel(name: "Matter Plasma Ether", address: "Plasma", decimals: "18", symbol: "ETH")
+//            let tokens = [plasmaToken]
+//            let expandableTokens = ExpandableTableTokens(isExpanded: true,
+//                                                         tokens: tokens.map {
+//                                                            TableToken(token: $0,
+//                                                                       inWallet: wallet,
+//                                                                       isSelected: ($0.name == plasmaToken.name))
+//            })
+//            twoDimensionalTokensArray.append(expandableTokens)
             refreshControl.endRefreshing()
             walletTableView.reloadData()
         }
@@ -193,21 +231,44 @@ class WalletViewController: UIViewController {
 }
 
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    
+    func backgroundForHeaderInEtherBlockchain(section: Int) -> UIView {
         let backgroundView = design.tableViewHeaderBackground(in: self.view)
-
+        
         let walletButton = design.tableViewHeaderWalletButton(in: self.view,
-                withTitle: "Wallet \(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "")",
-                withTag: section)
+                                                              withTitle: "Wallet \(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "")",
+            withTag: section)
         walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         backgroundView.addSubview(walletButton)
-
+        
         let addButton = design.tableViewAddTokenButton(in: self.view, withTag: section)
         addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
         backgroundView.addSubview(addButton)
-
+        
         return backgroundView
+    }
+    
+    func backgroundForHeaderInPlasmaBlockchain(section: Int) -> UIView {
+        let backgroundView = design.tableViewHeaderBackground(in: self.view)
+        
+        let walletButton = design.tableViewHeaderWalletButton(in: self.view,
+                                                              withTitle: "Wallet \(twoDimensionalUTXOsArray[section].tokens.first?.inWallet.name ?? "")",
+            withTag: section)
+        walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
+        backgroundView.addSubview(walletButton)
+        
+        return backgroundView
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let background: UIView
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            background = backgroundForHeaderInEtherBlockchain(section: section)
+        default:
+            background = backgroundForHeaderInPlasmaBlockchain(section: section)
+        }
+        return background
     }
 
     @objc func handleExpandClose(button: UIButton) {
@@ -215,14 +276,27 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let section = button.tag
 
         var indexPaths = [IndexPath]()
-        for row in twoDimensionalTokensArray[section].tokens.indices {
-            let indexPath = IndexPath(row: row, section: section)
-            indexPaths.append(indexPath)
+        
+        let isExpanded: Bool
+        
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            for row in twoDimensionalTokensArray[section].tokens.indices {
+                let indexPath = IndexPath(row: row, section: section)
+                indexPaths.append(indexPath)
+            }
+
+            isExpanded = twoDimensionalTokensArray[section].isExpanded
+            twoDimensionalTokensArray[section].isExpanded = !isExpanded
+        default:
+            for row in twoDimensionalUTXOsArray[section].utxos.indices {
+                let indexPath = IndexPath(row: row, section: section)
+                indexPaths.append(indexPath)
+            }
+            
+            isExpanded = twoDimensionalUTXOsArray[section].isExpanded
+            twoDimensionalUTXOsArray[section].isExpanded = !isExpanded
         }
-
-        let isExpanded = twoDimensionalTokensArray[section].isExpanded
-        twoDimensionalTokensArray[section].isExpanded = !isExpanded
-
         if isExpanded {
             walletTableView.deleteRows(at: indexPaths, with: .fade)
         } else {
@@ -242,7 +316,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
-        return twoDimensionalTokensArray.count
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            return twoDimensionalTokensArray.count
+        default:
+            return twoDimensionalUTXOsArray.count
+        }
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -254,56 +333,88 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if !twoDimensionalTokensArray[section].isExpanded {
-            return 0
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            if !twoDimensionalTokensArray[section].isExpanded {
+                return 0
+            }
+            
+            return twoDimensionalTokensArray[section].tokens.count
+        default:
+            if !twoDimensionalUTXOsArray[section].isExpanded {
+                return 0
+            }
+            
+            return twoDimensionalUTXOsArray[section].utxos.count
         }
-
-        return twoDimensionalTokensArray[section].tokens.count
+        
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
-                                                       for: indexPath) as? TokenCell else {
-            return UITableViewCell()
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
+                                                           for: indexPath) as? TokenCell else {
+                                                            return UITableViewCell()
+            }
+            cell.link = self
+            let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
+            cell.configureForEtherBlockchain(token: token.token,
+                                             forWallet: token.inWallet)
+            
+            cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
+            
+            return cell
+        default:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "UTXOCell",
+                                                           for: indexPath) as? UTXOCell else {
+                                                            return UITableViewCell()
+            }
+            cell.link = self
+            let utxo = twoDimensionalUTXOsArray[indexPath.section].utxos[indexPath.row]
+            cell.configureForPlasmaBlockchain()
+            
+            cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: utxo.isSelected)
+            
+            return cell
         }
-        cell.link = self
-        let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
-        cell.configure(token: token.token,
-                       forWallet: token.inWallet)
-
-        cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
-
-        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
-        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
-            return
-        }
-        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
-
-        guard let selectedCell = cell else {
-            return
-        }
-
-        guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else {
-            return
-        }
-
-        let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
-
-        let tokenViewController = TokenViewController(
+        switch blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
+                return
+            }
+            let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+            
+            guard let selectedCell = cell else {
+                return
+            }
+            
+            guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else {
+                return
+            }
+            
+            let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
+            
+            let tokenViewController = TokenViewController(
                 wallet: token.inWallet,
                 token: token.token,
                 tokenBalance: selectedCell.balance.text ?? "0")
-        self.navigationController?.pushViewController(tokenViewController, animated: true)
-        tableView.deselectRow(at: indexPath, animated: true)
-
+            self.navigationController?.pushViewController(tokenViewController, animated: true)
+            tableView.deselectRow(at: indexPath, animated: true)
+        default:
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true) {
+        guard blockchainControl.selectedSegmentIndex == Blockchain.ether.rawValue else {return}
+        let etherToken = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true)
+        let plasmaBlockchain = blockchainControl.selectedSegmentIndex == Blockchain.ether.rawValue
+        if etherToken || plasmaBlockchain {
             return
         }
         if editingStyle == .delete {
