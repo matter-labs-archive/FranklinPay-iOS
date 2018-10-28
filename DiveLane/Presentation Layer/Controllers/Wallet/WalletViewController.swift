@@ -19,13 +19,15 @@ class WalletViewController: UIViewController {
     var wallets: [KeyWalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
 
+    let animation = AnimationController()
+
     let design = DesignElements()
 
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
         #selector(self.handleRefresh(_:)),
-                for: UIControlEvents.valueChanged)
+                for: UIControl.Event.valueChanged)
         refreshControl.tintColor = UIColor.blue
 
         return refreshControl
@@ -33,7 +35,7 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nib = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
@@ -41,7 +43,7 @@ class WalletViewController: UIViewController {
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nib, forCellReuseIdentifier: "TokenCell")
-        self.navigationItem.setRightBarButton(addWalletBarItem(), animated: false)
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
     func initDatabase(complection: @escaping () -> Void) {
@@ -102,21 +104,22 @@ class WalletViewController: UIViewController {
         getTokensList { [weak self] in
             DispatchQueue.main.async {
                 self?.walletTableView.reloadData()
+                self?.animation.waitAnimation(isEnabled: false, notificationText: "Loading initial data", on: (self?.view)!)
             }
-            guard let tokensArray = self?.twoDimensionalTokensArray else {
-                return
-            }
-            for wallet in tokensArray {
-                for token in wallet.tokens {
-                    TokensService().updateConversion(for: token.token, completion: { (_) in
-                        if token == wallet.tokens.last {
-                            DispatchQueue.main.async {
-                                self?.walletTableView.reloadData()
-                            }
-                        }
-                    })
-                }
-            }
+//            guard let tokensArray = self?.twoDimensionalTokensArray else {
+//                return
+//            }
+//            for wallet in tokensArray {
+//                for token in wallet.tokens {
+//                    TokensService().updateConversion(for: token.token, completion: { (_) in
+//                        if token == wallet.tokens.last {
+//                            DispatchQueue.main.async {
+//                                self?.walletTableView.reloadData()
+//                            }
+//                        }
+//                    })
+//                }
+//            }
         }
     }
 
@@ -127,14 +130,22 @@ class WalletViewController: UIViewController {
         }
     }
 
-    func addWalletBarItem() -> UIBarButtonItem {
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addWallet))
+    func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
         return addButton
     }
 
-    @objc func addWallet() {
+    @objc func settingsWallet() {
         let walletsViewController = WalletsViewController()
         self.navigationController?.pushViewController(walletsViewController, animated: true)
+    }
+
+    @IBAction func addWallet(_ sender: UIButton) {
+        let addWalletViewController = AddWalletViewController(isNavigationBarNeeded: true)
+        self.navigationController?.pushViewController(addWalletViewController, animated: true)
     }
 
     func getTokensList(completion: @escaping () -> Void) {
@@ -169,12 +180,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let backgroundView = design.tableViewHeaderBackground(in: self.view)
 
         let walletButton = design.tableViewHeaderWalletButton(in: self.view,
-                withTitle: "\(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "") wallet",
+                withTitle: "Wallet \(twoDimensionalTokensArray[section].tokens.first?.inWallet.name ?? "")",
                 withTag: section)
         walletButton.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
         backgroundView.addSubview(walletButton)
 
-        let addButton = design.tableViewAddTokenButton(in: self.view, withTitle: "+", withTag: section)
+        let addButton = design.tableViewAddTokenButton(in: self.view, withTag: section)
         addButton.addTarget(self, action: #selector(handleAddToken), for: .touchUpInside)
         backgroundView.addSubview(addButton)
 
@@ -240,9 +251,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         cell.link = self
         let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
         cell.configure(token: token.token,
-                       forWallet: token.inWallet,
-                       withConversionRate: conversionService.currentConversionRate(for:
-                        token.token.symbol.uppercased()))
+                       forWallet: token.inWallet)
 
         cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
 
@@ -275,7 +284,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 
     }
 
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true) {
             return
         }

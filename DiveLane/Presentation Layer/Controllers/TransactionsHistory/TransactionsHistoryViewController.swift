@@ -13,6 +13,8 @@ class TransactionsHistoryViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
 
+    let animationController = AnimationController()
+
     // MARK: - Services
     let keysService: IKeysService = KeysService()
     let transactionsHistoryService = TransactionsHistoryService()
@@ -67,6 +69,9 @@ class TransactionsHistoryViewController: UIViewController {
     }
 
     private func uploadTransactions() {
+        animationController.waitAnimation(isEnabled: true,
+                                notificationText: "Downloading transactions",
+                                on: self.view)
         guard let wallet = keysService.selectedWallet() else {
             return
         }
@@ -74,6 +79,10 @@ class TransactionsHistoryViewController: UIViewController {
             return
         }
         transactionsHistoryService.loadTransactions(forAddress: wallet.address, type: .custom, inNetwork: Int64(networkId)) { (result) in
+            DispatchQueue.main.async { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false,
+                                              on: (self?.view)!)
+            }
             switch result {
             case .Error(let error):
                 showErrorAlert(for: self, error: error, completion: {})
@@ -174,6 +183,7 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
         guard let wallet = keysService.selectedWallet() else {
             return UITableViewCell()
         }
+        cell.longPressDelegate = self
         cell.configureCell(withModel: transactions[indexPath.section][indexPath.row], andCurrentWallet: wallet)
         return cell
     }
@@ -188,4 +198,27 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
         navigationController?.pushViewController(transactionInfoVC, animated: true)
     }
 
+}
+
+extension TransactionsHistoryViewController: LongPressDelegate {
+    func didLongPressCell(transaction: ETHTransactionModel?) {
+        guard let transaction = transaction else {
+            return
+        }
+        let nibName = TransactionInfoWebController.nibName
+        let transactionInfoWebVC = TransactionInfoWebController(nibName: nibName, bundle: nil)
+        transactionInfoWebVC.transactionHash = transaction.transactionHash
+        let navigationController = UINavigationController(rootViewController: transactionInfoWebVC)
+
+        guard let topController = self.topViewController() else { return }
+        topController.present(navigationController, animated: true, completion: nil)
+    }
+
+    private func topViewController() -> UIViewController? {
+        var topController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
+        while topController?.presentedViewController != nil {
+            topController = topController?.presentedViewController
+        }
+        return topController
+    }
 }

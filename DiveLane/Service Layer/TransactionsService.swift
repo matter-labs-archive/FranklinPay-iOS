@@ -71,10 +71,10 @@ class TransactionsService: ITransactionsService {
         guard let contract = web3.contract(contractAbi,
                 at: ethContractAddress,
                 abiVersion: 2) else {
-            return
             DispatchQueue.main.async {
                 completion(Result.Error(TransactionErrors.init(rawValue: "Can not create a contract with given abi and address.")!))
             }
+            return
         }
         guard let gasPrice = web3.eth.getGasPrice().value else {
             return
@@ -206,7 +206,7 @@ class TransactionsService: ITransactionsService {
             }
 
             // MARK: - Just to check that everything is all right
-            guard let _ = contract?.method(options: options)?.estimateGas(options: options).value else {
+            guard contract?.method(options: options)?.estimateGas(options: options).value != nil else {
                 DispatchQueue.main.async {
                     completion(Result.Error(SendErrors.retrievingEstimatedGasError))
                 }

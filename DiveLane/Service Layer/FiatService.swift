@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 protocol FiatService {
 
@@ -32,42 +33,27 @@ class FiatServiceImplementation: FiatService {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+		Alamofire.request(url)
+			.responseJSON { response in
+				guard response.result.isSuccess else {
+					print(response.result.error!.localizedDescription)
+					DispatchQueue.main.async {
+						completion(0)
+					}
+					return
+				}
+				guard let value = response.result.value as? [String: Any],
+				let conversionRate = value["USD"] as? Double else {
+					print("Can't convert to Double")
+					DispatchQueue.main.async {
+						completion(0)
+					}
+					return
+				}
 
-            if let data = data {
-                do {
-                    // Convert the data to JSON
-                    let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
-
-                    if let json = jsonSerialized {
-
-                        if let conversionRate = json["USD"] as? Double {
-                            DispatchQueue.main.async {
-                                self.conversionRates[tokenName] = conversionRate
-                                completion(conversionRate)
-                            }
-                        } else {
-                            print("Can't convert to Double")
-                            DispatchQueue.main.async {
-                                completion(0)
-                            }
-                        }
-                    }
-                } catch let error as NSError {
-                    print(error.localizedDescription)
-                    DispatchQueue.main.async {
-                        completion(0)
-                    }
-                }
-            } else if let error = error {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    completion(0)
-                }
-            }
-        }
-
-        task.resume()
+				self.conversionRates[tokenName] = conversionRate
+				completion(conversionRate)
+		}
     }
 
     func currentConversionRate(for tokenName: String) -> Double {

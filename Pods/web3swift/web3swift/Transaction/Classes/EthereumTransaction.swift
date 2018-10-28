@@ -8,6 +8,8 @@
 
 import Foundation
 import BigInt
+import SwiftRLP
+import secp256k1_swift
 
 public struct EthereumTransaction: CustomStringConvertible {
     public var nonce: BigUInt
@@ -298,7 +300,7 @@ public struct EthereumTransaction: CustomStringConvertible {
                 } else {
                     return nil
                 }
-            case .list(_, _):
+            case .list(_, _, _):
                 return nil
             }
             guard let valueData = rlpItem[4]!.data else {return nil}

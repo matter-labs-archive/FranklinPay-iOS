@@ -31,7 +31,7 @@ class TokenInfoViewController: UIViewController {
             wallet = KeysService().selectedWallet()
         }
 
-        addingButton.setTitle(isAdded ? "Delete" : "Add", for: .normal)
+        addingButton.setTitle(isAdded ? "DELETE" : "ADD", for: .normal)
 
         let nib = UINib.init(nibName: "TokenInfoCell", bundle: nil)
         self.tokenInfoTableView.delegate = self

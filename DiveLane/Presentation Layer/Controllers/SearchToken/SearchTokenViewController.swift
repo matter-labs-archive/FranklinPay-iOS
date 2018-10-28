@@ -64,9 +64,11 @@ class SearchTokenViewController: UIViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.barTintColor = UIColor.white
         searchController.delegate = self
-        searchController.searchBar.tintColor = UIColor.darkText
+        searchController.searchBar.tintColor = UIColor.lightGray
         searchController.hidesNavigationBarDuringPresentation = false
         definesPresentationContext = true
+
+        self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -98,12 +100,6 @@ class SearchTokenViewController: UIViewController {
         return false
     }
 
-}
-
-extension SearchTokenViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        self.searchController.searchBar.endEditing(true)
-    }
 }
 
 extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource {

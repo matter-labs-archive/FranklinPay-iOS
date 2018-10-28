@@ -17,6 +17,8 @@ class MnemonicsViewController: UIViewController {
     var name: String
     var password: String
 
+    let animation = AnimationController()
+
     init(name: String, password: String) {
         self.keysService = KeysService()
         self.mnemonics = keysService.generateMnemonics(bitsOfEntropy: 128)
@@ -45,6 +47,9 @@ class MnemonicsViewController: UIViewController {
     }
 
     @IBAction func createWalletButtonTapped(_ sender: Any) {
+        animation.waitAnimation(isEnabled: true,
+                                      notificationText: "Saving wallet",
+                                      on: self.view)
         keysService.createNewHDWallet(withName: name, password: password, mnemonics: mnemonics) { (keyWalletModel, error) in
             if let error = error {
                 showErrorAlert(for: self, error: error, completion: {
@@ -52,6 +57,10 @@ class MnemonicsViewController: UIViewController {
                 })
             } else {
                 self.localStorage.saveWallet(wallet: keyWalletModel, completion: { (error) in
+                    DispatchQueue.main.async { [weak self] in
+                        self?.animation.waitAnimation(isEnabled: false,
+                                                      on: (self?.view)!)
+                    }
                     if let error = error {
                         showErrorAlert(for: self, error: error, completion: {
                             self.goToApp()

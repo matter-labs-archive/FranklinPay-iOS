@@ -61,32 +61,42 @@
                     </subviews>
                 </stackView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dive Lane" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTj-yS-aSH">
-                    <rect key="frame" x="121" y="325.5" width="133" height="36"/>
-                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
-                    <nil key="textColor"/>
+                    <rect key="frame" x="120" y="326.5" width="135.5" height="34.5"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="30"/>
+                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="dive" translatesAutoresizingMaskIntoConstraints="NO" id="76K-wD-r5P">
-                    <rect key="frame" x="56.5" y="40" width="262.5" height="265.5"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding1" translatesAutoresizingMaskIntoConstraints="NO" id="76K-wD-r5P">
+                    <rect key="frame" x="56.5" y="85.5" width="262.5" height="221"/>
                 </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Universal Ethereum payment system" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fC-wv-nXt">
+                    <rect key="frame" x="10" y="391" width="355" height="20"/>
+                    <fontDescription key="fontDescription" name="Helvetica" family="Helvetica" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="3xO-5S-uBI" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3fC-wv-nXt" secondAttribute="bottom" constant="10" id="2rn-Sl-gEb"/>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="5Oe-oL-Ck1"/>
                 <constraint firstItem="bVN-Yh-V2J" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="F78-M9-lkK"/>
                 <constraint firstItem="mOM-MJ-t3B" firstAttribute="bottom" secondItem="bVN-Yh-V2J" secondAttribute="bottom" constant="50" id="KgR-HL-8EJ"/>
                 <constraint firstItem="76K-wD-r5P" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="NH0-mo-GwA"/>
                 <constraint firstItem="76K-wD-r5P" firstAttribute="top" relation="greaterThanOrEqual" secondItem="mOM-MJ-t3B" secondAttribute="top" constant="20" id="SOZ-Eq-jAL"/>
+                <constraint firstItem="3fC-wv-nXt" firstAttribute="leading" secondItem="mOM-MJ-t3B" secondAttribute="leading" constant="10" id="Zi4-CZ-VFH"/>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="top" secondItem="76K-wD-r5P" secondAttribute="bottom" constant="20" id="asl-uq-d7x"/>
                 <constraint firstItem="wTj-yS-aSH" firstAttribute="centerY" secondItem="mOM-MJ-t3B" secondAttribute="centerY" id="ppC-67-DdP"/>
                 <constraint firstItem="76K-wD-r5P" firstAttribute="width" relation="lessThanOrEqual" secondItem="iEO-iG-X63" secondAttribute="width" multiplier="0.7" id="sUX-GK-9iT"/>
+                <constraint firstItem="3fC-wv-nXt" firstAttribute="centerX" secondItem="mOM-MJ-t3B" secondAttribute="centerX" id="vKJ-Wk-DJc"/>
                 <constraint firstItem="bVN-Yh-V2J" firstAttribute="width" secondItem="iEO-iG-X63" secondAttribute="width" multiplier="0.9" id="yJI-qf-PCi"/>
+                <constraint firstItem="3fC-wv-nXt" firstAttribute="top" secondItem="wTj-yS-aSH" secondAttribute="bottom" constant="30" id="yn4-qb-90b"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="mOM-MJ-t3B"/>
             <point key="canvasLocation" x="33.5" y="53.5"/>
         </view>
     </objects>
     <resources>
-        <image name="dive" width="4781" height="3323"/>
+        <image name="onboarding1" width="277" height="221"/>
     </resources>
 </document>

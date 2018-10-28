@@ -68,11 +68,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        if section == SettingsTableViewSections.main.rawValue {
-            return "Main settings"
-        } else {
-            return "..."
-        }
+        return nil
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,9 +80,9 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             }
             switch indexPath.row {
             case 0:
-                cell.configure(param: "Networks", value: settings["currentNetwork"] as Any)
+                cell.configure(param: "Network", value: settings["currentNetwork"] as Any)
             default:
-                cell.configure(param: "Wallets", value: settings["currentWallet"] as Any)
+                cell.configure(param: "Wallet", value: settings["currentWallet"] as Any)
             }
             return cell
         default:
@@ -102,10 +98,10 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let selectedCell = tableView.cellForRow(at: indexPathForSelectedRow) as? SettingsCell
 
-        if selectedCell?.param.text == "Networks" {
+        if selectedCell?.param.text == "Network" {
             let networksViewController = NetworksViewController()
             self.navigationController?.pushViewController(networksViewController, animated: true)
-        } else if selectedCell?.param.text == "Wallets" {
+        } else if selectedCell?.param.text == "Wallet" {
             let walletsViewController = WalletsViewController()
             self.navigationController?.pushViewController(walletsViewController, animated: true)
         }
