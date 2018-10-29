@@ -4,8 +4,6 @@
 //
 
 import Foundation
-
-import Foundation
 import BigInt
 
 extension Data {

@@ -34,9 +34,20 @@ public struct TransactionInput {
     
     public init?(data: Data) {
         
-        guard let dataArray = RLP.decode(data) else {return nil}
-        guard dataArray.isList else {return nil}
-        guard dataArray.count == 4 else {return nil}
+        guard let dataDecoded = RLP.decode(data) else {return nil}
+        guard dataDecoded.isList else {return nil}
+        guard let count = dataDecoded.count else {return nil}
+        let dataArray: RLP.RLPItem
+        guard let firstItem = dataDecoded[0] else {return nil}
+        if count > 1 {
+            dataArray = dataDecoded
+        } else {
+            dataArray = firstItem
+        }
+        guard dataArray.count == 4 else {
+            print("Wrong decoded input")
+            return nil
+        }
         guard let blockNumberData = dataArray[0]?.data else {return nil}
         guard let txNumberInBlockData = dataArray[1]?.data else {return nil}
         guard let outputNumberInTxData = dataArray[2]?.data else {return nil}

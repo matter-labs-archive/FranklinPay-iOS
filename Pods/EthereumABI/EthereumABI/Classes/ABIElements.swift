@@ -9,27 +9,27 @@ import BigInt
 public extension ABI {
     // JSON Decoding
     public struct Input: Decodable {
-        var name: String?
-        var type: String
-        var indexed: Bool?
-        var components: [Input]?
+        public var name: String?
+        public var type: String
+        public var indexed: Bool?
+        public var components: [Input]?
     }
     
     public struct Output: Decodable {
-        var name: String?
-        var type: String
-        var components: [Output]?
+        public var name: String?
+        public var type: String
+        public var components: [Output]?
     }
 
     public struct Record: Decodable {
-        var name: String?
-        var type: String?
-        var payable: Bool?
-        var constant: Bool?
-        var stateMutability: String?
-        var inputs: [ABI.Input]?
-        var outputs: [ABI.Output]?
-        var anonymous: Bool?
+        public var name: String?
+        public var type: String?
+        public var payable: Bool?
+        public var constant: Bool?
+        public var stateMutability: String?
+        public var inputs: [ABI.Input]?
+        public var outputs: [ABI.Output]?
+        public var anonymous: Bool?
     }
     
     public enum Element {
@@ -44,39 +44,102 @@ public extension ABI {
         case fallback(Fallback)
         case event(Event)
         
+        public enum StateMutability {
+            case payable
+            case mutating
+            case view
+            case pure
+            
+            var isConstant: Bool {
+                switch self {
+                case .payable:
+                    return false
+                case .mutating:
+                    return false
+                default:
+                    return true
+                }
+            }
+            
+            var isPayable: Bool {
+                switch self {
+                case .payable:
+                    return true
+                default:
+                    return false
+                }
+            }
+        }
+        
         public struct InOut {
             public let name: String
             public let type: ParameterType
+            
+            public init(name: String, type: ParameterType) {
+                self.name = name
+                self.type = type
+            }
         }
         
         public struct Function {
             public let name: String?
             public let inputs: [InOut]
             public let outputs: [InOut]
+            public let stateMutability: StateMutability? = nil
             public let constant: Bool
             public let payable: Bool
+            
+            public init(name: String?, inputs: [InOut], outputs: [InOut], constant: Bool, payable: Bool) {
+                self.name = name
+                self.inputs = inputs
+                self.outputs = outputs
+                self.constant = constant
+                self.payable = payable
+            }
         }
         
         public struct Constructor {
-            let inputs: [InOut]
-            let constant: Bool
-            let payable: Bool
+            public let inputs: [InOut]
+            public let constant: Bool
+            public let payable: Bool
+            public init(inputs: [InOut], constant: Bool, payable: Bool) {
+                self.inputs = inputs
+                self.constant = constant
+                self.payable = payable
+            }
         }
         
         public struct Fallback {
-            let constant: Bool
-            let payable: Bool
+            public let constant: Bool
+            public let payable: Bool
+            
+            public init(constant: Bool, payable: Bool) {
+                self.constant = constant
+                self.payable = payable
+            }
         }
         
         public struct Event {
-            let name: String
-            let inputs: [Input]
-            let anonymous: Bool
+            public let name: String
+            public let inputs: [Input]
+            public let anonymous: Bool
             
-            struct Input {
-                let name: String
-                let type: ParameterType
-                let indexed: Bool
+            public init(name: String, inputs: [Input], anonymous: Bool) {
+                self.name = name
+                self.inputs = inputs
+                self.anonymous = anonymous
+            }
+            
+            public struct Input {
+                public let name: String
+                public let type: ParameterType
+                public let indexed: Bool
+                
+                public init(name: String, type: ParameterType, indexed: Bool) {
+                    self.name = name
+                    self.type = type
+                    self.indexed = indexed
+                }
             }
         }
     }

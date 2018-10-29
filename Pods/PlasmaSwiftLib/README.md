@@ -8,7 +8,7 @@
 
 <img align="left" width="25" height="25" src="https://user-images.githubusercontent.com/28599454/41086111-af4bc3b0-6a41-11e8-9f9f-2d642b12666e.png">[Ask questions](https://stackoverflow.com/questions/tagged/PlasmaSwiftLib)
 
-**PlasmaSwiftLib** is your toolbelt for any kind interactions with The Matter Plasma Implementations.
+**PlasmaSwiftLib** is your toolbelt for any kind of interactions with The Matter Plasma Implementations.
 
   * [Features](#features)
   * [Design Decisions](#design-decisions)
@@ -91,7 +91,7 @@ platform :ios, '9.0'
 
 target '<Your Target Name>' do
     use_frameworks!
-    pod 'PlasmaSwiftLib'
+    pod 'PlasmaSwiftLib', '~> 1.0.5'
 end
 ```
 

@@ -5,14 +5,14 @@ PODS:
   - Crashlytics (3.11.0):
     - Fabric (~> 1.8.0)
   - CryptoSwift (0.13.0)
-  - EthereumABI (1.0.1):
+  - EthereumABI (1.1.1):
     - BigInt (~> 3.1)
     - CryptoSwift (~> 0.13)
     - EthereumAddress (~> 1.0.0)
   - EthereumAddress (1.0.0):
     - CryptoSwift (~> 0.13)
   - Fabric (1.8.0)
-  - PlasmaSwiftLib (1.0.5):
+  - PlasmaSwiftLib (1.0.6):
     - BigInt
     - CryptoSwift
     - EthereumABI
@@ -53,7 +53,7 @@ DEPENDENCIES:
   - Fabric
   - PlasmaSwiftLib
   - QRCodeReader.swift
-  - web3swift (from `https://github.com/matterinc/web3swift`, branch `master`)
+  - web3swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -72,26 +72,17 @@ SPEC REPOS:
     - secp256k1_swift
     - SipHash
     - SwiftRLP
-
-EXTERNAL SOURCES:
-  web3swift:
-    :branch: master
-    :git: https://github.com/matterinc/web3swift
-
-CHECKOUT OPTIONS:
-  web3swift:
-    :commit: 21b448e352a23de65b77e1d2a062fb899dc6ef42
-    :git: https://github.com/matterinc/web3swift
+    - web3swift
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: 1448070c1d2731ab71ea7c3faf84ac0f69657287
   CryptoSwift: 16e78bebf567bad1c87b2d58f6547f25b74c31aa
-  EthereumABI: 028d8b8b525e739d3ed3ef192ee559a288f6bcaa
+  EthereumABI: f040f5429e5a4366d028c88b88d9441e137593af
   EthereumAddress: f476e1320dca3a0024431e713ede7a09c7eb7796
   Fabric: 4ac1cdfef3004ccd83ce0959b91eda8a6e37df72
-  PlasmaSwiftLib: 1ecd02220978184d0f343c3bd8bc3e734d64f7da
+  PlasmaSwiftLib: 0954fd0870c5afbf7fe00951e9e364ec4c6c40ef
   PromiseKit: 27c1601bfb73405871b805bcb8cf7e55c4dad3db
   QRCodeReader.swift: 96292a5612fbc2fd9a0b26f93fa5164c8d02f59d
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
@@ -101,6 +92,6 @@ SPEC CHECKSUMS:
   SwiftRLP: 5512899925f1a9e1c78c902ed3bf857880e814a0
   web3swift: d80d1b9a3feca16e614acec9eea47ec26310d37d
 
-PODFILE CHECKSUM: 36521b3a5ae4740af007bc3f802f5c3c014874d2
+PODFILE CHECKSUM: 678d9198ab1d398031ced8c6adc53f94d057e26b
 
-COCOAPODS: 1.6.0.beta.1
+COCOAPODS: 1.6.0.beta.2

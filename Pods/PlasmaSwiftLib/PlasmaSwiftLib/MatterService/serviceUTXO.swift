@@ -34,11 +34,11 @@ public final class ServiceUTXO {
                 return
             }
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(Result.Error(MatterErrors.noData))
+                completion(Result.Error(MatterErrors.badResponse))
                 return
             }
-            guard httpResponse.statusCode == 500 else {
-                completion(Result.Error(MatterErrors.noData))
+            guard httpResponse.statusCode == 200 else {
+                completion(Result.Error(MatterErrors.badResponse))
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
@@ -74,9 +74,17 @@ public final class ServiceUTXO {
             return
         }
         
-        let task = URLSession.shared.dataTask(with: request) { data, _, error in
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 completion(Result.Error(error!))
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(Result.Error(MatterErrors.badResponse))
+                return
+            }
+            guard httpResponse.statusCode == 200 else {
+                completion(Result.Error(MatterErrors.badResponse))
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
