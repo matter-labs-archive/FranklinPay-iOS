@@ -79,7 +79,7 @@
                                                         <segment title="Plasma"/>
                                                     </segments>
                                                     <connections>
-                                                        <action selector="didChangeState:" destination="-1" eventType="valueChanged" id="6GV-DB-d6z"/>
+                                                        <action selector="changeBlockchain:" destination="-1" eventType="valueChanged" id="Ews-zR-lwK"/>
                                                     </connections>
                                                 </segmentedControl>
                                             </subviews>
