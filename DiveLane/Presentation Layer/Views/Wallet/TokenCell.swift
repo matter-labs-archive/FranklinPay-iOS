@@ -38,6 +38,17 @@ class TokenCell: UITableViewCell {
         changeSelectButton(isSelected: isSelected)
     }
 
+    func configureForPlasmaBlockchain(utxo: ListUTXOsModel, token: ERC20TokenModel = ERC20TokenModel(isEther: true), forWallet: KeyWalletModel) {
+        let balance = Web3Utils.formatToEthereumUnits(utxo.value,
+                                                      toUnits: .eth,
+                                                      decimals: 6,
+                                                      decimalSeparator: ".")
+        self.balance.text = balance
+        self.updateBalanceInDollars(for: token, withBalance: balance)
+
+        changeSelectButton(isSelected: isSelected)
+    }
+
     func changeSelectButton(isSelected: Bool) {
 
         let button = selectButton(isSelected: isSelected)

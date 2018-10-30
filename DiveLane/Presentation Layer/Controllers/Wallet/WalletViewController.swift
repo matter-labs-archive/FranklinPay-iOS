@@ -48,13 +48,11 @@ class WalletViewController: UIViewController {
         animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
         let nibToken = UINib.init(nibName: "TokenCell", bundle: nil)
-        let nibUTXO = UINib.init(nibName: "UTXOCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nibToken, forCellReuseIdentifier: "TokenCell")
-        self.walletTableView.register(nibUTXO, forCellReuseIdentifier: "UTXOCell")
         self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
@@ -154,9 +152,7 @@ class WalletViewController: UIViewController {
         guard let wallets = wallets else {
             return
         }
-
         let networkID = CurrentNetwork().getNetworkID()
-
         for wallet in wallets {
             let tokensForWallet = localDatabase?.getAllTokens(for: wallet, forNetwork: networkID)
             let isSelectedWallet = wallet == keysService?.selectedWallet() ? true : false
@@ -340,31 +336,23 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
+                                                       for: indexPath) as? TokenCell else {
+                                                        return UITableViewCell()
+        }
+        cell.link = self
+
         switch blockchainControl.selectedSegmentIndex {
         case Blockchain.ether.rawValue:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
-                                                           for: indexPath) as? TokenCell else {
-                                                            return UITableViewCell()
-            }
-            cell.link = self
             let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
             cell.configureForEtherBlockchain(token: token.token,
                                              forWallet: token.inWallet,
                                              isSelected: token.isSelected)
-
-//            cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
-
-            return cell
         default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "UTXOCell",
-                                                           for: indexPath) as? UTXOCell else {
-                                                            return UITableViewCell()
-            }
             let utxo = twoDimensionalUTXOsArray[indexPath.section].utxos[indexPath.row]
             cell.configureForPlasmaBlockchain(utxo: utxo.utxo, forWallet: utxo.inWallet)
-
-            return cell
         }
+        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
