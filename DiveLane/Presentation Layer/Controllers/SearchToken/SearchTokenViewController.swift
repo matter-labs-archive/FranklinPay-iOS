@@ -186,7 +186,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         if isEnabled {
             LocalDatabase().deleteToken(token: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
                 if error == nil {
-
+                    CurrentToken.currentToken = ERC20TokenModel(isEther: true)
                     DispatchQueue.main.async {
                         self?.tokensTableView.reloadData()
                     }
@@ -195,7 +195,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         } else {
             LocalDatabase().saveCustomToken(with: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
                 if error == nil {
-
+                    CurrentToken.currentToken = token
                     DispatchQueue.main.async {
                         self?.tokensTableView.reloadData()
                     }

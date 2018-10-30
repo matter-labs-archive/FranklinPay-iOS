@@ -82,7 +82,8 @@ class WalletViewController: UIViewController {
         for wallet in twoDimensionalTokensArray {
             for _ in wallet.tokens {
                 self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].isSelected = false
-                walletTableView.cellForRow(at: indexPath)?.accessoryView?.tintColor = .lightGray
+                guard let cell = walletTableView.cellForRow(at: indexPath) as? TokenCell else {return}
+                cell.changeSelectButton(isSelected: false)
                 indexPath.row += 1
             }
             indexPath.section += 1
@@ -91,21 +92,15 @@ class WalletViewController: UIViewController {
     }
 
     func selectToken(cell: UITableViewCell) {
-
         unselectAll()
-
-        guard let indexPathTapped = walletTableView.indexPath(for: cell) else {
-            return
-        }
-
+        guard let cell = cell as? TokenCell else {return}
+        guard let indexPathTapped = walletTableView.indexPath(for: cell) else {return}
         let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
         print(token)
-
         CurrentToken.currentToken = token.token
-
         localDatabase?.selectWallet(wallet: token.inWallet, completion: { [weak self] in
             self?.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
-            cell.accessoryView?.tintColor = Colors.NavBarColors.mainTint
+            cell.changeSelectButton(isSelected: true)
         })
     }
 
@@ -167,7 +162,7 @@ class WalletViewController: UIViewController {
             let isSelectedWallet = wallet == keysService?.selectedWallet() ? true : false
             if let tokens = tokensForWallet {
 
-                let expandableTokens = ExpandableTableTokens(isExpanded: true,
+                let expandableTokens = ExpandableTableTokens(isExpanded: isSelectedWallet,
                         tokens: tokens.map {
                             TableToken(token: $0,
                                     inWallet: wallet,
@@ -299,14 +294,14 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     @objc func handleAddToken(button: UIButton) {
-
         let section = button.tag
-
         let wallet = twoDimensionalTokensArray[section].tokens.first?.inWallet
-
-        let searchTokenController = SearchTokenViewController(for: wallet)
-        self.navigationController?.pushViewController(searchTokenController, animated: true)
-
+        let token = twoDimensionalTokensArray[section].tokens.first
+        LocalDatabase().selectWallet(wallet: wallet) {
+            CurrentToken.currentToken = token?.token
+            let searchTokenController = SearchTokenViewController(for: wallet)
+            self.navigationController?.pushViewController(searchTokenController, animated: true)
+        }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -354,9 +349,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             cell.link = self
             let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row]
             cell.configureForEtherBlockchain(token: token.token,
-                                             forWallet: token.inWallet)
+                                             forWallet: token.inWallet,
+                                             isSelected: token.isSelected)
 
-            cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
+//            cell.accessoryView?.tintColor = Colors.ButtonColors().changeSelectionColor(dependingOnChoise: token.isSelected)
 
             return cell
         default:

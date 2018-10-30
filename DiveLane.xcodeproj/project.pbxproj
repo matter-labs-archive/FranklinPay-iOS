@@ -110,6 +110,7 @@
 		E2065FFE21836BDF00701068 /* UTXOCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2065FFC21836BDF00701068 /* UTXOCell.swift */; };
 		E2065FFF21836BDF00701068 /* UTXOCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2065FFD21836BDF00701068 /* UTXOCell.xib */; };
 		E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */; };
+		E20660A82188BF9A00701068 /* SelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660A72188BF9A00701068 /* SelectButton.swift */; };
 		E2724B99215ABD9100E99901 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B98215ABD9100E99901 /* Constants.swift */; };
 		E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */; };
 		E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A292174D08700F38E50 /* StringExtension.swift */; };
@@ -265,6 +266,7 @@
 		E2065FFC21836BDF00701068 /* UTXOCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UTXOCell.swift; sourceTree = "<group>"; };
 		E2065FFD21836BDF00701068 /* UTXOCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UTXOCell.xib; sourceTree = "<group>"; };
 		E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableUTXOs.swift; sourceTree = "<group>"; };
+		E20660A72188BF9A00701068 /* SelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectButton.swift; sourceTree = "<group>"; };
 		E2724B98215ABD9100E99901 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		E2B45A292174D08700F38E50 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 				9197F2F02143B9D600C358AA /* TokenCell.swift */,
 				E2065FFC21836BDF00701068 /* UTXOCell.swift */,
 				E2065FFD21836BDF00701068 /* UTXOCell.xib */,
+				E20660A72188BF9A00701068 /* SelectButton.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -1257,6 +1260,7 @@
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				E2B45A3F2174D29200F38E50 /* TokenInfoControllerRaws.swift in Sources */,
 				E2B45A5821762DC200F38E50 /* ContactsService.swift in Sources */,
+				E20660A82188BF9A00701068 /* SelectButton.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				E2B45A2F2174D1CD00F38E50 /* DismissAnimator.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,

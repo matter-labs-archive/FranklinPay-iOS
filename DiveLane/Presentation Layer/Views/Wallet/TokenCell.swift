@@ -28,31 +28,22 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
 
-    func configureForEtherBlockchain(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
-
-        guard let token = token else {
-            return
-        }
+    func configureForEtherBlockchain(token: ERC20TokenModel?, forWallet: KeyWalletModel, isSelected: Bool) {
+        guard let token = token else {return}
 
         self.tokenShortName.text = token.symbol.uppercased()
-//
-//        self.balance.text = "Loading..."
-//        self.balanceInDollars.text = "Loading..."
 
         updateBalanceAndAddress(for: token, forWallet: forWallet)
 
-        addSelectButton()
+        changeSelectButton(isSelected: isSelected)
     }
 
-    func addSelectButton() {
-        let starButton = UIButton(type: .system)
-        starButton.setImage(UIImage(named: "SuccessIcon"), for: .normal)
-        starButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+    func changeSelectButton(isSelected: Bool) {
 
-        starButton.tintColor = .lightGray
-        starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
+        let button = selectButton(isSelected: isSelected)
+        button.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
 
-        accessoryView = starButton
+        accessoryView = button
     }
 
     func updateBalanceAndAddress(for token: ERC20TokenModel, forWallet: KeyWalletModel) {
