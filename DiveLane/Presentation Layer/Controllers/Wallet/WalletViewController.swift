@@ -24,6 +24,8 @@ class WalletViewController: UIViewController {
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     var twoDimensionalUTXOsArray: [ExpandableTableUTXOs] = []
 
+    var chosenUTXOs: [ListUTXOsModel] = []
+
     let animation = AnimationController()
 
     let design = DesignElements()
@@ -75,11 +77,26 @@ class WalletViewController: UIViewController {
         updateTable()
     }
 
-    func unselectAll() {
+    func unselectAllTokens() {
         var indexPath = IndexPath(row: 0, section: 0)
         for wallet in twoDimensionalTokensArray {
             for _ in wallet.tokens {
                 self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].isSelected = false
+                if let cell = walletTableView.cellForRow(at: indexPath) as? TokenCell {
+                    cell.changeSelectButton(isSelected: false)
+                }
+                indexPath.row += 1
+            }
+            indexPath.section += 1
+            indexPath.row = 0
+        }
+    }
+
+    func unselectAllUTXOs() {
+        var indexPath = IndexPath(row: 0, section: 0)
+        for wallet in twoDimensionalUTXOsArray {
+            for _ in wallet.utxos {
+                self.twoDimensionalUTXOsArray[indexPath.section].utxos[indexPath.row].isSelected = false
                 guard let cell = walletTableView.cellForRow(at: indexPath) as? TokenCell else {return}
                 cell.changeSelectButton(isSelected: false)
                 indexPath.row += 1
@@ -90,7 +107,7 @@ class WalletViewController: UIViewController {
     }
 
     func selectToken(cell: UITableViewCell) {
-        unselectAll()
+        unselectAllTokens()
         guard let cell = cell as? TokenCell else {return}
         guard let indexPathTapped = walletTableView.indexPath(for: cell) else {return}
         let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
@@ -100,6 +117,16 @@ class WalletViewController: UIViewController {
             self?.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
             cell.changeSelectButton(isSelected: true)
         })
+    }
+
+    func selectUTXO(cell: UITableViewCell) {
+//        unselectAllUTXOs()
+        guard let cell = cell as? TokenCell else {return}
+        guard let indexPathTapped = walletTableView.indexPath(for: cell) else {return}
+        let utxo = twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row]
+        print(utxo)
+        twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected = true
+        cell.changeSelectButton(isSelected: true)
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -185,7 +212,8 @@ class WalletViewController: UIViewController {
                     let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,
                                                                utxos: utxos.map {
                                                                 TableUTXO(utxo: $0,
-                                                                          inWallet: wallet)
+                                                                          inWallet: wallet,
+                                                                          isSelected: false)
                     })
                     self?.twoDimensionalUTXOsArray.append(expandableUTXOS)
                 case .Error(let error):

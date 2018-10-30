@@ -20,6 +20,7 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var balanceInDollars: UILabel!
 
     var link: WalletViewController?
+    var isPlasma: Bool = false
 
     let keysService: KeysService = KeysService()
 
@@ -30,11 +31,9 @@ class TokenCell: UITableViewCell {
 
     func configureForEtherBlockchain(token: ERC20TokenModel?, forWallet: KeyWalletModel, isSelected: Bool) {
         guard let token = token else {return}
-
+        isPlasma = false
         self.tokenShortName.text = token.symbol.uppercased()
-
         updateBalanceAndAddress(for: token, forWallet: forWallet)
-
         changeSelectButton(isSelected: isSelected)
     }
 
@@ -43,10 +42,10 @@ class TokenCell: UITableViewCell {
                                                       toUnits: .eth,
                                                       decimals: 6,
                                                       decimalSeparator: ".")
+        isPlasma = true
         self.balance.text = balance
         self.updateBalanceInDollars(for: token, withBalance: balance)
-
-        changeSelectButton(isSelected: isSelected)
+        changeSelectButton(isSelected: false)
     }
 
     func changeSelectButton(isSelected: Bool) {
@@ -91,7 +90,11 @@ class TokenCell: UITableViewCell {
     }
 
     @objc private func handleMarkAsSelected() {
-        link?.selectToken(cell: self)
+        if isPlasma {
+            link?.selectUTXO(cell: self)
+        } else {
+            link?.selectToken(cell: self)
+        }
     }
 
     override func prepareForReuse() {

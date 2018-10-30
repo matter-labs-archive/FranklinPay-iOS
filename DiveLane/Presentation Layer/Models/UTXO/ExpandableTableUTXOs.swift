@@ -17,6 +17,7 @@ struct ExpandableTableUTXOs {
 struct TableUTXO {
     let utxo: ListUTXOsModel
     let inWallet: KeyWalletModel
+    var isSelected: Bool
 }
 
 extension TableUTXO: Equatable {
