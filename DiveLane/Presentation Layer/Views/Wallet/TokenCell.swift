@@ -104,5 +104,6 @@ class TokenCell: UITableViewCell {
         self.tokenShortName.text = ""
         self.tokenAddress.text = ""
         self.tokenIcon.image = UIImage(named: "ether")
+        self.balanceInDollars.text = ""
     }
 }

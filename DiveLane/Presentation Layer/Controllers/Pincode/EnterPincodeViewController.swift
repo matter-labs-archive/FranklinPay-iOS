@@ -121,7 +121,12 @@ class EnterPincodeViewController: PincodeViewController {
         ServiceUTXO().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
             switch result {
             case .Success(let approved):
-                print(approved)
+                guard approved != nil else {
+                    showErrorAlert(for: self, error: nil, completion: {
+                        self.returnToStartTab()
+                    })
+                    return
+                }
                 DispatchQueue.main.async { [weak self] in
                     showSuccessAlert(for: self!, completion: {
                         self?.returnToStartTab()

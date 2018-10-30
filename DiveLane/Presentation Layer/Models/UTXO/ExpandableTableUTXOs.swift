@@ -22,11 +22,18 @@ struct TableUTXO {
 
 extension TableUTXO: Equatable {
     static func ==(lhs: TableUTXO, rhs: TableUTXO) -> Bool {
-        let equalUTXOs = lhs.utxo.blockNumber == rhs.utxo.blockNumber &&
-            lhs.utxo.outputNumber == rhs.utxo.outputNumber &&
-            lhs.utxo.transactionNumber == rhs.utxo.transactionNumber &&
-            lhs.utxo.value == rhs.utxo.value
+        let equalUTXOs = lhs.utxo == rhs.utxo
         return equalUTXOs &&
             lhs.inWallet == rhs.inWallet
+    }
+}
+
+extension ListUTXOsModel: Equatable {
+    public static func ==(lhs: ListUTXOsModel, rhs: ListUTXOsModel) -> Bool {
+        let equalUTXOs = lhs.blockNumber == rhs.blockNumber &&
+            lhs.outputNumber == rhs.outputNumber &&
+            lhs.transactionNumber == rhs.transactionNumber &&
+            lhs.value == rhs.value
+        return equalUTXOs
     }
 }

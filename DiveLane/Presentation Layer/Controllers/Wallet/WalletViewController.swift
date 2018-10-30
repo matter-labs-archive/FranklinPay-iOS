@@ -10,6 +10,7 @@ import UIKit
 import PlasmaSwiftLib
 import web3swift
 import struct EthereumAddress.EthereumAddress
+import struct BigInt.BigUInt
 
 class WalletViewController: UIViewController {
 
@@ -24,7 +25,7 @@ class WalletViewController: UIViewController {
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     var twoDimensionalUTXOsArray: [ExpandableTableUTXOs] = []
 
-    var chosenUTXOs: [ListUTXOsModel] = []
+    var chosenUTXOs: [TableUTXO] = []
 
     let animation = AnimationController()
 
@@ -125,8 +126,69 @@ class WalletViewController: UIViewController {
         guard let indexPathTapped = walletTableView.indexPath(for: cell) else {return}
         let utxo = twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row]
         print(utxo)
-        twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected = true
-        cell.changeSelectButton(isSelected: true)
+        let selected = twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected
+        if selected {
+            for i in 0..<chosenUTXOs.count {
+                if chosenUTXOs[i] == utxo {
+                    chosenUTXOs.remove(at: i)
+                    break
+                }
+            }
+        } else {
+            guard chosenUTXOs.count < 2 else {return}
+            if let firstUTXO = chosenUTXOs.first {
+                guard utxo.inWallet == firstUTXO.inWallet else {return}
+                chosenUTXOs.append(utxo)
+            } else {
+                chosenUTXOs.append(utxo)
+            }
+        }
+        print(chosenUTXOs.count)
+        twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected = !selected
+        cell.changeSelectButton(isSelected: !selected)
+        if chosenUTXOs.count == 2 {
+            showAccessAlert(for: self, with: "Merge UTXOs?") { [weak self] (result) in
+                if result {
+                    self?.formMergeUTXOsTransaction(forWallet: utxo.inWallet)
+                }
+            }
+        }
+    }
+
+    func formMergeUTXOsTransaction(forWallet: KeyWalletModel) {
+        var inputs = [TransactionInput]()
+        var mergedAmount: BigUInt = 0
+        for utxo in chosenUTXOs {
+            if let input = utxo.utxo.toTransactionInput() {
+                inputs.append(input)
+                mergedAmount += input.amount
+            }
+        }
+
+        guard let address = EthereumAddress(forWallet.address) else {return}
+        guard let output = TransactionOutput(outputNumberInTx: 0, receiverEthereumAddress: address, amount: mergedAmount) else {return}
+        let outputs = [output]
+        guard let transaction = Transaction(txType: .merge, inputs: inputs, outputs: outputs) else {return}
+        checkPassword(forWallet: forWallet) { [weak self] (password) in
+            self?.enterPincode(for: transaction, withPassword: password)
+        }
+    }
+
+    func checkPassword(forWallet: KeyWalletModel, completion: @escaping (String?) -> Void) {
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
+                                                    account: "\(forWallet.name ?? "")-password",
+                accessGroup: KeychainConfiguration.accessGroup)
+            let keychainPassword = try passwordItem.readPassword()
+            completion(keychainPassword)
+        } catch {
+            completion(nil)
+        }
+    }
+
+    func enterPincode(for transaction: Transaction, withPassword: String?) {
+        let enterPincode = EnterPincodeViewController(from: .transaction, for: transaction, withPassword: withPassword ?? "", isFromDeepLink: false)
+        self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
