@@ -9,6 +9,7 @@
 import UIKit
 import LocalAuthentication
 import web3swift
+import PlasmaSwiftLib
 
 class EnterPincodeViewController: PincodeViewController {
 
@@ -17,10 +18,12 @@ class EnterPincodeViewController: PincodeViewController {
 
     var fromCase: EnterPincodeFromCases?
     var data: [String: Any]?
+    var transaction: Transaction?
     var password: String?
     var isFromDeepLink: Bool = false
 
     var transactionService = TransactionsService()
+    let keysService = KeysService()
 
     let animationController = AnimationController()
 
@@ -28,6 +31,14 @@ class EnterPincodeViewController: PincodeViewController {
         self.init()
         fromCase = from
         self.data = data
+        self.password = withPassword
+        self.isFromDeepLink = isFromDeepLink
+    }
+
+    convenience init(from: EnterPincodeFromCases, for transaction: Transaction, withPassword: String, isFromDeepLink: Bool) {
+        self.init()
+        fromCase = from
+        self.transaction = transaction
         self.password = withPassword
         self.isFromDeepLink = isFromDeepLink
     }
@@ -87,12 +98,43 @@ class EnterPincodeViewController: PincodeViewController {
         switch fromCase ?? .enterWallet {
         case .transaction:
             animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
-            let transactionData = transactionService.getDataForTransaction(dict: data!)
-            send(with: transactionData)
+            if let d = data {
+                let transactionData = transactionService.getDataForTransaction(dict: data!)
+                send(with: transactionData)
+            } else if let t = transaction {
+                send(with: t)
+            }
         default:
             let startViewController = AppController().goToApp()
             startViewController.view.backgroundColor = UIColor.white
             UIApplication.shared.keyWindow?.rootViewController = startViewController
+        }
+    }
+
+    func send(with transaction: Transaction) {
+        guard let wallet = keysService.selectedWallet() else {return}
+        guard let pass = password else {return}
+        guard let privateKey = keysService.getWalletPrivateKey(for: wallet, password: pass) else {return}
+        let privKey = Data(hex: privateKey)
+        let signedTransaction = transaction.sign(privateKey: privKey)
+
+        ServiceUTXO().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
+            switch result {
+            case .Success(let approved):
+                print(approved)
+                DispatchQueue.main.async { [weak self] in
+                    showSuccessAlert(for: self!, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
+            case .Error(let error):
+                DispatchQueue.main.async { [weak self] in
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
+            }
         }
     }
 
@@ -110,18 +152,10 @@ class EnterPincodeViewController: PincodeViewController {
                 } else {
                     showSuccessAlert(for: self!, completion: {
                         self?.returnToStartTab()
-                        //self?.navigationController?.popViewController(animated: true)
                     })
                 }
 
             case .Error(let error):
-//                if let error = error as? Web3Error {
-//                    switch error {
-//                    case .nodeError(let text):
-//                    default:
-//                        break
-//                    }
-//                }
                 print("\(error)")
                 showErrorAlert(for: self!, error: error, completion: {
                     self?.returnToStartTab()

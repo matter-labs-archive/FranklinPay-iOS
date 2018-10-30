@@ -11,6 +11,7 @@ import PlasmaSwiftLib
 
 protocol TokenSelectionDelegate: class {
     func didSelectToken(token: ERC20TokenModel)
+    func didSelectUTXO(utxo: ListUTXOsModel)
 }
 
 class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
@@ -50,6 +51,10 @@ class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.didSelectToken(token: tokens[indexPath.row])
+        if isPlasma {
+           delegate?.didSelectUTXO(utxo: utxos[indexPath.row])
+        } else {
+            delegate?.didSelectToken(token: tokens[indexPath.row])
+        }
     }
 }
