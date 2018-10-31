@@ -148,54 +148,38 @@ class EnterPincodeViewController: PincodeViewController {
     func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
         if !isContract {
             transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-                }
-                switch result {
-                case .Success:
-                    if (self?.isFromDeepLink)! {
-                        showSuccessAlert(for: self!, completion: {
-                            self?.returnToStartTab()
-                        })
-                    } else {
-                        showSuccessAlert(for: self!, completion: {
-                            self?.returnToStartTab()
-                        })
-                    }
-
-                case .Error(let error):
-                    print("\(error)")
-                    showErrorAlert(for: self!, error: error, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
+                self?.sendingResultOperation(result: result)
             }
         } else {
             transactionService.sendToContract(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-                }
-                switch result {
-                case .Success:
-                    if (self?.isFromDeepLink)! {
-                        showSuccessAlert(for: self!, completion: {
-                            self?.returnToStartTab()
-                        })
-                    } else {
-                        showSuccessAlert(for: self!, completion: {
-                            self?.returnToStartTab()
-                        })
-                    }
-
-                case .Error(let error):
-                    print("\(error)")
-                    showErrorAlert(for: self!, error: error, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
+                self?.sendingResultOperation(result: result)
             }
         }
 
+    }
+    
+    func sendingResultOperation(result: Result<TransactionSendingResult>) {
+        DispatchQueue.main.async { [weak self] in
+            self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+        }
+        switch result {
+        case .Success:
+            if isFromDeepLink {
+                showSuccessAlert(for: self, completion: { [weak self] in
+                    self?.returnToStartTab()
+                })
+            } else {
+                showSuccessAlert(for: self, completion: { [weak self] in
+                    self?.returnToStartTab()
+                })
+            }
+            
+        case .Error(let error):
+            print("\(error)")
+            showErrorAlert(for: self, error: error, completion: { [weak self] in
+                self?.returnToStartTab()
+            })
+        }
     }
 
     func returnToStartTab() {
