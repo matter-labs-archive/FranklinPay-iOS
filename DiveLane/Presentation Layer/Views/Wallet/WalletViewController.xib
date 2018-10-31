@@ -12,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="DiveLane" customModuleProvider="target">
             <connections>
+                <outlet property="blockchainControl" destination="WqH-Nr-SVW" id="pKJ-GZ-Me2"/>
                 <outlet property="view" destination="i7G-Dn-Yqp" id="E9H-de-cu1"/>
                 <outlet property="walletTableView" destination="5BW-OP-e77" id="nLv-EC-wvL"/>
             </connections>
@@ -35,6 +36,9 @@
                         <segment title="ETH"/>
                         <segment title="Plasma"/>
                     </segments>
+                    <connections>
+                        <action selector="blockchainChanged:" destination="-1" eventType="valueChanged" id="aZc-4Y-BRr"/>
+                    </connections>
                 </segmentedControl>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJ9-nv-B8r">
                     <rect key="frame" x="0.0" y="607" width="375" height="60"/>

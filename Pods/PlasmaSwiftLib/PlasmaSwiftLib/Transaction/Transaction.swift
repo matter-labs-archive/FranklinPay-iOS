@@ -63,7 +63,7 @@ public class Transaction {
         self.outputs = [TransactionOutput]()
     }
     
-    public init?(txType: TransactionType, inputs: Array<TransactionInput>, outputs: Array<TransactionOutput>){
+    public init?(txType: TransactionType, inputs: Array<TransactionInput>, outputs: Array<TransactionOutput>) {
         guard inputs.count <= inputsArrayMax else {return nil}
         guard outputs.count <= outputsArrayMax else {return nil}
         
@@ -76,33 +76,47 @@ public class Transaction {
         
         guard let item = RLP.decode(data) else {return nil}
         guard item.isList else {return nil}
-        guard item.count == 3 else {return nil}
+        guard let count = item.count else {return nil}
+        let dataArray: RLP.RLPItem
         
-        guard let txTypeData = item[0]?.data else {return nil}
-        guard let inputsData = item[1] else {return nil}
-        guard let outputsData = item[2] else {return nil}
-        guard inputsData.isList else {return nil}
-        guard outputsData.isList else {return nil}
+        guard let firstItem = item[0] else {return nil}
+        if count > 1 {
+            dataArray = item
+        } else {
+            dataArray = firstItem
+        }
+        
+        guard dataArray.count == 3 else {
+            print("Wrong decoded transaction")
+            return nil
+        }
+        
+        guard let txTypeData = dataArray[0]?.data else {return nil}
+        guard let inputsData = dataArray[1] else {return nil}
+        guard let outputsData = dataArray[2] else {return nil}
         
         guard txTypeData.count == txTypeByteLength else {return nil}
         guard let txType = TransactionType(byte: txTypeData.first!) else {return nil}
         self.txType = txType
         
         var inputs = [TransactionInput]()
-        inputs.reserveCapacity(inputsData.count!)
-        for inputIndex in 0 ..< inputsData.count! {
-            guard let inputData = inputsData[inputIndex]!.data else {return nil}
-            guard let input = TransactionInput(data: inputData) else {return nil}
-            inputs.append(input)
+        if inputsData.isList {
+            inputs.reserveCapacity(inputsData.count!)
+            for inputIndex in 0 ..< inputsData.count! {
+                guard let inputData = inputsData[inputIndex]!.data else {return nil}
+                guard let input = TransactionInput(data: inputData) else {return nil}
+                inputs.append(input)
+            }
         }
         
         var outputs = [TransactionOutput]()
-        outputs.reserveCapacity(outputsData.count!)
-        for outputIndex in 0 ..< outputsData.count! {
-            guard let outputData = outputsData[outputIndex]!.data else {return nil}
-            guard let output = TransactionOutput(data: outputData) else {return nil}
-            guard output.outputNumberInTx == outputIndex else {return nil}
-            outputs.append(output)
+        if outputsData.isList {
+            outputs.reserveCapacity(outputsData.count!)
+            for outputIndex in 0 ..< outputsData.count! {
+                guard let outputData = outputsData[outputIndex]!.data else {return nil}
+                guard let output = TransactionOutput(data: outputData) else {return nil}
+                outputs.append(output)
+            }
         }
         
         self.inputs = inputs
@@ -114,7 +128,7 @@ public class Transaction {
             if let signature = signature(privateKey: privateKey, useExtraEntropy: useExtraEntropy) {
                 var v = BigUInt(signature.v)
                 if (v < 27) {
-                    v = v + BigUInt(27)
+                    v += BigUInt(27)
                 }
                 let r = signature.r
                 let s = signature.s

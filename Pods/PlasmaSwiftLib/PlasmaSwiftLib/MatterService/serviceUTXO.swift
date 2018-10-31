@@ -7,8 +7,12 @@
 //
 
 import Foundation
+import EthereumAddress
 
-final class serviceUTXO {
+public final class ServiceUTXO {
+    
+    public init() {}
+    
     public func getListUTXOs(for address: EthereumAddress, onTestnet: Bool = false, completion: @escaping(Result<[ListUTXOsModel]>) -> Void) {
         let json: [String: Any] = ["for": address.address,
                                    "blockNumber": 1,
@@ -18,7 +22,7 @@ final class serviceUTXO {
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        guard let request = request(url: onTestnet ? URLs.listUTXOsTestnet : URLs.listUTXOsMainnet,
+        guard let request = request(url: onTestnet ? MatterURLs.listUTXOsTestnet : MatterURLs.listUTXOsMainnet,
                                     data: jsonData) else {
             completion(Result.Error(MatterErrors.cantCreateRequest))
             return
@@ -29,9 +33,17 @@ final class serviceUTXO {
                 completion(Result.Error(error!))
                 return
             }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(Result.Error(MatterErrors.badResponse))
+                return
+            }
+            guard httpResponse.statusCode == 200 else {
+                completion(Result.Error(MatterErrors.badResponse))
+                return
+            }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
             if let responseJSON = responseJSON as? [String: Any] {
-                if let utxos = responseJSON["utxos"] as? [[String : Any]] {
+                if let utxos = responseJSON["utxos"] as? [[String: Any]] {
                     var allUTXOs = [ListUTXOsModel]()
                     for utxo in utxos {
                         if let model = ListUTXOsModel(json: utxo) {
@@ -56,7 +68,7 @@ final class serviceUTXO {
         
         let jsonData = try? JSONSerialization.data(withJSONObject: json)
         
-        guard let request = request(url: onTestnet ? URLs.sendRawTXTestnet : URLs.sendRawTXMainnet,
+        guard let request = request(url: onTestnet ? MatterURLs.sendRawTXTestnet : MatterURLs.sendRawTXMainnet,
                                     data: jsonData) else {
             completion(Result.Error(MatterErrors.cantCreateRequest))
             return
@@ -65,6 +77,14 @@ final class serviceUTXO {
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             guard let data = data, error == nil else {
                 completion(Result.Error(error!))
+                return
+            }
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(Result.Error(MatterErrors.badResponse))
+                return
+            }
+            guard httpResponse.statusCode == 200 else {
+                completion(Result.Error(MatterErrors.badResponse))
                 return
             }
             let responseJSON = try? JSONSerialization.jsonObject(with: data, options: [])
@@ -93,6 +113,10 @@ final class serviceUTXO {
         
         return request
     }
+    
+    public enum Result<T> {
+        case Success(T)
+        case Error(Error)
+    }
+
 }
-
-

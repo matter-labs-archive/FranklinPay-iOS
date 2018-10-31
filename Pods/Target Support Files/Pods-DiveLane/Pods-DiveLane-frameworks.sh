@@ -3,10 +3,15 @@ set -e
 set -u
 set -o pipefail
 
+function on_error {
+  echo "$(realpath -mq "${0}"):$1: error: Unexpected failure"
+}
+trap 'on_error $LINENO' ERR
+
 if [ -z ${FRAMEWORKS_FOLDER_PATH+x} ]; then
-    # If FRAMEWORKS_FOLDER_PATH is not set, then there's nowhere for us to copy
-    # frameworks to, so exit 0 (signalling the script phase was successful).
-    exit 0
+  # If FRAMEWORKS_FOLDER_PATH is not set, then there's nowhere for us to copy
+  # frameworks to, so exit 0 (signalling the script phase was successful).
+  exit 0
 fi
 
 echo "mkdir -p ${CONFIGURATION_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
@@ -36,8 +41,8 @@ install_framework()
   local destination="${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}"
 
   if [ -L "${source}" ]; then
-      echo "Symlinked..."
-      source="$(readlink "${source}")"
+    echo "Symlinked..."
+    source="$(readlink "${source}")"
   fi
 
   # Use filter instead of exclude so missing patterns don't throw errors.
@@ -67,7 +72,7 @@ install_framework()
   # Embed linked Swift runtime libraries. No longer necessary as of Xcode 7.
   if [ "${XCODE_VERSION_MAJOR}" -lt 7 ]; then
     local swift_runtime_libs
-    swift_runtime_libs=$(xcrun otool -LX "$binary" | grep --color=never @rpath/libswift | sed -E s/@rpath\\/\(.+dylib\).*/\\1/g | uniq -u  && exit ${PIPESTATUS[0]})
+    swift_runtime_libs=$(xcrun otool -LX "$binary" | grep --color=never @rpath/libswift | sed -E s/@rpath\\/\(.+dylib\).*/\\1/g | uniq -u)
     for lib in $swift_runtime_libs; do
       echo "rsync -auv \"${SWIFT_STDLIB_PATH}/${lib}\" \"${destination}\""
       rsync -auv "${SWIFT_STDLIB_PATH}/${lib}" "${destination}"
@@ -136,7 +141,7 @@ strip_invalid_archs() {
   for arch in $binary_archs; do
     if ! [[ "${ARCHS}" == *"$arch"* ]]; then
       # Strip non-valid architectures in-place
-      lipo -remove "$arch" -output "$binary" "$binary" || exit 1
+      lipo -remove "$arch" -output "$binary" "$binary"
       stripped="$stripped $arch"
     fi
   done
@@ -151,6 +156,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PlasmaSwiftLib/PlasmaSwiftLib.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework"
@@ -165,6 +172,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PlasmaSwiftLib/PlasmaSwiftLib.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework"

@@ -1,13 +1,13 @@
 //
 //  EthereumAddress.swift
-//  web3swift
+//  EthereumAddress
 //
-//  Created by Alexander Vlasov on 07.01.2018.
-//  Copyright © 2018 Bankex Foundation. All rights reserved.
+//  Created by Alex Vlasov on 25/10/2018.
+//  Copyright © 2018 Alex Vlasov. All rights reserved.
 //
 
 import Foundation
-import BigInt
+import CryptoSwift
 
 public struct EthereumAddress: Equatable {
     public enum AddressType {
@@ -124,6 +124,10 @@ public struct EthereumAddress: Equatable {
     //    public static func fromIBAN(_ iban: String) -> EthereumAddress {
     //
     //    }
+    
+}
+
+extension EthereumAddress: Hashable {
     
 }
 

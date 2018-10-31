@@ -9,6 +9,7 @@
 import Foundation
 import SwiftRLP
 import BigInt
+import EthereumAddress
 
 public struct TransactionOutput {
     
@@ -21,7 +22,7 @@ public struct TransactionOutput {
         return self.serialize()
     }
     
-    public init?(outputNumberInTx: BigUInt, receiverEthereumAddress: EthereumAddress, amount: BigUInt){
+    public init?(outputNumberInTx: BigUInt, receiverEthereumAddress: EthereumAddress, amount: BigUInt) {
         guard outputNumberInTx.bitWidth <= outputNumberInTxMaxWidth else {return nil}
         guard receiverEthereumAddress.addressData.count <= receiverEthereumAddressByteLength else {return nil}
         guard amount.bitWidth <= amountMaxWidth else {return nil}
@@ -33,9 +34,20 @@ public struct TransactionOutput {
     
     public init?(data: Data) {
         
-        guard let dataArray = RLP.decode(data) else {return nil}
-        guard dataArray.isList else {return nil}
-        guard dataArray.count == 3 else {return nil}
+        guard let dataDecoded = RLP.decode(data) else {return nil}
+        guard dataDecoded.isList else {return nil}
+        guard let count = dataDecoded.count else {return nil}
+        let dataArray: RLP.RLPItem
+        guard let firstItem = dataDecoded[0] else {return nil}
+        if count > 1 {
+            dataArray = dataDecoded
+        } else {
+            dataArray = firstItem
+        }
+        guard dataArray.count == 3 else {
+            print("Wrong decoded output")
+            return nil
+        }
         
         guard let outputNumberInTxData = dataArray[0]?.data else {return nil}
         guard let receiverEthereumAddressData = dataArray[1]?.data else {return nil}

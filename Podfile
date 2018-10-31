@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '9.0'
 
 target 'DiveLane' do
@@ -5,11 +6,12 @@ target 'DiveLane' do
   use_frameworks!
   # Pods for DiveLane
   #pod 'web3swift', :path => '../web3swift'
-  pod 'web3swift', :git => 'https://github.com/matterinc/web3swift', :branch => 'master'
-  pod 'QRCodeReader.swift', '~> 8.1.1'
+  pod 'web3swift'
+  pod 'QRCodeReader.swift'
   pod 'Fabric'
   pod 'Crashlytics'
-  pod 'Alamofire', '~> 4.7'
+  pod 'Alamofire'
   pod 'PlasmaSwiftLib'
+  pod 'EthereumAddress'
 
 end

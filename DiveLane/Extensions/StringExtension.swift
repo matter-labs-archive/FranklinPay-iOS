@@ -35,6 +35,7 @@ extension String {
     }
     func hideExtraSymbolsInAddress() -> String {
         let address = self
+        if address.count < 6 {return self}
         let first = String(address[0...5])
         let last = String(address.suffix(4))
         return first+"..."+last

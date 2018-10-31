@@ -9,6 +9,7 @@
 import UIKit
 import LocalAuthentication
 import web3swift
+import PlasmaSwiftLib
 
 class EnterPincodeViewController: PincodeViewController {
 
@@ -17,17 +18,29 @@ class EnterPincodeViewController: PincodeViewController {
 
     var fromCase: EnterPincodeFromCases?
     var data: [String: Any]?
+    var transaction: Transaction?
     var password: String?
     var isFromDeepLink: Bool = false
+    var isContract: Bool = false
 
     var transactionService = TransactionsService()
+    let keysService = KeysService()
 
     let animationController = AnimationController()
 
-    convenience init(from: EnterPincodeFromCases, for data: [String: Any], withPassword: String, isFromDeepLink: Bool) {
+    convenience init(from: EnterPincodeFromCases, for data: [String: Any], isContract: Bool = false, withPassword: String, isFromDeepLink: Bool) {
         self.init()
         fromCase = from
         self.data = data
+        self.password = withPassword
+        self.isFromDeepLink = isFromDeepLink
+        self.isContract = isContract
+    }
+
+    convenience init(from: EnterPincodeFromCases, for transaction: Transaction, withPassword: String, isFromDeepLink: Bool) {
+        self.init()
+        fromCase = from
+        self.transaction = transaction
         self.password = withPassword
         self.isFromDeepLink = isFromDeepLink
     }
@@ -87,8 +100,12 @@ class EnterPincodeViewController: PincodeViewController {
         switch fromCase ?? .enterWallet {
         case .transaction:
             animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
-            let transactionData = transactionService.getDataForTransaction(dict: data!)
-            send(with: transactionData)
+            if let d = data {
+                let transactionData = transactionService.getDataForTransaction(dict: data!)
+                send(with: transactionData)
+            } else if let t = transaction {
+                send(with: t)
+            }
         default:
             let startViewController = AppController().goToApp()
             startViewController.view.backgroundColor = UIColor.white
@@ -96,38 +113,89 @@ class EnterPincodeViewController: PincodeViewController {
         }
     }
 
-    func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
-        transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-            DispatchQueue.main.async { [weak self] in
-                self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-            }
+    func send(with transaction: Transaction) {
+        guard let wallet = keysService.selectedWallet() else {return}
+        guard let pass = password else {return}
+        guard let privateKey = keysService.getWalletPrivateKey(for: wallet, password: pass) else {return}
+        let privKey = Data(hex: privateKey)
+        let signedTransaction = transaction.sign(privateKey: privKey)
+
+        ServiceUTXO().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
             switch result {
-            case .Success:
-                if (self?.isFromDeepLink)! {
-                    showSuccessAlert(for: self!, completion: {
-                        self?.returnToStartTab()
+            case .Success(let approved):
+                guard approved != nil else {
+                    showErrorAlert(for: self, error: nil, completion: {
+                        self.returnToStartTab()
                     })
-                } else {
+                    return
+                }
+                DispatchQueue.main.async { [weak self] in
                     showSuccessAlert(for: self!, completion: {
                         self?.returnToStartTab()
-                        //self?.navigationController?.popViewController(animated: true)
                     })
                 }
-
             case .Error(let error):
-//                if let error = error as? Web3Error {
-//                    switch error {
-//                    case .nodeError(let text):
-//                    default:
-//                        break
-//                    }
-//                }
-                print("\(error)")
-                showErrorAlert(for: self!, error: error, completion: {
-                    self?.returnToStartTab()
-                })
+                DispatchQueue.main.async { [weak self] in
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
             }
         }
+    }
+
+    func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
+        if !isContract {
+            transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+                }
+                switch result {
+                case .Success:
+                    if (self?.isFromDeepLink)! {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    } else {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    }
+
+                case .Error(let error):
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
+            }
+        } else {
+            transactionService.sendToContract(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+                }
+                switch result {
+                case .Success:
+                    if (self?.isFromDeepLink)! {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    } else {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    }
+
+                case .Error(let error):
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
+            }
+        }
+
     }
 
     func returnToStartTab() {

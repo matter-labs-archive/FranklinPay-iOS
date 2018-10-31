@@ -15,4 +15,5 @@ enum MatterErrors: Error {
     case errorInListUTXOs
     case errorInUTXOs
     case noAcceptedInfo
+    case badResponse
 }
