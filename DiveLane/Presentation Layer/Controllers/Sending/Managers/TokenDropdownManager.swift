@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import PlasmaSwiftLib
 
 protocol TokenSelectionDelegate: class {
     func didSelectToken(token: ERC20TokenModel)
+    func didSelectUTXO(utxo: ListUTXOsModel)
 }
 
 class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
@@ -18,25 +20,41 @@ class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource
     let localStorage = LocalDatabase()
 
     var tokens = [ERC20TokenModel]()
+    var utxos = [ListUTXOsModel]()
     var wallet: KeyWalletModel?
 
+    var isPlasma: Bool = false
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tokens.count
+        if isPlasma {
+            return utxos.count
+        } else {
+            return tokens.count
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCellDropdown") as? TokenCellDropdown else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCellDropdown") as?  TokenCellDropdown else {
             return UITableViewCell()
         }
         guard let wallet = wallet else {
             return UITableViewCell()
         }
-        cell.configure(tokens[indexPath.row], wallet: wallet)
+        if isPlasma {
+            cell.configure(utxos[indexPath.row], wallet: wallet)
+        } else {
+            cell.configure(tokens[indexPath.row], wallet: wallet)
+        }
         return cell
+
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.didSelectToken(token: tokens[indexPath.row])
+        if isPlasma {
+           delegate?.didSelectUTXO(utxo: utxos[indexPath.row])
+        } else {
+            delegate?.didSelectToken(token: tokens[indexPath.row])
+        }
     }
 }

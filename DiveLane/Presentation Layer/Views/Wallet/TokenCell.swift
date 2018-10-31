@@ -8,6 +8,7 @@
 
 import UIKit
 import web3swift
+import PlasmaSwiftLib
 
 class TokenCell: UITableViewCell {
 
@@ -19,6 +20,7 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var balanceInDollars: UILabel!
 
     var link: WalletViewController?
+    var isPlasma: Bool = false
 
     let keysService: KeysService = KeysService()
 
@@ -27,28 +29,33 @@ class TokenCell: UITableViewCell {
         // Initialization code
     }
 
-    func configure(token: ERC20TokenModel?, forWallet: KeyWalletModel) {
-
-        guard let token = token else {
-            return
-        }
-
+    func configureForEtherBlockchain(token: ERC20TokenModel?, forWallet: KeyWalletModel, isSelected: Bool) {
+        guard let token = token else {return}
+        isPlasma = false
         self.tokenShortName.text = token.symbol.uppercased()
-//
-//        self.balance.text = "Loading..."
-//        self.balanceInDollars.text = "Loading..."
-
         updateBalanceAndAddress(for: token, forWallet: forWallet)
+        changeSelectButton(isSelected: isSelected)
+    }
 
-        //select token
-        let starButton = UIButton(type: .system)
-        starButton.setImage(UIImage(named: "SuccessIcon"), for: .normal)
-        starButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+    func configureForPlasmaBlockchain(utxo: ListUTXOsModel, token: ERC20TokenModel = ERC20TokenModel(isEther: true), forWallet: KeyWalletModel) {
+        let balance = Web3Utils.formatToEthereumUnits(utxo.value,
+                                                      toUnits: .eth,
+                                                      decimals: 6,
+                                                      decimalSeparator: ".")
+        isPlasma = true
+        self.balance.text = balance
+        self.tokenShortName.text = "ETH"
+        self.tokenAddress.text = "Wallet address: \(forWallet.address.hideExtraSymbolsInAddress())"
+        self.updateBalanceInDollars(for: token, withBalance: balance)
+        changeSelectButton(isSelected: false)
+    }
 
-        starButton.tintColor = .lightGray
-        starButton.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
+    func changeSelectButton(isSelected: Bool) {
 
-        accessoryView = starButton
+        let button = selectButton(isSelected: isSelected)
+        button.addTarget(self, action: #selector(handleMarkAsSelected), for: .touchUpInside)
+
+        accessoryView = button
     }
 
     func updateBalanceAndAddress(for token: ERC20TokenModel, forWallet: KeyWalletModel) {
@@ -85,7 +92,11 @@ class TokenCell: UITableViewCell {
     }
 
     @objc private func handleMarkAsSelected() {
-        link?.selectToken(cell: self)
+        if isPlasma {
+            link?.selectUTXO(cell: self)
+        } else {
+            link?.selectToken(cell: self)
+        }
     }
 
     override func prepareForReuse() {
@@ -95,5 +106,6 @@ class TokenCell: UITableViewCell {
         self.tokenShortName.text = ""
         self.tokenAddress.text = ""
         self.tokenIcon.image = UIImage(named: "ether")
+        self.balanceInDollars.text = ""
     }
 }

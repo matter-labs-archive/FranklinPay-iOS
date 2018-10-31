@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */; };
+		130C88EC217BC86600FC165C /* TransactionInfoWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */; };
 		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
 		84C70F56207BAA6AC48EE3FD /* Pods_DiveLane.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
@@ -105,6 +107,8 @@
 		B2E668DB2150FF0500C3CC2D /* TokenCellDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */; };
 		B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */; };
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
+		E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */; };
+		E20660A82188BF9A00701068 /* SelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660A72188BF9A00701068 /* SelectButton.swift */; };
 		E2724B99215ABD9100E99901 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B98215ABD9100E99901 /* Constants.swift */; };
 		E2724B9B215AE90E00E99901 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */; };
 		E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A292174D08700F38E50 /* StringExtension.swift */; };
@@ -149,6 +153,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoWebController.swift; sourceTree = "<group>"; };
+		130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoWebController.xib; sourceTree = "<group>"; };
 		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiveLaneTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -255,6 +261,8 @@
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
 		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
+		E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableUTXOs.swift; sourceTree = "<group>"; };
+		E20660A72188BF9A00701068 /* SelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectButton.swift; sourceTree = "<group>"; };
 		E2724B98215ABD9100E99901 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E2724B9A215AE90E00E99901 /* UserDefaultKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultKeys.swift; sourceTree = "<group>"; };
 		E2B45A292174D08700F38E50 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -316,6 +324,24 @@
 			);
 			name = Pods;
 			sourceTree = "<group>";
+		};
+		130C88E7217BC83700FC165C /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */,
+			);
+			name = TransactionInfoWeb;
+			path = "DiveLane/Presentation Layer/Controllers/TransactionInfoWeb";
+			sourceTree = SOURCE_ROOT;
+		};
+		130C88EA217BC86600FC165C /* TransactionInfoWeb */ = {
+			isa = PBXGroup;
+			children = (
+				130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */,
+			);
+			name = TransactionInfoWeb;
+			path = "DiveLane/Presentation Layer/Views/TransactionInfoWeb";
+			sourceTree = SOURCE_ROOT;
 		};
 		1CF54A73215CCF0E009CC78F /* DiveLaneTests */ = {
 			isa = PBXGroup;
@@ -422,6 +448,7 @@
 				9197F2EC2143B92B00C358AA /* WalletViewController.xib */,
 				9197F2F12143B9D600C358AA /* TokenCell.xib */,
 				9197F2F02143B9D600C358AA /* TokenCell.swift */,
+				E20660A72188BF9A00701068 /* SelectButton.swift */,
 			);
 			path = Wallet;
 			sourceTree = "<group>";
@@ -576,6 +603,7 @@
 		91B6A7A82143606E0033A045 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E20660022183DDF400701068 /* UTXO */,
 				E2B45A5121762A2200F38E50 /* Contact */,
 				E2B45A302174D1E100F38E50 /* TokenInfo */,
 				E2B45A2B2174D1CC00F38E50 /* Animators */,
@@ -631,6 +659,7 @@
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
+				130C88EA217BC86600FC165C /* TransactionInfoWeb */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				9197F32B2144210400C358AA /* Networks */,
 				9197F31D2144038400C358AA /* Settings */,
@@ -652,6 +681,7 @@
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
+				130C88E7217BC83700FC165C /* TransactionInfoWeb */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
 				9197F31E2144039000C358AA /* Settings */,
@@ -802,6 +832,14 @@
 				B2E668DE2151238200C3CC2D /* Enumerations.swift */,
 			);
 			path = Sending;
+			sourceTree = "<group>";
+		};
+		E20660022183DDF400701068 /* UTXO */ = {
+			isa = PBXGroup;
+			children = (
+				E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */,
+			);
+			path = UTXO;
 			sourceTree = "<group>";
 		};
 		E2B45A2B2174D1CC00F38E50 /* Animators */ = {
@@ -962,9 +1000,9 @@
 				91B6A78F21435F5D0033A045 /* Sources */,
 				91B6A79021435F5D0033A045 /* Frameworks */,
 				91B6A79121435F5D0033A045 /* Resources */,
-				1AC5E348E4143ACFCC13C076 /* [CP] Embed Pods Frameworks */,
 				B20B10AB2152408A00F62797 /* ShellScript */,
 				B2495E05215CE6F2005B18F2 /* ShellScript */,
+				1346525DECE6C1B7194AB3AA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1057,6 +1095,7 @@
 				9197F3022143BFC600C358AA /* TokenViewController.xib in Resources */,
 				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
 				B271CF9C214BAEDB0023FC18 /* TransactionCell.xib in Resources */,
+				130C88EC217BC86600FC165C /* TransactionInfoWebController.xib in Resources */,
 				B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */,
 				914F228B21499ACC00ED58E6 /* CreateWalletPincodeViewController.xib in Resources */,
 				E2B45A3A2174D27E00F38E50 /* TokenInfoCell.xib in Resources */,
@@ -1094,38 +1133,52 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AC5E348E4143ACFCC13C076 /* [CP] Embed Pods Frameworks */ = {
+		1346525DECE6C1B7194AB3AA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
+			inputFileListPaths = (
+			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
 				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
+				"${BUILT_PRODUCTS_DIR}/PlasmaSwiftLib/PlasmaSwiftLib.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
 				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1_ios/secp256k1_ios.framework",
+				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlasmaSwiftLib.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_ios.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3swift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		545595EA32A4C5AA1688643D /* [CP] Check Pods Manifest.lock */ = {
@@ -1200,6 +1253,7 @@
 				91B6A7AD214360F90033A045 /* Web3Service.swift in Sources */,
 				E2B45A3F2174D29200F38E50 /* TokenInfoControllerRaws.swift in Sources */,
 				E2B45A5821762DC200F38E50 /* ContactsService.swift in Sources */,
+				E20660A82188BF9A00701068 /* SelectButton.swift in Sources */,
 				9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */,
 				E2B45A2F2174D1CD00F38E50 /* DismissAnimator.swift in Sources */,
 				9197F2E52143B65600C358AA /* WalletCreationViewController.swift in Sources */,
@@ -1233,7 +1287,9 @@
 				E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */,
 				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
 				E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */,
+				E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */,
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
+				130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
 				E2B45A352174D21100F38E50 /* AnimationController.swift in Sources */,
@@ -1484,6 +1540,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1505,6 +1562,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

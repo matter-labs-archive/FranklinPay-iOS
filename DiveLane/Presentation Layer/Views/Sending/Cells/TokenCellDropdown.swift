@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import PlasmaSwiftLib
+import web3swift
 
 class TokenCellDropdown: UITableViewCell {
 
@@ -15,6 +17,7 @@ class TokenCellDropdown: UITableViewCell {
 
     let web3Service = Web3SwiftService()
     var currentToken: ERC20TokenModel?
+    var currentUTXO: ListUTXOsModel?
 
     func configure(_ token: ERC20TokenModel, wallet: KeyWalletModel) {
         currentToken = token
@@ -36,6 +39,16 @@ class TokenCellDropdown: UITableViewCell {
                 }
             }
         }
+    }
+
+    func configure(_ utxo: ListUTXOsModel, wallet: KeyWalletModel) {
+        currentUTXO = utxo
+        tokenName.text = ""
+        let balance = Web3Utils.formatToEthereumUnits(utxo.value,
+                                                      toUnits: .eth,
+                                                      decimals: 6,
+                                                      decimalSeparator: ".")
+        self.tokenBalance.text = balance
     }
 
     override func prepareForReuse() {

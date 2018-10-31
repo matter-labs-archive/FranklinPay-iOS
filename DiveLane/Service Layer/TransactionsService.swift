@@ -17,6 +17,7 @@ protocol ITransactionsService {
                                       contractAddress: String,
                                       method: String,
                                       predefinedOptions: Web3Options?,
+                                      value: String,
                                       completion: @escaping (Result<TransactionIntermediate>) -> Void)
 
     func prepareTransactionForSendingEther(destinationAddressString: String,
@@ -54,20 +55,34 @@ class TransactionsService: ITransactionsService {
                                              contractAddress: String,
                                              method: String,
                                              predefinedOptions: Web3Options? = nil,
+                                             value: String = "0",
                                              completion: @escaping (Result<TransactionIntermediate>) -> Void) {
         let wallet = TransactionsService.keyservice.selectedWallet()
         guard let address = wallet?.address else {
             return
         }
-        let ethAddressFrom = EthereumAddress(address)
-        let ethContractAddress = EthereumAddress(contractAddress)!
+        guard let ethAddressFrom = EthereumAddress(address) else {return}
+        guard let ethContractAddress = EthereumAddress(contractAddress) else {return}
+//        guard let amount = Web3.Utils.parseToBigUInt(value, units: .eth) else {
+//            DispatchQueue.main.async {
+//                completion(Result.Error(SendErrors.invalidAmountFormat))
+//            }
+//            return
+//        }
+        guard let floatAmount = Float(value) else {return}
+        let uintAmount = BigUInt( floatAmount * 1000000 )
+        let amountSendInETH = uintAmount * BigUInt(1000000000000)
 
-        let web3 = CurrentWeb.currentWeb ?? Web3.InfuraMainnetWeb3()
+        let web3 = web3swift.web3(provider: InfuraProvider(CurrentNetwork.currentNetwork ?? Networks.Mainnet)!)
         web3.addKeystoreManager(TransactionsService.keyservice.keystoreManager())
+
         var options = predefinedOptions ?? Web3Options.defaultOptions()
         options.from = ethAddressFrom
         options.to = ethContractAddress
-        options.value = options.value ?? 0
+        options.value = amountSendInETH ?? options.value
+        print(options.value?.description)
+        print(contractAddress)
+        print(ethAddressFrom)
         guard let contract = web3.contract(contractAbi,
                 at: ethContractAddress,
                 abiVersion: 2) else {
@@ -76,22 +91,27 @@ class TransactionsService: ITransactionsService {
             }
             return
         }
-        guard let gasPrice = web3.eth.getGasPrice().value else {
+        guard let estimatedGas = contract.method(options: options)?.estimateGas(options: nil).value else {
+            DispatchQueue.main.async {
+                completion(Result.Error(SendErrors.retrievingEstimatedGasError))
+            }
             return
         }
-        options.gasPrice = predefinedOptions?.gasPrice ?? gasPrice
+        guard let gasPrice = web3.eth.getGasPrice().value else {
+            DispatchQueue.main.async {
+                completion(Result.Error(SendErrors.retrievingGasPriceError))
+            }
+            return
+        }
+        options.gasLimit = estimatedGas
+        options.gasPrice = gasPrice
+
         guard let transaction = contract.method(method,
                 parameters: data,
                 options: options) else {
             return
         }
-        guard case .success(let estimate) = transaction.estimateGas(options: options) else {
-            DispatchQueue.main.async {
-                completion(Result.Error(TransactionErrors.PreparingError))
-            }
-            return
-        }
-        print("estimated cost: \(estimate)")
+
         DispatchQueue.main.async {
             completion(Result.Success(transaction))
         }
@@ -306,7 +326,7 @@ class TransactionsService: ITransactionsService {
         if let gasLimit = dict["gasLimit"] as? String,
             let gasPrice = dict["gasPrice"] as? String {
             options.gasLimit = BigUInt(gasLimit)
-            options.gasPrice = BigUInt(Double(gasPrice)! * pow(10, 9))
+            options.gasPrice = BigUInt((Double(gasPrice) ?? 0.0) * pow(10, 9))
         }
         let transaction = (dict["transaction"] as? TransactionIntermediate)!
         options.from = transaction.options?.from
