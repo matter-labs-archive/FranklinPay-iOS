@@ -21,18 +21,20 @@ class EnterPincodeViewController: PincodeViewController {
     var transaction: Transaction?
     var password: String?
     var isFromDeepLink: Bool = false
+    var isContract: Bool = false
 
     var transactionService = TransactionsService()
     let keysService = KeysService()
 
     let animationController = AnimationController()
 
-    convenience init(from: EnterPincodeFromCases, for data: [String: Any], withPassword: String, isFromDeepLink: Bool) {
+    convenience init(from: EnterPincodeFromCases, for data: [String: Any], isContract: Bool = false, withPassword: String, isFromDeepLink: Bool) {
         self.init()
         fromCase = from
         self.data = data
         self.password = withPassword
         self.isFromDeepLink = isFromDeepLink
+        self.isContract = isContract
     }
 
     convenience init(from: EnterPincodeFromCases, for transaction: Transaction, withPassword: String, isFromDeepLink: Bool) {
@@ -144,29 +146,56 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
-        transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-            DispatchQueue.main.async { [weak self] in
-                self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-            }
-            switch result {
-            case .Success:
-                if (self?.isFromDeepLink)! {
-                    showSuccessAlert(for: self!, completion: {
-                        self?.returnToStartTab()
-                    })
-                } else {
-                    showSuccessAlert(for: self!, completion: {
+        if !isContract {
+            transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+                }
+                switch result {
+                case .Success:
+                    if (self?.isFromDeepLink)! {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    } else {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    }
+
+                case .Error(let error):
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
                         self?.returnToStartTab()
                     })
                 }
+            }
+        } else {
+            transactionService.sendToContract(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
+                DispatchQueue.main.async { [weak self] in
+                    self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+                }
+                switch result {
+                case .Success:
+                    if (self?.isFromDeepLink)! {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    } else {
+                        showSuccessAlert(for: self!, completion: {
+                            self?.returnToStartTab()
+                        })
+                    }
 
-            case .Error(let error):
-                print("\(error)")
-                showErrorAlert(for: self!, error: error, completion: {
-                    self?.returnToStartTab()
-                })
+                case .Error(let error):
+                    print("\(error)")
+                    showErrorAlert(for: self!, error: error, completion: {
+                        self?.returnToStartTab()
+                    })
+                }
             }
         }
+
     }
 
     func returnToStartTab() {

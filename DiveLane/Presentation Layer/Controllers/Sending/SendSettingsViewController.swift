@@ -55,6 +55,17 @@ class SendSettingsViewController: UIViewController {
     var tokenDropdownManager: TokenDropdownManager?
     var walletDropdownManager: WalletDropdownManager?
 
+    convenience init(_ plasmaContract: String = plasmaContract,
+                     wallet: KeyWalletModel,
+                     tokenBalance: String,
+                     token: ERC20TokenModel = ERC20TokenModel(isEther: true)) {
+        self.init()
+        self.wallet = wallet
+        self.tokenBalance = tokenBalance
+        self.token = token
+        self.destinationAddress = plasmaContract
+    }
+
     // MARK: Initializers for launching from deeplink
     convenience init(wallet: KeyWalletModel,
                      tokenBalance: String,
@@ -314,7 +325,17 @@ class SendSettingsViewController: UIViewController {
             return
         }
 
-        if token?.address.isEmpty ?? true {
+        guard let token = token else {return}
+
+        if token == ERC20TokenModel(isEther: true) && destinationAddress == plasmaContract {
+            transactionsService.prepareTransactionToContract(data: [], contractAbi: plasmaABI, contractAddress: plasmaContract, method: "deposit", value: amount) { [weak self] (result) in
+                self?.transactionOperation(isContract: true,
+                                           result: result,
+                                           amount: amount,
+                                           destinationAddress: destinationAddress,
+                                           password: withPassword)
+            }
+        } else if token == ERC20TokenModel(isEther: true) {
             transactionsService.prepareTransactionForSendingEther(destinationAddressString: destinationAddress,
                                                                   amountString: amount,
                                                                   gasLimit: 21000) { [weak self] (result) in
@@ -327,7 +348,7 @@ class SendSettingsViewController: UIViewController {
             transactionsService.prepareTransactionForSendingERC(destinationAddressString: destinationAddress,
                                                                 amountString: amount,
                                                                 gasLimit: 21000,
-                                                                tokenAddress: (token?.address) ?? "") { [weak self] (result) in
+                                                                tokenAddress: (token.address) ?? "") { [weak self] (result) in
                                                                     self?.transactionOperation(result: result,
                                                                                                amount: amount,
                                                                                                destinationAddress: destinationAddress,
@@ -336,25 +357,21 @@ class SendSettingsViewController: UIViewController {
         }
     }
 
-    func transactionOperation(result: Result<TransactionIntermediate>, amount: String, destinationAddress: String, password: String?) {
+    func transactionOperation(isContract: Bool = false, result: Result<TransactionIntermediate>, amount: String, destinationAddress: String, password: String?) {
         DispatchQueue.main.async { [weak self] in
             self?.animation.waitAnimation(isEnabled: false,
                                           on: (self?.view)!)
         }
         switch result {
         case .Success(let transaction):
-            guard let gasPrice = self.gasPriceTextField.text else {
-                return
-            }
-            guard let gasLimit = self.gasLimitTextField.text else {
-                return
-            }
             guard let name = self.wallet?.name else {
                 return
             }
+            let gasPrice = self.gasPriceTextField.text ?? ""
+            let gasLimit = self.gasLimitTextField.text ?? ""
             let dict: [String: Any] = [
-                "gasPrice": gasPrice,
-                "gasLimit": gasLimit,
+                "gasPrice": gasPrice == "" ? transaction.options?.gasPrice : gasPrice,
+                "gasLimit": gasLimit == "" ? transaction.options?.gasLimit : gasLimit,
                 "transaction": transaction,
                 "amount": amount,
                 "name": name,
@@ -364,7 +381,7 @@ class SendSettingsViewController: UIViewController {
             //self?.sendFunds(dict: dict, enteredPassword: withPassword)
             showAccessAlert(for: self, with: "Send the transaction?", completion: { [weak self] (result) in
                 if result {
-                    self?.enterPincode(for: dict, withPassword: password)
+                    self?.enterPincode(for: dict, isContract: isContract, withPassword: password)
                 } else {
                     showErrorAlert(for: self!, error: TransactionErrors.PreparingError, completion: {
 
@@ -462,14 +479,14 @@ class SendSettingsViewController: UIViewController {
         }
     }
 
-    func enterPincode(for data: [String: Any]?, withPassword: String?) {
+    func enterPincode(for data: [String: Any]?, isContract: Bool = false, withPassword: String?) {
         guard let data = data else {
             showErrorAlert(for: self, error: TransactionErrors.PreparingError, completion: {
 
             })
             return
         }
-        let enterPincode = EnterPincodeViewController(from: .transaction, for: data, withPassword: withPassword ?? "", isFromDeepLink: isFromDeepLink)
+        let enterPincode = EnterPincodeViewController(from: .transaction, for: data, isContract: isContract, withPassword: withPassword ?? "", isFromDeepLink: isFromDeepLink)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
