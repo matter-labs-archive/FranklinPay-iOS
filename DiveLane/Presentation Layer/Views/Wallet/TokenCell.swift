@@ -44,6 +44,8 @@ class TokenCell: UITableViewCell {
                                                       decimalSeparator: ".")
         isPlasma = true
         self.balance.text = balance
+        self.tokenShortName.text = "ETH"
+        self.tokenAddress.text = "Wallet address: \(forWallet.address.hideExtraSymbolsInAddress())"
         self.updateBalanceInDollars(for: token, withBalance: balance)
         changeSelectButton(isSelected: false)
     }

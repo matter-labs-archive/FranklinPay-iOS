@@ -488,8 +488,10 @@ class SendSettingsViewController: UIViewController {
         currentUTXOs = []
         if sender.selectedSegmentIndex == 0 {
             blockchainState = .ETH
+            tokenNameLabel.text = token?.symbol.uppercased() ?? "ETH"
         } else {
             blockchainState = .Plasma
+            tokenNameLabel.text = "Choose UTXO"
             self.getUTXOs()
         }
     }
@@ -580,20 +582,44 @@ extension SendSettingsViewController: UITextFieldDelegate {
     private func isSendButtonEnabled(afterChanging textField: UITextField, with string: String) -> Bool {
         var hardExpression = true
         if blockchainState == .Plasma {
-            return hardExpression
-        }
-        hardExpression = hardExpression && !string.isEmpty
-                && (token != nil) && (wallet != nil)
-                && ((Double(tokenBalance ?? "0") ?? 0.0) > Double(0))
-        if textField != amountTextField {
-            hardExpression = hardExpression
+            guard let utxo = utxo else {return false}
+            let balance = Web3Utils.formatToEthereumUnits(utxo.value,
+                                                          toUnits: .eth,
+                                                          decimals: 6,
+                                                          decimalSeparator: ".")
+            if textField != amountTextField {
+                let amount = Float(amountTextField.text ?? "0.0") ?? 0.0
+                hardExpression = hardExpression
                     && !string.isEmpty
+                    && (wallet != nil)
                     && !(amountTextField.text?.isEmpty ?? true)
-                    && ((Float(amountTextField.text ?? "0.0") ?? 0.0) > Float(0))
-        } else {
-            hardExpression = hardExpression
+                    && (amount > Float(0))
+                    && (amount <= Float(balance ?? "0.0") ?? 0.0)
+            } else {
+                let amount = Float(string) ?? 0.0
+                hardExpression = hardExpression
                     && !string.isEmpty
-                    && ((Float(string) ?? 0.0) > Float(0))
+                    && (wallet != nil)
+                    && (amount > Float(0))
+                    && (amount <= Float(balance ?? "0.0") ?? 0.0)
+                    && enterAddressTextField.text != nil
+            }
+        } else {
+            hardExpression = hardExpression && !string.isEmpty
+                && token != nil && wallet != nil
+                && Double(tokenBalance ?? "0") ?? 0.0 > Double(0)
+            let balance = Float(tokenBalance ?? "0") ?? 0.0
+            if textField != amountTextField {
+                let amount = (Float(amountTextField.text ?? "0.0") ?? 0.0)
+                hardExpression = hardExpression
+                    && !(amountTextField.text?.isEmpty ?? true)
+                    && amount > Float(0)
+                    && amount <= balance
+            } else {
+                hardExpression = hardExpression
+                    && Float(string) ?? 0.0 > Float(0)
+                    && Float(string) ?? 0.0 <= balance
+            }
         }
         return hardExpression
     }

@@ -164,7 +164,7 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </stackView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bT4-ka-714">
-                                    <rect key="frame" x="40" y="510" width="240" height="36"/>
+                                    <rect key="frame" x="40" y="266" width="240" height="36"/>
                                     <color key="backgroundColor" red="0.0" green="0.47843137254901957" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
                                     <state key="normal" title="Send">
@@ -241,7 +241,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ETH" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eSc-aQ-2YI">
                                             <rect key="frame" x="216" y="16" width="50" height="18"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="50" id="Xub-pj-Pm6"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Xub-pj-Pm6"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -399,9 +399,8 @@
                                 <constraint firstItem="wCR-Ag-AHK" firstAttribute="leading" secondItem="4VJ-Rh-dm8" secondAttribute="leading" constant="10" id="Jvt-mi-ZLW"/>
                                 <constraint firstAttribute="trailing" secondItem="fX5-75-ap4" secondAttribute="trailing" constant="10" id="Krk-Ym-Jkg"/>
                                 <constraint firstItem="bT4-ka-714" firstAttribute="leading" secondItem="4VJ-Rh-dm8" secondAttribute="leading" constant="40" id="MJ4-Q8-K1T"/>
-                                <constraint firstAttribute="bottom" secondItem="bT4-ka-714" secondAttribute="bottom" constant="22" id="P2h-X3-7hf"/>
                                 <constraint firstItem="z2o-Ij-WRC" firstAttribute="top" secondItem="KEQ-o0-hV6" secondAttribute="bottom" id="R9l-YQ-ok1"/>
-                                <constraint firstItem="bT4-ka-714" firstAttribute="top" relation="greaterThanOrEqual" secondItem="fX5-75-ap4" secondAttribute="bottom" constant="12" id="UgX-iU-0Ry"/>
+                                <constraint firstItem="bT4-ka-714" firstAttribute="top" secondItem="fX5-75-ap4" secondAttribute="bottom" constant="20" id="UgX-iU-0Ry"/>
                                 <constraint firstItem="fX5-75-ap4" firstAttribute="leading" secondItem="4VJ-Rh-dm8" secondAttribute="leading" constant="10" id="XqD-wX-p7t"/>
                                 <constraint firstItem="y4A-t9-eUe" firstAttribute="leading" secondItem="4VJ-Rh-dm8" secondAttribute="leading" constant="10" id="all-pL-OGH"/>
                                 <constraint firstAttribute="trailing" secondItem="bT4-ka-714" secondAttribute="trailing" constant="40" id="g34-H8-6eC"/>
