@@ -128,11 +128,9 @@ class WalletViewController: UIViewController {
         print(utxo)
         let selected = twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected
         if selected {
-            for i in 0..<chosenUTXOs.count {
-                if chosenUTXOs[i] == utxo {
-                    chosenUTXOs.remove(at: i)
-                    break
-                }
+            for i in 0..<chosenUTXOs.count where chosenUTXOs[i] == utxo {
+                chosenUTXOs.remove(at: i)
+                break
             }
         } else {
             guard chosenUTXOs.count < 2 else {return}
@@ -177,7 +175,7 @@ class WalletViewController: UIViewController {
     func checkPassword(forWallet: KeyWalletModel, completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
-                                                    account: "\(forWallet.name ?? "")-password",
+                                                    account: "\(forWallet.name)-password",
                 accessGroup: KeychainConfiguration.accessGroup)
             let keychainPassword = try passwordItem.readPassword()
             completion(keychainPassword)

@@ -28,7 +28,7 @@ class EIP681Model {
             CurrentNetwork.currentNetwork = Networks.Mainnet
         }
     }
-    // TODO: - ENS parser, when PR to w3s will be approved
+    // MARK: - ENS parser, when PR to w3s will be approved
     public func getParsedAddress(targetAddress: Web3.EIP681Code.TargetAddress) -> EthereumAddress {
         switch targetAddress {
         case .ensAddress(let domain):
@@ -37,7 +37,7 @@ class EIP681Model {
             return address
         }
     }
-    // TODO: - This is a useless function, but should become useful sometimes.
+    // MARK: - This is a useless function, but should become useful sometimes.
     public func getContractABI(contractAddress: EthereumAddress) -> String {
         if contractAddress.address == "0xfa28ec7198028438514b49a3cf353bca5541ce1d" {
             return peepEthAbi

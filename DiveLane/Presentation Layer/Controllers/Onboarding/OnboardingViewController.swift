@@ -81,11 +81,11 @@ class OnboardingViewController: UIViewController {
                 NSLayoutConstraint.constraints(withVisualFormat: "H:|-[pg]-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
-                                               views: views) +
+                                               views: views as [String : Any]) +
                 NSLayoutConstraint.constraints(withVisualFormat: "V:|-[pg]-30-[next]-30-[skip]-105-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
-                                               views: views)
+                                               views: views as [String : Any])
         )
 
         self.pageViewController.didMove(toParent: self)

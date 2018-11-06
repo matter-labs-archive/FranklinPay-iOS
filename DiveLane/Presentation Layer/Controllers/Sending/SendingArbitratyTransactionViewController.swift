@@ -42,7 +42,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         self.tableView.register(nib, forCellReuseIdentifier: "ParameterCell")
 
         self.title = "Transaction"
-        //TODO: - Setup outlets
+        // MARK: Setup outlets
         methodNameLabel.text = "Method name: " + transactionInfo.methodName
         if let address = KeysService().selectedWallet()?.address {
             fromTextField.text = "From: \(address)"
@@ -63,7 +63,7 @@ class SendArbitraryTransactionViewController: UIViewController {
     }
 
     @IBAction func sendButtonWasTapped(_ sender: Any) {
-        //TODO: - Password
+        // MARK: Password
         enterPassword()
 
     }
