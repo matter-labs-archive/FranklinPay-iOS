@@ -104,7 +104,7 @@ class TransactionsHistoryViewController: UIViewController {
     private func prepareTransactionsForView(transactions: [ETHTransactionModel]) {
         var transactions = transactions
         self.transactions.removeAll()
-        //TODO: - Sort transactions by day and put them in ascending order into array
+        // MARK: Sort transactions by day and put them in ascending order into array
         transactions.sort { (first, second) -> Bool in
             return first.date > second.date
         }

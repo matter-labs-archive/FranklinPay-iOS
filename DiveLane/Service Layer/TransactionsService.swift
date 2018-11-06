@@ -63,12 +63,6 @@ class TransactionsService: ITransactionsService {
         }
         guard let ethAddressFrom = EthereumAddress(address) else {return}
         guard let ethContractAddress = EthereumAddress(contractAddress) else {return}
-//        guard let amount = Web3.Utils.parseToBigUInt(value, units: .eth) else {
-//            DispatchQueue.main.async {
-//                completion(Result.Error(SendErrors.invalidAmountFormat))
-//            }
-//            return
-//        }
         guard let floatAmount = Float(value) else {return}
         let uintAmount = BigUInt( floatAmount * 1000000 )
         let amountSendInETH = uintAmount * BigUInt(1000000000000)
@@ -79,10 +73,7 @@ class TransactionsService: ITransactionsService {
         var options = predefinedOptions ?? Web3Options.defaultOptions()
         options.from = ethAddressFrom
         options.to = ethContractAddress
-        options.value = amountSendInETH ?? options.value
-        print(options.value?.description)
-        print(contractAddress)
-        print(ethAddressFrom)
+        options.value = amountSendInETH
         guard let contract = web3.contract(contractAbi,
                 at: ethContractAddress,
                 abiVersion: 2) else {

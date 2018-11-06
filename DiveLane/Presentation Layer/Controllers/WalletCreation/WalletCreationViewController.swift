@@ -250,7 +250,7 @@ class WalletCreationViewController: UIViewController {
                         })
                         return
                     } else {
-                        guard let walletStrAddress = wallet?.address, let _ = EthereumAddress(walletStrAddress) else {
+                        guard let walletStrAddress = wallet?.address, EthereumAddress(walletStrAddress) != nil else {
                             showErrorAlert(for: self!, error: error, completion: {
 
                             })

@@ -100,7 +100,7 @@ class EnterPincodeViewController: PincodeViewController {
         switch fromCase ?? .enterWallet {
         case .transaction:
             animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
-            if let d = data {
+            if data != nil {
                 let transactionData = transactionService.getDataForTransaction(dict: data!)
                 send(with: transactionData)
             } else if let t = transaction {

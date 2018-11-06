@@ -23,21 +23,21 @@ class DiveLaneUITests: XCTestCase {
     }
 
     func testExample() {
-        let app = XCUIApplication()
-        setupSnapshot(app)
-        app.launch()
-        snapshot("MainScreen")
-        let walletsNavigationBar = app.navigationBars["Wallets"]
-        walletsNavigationBar.buttons["Add"].tap()
-        snapshot("Wallets")
-        let tablesQuery = app.tables
-        tablesQuery.buttons["Info"].tap()
-        snapshot("WalletInfo")
-        app.navigationBars["Wallet"].buttons["Wallets"].tap()
-        walletsNavigationBar.buttons["Wallets"].tap()
-        tablesQuery.buttons["+"].tap()
-        tablesQuery.searchFields["Search"].tap()
-        snapshot("TokenSearch")
+//        let app = XCUIApplication()
+//        setupSnapshot(app)
+//        app.launch()
+//        snapshot("MainScreen")
+//        let walletsNavigationBar = app.navigationBars["Wallets"]
+//        walletsNavigationBar.buttons["Add"].tap()
+//        snapshot("Wallets")
+//        let tablesQuery = app.tables
+//        tablesQuery.buttons["Info"].tap()
+//        snapshot("WalletInfo")
+//        app.navigationBars["Wallet"].buttons["Wallets"].tap()
+//        walletsNavigationBar.buttons["Wallets"].tap()
+//        tablesQuery.buttons["+"].tap()
+//        tablesQuery.searchFields["Search"].tap()
+//        snapshot("TokenSearch")
     }
 
 }
