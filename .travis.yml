@@ -14,7 +14,5 @@ after_failure:
 script:
   - swiftlint
   - xcodebuild -workspace DiveLane.xcworkspace -scheme DiveLane -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-  - xcodebuild test -workspace DiveLane.xcworkspace -scheme DiveLaneTests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-  - xcodebuild test -workspace DiveLane.xcworkspace -scheme DiveLaneUITests -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 after_success:
   - bash <(curl -s https://codecov.io/bash)
