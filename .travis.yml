@@ -8,6 +8,9 @@ before_install:
   - brew install swiftlint
   - gem install cocoapods --pre --no-rdoc --no-ri --no-document --quiet
   - pod install --repo-update
+after_failure:
+  # dump the last 2000 lines of our build, and hope the error is in that!
+  - tail --lines=2000 build.log
 script:
   - swiftlint
   - xcodebuild -workspace DiveLane.xcworkspace -scheme DiveLane -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
