@@ -348,7 +348,7 @@ class SendSettingsViewController: UIViewController {
             transactionsService.prepareTransactionForSendingERC(destinationAddressString: destinationAddress,
                                                                 amountString: amount,
                                                                 gasLimit: 21000,
-                                                                tokenAddress: (token.address) ?? "") { [weak self] (result) in
+                                                                tokenAddress: token.address) { [weak self] (result) in
                                                                     self?.transactionOperation(result: result,
                                                                                                amount: amount,
                                                                                                destinationAddress: destinationAddress,
@@ -367,11 +367,11 @@ class SendSettingsViewController: UIViewController {
             guard let name = self.wallet?.name else {
                 return
             }
-            let gasPrice = self.gasPriceTextField.text ?? ""
-            let gasLimit = self.gasLimitTextField.text ?? ""
+            let gasPrice = transaction.options?.gasPrice ?? (BigUInt(self.gasPriceTextField.text ?? "0") ?? "0")
+            let gasLimit = transaction.options?.gasLimit ?? (BigUInt(self.gasLimitTextField.text ?? "0") ?? "0")
             let dict: [String: Any] = [
-                "gasPrice": gasPrice == "" ? transaction.options?.gasPrice : gasPrice,
-                "gasLimit": gasLimit == "" ? transaction.options?.gasLimit : gasLimit,
+                "gasPrice": gasPrice == gasPrice,
+                "gasLimit": gasLimit == gasLimit,
                 "transaction": transaction,
                 "amount": amount,
                 "name": name,
@@ -512,10 +512,9 @@ class SendSettingsViewController: UIViewController {
             self.getUTXOs()
         }
     }
-
 }
 
-// MARK: - Dropdowns Delegates
+// MARK: Dropdowns Delegates
 extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDelegate {
     func didSelectUTXO(utxo: ListUTXOsModel) {
         let balance = Web3Utils.formatToEthereumUnits(utxo.value,
@@ -555,7 +554,7 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
     }
 }
 
-// MARK: - QRCodeReaderViewController Delegate Methods
+// MARK: QRCodeReaderViewController Delegate Methods
 extension SendSettingsViewController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()

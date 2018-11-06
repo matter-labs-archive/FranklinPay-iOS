@@ -21,7 +21,7 @@
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
-            buildForTesting = "NO"
+            buildForTesting = "YES"
             buildForRunning = "NO"
             buildForProfiling = "NO"
             buildForArchiving = "NO"
@@ -49,6 +49,16 @@
                BlueprintIdentifier = "1CF54A71215CCF0E009CC78F"
                BuildableName = "DiveLaneTests.xctest"
                BlueprintName = "DiveLaneTests"
+               ReferencedContainer = "container:DiveLane.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B219DC28215B77A80035BF94"
+               BuildableName = "DiveLaneUITests.xctest"
+               BlueprintName = "DiveLaneUITests"
                ReferencedContainer = "container:DiveLane.xcodeproj">
             </BuildableReference>
          </TestableReference>
