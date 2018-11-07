@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		136DD30C216A3F5600F554F0 /* TransactionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 136DD30B216A3F5600F554F0 /* TransactionInfoController.swift */; };
+		13D3B0C2217C6F4C00C5507D /* TransactionInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */; };
+		13D3B0C5217C71A100C5507D /* TransactionInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */; };
+		13D3B0CC217C81DE00C5507D /* TransactionInfoCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */; };
 		130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */; };
 		130C88EC217BC86600FC165C /* TransactionInfoWebController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */; };
 		1CF54A75215CCF0E009CC78F /* DiveLaneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* DiveLaneTests.swift */; };
@@ -153,6 +157,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		136DD30B216A3F5600F554F0 /* TransactionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoController.swift; sourceTree = "<group>"; };
+		13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TransactionInfoController.xib; sourceTree = "<group>"; };
+		13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInfoCell.swift; sourceTree = "<group>"; };
+		13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoCell.xib; sourceTree = "<group>"; };
 		130C88E8217BC83700FC165C /* TransactionInfoWebController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInfoWebController.swift; sourceTree = "<group>"; };
 		130C88EB217BC86600FC165C /* TransactionInfoWebController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoWebController.xib; sourceTree = "<group>"; };
 		1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiveLaneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -325,6 +333,24 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		136DD30A216A3F5600F554F0 /* TransactionInfo */ = {
+			isa = PBXGroup;
+			children = (
+				136DD30B216A3F5600F554F0 /* TransactionInfoController.swift */,
+			);
+			path = TransactionInfo;
+			sourceTree = "<group>";
+		};
+		136DD30F216A402A00F554F0 /* TransactionInfo */ = {
+			isa = PBXGroup;
+			children = (
+				13D3B0C3217C71A100C5507D /* TransactionInfoCell.swift */,
+				13D3B0CB217C81DE00C5507D /* TransactionInfoCell.xib */,
+				13D3B0C1217C6F4C00C5507D /* TransactionInfoController.xib */,
+			);
+			path = TransactionInfo;
+			sourceTree = "<group>";
+    };
 		130C88E7217BC83700FC165C /* TransactionInfoWeb */ = {
 			isa = PBXGroup;
 			children = (
@@ -659,6 +685,7 @@
 				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
+				136DD30F216A402A00F554F0 /* TransactionInfo */,
 				130C88EA217BC86600FC165C /* TransactionInfoWeb */,
 				914F228721499AA900ED58E6 /* Pincode */,
 				9197F32B2144210400C358AA /* Networks */,
@@ -681,6 +708,7 @@
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				91E7254E214FDCED003FAD76 /* SearchToken */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
+				136DD30A216A3F5600F554F0 /* TransactionInfo */,
 				130C88E7217BC83700FC165C /* TransactionInfoWeb */,
 				914F228C21499ADB00ED58E6 /* Pincode */,
 				9197F32C2144211300C358AA /* Networks */,
@@ -1116,9 +1144,12 @@
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
 				91E72552214FDD1E003FAD76 /* SearchTokenViewController.xib in Resources */,
+				13D3B0CC217C81DE00C5507D /* TransactionInfoCell.xib in Resources */,
 				914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */,
+				E20DEEC32162CD3300CA492E /* TokenInfoViewController.xib in Resources */,
+				13D3B0C2217C6F4C00C5507D /* TransactionInfoController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1234,6 +1265,10 @@
 				91B6A7B3214361730033A045 /* LocalDatabase.swift in Sources */,
 				E2B45A602176379100F38E50 /* AddContactController.swift in Sources */,
 				9197F2E92143B75600C358AA /* Alerts.swift in Sources */,
+				E20DEEC62162CFFD00CA492E /* TokenInfoCell.swift in Sources */,
+				136DD30C216A3F5600F554F0 /* TransactionInfoController.swift in Sources */,
+				914F22862149800800ED58E6 /* AnimationController.swift in Sources */,
+				E20DEECC2162D24A00CA492E /* TokenInfoControllerRaws.swift in Sources */,
 				B271CF9E214BB2890023FC18 /* TransactionsHistoryState.swift in Sources */,
 				E2B45A2A2174D08700F38E50 /* StringExtension.swift in Sources */,
 				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
@@ -1257,6 +1292,7 @@
 				91B6A7C8214368470033A045 /* Parameter.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
 				9197F3162143FD4100C358AA /* NetworkService.swift in Sources */,
+				13D3B0C5217C71A100C5507D /* TransactionInfoCell.swift in Sources */,
 				9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */,
 				B2091517214AB04900C8B408 /* WalletImportMode.swift in Sources */,
 				914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */,
