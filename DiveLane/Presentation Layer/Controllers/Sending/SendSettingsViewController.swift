@@ -257,7 +257,7 @@ class SendSettingsViewController: UIViewController {
         let mainnet = network.chainID == Networks.Mainnet.chainID
         let testnet = !mainnet && network.chainID == Networks.Rinkeby.chainID
         if !testnet && !mainnet {return}
-        ServiceUTXO().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
+        MatterService().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
             switch result {
             case .Success(let utxos):
                 DispatchQueue.main.async {

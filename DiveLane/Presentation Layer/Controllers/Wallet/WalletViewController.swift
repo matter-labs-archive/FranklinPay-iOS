@@ -266,7 +266,7 @@ class WalletViewController: UIViewController {
             let testnet = !mainnet && network.chainID == Networks.Rinkeby.chainID
             if !testnet && !mainnet {return}
             let semaphore = DispatchSemaphore(value: 0)
-            ServiceUTXO().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
+            MatterService().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
                 switch result {
                 case .Success(let utxos):
                     let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,

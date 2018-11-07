@@ -120,7 +120,7 @@ class EnterPincodeViewController: PincodeViewController {
         let privKey = Data(hex: privateKey)
         let signedTransaction = transaction.sign(privateKey: privKey)
 
-        ServiceUTXO().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
+        MatterService().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
             switch result {
             case .Success(let approved):
                 guard approved != nil else {
