@@ -8,7 +8,7 @@
 
 import UIKit
 import LocalAuthentication
-import web3swift
+import Web3swift
 import PlasmaSwiftLib
 
 class EnterPincodeViewController: PincodeViewController {

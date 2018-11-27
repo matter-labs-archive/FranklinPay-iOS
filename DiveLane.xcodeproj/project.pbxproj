@@ -57,7 +57,6 @@
 		91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B4214361AE0033A045 /* KeysService.swift */; };
 		91B6A7B9214362080033A045 /* WalletAndKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7B8214362080033A045 /* WalletAndKeys.swift */; };
 		91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7BA2143621E0033A045 /* CoreDataModel.xcdatamodeld */; };
-		91B6A7BE2143649A0033A045 /* TransactionsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7BD2143649A0033A045 /* TransactionsService.swift */; };
 		91B6A7C2214365890033A045 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C1214365890033A045 /* Transaction.swift */; };
 		91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C3214365B30033A045 /* ERC20Token.swift */; };
 		91B6A7C62143660B0033A045 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C52143660B0033A045 /* AppController.swift */; };
@@ -211,7 +210,6 @@
 		91B6A7B4214361AE0033A045 /* KeysService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeysService.swift; sourceTree = "<group>"; };
 		91B6A7B8214362080033A045 /* WalletAndKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAndKeys.swift; sourceTree = "<group>"; };
 		91B6A7BB2143621E0033A045 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		91B6A7BD2143649A0033A045 /* TransactionsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsService.swift; sourceTree = "<group>"; };
 		91B6A7C1214365890033A045 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		91B6A7C3214365B30033A045 /* ERC20Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		91B6A7C52143660B0033A045 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
@@ -631,16 +629,13 @@
 		91B6A7A9214360720033A045 /* Service Layer */ = {
 			isa = PBXGroup;
 			children = (
-				91B6A7AC214360F90033A045 /* Web3Service.swift */,
-				91B6A7BD2143649A0033A045 /* TransactionsService.swift */,
+				91D0372321AC3908009BD01C /* Keys */,
+				91D0372221AC38CD009BD01C /* Web3 */,
 				91B6A7B4214361AE0033A045 /* KeysService.swift */,
 				E2B45A5721762DC200F38E50 /* ContactsService.swift */,
 				914F229C2149C8F000ED58E6 /* BiometricsService.swift */,
 				B25BD1332143E43A0091C481 /* EtherscanService.swift */,
-				9197F3152143FD4100C358AA /* NetworkService.swift */,
 				914F228F21499EDD00ED58E6 /* KeychainService.swift */,
-				B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */,
-				91E7256121506700003FAD76 /* TokensService.swift */,
 				91E7256321507D16003FAD76 /* FiatService.swift */,
 			);
 			path = "Service Layer";
@@ -719,6 +714,24 @@
 				91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */,
 			);
 			path = AddWallet;
+			sourceTree = "<group>";
+		};
+		91D0372221AC38CD009BD01C /* Web3 */ = {
+			isa = PBXGroup;
+			children = (
+				91B6A7AC214360F90033A045 /* Web3Service.swift */,
+				9197F3152143FD4100C358AA /* NetworkService.swift */,
+				B271CF92214BAD4F0023FC18 /* TransactionsHistoryService.swift */,
+				91E7256121506700003FAD76 /* TokensService.swift */,
+			);
+			path = Web3;
+			sourceTree = "<group>";
+		};
+		91D0372321AC3908009BD01C /* Keys */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Keys;
 			sourceTree = "<group>";
 		};
 		91E7254E214FDCED003FAD76 /* SearchToken */ = {
@@ -1030,7 +1043,7 @@
 				91B6A79121435F5D0033A045 /* Resources */,
 				B20B10AB2152408A00F62797 /* ShellScript */,
 				B2495E05215CE6F2005B18F2 /* ShellScript */,
-				25C77AD319CB5BCD01D2997C /* [CP] Embed Pods Frameworks */,
+				84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1163,54 +1176,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		25C77AD319CB5BCD01D2997C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
-				"${BUILT_PRODUCTS_DIR}/PlasmaSwiftLib/PlasmaSwiftLib.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
-				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
-				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/web3swift/web3swift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlasmaSwiftLib.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/web3swift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		545595EA32A4C5AA1688643D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1227,6 +1192,52 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
+				"${BUILT_PRODUCTS_DIR}/PlasmaSwiftLib/PlasmaSwiftLib.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
+				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
+				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PlasmaSwiftLib.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B20B10AB2152408A00F62797 /* ShellScript */ = {
@@ -1355,7 +1366,6 @@
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
 				91B6A7B5214361AE0033A045 /* KeysService.swift in Sources */,
-				91B6A7BE2143649A0033A045 /* TransactionsService.swift in Sources */,
 				91B6A7C4214365B30033A045 /* ERC20Token.swift in Sources */,
 				E2DCA65A2193238500F94FBA /* TransactionInfoController.swift in Sources */,
 				91B6A7D22143B1E80033A045 /* ViewControllerExtensions.swift in Sources */,

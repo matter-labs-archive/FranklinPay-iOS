@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import web3swift
-import struct BigInt.BigUInt
+import Web3swift
+import BigInt
 
 class AppController {
 

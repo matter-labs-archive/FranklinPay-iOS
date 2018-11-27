@@ -53,7 +53,8 @@ class EtherscanService {
 }
 
 enum NetworkErrors: Error {
-    case couldnotParseUrlString
-    case couldnotParseJSON
+    case wrongURL
+    case wrongJSON
     case noSuchAPIOnTheEtherscan
+    case noData
 }

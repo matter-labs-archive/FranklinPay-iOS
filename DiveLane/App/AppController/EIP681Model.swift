@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import web3swift
-import struct BigInt.BigUInt
+import Web3swift
+import BigInt
 
 class EIP681Model {
     // MARK: - Choose the right network, MAINNET by default, if no network provided.

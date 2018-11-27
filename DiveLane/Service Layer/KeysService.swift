@@ -7,8 +7,8 @@
 //
 
 import Foundation
-import web3swift
-import struct BigInt.BigUInt
+import Web3swift
+import BigInt
 
 protocol IKeysService {
     func selectedWallet() -> KeyWalletModel?

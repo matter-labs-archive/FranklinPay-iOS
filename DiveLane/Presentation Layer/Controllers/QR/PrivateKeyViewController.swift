@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import web3swift
+import Web3swift
 
 class PrivateKeyViewController: UIViewController {
     @IBOutlet weak var privateQRimageView: UIImageView!

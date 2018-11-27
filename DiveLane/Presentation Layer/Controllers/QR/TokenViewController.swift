@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import web3swift
+import Web3swift
 import BigInt
 
 class TokenViewController: UIViewController {

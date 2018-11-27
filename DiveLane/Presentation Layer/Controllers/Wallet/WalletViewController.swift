@@ -8,9 +8,9 @@
 
 import UIKit
 import PlasmaSwiftLib
-import web3swift
-import struct EthereumAddress.EthereumAddress
-import struct BigInt.BigUInt
+import Web3swift
+import EthereumAddress
+import BigInt
 
 class WalletViewController: UIViewController {
 

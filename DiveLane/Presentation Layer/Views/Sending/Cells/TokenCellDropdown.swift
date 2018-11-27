@@ -7,8 +7,7 @@
 //
 
 import UIKit
-import PlasmaSwiftLib
-import web3swift
+import Web3swift
 
 class TokenCellDropdown: UITableViewCell {
 

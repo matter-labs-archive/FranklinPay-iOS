@@ -8,7 +8,7 @@
 
 import UIKit
 import QRCodeReader
-import web3swift
+import Web3swift
 
 class WalletCreationViewController: UIViewController {
 
