@@ -8,16 +8,16 @@
 
 import UIKit
 
-struct Colors {
-    struct BackgroundColors {
+public struct Colors {
+    public struct BackgroundColors {
         static let main = UIColor(red: 255 / 255, green: 255 / 255, blue: 255 / 255, alpha: 1)
     }
 
-    struct NavBarColors {
+    public struct NavBarColors {
         static let mainTint = UIColor(displayP3Red: 13 / 255, green: 92 / 255, blue: 182 / 255, alpha: 1)
     }
 
-    struct ButtonColors {
+    public struct ButtonColors {
         static let selectedColor = NavBarColors.mainTint
         static let deselectedColor = UIColor.lightGray
 
@@ -25,5 +25,4 @@ struct Colors {
             return dependingOnChoise ? Colors.ButtonColors.selectedColor : Colors.ButtonColors.deselectedColor
         }
     }
-
 }

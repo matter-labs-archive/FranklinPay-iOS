@@ -8,14 +8,14 @@
 
 import Foundation
 
-public struct KeyWalletModel {
+public struct WalletModel {
     let address: String
     let data: Data?
     let name: String
     let isHD: Bool
 
-    public static func fromCoreData(crModel: KeyWallet) -> KeyWalletModel {
-        let model = KeyWalletModel(address: crModel.address ?? "",
+    public static func fromCoreData(crModel: Wallet) -> WalletModel {
+        let model = WalletModel(address: crModel.address ?? "",
                 data: crModel.data,
                 name: crModel.name ?? "",
                 isHD: crModel.isHD)
@@ -23,8 +23,8 @@ public struct KeyWalletModel {
     }
 }
 
-extension KeyWalletModel: Equatable {
-    public static func ==(lhs: KeyWalletModel, rhs: KeyWalletModel) -> Bool {
+extension WalletModel: Equatable {
+    public static func ==(lhs: WalletModel, rhs: WalletModel) -> Bool {
         return lhs.address == rhs.address
     }
 }

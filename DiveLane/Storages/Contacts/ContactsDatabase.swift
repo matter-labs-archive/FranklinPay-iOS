@@ -9,14 +9,14 @@
 import Foundation
 
 import CoreData
-import struct BigInt.BigUInt
+import BigInt
 
 protocol IContactsDatabase {
-    func getContact(address: String) -> ContactModel?
-    func saveContact(contact: ContactModel?, completion: @escaping (Error?) -> Void)
-    func getAllContacts() -> [ContactModel]
-    func deleteContact(contact: ContactModel, completion: @escaping (Error?) -> Void)
-    func getContactsList(for searchingString: String) -> [ContactModel]?
+    func getContact(address: String) throws -> ContactModel
+    func saveContact(contact: ContactModel) throws
+    func getAllContacts() throws -> [ContactModel]
+    func deleteContact(contact: ContactModel) throws
+    func getContactsList(for searchingString: String) throws -> [ContactModel]
 }
 
 class ContactsDatabase: IContactsDatabase {
@@ -32,82 +32,85 @@ class ContactsDatabase: IContactsDatabase {
         }
     }
 
-    public func getContact(address: String) -> ContactModel? {
+    public func getContact(address: String) throws -> ContactModel {
         let requestContact: NSFetchRequest<Contact> = Contact.fetchRequest()
         requestContact.predicate = NSPredicate(format: "address = %@", address)
         do {
             let results = try mainContext.fetch(requestContact)
             guard let result = results.first else {
-                return nil
+                throw StorageErrors.cantGetContact
             }
             return ContactModel.fromCoreData(crModel: result)
-
-        } catch {
-            print(error)
-            return nil
+        } catch let error{
+            throw error
         }
-
     }
 
-    public func getAllContacts() -> [ContactModel] {
+    public func getAllContacts() throws -> [ContactModel] {
         let requestContacts: NSFetchRequest<Contact> = Contact.fetchRequest()
         do {
             let results = try mainContext.fetch(requestContacts)
             return results.map {
                 return ContactModel.fromCoreData(crModel: $0)
             }
-
-        } catch {
-            print(error)
-            return []
+        } catch let error{
+            throw error
         }
     }
 
-    public func saveContact(contact: ContactModel?, completion: @escaping (Error?) -> Void) {
+    public func saveContact(contact: ContactModel) throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
         container.performBackgroundTask { (context) in
-            guard let contact = contact else {
-                return
-            }
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as? Contact else {
-                return
+                error = StorageErrors.cantCreateContact
+                group.leave()
             }
             entity.address = contact.address
             entity.name = contact.name
             do {
                 try context.save()
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    completion(error)
-                }
+                group.leave()
+            } catch let someErr {
+                error = someErr
+                group.leave()
             }
         }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
     }
-
-    public func deleteContact(contact: ContactModel, completion: @escaping (Error?) -> Void) {
-
+    
+    public func deleteContact(contact: ContactModel) throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
         let requestContact: NSFetchRequest<Contact> = Contact.fetchRequest()
         requestContact.predicate = NSPredicate(format: "address CONTAINS[c] %@ || name CONTAINS[c] %@",
                                                contact.address,
                                                contact.name)
         do {
             let results = try mainContext.fetch(requestContact)
-            guard let item = results.first else {
-                completion(ContactsDataBaseError.noSuchContactInStorage)
-                return
+            guard let wallet = results.first else {
+                error = StorageErrors.noSuchContactInStorage
+                group.leave()
             }
-            mainContext.delete(item)
+            mainContext.delete(wallet)
             try mainContext.save()
-            completion(nil)
-
-        } catch {
-            completion(error)
+            group.leave()
+        } catch let someErr{
+            error = someErr
+            group.leave()
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
         }
     }
 
-    public func getContactsList(for searchingString: String) -> [ContactModel]? {
+    public func getContactsList(for searchingString: String) throws -> [ContactModel] {
         let requestContact: NSFetchRequest<Contact> = Contact.fetchRequest()
         requestContact.predicate = NSPredicate(format: "address CONTAINS[c] %@ || name CONTAINS[c] %@",
                                                searchingString,
@@ -117,8 +120,8 @@ class ContactsDatabase: IContactsDatabase {
             return results.map {
                 return ContactModel.fromCoreData(crModel: $0)
             }
-        } catch {
-            return nil
+        } catch let error {
+            throw error
         }
     }
 

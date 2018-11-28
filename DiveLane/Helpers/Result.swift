@@ -1,5 +1,5 @@
 //
-//  GlobalTODO.swift
+//  Result.swift
 //  DiveLane
 //
 //  Created by Anton Grigorev on 08/09/2018.
@@ -8,5 +8,7 @@
 
 import Foundation
 
-// Add some network service
-// Make get wallet getting not only one first wallet
+public enum Result<T> {
+    case Success(T)
+    case Error(Error)
+}

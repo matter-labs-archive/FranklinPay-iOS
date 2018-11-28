@@ -114,6 +114,4 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
         }
         return returnPromise
     }
-    
-
 }

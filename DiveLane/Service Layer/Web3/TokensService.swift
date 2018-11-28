@@ -7,198 +7,159 @@
 //
 
 import Foundation
-import Web3swift
 import Alamofire
-import struct BigInt.BigUInt
+import BigInt
+import PromiseKit
+import EthereumAddress
+import Web3swift
+private typealias PromiseResult = PromiseKit.Result
 
 protocol ITokensService {
-    func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void)
-    func downloadAllAvailableTokensIfNeeded(completion: @escaping (Error?) -> Void)
+    func getFullTokensList(for searchString: String) throws -> [ERC20TokenModel]
+    func downloadAllAvailableTokensIfNeeded() throws
+    func updateConversion(for token: ERC20TokenModel) throws -> Double
 }
 
 class TokensService {
 
-    let web3service = Web3SwiftService()
-
-    let conversionService = FiatServiceImplementation.service
-
-    public func getFullTokensList(for searchString: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
-        var tokensList: [ERC20TokenModel] = []
-        DispatchQueue.global().async {
-            let tokensFromCD = LocalDatabase().getTokensList(for: searchString)
-            if let tokens = tokensFromCD {
-                if tokens.count != 0 {
-                    DispatchQueue.main.async {
-                        for token in tokens {
-                            let tokenModel = ERC20TokenModel(name: token.name,
-                                    address: token.address,
-                                    decimals: token.decimals,
-                                    symbol: token.symbol)
-                            tokensList.append(tokenModel)
-                        }
-                        completion(tokensList)
-                    }
-
-                } else {
-                    self.getOnlineTokensList(with: searchString, completion: { (list) in
-                        completion(list)
-                    })
+    let web3service = Web3Service()
+    let ratesService = RatesService.service
+    
+    public func getFullTokensList(for searchString: String) throws -> [ERC20TokenModel] {
+        return try self.getFullTokensList(for: searchString).wait()
+    }
+    
+    private func getFullTokensList(for searchString: String) -> Promise<[ERC20TokenModel]> {
+        let returnPromise = Promise<[ERC20TokenModel]> { (seal) in
+            var tokensList: [ERC20TokenModel] = []
+            let tokens = TokensStorage().getTokensList(for: searchString)
+            if !tokens.isEmpty {
+                for token in tokens {
+                    let tokenModel = ERC20TokenModel(name: token.name,
+                                                     address: token.address,
+                                                     decimals: token.decimals,
+                                                     symbol: token.symbol)
+                    tokensList.append(tokenModel)
                 }
+                seal.fulfill(tokensList)
             } else {
-                self.getOnlineTokensList(with: searchString, completion: { (list) in
-                    completion(list)
+                guard let token = try? self.getTokenFromNet(with: searchString) else {
+                    seal.reject(Web3Error.processingError(desc: "No token from net"))
+                }
+                seal.fulfill([token])
+            }
+        }
+        return returnPromise
+    }
+
+    private func name(for tokenAddress: String) throws -> String {
+        do {
+            let contract = try web3service.contract(for: tokenAddress)
+            let options = web3service.defaultOptions()
+            guard let transaction = contract.read("name", parameters: [AnyObject](), extraData: Data(), transactionOptions: options) else {
+                throw Web3Error.transactionSerializationError
+            }
+            let result = try transaction.call(transactionOptions: options)
+            guard let name = result["0"] as? String, !name.isEmpty else {
+                throw Web3Error.dataError
+            }
+            return name
+        } catch let error {
+            throw error
+        }
+    }
+
+    private func symbol(for tokenAddress: String) throws -> String {
+        do {
+            let contract = try web3service.contract(for: tokenAddress)
+            let options = web3service.defaultOptions()
+            guard let transaction = contract.read("symbol", parameters: [AnyObject](), extraData: Data(), transactionOptions: options) else {
+                throw Web3Error.transactionSerializationError
+            }
+            let result = try transaction.call(transactionOptions: options)
+            guard let symbol = result["0"] as? String, !symbol.isEmpty else {
+                throw Web3Error.dataError
+            }
+            return symbol
+        } catch let error {
+            throw error
+        }
+    }
+
+    private func decimals(for tokenAddress: String) throws -> BigUInt {
+        do {
+            let contract = try web3service.contract(for: tokenAddress)
+            let options = web3service.defaultOptions()
+            guard let transaction = contract.read("decimals", parameters: [AnyObject](), extraData: Data(), transactionOptions: options) else {
+                throw Web3Error.transactionSerializationError
+            }
+            let result = try transaction.call(transactionOptions: options)
+            guard let decimals = result["0"] as? BigUInt else {
+                throw Web3Error.dataError
+            }
+            return decimals
+        } catch let error {
+            throw error
+        }
+    }
+
+    private func getTokenFromNet(with address: String) throws -> ERC20TokenModel {
+
+        guard EthereumAddress(address) != nil else {
+            throw Web3Error.inputError(desc: "Wrong address")
+        }
+
+        let name = try self.name(for: address)
+        let decimals = try self.decimals(for: address)
+        let symbol = try self.symbol(for: address)
+        
+        guard !name.isEmpty, !symbol.isEmpty else {
+            throw Web3Error.dataError
+        }
+        return ERC20TokenModel(name: name,
+                               address: address,
+                               decimals: decimals.description,
+                               symbol: symbol)
+    }
+    
+    public func downloadAllAvailableTokensIfNeeded() throws -> OperationResult {
+        return try self.downloadAllAvailableTokensIfNeeded().wait()
+    }
+
+    private func downloadAllAvailableTokensIfNeeded() -> Promise<OperationResult> {
+        let promiseResult = Promise<OperationResult> { (seal) in
+            guard let url = URL(string: URLs.downloadTokensList) else {
+                seal.fulfill(.error(NetworkErrors.wrongURL))
+                return
+            }
+            Alamofire.request(url).responseJSON { response in
+                if let error = response.result.error {
+                    seal.reject(error)
+                    return
+                }
+                guard response.data != nil else {
+                    seal.reject(NetworkErrors.noData)
+                    return
+                }
+                guard let value = response.result.value as? [[String: Any]] else {
+                    seal.reject(NetworkErrors.wrongJSON)
+                    return
+                }
+                let dictsCount = value.count
+                var counter = 0
+                value.forEach({ (dict) in
+                    counter += 1
+                    let _ = TokensStorage().saveCustomToken(from: dict)
+                    if counter == dictsCount {
+                        seal.fulfill(.success)
+                    }
                 })
             }
         }
-
+        return promiseResult
     }
 
-    private func name(for token: String, completion: @escaping (String?) -> Void) {
-        let contract = web3service.contract(for: token)
-        if let transaction = contract?.method("name", parameters: [AnyObject](), options: web3service.defaultOptions()) {
-            DispatchQueue.global().async {
-                let result = transaction.call(options: self.web3service.defaultOptions(), onBlock: "latest")
-                DispatchQueue.main.async {
-                    if let name = result.value?["0"] as? String, !name.isEmpty {
-                        completion(name)
-                    } else {
-                        completion(nil)
-                    }
-                }
-            }
-        } else {
-            completion(nil)
-        }
+    public func updateConversion(for token: ERC20TokenModel) throws -> Double {
+        return try self.ratesService.updateConversionRate(for: token.symbol.uppercased())
     }
-
-    private func symbol(for token: String, completion: @escaping (String?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let contract = self.web3service.contract(for: token)
-            let transaction = contract?.method("symbol", parameters: [AnyObject](), options: self.web3service.defaultOptions())
-            let balance = transaction?.call(options: self.web3service.defaultOptions())
-            DispatchQueue.main.async {
-                if let symbol = balance?.value?["0"] as? String, !symbol.isEmpty {
-                    completion(symbol)
-                } else {
-                    completion(nil)
-                }
-            }
-        }
-    }
-
-    private func decimals(for token: String, completion: @escaping (BigUInt?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            let contract = self.web3service.contract(for: token)
-            let transaction = contract?.method("decimals", parameters: [AnyObject](), options: self.web3service.defaultOptions())
-            let bkxBalance = transaction?.call(options: self.web3service.defaultOptions())
-            DispatchQueue.main.async {
-                if let balance = bkxBalance?.value?["0"] as? BigUInt {
-                    completion(balance)
-                } else {
-                    completion(nil)
-                }
-            }
-        }
-    }
-
-    private func getOnlineTokensList(with address: String, completion: @escaping ([ERC20TokenModel]?) -> Void) {
-
-        guard EthereumAddress(address) != nil else {
-            completion(nil)
-            return
-        }
-
-        DispatchQueue.global(qos: .userInitiated).async {
-            let dispatchGroup = DispatchGroup()
-
-            dispatchGroup.enter()
-            var name: String = ""
-            self.name(for: address, completion: { (result) in
-                if let localName = result {
-                    name = localName
-                } else {
-                    name = ""
-                }
-                dispatchGroup.leave()
-            })
-
-            dispatchGroup.enter()
-            var decimals: BigUInt = BigUInt()
-            self.decimals(for: address, completion: { (result) in
-                if let localdecimals = result {
-                    decimals = localdecimals
-                } else {
-                    decimals = ""
-                }
-
-            })
-
-            dispatchGroup.enter()
-            var symbol: String = ""
-            self.symbol(for: address, completion: { (result) in
-                if let localsymbol = result {
-                    symbol = localsymbol
-                } else {
-                    symbol = ""
-                }
-                dispatchGroup.leave()
-            })
-
-            dispatchGroup.notify(queue: .main) {
-                guard !name.isEmpty, !symbol.isEmpty else {
-                    completion(nil)
-                    return
-                }
-                completion([ERC20TokenModel(name: name,
-                        address: address,
-                        decimals: decimals.description,
-                        symbol: symbol)])
-
-            }
-        }
-    }
-
-    public func downloadAllAvailableTokensIfNeeded(completion: @escaping (Error?) -> Void) {
-
-        guard let url = URL(string: URLs.urlDownloadTOkensList) else {
-            completion(NetworkErrors.couldnotParseUrlString)
-            return
-        }
-
-		Alamofire.request(url).responseJSON { response in
-			guard response.result.isSuccess else {
-				completion(response.result.error!)
-				return
-			}
-
-			guard response.data != nil else {
-				completion(response.result.error!)
-				return
-			}
-				guard let value = response.result.value as? [[String: Any]] else {
-					completion(response.result.error!)
-					return
-				}
-				let dictsCount = value.count
-				var counter = 0
-				value.forEach({ (dict) in
-					counter += 1
-					LocalDatabase().saveToken(from: dict, completion: {(_) in
-						if counter == dictsCount {
-							completion(nil)
-						}
-					})
-				})
-		}
-    }
-
-    func updateConversion(for token: ERC20TokenModel, completion: @escaping (Double?) -> Void) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.conversionService.updateConversionRate(for: token.symbol.uppercased()) { (rate) in
-                completion(rate)
-            }
-        }
-
-    }
-
 }

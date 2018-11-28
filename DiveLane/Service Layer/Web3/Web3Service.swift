@@ -41,27 +41,39 @@ protocol IWeb3Service {
                 password: String) throws -> TransactionSendingResult
     func callTx(transaction: ReadTransaction,
                 options: TransactionOptions?) throws -> [String : Any]
-    func getETHbalance(for wallet: KeyWalletModel) throws -> String
-    func getERC20balance(for wallet: KeyWalletModel,
+    func getETHbalance(for wallet: WalletModel) throws -> String
+    func getERC20balance(for wallet: WalletModel,
                          tokenAddress: EthereumAddress) throws -> String
 }
 
 public class Web3Service: IWeb3Service {
     
+    private let walletsService = WalletsService()
+    
+    public func contract(for address: String) throws -> web3.web3contract {
+        guard let ethAddress = EthereumAddress(address),
+            let contract = web3Instance.contract(Web3.Utils.erc20ABI,
+                                                 at: ethAddress,
+                                                 abiVersion: 2) else {
+            throw Web3Error.dataError
+        }
+        return contract
+    }
+    
     private var web3Instance: web3 {
         let web3 = CurrentWeb.currentWeb
-        web3.addKeystoreManager(KeysService().keystoreManager())
+        web3.addKeystoreManager(walletsService.keystoreManager()!)
         return web3
     }
     
-    private var currentAddress: EthereumAddress {
-        let wallet = KeysService().selectedWallet()
+    public var currentAddress: EthereumAddress {
+        let wallet = walletsService.getSelectedWallet()
         let address = wallet?.address
         let ethAddressFrom = EthereumAddress(address!)!
         return ethAddressFrom
     }
     
-    private func defaultOptions() -> TransactionOptions {
+    public func defaultOptions() -> TransactionOptions {
         var options = TransactionOptions.defaultOptions
         let address = self.currentAddress
         options.from = address
@@ -180,7 +192,7 @@ public class Web3Service: IWeb3Service {
         }
     }
     
-    public func getETHbalance(for wallet: KeyWalletModel) throws -> String {
+    public func getETHbalance(for wallet: WalletModel) throws -> String {
         do {
             guard let walletAddress = EthereumAddress(wallet.address) else {
                 throw Web3Error.walletError
@@ -196,7 +208,7 @@ public class Web3Service: IWeb3Service {
         }
     }
     
-    public func getERC20balance(for wallet: KeyWalletModel,
+    public func getERC20balance(for wallet: WalletModel,
                                 tokenAddress: EthereumAddress) throws -> String {
         do {
             guard let walletAddress = EthereumAddress(wallet.address) else {

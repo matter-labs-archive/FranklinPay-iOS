@@ -25,8 +25,8 @@ public struct URLs {
     static let pricesFromCryptocompare = "https://min-api.cryptocompare.com/data/price?fsym=%@&tsyms=USD"
     static let downloadTokensList = "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json"
     
-    public func getContractURL(for Address: String) -> String {
-        return "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=\(forContractAddress)&apikey=YourApiKeyToken"
+    public func getContractURL(for address: String) -> String {
+        return "https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=\(address)&apikey=YourApiKeyToken"
     }
     
     public func getEtherscanURL(for type: TransactionType, address: String, networkId: Int64) -> URL? {

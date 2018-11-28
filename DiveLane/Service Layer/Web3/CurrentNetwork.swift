@@ -10,7 +10,7 @@ import Foundation
 import Web3swift
 import BigInt
 
-class CurrentWeb {
+public class CurrentWeb {
 
     static var _currentWeb: web3?
 
@@ -31,7 +31,7 @@ class CurrentWeb {
 
 }
 
-class CurrentNetwork {
+public class CurrentNetwork {
 
     static var _currentNetwork: Networks?
 
@@ -50,7 +50,7 @@ class CurrentNetwork {
         }
     }
 
-    func getNetworkID() -> Int64 {
+    public func getNetworkID() -> Int64 {
         let chainID = Int64(CurrentNetwork.currentNetwork?.chainID ?? 0)
         return chainID
     }

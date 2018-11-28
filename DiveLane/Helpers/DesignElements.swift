@@ -8,8 +8,8 @@
 
 import UIKit
 
-class DesignElements: UIView {
-    func tableViewHeaderBackground(in selfView: UIView) -> UIView {
+public final class DesignElements: UIView {
+    public func tableViewHeaderBackground(in selfView: UIView) -> UIView {
         let background = UIView(frame: CGRect(x: 20, y: 0, width: selfView.bounds.width, height: 45))
         background.backgroundColor = .white
 
@@ -25,7 +25,7 @@ class DesignElements: UIView {
         return background
     }
 
-    func tableViewHeaderWalletButton(in selfView: UIView, withTitle: String, withTag: Int) -> UIButton {
+    public func tableViewHeaderWalletButton(in selfView: UIView, withTitle: String, withTag: Int) -> UIButton {
         let button = UIButton(frame:
             CGRect(x: 20,
                    y: 0,
@@ -40,7 +40,7 @@ class DesignElements: UIView {
         return button
     }
 
-    func tableViewAddTokenButton(in selfView: UIView, withTag: Int) -> UIButton {
+    public func tableViewAddTokenButton(in selfView: UIView, withTag: Int) -> UIButton {
         let button = UIButton(frame:
             CGRect(x: selfView.bounds.width - 45,
                    y: 0,

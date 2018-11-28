@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Parameter {
-    var type: String
-    var value: String
+public struct Parameter {
+    public var type: String
+    public var value: String
 }
