@@ -40,12 +40,12 @@ class TokensStorage: ITokensStorage {
             do {
                 let token: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
                 guard let address = dict["address"] as? String else {
-                    error = StorageErrors.cantCreateToken
+                    error = Errors.StorageErrors.cantCreateToken
                     group.leave()
                 }
                 token.predicate = NSPredicate(format: "address = %@", address)
                 guard var newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token", into: context) as? ERC20Token else {
-                    error = StorageErrors.cantCreateToken
+                    error = Errors.StorageErrors.cantCreateToken
                     group.leave()
                 }
                 if let entity = try self.mainContext.fetch(token).first {
@@ -62,7 +62,7 @@ class TokensStorage: ITokensStorage {
                 
                 try context.save()
                 group.leave()
-            } catch let someErr{
+            } catch let someErr {
                 error = someErr
                 group.leave()
             }
@@ -82,7 +82,7 @@ class TokensStorage: ITokensStorage {
         container.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token",
                                                                    into: context) as? ERC20Token else {
-                error = StorageErrors.cantCreateToken
+                error = Errors.StorageErrors.cantCreateToken
                 group.leave()
             }
             entity.address = token.address
@@ -135,7 +135,7 @@ class TokensStorage: ITokensStorage {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }.first
             guard let token = mappedRes else {
-                throw StorageErrors.cantGetContact
+                throw Errors.StorageErrors.cantGetContact
             }
             return token
         } catch let error {
@@ -178,7 +178,7 @@ class TokensStorage: ITokensStorage {
                 $0.networkID == networkId
             }
             guard let token = tokensInNetwork.first else {
-                error = StorageErrors.noSuchTokenInStorage
+                error = Errors.StorageErrors.noSuchTokenInStorage
                 group.leave()
             }
             mainContext.delete(token)

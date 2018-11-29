@@ -62,14 +62,15 @@ public class Web3Service: IWeb3Service {
     
     private var web3Instance: web3 {
         let web3 = CurrentWeb.currentWeb
-        web3.addKeystoreManager(walletsService.keystoreManager()!)
+        let keystoreManager = try! walletsService.keystoreManager()
+        web3.addKeystoreManager(keystoreManager)
         return web3
     }
     
     public var currentAddress: EthereumAddress {
-        let wallet = walletsService.getSelectedWallet()
-        let address = wallet?.address
-        let ethAddressFrom = EthereumAddress(address!)!
+        let wallet = try! walletsService.getSelectedWallet()
+        let address = wallet.address
+        let ethAddressFrom = EthereumAddress(address)!
         return ethAddressFrom
     }
     

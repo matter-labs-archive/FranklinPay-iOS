@@ -36,7 +36,7 @@ class WalletsStorage {
         do {
             let results = try mainContext.fetch(requestWallet)
             guard let result = results.first else {
-                throw StorageErrors.noSelectedWallet
+                throw Errors.StorageErrors.noSelectedWallet
             }
             return WalletModel.fromCoreData(crModel: result)
             
@@ -63,7 +63,7 @@ class WalletsStorage {
         var error: Error?
         container.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Wallet", into: context) as? Wallet else {
-                error = StorageErrors.cantCreateWallet
+                error = Errors.StorageErrors.cantCreateWallet
                 group.leave()
             }
             entity.address = wallet.address
@@ -93,7 +93,7 @@ class WalletsStorage {
         do {
             let results = try mainContext.fetch(requestWallet)
             guard let wallet = results.first else {
-                error = StorageErrors.noSuchWalletInStorage
+                error = Errors.StorageErrors.noSuchWalletInStorage
                 group.leave()
             }
             mainContext.delete(wallet)

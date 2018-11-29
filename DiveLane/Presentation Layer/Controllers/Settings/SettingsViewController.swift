@@ -33,8 +33,12 @@ class SettingsViewController: UIViewController {
     }
 
     func getSettings() {
-        settings["currentNetwork"] = (CurrentNetwork.currentNetwork ?? Networks.Mainnet)
-        settings["currentWallet"] = KeysService().selectedWallet()?.name
+        do {
+            settings["currentNetwork"] = (CurrentNetwork.currentNetwork ?? Networks.Mainnet)
+            settings["currentWallet"] = try WalletsService().getSelectedWallet().name
+        } catch let error {
+            settings["currentWallet"] = error.localizedDescription
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {

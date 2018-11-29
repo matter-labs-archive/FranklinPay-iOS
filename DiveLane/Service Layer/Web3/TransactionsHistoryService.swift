@@ -32,7 +32,7 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                 let value = result["value"] as? String,
                 let hash = result["hash"] as? String,
                 let data = result["input"] as? String else {
-                    throw NetworkErrors.wrongJSON
+                    throw Errors.NetworkErrors.wrongJSON
             }
             let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
             var tokenModel: ERC20TokenModel?
@@ -41,7 +41,7 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                     let tokenSymbol = result["tokenSymbol"] as? String,
                     let tokenDecimal = result["tokenDecimal"] as? String,
                     let tokenAddress = result["contractAddress"] as? String else {
-                        throw NetworkErrors.wrongJSON
+                        throw Errors.NetworkErrors.wrongJSON
                 }
                 tokenModel = ERC20TokenModel(name: tokenName,
                                              address: tokenAddress,
@@ -51,10 +51,10 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                 tokenModel = nil
             }
             guard let amount = BigUInt(value) else {
-                throw NetworkErrors.wrongJSON
+                throw Errors.NetworkErrors.wrongJSON
             }
             guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else {
-                throw NetworkErrors.wrongJSON
+                throw Errors.NetworkErrors.wrongJSON
             }
             let transaction = ETHTransactionModel(transactionHash: hash,
                                                   from: from,
@@ -82,7 +82,7 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                                         networkId: Int64) -> Promise<[ETHTransactionModel]> {
         let returnPromise = Promise<[ETHTransactionModel]> { (seal) in
             guard let url = URLs().getEtherscanURL(for: txType, address: address, networkId: networkId) else {
-                seal.reject(NetworkErrors.wrongURL)
+                seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
             Alamofire.request(url, method: .get).responseJSON { response in
@@ -92,13 +92,13 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                 }
                 
                 guard response.data != nil else {
-                    seal.reject(NetworkErrors.noData)
+                    seal.reject(Errors.NetworkErrors.noData)
                     return
                 }
                 
                 guard let value = response.result.value as? [String: Any],
                     let results = value["result"] as? [[String: Any]] else {
-                        seal.reject(NetworkErrors.wrongJSON)
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
                 }
                 do {

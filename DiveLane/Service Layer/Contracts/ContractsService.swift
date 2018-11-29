@@ -25,7 +25,7 @@ class ContractsService: IContractsService {
         let returnPromise = Promise<String> { (seal) in
             let urlString = URLs().getContractURL(for: contractAddress)
             guard let url = URL(string: urlString) else {
-                seal.reject(NetworkErrors.wrongURL)
+                seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
             Alamofire.request(url, method: .get).responseJSON { response in
@@ -35,17 +35,17 @@ class ContractsService: IContractsService {
                 }
                 
                 guard response.data != nil else {
-                    seal.reject(NetworkErrors.noData)
+                    seal.reject(Errors.NetworkErrors.noData)
                     return
                 }
                 
                 guard let value = response.result.value as? [String: String] else {
-                    seal.reject(NetworkErrors.wrongJSON)
+                    seal.reject(Errors.NetworkErrors.wrongJSON)
                     return
                 }
                 
                 guard let message = value["message"], message == "OK", let abi = value["result"] else {
-                    seal.reject(NetworkErrors.noSuchAPIOnTheEtherscan)
+                    seal.reject(Errors.NetworkErrors.noSuchAPIOnTheEtherscan)
                     return
                 }
                 seal.fulfill(abi)

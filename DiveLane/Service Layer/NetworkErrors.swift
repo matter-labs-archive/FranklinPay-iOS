@@ -8,9 +8,12 @@
 
 import Foundation
 
-enum NetworkErrors: Error {
-    case wrongURL
-    case wrongJSON
-    case noSuchAPIOnTheEtherscan
-    case noData
+extension Errors {
+    public enum NetworkErrors: Error {
+        case wrongURL
+        case wrongJSON
+        case noSuchAPIOnTheEtherscan
+        case noData
+    }
 }
+

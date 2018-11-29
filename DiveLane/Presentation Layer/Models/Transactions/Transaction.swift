@@ -21,9 +21,15 @@ public struct ETHTransactionModel {
     var isPending = false
 }
 
-public struct TransactionInfo {
+public struct WriteTransactionInfo {
     var contractAddress: String
-    var transactionIntermediate: TransactionIntermediate
+    var writeTransaction: WriteTransaction
+    var methodName: String
+}
+
+public struct ReadTransactionInfo {
+    var contractAddress: String
+    var readTransaction: ReadTransaction
     var methodName: String
 }
 

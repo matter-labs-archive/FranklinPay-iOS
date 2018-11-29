@@ -25,7 +25,7 @@ class ContactsService: IContactsService {
         let returnPromise = Promise<[ContactModel]> { (seal) in
             var contactsList: [ContactModel] = []
             guard let contacts = try? ContactsDatabase().getContactsList(for: searchString) else {
-                seal.reject(StorageErrors.cantGetContact)
+                seal.reject(Errors.StorageErrors.cantGetContact)
             }
             if !contacts.isEmpty {
                 for contact in contacts {
@@ -35,7 +35,7 @@ class ContactsService: IContactsService {
                 }
                 seal.fulfill(contactsList)
             } else {
-                seal.reject(StorageErrors.noSuchContactInStorage)
+                seal.reject(Errors.StorageErrors.noSuchContactInStorage)
             }
         }
         return returnPromise

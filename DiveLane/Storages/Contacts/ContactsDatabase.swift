@@ -38,7 +38,7 @@ class ContactsDatabase: IContactsDatabase {
         do {
             let results = try mainContext.fetch(requestContact)
             guard let result = results.first else {
-                throw StorageErrors.cantGetContact
+                throw Errors.StorageErrors.cantGetContact
             }
             return ContactModel.fromCoreData(crModel: result)
         } catch let error{
@@ -64,7 +64,7 @@ class ContactsDatabase: IContactsDatabase {
         var error: Error?
         container.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as? Contact else {
-                error = StorageErrors.cantCreateContact
+                error = Errors.StorageErrors.cantCreateContact
                 group.leave()
             }
             entity.address = contact.address
@@ -94,7 +94,7 @@ class ContactsDatabase: IContactsDatabase {
         do {
             let results = try mainContext.fetch(requestContact)
             guard let wallet = results.first else {
-                error = StorageErrors.noSuchContactInStorage
+                error = Errors.StorageErrors.noSuchContactInStorage
                 group.leave()
             }
             mainContext.delete(wallet)

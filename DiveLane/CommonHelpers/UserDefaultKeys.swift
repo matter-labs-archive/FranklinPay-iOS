@@ -9,14 +9,15 @@
 import Foundation
 
 public struct UserDefaultKeys {
-    public var isEtherAdded = UserDefaults.standard.bool(forKey: "etherAddedForWallet\(WalletsService().getSelectedWallet()?.address ?? "")")
+    
+    public var isEtherAdded = UserDefaults.standard.bool(forKey: "etherAddedForWallet\((try? WalletsService().getSelectedWallet().address) ?? "")")
     public var isOnboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
     public var tokensDownloaded = UserDefaults.standard.bool(forKey: "tokensDownloaded")
     public var currentNetwork = UserDefaults.standard.object(forKey: "currentNetwork")
     public var currentWeb = UserDefaults.standard.object(forKey: "currentWeb")
 
     public func setEtherAdded() {
-        UserDefaults.standard.set(true, forKey: "etherAddedForWallet\(WalletsService().getSelectedWallet()?.address ?? "")")
+        UserDefaults.standard.set(true, forKey: "etherAddedForWallet\((try? WalletsService().getSelectedWallet().address) ?? "")")
     }
 
     public func setTokensDownloaded() {

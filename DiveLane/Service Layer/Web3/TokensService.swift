@@ -32,7 +32,9 @@ class TokensService {
     private func getFullTokensList(for searchString: String) -> Promise<[ERC20TokenModel]> {
         let returnPromise = Promise<[ERC20TokenModel]> { (seal) in
             var tokensList: [ERC20TokenModel] = []
-            let tokens = TokensStorage().getTokensList(for: searchString)
+            guard let tokens = try? TokensStorage().getTokensList(for: searchString) else {
+                seal.reject(Errors.StorageErrors.noSuchTokenInStorage)
+            }
             if !tokens.isEmpty {
                 for token in tokens {
                     let tokenModel = ERC20TokenModel(name: token.name,
@@ -122,41 +124,46 @@ class TokensService {
                                symbol: symbol)
     }
     
-    public func downloadAllAvailableTokensIfNeeded() throws -> OperationResult {
-        return try self.downloadAllAvailableTokensIfNeeded().wait()
-    }
-
-    private func downloadAllAvailableTokensIfNeeded() -> Promise<OperationResult> {
-        let promiseResult = Promise<OperationResult> { (seal) in
-            guard let url = URL(string: URLs.downloadTokensList) else {
-                seal.fulfill(.error(NetworkErrors.wrongURL))
-                return
-            }
-            Alamofire.request(url).responseJSON { response in
-                if let error = response.result.error {
-                    seal.reject(error)
-                    return
-                }
-                guard response.data != nil else {
-                    seal.reject(NetworkErrors.noData)
-                    return
-                }
-                guard let value = response.result.value as? [[String: Any]] else {
-                    seal.reject(NetworkErrors.wrongJSON)
-                    return
-                }
-                let dictsCount = value.count
-                var counter = 0
-                value.forEach({ (dict) in
-                    counter += 1
-                    let _ = TokensStorage().saveCustomToken(from: dict)
-                    if counter == dictsCount {
-                        seal.fulfill(.success)
-                    }
-                })
-            }
+    private func downloadAllAvailableTokensIfNeeded() throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
+        guard let url = URL(string: URLs.downloadTokensList) else {
+            error = Errors.NetworkErrors.wrongURL
+            group.leave()
         }
-        return promiseResult
+        Alamofire.request(url).responseJSON { response in
+            if let e = response.result.error {
+                error = e
+                group.leave()
+            }
+            guard response.data != nil else {
+                error = Errors.NetworkErrors.noData
+                group.leave()
+            }
+            guard let value = response.result.value as? [[String: Any]] else {
+                error = Errors.NetworkErrors.wrongJSON
+                group.leave()
+            }
+            let dictsCount = value.count
+            var counter = 0
+            value.forEach({ (dict) in
+                counter += 1
+                do {
+                    try TokensStorage().saveCustomToken(from: dict)
+                    if counter == dictsCount {
+                        group.leave()
+                    }
+                } catch let e {
+                    error = e
+                    group.leave()
+                }
+            })
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
     }
 
     public func updateConversion(for token: ERC20TokenModel) throws -> Double {

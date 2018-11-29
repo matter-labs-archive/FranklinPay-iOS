@@ -11,8 +11,8 @@ import UIKit
 class MnemonicsViewController: UIViewController {
     @IBOutlet weak var mnemonicsLabel: UILabel!
 
-    let keysService: IKeysService
-    let localStorage: ILocalDatabase = LocalDatabase()
+    let walletsService = WalletsService()
+    let walletsStorage = WalletsStorage()
     var mnemonics: String
     var name: String
     var password: String
@@ -20,11 +20,15 @@ class MnemonicsViewController: UIViewController {
     let animation = AnimationController()
 
     init(name: String, password: String) {
-        self.keysService = KeysService()
-        self.mnemonics = keysService.generateMnemonics(bitsOfEntropy: 128)
+        super.init(nibName: nil, bundle: nil)
         self.name = name
         self.password = password
-        super.init(nibName: nil, bundle: nil)
+        guard let mnemonics = try? walletsService.generateMnemonics(bitsOfEntropy: 128) else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {
+                
+            })
+        }
+        self.mnemonics = mnemonics
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -50,40 +54,30 @@ class MnemonicsViewController: UIViewController {
         animation.waitAnimation(isEnabled: true,
                                       notificationText: "Saving wallet",
                                       on: self.view)
-        keysService.createNewHDWallet(withName: name, password: password, mnemonics: mnemonics) { (keyWalletModel, error) in
-            if let error = error {
-                showErrorAlert(for: self, error: error, completion: {
-                    self.goToApp()
+        do {
+            DispatchQueue.main.async { [weak self] in
+                self?.animation.waitAnimation(isEnabled: false,
+                                              on: (self?.view)!)
+            }
+            let wallet = try walletsService.createHDWallet(name: name, password: password, mnemonics: mnemonics)
+            try walletsStorage.saveWallet(wallet: wallet)
+            if !UserDefaultKeys().isEtherAdded {
+                AppController().addFirstToken(for: wallet, completion: { (error) in
+                    if error == nil {
+                        UserDefaultKeys().setEtherAdded()
+                        UserDefaults.standard.synchronize()
+                        self.goToApp()
+                    } else {
+                        fatalError("Can't add ether - \(String(describing: error))")
+                    }
                 })
             } else {
-                self.localStorage.saveWallet(wallet: keyWalletModel, completion: { (error) in
-                    DispatchQueue.main.async { [weak self] in
-                        self?.animation.waitAnimation(isEnabled: false,
-                                                      on: (self?.view)!)
-                    }
-                    if let error = error {
-                        showErrorAlert(for: self, error: error, completion: {
-                            self.goToApp()
-                        })
-                    } else {
-                        DispatchQueue.global().async {
-                            if !UserDefaultKeys().isEtherAdded {
-                                AppController().addFirstToken(for: keyWalletModel!, completion: { (error) in
-                                    if error == nil {
-                                        UserDefaultKeys().setEtherAdded()
-                                        UserDefaults.standard.synchronize()
-                                        self.goToApp()
-                                    } else {
-                                        fatalError("Can't add ether - \(String(describing: error))")
-                                    }
-                                })
-                            } else {
-                                self.goToApp()
-                            }
-                        }
-                    }
-                })
+                self.goToApp()
             }
+        } catch let error{
+            Alerts().showErrorAlert(for: self, error: error, completion: { [weak self] in
+                self?.goToApp()
+            })
         }
     }
 }

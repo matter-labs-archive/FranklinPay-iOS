@@ -27,7 +27,7 @@ class RatesService: IRatesService {
         let promiseResult = Promise<Double> { (seal) in
             let fullURLString = String(format: urlFormat, tokenName)
             guard let url = URL(string: fullURLString) else {
-                seal.reject(NetworkErrors.wrongURL)
+                seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
             Alamofire.request(url)
@@ -37,12 +37,12 @@ class RatesService: IRatesService {
                         return
                     }
                     guard response.data != nil else {
-                        seal.reject(NetworkErrors.noData)
+                        seal.reject(Errors.NetworkErrors.noData)
                         return
                     }
                     guard let value = response.result.value as? [String: Any],
                         let conversionRate = value["USD"] as? Double else {
-                            seal.reject(NetworkErrors.wrongJSON)
+                            seal.reject(Errors.NetworkErrors.wrongJSON)
                             return
                     }
                     self.conversionRates[tokenName] = conversionRate
