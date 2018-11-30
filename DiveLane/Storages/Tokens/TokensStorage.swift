@@ -19,7 +19,7 @@ protocol ITokensStorage {
 }
 
 
-class TokensStorage: ITokensStorage {
+public class TokensStorage: ITokensStorage {
     
     lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
     private lazy var mainContext = self.container.viewContext
@@ -42,11 +42,13 @@ class TokensStorage: ITokensStorage {
                 guard let address = dict["address"] as? String else {
                     error = Errors.StorageErrors.cantCreateToken
                     group.leave()
+                    return
                 }
                 token.predicate = NSPredicate(format: "address = %@", address)
                 guard var newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token", into: context) as? ERC20Token else {
                     error = Errors.StorageErrors.cantCreateToken
                     group.leave()
+                    return
                 }
                 if let entity = try self.mainContext.fetch(token).first {
                     newToken = entity
@@ -84,6 +86,7 @@ class TokensStorage: ITokensStorage {
                                                                    into: context) as? ERC20Token else {
                 error = Errors.StorageErrors.cantCreateToken
                 group.leave()
+                return
             }
             entity.address = token.address
             entity.name = token.name
@@ -180,6 +183,7 @@ class TokensStorage: ITokensStorage {
             guard let token = tokensInNetwork.first else {
                 error = Errors.StorageErrors.noSuchTokenInStorage
                 group.leave()
+                return
             }
             mainContext.delete(token)
             try mainContext.save()

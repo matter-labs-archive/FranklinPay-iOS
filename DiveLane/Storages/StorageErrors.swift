@@ -25,6 +25,8 @@ extension Errors {
         case noSuchTokenInStorage
         case cantDeleteToken
         case cantGetToke
+        case cantCreateTransaction
+        case cantGetTransaction
     }
 }
 

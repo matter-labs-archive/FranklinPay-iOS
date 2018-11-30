@@ -19,7 +19,7 @@ class SearchTokenViewController: UIViewController {
 
     var searchController: UISearchController!
 
-    var wallet: KeyWalletModel?
+    var wallet: WalletModel?
 
     let interactor = Interactor()
 
@@ -30,7 +30,7 @@ class SearchTokenViewController: UIViewController {
         return QRCodeReaderViewController(builder: builder)
     }()
 
-    convenience init(for wallet: KeyWalletModel?) {
+    convenience init(for wallet: WalletModel?) {
         self.init()
         self.wallet = wallet
     }
@@ -43,7 +43,10 @@ class SearchTokenViewController: UIViewController {
         self.title = "Search token"
 
         if wallet == nil {
-            wallet = KeysService().selectedWallet()
+            guard let w = try? WalletsService().getSelectedWallet() else {
+                return
+            }
+            wallet = w
         }
 
         self.tokensTableView.delegate = self
@@ -132,7 +135,9 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             guard let wallet = wallet else {
                 return cell
             }
-            let tokensInWallet = LocalDatabase().getAllTokens(for: wallet, forNetwork: networkID)
+            guard let tokensInWallet = try? TokensStorage().getAllTokens(for: wallet, networkId: networkID) else {
+                return cell
+            }
             var isAdded = false
             for token in tokensInWallet where token == (tokensList?[indexPath.row])! {
                 isAdded = true
@@ -183,27 +188,24 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
 
         tokensIsAdded = []
 
-        if isEnabled {
-            LocalDatabase().deleteToken(token: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
-                if error == nil {
-                    CurrentToken.currentToken = ERC20TokenModel(isEther: true)
-                    DispatchQueue.main.async {
-                        self?.tokensTableView.reloadData()
-                    }
+        do {
+            if isEnabled {
+                try TokensStorage().deleteToken(token: token, wallet: currentWallet, networkId: networkID)
+                CurrentToken.currentToken = ERC20TokenModel(isEther: true)
+                DispatchQueue.main.async { [weak self] in
+                    self?.tokensTableView.reloadData()
                 }
-            })
-        } else {
-            LocalDatabase().saveCustomToken(with: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
-                if error == nil {
-                    CurrentToken.currentToken = token
-                    DispatchQueue.main.async {
-                        self?.tokensTableView.reloadData()
-                    }
+            } else {
+                try TokensStorage().saveCustomToken(token: token, wallet: currentWallet, networkId: networkID)
+                CurrentToken.currentToken = token
+                DispatchQueue.main.async { [weak self] in
+                    self?.tokensTableView.reloadData()
                 }
-            })
+            }
+        } catch {
+            return
         }
     }
-
 }
 
 extension SearchTokenViewController: UISearchControllerDelegate {
@@ -215,14 +217,11 @@ extension SearchTokenViewController: UISearchControllerDelegate {
 extension SearchTokenViewController: UISearchBarDelegate {
 
     func searchTokens(string: String) {
-
-        TokensService().getFullTokensList(for: string, completion: { [weak self] (result) in
-            if let list = result {
-                self?.updateTokensList(with: list)
-            } else {
-                self?.emptyTokensList()
-            }
-        })
+        guard let list = try? TokensService().getFullTokensList(for: string) else {
+            emptyTokensList()
+            return
+        }
+        updateTokensList(with: list)
     }
 
     func makeHelpLabel(enabled: Bool) {

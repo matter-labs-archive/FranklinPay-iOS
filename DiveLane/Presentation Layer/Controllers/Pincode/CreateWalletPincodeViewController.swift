@@ -16,15 +16,15 @@ class CreateWalletPincodeViewController: PincodeViewController {
 
     var pincodeItems: [KeychainPasswordItem] = []
 
-    let localStorage = LocalDatabase()
+    let localStorage = WalletsStorage()
     let animationController = AnimationController()
 
     //var newWallet: Bool = false
 
-    var wallet: KeyWalletModel?
+    var wallet: WalletModel?
     var password: String?
 
-    convenience init(forWallet: KeyWalletModel, with password: String) {
+    convenience init(forWallet: WalletModel, with password: String) {
         self.init()
         wallet = forWallet
         self.password = password
@@ -132,54 +132,44 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     notificationText: "Saving wallet",
                     on: (self.view)!)
         }
-        self.localStorage.saveWallet(wallet: self.wallet) { (error) in
-            if error == nil {
-                self.createPassword()
-                DispatchQueue.main.async {
-                    self.animationController.waitAnimation(isEnabled: false,
-                            on: (self.view)!)
-                }
-                self.localStorage.selectWallet(wallet: self.wallet, completion: {
-
-                    DispatchQueue.global().async {
-                        if !UserDefaultKeys().tokensDownloaded {
-                            TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
-                                if error == nil {
-                                    UserDefaultKeys().setTokensDownloaded()
-                                    UserDefaults.standard.synchronize()
-                                }
-                            })
-                        }
-                    }
-
-                    let dispatchGroup = DispatchGroup()
-                    dispatchGroup.enter()
-                    if !UserDefaultKeys().isEtherAdded {
-                        AppController().addFirstToken(for: self.wallet!, completion: { (error) in
-                            if error == nil {
-                                UserDefaultKeys().setEtherAdded()
-                                UserDefaults.standard.synchronize()
-                                dispatchGroup.leave()
-                            } else {
-                                dispatchGroup.leave()
-                                //fatalError("Can't add ether - \(String(describing: error))")
-                            }
-                        })
-                    }
-                    dispatchGroup.notify(queue: .main) {
-                        if UserDefaultKeys().isEtherAdded {
-                            self.goToApp()
-                        } else {
-                            showErrorAlert(for: self, error: NetworkErrors.couldnotParseUrlString, completion: {
-                                self.navigationController?.popViewController(animated: true)
-                            })
-                        }
-                    }
-
-                })
-            } else {
-                fatalError("Error saving wallet - \(String(describing: error))")
+        do {
+            try localStorage.saveWallet(wallet: wallet!)
+            self.createPassword()
+            DispatchQueue.main.async {
+                self.animationController.waitAnimation(isEnabled: false,
+                                                       on: (self.view)!)
             }
+            try localStorage.selectWallet(wallet: self.wallet!)
+            if !UserDefaultKeys().tokensDownloaded {
+                try TokensService().downloadAllAvailableTokensIfNeeded()
+                UserDefaultKeys().setTokensDownloaded()
+                UserDefaults.standard.synchronize()
+            }
+            
+            let dispatchGroup = DispatchGroup()
+            dispatchGroup.enter()
+            if !UserDefaultKeys().isEtherAdded {
+                AppController().addFirstToken(for: self.wallet!, completion: { (error) in
+                    if error == nil {
+                        UserDefaultKeys().setEtherAdded()
+                        UserDefaults.standard.synchronize()
+                        dispatchGroup.leave()
+                    } else {
+                        fatalError("Can't add ether - \(String(describing: error))")
+                    }
+                })
+            }
+            dispatchGroup.notify(queue: .main) {
+                if UserDefaultKeys().isEtherAdded {
+                    self.goToApp()
+                } else {
+                    Alerts().showErrorAlert(for: self, error: Errors.NetworkErrors.wrongURL, completion: {
+                        self.navigationController?.popViewController(animated: true)
+                    })
+                }
+            }
+        } catch let error{
+            fatalError("Error saving wallet - \(String(describing: error))")
         }
     }
 

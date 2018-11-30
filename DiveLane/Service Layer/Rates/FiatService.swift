@@ -16,7 +16,7 @@ protocol IRatesService {
     func currentConversionRate(for tokenName: String) -> Double
 }
 
-class RatesService: IRatesService {
+public class RatesService: IRatesService {
 
     static let service = RatesService()
     public var conversionRates = [String: Double]()

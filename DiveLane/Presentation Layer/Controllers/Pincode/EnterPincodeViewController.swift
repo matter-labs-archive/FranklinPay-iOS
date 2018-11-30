@@ -23,8 +23,8 @@ class EnterPincodeViewController: PincodeViewController {
     var isFromDeepLink: Bool = false
     var isContract: Bool = false
 
-    var transactionService = TransactionsService()
-    let keysService = KeysService()
+    var transactionService = Web3Service()
+    let keysService = WalletsService()
 
     let animationController = AnimationController()
 
@@ -114,71 +114,44 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func send(with transaction: Transaction) {
-        guard let wallet = keysService.selectedWallet() else {return}
+        guard let wallet = try? keysService.getSelectedWallet() else {return}
         guard let pass = password else {return}
-        guard let privateKey = keysService.getWalletPrivateKey(for: wallet, password: pass) else {return}
+        guard let privateKey = try? keysService.getPrivateKey(for: wallet, password: pass) else {return}
         let privKey = Data(hex: privateKey)
-        let signedTransaction = transaction.sign(privateKey: privKey)
+        guard let signedTransaction = try? transaction.sign(privateKey: privKey) else {return}
 
-        MatterService().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
-            switch result {
-            case .Success(let approved):
-                guard approved != nil else {
-                    showErrorAlert(for: self, error: nil, completion: {
-                        self.returnToStartTab()
-                    })
-                    return
-                }
-                DispatchQueue.main.async { [weak self] in
-                    showSuccessAlert(for: self!, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
-            case .Error(let error):
-                DispatchQueue.main.async { [weak self] in
-                    print("\(error)")
-                    showErrorAlert(for: self!, error: error, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
+        guard let result = try? PlasmaService().sendRawTX(transaction: signedTransaction, onTestnet: true) else {
+            DispatchQueue.main.async { [weak self] in
+                Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {
+                    self?.returnToStartTab()
+                })
             }
+            return
         }
-    }
-
-    func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
-        if !isContract {
-            transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                self?.sendingResultOperation(result: result)
-            }
-        } else {
-            transactionService.sendToContract(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                self?.sendingResultOperation(result: result)
-            }
+        if !result {
+            Alerts().showErrorAlert(for: self, error: nil, completion: {
+                self.returnToStartTab()
+            })
+            return
         }
-
-    }
-    
-    func sendingResultOperation(result: Result<TransactionSendingResult>) {
         DispatchQueue.main.async { [weak self] in
-            self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-        }
-        switch result {
-        case .Success:
-            if isFromDeepLink {
-                showSuccessAlert(for: self, completion: { [weak self] in
-                    self?.returnToStartTab()
-                })
-            } else {
-                showSuccessAlert(for: self, completion: { [weak self] in
-                    self?.returnToStartTab()
-                })
-            }
-            
-        case .Error(let error):
-            print("\(error)")
-            showErrorAlert(for: self, error: error, completion: { [weak self] in
+            Alerts().showSuccessAlert(for: self!, completion: {
                 self?.returnToStartTab()
             })
+        }
+    }
+
+    func send(with data: (transaction: WriteTransaction, options: TransactionOptions)) {
+        do {
+            let _ = try transactionService.sendTx(transaction: data.transaction, options: data.options, password: password!)
+            DispatchQueue.main.async { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
+            }
+            Alerts().showSuccessAlert(for: self, completion: { [weak self] in
+                self?.returnToStartTab()
+            })
+        } catch {
+            return
         }
     }
 

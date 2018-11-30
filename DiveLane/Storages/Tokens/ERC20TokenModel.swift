@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ERC20TokenModel {
+public class ERC20TokenModel {
     var name: String
     var address: String
     var decimals: String
@@ -48,7 +48,7 @@ class ERC20TokenModel {
 }
 
 extension ERC20TokenModel: Equatable {
-    static func ==(lhs: ERC20TokenModel, rhs: ERC20TokenModel) -> Bool {
+    public static func ==(lhs: ERC20TokenModel, rhs: ERC20TokenModel) -> Bool {
         return lhs.name == rhs.name &&
             lhs.address == rhs.address &&
             lhs.decimals == rhs.decimals &&

@@ -15,7 +15,7 @@ protocol IContractsService {
     func getAbi(for contractAddress: String) throws -> String
 }
 
-class ContractsService: IContractsService {
+public class ContractsService: IContractsService {
     
     public func getAbi(for contractAddress: String) throws -> String {
         return try self.getAbi(for: contractAddress).wait()

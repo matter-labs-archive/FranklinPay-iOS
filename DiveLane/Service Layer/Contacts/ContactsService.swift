@@ -15,7 +15,7 @@ protocol IContactsService {
     func getFullContactsList(for searchString: String) throws -> [ContactModel]
 }
 
-class ContactsService: IContactsService {
+public class ContactsService: IContactsService {
 
     public func getFullContactsList(for searchString: String) throws -> [ContactModel] {
         return try self.getFullContactsList(for: searchString).wait()
@@ -24,8 +24,9 @@ class ContactsService: IContactsService {
     private func getFullContactsList(for searchString: String) -> Promise<[ContactModel]> {
         let returnPromise = Promise<[ContactModel]> { (seal) in
             var contactsList: [ContactModel] = []
-            guard let contacts = try? ContactsDatabase().getContactsList(for: searchString) else {
+            guard let contacts = try? ContactsStorage().getContactsList(for: searchString) else {
                 seal.reject(Errors.StorageErrors.cantGetContact)
+                return
             }
             if !contacts.isEmpty {
                 for contact in contacts {

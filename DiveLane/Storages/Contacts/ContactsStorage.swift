@@ -11,7 +11,7 @@ import Foundation
 import CoreData
 import BigInt
 
-protocol IContactsDatabase {
+protocol IContactsStorage {
     func getContact(address: String) throws -> ContactModel
     func saveContact(contact: ContactModel) throws
     func getAllContacts() throws -> [ContactModel]
@@ -19,7 +19,7 @@ protocol IContactsDatabase {
     func getContactsList(for searchingString: String) throws -> [ContactModel]
 }
 
-class ContactsDatabase: IContactsDatabase {
+public class ContactsStorage: IContactsStorage {
 
     lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
     private lazy var mainContext = self.container.viewContext
@@ -66,6 +66,7 @@ class ContactsDatabase: IContactsDatabase {
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as? Contact else {
                 error = Errors.StorageErrors.cantCreateContact
                 group.leave()
+                return
             }
             entity.address = contact.address
             entity.name = contact.name
@@ -96,6 +97,7 @@ class ContactsDatabase: IContactsDatabase {
             guard let wallet = results.first else {
                 error = Errors.StorageErrors.noSuchContactInStorage
                 group.leave()
+                return
             }
             mainContext.delete(wallet)
             try mainContext.save()

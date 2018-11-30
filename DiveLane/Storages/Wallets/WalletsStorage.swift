@@ -18,7 +18,7 @@ protocol IWalletsStorage {
     func selectWallet(wallet: WalletModel) throws
 }
 
-class WalletsStorage {
+public class WalletsStorage {
     lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
     private lazy var mainContext = self.container.viewContext
     
@@ -65,6 +65,7 @@ class WalletsStorage {
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Wallet", into: context) as? Wallet else {
                 error = Errors.StorageErrors.cantCreateWallet
                 group.leave()
+                return
             }
             entity.address = wallet.address
             entity.data = wallet.data
@@ -84,7 +85,7 @@ class WalletsStorage {
         }
     }
     
-    public func deleteWalletPromise(wallet: WalletModel) throws {
+    public func deleteWallet(wallet: WalletModel) throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
@@ -95,6 +96,7 @@ class WalletsStorage {
             guard let wallet = results.first else {
                 error = Errors.StorageErrors.noSuchWalletInStorage
                 group.leave()
+                return
             }
             mainContext.delete(wallet)
             try mainContext.save()
@@ -132,7 +134,7 @@ class WalletsStorage {
         }
     }
     
-    public func fetchWalletRequest(with address: String) -> NSFetchRequest<Wallet> {
+    private func fetchWalletRequest(with address: String) -> NSFetchRequest<Wallet> {
         let fr: NSFetchRequest<Wallet> = Wallet.fetchRequest()
         fr.predicate = NSPredicate(format: "address = %@", address)
         return fr

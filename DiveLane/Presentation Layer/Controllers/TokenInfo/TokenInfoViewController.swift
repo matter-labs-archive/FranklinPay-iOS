@@ -14,11 +14,11 @@ class TokenInfoViewController: UIViewController {
 
     @IBOutlet weak var addingButton: UIButton!
 
-    var wallet: KeyWalletModel?
+    var wallet: WalletModel?
 
     var interactor: Interactor?
 
-    let conversionService = FiatServiceImplementation.service
+    let conversionService = RatesService.service
 
     var token: ERC20TokenModel?
     var isAdded: Bool = false
@@ -28,7 +28,11 @@ class TokenInfoViewController: UIViewController {
         super.viewDidLoad()
 
         if wallet == nil {
-            wallet = KeysService().selectedWallet()
+            do {
+                wallet = try WalletsService().getSelectedWallet()
+            } catch {
+                return
+            }
         }
 
         addingButton.setTitle(isAdded ? "DELETE" : "ADD", for: .normal)
@@ -42,11 +46,13 @@ class TokenInfoViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        conversionService.updateConversionRate(for: token?.symbol.uppercased() ?? "ETH") { [weak self] (_) in
-            DispatchQueue.main.async {
+        do {
+            try conversionService.updateConversionRate(for: token?.symbol.uppercased() ?? "ETH")
+            DispatchQueue.main.async { [weak self] in
                 self?.tokenInfoTableView.reloadData()
             }
+        } catch {
+            return
         }
     }
 
@@ -103,22 +109,21 @@ class TokenInfoViewController: UIViewController {
         let networkID = CurrentNetwork().getNetworkID()
 
         if isAdded {
-            LocalDatabase().deleteToken(token: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
-                if error == nil {
-                    DispatchQueue.main.async {
-                        self?.dismiss(animated: true, completion: nil)
-                    }
-
+            do {
+                try TokensStorage().deleteToken(token: token, wallet: currentWallet, networkId: networkID)
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
                 }
-            })
+            }
         } else {
-            LocalDatabase().saveCustomToken(with: token, forWallet: currentWallet, forNetwork: networkID, completion: { [weak self] (error) in
-                if error == nil {
-                    DispatchQueue.main.async {
-                        self?.dismiss(animated: true, completion: nil)
-                    }
+            do {
+                try TokensStorage().saveCustomToken(token: token, wallet: currentWallet, networkId: networkID)
+            } catch {
+                DispatchQueue.main.async { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
                 }
-            })
+            }
         }
 
     }

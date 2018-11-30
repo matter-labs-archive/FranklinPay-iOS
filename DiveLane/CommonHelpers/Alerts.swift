@@ -11,8 +11,8 @@ import UIKit
 public struct Alerts {
     public func showErrorAlert(for viewController: UIViewController, error: Error?, completion: (() -> Void)?) {
         var text: String?
-        if let error = error as? TransactionErrors {
-            text = error.rawValue
+        if let error = error {
+            text = error.localizedDescription
         }
         let alert = UIAlertController(title: "Error", message: text ?? error?.localizedDescription, preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in

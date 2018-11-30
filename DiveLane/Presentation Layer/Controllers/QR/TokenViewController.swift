@@ -9,6 +9,7 @@
 import UIKit
 import Web3swift
 import BigInt
+import EthereumAddress
 
 class TokenViewController: UIViewController {
 
@@ -20,10 +21,10 @@ class TokenViewController: UIViewController {
     @IBOutlet weak var sendTokenButton: UIButton!
 
     var tokenBalance: String?
-    var wallet: KeyWalletModel?
+    var wallet: WalletModel?
     var token: ERC20TokenModel?
 
-    convenience init(wallet: KeyWalletModel,
+    convenience init(wallet: WalletModel,
                      token: ERC20TokenModel,
                      tokenBalance: String) {
         self.init()
@@ -81,26 +82,21 @@ class TokenViewController: UIViewController {
         guard let wallet = wallet else {
             return
         }
-        if token == ERC20TokenModel(isEther: true) {
-            Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, error) in
-                if error == nil && result != nil {
-                    self?.tokenBalance = result!
-                    self?.checkBalanceAndEnableSend()
-                } else {
-                    self?.getBalance()
-                }
+        do {
+            if token == ERC20TokenModel(isEther: true) {
+                let balance = try Web3Service().getETHbalance(for: wallet)
+                self.tokenBalance = balance
+                self.checkBalanceAndEnableSend()
+                
+            } else {
+                let balance = try Web3Service().getERC20balance(for: wallet, token: token)
+                self.tokenBalance = balance
+                self.checkBalanceAndEnableSend()
             }
-        } else {
-            Web3SwiftService().getERCBalance(for: token.address,
-                    address: wallet.address) { [weak self] (result, error) in
-                if error == nil && result != nil {
-                    self?.tokenBalance = result!
-                    self?.checkBalanceAndEnableSend()
-                } else {
-                    self?.getBalance()
-                }
-            }
+        } catch {
+            self.getBalance()
         }
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {

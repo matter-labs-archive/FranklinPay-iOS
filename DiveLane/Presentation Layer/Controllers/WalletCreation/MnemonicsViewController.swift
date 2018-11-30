@@ -20,15 +20,15 @@ class MnemonicsViewController: UIViewController {
     let animation = AnimationController()
 
     init(name: String, password: String) {
-        super.init(nibName: nil, bundle: nil)
         self.name = name
         self.password = password
-        guard let mnemonics = try? walletsService.generateMnemonics(bitsOfEntropy: 128) else {
-            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {
-                
-            })
+        do {
+            let mnemonics = try walletsService.generateMnemonics(bitsOfEntropy: 128)
+            self.mnemonics = mnemonics
+        } catch {
+            self.mnemonics = ""
         }
-        self.mnemonics = mnemonics
+        super.init(nibName: nil, bundle: nil)
     }
 
     required init?(coder aDecoder: NSCoder) {

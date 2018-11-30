@@ -12,17 +12,17 @@ import EthereumAddress
 import BigInt
 
 protocol IWeb3Service {
-    func prepareSendEthTx(toAddress: EthereumAddress,
+    func prepareSendEthTx(toAddress: String,
                           value: String,
                           gasLimit: TransactionOptions.GasLimitPolicy,
                           gasPrice: TransactionOptions.GasPricePolicy) throws -> WriteTransaction
-    func prepareSendERC20Tx(tokenAddress: EthereumAddress,
-                            toAddress: EthereumAddress,
+    func prepareSendERC20Tx(tokenAddress: String,
+                            toAddress: String,
                             tokenAmount: String,
                             gasLimit: TransactionOptions.GasLimitPolicy,
                             gasPrice: TransactionOptions.GasPricePolicy) throws -> WriteTransaction
     func prepareWriteContractTx(contractABI: String,
-                                contractAddress: EthereumAddress,
+                                contractAddress: String,
                                 contractMethod: String,
                                 value: String,
                                 gasLimit: TransactionOptions.GasLimitPolicy,
@@ -30,7 +30,7 @@ protocol IWeb3Service {
                                 parameters: [AnyObject],
                                 extraData: Data) throws -> WriteTransaction
     func prepareReadContractTx(contractABI: String,
-                               contractAddress: EthereumAddress,
+                               contractAddress: String,
                                contractMethod: String,
                                gasLimit: TransactionOptions.GasLimitPolicy,
                                gasPrice: TransactionOptions.GasPricePolicy,
@@ -43,7 +43,8 @@ protocol IWeb3Service {
                 options: TransactionOptions?) throws -> [String : Any]
     func getETHbalance(for wallet: WalletModel) throws -> String
     func getERC20balance(for wallet: WalletModel,
-                         tokenAddress: EthereumAddress) throws -> String
+                         token: ERC20TokenModel) throws -> String
+    func getDataForTransaction(dict: [String: Any]) -> (transaction: WriteTransaction, options: TransactionOptions)
 }
 
 public class Web3Service: IWeb3Service {
@@ -81,11 +82,14 @@ public class Web3Service: IWeb3Service {
         return options
     }
     
-    public func prepareSendEthTx(toAddress: EthereumAddress,
+    public func prepareSendEthTx(toAddress: String,
                                  value: String = "0.0",
                                  gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
                                  gasPrice: TransactionOptions.GasPricePolicy = .automatic) throws -> WriteTransaction {
-        guard let contract = web3Instance.contract(Web3.Utils.coldWalletABI, at: toAddress, abiVersion: 2) else {
+        guard let ethAddress = EthereumAddress(toAddress) else {
+            throw Web3Error.dataError
+        }
+        guard let contract = web3Instance.contract(Web3.Utils.coldWalletABI, at: ethAddress, abiVersion: 2) else {
             throw Web3Error.dataError
         }
         let amount = Web3.Utils.parseToBigUInt(value, units: .eth)
@@ -102,12 +106,18 @@ public class Web3Service: IWeb3Service {
         return tx
     }
     
-    public func prepareSendERC20Tx(tokenAddress: EthereumAddress,
-                                   toAddress: EthereumAddress,
+    public func prepareSendERC20Tx(tokenAddress: String,
+                                   toAddress: String,
                                    tokenAmount: String = "0.0",
                                    gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
                                    gasPrice: TransactionOptions.GasPricePolicy = .automatic) throws -> WriteTransaction {
-        guard let contract = web3Instance.contract(Web3.Utils.erc20ABI, at: tokenAddress, abiVersion: 2) else {
+        guard let ethTokenAddress = EthereumAddress(tokenAddress) else {
+            throw Web3Error.dataError
+        }
+        guard let ethToAddress = EthereumAddress(toAddress) else {
+            throw Web3Error.dataError
+        }
+        guard let contract = web3Instance.contract(Web3.Utils.erc20ABI, at: ethTokenAddress, abiVersion: 2) else {
             throw Web3Error.dataError
         }
         let amount = Web3.Utils.parseToBigUInt(tokenAmount, units: .eth)
@@ -115,7 +125,7 @@ public class Web3Service: IWeb3Service {
         options.gasPrice = gasPrice
         options.gasLimit = gasLimit
         guard let tx = contract.write("transfer",
-                                      parameters: [toAddress, amount] as [AnyObject],
+                                      parameters: [ethToAddress, amount] as [AnyObject],
                                       extraData: Data(),
                                       transactionOptions: options) else {
             throw Web3Error.transactionSerializationError
@@ -124,14 +134,17 @@ public class Web3Service: IWeb3Service {
     }
     
     public func prepareWriteContractTx(contractABI: String,
-                                      contractAddress: EthereumAddress,
+                                      contractAddress: String,
                                       contractMethod: String,
                                       value: String = "0.0",
                                       gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
                                       gasPrice: TransactionOptions.GasPricePolicy = .automatic,
                                       parameters: [AnyObject] = [AnyObject](),
                                       extraData: Data = Data()) throws -> WriteTransaction {
-        guard let contract = web3Instance.contract(contractABI, at: contractAddress, abiVersion: 2) else {
+        guard let ethContractAddress = EthereumAddress(contractAddress) else {
+            throw Web3Error.dataError
+        }
+        guard let contract = web3Instance.contract(contractABI, at: ethContractAddress, abiVersion: 2) else {
             throw Web3Error.dataError
         }
         let amount = Web3.Utils.parseToBigUInt(value, units: .eth)
@@ -149,13 +162,16 @@ public class Web3Service: IWeb3Service {
     }
     
     public func prepareReadContractTx(contractABI: String,
-                                      contractAddress: EthereumAddress,
+                                      contractAddress: String,
                                       contractMethod: String,
                                       gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
                                       gasPrice: TransactionOptions.GasPricePolicy = .automatic,
                                       parameters: [AnyObject] = [AnyObject](),
                                       extraData: Data = Data()) throws -> ReadTransaction {
-        guard let contract = web3Instance.contract(contractABI, at: contractAddress, abiVersion: 2) else {
+        guard let ethContractAddress = EthereumAddress(contractAddress) else {
+            throw Web3Error.dataError
+        }
+        guard let contract = web3Instance.contract(contractABI, at: ethContractAddress, abiVersion: 2) else {
             throw Web3Error.dataError
         }
         var options = defaultOptions()
@@ -210,13 +226,13 @@ public class Web3Service: IWeb3Service {
     }
     
     public func getERC20balance(for wallet: WalletModel,
-                                tokenAddress: EthereumAddress) throws -> String {
+                                token: ERC20TokenModel) throws -> String {
         do {
             guard let walletAddress = EthereumAddress(wallet.address) else {
                 throw Web3Error.walletError
             }
             let tx = try self.prepareReadContractTx(contractABI: Web3.Utils.erc20ABI,
-                                                    contractAddress: tokenAddress,
+                                                    contractAddress: token.address,
                                                     contractMethod: "balanceOf",
                                                     gasLimit: .automatic,
                                                     gasPrice: .automatic,
@@ -233,6 +249,20 @@ public class Web3Service: IWeb3Service {
         } catch let error {
             throw error
         }
+    }
+    
+    public func getDataForTransaction(dict: [String: Any]) -> (transaction: WriteTransaction, options: TransactionOptions) {
+            var options = TransactionOptions.defaultOptions
+            if let gasLimit = dict["gasLimit"] as? BigUInt,
+                let gasPrice = dict["gasPrice"] as? BigUInt {
+                options.gasLimit = .manual(gasLimit)
+                options.gasPrice = .manual(gasPrice * (BigUInt("1000000000"))!)
+            }
+            let transaction = (dict["transaction"] as? WriteTransaction)!
+            options.from = transaction.transactionOptions.from
+            options.to = transaction.transactionOptions.to
+            options.value = transaction.transactionOptions.value
+            return (transaction: transaction, options: options)
     }
 }
 

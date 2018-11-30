@@ -85,11 +85,13 @@ class SendArbitraryTransactionViewController: UIViewController {
                 Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.noSelectedWallet, completion: {
                     
                 })
+                return
             }
             guard (try? WalletsService().getPrivateKey(for: wallet, password: passwordText)) != nil else {
                 Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.wrongPassword, completion: {
                     
                 })
+                return
             }
             self.send(withPassword: passwordText)
         }

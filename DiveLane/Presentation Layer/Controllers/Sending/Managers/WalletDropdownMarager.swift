@@ -9,13 +9,13 @@
 import UIKit
 
 protocol WalletSelectionDelegate: class {
-    func didSelectWallet(wallet: KeyWalletModel)
+    func didSelectWallet(wallet: WalletModel)
 }
 
 class WalletDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: WalletSelectionDelegate?
 
-    var wallets = [KeyWalletModel]()
+    var wallets = [WalletModel]()
 
     var isPlasma: Bool = false
 

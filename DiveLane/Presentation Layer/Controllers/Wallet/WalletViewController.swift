@@ -17,11 +17,11 @@ class WalletViewController: UIViewController {
     @IBOutlet weak var walletTableView: UITableView!
     @IBOutlet weak var blockchainControl: UISegmentedControl!
 
-    let conversionService = FiatServiceImplementation.service
+    let conversionService = RatesService.service
 
-    var localDatabase: ILocalDatabase?
-    var keysService: IKeysService?
-    var wallets: [KeyWalletModel]?
+    var localDatabase = TokensService()
+    var keysService = WalletsService()
+    var wallets: [WalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     var twoDimensionalUTXOsArray: [ExpandableTableUTXOs] = []
 
@@ -59,11 +59,11 @@ class WalletViewController: UIViewController {
         self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
-    func initDatabase(complection: @escaping () -> Void) {
-        localDatabase = LocalDatabase()
-        wallets = localDatabase?.getAllWallets()
-        keysService = KeysService()
-        complection()
+    func initDatabase() {
+        guard let wallets = try? WalletsStorage().getAllWallets() else {
+            return
+        }
+        self.wallets = wallets
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -114,10 +114,13 @@ class WalletViewController: UIViewController {
         let token = twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
         print(token)
         CurrentToken.currentToken = token.token
-        localDatabase?.selectWallet(wallet: token.inWallet, completion: { [weak self] in
-            self?.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
+        do {
+            try WalletsStorage().selectWallet(wallet: token.inWallet)
+            self.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
             cell.changeSelectButton(isSelected: true)
-        })
+        } catch {
+            return
+        }
     }
 
     func selectUTXO(cell: UITableViewCell) {
@@ -145,7 +148,7 @@ class WalletViewController: UIViewController {
         twoDimensionalUTXOsArray[indexPathTapped.section].utxos[indexPathTapped.row].isSelected = !selected
         cell.changeSelectButton(isSelected: !selected)
         if chosenUTXOs.count == 2 {
-            showAccessAlert(for: self, with: "Merge UTXOs?") { [weak self] (result) in
+            Alerts().showAccessAlert(for: self, with: "Merge UTXOs?") { [weak self] (result) in
                 if result {
                     self?.formMergeUTXOsTransaction(forWallet: utxo.inWallet)
                 }
@@ -153,26 +156,30 @@ class WalletViewController: UIViewController {
         }
     }
 
-    func formMergeUTXOsTransaction(forWallet: KeyWalletModel) {
+    func formMergeUTXOsTransaction(forWallet: WalletModel) {
         var inputs = [TransactionInput]()
         var mergedAmount: BigUInt = 0
-        for utxo in chosenUTXOs {
-            if let input = utxo.utxo.toTransactionInput() {
-                inputs.append(input)
-                mergedAmount += input.amount
+        do {
+            for utxo in chosenUTXOs {
+                let input = try? utxo.utxo.toTransactionInput()
+                if let i = input {
+                    inputs.append(i)
+                    mergedAmount += i.amount
+                }
             }
-        }
-
-        guard let address = EthereumAddress(forWallet.address) else {return}
-        guard let output = TransactionOutput(outputNumberInTx: 0, receiverEthereumAddress: address, amount: mergedAmount) else {return}
-        let outputs = [output]
-        guard let transaction = Transaction(txType: .merge, inputs: inputs, outputs: outputs) else {return}
-        checkPassword(forWallet: forWallet) { [weak self] (password) in
-            self?.enterPincode(for: transaction, withPassword: password)
+            guard let address = EthereumAddress(forWallet.address) else {return}
+            let output = try TransactionOutput(outputNumberInTx: 0, receiverEthereumAddress: address, amount: mergedAmount)
+            let outputs = [output]
+            let transaction = try Transaction(txType: .merge, inputs: inputs, outputs: outputs)
+            checkPassword(forWallet: forWallet) { [weak self] (password) in
+                self?.enterPincode(for: transaction, withPassword: password)
+            }
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 
-    func checkPassword(forWallet: KeyWalletModel, completion: @escaping (String?) -> Void) {
+    func checkPassword(forWallet: WalletModel, completion: @escaping (String?) -> Void) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
                                                     account: "\(forWallet.name)-password",
@@ -240,20 +247,22 @@ class WalletViewController: UIViewController {
             return
         }
         let networkID = CurrentNetwork().getNetworkID()
-        for wallet in wallets {
-            let tokensForWallet = localDatabase?.getAllTokens(for: wallet, forNetwork: networkID)
-            let isSelectedWallet = wallet == keysService?.selectedWallet() ? true : false
-            if let tokens = tokensForWallet {
-
+        do {
+            for wallet in wallets {
+                let tokens = try TokensStorage().getAllTokens(for: wallet, networkId: networkID)
+                let selectedWallet = try keysService.getSelectedWallet()
+                let isSelectedWallet = wallet == selectedWallet ? true : false
                 let expandableTokens = ExpandableTableTokens(isExpanded: isSelectedWallet,
-                        tokens: tokens.map {
-                            TableToken(token: $0,
-                                    inWallet: wallet,
-                                    isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet)
-                        })
+                                                             tokens: tokens.map {
+                                                                TableToken(token: $0,
+                                                                           inWallet: wallet,
+                                                                           isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet)
+                })
                 twoDimensionalTokensArray.append(expandableTokens)
                 completion()
             }
+        } catch let error {
+            print(error)
         }
     }
 
@@ -266,34 +275,31 @@ class WalletViewController: UIViewController {
             let testnet = !mainnet && network.chainID == Networks.Rinkeby.chainID
             if !testnet && !mainnet {return}
             let semaphore = DispatchSemaphore(value: 0)
-            MatterService().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
-                switch result {
-                case .Success(let utxos):
-                    let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,
-                                                               utxos: utxos.map {
-                                                                TableUTXO(utxo: $0,
-                                                                          inWallet: wallet,
-                                                                          isSelected: false)
-                    })
-                    self?.twoDimensionalUTXOsArray.append(expandableUTXOS)
-                case .Error(let error):
-                    print(error.localizedDescription)
-                }
+            do {
+                let utxos = try PlasmaService().getUTXOs(for: ethAddress, onTestnet: testnet)
+                let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,
+                                                           utxos: utxos.map {
+                                                            TableUTXO(utxo: $0,
+                                                                      inWallet: wallet,
+                                                                      isSelected: false)
+                })
+                self.twoDimensionalUTXOsArray.append(expandableUTXOS)
                 if wallet == wallets.last {
-                    self?.reloadDataInTable()
+                    self.reloadDataInTable()
                 }
                 semaphore.signal()
+            } catch let error {
+                print(error.localizedDescription)
             }
             semaphore.wait()
         }
     }
 
     func updateEtherBlockchain() {
-        initDatabase { [weak self] in
-            self?.twoDimensionalTokensArray.removeAll()
-            self?.getTokensListForEtherBlockchain { [weak self] in
-                self?.reloadDataInTable()
-            }
+        initDatabase()
+        self.twoDimensionalTokensArray.removeAll()
+        self.getTokensListForEtherBlockchain { [weak self] in
+            self?.reloadDataInTable()
         }
     }
 
@@ -381,10 +387,13 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let section = button.tag
         let wallet = twoDimensionalTokensArray[section].tokens.first?.inWallet
         let token = twoDimensionalTokensArray[section].tokens.first
-        LocalDatabase().selectWallet(wallet: wallet) {
+        do {
+            try WalletsStorage().selectWallet(wallet: wallet!)
             CurrentToken.currentToken = token?.token
             let searchTokenController = SearchTokenViewController(for: wallet)
             self.navigationController?.pushViewController(searchTokenController, animated: true)
+        } catch let error {
+            print(error)
         }
     }
 
@@ -482,16 +491,12 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         }
         if editingStyle == .delete {
             let networkID = CurrentNetwork().getNetworkID()
-            localDatabase?.deleteToken(
-                token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token,
-                forWallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet,
-                forNetwork: networkID,
-                completion: { [weak self] (error) in
-                if error == nil {
-                    self?.updateTable()
-                }
-            })
+            do {
+                try TokensStorage().deleteToken(token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token, wallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet, networkId: networkID)
+                self.updateTable()
+            } catch {
+                return
+            }
         }
     }
-
 }

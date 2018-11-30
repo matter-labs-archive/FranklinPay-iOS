@@ -16,9 +16,9 @@ class TransactionsHistoryViewController: UIViewController {
     let animationController = AnimationController()
 
     // MARK: - Services
-    let keysService: IKeysService = KeysService()
+    let keysService = WalletsService()
     let transactionsHistoryService = TransactionsHistoryService()
-    let localDatabase = LocalDatabase()
+    let localDatabase = TokensStorage()
 
     // MARK: - Variables
     var transactions = [[ETHTransactionModel]]()
@@ -72,32 +72,24 @@ class TransactionsHistoryViewController: UIViewController {
         animationController.waitAnimation(isEnabled: true,
                                 notificationText: "Downloading transactions",
                                 on: self.view)
-        guard let wallet = keysService.selectedWallet() else {
-            return
-        }
-        guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
-            return
-        }
-        transactionsHistoryService.loadTransactions(forAddress: wallet.address, type: .custom, inNetwork: Int64(networkId)) { (result) in
+        do {
+            let wallet = try keysService.getSelectedWallet()
+            guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
+                return
+            }
+            let result = try transactionsHistoryService.loadTransactions(for: wallet.address, txType: .custom, networkId: Int64(networkId))
             DispatchQueue.main.async { [weak self] in
                 self?.animationController.waitAnimation(isEnabled: false,
-                                              on: (self?.view)!)
+                                                        on: (self?.view)!)
             }
-            switch result {
-            case .Error(let error):
-                showErrorAlert(for: self, error: error, completion: {})
-            case .Success(let transactions):
-                self.localDatabase.saveTransactions(transactions: transactions, forWallet: wallet, completion: { (error) in
-                    if let error = error {
-                        showErrorAlert(for: self, error: error, completion: {})
-                    } else {
-                        guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
-                            return
-                        }
-                        self.prepareTransactionsForView(transactions: self.localDatabase.getAllTransactions(forWallet: wallet, andNetwork: Int64(networkID)))
-                    }
-                })
+            try TransactionsStorage().saveTransactions(transactions: result, for: wallet)
+            guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
+                return
             }
+            let txs = try TransactionsStorage().getAllTransactions(for: wallet, networkId: Int64(networkID))
+            self.prepareTransactionsForView(transactions: txs)
+        } catch let error {
+            Alerts().showErrorAlert(for: self, error: error, completion: {})
         }
     }
 
@@ -108,7 +100,7 @@ class TransactionsHistoryViewController: UIViewController {
         transactions.sort { (first, second) -> Bool in
             return first.date > second.date
         }
-        guard let selectedWallet = keysService.selectedWallet() else {
+        guard let selectedWallet = try? keysService.getSelectedWallet() else {
             return
         }
         switch state {
@@ -180,7 +172,7 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell") as? TransactionCell else {
             return UITableViewCell()
         }
-        guard let wallet = keysService.selectedWallet() else {
+        guard let wallet = try? keysService.getSelectedWallet() else {
             return UITableViewCell()
         }
         cell.longPressDelegate = self

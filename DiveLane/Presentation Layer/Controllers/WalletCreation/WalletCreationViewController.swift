@@ -221,6 +221,7 @@ class WalletCreationViewController: UIViewController {
                 Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {
                     
                 })
+                return
             }
             
             do {
@@ -281,13 +282,13 @@ class WalletCreationViewController: UIViewController {
             }
             try walletsStorage.selectWallet(wallet: wallet)
             if !UserDefaultKeys().isEtherAdded {
-                AppController().addFirstToken(for: wallet!, completion: { (error) in
+                AppController().addFirstToken(for: wallet, completion: { [weak self] (error) in
                     if error == nil {
                         UserDefaultKeys().setEtherAdded()
                         UserDefaults.standard.synchronize()
                         self?.goToApp()
                     } else {
-                        Alerts().showErrorAlert(for: self,
+                        Alerts().showErrorAlert(for: self!,
                                        error: error,
                                        completion: { [weak self] in
                             self?.goToApp()
@@ -325,6 +326,7 @@ class WalletCreationViewController: UIViewController {
                 Alerts().showErrorAlert(for: self!, error: Errors.StorageErrors.cantCreateWallet, completion: {
                     
                 })
+                return
             }
             DispatchQueue.main.async {
                 self?.animation.waitAnimation(isEnabled: false,

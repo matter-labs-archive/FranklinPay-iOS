@@ -66,7 +66,10 @@ class ContactsViewController: UIViewController {
     }
 
     func getAllContacts() {
-        let contacts = ContactsDatabase().getAllContacts()
+        guard let contacts = try? ContactsStorage().getAllContacts() else {
+            updateContactsList(with: [])
+            return
+        }
         updateContactsList(with: contacts)
     }
 
@@ -130,17 +133,21 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard let contact = contactsList?[indexPath.row] else {return}
         if editingStyle == .delete {
-            ContactsDatabase().deleteContact(contact: contact) { [weak self] (_) in
-                let searchText = self?.searchController.searchBar.text ?? ""
+            do {
+                try ContactsStorage().deleteContact(contact: contact)
+                let searchText = self.searchController.searchBar.text ?? ""
                 if searchText != "" {
-                    self?.searchContact(string: searchText)
+                    self.searchContact(string: searchText)
                 } else {
-                    self?.getAllContacts()
+                    self.getAllContacts()
+                }
+            } catch let error{
+                Alerts().showErrorAlert(for: self, error: error) {
+                    
                 }
             }
         }
     }
-
 }
 
 extension ContactsViewController: UISearchControllerDelegate {
@@ -152,14 +159,11 @@ extension ContactsViewController: UISearchControllerDelegate {
 extension ContactsViewController: UISearchBarDelegate {
 
     func searchContact(string: String) {
-
-        ContactsService().getFullContactsList(for: string, completion: { [weak self] (result) in
-            if let list = result {
-                self?.updateContactsList(with: list)
-            } else {
-                self?.emptyContactsList()
-            }
-        })
+        guard let list = try? ContactsService().getFullContactsList(for: string) else {
+            self.emptyContactsList()
+            return
+        }
+        self.updateContactsList(with: list)
     }
 
     func makeHelpLabel(enabled: Bool) {

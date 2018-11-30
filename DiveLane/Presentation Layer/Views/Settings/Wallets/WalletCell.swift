@@ -14,19 +14,18 @@ class WalletCell: UITableViewCell {
     @IBOutlet weak var walletBalance: UILabel!
     @IBOutlet weak var walletAddress: UILabel!
 
-    var wallet: KeyWalletModel?
-    let web3SwiftService: IWeb3SwiftService = Web3SwiftService()
+    var wallet: WalletModel?
+    let web3SwiftService = Web3Service()
 
-    func configureCell(model: KeyWalletModel) {
+    func configureCell(model: WalletModel) {
         wallet = model
         walletName.text = "Wallet " + model.name
         walletAddress.text = "Address: " + model.address.hideExtraSymbolsInAddress()
-        web3SwiftService.getETHbalance(forAddress: model.address) { (balance, error) in
-            if let error = error {
-                print(error)
-            } else {
-                self.walletBalance.text = (balance ?? "0") + " ETH"
-            }
+        do {
+            let balance = try web3SwiftService.getETHbalance(for: model)
+            self.walletBalance.text = balance + " ETH"
+        } catch let error {
+            self.walletBalance.text = error.localizedDescription
         }
     }
 

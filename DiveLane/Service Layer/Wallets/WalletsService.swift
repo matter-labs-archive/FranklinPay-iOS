@@ -27,7 +27,7 @@ protocol IWalletsService {
     func generateMnemonics(bitsOfEntropy: Int) throws -> String
 }
 
-class WalletsService: IWalletsService {
+public class WalletsService: IWalletsService {
     let walletsStorage = WalletsStorage()
     
     public func getSelectedWallet() throws -> WalletModel {
@@ -40,7 +40,7 @@ class WalletsService: IWalletsService {
     public func getKey() throws -> HDKey {
         guard let wallet = try? self.getSelectedWallet(),
             !wallet.address.isEmpty else {
-            throw StorageErrors.noSelectedWallet
+            throw Errors.StorageErrors.noSelectedWallet
         }
         return HDKey(name: wallet.name,
                      address: wallet.address)
@@ -119,7 +119,7 @@ class WalletsService: IWalletsService {
         return walletModel
     }
     
-    func createHDWallet(name: String?,
+    public func createHDWallet(name: String?,
                         password: String,
                         mnemonics: String) throws -> WalletModel {
         guard let keystore = try? BIP32Keystore(mnemonics: mnemonics,

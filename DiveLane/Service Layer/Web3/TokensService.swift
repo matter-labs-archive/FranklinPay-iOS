@@ -20,7 +20,7 @@ protocol ITokensService {
     func updateConversion(for token: ERC20TokenModel) throws -> Double
 }
 
-class TokensService {
+public class TokensService {
 
     let web3service = Web3Service()
     let ratesService = RatesService.service
@@ -32,23 +32,23 @@ class TokensService {
     private func getFullTokensList(for searchString: String) -> Promise<[ERC20TokenModel]> {
         let returnPromise = Promise<[ERC20TokenModel]> { (seal) in
             var tokensList: [ERC20TokenModel] = []
-            guard let tokens = try? TokensStorage().getTokensList(for: searchString) else {
-                seal.reject(Errors.StorageErrors.noSuchTokenInStorage)
-            }
-            if !tokens.isEmpty {
-                for token in tokens {
-                    let tokenModel = ERC20TokenModel(name: token.name,
-                                                     address: token.address,
-                                                     decimals: token.decimals,
-                                                     symbol: token.symbol)
-                    tokensList.append(tokenModel)
+            do {
+                let tokens = try TokensStorage().getTokensList(for: searchString)
+                if !tokens.isEmpty {
+                    for token in tokens {
+                        let tokenModel = ERC20TokenModel(name: token.name,
+                                                         address: token.address,
+                                                         decimals: token.decimals,
+                                                         symbol: token.symbol)
+                        tokensList.append(tokenModel)
+                    }
+                    seal.fulfill(tokensList)
+                } else {
+                    let token = try self.getTokenFromNet(with: searchString)
+                    seal.fulfill([token])
                 }
-                seal.fulfill(tokensList)
-            } else {
-                guard let token = try? self.getTokenFromNet(with: searchString) else {
-                    seal.reject(Web3Error.processingError(desc: "No token from net"))
-                }
-                seal.fulfill([token])
+            } catch let error {
+                seal.reject(error)
             }
         }
         return returnPromise
@@ -124,26 +124,30 @@ class TokensService {
                                symbol: symbol)
     }
     
-    private func downloadAllAvailableTokensIfNeeded() throws {
+    public func downloadAllAvailableTokensIfNeeded() throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
         guard let url = URL(string: URLs.downloadTokensList) else {
             error = Errors.NetworkErrors.wrongURL
             group.leave()
+            return
         }
         Alamofire.request(url).responseJSON { response in
             if let e = response.result.error {
                 error = e
                 group.leave()
+                return
             }
             guard response.data != nil else {
                 error = Errors.NetworkErrors.noData
                 group.leave()
+                return
             }
             guard let value = response.result.value as? [[String: Any]] else {
                 error = Errors.NetworkErrors.wrongJSON
                 group.leave()
+                return
             }
             let dictsCount = value.count
             var counter = 0

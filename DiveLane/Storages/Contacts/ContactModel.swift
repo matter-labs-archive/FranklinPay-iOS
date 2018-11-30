@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ContactModel {
+public struct ContactModel {
     let address: String
     let name: String
 
@@ -20,7 +20,7 @@ struct ContactModel {
 }
 
 extension ContactModel: Equatable {
-    static func ==(lhs: ContactModel, rhs: ContactModel) -> Bool {
+    public static func ==(lhs: ContactModel, rhs: ContactModel) -> Bool {
         return lhs.address == rhs.address
     }
 }
