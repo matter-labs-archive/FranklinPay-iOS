@@ -16,22 +16,11 @@ protocol ITransactionsStorage {
 
 public class TransactionsStorage: ITransactionsStorage {
     
-    lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
-    private lazy var mainContext = self.container.viewContext
-    
-    init() {
-        container.loadPersistentStores { (_, error) in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
-    }
-    
     public func saveTransactions(transactions: [ETHTransactionModel], for wallet: WalletModel) throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        container.performBackgroundTask { (context) in
+        ContainerCD.container.performBackgroundTask { (context) in
             do {
                 for transaction in transactions {
                     let fr: NSFetchRequest<ETHTransaction> = ETHTransaction.fetchRequest()
@@ -119,7 +108,7 @@ public class TransactionsStorage: ITransactionsStorage {
     
     public func getAllTransactions(for wallet: WalletModel, networkId: Int64) throws -> [ETHTransactionModel] {
         do {
-            guard let result = try mainContext.fetch(self.fetchWalletRequest(with: wallet.address)).first else {
+            guard let result = try ContainerCD.mainContext!.fetch(self.fetchWalletRequest(with: wallet.address)).first else {
                 throw Errors.StorageErrors.cantGetTransaction
             }
             guard var transactions = result.transactions?.allObjects as? [ETHTransaction] else {

@@ -17,7 +17,10 @@ public struct UserDefaultKeys {
     public var currentWeb = UserDefaults.standard.object(forKey: "currentWeb")
 
     public func setEtherAdded() {
-        UserDefaults.standard.set(true, forKey: "etherAddedForWallet\((try? WalletsService().getSelectedWallet().address) ?? "")")
+        guard let address = try? WalletsService().getSelectedWallet().address else {
+            return
+        }
+        UserDefaults.standard.set(true, forKey: "etherAddedForWallet\(address)")
     }
 
     public func setTokensDownloaded() {

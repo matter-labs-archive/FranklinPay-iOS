@@ -101,15 +101,20 @@ class AppController {
         var startViewController: UIViewController?
 
         let isOnboardingPassed = UserDefaultKeys().isOnboardingPassed
-        guard (try? localDatabase.getSelectedWallet()) != nil else {
-            startViewController = addWallet()
-            startViewController?.view.backgroundColor = UIColor.white
-            return
+        let wallet: WalletModel?
+        do {
+            let w = try localDatabase.getSelectedWallet()
+            wallet = w
+        } catch {
+            wallet = nil
         }
 
         if !isOnboardingPassed {
             startViewController = OnboardingViewController()
             startViewController?.view.backgroundColor = Colors.BackgroundColors.main
+        } else if wallet == nil {
+            startViewController = addWallet()
+            startViewController?.view.backgroundColor = UIColor.white
         } else {
             DispatchQueue.global().async {
                 if !UserDefaultKeys().tokensDownloaded {
@@ -187,11 +192,8 @@ class AppController {
             if Int64(networkID) == currentNetworkID {
                 CurrentToken.currentToken = etherToken
             }
-            if networkID == 42 {
-                completion(Errors.CommonErrors.unknown)
-            }
-            completion(nil)
         }
+        completion(nil)
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {

@@ -9,7 +9,6 @@
 import Foundation
 import Web3swift
 import BigInt
-import Alamofire
 import PromiseKit
 private typealias PromiseResult = PromiseKit.Result
 
@@ -85,32 +84,38 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                 seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
-            Alamofire.request(url, method: .get).responseJSON { response in
-                if let error = response.result.error {
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+                if let error = error {
                     seal.reject(error)
-                    return
                 }
-                
-                guard response.data != nil else {
+                guard let data = data else {
                     seal.reject(Errors.NetworkErrors.noData)
                     return
                 }
-                
-                guard let value = response.result.value as? [String: Any],
-                    let results = value["result"] as? [[String: Any]] else {
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
                         seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
-                }
-                do {
-                    let transaction = try self.buildTXlist(from: results,
-                                                       txType: txType,
-                                                       networkId: networkId)
-                    seal.fulfill(transaction)
-                } catch let error {
-                    seal.reject(error)
-                    return
+                    }
+                    guard let results = json["result"] as? [[String: Any]] else {
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
+                        return
+                    }
+                    do {
+                        let transaction = try self.buildTXlist(from: results,
+                                                               txType: txType,
+                                                               networkId: networkId)
+                        seal.fulfill(transaction)
+                    } catch let err {
+                        seal.reject(err)
+                    }
+                } catch let err{
+                    seal.reject(err)
                 }
             }
+            dataTask.resume()
         }
         return returnPromise
     }

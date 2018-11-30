@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 import PromiseKit
 private typealias PromiseResult = PromiseKit.Result
 
@@ -30,24 +29,30 @@ public class RatesService: IRatesService {
                 seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
-            Alamofire.request(url)
-                .responseJSON { response in
-                    if let error = response.result.error {
+            let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+                
+                if let data = data {
+                    do {
+                        // Convert the data to JSON
+                        let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+                        
+                        if let json = jsonSerialized {
+                            
+                            if let conversionRate = json["USD"] as? Double {
+                                self.conversionRates[tokenName] = conversionRate
+                                seal.fulfill(conversionRate)
+                            } else {
+                                seal.reject(Errors.NetworkErrors.wrongJSON)
+                            }
+                        }
+                    } catch let error as NSError {
                         seal.reject(error)
-                        return
                     }
-                    guard response.data != nil else {
-                        seal.reject(Errors.NetworkErrors.noData)
-                        return
-                    }
-                    guard let value = response.result.value as? [String: Any],
-                        let conversionRate = value["USD"] as? Double else {
-                            seal.reject(Errors.NetworkErrors.wrongJSON)
-                            return
-                    }
-                    self.conversionRates[tokenName] = conversionRate
-                    seal.fulfill(conversionRate)
+                } else if let error = error {
+                    seal.reject(error)
+                }
             }
+            task.resume()
         }
         return promiseResult
     }

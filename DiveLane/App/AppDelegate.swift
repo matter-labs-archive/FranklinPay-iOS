@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         Fabric.with([Crashlytics.self])
+        
+        ContainerCD.init()
 
         window = UIWindow(frame: UIScreen.main.bounds)
 
@@ -32,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        ContainerCD.init()
         controller = AppController(window: window!, launchOptions: nil, url: url)
         return true
     }

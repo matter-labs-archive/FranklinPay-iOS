@@ -19,22 +19,12 @@ protocol IWalletsStorage {
 }
 
 public class WalletsStorage {
-    lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
-    private lazy var mainContext = self.container.viewContext
-    
-    init() {
-        container.loadPersistentStores { (_, error) in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
-    }
     
     public func getSelectedWallet() throws -> WalletModel {
         let requestWallet: NSFetchRequest<Wallet> = Wallet.fetchRequest()
         requestWallet.predicate = NSPredicate(format: "isSelected = %@", NSNumber(value: true))
         do {
-            let results = try mainContext.fetch(requestWallet)
+            let results = try ContainerCD.mainContext!.fetch(requestWallet)
             guard let result = results.first else {
                 throw Errors.StorageErrors.noSelectedWallet
             }
@@ -48,7 +38,7 @@ public class WalletsStorage {
     public func getAllWallets() throws -> [WalletModel] {
         let requestWallet: NSFetchRequest<Wallet> = Wallet.fetchRequest()
         do {
-            let results = try mainContext.fetch(requestWallet)
+            let results = try ContainerCD.mainContext!.fetch(requestWallet)
             return results.map {
                 return WalletModel.fromCoreData(crModel: $0)
             }
@@ -61,7 +51,7 @@ public class WalletsStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        container.performBackgroundTask { (context) in
+        ContainerCD.container.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Wallet", into: context) as? Wallet else {
                 error = Errors.StorageErrors.cantCreateWallet
                 group.leave()
@@ -92,14 +82,14 @@ public class WalletsStorage {
         let requestWallet: NSFetchRequest<Wallet> = Wallet.fetchRequest()
         requestWallet.predicate = NSPredicate(format: "address = %@", wallet.address)
         do {
-            let results = try mainContext.fetch(requestWallet)
+            let results = try ContainerCD.mainContext!.fetch(requestWallet)
             guard let wallet = results.first else {
                 error = Errors.StorageErrors.noSuchWalletInStorage
                 group.leave()
                 return
             }
-            mainContext.delete(wallet)
-            try mainContext.save()
+            ContainerCD.mainContext!.delete(wallet)
+            try ContainerCD.mainContext!.save()
             group.leave()
         } catch let someErr{
             error = someErr
@@ -117,12 +107,12 @@ public class WalletsStorage {
         var error: Error?
         let requestWallet: NSFetchRequest<Wallet> = Wallet.fetchRequest()
         do {
-            let results = try mainContext.fetch(requestWallet)
+            let results = try ContainerCD.mainContext!.fetch(requestWallet)
             for item in results {
                 let isEqual = item.address == wallet.address
                 item.isSelected = isEqual
             }
-            try mainContext.save()
+            try ContainerCD.mainContext!.save()
             group.leave()
         } catch let someErr {
             error = someErr

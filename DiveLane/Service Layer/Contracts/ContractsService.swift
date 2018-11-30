@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import PromiseKit
 private typealias PromiseResult = PromiseKit.Result
 
@@ -28,28 +27,32 @@ public class ContractsService: IContractsService {
                 seal.reject(Errors.NetworkErrors.wrongURL)
                 return
             }
-            Alamofire.request(url, method: .get).responseJSON { response in
-                if let error = response.result.error {
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+                if let error = error {
                     seal.reject(error)
-                    return
                 }
-                
-                guard response.data != nil else {
+                if let data = data {
+                    do {
+                        guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: String] else {
+                            seal.reject(Errors.NetworkErrors.wrongJSON)
+                            return
+                        }
+                        if let message = json["message"], message == "OK", let abi = json["result"] {
+                            seal.fulfill(abi)
+                        } else {
+                            seal.reject(Errors.NetworkErrors.noSuchAPIOnTheEtherscan)
+                        }
+                    } catch let err {
+                        seal.reject(err)
+                    }
+                } else {
                     seal.reject(Errors.NetworkErrors.noData)
-                    return
                 }
                 
-                guard let value = response.result.value as? [String: String] else {
-                    seal.reject(Errors.NetworkErrors.wrongJSON)
-                    return
-                }
-                
-                guard let message = value["message"], message == "OK", let abi = value["result"] else {
-                    seal.reject(Errors.NetworkErrors.noSuchAPIOnTheEtherscan)
-                    return
-                }
-                seal.fulfill(abi)
             }
+            dataTask.resume()
         }
         return returnPromise
     }

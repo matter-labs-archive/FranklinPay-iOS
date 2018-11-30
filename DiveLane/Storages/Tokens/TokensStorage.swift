@@ -21,22 +21,11 @@ protocol ITokensStorage {
 
 public class TokensStorage: ITokensStorage {
     
-    lazy var container: NSPersistentContainer = NSPersistentContainer(name: "CoreDataModel")
-    private lazy var mainContext = self.container.viewContext
-    
-    init() {
-        container.loadPersistentStores { (_, error) in
-            if let error = error {
-                fatalError("Failed to load store: \(error)")
-            }
-        }
-    }
-    
     public func saveCustomToken(from dict: [String: Any]) throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        container.performBackgroundTask { (context) in
+        ContainerCD.container.performBackgroundTask { (context) in
             do {
                 let token: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
                 guard let address = dict["address"] as? String else {
@@ -50,7 +39,7 @@ public class TokensStorage: ITokensStorage {
                     group.leave()
                     return
                 }
-                if let entity = try self.mainContext.fetch(token).first {
+                if let entity = try ContainerCD.mainContext!.fetch(token).first {
                     newToken = entity
                 }
                 
@@ -81,7 +70,7 @@ public class TokensStorage: ITokensStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        container.performBackgroundTask { (context) in
+        ContainerCD.container.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token",
                                                                    into: context) as? ERC20Token else {
                 error = Errors.StorageErrors.cantCreateToken
@@ -117,7 +106,7 @@ public class TokensStorage: ITokensStorage {
                                                   NSNumber(value: networkId),
                                                   NSNumber(value: true)
             )
-            let results = try mainContext.fetch(requestTokens)
+            let results = try ContainerCD.mainContext!.fetch(requestTokens)
             let tokens = results.filter {
                 $0.walletAddress == wallet.address
             }
@@ -133,7 +122,7 @@ public class TokensStorage: ITokensStorage {
         let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         requestToken.predicate = NSPredicate(format: "address = %@", token.address)
         do {
-            let results = try mainContext.fetch(requestToken)
+            let results = try ContainerCD.mainContext!.fetch(requestToken)
             let mappedRes = results.map {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }.first
@@ -155,7 +144,7 @@ public class TokensStorage: ITokensStorage {
                                              searchingString,
                                              searchingString)
         do {
-            let results = try mainContext.fetch(requestToken)
+            let results = try ContainerCD.mainContext!.fetch(requestToken)
             return results.map {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }
@@ -173,7 +162,7 @@ public class TokensStorage: ITokensStorage {
         let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         requestToken.predicate = NSPredicate(format: "walletAddress = %@", wallet.address)
         do {
-            let results = try mainContext.fetch(requestToken)
+            let results = try ContainerCD.mainContext!.fetch(requestToken)
             let tokens = results.filter {
                 $0.address == token.address
             }
@@ -185,8 +174,8 @@ public class TokensStorage: ITokensStorage {
                 group.leave()
                 return
             }
-            mainContext.delete(token)
-            try mainContext.save()
+            ContainerCD.mainContext!.delete(token)
+            try ContainerCD.mainContext!.save()
             group.leave()
         } catch let someErr {
             error = someErr

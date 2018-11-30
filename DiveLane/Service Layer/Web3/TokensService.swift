@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Alamofire
 import BigInt
 import PromiseKit
 import EthereumAddress
@@ -127,45 +126,38 @@ public class TokensService {
     public func downloadAllAvailableTokensIfNeeded() throws {
         let group = DispatchGroup()
         group.enter()
-        var error: Error?
+        var err: Error?
         guard let url = URL(string: URLs.downloadTokensList) else {
-            error = Errors.NetworkErrors.wrongURL
+            err = Errors.NetworkErrors.wrongURL
             group.leave()
             return
         }
-        Alamofire.request(url).responseJSON { response in
-            if let e = response.result.error {
-                error = e
-                group.leave()
-                return
-            }
-            guard response.data != nil else {
-                error = Errors.NetworkErrors.noData
-                group.leave()
-                return
-            }
-            guard let value = response.result.value as? [[String: Any]] else {
-                error = Errors.NetworkErrors.wrongJSON
-                group.leave()
-                return
-            }
-            let dictsCount = value.count
-            var counter = 0
-            value.forEach({ (dict) in
-                counter += 1
+        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+            if let data = data {
                 do {
-                    try TokensStorage().saveCustomToken(from: dict)
-                    if counter == dictsCount {
-                        group.leave()
+                    if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {
+                        let dictsCount = jsonSerialized.count
+                        var counter = 0
+                        try jsonSerialized.forEach({ (dict) in
+                            counter += 1
+                            try TokensStorage().saveCustomToken(from: dict)
+                            if counter == dictsCount {
+                                group.leave()
+                            }
+                        })
                     }
-                } catch let e {
-                    error = e
+                } catch let someErr {
+                    err = someErr
                     group.leave()
                 }
-            })
+            } else {
+                err = Errors.NetworkErrors.noData
+                group.leave()
+            }
         }
+        task.resume()
         group.wait()
-        if let resErr = error {
+        if let resErr = err {
             throw resErr
         }
     }
