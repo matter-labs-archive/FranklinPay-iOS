@@ -29,5 +29,3 @@ extension Errors {
         case cantGetTransaction
     }
 }
-
-

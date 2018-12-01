@@ -193,7 +193,7 @@ public class Web3Service: IWeb3Service {
             let txOptions = options ?? transaction.transactionOptions
             let result = try transaction.send(password: password, transactionOptions: txOptions)
             return result
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
@@ -204,7 +204,7 @@ public class Web3Service: IWeb3Service {
             let txOptions = options ?? transaction.transactionOptions
             let result = try transaction.call(transactionOptions: txOptions)
             return result
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
@@ -220,7 +220,7 @@ public class Web3Service: IWeb3Service {
                 throw Web3Error.dataError
             }
             return balanceString
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
@@ -265,4 +265,3 @@ public class Web3Service: IWeb3Service {
             return (transaction: transaction, options: options)
     }
 }
-

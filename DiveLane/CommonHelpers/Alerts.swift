@@ -44,4 +44,3 @@ public struct Alerts {
         viewController.present(alert, animated: true, completion: nil)
     }
 }
-

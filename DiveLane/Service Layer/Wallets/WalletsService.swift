@@ -120,8 +120,8 @@ public class WalletsService: IWalletsService {
     }
     
     public func createHDWallet(name: String?,
-                        password: String,
-                        mnemonics: String) throws -> WalletModel {
+                               password: String,
+                               mnemonics: String) throws -> WalletModel {
         guard let keystore = try? BIP32Keystore(mnemonics: mnemonics,
                                                 password: password,
                                                 mnemonicsPassword: "",
@@ -134,7 +134,7 @@ public class WalletsService: IWalletsService {
         guard let keyData = try? JSONEncoder().encode(wallet.keystoreParams) else {
             throw Errors.StorageErrors.cantCreateWallet
         }
-        let walletModel = WalletModel(address: address, data: keyData, name: name ?? "", isHD: false)
+        let walletModel = WalletModel(address: address, data: keyData, name: name ?? "", isHD: true)
         return walletModel
     }
     
@@ -148,7 +148,7 @@ public class WalletsService: IWalletsService {
             }
             let pkData = try manager.UNSAFE_getPrivateKeyData(password: password, account: ethereumAddress)
             return pkData.toHexString()
-        } catch let error{
+        } catch let error {
             throw error
         }
     }

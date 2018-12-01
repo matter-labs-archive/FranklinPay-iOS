@@ -168,7 +168,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     })
                 }
             }
-        } catch let error{
+        } catch let error {
             fatalError("Error saving wallet - \(String(describing: error))")
         }
     }

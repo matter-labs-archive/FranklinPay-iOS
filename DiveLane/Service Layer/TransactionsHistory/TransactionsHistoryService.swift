@@ -111,7 +111,7 @@ public class TransactionsHistoryService: ITransactionsHistoryService {
                     } catch let err {
                         seal.reject(err)
                     }
-                } catch let err{
+                } catch let err {
                     seal.reject(err)
                 }
             }

@@ -143,7 +143,7 @@ class EnterPincodeViewController: PincodeViewController {
 
     func send(with data: (transaction: WriteTransaction, options: TransactionOptions)) {
         do {
-            let _ = try transactionService.sendTx(transaction: data.transaction, options: data.options, password: password!)
+            _ = try transactionService.sendTx(transaction: data.transaction, options: data.options, password: password!)
             DispatchQueue.main.async { [weak self] in
                 self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
             }

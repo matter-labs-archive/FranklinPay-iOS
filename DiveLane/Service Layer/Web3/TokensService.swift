@@ -132,7 +132,7 @@ public class TokensService {
             group.leave()
             return
         }
-        let task = URLSession.shared.dataTask(with: url) { (data, _, error) in
+        let task = URLSession.shared.dataTask(with: url) { (data, _, _) in
             if let data = data {
                 do {
                     if let jsonSerialized = try JSONSerialization.jsonObject(with: data, options: []) as? [[String: Any]] {

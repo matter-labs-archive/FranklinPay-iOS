@@ -57,7 +57,7 @@ public class RatesService: IRatesService {
         return promiseResult
     }
 
-    public func updateConversionRate(for tokenName: String) throws -> Double  {
+    public func updateConversionRate(for tokenName: String) throws -> Double {
         return try self.updateConversionRatePromise(for: tokenName).wait()
     }
 

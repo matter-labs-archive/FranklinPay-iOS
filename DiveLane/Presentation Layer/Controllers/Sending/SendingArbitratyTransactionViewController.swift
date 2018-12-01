@@ -109,7 +109,7 @@ class SendArbitraryTransactionViewController: UIViewController {
         guard (contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) != nil else {
             return
         }
-        if let _ = try? Web3Service().sendTx(transaction: transactionInfo.writeTransaction, password: password) {
+        if let _ = try? Web3Service().sendTx(transaction: transactionInfo.writeTransaction, password: password) != nil {
             Alerts().showSuccessAlert(for: self, completion: {
                 let c = self.goToApp()
                 c.view.backgroundColor = UIColor.white

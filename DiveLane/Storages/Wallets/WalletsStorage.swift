@@ -64,7 +64,7 @@ public class WalletsStorage {
             do {
                 try context.save()
                 group.leave()
-            } catch let someErr{
+            } catch let someErr {
                 error = someErr
                 group.leave()
             }
@@ -91,7 +91,7 @@ public class WalletsStorage {
             ContainerCD.mainContext!.delete(wallet)
             try ContainerCD.mainContext!.save()
             group.leave()
-        } catch let someErr{
+        } catch let someErr {
             error = someErr
             group.leave()
         }

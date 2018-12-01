@@ -141,7 +141,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
                 } else {
                     self.getAllContacts()
                 }
-            } catch let error{
+            } catch let error {
                 Alerts().showErrorAlert(for: self, error: error) {
                     
                 }

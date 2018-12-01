@@ -74,7 +74,7 @@ class MnemonicsViewController: UIViewController {
             } else {
                 self.goToApp()
             }
-        } catch let error{
+        } catch let error {
             Alerts().showErrorAlert(for: self, error: error, completion: { [weak self] in
                 self?.goToApp()
             })

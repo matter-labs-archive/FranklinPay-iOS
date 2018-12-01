@@ -30,7 +30,7 @@ public class ContactsStorage: IContactsStorage {
                 throw Errors.StorageErrors.cantGetContact
             }
             return ContactModel.fromCoreData(crModel: result)
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
@@ -42,7 +42,7 @@ public class ContactsStorage: IContactsStorage {
             return results.map {
                 return ContactModel.fromCoreData(crModel: $0)
             }
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
@@ -91,7 +91,7 @@ public class ContactsStorage: IContactsStorage {
             ContainerCD.mainContext!.delete(wallet)
             try ContainerCD.mainContext!.save()
             group.leave()
-        } catch let someErr{
+        } catch let someErr {
             error = someErr
             group.leave()
         }

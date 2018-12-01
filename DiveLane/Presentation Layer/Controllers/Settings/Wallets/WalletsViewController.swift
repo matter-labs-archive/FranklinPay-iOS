@@ -117,9 +117,9 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
             do {
-                let _ = try WalletsService().getPrivateKey(for: wallet, password: passwordText)
+                _ = try WalletsService().getPrivateKey(for: wallet, password: passwordText)
                 self.showPK(for: wallet, withPassword: passwordText)
-            } catch let error{
+            } catch let error {
                 Alerts().showErrorAlert(for: self, error: error, completion: {
                     
                 })

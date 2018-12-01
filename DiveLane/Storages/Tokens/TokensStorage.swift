@@ -18,7 +18,6 @@ protocol ITokensStorage {
     func deleteToken(token: ERC20TokenModel, wallet: WalletModel, networkId: Int64) throws
 }
 
-
 public class TokensStorage: ITokensStorage {
     
     public func saveCustomToken(from dict: [String: Any]) throws {
@@ -148,7 +147,7 @@ public class TokensStorage: ITokensStorage {
             return results.map {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }
-        } catch let error{
+        } catch let error {
             throw error
         }
     }
