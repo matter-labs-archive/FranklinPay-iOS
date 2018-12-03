@@ -81,6 +81,10 @@
 		91E7255C214FEDE3003FAD76 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */; };
 		91E7256221506700003FAD76 /* TokensService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7256121506700003FAD76 /* TokensService.swift */; };
 		91E7256421507D16003FAD76 /* FiatService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7256321507D16003FAD76 /* FiatService.swift */; };
+		91F6E94021B5339F0022CF61 /* BrowserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91F6E93E21B5339F0022CF61 /* BrowserController.swift */; };
+		91F6E94121B5339F0022CF61 /* BrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E93F21B5339F0022CF61 /* BrowserController.xib */; };
+		91F6E94521B534D20022CF61 /* Web3Swift.js in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E94321B534D10022CF61 /* Web3Swift.js */; };
+		91F6E94621B534D20022CF61 /* Web3Swift.min.js in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E94421B534D20022CF61 /* Web3Swift.min.js */; };
 		B209141D214464EF00C8B408 /* SendArbitraryTransactionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */; };
 		B209141E214464EF00C8B408 /* ParameterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209141C214464EF00C8B408 /* ParameterCell.xib */; };
 		B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20914FC214A564500C8B408 /* WalletsViewController.swift */; };
@@ -240,6 +244,10 @@
 		91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddressTableViewCell.xib; sourceTree = "<group>"; };
 		91E7256121506700003FAD76 /* TokensService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokensService.swift; sourceTree = "<group>"; };
 		91E7256321507D16003FAD76 /* FiatService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiatService.swift; sourceTree = "<group>"; };
+		91F6E93E21B5339F0022CF61 /* BrowserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserController.swift; sourceTree = "<group>"; };
+		91F6E93F21B5339F0022CF61 /* BrowserController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BrowserController.xib; sourceTree = "<group>"; };
+		91F6E94321B534D10022CF61 /* Web3Swift.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Web3Swift.js; sourceTree = "<group>"; };
+		91F6E94421B534D20022CF61 /* Web3Swift.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Web3Swift.min.js; sourceTree = "<group>"; };
 		A6659B35DCF78FECEB3507C0 /* Pods_DiveLane.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiveLane.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B209141B214464EF00C8B408 /* SendArbitraryTransactionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SendArbitraryTransactionViewController.xib; sourceTree = "<group>"; };
 		B209141C214464EF00C8B408 /* ParameterCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ParameterCell.xib; sourceTree = "<group>"; };
@@ -657,6 +665,7 @@
 		91B6A7D72143B26D0033A045 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				91F6E94221B533A70022CF61 /* Browser */,
 				E2B45A5B2176374B00F38E50 /* AddContact */,
 				E2B45A4821761F1D00F38E50 /* Contacts */,
 				E2B45A332174D21100F38E50 /* Animations */,
@@ -681,6 +690,7 @@
 		91B6A7D82143B2940033A045 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				91F6E93D21B5333A0022CF61 /* Browser */,
 				E2B45A622176379A00F38E50 /* AddContact */,
 				E2B45A4721761F0400F38E50 /* Contacts */,
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
@@ -837,6 +847,24 @@
 				91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */,
 			);
 			path = AddressCell;
+			sourceTree = "<group>";
+		};
+		91F6E93D21B5333A0022CF61 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				91F6E93E21B5339F0022CF61 /* BrowserController.swift */,
+			);
+			path = Browser;
+			sourceTree = "<group>";
+		};
+		91F6E94221B533A70022CF61 /* Browser */ = {
+			isa = PBXGroup;
+			children = (
+				91F6E94321B534D10022CF61 /* Web3Swift.js */,
+				91F6E94421B534D20022CF61 /* Web3Swift.min.js */,
+				91F6E93F21B5339F0022CF61 /* BrowserController.xib */,
+			);
+			path = Browser;
 			sourceTree = "<group>";
 		};
 		B2091500214A5A4D00C8B408 /* Wallets */ = {
@@ -1202,6 +1230,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				91F6E94521B534D20022CF61 /* Web3Swift.js in Resources */,
 				9197F2E62143B65600C358AA /* WalletCreationViewController.xib in Resources */,
 				9197F3092143C39C00C358AA /* SendSettingsViewController.xib in Resources */,
 				E2B45A612176379100F38E50 /* AddContactController.xib in Resources */,
@@ -1224,10 +1253,12 @@
 				91B6A7A121435F5E0033A045 /* LaunchScreen.storyboard in Resources */,
 				9197F3302144213000C358AA /* NetworksViewController.xib in Resources */,
 				9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */,
+				91F6E94621B534D20022CF61 /* Web3Swift.min.js in Resources */,
 				E2B45A4C21761F4000F38E50 /* ContactsViewController.xib in Resources */,
 				B271CF97214BAD730023FC18 /* TransactionsHistoryViewController.xib in Resources */,
 				B2E668DC2150FF0500C3CC2D /* TokenCellDropdown.xib in Resources */,
 				E2B45A3B2174D27E00F38E50 /* TokenInfoViewController.xib in Resources */,
+				91F6E94121B5339F0022CF61 /* BrowserController.xib in Resources */,
 				91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */,
 				E2B45A50217620D500F38E50 /* ContactCell.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
@@ -1287,6 +1318,7 @@
 				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
 				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
+				"${BUILT_PRODUCTS_DIR}/WKBridge/WKBridge.framework",
 				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
 				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
 				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
@@ -1305,6 +1337,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WKBridge.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
@@ -1418,6 +1451,7 @@
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
 				91D0373B21AEB564009BD01C /* ABIs.swift in Sources */,
 				914F22982149BF2400ED58E6 /* EnterPincodeViewController.swift in Sources */,
+				91F6E94021B5339F0022CF61 /* BrowserController.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				91B6A7CE214370F00033A045 /* URLs.swift in Sources */,

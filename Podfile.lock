@@ -39,6 +39,7 @@ PODS:
     - scrypt (~> 2.0)
     - secp256k1_swift (~> 1.0.3)
     - SwiftRLP (~> 1.1)
+  - WKBridge (0.2.4)
 
 DEPENDENCIES:
   - Alamofire
@@ -46,6 +47,7 @@ DEPENDENCIES:
   - Fabric
   - PlasmaSwiftLib
   - QRCodeReader.swift
+  - WKBridge
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -64,6 +66,7 @@ SPEC REPOS:
     - SipHash
     - SwiftRLP
     - web3swift
+    - WKBridge
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -81,7 +84,8 @@ SPEC CHECKSUMS:
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
   SwiftRLP: 98a02b2210128353ca02e4c2f4d83e2a9796db4f
   web3swift: aeb3d08ded961e0562919d4161f5af6ccb0ab30f
+  WKBridge: 677fc36b9a9e4a80b6f9c4e915480d8fd91f5ad5
 
-PODFILE CHECKSUM: 2ab1d86aca2d89029a8adbdda0becac1ccb9e37a
+PODFILE CHECKSUM: a8c381a0b47790b9f9bc9b5d82a9e802c3c3357d
 
 COCOAPODS: 1.5.3

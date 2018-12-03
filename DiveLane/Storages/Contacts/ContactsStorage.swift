@@ -25,7 +25,7 @@ public class ContactsStorage: IContactsStorage {
         let requestContact: NSFetchRequest<Contact> = Contact.fetchRequest()
         requestContact.predicate = NSPredicate(format: "address = %@", address)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestContact)
+            let results = try ContainerCD.context.fetch(requestContact)
             guard let result = results.first else {
                 throw Errors.StorageErrors.cantGetContact
             }
@@ -38,7 +38,7 @@ public class ContactsStorage: IContactsStorage {
     public func getAllContacts() throws -> [ContactModel] {
         let requestContacts: NSFetchRequest<Contact> = Contact.fetchRequest()
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestContacts)
+            let results = try ContainerCD.context.fetch(requestContacts)
             return results.map {
                 return ContactModel.fromCoreData(crModel: $0)
             }
@@ -51,7 +51,7 @@ public class ContactsStorage: IContactsStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        ContainerCD.container.performBackgroundTask { (context) in
+        ContainerCD.persistentContainer.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "Contact", into: context) as? Contact else {
                 error = Errors.StorageErrors.cantCreateContact
                 group.leave()
@@ -82,14 +82,14 @@ public class ContactsStorage: IContactsStorage {
                                                contact.address,
                                                contact.name)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestContact)
+            let results = try ContainerCD.context.fetch(requestContact)
             guard let wallet = results.first else {
                 error = Errors.StorageErrors.noSuchContactInStorage
                 group.leave()
                 return
             }
-            ContainerCD.mainContext!.delete(wallet)
-            try ContainerCD.mainContext!.save()
+            ContainerCD.context.delete(wallet)
+            try ContainerCD.context.save()
             group.leave()
         } catch let someErr {
             error = someErr
@@ -107,7 +107,7 @@ public class ContactsStorage: IContactsStorage {
                                                searchingString,
                                                searchingString)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestContact)
+            let results = try ContainerCD.context.fetch(requestContact)
             return results.map {
                 return ContactModel.fromCoreData(crModel: $0)
             }

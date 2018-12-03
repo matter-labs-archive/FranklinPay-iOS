@@ -47,7 +47,8 @@ class TokenInfoViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         do {
-            try conversionService.updateConversionRate(for: token?.symbol.uppercased() ?? "ETH")
+            let rate = try conversionService.updateConversionRate(for: token?.symbol.uppercased() ?? "ETH")
+            self.rate = rate
             DispatchQueue.main.async { [weak self] in
                 self?.tokenInfoTableView.reloadData()
             }

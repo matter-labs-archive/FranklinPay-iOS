@@ -76,7 +76,11 @@ class AppController {
                                         withImage: UIImage(named: "contacts_gray"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 5)
-        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
+        let nav6 = navigationController(withTitle: "Browser",
+                                        withImage: UIImage(named: "contacts_gray"),
+                                        withController: BrowserController(nibName: nil, bundle: nil),
+                                        tag: 6)
+        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5, nav6]
 
         return tabs
     }
