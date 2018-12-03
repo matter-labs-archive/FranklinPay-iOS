@@ -17,12 +17,14 @@ class BrowserController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setNavigation()
+        self.tabBarController?.tabBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        //setNavigation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        keyboardExtensions()
+        //keyboardExtensions()
     }
     
     func keyboardExtensions() {
@@ -107,7 +109,9 @@ class BrowserController: UIViewController {
             }, for: "getRPCurl")
             
             self.webView.bridge.register({ (_, completion) in
-                let allAccounts = web3.browserFunctions.getAccounts()
+                guard let allAccounts = try? WalletsStorage().getAllWallets().compactMap({$0.address}) else {
+                    return
+                }
                 completion(.success(["accounts": allAccounts as Any]))
             }, for: "eth_getAccounts")
             
