@@ -20,7 +20,7 @@ public class TransactionsStorage: ITransactionsStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        ContainerCD.container.performBackgroundTask { (context) in
+        ContainerCD.persistentContainer.performBackgroundTask { (context) in
             do {
                 for transaction in transactions {
                     let fr: NSFetchRequest<ETHTransaction> = ETHTransaction.fetchRequest()
@@ -108,7 +108,7 @@ public class TransactionsStorage: ITransactionsStorage {
     
     public func getAllTransactions(for wallet: WalletModel, networkId: Int64) throws -> [ETHTransactionModel] {
         do {
-            guard let result = try ContainerCD.mainContext!.fetch(self.fetchWalletRequest(with: wallet.address)).first else {
+            guard let result = try ContainerCD.context.fetch(self.fetchWalletRequest(with: wallet.address)).first else {
                 throw Errors.StorageErrors.cantGetTransaction
             }
             guard var transactions = result.transactions?.allObjects as? [ETHTransaction] else {

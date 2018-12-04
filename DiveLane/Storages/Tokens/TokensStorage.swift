@@ -24,7 +24,7 @@ public class TokensStorage: ITokensStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        ContainerCD.container.performBackgroundTask { (context) in
+        ContainerCD.persistentContainer.performBackgroundTask { (context) in
             do {
                 let token: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
                 guard let address = dict["address"] as? String else {
@@ -38,7 +38,7 @@ public class TokensStorage: ITokensStorage {
                     group.leave()
                     return
                 }
-                if let entity = try ContainerCD.mainContext!.fetch(token).first {
+                if let entity = try ContainerCD.context.fetch(token).first {
                     newToken = entity
                 }
                 
@@ -69,7 +69,7 @@ public class TokensStorage: ITokensStorage {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
-        ContainerCD.container.performBackgroundTask { (context) in
+        ContainerCD.persistentContainer.performBackgroundTask { (context) in
             guard let entity = NSEntityDescription.insertNewObject(forEntityName: "ERC20Token",
                                                                    into: context) as? ERC20Token else {
                 error = Errors.StorageErrors.cantCreateToken
@@ -105,7 +105,7 @@ public class TokensStorage: ITokensStorage {
                                                   NSNumber(value: networkId),
                                                   NSNumber(value: true)
             )
-            let results = try ContainerCD.mainContext!.fetch(requestTokens)
+            let results = try ContainerCD.context.fetch(requestTokens)
             let tokens = results.filter {
                 $0.walletAddress == wallet.address
             }
@@ -121,7 +121,7 @@ public class TokensStorage: ITokensStorage {
         let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         requestToken.predicate = NSPredicate(format: "address = %@", token.address)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestToken)
+            let results = try ContainerCD.context.fetch(requestToken)
             let mappedRes = results.map {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }.first
@@ -143,7 +143,7 @@ public class TokensStorage: ITokensStorage {
                                              searchingString,
                                              searchingString)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestToken)
+            let results = try ContainerCD.context.fetch(requestToken)
             return results.map {
                 return ERC20TokenModel.fromCoreData(crModel: $0)
             }
@@ -153,15 +153,15 @@ public class TokensStorage: ITokensStorage {
     }
     
     public func deleteToken(token: ERC20TokenModel,
-                             wallet: WalletModel,
-                             networkId: Int64) throws {
+                            wallet: WalletModel,
+                            networkId: Int64) throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
         let requestToken: NSFetchRequest<ERC20Token> = ERC20Token.fetchRequest()
         requestToken.predicate = NSPredicate(format: "walletAddress = %@", wallet.address)
         do {
-            let results = try ContainerCD.mainContext!.fetch(requestToken)
+            let results = try ContainerCD.context.fetch(requestToken)
             let tokens = results.filter {
                 $0.address == token.address
             }
@@ -173,8 +173,8 @@ public class TokensStorage: ITokensStorage {
                 group.leave()
                 return
             }
-            ContainerCD.mainContext!.delete(token)
-            try ContainerCD.mainContext!.save()
+            ContainerCD.context.delete(token)
+            try ContainerCD.context.save()
             group.leave()
         } catch let someErr {
             error = someErr

@@ -39,6 +39,21 @@ class TransactionsHistoryViewController: UIViewController {
         super.viewDidLoad()
         setupTableView()
         uploadTransactions()
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
+    }
+    
+    private func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
+        return addButton
+    }
+    
+    @objc func settingsWallet() {
+        //let walletsViewController = WalletsViewController()
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {

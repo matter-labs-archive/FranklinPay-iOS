@@ -61,7 +61,7 @@ public class Web3Service: IWeb3Service {
         return contract
     }
     
-    private var web3Instance: web3 {
+    public var web3Instance: web3 {
         let web3 = CurrentWeb.currentWeb
         let keystoreManager = try! walletsService.keystoreManager()
         web3.addKeystoreManager(keystoreManager)
