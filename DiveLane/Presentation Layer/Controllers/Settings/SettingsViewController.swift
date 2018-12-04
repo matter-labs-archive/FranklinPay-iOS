@@ -17,35 +17,31 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         self.title = "Settings"
-
-        getSettings()
-
         self.tabBarController?.tabBar.selectedItem?.title = nil
-
-        self.settingsTableView.delegate = self
-        self.settingsTableView.dataSource = self
-        settingsTableView.tableFooterView = UIView()
-
-        let nib = UINib.init(nibName: "SettingsCell", bundle: nil)
-        self.settingsTableView.register(nib, forCellReuseIdentifier: "SettingsCell")
+        getSettings()
     }
 
     func getSettings() {
         do {
-            settings["currentNetwork"] = (CurrentNetwork.currentNetwork ?? Networks.Mainnet)
-            settings["currentWallet"] = try WalletsService().getSelectedWallet().name
+            self.settings["currentNetwork"] = (CurrentNetwork.currentNetwork ?? Networks.Mainnet)
+            self.settings["currentWallet"] = try WalletsService().getSelectedWallet().name
         } catch let error {
-            settings["currentWallet"] = error.localizedDescription
+            self.settings["currentWallet"] = error.localizedDescription
         }
+        
+        self.settingsTableView.delegate = self
+        self.settingsTableView.dataSource = self
+        self.settingsTableView.tableFooterView = UIView()
+        
+        let nib = UINib.init(nibName: "SettingsCell", bundle: nil)
+        self.settingsTableView.register(nib, forCellReuseIdentifier: "SettingsCell")
     }
 
     override func viewDidAppear(_ animated: Bool) {
         getSettings()
         self.settingsTableView.reloadData()
     }
-
 }
 
 extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {

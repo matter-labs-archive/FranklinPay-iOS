@@ -60,27 +60,27 @@ class AppController {
                                         withImage: UIImage(named: "wallet_gray"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: "Transactions History",
-                                        withImage: UIImage(named: "transactions_gray"),
-                                        withController: TransactionsHistoryViewController(),
-                                        tag: 2)
-        let nav3 = navigationController(withTitle: "Send",
+        let nav2 = navigationController(withTitle: "Send",
                                         withImage: UIImage(named: "send_gray"),
                                         withController: SendSettingsViewController(),
+                                        tag: 2)
+        let nav3 = navigationController(withTitle: "Transactions History",
+                                        withImage: UIImage(named: "transactions_gray"),
+                                        withController: TransactionsHistoryViewController(),
                                         tag: 3)
-        let nav4 = navigationController(withTitle: "Settings",
-                                        withImage: UIImage(named: "settings_gray"),
-                                        withController: SettingsViewController(nibName: nil, bundle: nil),
-                                        tag: 4)
-        let nav5 = navigationController(withTitle: "Contacts",
+//        let nav4 = navigationController(withTitle: "Settings",
+//                                        withImage: UIImage(named: "settings_gray"),
+//                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+//                                        tag: 4)
+        let nav4 = navigationController(withTitle: "Contacts",
                                         withImage: UIImage(named: "contacts_gray"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
-                                        tag: 5)
-        let nav6 = navigationController(withTitle: "Browser",
-                                        withImage: UIImage(named: "contacts_gray"),
+                                        tag: 4)
+        let nav5 = navigationController(withTitle: "Browser",
+                                        withImage: UIImage(named: "AppIcon"),
                                         withController: BrowserController(nibName: nil, bundle: nil),
-                                        tag: 6)
-        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5, nav6]
+                                        tag: 5)
+        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
 
         return tabs
     }
@@ -151,11 +151,11 @@ class AppController {
             }
             startViewController = self.goToApp()
             startViewController?.view.backgroundColor = UIColor.white
-
         }
-        window.rootViewController = startViewController ?? UIViewController()
-        window.makeKeyAndVisible()
-
+        DispatchQueue.main.async {
+            window.rootViewController = startViewController ?? UIViewController()
+            window.makeKeyAndVisible()
+        }
     }
     
     func selectNetwork() {

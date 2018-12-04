@@ -17,14 +17,27 @@ class BrowserController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBarController?.tabBar.isHidden = true
-        self.navigationController?.navigationBar.isHidden = true
-        //setNavigation()
+        setNavigation()
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
+    }
+    
+    private func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
+        return addButton
+    }
+    
+    @objc func settingsWallet() {
+        //let walletsViewController = WalletsViewController()
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        //keyboardExtensions()
+        keyboardExtensions()
     }
     
     func keyboardExtensions() {

@@ -110,35 +110,33 @@ class CreateWalletPincodeViewController: PincodeViewController {
     }
 
     func createWallet() {
-        UserDefaults.standard.set(true, forKey: "atLeastOneWalletExists")
-        do {
-            let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
-                    account: "pincode",
-                    accessGroup: KeychainConfiguration.accessGroup)
-            try pincodeItem.savePassword(pincode)
-        } catch {
-            fatalError("Error updating keychain - \(error)")
+        self.animationController.waitAnimation(isEnabled: true,
+                                               notificationText: "Saving wallet",
+                                               on: (self.view)!)
+        DispatchQueue.global().async { [weak self] in
+            UserDefaults.standard.set(true, forKey: "atLeastOneWalletExists")
+            do {
+                let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
+                                                       account: "pincode",
+                                                       accessGroup: KeychainConfiguration.accessGroup)
+                guard let pin = self?.pincode else {
+                    fatalError("Error updating keychain - \(Errors.CommonErrors.unknown)")
+                }
+                try pincodeItem.savePassword(pin)
+            } catch let error {
+                fatalError("Error updating keychain - \(error)")
+            }
+            UserDefaults.standard.set(true, forKey: "pincodeExists")
+            UserDefaults.standard.synchronize()
+            
+            self?.savingWallet()
         }
-
-        UserDefaults.standard.set(true, forKey: "pincodeExists")
-        UserDefaults.standard.synchronize()
-
-        savingWallet()
     }
 
     func savingWallet() {
-        DispatchQueue.main.async {
-            self.animationController.waitAnimation(isEnabled: true,
-                    notificationText: "Saving wallet",
-                    on: (self.view)!)
-        }
         do {
             try localStorage.saveWallet(wallet: wallet!)
             self.createPassword()
-            DispatchQueue.main.async {
-                self.animationController.waitAnimation(isEnabled: false,
-                                                       on: (self.view)!)
-            }
             try localStorage.selectWallet(wallet: self.wallet!)
             if !UserDefaultKeys().tokensDownloaded {
                 try TokensService().downloadAllAvailableTokensIfNeeded()
@@ -159,12 +157,18 @@ class CreateWalletPincodeViewController: PincodeViewController {
                     }
                 })
             }
-            dispatchGroup.notify(queue: .main) {
+            dispatchGroup.notify(queue: .main) { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false,
+                                                       on: (self?.view)!)
                 if UserDefaultKeys().isEtherAdded {
-                    self.goToApp()
+                    self?.goToApp()
                 } else {
-                    Alerts().showErrorAlert(for: self, error: Errors.NetworkErrors.wrongURL, completion: {
-                        self.navigationController?.popViewController(animated: true)
+                    Alerts().showErrorAlert(for: self!,
+                                            error: Errors.NetworkErrors.wrongURL,
+                                            completion: {
+                        DispatchQueue.main.async {
+                            self?.navigationController?.popViewController(animated: true)
+                        }
                     })
                 }
             }
@@ -174,8 +178,10 @@ class CreateWalletPincodeViewController: PincodeViewController {
     }
 
     func goToApp() {
-        let tabViewController = AppController().goToApp()
-        tabViewController.view.backgroundColor = UIColor.white
-        self.present(tabViewController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            let tabViewController = AppController().goToApp()
+            tabViewController.view.backgroundColor = UIColor.white
+            self.present(tabViewController, animated: true, completion: nil)
+        }
     }
 }

@@ -44,40 +44,79 @@ class MnemonicsViewController: UIViewController {
         UIPasteboard.general.string = mnemonics
     }
 
-    func goToApp() {
-        let tabViewController = AppController().goToApp()
-        tabViewController.view.backgroundColor = UIColor.white
-        self.present(tabViewController, animated: true, completion: nil)
+    func finishSavingWallet(with error: Error?, needDeleteWallet: WalletModel?) {
+        self.animation.waitAnimation(isEnabled: false,
+                                     on: self.view)
+        if let wallet = needDeleteWallet {
+            do {
+                try self.walletsStorage.deleteWallet(wallet: wallet)
+            } catch let deleteErr {
+                Alerts().showErrorAlert(for: self,
+                                        error: deleteErr,
+                                        completion: {
+                                            return
+                })
+            }
+        }
+        if let err = error {
+            Alerts().showErrorAlert(for: self,
+                                    error: err,
+                                    completion: {
+                                        return
+            })
+        } else {
+            DispatchQueue.main.async {
+                let tabViewController = AppController().goToApp()
+                tabViewController.view.backgroundColor = UIColor.white
+                self.present(tabViewController, animated: true, completion: nil)
+            }
+        }
+    }
+    
+    func createPassword(_ password: String, forWallet: WalletModel?) {
+        do {
+            let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
+                                                    account: "\(forWallet?.name ?? "")-password",
+                accessGroup: KeychainConfiguration.accessGroup)
+            try passwordItem.savePassword(password)
+        } catch {
+            fatalError("Error updating keychain - \(error)")
+        }
     }
 
     @IBAction func createWalletButtonTapped(_ sender: Any) {
         animation.waitAnimation(isEnabled: true,
                                       notificationText: "Saving wallet",
                                       on: self.view)
-        do {
-            DispatchQueue.main.async { [weak self] in
-                self?.animation.waitAnimation(isEnabled: false,
-                                              on: (self?.view)!)
+        DispatchQueue.global().async { [weak self] in
+            do {
+                guard let name = self?.name else {return}
+                guard let password = self?.password else {return}
+                guard let mnemonics = self?.mnemonics else {return}
+                let hdwallet = try self?.walletsService.createHDWallet(name: name,
+                                                                     password: password,
+                                                                     mnemonics: mnemonics)
+                guard let wallet = hdwallet else {return}
+                try self?.walletsStorage.saveWallet(wallet: wallet)
+                self?.createPassword(password, forWallet: wallet)
+                try self?.walletsStorage.selectWallet(wallet: wallet)
+                if !UserDefaultKeys().isEtherAdded {
+                    AppController().addFirstToken(for: wallet, completion: { (error) in
+                        if error == nil {
+                            UserDefaultKeys().setEtherAdded()
+                            UserDefaults.standard.synchronize()
+                            self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                        } else {
+                            self?.finishSavingWallet(with: error, needDeleteWallet: wallet)
+                        }
+                    })
+                } else {
+                    self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                }
+            } catch let error {
+                self?.finishSavingWallet(with: error, needDeleteWallet: nil)
             }
-            let wallet = try walletsService.createHDWallet(name: name, password: password, mnemonics: mnemonics)
-            try walletsStorage.saveWallet(wallet: wallet)
-            if !UserDefaultKeys().isEtherAdded {
-                AppController().addFirstToken(for: wallet, completion: { (error) in
-                    if error == nil {
-                        UserDefaultKeys().setEtherAdded()
-                        UserDefaults.standard.synchronize()
-                        self.goToApp()
-                    } else {
-                        fatalError("Can't add ether - \(String(describing: error))")
-                    }
-                })
-            } else {
-                self.goToApp()
-            }
-        } catch let error {
-            Alerts().showErrorAlert(for: self, error: error, completion: { [weak self] in
-                self?.goToApp()
-            })
         }
+        
     }
 }

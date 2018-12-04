@@ -63,7 +63,6 @@ class SendArbitraryTransactionViewController: UIViewController {
     @IBAction func sendButtonWasTapped(_ sender: Any) {
         // MARK: Password
         enterPassword()
-
     }
 
     @IBAction func closeButtonWasTapped(_ sender: Any) {

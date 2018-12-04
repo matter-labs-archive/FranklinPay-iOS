@@ -65,7 +65,6 @@ class EnterPincodeViewController: PincodeViewController {
             hideBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
-
     }
 
     func hideBiometricsButton(_ hidden: Bool = false) {
@@ -96,15 +95,18 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func enter() {
-
         switch fromCase ?? .enterWallet {
         case .transaction:
             animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
             if data != nil {
                 let transactionData = transactionService.getDataForTransaction(dict: data!)
-                send(with: transactionData)
+                DispatchQueue.global().async { [weak self] in
+                    self?.send(with: transactionData)
+                }
             } else if let t = transaction {
-                send(with: t)
+                DispatchQueue.global().async { [weak self] in
+                    self?.send(with: t)
+                }
             }
         default:
             let startViewController = AppController().goToApp()
@@ -114,31 +116,35 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func send(with transaction: Transaction) {
-        guard let wallet = try? keysService.getSelectedWallet() else {return}
-        guard let pass = password else {return}
-        guard let privateKey = try? keysService.getPrivateKey(for: wallet, password: pass) else {return}
+        guard let wallet = try? keysService.getSelectedWallet() else {
+            Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.noSelectedWallet, completion: {})
+            return
+        }
+        guard let pass = password else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.wrongPassword, completion: {})
+            return
+        }
+        guard let privateKey = try? keysService.getPrivateKey(for: wallet, password: pass) else {
+            Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.unknownError, completion: {})
+            return
+        }
         let privKey = Data(hex: privateKey)
-        guard let signedTransaction = try? transaction.sign(privateKey: privKey) else {return}
+        guard let signedTransaction = try? transaction.sign(privateKey: privKey) else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
 
         guard let result = try? PlasmaService().sendRawTX(transaction: signedTransaction, onTestnet: true) else {
-            DispatchQueue.main.async { [weak self] in
-                Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {
-                    self?.returnToStartTab()
-                })
-            }
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
             return
         }
         if !result {
-            Alerts().showErrorAlert(for: self, error: nil, completion: {
-                self.returnToStartTab()
-            })
+            Alerts().showErrorAlert(for: self, error: nil, completion: {})
             return
         }
-        DispatchQueue.main.async { [weak self] in
-            Alerts().showSuccessAlert(for: self!, completion: {
-                self?.returnToStartTab()
-            })
-        }
+        Alerts().showSuccessAlert(for: self, completion: {
+            self.returnToStartTab()
+        })
     }
 
     func send(with data: (transaction: WriteTransaction, options: TransactionOptions)) {
@@ -151,14 +157,16 @@ class EnterPincodeViewController: PincodeViewController {
                 self?.returnToStartTab()
             })
         } catch {
-            return
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
         }
     }
 
     func returnToStartTab() {
-        let startViewController = AppController().goToApp()
-        startViewController.view.backgroundColor = UIColor.white
-        UIApplication.shared.keyWindow?.rootViewController = startViewController
+        DispatchQueue.main.async {
+            let startViewController = AppController().goToApp()
+            startViewController.view.backgroundColor = UIColor.white
+            UIApplication.shared.keyWindow?.rootViewController = startViewController
+        }
     }
 
     override func numberPressedAction(number: String) {
@@ -208,13 +216,10 @@ class EnterPincodeViewController: PincodeViewController {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                     localizedReason: reason,
                     reply: { [weak self] (succes, _) in
-
-                        if succes {
-                            self?.enter()
-                        }
-
-                    })
+                if succes {
+                    self?.enter()
+                }
+            })
         }
     }
-
 }

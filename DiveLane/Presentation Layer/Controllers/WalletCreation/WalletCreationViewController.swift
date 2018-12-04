@@ -99,9 +99,7 @@ class WalletCreationViewController: UIViewController {
         guard let wallet = toWallet else {
             Alerts().showErrorAlert(for: self,
                                     error: Errors.StorageErrors.cantCreateWallet,
-                                    completion: {
-
-            })
+                                    completion: {})
             return
         }
         let addPincode = CreateWalletPincodeViewController(forWallet: wallet, with: password)
@@ -218,99 +216,115 @@ class WalletCreationViewController: UIViewController {
         default:
             //Import wallet
             guard let importMode = importMode else {
-                Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {
-                    
-                })
+                self.finishSavingWallet(with: Errors.CommonErrors.unknown, needDeleteWallet: nil)
                 return
             }
             
-            do {
-                switch importMode {
-                case .mnemonics:
-                    let wallet = try walletsService.createHDWallet(name: walletName, password: withPassword, mnemonics: withKey)
-                    DispatchQueue.main.async { [weak self] in
-                        self?.animation.waitAnimation(isEnabled: false,
-                                                      on: (self?.view)!)
-                    }
-                    switch isAtLeastOneExists {
-                    case true:
-                        savingWallet(wallet: wallet, withPassword: withPassword)
-                    case false:
-                        addPincode(toWallet: wallet, with: withPassword)
-                    }
-                case .privateKey:
-                    let wallet = try walletsService.importWalletWithPrivateKey(name: walletName,
-                                                                                   key: withKey,
-                                                                                   password: withPassword)
-                    DispatchQueue.main.async { [weak self] in
-                        self?.animation.waitAnimation(isEnabled: false,
-                                                      on: (self?.view)!)
-                    }
-                    guard EthereumAddress(wallet.address) != nil else {
-                        Alerts().showErrorAlert(for: self, error: Web3Error.walletError, completion: {
-                            
-                        })
+            switch importMode {
+            case .mnemonics:
+                self.animation.waitAnimation(isEnabled: true,
+                                             on: self.view)
+                DispatchQueue.global().async { [weak self] in
+                    guard let hdwallet = try? self?.walletsService.createHDWallet(name: walletName,
+                                                                                password: withPassword,
+                                                                                mnemonics: withKey), let wallet = hdwallet else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
                         return
                     }
-                    switch isAtLeastOneExists {
-                    case true:
-                        savingWallet(wallet: wallet, withPassword: withPassword)
-                    case false:
-                        addPincode(toWallet: wallet, with: withPassword)
+                    DispatchQueue.main.async {
+                        switch isAtLeastOneExists {
+                        case true:
+                            self?.savingWallet(wallet: wallet, withPassword: withPassword)
+                        case false:
+                            self?.addPincode(toWallet: wallet, with: withPassword)
+                        }
                     }
                 }
-            } catch let error {
-                Alerts().showErrorAlert(for: self, error: error, completion: {
-                    
-                })
+                
+            case .privateKey:
+                self.animation.waitAnimation(isEnabled: true,
+                                             on: self.view)
+                DispatchQueue.global().async { [weak self] in
+                    guard let prwallet = try? self?.walletsService.importWalletWithPrivateKey(name: walletName,
+                                                                                            key: withKey,
+                                                                                            password: withPassword), let wallet = prwallet else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
+                        return
+                    }
+                    guard EthereumAddress(wallet.address) != nil else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        switch isAtLeastOneExists {
+                        case true:
+                            self?.savingWallet(wallet: wallet, withPassword: withPassword)
+                        case false:
+                            self?.addPincode(toWallet: wallet, with: withPassword)
+                        }
+                    }
+                }
             }
         }
     }
 
     func savingWallet(wallet: WalletModel, withPassword: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: true,
-                    notificationText: "Saving wallet",
-                    on: (self?.view)!)
-        }
-        do {
-            try walletsStorage.saveWallet(wallet: wallet)
-            createPassword(withPassword, forWallet: wallet)
-            DispatchQueue.main.async { [weak self] in
-                self?.animation.waitAnimation(isEnabled: false,
-                                              on: (self?.view)!)
+        self.animation.waitAnimation(isEnabled: false,
+                                     on: self.view)
+        self.animation.waitAnimation(isEnabled: true,
+                                     notificationText: "Saving wallet",
+                                     on: self.view)
+        DispatchQueue.global().async { [weak self] in
+            do {
+                try self?.walletsStorage.saveWallet(wallet: wallet)
+                self?.createPassword(withPassword, forWallet: wallet)
+                try self?.walletsStorage.selectWallet(wallet: wallet)
+                if !UserDefaultKeys().isEtherAdded {
+                    AppController().addFirstToken(for: wallet, completion: { [weak self] (error) in
+                        if error == nil {
+                            UserDefaultKeys().setEtherAdded()
+                            UserDefaults.standard.synchronize()
+                            self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                        } else {
+                            self?.finishSavingWallet(with: error, needDeleteWallet: wallet)
+                        }
+                    })
+                } else {
+                    self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                }
+            } catch let error {
+                self?.finishSavingWallet(with: error, needDeleteWallet: wallet)
             }
-            try walletsStorage.selectWallet(wallet: wallet)
-            if !UserDefaultKeys().isEtherAdded {
-                AppController().addFirstToken(for: wallet, completion: { [weak self] (error) in
-                    if error == nil {
-                        UserDefaultKeys().setEtherAdded()
-                        UserDefaults.standard.synchronize()
-                        self?.goToApp()
-                    } else {
-                        Alerts().showErrorAlert(for: self!,
-                                       error: error,
-                                       completion: { [weak self] in
-                            self?.goToApp()
-                        })
-                    }
-                })
-            } else {
-                self.goToApp()
-            }
-        } catch let error {
-            Alerts().showErrorAlert(for: self,
-                                    error: error,
-                                    completion: { [weak self] in
-                self?.goToApp()
-            })
         }
     }
 
-    func goToApp() {
-        let tabViewController = AppController().goToApp()
-        tabViewController.view.backgroundColor = UIColor.white
-        self.present(tabViewController, animated: true, completion: nil)
+    func finishSavingWallet(with error: Error?, needDeleteWallet: WalletModel?) {
+        self.animation.waitAnimation(isEnabled: false,
+                                     on: self.view)
+        if let wallet = needDeleteWallet {
+            do {
+                try self.walletsStorage.deleteWallet(wallet: wallet)
+            } catch let deleteErr {
+                Alerts().showErrorAlert(for: self,
+                                        error: deleteErr,
+                                        completion: {
+                    return
+                })
+            }
+        }
+        if let err = error {
+            Alerts().showErrorAlert(for: self,
+                                    error: err,
+                                    completion: {
+                return
+            })
+        } else {
+            DispatchQueue.main.async {
+                let tabViewController = AppController().goToApp()
+                tabViewController.view.backgroundColor = UIColor.white
+                self.present(tabViewController, animated: true, completion: nil)
+            }
+        }
     }
 
     func showChooseAlert(forWallet withName: String, withPassword: String) {
@@ -322,21 +336,19 @@ class WalletCreationViewController: UIViewController {
         }
 
         let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { [weak self] _ in
-            guard let wallet = try? self?.walletsService.createWallet(name: withName, password: withPassword) else {
-                Alerts().showErrorAlert(for: self!, error: Errors.StorageErrors.cantCreateWallet, completion: {
-                    
-                })
-                return
-            }
-            DispatchQueue.main.async {
-                self?.animation.waitAnimation(isEnabled: false,
-                                              on: (self?.view)!)
-            }
-            switch isAtLeastOneWalletExists {
-            case true:
-                self?.savingWallet(wallet: wallet!, withPassword: withPassword)
-            case false:
-                self?.addPincode(toWallet: wallet, with: withPassword)
+            DispatchQueue.global().async {
+                guard let wallet = try? self?.walletsService.createWallet(name: withName, password: withPassword) else {
+                    self?.finishSavingWallet(with: Errors.StorageErrors.cantCreateWallet, needDeleteWallet: nil)
+                    return
+                }
+                DispatchQueue.main.async {
+                    switch isAtLeastOneWalletExists {
+                    case true:
+                        self?.savingWallet(wallet: wallet!, withPassword: withPassword)
+                    case false:
+                        self?.addPincode(toWallet: wallet, with: withPassword)
+                    }
+                }
             }
         }
         alertController.addAction(actionMnemonics)

@@ -126,9 +126,7 @@ class TokenInfoViewController: UIViewController {
                 }
             }
         }
-
     }
-
 }
 
 extension TokenInfoViewController: UITableViewDelegate, UITableViewDataSource {

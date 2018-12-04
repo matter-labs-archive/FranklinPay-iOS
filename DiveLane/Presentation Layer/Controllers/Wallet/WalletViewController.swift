@@ -224,7 +224,7 @@ class WalletViewController: UIViewController {
         }
     }
 
-    func settingsWalletBarItem() -> UIBarButtonItem {
+    private func settingsWalletBarItem() -> UIBarButtonItem {
         let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
                                         style: .plain,
                                         target: self,
@@ -233,8 +233,9 @@ class WalletViewController: UIViewController {
     }
 
     @objc func settingsWallet() {
-        let walletsViewController = WalletsViewController()
-        self.navigationController?.pushViewController(walletsViewController, animated: true)
+        //let walletsViewController = WalletsViewController()
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     @IBAction func addWallet(_ sender: UIButton) {
