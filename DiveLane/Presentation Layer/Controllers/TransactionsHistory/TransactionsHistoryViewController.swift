@@ -24,7 +24,9 @@ class TransactionsHistoryViewController: UIViewController {
     var transactions = [[ETHTransactionModel]]()
     var state: TransactionsHistoryState = .all {
         didSet {
-            uploadTransactions()
+            DispatchQueue.global().async { [weak self] in
+                self?.uploadTransactions()
+            }
         }
     }
 
@@ -38,7 +40,6 @@ class TransactionsHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        uploadTransactions()
         self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
     
@@ -58,12 +59,18 @@ class TransactionsHistoryViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        uploadTransactions()
+//        animationController.waitAnimation(isEnabled: true,
+//                                          notificationText: "Downloading transactions",
+//                                          on: self.view)
+        DispatchQueue.global().async { [weak self] in
+            self?.uploadTransactions()
+        }
     }
 
     private func setupTableView() {
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TransactionCell")
+        tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -85,37 +92,52 @@ class TransactionsHistoryViewController: UIViewController {
 
     private func uploadTransactions() {
         animationController.waitAnimation(isEnabled: true,
-                                notificationText: "Downloading transactions",
-                                on: self.view)
-        do {
-            let wallet = try keysService.getSelectedWallet()
-            guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
-                return
-            }
-            let result = try transactionsHistoryService.loadTransactions(for: wallet.address, txType: .custom, networkId: Int64(networkId))
-            DispatchQueue.main.async { [weak self] in
-                self?.animationController.waitAnimation(isEnabled: false,
-                                                        on: (self?.view)!)
-            }
-            try TransactionsStorage().saveTransactions(transactions: result, for: wallet)
-            guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
-                return
-            }
-            let txs = try TransactionsStorage().getAllTransactions(for: wallet, networkId: Int64(networkID))
-            self.prepareTransactionsForView(transactions: txs)
-        } catch let error {
-            Alerts().showErrorAlert(for: self, error: error, completion: {})
+                                          notificationText: "Downloading transactions",
+                                          on: self.view)
+        guard let wallet = try? keysService.getSelectedWallet() else {
+            self.prepareTransactionsForView(transactions: [])
+            return
         }
+        guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
+            self.prepareTransactionsForView(transactions: [])
+            return
+        }
+        guard let result = try? transactionsHistoryService.loadTransactions(for: wallet.address,
+                                                                            txType: .custom,
+                                                                            networkId: Int64(networkId)) else {
+            self.prepareTransactionsForView(transactions: [])
+            return
+        }
+        do {
+            try TransactionsStorage().saveTransactions(transactions: result, for: wallet)
+        } catch {
+            self.prepareTransactionsForView(transactions: [])
+            return
+        }
+        guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
+            return
+        }
+        guard let txs = try? TransactionsStorage().getAllTransactions(for: wallet,
+                                                                      networkId: Int64(networkID)) else {
+            self.prepareTransactionsForView(transactions: [])
+            return
+        }
+        self.prepareTransactionsForView(transactions: txs)
     }
 
     private func prepareTransactionsForView(transactions: [ETHTransactionModel]) {
         var transactions = transactions
         self.transactions.removeAll()
+        if transactions.isEmpty {
+            reloadTableView()
+            return
+        }
         // MARK: Sort transactions by day and put them in ascending order into array
         transactions.sort { (first, second) -> Bool in
             return first.date > second.date
         }
         guard let selectedWallet = try? keysService.getSelectedWallet() else {
+            reloadTableView()
             return
         }
         switch state {
@@ -140,6 +162,7 @@ class TransactionsHistoryViewController: UIViewController {
                 self.transactions.append([transaction])
             } else {
                 guard let lastTransaction = self.transactions.last?.last else {
+                    reloadTableView()
                     return
                 }
                 let previousTransactionCalendarDate = calendarDate(date: lastTransaction.date)
@@ -152,7 +175,15 @@ class TransactionsHistoryViewController: UIViewController {
                 }
             }
         }
-        tableView.reloadData()
+        reloadTableView()
+    }
+    
+    private func reloadTableView() {
+        self.animationController.waitAnimation(isEnabled: false,
+                                               on: self.view)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
     private func calendarDate(date: Date) -> (day: Int, month: Int, year: Int) {

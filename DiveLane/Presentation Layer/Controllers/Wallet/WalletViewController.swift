@@ -48,15 +48,18 @@ class WalletViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         self.tabBarController?.tabBar.selectedItem?.title = nil
+        self.setupTableView()
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
+    }
+    
+    private func setupTableView() {
         let nibToken = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
         self.walletTableView.tableFooterView = UIView()
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nibToken, forCellReuseIdentifier: "TokenCell")
-        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
 
     func initDatabase() {
@@ -75,6 +78,7 @@ class WalletViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        animation.waitAnimation(isEnabled: true, notificationText: "Loading initial data", on: self.view)
         twoDimensionalTokensArray.removeAll()
         twoDimensionalUTXOsArray.removeAll()
         updateTable()
