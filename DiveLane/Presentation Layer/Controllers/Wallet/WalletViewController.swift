@@ -75,6 +75,8 @@ class WalletViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        twoDimensionalTokensArray.removeAll()
+        twoDimensionalUTXOsArray.removeAll()
         updateTable()
     }
 
@@ -197,6 +199,9 @@ class WalletViewController: UIViewController {
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        twoDimensionalTokensArray.removeAll()
+        twoDimensionalUTXOsArray.removeAll()
+        reloadDataInTable()
         updateTable()
     }
 
@@ -209,9 +214,10 @@ class WalletViewController: UIViewController {
     }
 
     func updateTable() {
-        twoDimensionalTokensArray.removeAll()
-        twoDimensionalUTXOsArray.removeAll()
-        reloadDataInTable()
+//        twoDimensionalTokensArray.removeAll()
+//        twoDimensionalUTXOsArray.removeAll()
+//        reloadDataInTable()
+        
         switch blockchainControl.selectedSegmentIndex {
         case Blockchain.ether.rawValue:
             DispatchQueue.global().async { [weak self] in
@@ -248,63 +254,81 @@ class WalletViewController: UIViewController {
             return
         }
         let networkID = CurrentNetwork().getNetworkID()
-        do {
-            for wallet in wallets {
-                let tokens = try TokensStorage().getAllTokens(for: wallet, networkId: networkID)
-                let selectedWallet = try keysService.getSelectedWallet()
-                let isSelectedWallet = wallet == selectedWallet ? true : false
-                let expandableTokens = ExpandableTableTokens(isExpanded: isSelectedWallet,
-                                                             tokens: tokens.map {
-                                                                TableToken(token: $0,
-                                                                           inWallet: wallet,
-                                                                           isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet)
-                })
-                twoDimensionalTokensArray.append(expandableTokens)
+        for wallet in wallets {
+            guard let tokens = try? TokensStorage().getAllTokens(for: wallet, networkId: networkID) else {
                 completion()
+                return
             }
-        } catch let error {
-            print(error)
+            guard let selectedWallet = try? keysService.getSelectedWallet() else {
+                completion()
+                return
+            }
+            let isSelectedWallet = wallet == selectedWallet ? true : false
+//            let expandableTokens = ExpandableTableTokens(isExpanded: isSelectedWallet,
+//                                                         tokens: tokens.map {
+//                                                            TableToken(token: $0,
+//                                                                       inWallet: wallet,
+//                                                                       isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet)
+//            })
+            let expandableTokens = ExpandableTableTokens(isExpanded: true,
+                                                         tokens: tokens.map {
+                                                            TableToken(token: $0,
+                                                                       inWallet: wallet,
+                                                                       isSelected: ($0 == CurrentToken.currentToken) && isSelectedWallet)
+            })
+            twoDimensionalTokensArray.append(expandableTokens)
+            completion()
         }
     }
 
     func updatePlasmaBlockchain() {
+        initDatabase()
+//        twoDimensionalUTXOsArray.removeAll()
         guard let wallets = wallets else {return}
-        guard let network = CurrentNetwork.currentNetwork else {return}
+        guard let network = CurrentNetwork.currentNetwork else {
+            self.reloadDataInTable()
+            return
+        }
         for wallet in wallets {
-            guard let ethAddress = EthereumAddress(wallet.address) else {return}
+            guard let ethAddress = EthereumAddress(wallet.address) else {
+                self.reloadDataInTable()
+                return
+            }
             let mainnet = network.chainID == Networks.Mainnet.chainID
             let testnet = !mainnet && network.chainID == Networks.Rinkeby.chainID
-            if !testnet && !mainnet {return}
-            let semaphore = DispatchSemaphore(value: 0)
-            do {
-                let utxos = try PlasmaService().getUTXOs(for: ethAddress, onTestnet: testnet)
-                let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,
-                                                           utxos: utxos.map {
-                                                            TableUTXO(utxo: $0,
-                                                                      inWallet: wallet,
-                                                                      isSelected: false)
-                })
-                self.twoDimensionalUTXOsArray.append(expandableUTXOS)
-                if wallet == wallets.last {
-                    self.reloadDataInTable()
-                }
-                semaphore.signal()
-            } catch let error {
-                print(error.localizedDescription)
+            if !testnet && !mainnet {
+                self.reloadDataInTable()
+                return
             }
-            semaphore.wait()
+            guard let utxos = try? PlasmaService().getUTXOs(for: ethAddress, onTestnet: testnet) else {
+                self.reloadDataInTable()
+                return
+            }
+            let expandableUTXOS = ExpandableTableUTXOs(isExpanded: true,
+                                                       utxos: utxos.map {
+                                                        TableUTXO(utxo: $0,
+                                                                  inWallet: wallet,
+                                                                  isSelected: false)
+            })
+            self.twoDimensionalUTXOsArray.append(expandableUTXOS)
+            if wallet == wallets.last {
+                self.reloadDataInTable()
+            }
         }
     }
 
     func updateEtherBlockchain() {
         initDatabase()
-        self.twoDimensionalTokensArray.removeAll()
+//        self.twoDimensionalTokensArray.removeAll()
         self.getTokensListForEtherBlockchain { [weak self] in
             self?.reloadDataInTable()
         }
     }
 
     @IBAction func blockchainChanged(_ sender: UISegmentedControl) {
+        twoDimensionalTokensArray.removeAll()
+        twoDimensionalUTXOsArray.removeAll()
+        reloadDataInTable()
         updateTable()
     }
 
