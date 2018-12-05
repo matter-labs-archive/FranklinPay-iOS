@@ -1143,9 +1143,9 @@
 				91B6A78F21435F5D0033A045 /* Sources */,
 				91B6A79021435F5D0033A045 /* Frameworks */,
 				91B6A79121435F5D0033A045 /* Resources */,
+				84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */,
 				B20B10AB2152408A00F62797 /* ShellScript */,
 				B2495E05215CE6F2005B18F2 /* ShellScript */,
-				84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1358,7 +1358,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 9b700e965c4def9e149bd1e50a7fe7eb8e872a9c 85d9893741f978d93e6db35b9e82f4482ae7e956a7ba3931f1bcc923174b3abe\n";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" ebf2c1b81f019e28e2abc5698b36d86173346ad1 f04c3481d6e18e736fb7f0d15e11fe1ceaab24cc7754b7c823d59181eb7978f8\n";
 		};
 		B2495E05215CE6F2005B18F2 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1691,7 +1691,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				APP_ICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
+				BUNDLE_IDENTIFIER_SUFFIX = "io.matter.DiveLaneApp-dev";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8DB897QKJA;
@@ -1713,7 +1715,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */;
 			buildSettings = {
+				APP_ICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_IDENTIFIER_SUFFIX = io.matter.DiveLaneApp;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8DB897QKJA;
@@ -1723,9 +1727,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

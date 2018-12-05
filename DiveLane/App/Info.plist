@@ -6,8 +6,14 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>${APP_ICON_NAME}@2x.png</string>
+		<string>${APP_ICON_NAME}@2x.png</string>
+		<string>${APP_ICON_NAME}.png</string>
+	</array>
 	<key>CFBundleIdentifier</key>
-	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<string>${PRODUCT_BUNDLE_IDENTIFIER}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -34,7 +40,7 @@
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
-		<string>9b700e965c4def9e149bd1e50a7fe7eb8e872a9c</string>
+		<string>ebf2c1b81f019e28e2abc5698b36d86173346ad1</string>
 		<key>Kits</key>
 		<array>
 			<dict>
