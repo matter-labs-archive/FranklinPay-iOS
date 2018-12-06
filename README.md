@@ -11,8 +11,8 @@
   <a href="https://github.com/matterinc/PlasmaManager">JS Lib</a> &bull;
   <a href="https://github.com/matterinc/PlasmaSwiftLib">Swift Lib</a> &bull;
   <a href="https://github.com/matterinc/PlasmaWebExplorer">Block Explorer</a> &bull;
-  <a href="https://github.com/matterinc/PlasmaWebUI">Web App</a>
-  <b>iOS App</b> &bull;
+  <a href="https://github.com/matterinc/PlasmaWebUI">Web App</a> &bull;
+  <b>iOS App</b></a>
 </p>
 
 # DiveLane - Universal Ethereum payment system
