@@ -289,10 +289,7 @@ class WalletViewController: UIViewController {
         initDatabase()
 //        twoDimensionalUTXOsArray.removeAll()
         guard let wallets = wallets else {return}
-        guard let network = CurrentNetwork.currentNetwork else {
-            self.reloadDataInTable()
-            return
-        }
+        let network = CurrentNetwork.currentNetwork
         for wallet in wallets {
             guard let ethAddress = EthereumAddress(wallet.address) else {
                 self.reloadDataInTable()

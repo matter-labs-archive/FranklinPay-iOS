@@ -22,6 +22,9 @@
 		914F229D2149C8F000ED58E6 /* BiometricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F229C2149C8F000ED58E6 /* BiometricsService.swift */; };
 		914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */; };
 		914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */; };
+		9196A68E21BA93E000852ED0 /* EIP681.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A68D21BA93E000852ED0 /* EIP681.swift */; };
+		9196A69021BAA20000852ED0 /* ENS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A68F21BAA20000852ED0 /* ENS.swift */; };
+		9196A69421BAA3B800852ED0 /* NameHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A69321BAA3B800852ED0 /* NameHash.swift */; };
 		9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */; };
 		9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */; };
 		9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */; };
@@ -183,6 +186,9 @@
 		914F229C2149C8F000ED58E6 /* BiometricsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricsService.swift; sourceTree = "<group>"; };
 		914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EnterPincodeViewController.xib; sourceTree = "<group>"; };
 		914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPincodeFromCases.swift; sourceTree = "<group>"; };
+		9196A68D21BA93E000852ED0 /* EIP681.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP681.swift; sourceTree = "<group>"; };
+		9196A68F21BAA20000852ED0 /* ENS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENS.swift; sourceTree = "<group>"; };
+		9196A69321BAA3B800852ED0 /* NameHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameHash.swift; sourceTree = "<group>"; };
 		9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAdditionMode.swift; sourceTree = "<group>"; };
 		9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentViewController.swift; sourceTree = "<group>"; };
@@ -210,7 +216,7 @@
 		9197F32E2144213000C358AA /* NetworksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksViewController.xib; sourceTree = "<group>"; };
 		9197F3312144228B00C358AA /* NetworksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCell.swift; sourceTree = "<group>"; };
 		9197F3322144228B00C358AA /* NetworksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksCell.xib; sourceTree = "<group>"; };
-		91B6A79321435F5D0033A045 /* DiveLane.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiveLane.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		91B6A79321435F5D0033A045 /* DiveLane-dev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DiveLane-dev.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B6A79621435F5D0033A045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91B6A7A221435F5E0033A045 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -596,7 +602,7 @@
 		91B6A79421435F5D0033A045 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				91B6A79321435F5D0033A045 /* DiveLane.app */,
+				91B6A79321435F5D0033A045 /* DiveLane-dev.app */,
 				B219DC29215B77A80035BF94 /* DiveLaneUITests.xctest */,
 				1CF54A72215CCF0E009CC78F /* DiveLaneTests.xctest */,
 			);
@@ -909,8 +915,11 @@
 			isa = PBXGroup;
 			children = (
 				91B6A7C52143660B0033A045 /* AppController.swift */,
+				9196A68D21BA93E000852ED0 /* EIP681.swift */,
 				B2495E0A215D0F5A005B18F2 /* EIP681Router.swift */,
 				B2495E0C215D0FF0005B18F2 /* EIP681Model.swift */,
+				9196A68F21BAA20000852ED0 /* ENS.swift */,
+				9196A69321BAA3B800852ED0 /* NameHash.swift */,
 			);
 			path = AppController;
 			sourceTree = "<group>";
@@ -1153,7 +1162,7 @@
 			);
 			name = DiveLane;
 			productName = DiveLane;
-			productReference = 91B6A79321435F5D0033A045 /* DiveLane.app */;
+			productReference = 91B6A79321435F5D0033A045 /* DiveLane-dev.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B219DC28215B77A80035BF94 /* DiveLaneUITests */ = {
@@ -1438,6 +1447,7 @@
 				B271CF96214BAD730023FC18 /* TransactionsHistoryViewController.swift in Sources */,
 				E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */,
 				E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */,
+				9196A68E21BA93E000852ED0 /* EIP681.swift in Sources */,
 				B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */,
 				130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
@@ -1446,6 +1456,7 @@
 				91E7256421507D16003FAD76 /* FiatService.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
 				E2B45A422174D2B500F38E50 /* TokenInfoViewController.swift in Sources */,
+				9196A69021BAA20000852ED0 /* ENS.swift in Sources */,
 				E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */,
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
 				B25BD1382143E5BC0091C481 /* ParameterCell.swift in Sources */,
@@ -1468,6 +1479,7 @@
 				91D0372A21AD737F009BD01C /* WalletsStorage.swift in Sources */,
 				91D0373021AD8223009BD01C /* TokensStorage.swift in Sources */,
 				91D0372C21AD8146009BD01C /* StorageErrors.swift in Sources */,
+				9196A69421BAA3B800852ED0 /* NameHash.swift in Sources */,
 				91B6A7BC2143621E0033A045 /* CoreDataModel.xcdatamodeld in Sources */,
 				E2B45A4F217620D500F38E50 /* ContactCell.swift in Sources */,
 				E2EBA094215A8C41001755A4 /* DesignElements.swift in Sources */,
@@ -1692,8 +1704,8 @@
 			baseConfigurationReference = 2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = "AppIcon-dev";
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-dev";
-				BUNDLE_IDENTIFIER_SUFFIX = "io.matter.DiveLaneApp-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = .dev;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8DB897QKJA;
@@ -1704,7 +1716,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "DiveLane-dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1716,8 +1728,8 @@
 			baseConfigurationReference = B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				BUNDLE_IDENTIFIER_SUFFIX = io.matter.DiveLaneApp;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8DB897QKJA;
@@ -1729,13 +1741,136 @@
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = DiveLane;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		91E1183C21B87BE000BA4BC1 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		91E1183D21B87BE000BA4BC1 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */;
+			buildSettings = {
+				APP_ICON_NAME = "AppIcon-dev";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
+				BUNDLE_ID_SUFFIX = .beta;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8DB897QKJA;
+				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
+				PRODUCT_NAME = "DiveLane-beta";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Beta;
+		};
+		91E1183E21B87BE000BA4BC1 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = DiveLaneUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DiveLane;
+			};
+			name = Beta;
+		};
+		91E1183F21B87BE000BA4BC1 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = DiveLaneTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = MT.DiveLaneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiveLane.app/DiveLane";
+			};
+			name = Beta;
 		};
 		B219DC30215B77A80035BF94 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1788,6 +1923,7 @@
 			buildConfigurations = (
 				1CF54A79215CCF0E009CC78F /* Debug */,
 				1CF54A7A215CCF0E009CC78F /* Release */,
+				91E1183F21B87BE000BA4BC1 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1797,6 +1933,7 @@
 			buildConfigurations = (
 				91B6A7A321435F5E0033A045 /* Debug */,
 				91B6A7A421435F5E0033A045 /* Release */,
+				91E1183C21B87BE000BA4BC1 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1806,6 +1943,7 @@
 			buildConfigurations = (
 				91B6A7A621435F5E0033A045 /* Debug */,
 				91B6A7A721435F5E0033A045 /* Release */,
+				91E1183D21B87BE000BA4BC1 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1815,6 +1953,7 @@
 			buildConfigurations = (
 				B219DC30215B77A80035BF94 /* Debug */,
 				B219DC31215B77A80035BF94 /* Release */,
+				91E1183E21B87BE000BA4BC1 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

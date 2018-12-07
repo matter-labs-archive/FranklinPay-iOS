@@ -35,7 +35,7 @@ public class CurrentNetwork {
 
     static var _currentNetwork: Networks?
 
-    class var currentNetwork: Networks? {
+    class var currentNetwork: Networks {
         get {
             if let net = _currentNetwork {
                 return net
@@ -51,7 +51,7 @@ public class CurrentNetwork {
     }
 
     public func getNetworkID() -> Int64 {
-        let chainID = Int64(CurrentNetwork.currentNetwork?.chainID ?? 0)
+        let chainID = Int64(CurrentNetwork.currentNetwork.chainID)
         return chainID
     }
 }

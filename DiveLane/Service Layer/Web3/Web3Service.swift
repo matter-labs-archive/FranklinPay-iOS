@@ -134,13 +134,13 @@ public class Web3Service: IWeb3Service {
     }
     
     public func prepareWriteContractTx(contractABI: String,
-                                      contractAddress: String,
-                                      contractMethod: String,
-                                      value: String = "0.0",
-                                      gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
-                                      gasPrice: TransactionOptions.GasPricePolicy = .automatic,
-                                      parameters: [AnyObject] = [AnyObject](),
-                                      extraData: Data = Data()) throws -> WriteTransaction {
+                                       contractAddress: String,
+                                       contractMethod: String,
+                                       value: String = "0.0",
+                                       gasLimit: TransactionOptions.GasLimitPolicy = .automatic,
+                                       gasPrice: TransactionOptions.GasPricePolicy = .automatic,
+                                       parameters: [AnyObject] = [AnyObject](),
+                                       extraData: Data = Data()) throws -> WriteTransaction {
         guard let ethContractAddress = EthereumAddress(contractAddress) else {
             throw Web3Error.dataError
         }

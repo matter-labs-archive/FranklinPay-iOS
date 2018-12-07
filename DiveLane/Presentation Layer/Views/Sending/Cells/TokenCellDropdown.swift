@@ -23,12 +23,41 @@ class TokenCellDropdown: UITableViewCell {
     func configure(_ token: ERC20TokenModel, wallet: WalletModel) {
         currentToken = token
         tokenName.text = token.name
-        guard let balance = try? web3Service.getERC20balance(for: wallet, token: token) else {
-            self.tokenBalance.text = "Can't get balance for \(token.name)"
-            return
-        }
-        if let currentAddress = self.currentToken?.address, currentAddress == token.address {
-            self.tokenBalance.text = "Balance: " + balance + " " + token.symbol.uppercased()
+        let balance: String
+        if token == ERC20TokenModel(isEther: true) {
+            if let result = try? web3Service.getETHbalance(for: wallet) {
+                balance = result
+                if let currentAddress = self.currentToken?.address, currentAddress == token.address {
+                    DispatchQueue.main.async {
+                        self.tokenBalance.text = "Balance: " + balance + " " + token.symbol.uppercased()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.tokenBalance.text = "Can't get balance for \(token.name)"
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.tokenBalance.text = "Can't get balance for \(token.name)"
+                }
+            }
+        } else {
+            if let result = try? web3Service.getERC20balance(for: wallet, token: token) {
+                balance = result
+                if let currentAddress = self.currentToken?.address, currentAddress == token.address {
+                    DispatchQueue.main.async {
+                        self.tokenBalance.text = "Balance: " + balance + " " + token.symbol.uppercased()
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        self.tokenBalance.text = "Can't get balance for \(token.name)"
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.tokenBalance.text = "Can't get balance for \(token.name)"
+                }
+            }
         }
     }
 

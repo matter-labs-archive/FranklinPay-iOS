@@ -98,10 +98,7 @@ class TransactionsHistoryViewController: UIViewController {
             self.prepareTransactionsForView(transactions: [])
             return
         }
-        guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
-            self.prepareTransactionsForView(transactions: [])
-            return
-        }
+        let networkId = CurrentNetwork.currentNetwork.chainID
         guard let result = try? transactionsHistoryService.loadTransactions(for: wallet.address,
                                                                             txType: .custom,
                                                                             networkId: Int64(networkId)) else {
@@ -114,9 +111,7 @@ class TransactionsHistoryViewController: UIViewController {
             self.prepareTransactionsForView(transactions: [])
             return
         }
-        guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
-            return
-        }
+        let networkID = CurrentNetwork.currentNetwork.chainID
         guard let txs = try? TransactionsStorage().getAllTransactions(for: wallet,
                                                                       networkId: Int64(networkID)) else {
             self.prepareTransactionsForView(transactions: [])

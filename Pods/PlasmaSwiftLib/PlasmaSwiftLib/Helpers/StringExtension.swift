@@ -9,22 +9,22 @@
 import Foundation
 
 extension String {
-    var fullRange: Range<Index> {
+    public var fullRange: Range<Index> {
         return startIndex..<endIndex
     }
 
-    var fullNSRange: NSRange {
+    public var fullNSRange: NSRange {
         return NSRange(fullRange, in: self)
     }
 
-    func index(of char: Character) -> Index? {
+    public func index(of char: Character) -> Index? {
         guard let range = range(of: String(char)) else {
             return nil
         }
         return range.lowerBound
     }
 
-    func split(intoChunksOf chunkSize: Int) -> [String] {
+    public func split(intoChunksOf chunkSize: Int) -> [String] {
         var output = [String]()
         let splittedString = self
             .map { $0 }
@@ -53,7 +53,7 @@ extension String {
         return String(self[start..<end])
     }
 
-    func leftPadding(toLength: Int, withPad character: Character) -> String {
+    public func leftPadding(toLength: Int, withPad character: Character) -> String {
         let stringLength = self.count
         if stringLength < toLength {
             return String(repeatElement(character, count: toLength - stringLength)) + self
@@ -62,17 +62,17 @@ extension String {
         }
     }
 
-    func interpretAsBinaryData() -> Data? {
+    public func interpretAsBinaryData() -> Data? {
         let padded = self.padding(toLength: ((self.count + 7) / 8) * 8, withPad: "0", startingAt: 0)
         let byteArray = padded.split(intoChunksOf: 8).map { UInt8(strtoul($0, nil, 2)) }
         return Data(byteArray)
     }
 
-    func hasHexPrefix() -> Bool {
+    public func hasHexPrefix() -> Bool {
         return self.hasPrefix("0x")
     }
 
-    func stripHexPrefix() -> String {
+    public func stripHexPrefix() -> String {
         if self.hasPrefix("0x") {
             let indexStart = self.index(self.startIndex, offsetBy: 2)
             return String(self[indexStart...])
@@ -80,14 +80,14 @@ extension String {
         return self
     }
 
-    func addHexPrefix() -> String {
+    public func addHexPrefix() -> String {
         if !self.hasPrefix("0x") {
             return "0x" + self
         }
         return self
     }
 
-    func stripLeadingZeroes() -> String? {
+    public func stripLeadingZeroes() -> String? {
         let hex = self.addHexPrefix()
         guard let matcher = try? NSRegularExpression(pattern: "^(?<prefix>0x)0*(?<end>[0-9a-fA-F]*)$", options: NSRegularExpression.Options.dotMatchesLineSeparators) else {return nil}
         let match = matcher.captureGroups(string: hex, options: NSRegularExpression.MatchingOptions.anchored)
@@ -99,7 +99,7 @@ extension String {
         return "0x0"
     }
 
-    func matchingStrings(regex: String) -> [[String]] {
+    public func matchingStrings(regex: String) -> [[String]] {
         guard let regex = try? NSRegularExpression(pattern: regex, options: []) else { return [] }
         let nsString = self as NSString
         let results  = regex.matches(in: self, options: [], range: NSRange(location: 0, length: nsString.length))
@@ -111,7 +111,7 @@ extension String {
         }
     }
 
-    func range(from nsRange: NSRange) -> Range<String.Index>? {
+    public func range(from nsRange: NSRange) -> Range<String.Index>? {
         guard
             let from16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location, limitedBy: utf16.endIndex),
             let to16 = utf16.index(utf16.startIndex, offsetBy: nsRange.location + nsRange.length, limitedBy: utf16.endIndex),
@@ -121,14 +121,14 @@ extension String {
         return from ..< to
     }
 
-    var asciiValue: Int {
+    public var asciiValue: Int {
         let s = self.unicodeScalars
         return Int(s[s.startIndex].value)
     }
 }
 
 extension Character {
-    var asciiValue: Int {
+    public var asciiValue: Int {
         let s = String(self).unicodeScalars
         return Int(s[s.startIndex].value)
     }

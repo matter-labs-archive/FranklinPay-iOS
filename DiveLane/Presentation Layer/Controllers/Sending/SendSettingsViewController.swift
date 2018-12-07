@@ -29,7 +29,8 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var closeView: UIView!
     @IBOutlet weak var addressFromView: UIView!
     @IBOutlet weak var stackView: UIStackView!
-
+    @IBOutlet weak var blockchain: UISegmentedControl!
+    
     // MARK: - Dropdown Outlets
     @IBOutlet weak var heightWalletsConstraint: NSLayoutConstraint!
     @IBOutlet weak var walletsDropdownTableView: UITableView!
@@ -91,20 +92,36 @@ class SendSettingsViewController: UIViewController {
             let decimals = Float(1000000000000000000)
             let amountFloat = Float(amount)
             let resultAmount = Float(amountFloat / decimals)
-            self?.token = ERC20TokenModel(isEther: false)
+            let ta = tokenAddress ?? ""
+            if ta.isEmpty || ta == "0" {
+                self?.token = ERC20TokenModel(isEther: true)
+            } else {
+                self?.token = ERC20TokenModel(name: "Some token",
+                                              address: ta,
+                                              decimals: "18",
+                                              symbol: "Some token")
+            }
             self?.amountInString = String(resultAmount)
             self?.destinationAddress = destinationAddress
             do {
                 let wallet = try WalletsStorage().getSelectedWallet()
                 self?.wallet = wallet
                 self?.isFromDeepLink = isFromDeepLink
-                guard let token = self?.token else {
-                    let balance = try Web3Service().getETHbalance(for: wallet)
-                    self?.tokenBalance = balance
-                    return
+                if let token = self?.token {
+                    if token == ERC20TokenModel(isEther: true) {
+                        if let balance = try? Web3Service().getETHbalance(for: wallet) {
+                            self?.tokenBalance = balance
+                        }
+                    } else {
+                        if let balance = try? Web3Service().getERC20balance(for: wallet, token: token) {
+                            self?.tokenBalance = balance
+                        }
+                    }
+                } else {
+                    if let balance = try? Web3Service().getETHbalance(for: wallet) {
+                        self?.tokenBalance = balance
+                    }
                 }
-                let balance = try Web3Service().getERC20balance(for: wallet, token: token)
-                self?.tokenBalance = balance
             } catch let error {
                 fatalError(error.localizedDescription)
             }
@@ -114,6 +131,9 @@ class SendSettingsViewController: UIViewController {
     // MARK: Lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        if isFromDeepLink {
+            self.blockchain.isHidden = true
+        }
         arrowDownWalletsImageView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
@@ -165,9 +185,25 @@ class SendSettingsViewController: UIViewController {
         DispatchQueue.global().async { [weak self] in
             do {
                 guard let wallet = self?.wallet else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
                     return
                 }
-                let balance = try Web3Service().getETHbalance(for: wallet)
+                let balance: String?
+                guard let token = self?.token else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
+                    return
+                }
+                if token == ERC20TokenModel(isEther: true) {
+                   let result = try Web3Service().getETHbalance(for: wallet)
+                    balance = result
+                } else {
+                    let result = try Web3Service().getERC20balance(for: wallet, token: token)
+                    balance = result
+                }
                 DispatchQueue.main.async { [weak self] in
                     self?.tokenBalance = balance
                 }
@@ -299,7 +335,7 @@ class SendSettingsViewController: UIViewController {
     func getUTXOs() {
         self.animation.waitAnimation(isEnabled: true, notificationText: "Getting UTXOs from Plasma", on: self.view)
         currentUTXOs = []
-        guard let network = CurrentNetwork.currentNetwork else {return}
+        let network = CurrentNetwork.currentNetwork
         guard let wallet = wallet else {
             return
         }

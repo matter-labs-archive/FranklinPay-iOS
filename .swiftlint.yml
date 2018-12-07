@@ -18,8 +18,8 @@ cyclomatic_complexity: 30
 # configurable rules can be customized from this configuration file
 # binary rules can set their severity level
 function_body_length:
-  - 80 # warning
-  - 100 # error
+  - 150 # warning
+  - 180 # error
 force_cast: warning # implicitly
 force_try:
   severity: warning # explicitly

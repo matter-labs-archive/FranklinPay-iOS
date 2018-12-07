@@ -175,7 +175,7 @@ class AppController {
     func selectToken(for wallet: WalletModel) {
         do {
             try localDatabase.selectWallet(wallet: wallet)
-            let token = try TokensStorage().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1)).first
+            let token = try TokensStorage().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork.chainID)).first
             CurrentToken.currentToken = token
         } catch let error {
             fatalError("Can't select token - \(String(describing: error))")
@@ -183,7 +183,7 @@ class AppController {
     }
     
     func addFirstToken(for wallet: WalletModel, completion: @escaping (Error?) -> Void) {
-        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork.chainID )) ?? 0
         for networkID in 1...42 {
             let etherToken = ERC20TokenModel(isEther: true)
             do {
@@ -201,14 +201,14 @@ class AppController {
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {
-//        guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
-//        switch parsed.isPayRequest {
-//        case false:
-//            //Custom transaction
-//            routerEIP681.sendCustomTransaction(parsed: parsed, usingWindow: window)
-//        case true:
-//            //Regular sending of ETH
-//            routerEIP681.sendETHTransaction(parsed: parsed, usingWindow: window)
-//        }
+        guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
+        switch parsed.isPayRequest {
+        case false:
+            //Custom transaction
+            routerEIP681.sendCustomTransaction(parsed: parsed, usingWindow: window)
+        case true:
+            //Regular sending of ETH
+            routerEIP681.sendETHTransaction(parsed: parsed, usingWindow: window)
+        }
     }
 }
