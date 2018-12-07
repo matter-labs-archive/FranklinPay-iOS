@@ -147,11 +147,15 @@ class TokenViewController: UIViewController {
         guard let wallet = wallet else {
             return
         }
+        do {
+            try WalletsStorage().selectWallet(wallet: wallet)
+        } catch {
+            return
+        }
         guard let token = token else {
             return
         }
         let sendSettingsViewController = SendSettingsViewController(
-                wallet: wallet,
                 tokenBalance: tokenBalance ?? "",
                 token: token)
         self.navigationController?.pushViewController(sendSettingsViewController, animated: true)

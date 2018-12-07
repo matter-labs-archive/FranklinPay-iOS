@@ -25,6 +25,9 @@
 		9196A68E21BA93E000852ED0 /* EIP681.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A68D21BA93E000852ED0 /* EIP681.swift */; };
 		9196A69021BAA20000852ED0 /* ENS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A68F21BAA20000852ED0 /* ENS.swift */; };
 		9196A69421BAA3B800852ED0 /* NameHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A69321BAA3B800852ED0 /* NameHash.swift */; };
+		9196A69921BACF1300852ED0 /* PlasmaRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A69821BACF1300852ED0 /* PlasmaRouter.swift */; };
+		9196A69B21BACF6B00852ED0 /* PlasmaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A69A21BACF6B00852ED0 /* PlasmaParser.swift */; };
+		9196A69D21BAD6D400852ED0 /* PlasmaParserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9196A69C21BAD6D400852ED0 /* PlasmaParserModel.swift */; };
 		9197F2D82143B52F00C358AA /* WalletAdditionMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */; };
 		9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */; };
 		9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */; };
@@ -189,6 +192,9 @@
 		9196A68D21BA93E000852ED0 /* EIP681.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EIP681.swift; sourceTree = "<group>"; };
 		9196A68F21BAA20000852ED0 /* ENS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ENS.swift; sourceTree = "<group>"; };
 		9196A69321BAA3B800852ED0 /* NameHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameHash.swift; sourceTree = "<group>"; };
+		9196A69821BACF1300852ED0 /* PlasmaRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaRouter.swift; sourceTree = "<group>"; };
+		9196A69A21BACF6B00852ED0 /* PlasmaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaParser.swift; sourceTree = "<group>"; };
+		9196A69C21BAD6D400852ED0 /* PlasmaParserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaParserModel.swift; sourceTree = "<group>"; };
 		9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAdditionMode.swift; sourceTree = "<group>"; };
 		9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentViewController.swift; sourceTree = "<group>"; };
@@ -420,6 +426,37 @@
 				914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */,
 			);
 			path = Pincode;
+			sourceTree = "<group>";
+		};
+		9196A69521BACE5D00852ED0 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				9196A69721BACE7F00852ED0 /* Plasma */,
+				9196A69621BACE6A00852ED0 /* EIP681 */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		9196A69621BACE6A00852ED0 /* EIP681 */ = {
+			isa = PBXGroup;
+			children = (
+				9196A68D21BA93E000852ED0 /* EIP681.swift */,
+				B2495E0A215D0F5A005B18F2 /* EIP681Router.swift */,
+				B2495E0C215D0FF0005B18F2 /* EIP681Model.swift */,
+				9196A68F21BAA20000852ED0 /* ENS.swift */,
+				9196A69321BAA3B800852ED0 /* NameHash.swift */,
+			);
+			path = EIP681;
+			sourceTree = "<group>";
+		};
+		9196A69721BACE7F00852ED0 /* Plasma */ = {
+			isa = PBXGroup;
+			children = (
+				9196A69821BACF1300852ED0 /* PlasmaRouter.swift */,
+				9196A69C21BAD6D400852ED0 /* PlasmaParserModel.swift */,
+				9196A69A21BACF6B00852ED0 /* PlasmaParser.swift */,
+			);
+			path = Plasma;
 			sourceTree = "<group>";
 		};
 		9197F2D62143B4FE00C358AA /* WalletCreation */ = {
@@ -659,6 +696,7 @@
 		91B6A7AB2143608B0033A045 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				9196A69521BACE5D00852ED0 /* Parsers */,
 				B2495E09215D0F48005B18F2 /* AppController */,
 				91B6A79621435F5D0033A045 /* AppDelegate.swift */,
 				91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */,
@@ -915,11 +953,6 @@
 			isa = PBXGroup;
 			children = (
 				91B6A7C52143660B0033A045 /* AppController.swift */,
-				9196A68D21BA93E000852ED0 /* EIP681.swift */,
-				B2495E0A215D0F5A005B18F2 /* EIP681Router.swift */,
-				B2495E0C215D0FF0005B18F2 /* EIP681Model.swift */,
-				9196A68F21BAA20000852ED0 /* ENS.swift */,
-				9196A69321BAA3B800852ED0 /* NameHash.swift */,
 			);
 			path = AppController;
 			sourceTree = "<group>";
@@ -1438,6 +1471,7 @@
 				B2E668D82150FA0500C3CC2D /* TokenDropdownManager.swift in Sources */,
 				B2E668D12150ED6000C3CC2D /* WalletCellDropdown.swift in Sources */,
 				B2495E0B215D0F5A005B18F2 /* EIP681Router.swift in Sources */,
+				9196A69D21BAD6D400852ED0 /* PlasmaParserModel.swift in Sources */,
 				E2B45A602176379100F38E50 /* AddContactController.swift in Sources */,
 				91D0374121B0C74B009BD01C /* TransactionsStorage.swift in Sources */,
 				E2DCA660219323B000F94FBA /* TransactionInfoCell.swift in Sources */,
@@ -1452,6 +1486,7 @@
 				130C88E9217BC83700FC165C /* TransactionInfoWebController.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				9197F3012143BFC600C358AA /* TokenViewController.swift in Sources */,
+				9196A69921BACF1300852ED0 /* PlasmaRouter.swift in Sources */,
 				E2B45A352174D21100F38E50 /* AnimationController.swift in Sources */,
 				91E7256421507D16003FAD76 /* FiatService.swift in Sources */,
 				9197F3082143C39C00C358AA /* SendSettingsViewController.swift in Sources */,
@@ -1490,6 +1525,7 @@
 				9197F2F92143BC8300C358AA /* CurrentToken.swift in Sources */,
 				91D0373D21AF4B04009BD01C /* Errors.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
+				9196A69B21BACF6B00852ED0 /* PlasmaParser.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
 				91B6A7C4214365B30033A045 /* ERC20TokenModel.swift in Sources */,
 				E2DCA65A2193238500F94FBA /* TransactionInfoController.swift in Sources */,

@@ -57,22 +57,18 @@ class SendSettingsViewController: UIViewController {
     var walletDropdownManager: WalletDropdownManager?
 
     convenience init(_ plasmaContract: String = PlasmaContract.plasmaAddress,
-                     wallet: WalletModel,
                      tokenBalance: String,
                      token: ERC20TokenModel = ERC20TokenModel(isEther: true)) {
         self.init()
-        self.wallet = wallet
         self.tokenBalance = tokenBalance
         self.token = token
         self.destinationAddress = plasmaContract
     }
 
     // MARK: Initializers for launching from deeplink
-    convenience init(wallet: WalletModel,
-                     tokenBalance: String,
+    convenience init(tokenBalance: String,
                      token: ERC20TokenModel) {
         self.init()
-        self.wallet = wallet
         self.tokenBalance = tokenBalance
         self.token = token
     }
@@ -82,58 +78,46 @@ class SendSettingsViewController: UIViewController {
         self.init()
         self.destinationAddress = destinationAddress
     }
+    
+    // Plasma init
+    convenience init(amount: String?,
+                     destinationAddress: String,
+                     isFromDeepLink: Bool = true) {
+        self.init()
+        self.amountInString = amount
+        self.destinationAddress = destinationAddress
+        self.isFromDeepLink = isFromDeepLink
+        blockchainState = .Plasma
+//        blockchainState = .Plasma
+//        tokenNameLabel.text = "Choose UTXO"
+        
+        //self.getUTXOs()
+    }
 
     convenience init(tokenAddress: String?,
                      amount: BigUInt,
                      destinationAddress: String,
                      isFromDeepLink: Bool = true) {
         self.init()
-        DispatchQueue.global().async { [weak self] in
-            let decimals = Float(1000000000000000000)
-            let amountFloat = Float(amount)
-            let resultAmount = Float(amountFloat / decimals)
-            let ta = tokenAddress ?? ""
-            if ta.isEmpty || ta == "0" {
-                self?.token = ERC20TokenModel(isEther: true)
-            } else {
-                self?.token = ERC20TokenModel(name: "Some token",
-                                              address: ta,
-                                              decimals: "18",
-                                              symbol: "Some token")
-            }
-            self?.amountInString = String(resultAmount)
-            self?.destinationAddress = destinationAddress
-            do {
-                let wallet = try WalletsStorage().getSelectedWallet()
-                self?.wallet = wallet
-                self?.isFromDeepLink = isFromDeepLink
-                if let token = self?.token {
-                    if token == ERC20TokenModel(isEther: true) {
-                        if let balance = try? Web3Service().getETHbalance(for: wallet) {
-                            self?.tokenBalance = balance
-                        }
-                    } else {
-                        if let balance = try? Web3Service().getERC20balance(for: wallet, token: token) {
-                            self?.tokenBalance = balance
-                        }
-                    }
-                } else {
-                    if let balance = try? Web3Service().getETHbalance(for: wallet) {
-                        self?.tokenBalance = balance
-                    }
-                }
-            } catch let error {
-                fatalError(error.localizedDescription)
-            }
+        let decimals = Float(1000000000000000000)
+        let amountFloat = Float(amount)
+        let resultAmount = Float(amountFloat / decimals)
+        let ta = tokenAddress ?? ""
+        if ta.isEmpty || ta == "0" {
+            self.token = ERC20TokenModel(isEther: true)
+        } else {
+            self.token = ERC20TokenModel(name: "Some token",
+                                          address: ta,
+                                          decimals: "18",
+                                          symbol: "Some token")
         }
+        self.amountInString = String(resultAmount)
+        self.destinationAddress = destinationAddress
     }
 
     // MARK: Lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        if isFromDeepLink {
-            self.blockchain.isHidden = true
-        }
         arrowDownWalletsImageView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
@@ -165,52 +149,62 @@ class SendSettingsViewController: UIViewController {
         if !isFromDeepLink {
             token = CurrentToken.currentToken
         }
-        DispatchQueue.global().async { [weak self] in
-            do {
-                let wallet = try self?.localStorage.getSelectedWallet()
-                DispatchQueue.main.async {
-                    self?.wallet = wallet
-                    self?.setup()
-                }
-            } catch {
-                DispatchQueue.main.async {
-                    self?.wallet = nil
-                }
-            }
-        }
+        self.setup()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DispatchQueue.global().async { [weak self] in
-            do {
-                guard let wallet = self?.wallet else {
-                    DispatchQueue.main.async {
-                        self?.tokenBalance = nil
-                    }
-                    return
+            guard let selectedWallet = try? self?.localStorage.getSelectedWallet() else {
+                DispatchQueue.main.async {
+                    self?.wallet = nil
+                    self?.tokenBalance = nil
                 }
-                let balance: String?
-                guard let token = self?.token else {
-                    DispatchQueue.main.async {
-                        self?.tokenBalance = nil
-                    }
-                    return
-                }
-                if token == ERC20TokenModel(isEther: true) {
-                   let result = try Web3Service().getETHbalance(for: wallet)
-                    balance = result
-                } else {
-                    let result = try Web3Service().getERC20balance(for: wallet, token: token)
-                    balance = result
-                }
-                DispatchQueue.main.async { [weak self] in
-                    self?.tokenBalance = balance
-                }
-            } catch {
+                return
+            }
+            self?.wallet = selectedWallet
+            guard let wallet = selectedWallet else {
                 DispatchQueue.main.async {
                     self?.tokenBalance = nil
                 }
+                return
+            }
+            DispatchQueue.main.async {
+                self?.addressFromLabel.text = "\(wallet.address.hideExtraSymbolsInAddress() )"
+            }
+            if self?.blockchainState == .Plasma {
+                DispatchQueue.main.async {
+                    self?.tokenBalance = nil
+                }
+                self?.getUTXOs()
+                return
+            }
+            let balance: String?
+            guard let token = self?.token else {
+                DispatchQueue.main.async {
+                    self?.tokenBalance = nil
+                }
+                return
+            }
+            if token == ERC20TokenModel(isEther: true) {
+                guard let result = try? Web3Service().getETHbalance(for: wallet) else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
+                    return
+                }
+                balance = result
+            } else {
+                guard let result = try? Web3Service().getERC20balance(for: wallet, token: token) else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
+                    return
+                }
+                balance = result
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.tokenBalance = balance
             }
         }
     }
@@ -227,10 +221,11 @@ class SendSettingsViewController: UIViewController {
 
     private func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "\(wallet?.address.hideExtraSymbolsInAddress() ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
-        tokenNameLabel.text = token?.symbol.uppercased() ?? "ETH"
+        tokenNameLabel.text = blockchainState == .Plasma ?
+            "CHOOSE UTXO" :
+            (token?.symbol.uppercased() ?? "ETH")
         hideSendButton(true)
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
@@ -336,7 +331,7 @@ class SendSettingsViewController: UIViewController {
         self.animation.waitAnimation(isEnabled: true, notificationText: "Getting UTXOs from Plasma", on: self.view)
         currentUTXOs = []
         let network = CurrentNetwork.currentNetwork
-        guard let wallet = wallet else {
+        guard let wallet = self.wallet else {
             return
         }
         guard let ethAddress = EthereumAddress(wallet.address) else {return}
@@ -562,7 +557,7 @@ class SendSettingsViewController: UIViewController {
             Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
             return
         }
-        guard let currentAddress = try? WalletsService().getSelectedWallet().address else {
+        guard let currentAddress = wallet?.address else {
             self.animation.waitAnimation(isEnabled: false,
                                          notificationText: "Preparing transaction",
                                          on: self.view)
