@@ -6,7 +6,7 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import EthereumAddress
 import BigInt
 import PlasmaSwiftLib
@@ -43,10 +43,10 @@ public final class PlasmaRouter {
     
     private func showController(_ controller: UIViewController, window: UIWindow) {
         let tabs = self.goToApp(controller: controller)
-        
         DispatchQueue.main.async {
-            window.rootViewController = tabs
+            tabs.view.backgroundColor = UIColor.white
             tabs.selectedIndex = 2
+            window.rootViewController = tabs
             window.makeKeyAndVisible()
         }
     }

@@ -211,7 +211,7 @@ class SendSettingsViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.stackView.isUserInteractionEnabled = true
+        //self.stackView.isUserInteractionEnabled = true
     }
 
     private func hideSendButton(_ hidden: Bool = true) {
