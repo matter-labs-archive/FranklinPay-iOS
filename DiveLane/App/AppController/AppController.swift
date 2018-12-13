@@ -7,15 +7,16 @@
 //
 
 import UIKit
-import web3swift
-import struct BigInt.BigUInt
+import Web3swift
+import BigInt
 
 class AppController {
 
-    let transactionsService = TransactionsService()
-    let etherscanService = EtherscanService()
-    let localDatabase = LocalDatabase()
+    let transactionsService = Web3Service()
+    let etherscanService = ContractsService()
+    let localDatabase = WalletsStorage()
     let routerEIP681 = EIP681Router()
+    let plasmaRouter = PlasmaRouter()
 
     convenience init(
             window: UIWindow,
@@ -60,21 +61,25 @@ class AppController {
                                         withImage: UIImage(named: "wallet_gray"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: "Transactions History",
-                                        withImage: UIImage(named: "transactions_gray"),
-                                        withController: TransactionsHistoryViewController(),
-                                        tag: 2)
-        let nav3 = navigationController(withTitle: "Send",
+        let nav2 = navigationController(withTitle: "Send",
                                         withImage: UIImage(named: "send_gray"),
                                         withController: SendSettingsViewController(),
+                                        tag: 2)
+        let nav3 = navigationController(withTitle: "Transactions History",
+                                        withImage: UIImage(named: "transactions_gray"),
+                                        withController: TransactionsHistoryViewController(),
                                         tag: 3)
-        let nav4 = navigationController(withTitle: "Settings",
-                                        withImage: UIImage(named: "settings_gray"),
-                                        withController: SettingsViewController(nibName: nil, bundle: nil),
-                                        tag: 4)
-        let nav5 = navigationController(withTitle: "Contacts",
+//        let nav4 = navigationController(withTitle: "Settings",
+//                                        withImage: UIImage(named: "settings_gray"),
+//                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+//                                        tag: 4)
+        let nav4 = navigationController(withTitle: "Contacts",
                                         withImage: UIImage(named: "contacts_gray"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
+                                        tag: 4)
+        let nav5 = navigationController(withTitle: "Browser",
+                                        withImage: UIImage(named: "AppIcon"),
+                                        withController: BrowserController(nibName: nil, bundle: nil),
                                         tag: 5)
         tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
 
@@ -101,95 +106,115 @@ class AppController {
         var startViewController: UIViewController?
 
         let isOnboardingPassed = UserDefaultKeys().isOnboardingPassed
-        let existingWallet = LocalDatabase().getWallet()
+        let wallet: WalletModel?
+        do {
+            let w = try localDatabase.getSelectedWallet()
+            wallet = w
+        } catch {
+            wallet = nil
+        }
 
         if !isOnboardingPassed {
             startViewController = OnboardingViewController()
             startViewController?.view.backgroundColor = Colors.BackgroundColors.main
-        } else if existingWallet == nil {
+        } else if wallet == nil {
             startViewController = addWallet()
             startViewController?.view.backgroundColor = UIColor.white
         } else {
             DispatchQueue.global().async {
                 if !UserDefaultKeys().tokensDownloaded {
-                    TokensService().downloadAllAvailableTokensIfNeeded(completion: { (error) in
-                        if error == nil {
-                            UserDefaultKeys().setTokensDownloaded()
-                            UserDefaults.standard.synchronize()
-                        }
-                    })
+                    do {
+                        try TokensService().downloadAllAvailableTokensIfNeeded()
+                        UserDefaultKeys().setTokensDownloaded()
+                        UserDefaults.standard.synchronize()
+                    } catch let error {
+                        fatalError("Can't download tokens - \(String(describing: error))")
+                    }
                 }
             }
             DispatchQueue.global().async { [unowned self] in
                 if !UserDefaultKeys().isEtherAdded {
-                    guard let wallet = KeysService().selectedWallet() else {
-                        return
+                    do {
+                        let wallet = try self.localDatabase.getSelectedWallet()
+                        self.addFirstToken(for: wallet, completion: { (error) in
+                            if error == nil {
+                                UserDefaultKeys().setEtherAdded()
+                                UserDefaults.standard.synchronize()
+                                
+                            } else {
+                                fatalError("Can't add ether - \(String(describing: error))")
+                            }
+                        })
+                    } catch let error {
+                        fatalError("Can't get wallet - \(String(describing: error))")
                     }
-                    self.addFirstToken(for: wallet, completion: { (error) in
-                        if error == nil {
-                            UserDefaultKeys().setEtherAdded()
-                            UserDefaults.standard.synchronize()
-
-                        } else {
-                            //fatalError("Can't add ether - \(String(describing: error))")
-                        }
-                    })
                 }
             }
             startViewController = self.goToApp()
             startViewController?.view.backgroundColor = UIColor.white
-
         }
-        window.rootViewController = startViewController ?? UIViewController()
-        window.makeKeyAndVisible()
-
+        DispatchQueue.main.async {
+            window.rootViewController = startViewController ?? UIViewController()
+            window.makeKeyAndVisible()
+        }
     }
+    
     func selectNetwork() {
         CurrentNetwork.currentNetwork = (UserDefaultKeys().currentNetwork as? Networks) ?? Networks.Mainnet
         CurrentWeb.currentWeb = (UserDefaultKeys().currentWeb as? web3) ?? Web3.InfuraMainnetWeb3()
     }
-    func selectWallet(completion: @escaping (KeyWalletModel?) -> Void) {
-        guard let firstWallet = LocalDatabase().getWallet() else {
+    
+    func selectWallet(completion: @escaping (WalletModel?) -> Void) {
+        guard let firstWallet = try? localDatabase.getSelectedWallet() else {
             completion(nil)
             return
         }
         completion(firstWallet)
 
     }
-    func selectToken(for wallet: KeyWalletModel) {
-        localDatabase.selectWallet(wallet: wallet) {
-            let token = self.localDatabase.getAllTokens(for: wallet,
-                                                   forNetwork: Int64(CurrentNetwork.currentNetwork?.chainID ?? 1)).first
+    
+    func selectToken(for wallet: WalletModel) {
+        do {
+            try localDatabase.selectWallet(wallet: wallet)
+            let token = try TokensStorage().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork.chainID)).first
             CurrentToken.currentToken = token
+        } catch let error {
+            fatalError("Can't select token - \(String(describing: error))")
         }
     }
-    func addFirstToken(for wallet: KeyWalletModel, completion: @escaping (Error?) -> Void) {
-        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork?.chainID ?? 0)) ?? 0
+    
+    func addFirstToken(for wallet: WalletModel, completion: @escaping (Error?) -> Void) {
+        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork.chainID )) ?? 0
         for networkID in 1...42 {
             let etherToken = ERC20TokenModel(isEther: true)
-            localDatabase.saveCustomToken(with: etherToken,
-                                          forWallet: wallet,
-                                          forNetwork: Int64(networkID)) { (error) in
-                if error == nil && Int64(networkID) == currentNetworkID {
-                    CurrentToken.currentToken = etherToken
-                } else if error != nil && Int64(networkID) == currentNetworkID {
-                    completion(error)
-                }
-                if networkID == 42 {
-                    completion(error)
-                }
+            do {
+                try TokensStorage().saveCustomToken(token: etherToken,
+                                            wallet: wallet,
+                                            networkId: Int64(networkID))
+            } catch let error {
+                completion(error)
+            }
+            if Int64(networkID) == currentNetworkID {
+                CurrentToken.currentToken = etherToken
             }
         }
+        completion(nil)
     }
+    
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {
-        guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
-        switch parsed.isPayRequest {
-        case false:
-            //Custom transaction
-            routerEIP681.sendCustomTransaction(parsed: parsed, usingWindow: window)
-        case true:
-            //Regular sending of ETH
-            routerEIP681.sendETHTransaction(parsed: parsed, usingWindow: window)
+        if url.absoluteString.hasPrefix("ethereum:") {
+            guard let parsed = Web3.EIP681CodeParser.parse(url.absoluteString) else { return }
+            switch parsed.isPayRequest {
+            case false:
+                //Custom transaction
+                routerEIP681.sendCustomTransaction(parsed: parsed, usingWindow: window)
+            case true:
+                //Regular sending of ETH
+                routerEIP681.sendETHTransaction(parsed: parsed, usingWindow: window)
+            }
+        } else if url.absoluteString.hasPrefix("plasma:") {
+            guard let parsed = PlasmaParser.parse(url.absoluteString) else { return }
+            plasmaRouter.sendCustomTransaction(parsed: parsed, usingWindow: window)
         }
     }
 }

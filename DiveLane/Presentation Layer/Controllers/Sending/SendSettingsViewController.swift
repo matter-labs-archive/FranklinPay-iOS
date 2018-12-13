@@ -8,10 +8,10 @@
 
 import UIKit
 import QRCodeReader
-import web3swift
-import struct BigInt.BigUInt
+import Web3swift
+import BigInt
 import PlasmaSwiftLib
-import struct EthereumAddress.EthereumAddress
+import EthereumAddress
 
 class SendSettingsViewController: UIViewController {
 
@@ -29,7 +29,8 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var closeView: UIView!
     @IBOutlet weak var addressFromView: UIView!
     @IBOutlet weak var stackView: UIStackView!
-
+    @IBOutlet weak var blockchain: UISegmentedControl!
+    
     // MARK: - Dropdown Outlets
     @IBOutlet weak var heightWalletsConstraint: NSLayoutConstraint!
     @IBOutlet weak var walletsDropdownTableView: UITableView!
@@ -38,40 +39,36 @@ class SendSettingsViewController: UIViewController {
     @IBOutlet weak var arrowDownWalletsImageView: UIImageView!
     @IBOutlet weak var arrowDownTokensImageView: UIImageView!
     // MARK: Variables
-    var wallet: KeyWalletModel?
+    var wallet: WalletModel?
     var token: ERC20TokenModel?
-    var utxo: ListUTXOsModel?
+    var utxo: PlasmaUTXOs?
     var tokenBalance: String?
     var isFromDeepLink: Bool = false
     var amountInString: String?
     var destinationAddress: String?
-    let localStorage = LocalDatabase()
-    let transactionsService = TransactionsService()
+    let localStorage = WalletsStorage()
+    let transactionsService = Web3Service()
     let animation = AnimationController()
 
-    var currentUTXOs = [ListUTXOsModel]()
+    var currentUTXOs = [PlasmaUTXOs]()
     var blockchainState: AppState = .ETH
 
     var tokenDropdownManager: TokenDropdownManager?
     var walletDropdownManager: WalletDropdownManager?
 
-    convenience init(_ plasmaContract: String = plasmaContract,
-                     wallet: KeyWalletModel,
+    convenience init(_ plasmaContract: String = PlasmaContract.plasmaAddress,
                      tokenBalance: String,
                      token: ERC20TokenModel = ERC20TokenModel(isEther: true)) {
         self.init()
-        self.wallet = wallet
         self.tokenBalance = tokenBalance
         self.token = token
         self.destinationAddress = plasmaContract
     }
 
     // MARK: Initializers for launching from deeplink
-    convenience init(wallet: KeyWalletModel,
-                     tokenBalance: String,
+    convenience init(tokenBalance: String,
                      token: ERC20TokenModel) {
         self.init()
-        self.wallet = wallet
         self.tokenBalance = tokenBalance
         self.token = token
     }
@@ -81,38 +78,41 @@ class SendSettingsViewController: UIViewController {
         self.init()
         self.destinationAddress = destinationAddress
     }
+    
+    // Plasma init
+    convenience init(amount: String?,
+                     destinationAddress: String,
+                     isFromDeepLink: Bool = true) {
+        self.init()
+        self.amountInString = amount
+        self.destinationAddress = destinationAddress
+        self.isFromDeepLink = isFromDeepLink
+        blockchainState = .Plasma
+//        blockchainState = .Plasma
+//        tokenNameLabel.text = "Choose UTXO"
+        
+        //self.getUTXOs()
+    }
 
     convenience init(tokenAddress: String?,
                      amount: BigUInt,
                      destinationAddress: String,
                      isFromDeepLink: Bool = true) {
         self.init()
-        token = ERC20TokenModel(isEther: false)
         let decimals = Float(1000000000000000000)
         let amountFloat = Float(amount)
         let resultAmount = Float(amountFloat / decimals)
+        let ta = tokenAddress ?? ""
+        if ta.isEmpty || ta == "0" {
+            self.token = ERC20TokenModel(isEther: true)
+        } else {
+            self.token = ERC20TokenModel(name: "Some token",
+                                          address: ta,
+                                          decimals: "18",
+                                          symbol: "Some token")
+        }
         self.amountInString = String(resultAmount)
         self.destinationAddress = destinationAddress
-        let walletFromDatabase = LocalDatabase().getWallet()
-        guard let wallet = walletFromDatabase else {
-            return
-        }
-        self.wallet = wallet
-        self.isFromDeepLink = isFromDeepLink
-        if tokenAddress != nil {
-            Web3SwiftService().getERCBalance(for: tokenAddress!,
-                    address: wallet.address) { (result, _) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.tokenBalance = result ?? ""
-                }
-            }
-        } else {
-            Web3SwiftService().getETHbalance(for: wallet) { (result, _) in
-                DispatchQueue.main.async { [weak self] in
-                    self?.tokenBalance = result ?? ""
-                }
-            }
-        }
     }
 
     // MARK: Lyfecycle
@@ -125,7 +125,23 @@ class SendSettingsViewController: UIViewController {
         arrowDownWalletsImageView.isUserInteractionEnabled = true
         arrowDownTokensImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapToken)))
         arrowDownTokensImageView.isUserInteractionEnabled = true
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
     }
+    
+    private func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
+        return addButton
+    }
+    
+    @objc func settingsWallet() {
+        //let walletsViewController = WalletsViewController()
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -133,25 +149,69 @@ class SendSettingsViewController: UIViewController {
         if !isFromDeepLink {
             token = CurrentToken.currentToken
         }
-        wallet = localStorage.getWallet()
-        setup()
+        self.setup()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
-        guard let wallet = wallet else {
-            return
-        }
-        Web3SwiftService().getETHbalance(for: wallet) { [weak self] (result, _) in
+        DispatchQueue.global().async { [weak self] in
+            guard let selectedWallet = try? self?.localStorage.getSelectedWallet() else {
+                DispatchQueue.main.async {
+                    self?.wallet = nil
+                    self?.tokenBalance = nil
+                }
+                return
+            }
+            self?.wallet = selectedWallet
+            guard let wallet = selectedWallet else {
+                DispatchQueue.main.async {
+                    self?.tokenBalance = nil
+                }
+                return
+            }
             DispatchQueue.main.async {
-                self?.tokenBalance = result ?? ""
+                self?.addressFromLabel.text = "\(wallet.address.hideExtraSymbolsInAddress() )"
+            }
+            if self?.blockchainState == .Plasma {
+                DispatchQueue.main.async {
+                    self?.tokenBalance = nil
+                }
+                self?.getUTXOs()
+                return
+            }
+            let balance: String?
+            guard let token = self?.token else {
+                DispatchQueue.main.async {
+                    self?.tokenBalance = nil
+                }
+                return
+            }
+            if token == ERC20TokenModel(isEther: true) {
+                guard let result = try? Web3Service().getETHbalance(for: wallet) else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
+                    return
+                }
+                balance = result
+            } else {
+                guard let result = try? Web3Service().getERC20balance(for: wallet, token: token) else {
+                    DispatchQueue.main.async {
+                        self?.tokenBalance = nil
+                    }
+                    return
+                }
+                balance = result
+            }
+            DispatchQueue.main.async { [weak self] in
+                self?.tokenBalance = balance
             }
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.stackView.isUserInteractionEnabled = true
+        //self.stackView.isUserInteractionEnabled = true
     }
 
     private func hideSendButton(_ hidden: Bool = true) {
@@ -161,13 +221,38 @@ class SendSettingsViewController: UIViewController {
 
     private func setup() {
         self.hideKeyboardWhenTappedAround()
-        addressFromLabel.text = "\(wallet?.address.hideExtraSymbolsInAddress() ?? "")"
         addGestureRecognizer()
         closeButton.isHidden = true
-        tokenNameLabel.text = token?.symbol.uppercased() ?? "ETH"
+        tokenNameLabel.text = blockchainState == .Plasma ?
+            "CHOOSE UTXO" :
+            (token?.symbol.uppercased() ?? "ETH")
         hideSendButton(true)
         enterAddressTextField.text = destinationAddress
         amountTextField.text = amountInString
+    }
+    
+    private func setMainParams(tokens: [ERC20TokenModel], wallet: WalletModel, utxos: [PlasmaUTXOs]) {
+        self.tokenDropdownManager?.tokens = tokens
+        self.tokenDropdownManager?.wallet = wallet
+        self.tokenDropdownManager?.utxos = utxos
+    }
+    
+    private func setTableView(withManager manager: ManagerType, isPlasma: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            let tableView = (manager == .Wallets ? self?.walletsDropdownTableView : self?.tokensDropdownTableView)!
+            let cellToRegister = manager == .Wallets ? "WalletCellDropdown" : "TokenCellDropdown"
+            let nib = UINib(nibName: cellToRegister, bundle: nil)
+            tableView.register(nib, forCellReuseIdentifier: cellToRegister)
+            tableView.delegate = manager == .Wallets ? self?.walletDropdownManager : self?.tokenDropdownManager
+            tableView.dataSource = manager == .Wallets ? self?.walletDropdownManager : self?.tokenDropdownManager
+            
+            self?.walletDropdownManager?.isPlasma = isPlasma
+            self?.walletDropdownManager?.delegate = self
+            self?.tokenDropdownManager?.isPlasma = isPlasma
+            self?.tokenDropdownManager?.delegate = self
+            
+            tableView.reloadData()
+        }
     }
 
     func addGestureRecognizer() {
@@ -219,56 +304,48 @@ class SendSettingsViewController: UIViewController {
     func prepareDropdownViewForEtherBlockchain(withManager manager: ManagerType) {
         tokenDropdownManager = TokenDropdownManager()
         walletDropdownManager = WalletDropdownManager()
-        switch manager {
-        case .Tokens:
-            guard let wallet = wallet else {
-                return
+        DispatchQueue.global().async { [weak self] in
+            switch manager {
+            case .Tokens:
+                guard let wallet = self?.wallet else {
+                    Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {})
+                    return
+                }
+                guard let tokens = try? TokensStorage().getAllTokens(for: wallet, networkId: CurrentNetwork().getNetworkID()) else {
+                    Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {})
+                    return
+                }
+                self?.setMainParams(tokens: tokens, wallet: wallet, utxos: [])
+            case .Wallets:
+                guard let wallets = try? self?.localStorage.getAllWallets(), let w = wallets else {
+                    Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {})
+                    return
+                }
+                self?.walletDropdownManager?.wallets = w
             }
-            tokenDropdownManager?.tokens = localStorage.getAllTokens(for: wallet,
-                                                                    forNetwork: CurrentNetwork().getNetworkID())
-            tokenDropdownManager?.wallet = wallet
-            tokenDropdownManager?.utxos = []
-        case .Wallets:
-            walletDropdownManager?.wallets = localStorage.getAllWallets()
+            self?.setTableView(withManager: manager, isPlasma: false)
         }
-        let tableView = (manager == .Wallets ? walletsDropdownTableView : tokensDropdownTableView)!
-        let cellToRegister = manager == .Wallets ? "WalletCellDropdown" : "TokenCellDropdown"
-        let nib = UINib(nibName: cellToRegister, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: cellToRegister)
-        tableView.delegate = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
-        tableView.dataSource = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
-
-        walletDropdownManager?.isPlasma = false
-        walletDropdownManager?.delegate = self
-        tokenDropdownManager?.isPlasma = false
-        tokenDropdownManager?.delegate = self
     }
 
     func getUTXOs() {
-        DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: true, notificationText: "Getting UTXOs from Plasma", on: (self?.view)!)
-        }
+        self.animation.waitAnimation(isEnabled: true, notificationText: "Getting UTXOs from Plasma", on: self.view)
         currentUTXOs = []
-        guard let network = CurrentNetwork.currentNetwork else {return}
-        guard let wallet = wallet else {
+        let network = CurrentNetwork.currentNetwork
+        guard let wallet = self.wallet else {
             return
         }
         guard let ethAddress = EthereumAddress(wallet.address) else {return}
         let mainnet = network.chainID == Networks.Mainnet.chainID
         let testnet = !mainnet && network.chainID == Networks.Rinkeby.chainID
         if !testnet && !mainnet {return}
-        ServiceUTXO().getListUTXOs(for: ethAddress, onTestnet: testnet) { [weak self] (result) in
-            switch result {
-            case .Success(let utxos):
-                DispatchQueue.main.async {
-                    self?.currentUTXOs = utxos
-                    self?.animation.waitAnimation(isEnabled: false, notificationText: "Getting UTXOs from Plasma", on: (self?.view)!)
-                }
-            case .Error(let error):
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self?.animation.waitAnimation(isEnabled: false, notificationText: "Getting UTXOs from Plasma", on: (self?.view)!)
-                }
+        DispatchQueue.global().async { [weak self] in
+            do {
+                let list = try PlasmaService().getUTXOs(for: ethAddress, onTestnet: testnet)
+                self?.currentUTXOs = list
+                self?.animation.waitAnimation(isEnabled: false, notificationText: "Getting UTXOs from Plasma", on: (self?.view)!)
+            } catch {
+                self?.currentUTXOs = []
+                self?.animation.waitAnimation(isEnabled: false, notificationText: "Getting UTXOs from Plasma", on: (self?.view)!)
             }
         }
     }
@@ -276,29 +353,22 @@ class SendSettingsViewController: UIViewController {
     func prepareDropdownViewForPlasmaBlockchain(withManager manager: ManagerType) {
         tokenDropdownManager = TokenDropdownManager()
         walletDropdownManager = WalletDropdownManager()
-        switch manager {
-        case .Tokens:
-            guard let wallet = wallet else {
-                return
+        DispatchQueue.global().async { [weak self] in
+            switch manager {
+            case .Tokens:
+                guard let wallet = self?.wallet,
+                    let utxos = self?.currentUTXOs else {
+                    return
+                }
+                self?.setMainParams(tokens: [], wallet: wallet, utxos: utxos)
+            case .Wallets:
+                guard let wallets = try? self?.localStorage.getAllWallets(), let w = wallets else {
+                    return
+                }
+                self?.walletDropdownManager?.wallets = w
             }
-            tokenDropdownManager?.tokens = []
-            tokenDropdownManager?.utxos = currentUTXOs
-            tokenDropdownManager?.wallet = wallet
-        case .Wallets:
-            walletDropdownManager?.wallets = localStorage.getAllWallets()
+            self?.setTableView(withManager: manager, isPlasma: true)
         }
-
-        let tableView = (manager == .Wallets ? walletsDropdownTableView : tokensDropdownTableView)!
-        let cellToRegister = manager == .Wallets ? "WalletCellDropdown" : "TokenCellDropdown"
-        let nib = UINib(nibName: cellToRegister, bundle: nil)
-        tableView.register(nib, forCellReuseIdentifier: cellToRegister)
-        tableView.delegate = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
-        tableView.dataSource = manager == .Wallets ? walletDropdownManager : tokenDropdownManager
-
-        walletDropdownManager?.isPlasma = true
-        walletDropdownManager?.delegate = self
-        tokenDropdownManager?.isPlasma = true
-        tokenDropdownManager?.delegate = self
     }
 
     // MARK: QR Code scan
@@ -322,82 +392,96 @@ class SendSettingsViewController: UIViewController {
 
         guard let amount = amountTextField.text,
               let destinationAddress = enterAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
             return
         }
 
         guard let token = token else {return}
-
-        if token == ERC20TokenModel(isEther: true) && destinationAddress == plasmaContract {
-            transactionsService.prepareTransactionToContract(data: [], contractAbi: plasmaABI, contractAddress: plasmaContract, method: "deposit", value: amount) { [weak self] (result) in
-                self?.transactionOperation(isContract: true,
-                                           result: result,
-                                           amount: amount,
-                                           destinationAddress: destinationAddress,
-                                           password: withPassword)
+    
+        do {
+            if token == ERC20TokenModel(isEther: true) && destinationAddress == PlasmaContract.plasmaAddress {
+                let transaction = try self.transactionsService.prepareWriteContractTx(contractABI: PlasmaContract.plasmaABI,
+                                                                                      contractAddress: PlasmaContract.plasmaAddress,
+                                                                                      contractMethod: "deposit",
+                                                                                      value: amount,
+                                                                                      gasLimit: .automatic,
+                                                                                      gasPrice: .automatic,
+                                                                                      parameters: [AnyObject](),
+                                                                                      extraData: Data())
+                self.transactionOperation(isContract: true,
+                                          transaction: transaction,
+                                          amount: amount,
+                                          destinationAddress: destinationAddress,
+                                          password: withPassword)
+            } else if token == ERC20TokenModel(isEther: true) {
+                let transaction = try self.transactionsService.prepareSendEthTx(toAddress: destinationAddress,
+                                                                                 value: amount,
+                                                                                 gasLimit: .automatic,
+                                                                                 gasPrice: .automatic)
+                self.transactionOperation(transaction: transaction,
+                                          amount: amount,
+                                          destinationAddress: destinationAddress,
+                                          password: withPassword)
+            } else {
+                let transaction = try self.transactionsService.prepareSendERC20Tx(tokenAddress: token.address,
+                                                                                   toAddress: destinationAddress,
+                                                                                   tokenAmount: amount,
+                                                                                   gasLimit: .automatic,
+                                                                                   gasPrice: .automatic)
+                self.transactionOperation(transaction: transaction,
+                                          amount: amount,
+                                          destinationAddress: destinationAddress,
+                                          password: withPassword)
             }
-        } else if token == ERC20TokenModel(isEther: true) {
-            transactionsService.prepareTransactionForSendingEther(destinationAddressString: destinationAddress,
-                                                                  amountString: amount,
-                                                                  gasLimit: 21000) { [weak self] (result) in
-                                                                    self?.transactionOperation(result: result,
-                                                                                               amount: amount,
-                                                                                               destinationAddress: destinationAddress,
-                                                                                               password: withPassword)
-            }
-        } else {
-            transactionsService.prepareTransactionForSendingERC(destinationAddressString: destinationAddress,
-                                                                amountString: amount,
-                                                                gasLimit: 21000,
-                                                                tokenAddress: token.address) { [weak self] (result) in
-                                                                    self?.transactionOperation(result: result,
-                                                                                               amount: amount,
-                                                                                               destinationAddress: destinationAddress,
-                                                                                               password: withPassword)
-            }
+        } catch let error {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: error, completion: {})
         }
     }
-
-    func transactionOperation(isContract: Bool = false, result: Result<TransactionIntermediate>, amount: String, destinationAddress: String, password: String?) {
+        
+    func transactionOperation(isContract: Bool = false, transaction: WriteTransaction, amount: String, destinationAddress: String, password: String?) {
         DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: false,
-                                          on: (self?.view)!)
-        }
-        switch result {
-        case .Success(let transaction):
-            guard let name = self.wallet?.name else {
+            guard let name = self?.wallet?.name else {
                 return
             }
-            let gasPrice = transaction.options?.gasPrice ?? (BigUInt(self.gasPriceTextField.text ?? "0") ?? "0")
-            let gasLimit = transaction.options?.gasLimit ?? (BigUInt(self.gasLimitTextField.text ?? "0") ?? "0")
+            let gasPrice = transaction.transactionOptions.gasPrice ?? .automatic
+            let gasLimit = transaction.transactionOptions.gasLimit ?? .automatic
             let dict: [String: Any] = [
-                "gasPrice": gasPrice == gasPrice,
-                "gasLimit": gasLimit == gasLimit,
+                "gasPrice": gasPrice,
+                "gasLimit": gasLimit,
                 "transaction": transaction,
                 "amount": amount,
                 "name": name,
-                "fromAddress": self.wallet?.address ?? "",
+                "fromAddress": self?.wallet?.address ?? "",
                 "toAddress": destinationAddress]
-
+            
             //self?.sendFunds(dict: dict, enteredPassword: withPassword)
-            showAccessAlert(for: self, with: "Send the transaction?", completion: { [weak self] (result) in
+            self?.animation.waitAnimation(isEnabled: false,
+                                          on: (self?.view)!)
+            Alerts().showAccessAlert(for: self!,
+                                     with: "Send the transaction?",
+                                     completion: { [weak self] (result) in
                 if result {
-                    self?.enterPincode(for: dict, isContract: isContract, withPassword: password)
+                    self?.enterPincode(for: dict,
+                                       isContract: isContract,
+                                       withPassword: password)
                 } else {
-                    showErrorAlert(for: self!, error: TransactionErrors.PreparingError, completion: {
-
-                    })
+                    Alerts().showErrorAlert(for: self!,
+                                            error: Errors.CommonErrors.unknown,
+                                            completion: {})
                 }
-
-            })
-        case .Error(let error):
-            showErrorAlert(for: self, error: error, completion: {
-
             })
         }
     }
 
     @IBAction func send(_ sender: UIButton) {
         guard let wallet = wallet else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
             return
         }
         if blockchainState == .ETH {
@@ -407,63 +491,128 @@ class SendSettingsViewController: UIViewController {
             animation.waitAnimation(isEnabled: true,
                                     notificationText: "Preparing transaction",
                                     on: self.view)
-            localStorage.selectWallet(wallet: wallet) { [weak self] in
-                CurrentToken.currentToken = token
-                self?.checkPassword { [weak self] (password) in
-                    self?.prepareTransation(withPassword: password)
+            DispatchQueue.global().async { [weak self] in
+                do {
+                    try self?.localStorage.selectWallet(wallet: wallet)
+                    CurrentToken.currentToken = token
+                    self?.checkPassword { [weak self] (password) in
+                        self?.prepareTransation(withPassword: password)
+                    }
+                } catch let error {
+                    Alerts().showErrorAlert(for: self!, error: error, completion: {})
                 }
             }
         } else {
             animation.waitAnimation(isEnabled: true,
                                     notificationText: "Preparing transaction",
                                     on: self.view)
-            self.checkPassword { [weak self] (password) in
-                self?.preparePlasmaTransaction(withPassword: password)
+            DispatchQueue.global().async { [weak self] in
+                self?.checkPassword { [weak self] (password) in
+                    self?.preparePlasmaTransaction(withPassword: password)
+                }
             }
         }
     }
 
     func preparePlasmaTransaction(withPassword: String?) {
-        guard let utxo = utxo else {return}
-        guard let input = utxo.toTransactionInput() else {return}
+        guard let utxo = utxo else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
+        guard let input = try? utxo.toTransactionInput() else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
         let inputs = [input]
 
         guard let amount = amountTextField.text,
             let destinationAddress = enterAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
-                return
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
         }
-        guard let floatAmount = Float(amount) else {return}
+        guard let floatAmount = Float(amount) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
         let uintAmount = BigUInt( floatAmount * 1000000 )
         let amountSendInETH = uintAmount * BigUInt(1000000000000)
         let amountStayInETH = input.amount - amountSendInETH
 
-        guard let ethDestinationAddress = EthereumAddress(destinationAddress) else {return}
-        guard let currentAddress = KeysService().selectedWallet()?.address else {return}
-        guard let ethCurrentAddress = EthereumAddress(currentAddress) else {return}
+        guard let ethDestinationAddress = EthereumAddress(destinationAddress) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
+        guard let currentAddress = wallet?.address else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
+        guard let ethCurrentAddress = EthereumAddress(currentAddress) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
 
-        guard let output1 = TransactionOutput(outputNumberInTx: 0,
+        guard let output1 = try? TransactionOutput(outputNumberInTx: 0,
                                              receiverEthereumAddress: ethDestinationAddress,
-                                             amount: amountSendInETH) else {return}
-        guard let output2 = TransactionOutput(outputNumberInTx: 1,
+                                             amount: amountSendInETH) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
+        guard let output2 = try? TransactionOutput(outputNumberInTx: 1,
                                               receiverEthereumAddress: ethCurrentAddress,
-                                              amount: amountStayInETH) else {return}
+                                              amount: amountStayInETH) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
 
         let outputs = [output1, output2]
 
-        guard let transaction = Transaction(txType: .split, inputs: inputs, outputs: outputs) else {
-            showErrorAlert(for: self, error: TransactionErrors.PreparingError, completion: {
+        guard let transaction = try? Transaction(txType: .split, inputs: inputs, outputs: outputs) else {
+            self.animation.waitAnimation(isEnabled: false,
+                                         notificationText: "Preparing transaction",
+                                         on: self.view)
+            Alerts().showErrorAlert(for: self, error: Web3Error.transactionSerializationError, completion: {
             })
             return
         }
-        showAccessAlert(for: self, with: "Send the transaction?", completion: { [weak self] (result) in
+        Alerts().showAccessAlert(for: self, with: "Send the transaction?", completion: { [weak self] (result) in
             if result {
+                self?.animation.waitAnimation(isEnabled: false,
+                                             notificationText: "Preparing transaction",
+                                             on: (self?.view)!)
                 self?.enterPincode(for: transaction, withPassword: withPassword)
             } else {
-                showErrorAlert(for: self!, error: TransactionErrors.PreparingError, completion: {
-
-                })
+                self?.animation.waitAnimation(isEnabled: false,
+                                             notificationText: "Preparing transaction",
+                                             on: (self?.view)!)
+                Alerts().showErrorAlert(for: self!, error: Web3Error.transactionSerializationError, completion: {})
             }
-
         })
     }
 
@@ -481,17 +630,22 @@ class SendSettingsViewController: UIViewController {
 
     func enterPincode(for data: [String: Any]?, isContract: Bool = false, withPassword: String?) {
         guard let data = data else {
-            showErrorAlert(for: self, error: TransactionErrors.PreparingError, completion: {
-
-            })
+            Alerts().showErrorAlert(for: self, error: Errors.NetworkErrors.noData, completion: {})
             return
         }
-        let enterPincode = EnterPincodeViewController(from: .transaction, for: data, isContract: isContract, withPassword: withPassword ?? "", isFromDeepLink: isFromDeepLink)
+        let enterPincode = EnterPincodeViewController(from: .transaction,
+                                                      for: data,
+                                                      isContract: isContract,
+                                                      withPassword: withPassword ?? "",
+                                                      isFromDeepLink: isFromDeepLink)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
     func enterPincode(for transaction: Transaction, withPassword: String?) {
-        let enterPincode = EnterPincodeViewController(from: .transaction, for: transaction, withPassword: withPassword ?? "", isFromDeepLink: isFromDeepLink)
+        let enterPincode = EnterPincodeViewController(from: .transaction,
+                                                      for: transaction,
+                                                      withPassword: withPassword ?? "",
+                                                      isFromDeepLink: isFromDeepLink)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
@@ -516,7 +670,7 @@ class SendSettingsViewController: UIViewController {
 
 // MARK: Dropdowns Delegates
 extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDelegate {
-    func didSelectUTXO(utxo: ListUTXOsModel) {
+    func didSelectUTXO(utxo: PlasmaUTXOs) {
         let balance = Web3Utils.formatToEthereumUnits(utxo.value,
                                                       toUnits: .eth,
                                                       decimals: 6,
@@ -524,33 +678,44 @@ extension SendSettingsViewController: WalletSelectionDelegate, TokenSelectionDel
         self.tokenNameLabel.text = balance
         self.utxo = utxo
         self.heightTokensConstraint.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        DispatchQueue.main.async {
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
     }
 
-    func didSelectWallet(wallet: KeyWalletModel) {
+    func didSelectWallet(wallet: WalletModel) {
         self.wallet = wallet
-        localStorage.selectWallet(wallet: wallet) { [weak self] in
-            self?.addressFromLabel.text = wallet.address
-            self?.heightWalletsConstraint.constant = 0
-            UIView.animate(withDuration: 0.5, animations: {
-                self?.view.layoutIfNeeded()
-            }, completion: nil)
-            if self?.blockchainState == .Plasma {
-                self?.getUTXOs()
+        DispatchQueue.global().async { [weak self] in
+            do {
+                try self?.localStorage.selectWallet(wallet: wallet)
+                DispatchQueue.main.async {
+                    self?.addressFromLabel.text = wallet.address
+                    self?.heightWalletsConstraint.constant = 0
+                    UIView.animate(withDuration: 0.5, animations: { [weak self] in
+                        self?.view.layoutIfNeeded()
+                        }, completion: nil)
+                }
+                if self?.blockchainState == .Plasma {
+                    self?.getUTXOs()
+                }
+            } catch let error {
+                Alerts().showErrorAlert(for: self!, error: error, completion: {})
             }
         }
     }
 
     func didSelectToken(token: ERC20TokenModel) {
-        self.tokenNameLabel.text = token.symbol.uppercased()
-        self.token = token
-        CurrentToken.currentToken = token
-        self.heightTokensConstraint.constant = 0
-        UIView.animate(withDuration: 0.5, animations: {
-            self.view.layoutIfNeeded()
-        }, completion: nil)
+        DispatchQueue.main.async {
+            self.tokenNameLabel.text = token.symbol.uppercased()
+            self.token = token
+            CurrentToken.currentToken = token
+            self.heightTokensConstraint.constant = 0
+            UIView.animate(withDuration: 0.5, animations: {
+                self.view.layoutIfNeeded()
+            }, completion: nil)
+        }
     }
 }
 
@@ -656,6 +821,9 @@ extension SendSettingsViewController: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .done && sendButton.isEnabled {
+            animation.waitAnimation(isEnabled: true,
+                                    notificationText: "Preparing transaction",
+                                    on: self.view)
             checkPassword { [weak self] (password) in
                 self?.prepareTransation(withPassword: password)
             }

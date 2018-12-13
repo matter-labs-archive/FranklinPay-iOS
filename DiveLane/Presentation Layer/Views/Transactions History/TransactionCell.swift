@@ -38,7 +38,7 @@ class TransactionCell: UITableViewCell {
         addGestureRecognizer(longPressGesture())
     }
 
-    func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: KeyWalletModel) {
+    func configureCell(withModel model: ETHTransactionModel, andCurrentWallet currentWalet: WalletModel) {
         transaction = model
         amountLabel.text = model.amount + " " + (model.token?.symbol.uppercased() ?? "ETH")
         if model.from.lowercased() == currentWalet.address.lowercased() {

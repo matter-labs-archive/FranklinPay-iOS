@@ -15,7 +15,7 @@ struct ExpandableTableTokens {
 
 struct TableToken {
     let token: ERC20TokenModel
-    let inWallet: KeyWalletModel
+    let inWallet: WalletModel
     var isSelected: Bool
 }
 

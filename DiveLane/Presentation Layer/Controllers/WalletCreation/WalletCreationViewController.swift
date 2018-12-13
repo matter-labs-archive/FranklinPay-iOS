@@ -8,7 +8,8 @@
 
 import UIKit
 import QRCodeReader
-import web3swift
+import Web3swift
+import EthereumAddress
 
 class WalletCreationViewController: UIViewController {
 
@@ -24,9 +25,9 @@ class WalletCreationViewController: UIViewController {
     var additionMode: WalletAdditionMode
     var importMode: WalletImportMode?
 
-    let keysService: KeysService = KeysService()
-    let localStorage = LocalDatabase()
-    let web3service: Web3SwiftService = Web3SwiftService()
+    let walletsService: WalletsService = WalletsService()
+    let walletsStorage = WalletsStorage()
+    let web3service: Web3Service = Web3Service()
 
     let animation = AnimationController()
 
@@ -94,11 +95,11 @@ class WalletCreationViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
 
-    func addPincode(toWallet: KeyWalletModel?, with password: String) {
+    func addPincode(toWallet: WalletModel?, with password: String) {
         guard let wallet = toWallet else {
-            showErrorAlert(for: self, error: WalletSavingError.couldNotCreateTheWallet, completion: {
-
-            })
+            Alerts().showErrorAlert(for: self,
+                                    error: Errors.StorageErrors.cantCreateWallet,
+                                    completion: {})
             return
         }
         let addPincode = CreateWalletPincodeViewController(forWallet: wallet, with: password)
@@ -119,7 +120,7 @@ class WalletCreationViewController: UIViewController {
         }
     }
 
-    func createPassword(_ password: String, forWallet: KeyWalletModel?) {
+    func createPassword(_ password: String, forWallet: WalletModel?) {
         do {
             let passwordItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassword,
                     account: "\(forWallet?.name ?? "")-password",
@@ -215,48 +216,46 @@ class WalletCreationViewController: UIViewController {
         default:
             //Import wallet
             guard let importMode = importMode else {
+                self.finishSavingWallet(with: Errors.CommonErrors.unknown, needDeleteWallet: nil)
                 return
             }
-
+            
             switch importMode {
             case .mnemonics:
-                keysService.createNewHDWallet(withName: walletName, password: withPassword, mnemonics: withKey) { [weak self] (keyWalletModel, error) in
-                    DispatchQueue.main.async {
-                        self?.animation.waitAnimation(isEnabled: false,
-                                on: (self?.view)!)
+                self.animation.waitAnimation(isEnabled: true,
+                                             on: self.view)
+                DispatchQueue.global().async { [weak self] in
+                    guard let hdwallet = try? self?.walletsService.createHDWallet(name: walletName,
+                                                                                password: withPassword,
+                                                                                mnemonics: withKey), let wallet = hdwallet else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
+                        return
                     }
-                    if let error = error {
-                        print(error)
-                    } else {
+                    DispatchQueue.main.async {
                         switch isAtLeastOneExists {
                         case true:
-                            self?.savingWallet(wallet: keyWalletModel, withPassword: withPassword)
+                            self?.savingWallet(wallet: wallet, withPassword: withPassword)
                         case false:
-                            self?.addPincode(toWallet: keyWalletModel, with: withPassword)
+                            self?.addPincode(toWallet: wallet, with: withPassword)
                         }
                     }
                 }
+                
             case .privateKey:
-                keysService.addNewWalletWithPrivateKey(withName: walletName,
-                        key: withKey,
-                        password: withPassword) { [weak self] (wallet, error) in
-                    DispatchQueue.main.async {
-                        self?.animation.waitAnimation(isEnabled: false,
-                                on: (self?.view)!)
-                    }
-                    if let error = error {
-                        showErrorAlert(for: self!, error: error, completion: {
-
-                        })
+                self.animation.waitAnimation(isEnabled: true,
+                                             on: self.view)
+                DispatchQueue.global().async { [weak self] in
+                    guard let prwallet = try? self?.walletsService.importWalletWithPrivateKey(name: walletName,
+                                                                                            key: withKey,
+                                                                                            password: withPassword), let wallet = prwallet else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
                         return
-                    } else {
-                        guard let walletStrAddress = wallet?.address, EthereumAddress(walletStrAddress) != nil else {
-                            showErrorAlert(for: self!, error: error, completion: {
-
-                            })
-                            return
-                        }
-
+                    }
+                    guard EthereumAddress(wallet.address) != nil else {
+                        self?.finishSavingWallet(with: Web3Error.walletError, needDeleteWallet: nil)
+                        return
+                    }
+                    DispatchQueue.main.async {
                         switch isAtLeastOneExists {
                         case true:
                             self?.savingWallet(wallet: wallet, withPassword: withPassword)
@@ -269,49 +268,63 @@ class WalletCreationViewController: UIViewController {
         }
     }
 
-    func savingWallet(wallet: KeyWalletModel?, withPassword: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.animation.waitAnimation(isEnabled: true,
-                    notificationText: "Saving wallet",
-                    on: (self?.view)!)
-        }
-        self.localStorage.saveWallet(wallet: wallet) { [weak self] (error) in
-            if error == nil {
+    func savingWallet(wallet: WalletModel, withPassword: String) {
+        self.animation.waitAnimation(isEnabled: false,
+                                     on: self.view)
+        self.animation.waitAnimation(isEnabled: true,
+                                     notificationText: "Saving wallet",
+                                     on: self.view)
+        DispatchQueue.global().async { [weak self] in
+            do {
+                try self?.walletsStorage.saveWallet(wallet: wallet)
                 self?.createPassword(withPassword, forWallet: wallet)
-                DispatchQueue.main.async { [weak self] in
-                    self?.animation.waitAnimation(isEnabled: false,
-                            on: (self?.view)!)
-                }
-                self?.localStorage.selectWallet(wallet: wallet, completion: {
-                    DispatchQueue.global().async {
-                        if !UserDefaultKeys().isEtherAdded {
-                            AppController().addFirstToken(for: wallet!, completion: { (error) in
-                                if error == nil {
-                                    UserDefaultKeys().setEtherAdded()
-                                    UserDefaults.standard.synchronize()
-                                    self?.goToApp()
-                                } else {
-                                    showErrorAlert(for: self!, error: error, completion: {
-                                        self?.goToApp()
-                                    })
-                                }
-                            })
+                try self?.walletsStorage.selectWallet(wallet: wallet)
+                if !UserDefaultKeys().isEtherAdded {
+                    AppController().addFirstToken(for: wallet, completion: { [weak self] (error) in
+                        if error == nil {
+                            UserDefaultKeys().setEtherAdded()
+                            UserDefaults.standard.synchronize()
+                            self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
                         } else {
-                            self?.goToApp()
+                            self?.finishSavingWallet(with: error, needDeleteWallet: wallet)
                         }
-                    }
-
-                })
-            } else {
-                fatalError("String(describing: error)")
+                    })
+                } else {
+                    self?.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                }
+            } catch let error {
+                self?.finishSavingWallet(with: error, needDeleteWallet: wallet)
             }
         }
     }
 
-    func goToApp() {
-        let tabViewController = AppController().goToApp()
-        tabViewController.view.backgroundColor = UIColor.white
-        self.present(tabViewController, animated: true, completion: nil)
+    func finishSavingWallet(with error: Error?, needDeleteWallet: WalletModel?) {
+        self.animation.waitAnimation(isEnabled: false,
+                                     on: self.view)
+        if let wallet = needDeleteWallet {
+            do {
+                try self.walletsStorage.deleteWallet(wallet: wallet)
+            } catch let deleteErr {
+                Alerts().showErrorAlert(for: self,
+                                        error: deleteErr,
+                                        completion: {
+                    return
+                })
+            }
+        }
+        if let err = error {
+            Alerts().showErrorAlert(for: self,
+                                    error: err,
+                                    completion: {
+                return
+            })
+        } else {
+            DispatchQueue.main.async {
+                let tabViewController = AppController().goToApp()
+                tabViewController.view.backgroundColor = UIColor.white
+                self.present(tabViewController, animated: true, completion: nil)
+            }
+        }
     }
 
     func showChooseAlert(forWallet withName: String, withPassword: String) {
@@ -323,21 +336,15 @@ class WalletCreationViewController: UIViewController {
         }
 
         let actionPrivateKey = UIAlertAction(title: "Private Key", style: .default) { [weak self] _ in
-            self?.keysService.createNewWallet(withName: withName,
-                    password: withPassword) { [weak self] (wallet, error) in
-                DispatchQueue.main.async {
-                    self?.animation.waitAnimation(isEnabled: false,
-                            on: (self?.view)!)
+            DispatchQueue.global().async {
+                guard let wallet = try? self?.walletsService.createWallet(name: withName, password: withPassword) else {
+                    self?.finishSavingWallet(with: Errors.StorageErrors.cantCreateWallet, needDeleteWallet: nil)
+                    return
                 }
-                if let error = error {
-                    showErrorAlert(for: self!, error: error, completion: {
-
-                    })
-                } else {
-
+                DispatchQueue.main.async {
                     switch isAtLeastOneWalletExists {
                     case true:
-                        self?.savingWallet(wallet: wallet, withPassword: withPassword)
+                        self?.savingWallet(wallet: wallet!, withPassword: withPassword)
                     case false:
                         self?.addPincode(toWallet: wallet, with: withPassword)
                     }

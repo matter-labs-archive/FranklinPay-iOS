@@ -11,17 +11,17 @@ import PlasmaSwiftLib
 
 protocol TokenSelectionDelegate: class {
     func didSelectToken(token: ERC20TokenModel)
-    func didSelectUTXO(utxo: ListUTXOsModel)
+    func didSelectUTXO(utxo: PlasmaUTXOs)
 }
 
 class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: TokenSelectionDelegate?
 
-    let localStorage = LocalDatabase()
+    let localStorage = WalletsStorage()
 
     var tokens = [ERC20TokenModel]()
-    var utxos = [ListUTXOsModel]()
-    var wallet: KeyWalletModel?
+    var utxos = [PlasmaUTXOs]()
+    var wallet: WalletModel?
 
     var isPlasma: Bool = false
 

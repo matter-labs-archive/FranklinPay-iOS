@@ -8,7 +8,7 @@
 
 import UIKit
 import LocalAuthentication
-import web3swift
+import Web3swift
 import PlasmaSwiftLib
 
 class EnterPincodeViewController: PincodeViewController {
@@ -23,8 +23,8 @@ class EnterPincodeViewController: PincodeViewController {
     var isFromDeepLink: Bool = false
     var isContract: Bool = false
 
-    var transactionService = TransactionsService()
-    let keysService = KeysService()
+    var transactionService = Web3Service()
+    let keysService = WalletsService()
 
     let animationController = AnimationController()
 
@@ -65,7 +65,6 @@ class EnterPincodeViewController: PincodeViewController {
             hideBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
-
     }
 
     func hideBiometricsButton(_ hidden: Bool = false) {
@@ -96,15 +95,18 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func enter() {
-
         switch fromCase ?? .enterWallet {
         case .transaction:
             animationController.waitAnimation(isEnabled: true, notificationText: "Sending transaction", on: self.view)
             if data != nil {
                 let transactionData = transactionService.getDataForTransaction(dict: data!)
-                send(with: transactionData)
+                DispatchQueue.global().async { [weak self] in
+                    self?.send(with: transactionData)
+                }
             } else if let t = transaction {
-                send(with: t)
+                DispatchQueue.global().async { [weak self] in
+                    self?.send(with: t)
+                }
             }
         default:
             let startViewController = AppController().goToApp()
@@ -114,78 +116,57 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func send(with transaction: Transaction) {
-        guard let wallet = keysService.selectedWallet() else {return}
-        guard let pass = password else {return}
-        guard let privateKey = keysService.getWalletPrivateKey(for: wallet, password: pass) else {return}
+        guard let wallet = try? keysService.getSelectedWallet() else {
+            Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.noSelectedWallet, completion: {})
+            return
+        }
+        guard let pass = password else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.wrongPassword, completion: {})
+            return
+        }
+        guard let privateKey = try? keysService.getPrivateKey(for: wallet, password: pass) else {
+            Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.unknownError, completion: {})
+            return
+        }
         let privKey = Data(hex: privateKey)
-        let signedTransaction = transaction.sign(privateKey: privKey)
-
-        ServiceUTXO().sendRawTX(transaction: signedTransaction!, onTestnet: true) { (result) in
-            switch result {
-            case .Success(let approved):
-                guard approved != nil else {
-                    showErrorAlert(for: self, error: nil, completion: {
-                        self.returnToStartTab()
-                    })
-                    return
-                }
-                DispatchQueue.main.async { [weak self] in
-                    showSuccessAlert(for: self!, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
-            case .Error(let error):
-                DispatchQueue.main.async { [weak self] in
-                    print("\(error)")
-                    showErrorAlert(for: self!, error: error, completion: {
-                        self?.returnToStartTab()
-                    })
-                }
-            }
+        guard let signedTransaction = try? transaction.sign(privateKey: privKey) else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
         }
+
+        guard let result = try? PlasmaService().sendRawTX(transaction: signedTransaction, onTestnet: true) else {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
+            return
+        }
+        if !result {
+            Alerts().showErrorAlert(for: self, error: nil, completion: {})
+            return
+        }
+        Alerts().showSuccessAlert(for: self, completion: {
+            self.returnToStartTab()
+        })
     }
 
-    func send(with data: (transaction: TransactionIntermediate, options: Web3Options)) {
-        if !isContract {
-            transactionService.sendToken(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                self?.sendingResultOperation(result: result)
+    func send(with data: (transaction: WriteTransaction, options: TransactionOptions)) {
+        do {
+            _ = try transactionService.sendTx(transaction: data.transaction, options: data.options, password: password!)
+            DispatchQueue.main.async { [weak self] in
+                self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
             }
-        } else {
-            transactionService.sendToContract(transaction: data.transaction, with: password!, options: data.options) { [weak self] (result) in
-                self?.sendingResultOperation(result: result)
-            }
-        }
-
-    }
-    
-    func sendingResultOperation(result: Result<TransactionSendingResult>) {
-        DispatchQueue.main.async { [weak self] in
-            self?.animationController.waitAnimation(isEnabled: false, on: (self?.view)!)
-        }
-        switch result {
-        case .Success:
-            if isFromDeepLink {
-                showSuccessAlert(for: self, completion: { [weak self] in
-                    self?.returnToStartTab()
-                })
-            } else {
-                showSuccessAlert(for: self, completion: { [weak self] in
-                    self?.returnToStartTab()
-                })
-            }
-            
-        case .Error(let error):
-            print("\(error)")
-            showErrorAlert(for: self, error: error, completion: { [weak self] in
+            Alerts().showSuccessAlert(for: self, completion: { [weak self] in
                 self?.returnToStartTab()
             })
+        } catch {
+            Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.unknown, completion: {})
         }
     }
 
     func returnToStartTab() {
-        let startViewController = AppController().goToApp()
-        startViewController.view.backgroundColor = UIColor.white
-        UIApplication.shared.keyWindow?.rootViewController = startViewController
+        DispatchQueue.main.async {
+            let startViewController = AppController().goToApp()
+            startViewController.view.backgroundColor = UIColor.white
+            UIApplication.shared.keyWindow?.rootViewController = startViewController
+        }
     }
 
     override func numberPressedAction(number: String) {
@@ -235,13 +216,10 @@ class EnterPincodeViewController: PincodeViewController {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                     localizedReason: reason,
                     reply: { [weak self] (succes, _) in
-
-                        if succes {
-                            self?.enter()
-                        }
-
-                    })
+                if succes {
+                    self?.enter()
+                }
+            })
         }
     }
-
 }

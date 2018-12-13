@@ -15,8 +15,8 @@ struct ExpandableTableUTXOs {
 }
 
 struct TableUTXO {
-    let utxo: ListUTXOsModel
-    let inWallet: KeyWalletModel
+    let utxo: PlasmaUTXOs
+    let inWallet: WalletModel
     var isSelected: Bool
 }
 
@@ -25,15 +25,5 @@ extension TableUTXO: Equatable {
         let equalUTXOs = lhs.utxo == rhs.utxo
         return equalUTXOs &&
             lhs.inWallet == rhs.inWallet
-    }
-}
-
-extension ListUTXOsModel: Equatable {
-    public static func ==(lhs: ListUTXOsModel, rhs: ListUTXOsModel) -> Bool {
-        let equalUTXOs = lhs.blockNumber == rhs.blockNumber &&
-            lhs.outputNumber == rhs.outputNumber &&
-            lhs.transactionNumber == rhs.transactionNumber &&
-            lhs.value == rhs.value
-        return equalUTXOs
     }
 }

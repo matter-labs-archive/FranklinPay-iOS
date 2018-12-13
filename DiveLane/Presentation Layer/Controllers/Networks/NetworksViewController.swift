@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import web3swift
+import Web3swift
 
 class NetworksViewController: UIViewController {
 
@@ -59,7 +59,7 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let currentNetwork = CurrentNetwork.currentNetwork else {return UITableViewCell()}
+        let currentNetwork = CurrentNetwork.currentNetwork
         var isChosen = false
         if networks[indexPath.row].chainID == currentNetwork.chainID {
             isChosen = true

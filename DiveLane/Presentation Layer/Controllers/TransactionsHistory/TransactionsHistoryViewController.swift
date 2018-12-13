@@ -16,15 +16,17 @@ class TransactionsHistoryViewController: UIViewController {
     let animationController = AnimationController()
 
     // MARK: - Services
-    let keysService: IKeysService = KeysService()
+    let keysService = WalletsService()
     let transactionsHistoryService = TransactionsHistoryService()
-    let localDatabase = LocalDatabase()
+    let localDatabase = TokensStorage()
 
     // MARK: - Variables
     var transactions = [[ETHTransactionModel]]()
     var state: TransactionsHistoryState = .all {
         didSet {
-            uploadTransactions()
+            DispatchQueue.global().async { [weak self] in
+                self?.uploadTransactions()
+            }
         }
     }
 
@@ -38,17 +40,37 @@ class TransactionsHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupTableView()
-        uploadTransactions()
+        self.navigationItem.setRightBarButton(settingsWalletBarItem(), animated: false)
+    }
+    
+    private func settingsWalletBarItem() -> UIBarButtonItem {
+        let addButton = UIBarButtonItem(image: UIImage(named: "settings_blue"),
+                                        style: .plain,
+                                        target: self,
+                                        action: #selector(settingsWallet))
+        return addButton
+    }
+    
+    @objc func settingsWallet() {
+        //let walletsViewController = WalletsViewController()
+        let settingsViewController = SettingsViewController()
+        self.navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        uploadTransactions()
+//        animationController.waitAnimation(isEnabled: true,
+//                                          notificationText: "Downloading transactions",
+//                                          on: self.view)
+        DispatchQueue.global().async { [weak self] in
+            self?.uploadTransactions()
+        }
     }
 
     private func setupTableView() {
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TransactionCell")
+        tableView.tableFooterView = UIView()
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -70,45 +92,47 @@ class TransactionsHistoryViewController: UIViewController {
 
     private func uploadTransactions() {
         animationController.waitAnimation(isEnabled: true,
-                                notificationText: "Downloading transactions",
-                                on: self.view)
-        guard let wallet = keysService.selectedWallet() else {
+                                          notificationText: "Downloading transactions",
+                                          on: self.view)
+        guard let wallet = try? keysService.getSelectedWallet() else {
+            self.prepareTransactionsForView(transactions: [])
             return
         }
-        guard let networkId = CurrentNetwork.currentNetwork?.chainID else {
+        let networkId = CurrentNetwork.currentNetwork.chainID
+        guard let result = try? transactionsHistoryService.loadTransactions(for: wallet.address,
+                                                                            txType: .custom,
+                                                                            networkId: Int64(networkId)) else {
+            self.prepareTransactionsForView(transactions: [])
             return
         }
-        transactionsHistoryService.loadTransactions(forAddress: wallet.address, type: .custom, inNetwork: Int64(networkId)) { (result) in
-            DispatchQueue.main.async { [weak self] in
-                self?.animationController.waitAnimation(isEnabled: false,
-                                              on: (self?.view)!)
-            }
-            switch result {
-            case .Error(let error):
-                showErrorAlert(for: self, error: error, completion: {})
-            case .Success(let transactions):
-                self.localDatabase.saveTransactions(transactions: transactions, forWallet: wallet, completion: { (error) in
-                    if let error = error {
-                        showErrorAlert(for: self, error: error, completion: {})
-                    } else {
-                        guard let networkID = CurrentNetwork.currentNetwork?.chainID else {
-                            return
-                        }
-                        self.prepareTransactionsForView(transactions: self.localDatabase.getAllTransactions(forWallet: wallet, andNetwork: Int64(networkID)))
-                    }
-                })
-            }
+        do {
+            try TransactionsStorage().saveTransactions(transactions: result, for: wallet)
+        } catch {
+            self.prepareTransactionsForView(transactions: [])
+            return
         }
+        let networkID = CurrentNetwork.currentNetwork.chainID
+        guard let txs = try? TransactionsStorage().getAllTransactions(for: wallet,
+                                                                      networkId: Int64(networkID)) else {
+            self.prepareTransactionsForView(transactions: [])
+            return
+        }
+        self.prepareTransactionsForView(transactions: txs)
     }
 
     private func prepareTransactionsForView(transactions: [ETHTransactionModel]) {
         var transactions = transactions
         self.transactions.removeAll()
+        if transactions.isEmpty {
+            reloadTableView()
+            return
+        }
         // MARK: Sort transactions by day and put them in ascending order into array
         transactions.sort { (first, second) -> Bool in
             return first.date > second.date
         }
-        guard let selectedWallet = keysService.selectedWallet() else {
+        guard let selectedWallet = try? keysService.getSelectedWallet() else {
+            reloadTableView()
             return
         }
         switch state {
@@ -133,6 +157,7 @@ class TransactionsHistoryViewController: UIViewController {
                 self.transactions.append([transaction])
             } else {
                 guard let lastTransaction = self.transactions.last?.last else {
+                    reloadTableView()
                     return
                 }
                 let previousTransactionCalendarDate = calendarDate(date: lastTransaction.date)
@@ -145,7 +170,15 @@ class TransactionsHistoryViewController: UIViewController {
                 }
             }
         }
-        tableView.reloadData()
+        reloadTableView()
+    }
+    
+    private func reloadTableView() {
+        self.animationController.waitAnimation(isEnabled: false,
+                                               on: self.view)
+        DispatchQueue.main.async { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
 
     private func calendarDate(date: Date) -> (day: Int, month: Int, year: Int) {
@@ -180,7 +213,7 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell") as? TransactionCell else {
             return UITableViewCell()
         }
-        guard let wallet = keysService.selectedWallet() else {
+        guard let wallet = try? keysService.getSelectedWallet() else {
             return UITableViewCell()
         }
         cell.longPressDelegate = self
@@ -190,6 +223,12 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+
+        let transaction = transactions[indexPath.section][indexPath.row]
+
+        let transactionInfoVC = TransactionInfoController(nibName: TransactionInfoController.nibName, bundle: nil)
+        transactionInfoVC.transactionModel = transaction
+        navigationController?.pushViewController(transactionInfoVC, animated: true)
     }
 
 }

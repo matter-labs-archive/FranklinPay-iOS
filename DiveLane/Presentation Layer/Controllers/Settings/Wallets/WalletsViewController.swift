@@ -12,29 +12,46 @@ class WalletsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    let localDatabase: ILocalDatabase
-    let keysService: IKeysService
-    var wallets: [KeyWalletModel]
+    let localDatabase = WalletsStorage()
+    let keysService = WalletsService()
+    var wallets: [WalletModel] = []
 
-    init() {
-        localDatabase = LocalDatabase()
-        wallets = localDatabase.getAllWallets()
-        keysService = KeysService()
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+//    init() {
+//        do {
+//            let wallets = try localDatabase.getAllWallets()
+//            self.wallets = wallets
+//        } catch let error {
+//            self.wallets = []
+//            print(error)
+//        }
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Wallets"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        getWallets()
+    }
+    
+    private func getWallets() {
+        do {
+            let wallets = try self.localDatabase.getAllWallets()
+            self.wallets = wallets
+            self.tableView.reloadData()
+        } catch {
+            self.wallets = []
+            self.tableView.reloadData()
+            self.getWallets()
+        }
         let nib = UINib(nibName: "WalletCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "WalletCell")
         tableView.delegate = self
         tableView.dataSource = self
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
     }
 
     @objc func addButtonTapped() {
@@ -42,23 +59,29 @@ class WalletsViewController: UIViewController {
         self.navigationController?.pushViewController(addWalletViewController, animated: true)
     }
 
-    func showAttentionAlert(wallet: KeyWalletModel, indexPath: IndexPath) {
+    func showAttentionAlert(wallet: WalletModel, indexPath: IndexPath) {
         let alertController = UIAlertController(title: "Attention!", message: "Are you sure that you want to delete wallet \"\(wallet.name)\"?", preferredStyle: .actionSheet)
-        let acceptAction = UIAlertAction(title: "Yes", style: .destructive) { (_) in
-            self.localDatabase.deleteWallet(wallet: wallet) { (error) in
-                if error == nil {
-                    self.wallets.remove(at: indexPath.row)
-                    if self.wallets.first == nil {
+        let acceptAction = UIAlertAction(title: "Yes", style: .destructive) { [weak self] (_) in
+            DispatchQueue.global().async {
+                do {
+                    try self?.localDatabase.deleteWallet(wallet: wallet)
+                    self?.wallets.remove(at: indexPath.row)
+                    if self?.wallets.first == nil {
                         UserDefaults.standard.set(false, forKey: "atLeastOneWalletExists")
                         UserDefaults.standard.set(false, forKey: "pincodeExists")
-                        let nav = UINavigationController()
-                        nav.viewControllers = [AddWalletViewController()]
-                        UIApplication.shared.keyWindow?.rootViewController = nav
+                        DispatchQueue.main.async {
+                            let nav = UINavigationController()
+                            nav.viewControllers = [AddWalletViewController()]
+                            UIApplication.shared.keyWindow?.rootViewController = nav
+                        }
                     } else {
-                        self.localDatabase.selectWallet(wallet: self.wallets.first, completion: {
-                            self.tableView.deleteRows(at: [indexPath], with: .left)
-                        })
+                        try self?.localDatabase.selectWallet(wallet: (self?.wallets.first)!)
+                        DispatchQueue.main.async {
+                            self?.tableView.deleteRows(at: [indexPath], with: .left)
+                        }
                     }
+                } catch let error {
+                    Alerts().showErrorAlert(for: self!, error: error, completion: {})
                 }
             }
         }
@@ -102,7 +125,7 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
 
-    func enterPassword(for wallet: KeyWalletModel) {
+    func enterPassword(for wallet: WalletModel) {
         let alert = UIAlertController(title: "Show private key", message: nil, preferredStyle: .alert)
 
         alert.addTextField { (textField) in
@@ -112,13 +135,12 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
 
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
-            if KeysService().getWalletPrivateKey(for: wallet, password: passwordText) != nil {
+            do {
+                _ = try WalletsService().getPrivateKey(for: wallet, password: passwordText)
                 self.showPK(for: wallet, withPassword: passwordText)
-
-            } else {
-                //showErrorAlert(for: self, error: SendErrors.wrongPassword,
-                showErrorAlert(for: self, error: SendErrors.wrongPassword, completion: {
-
+            } catch let error {
+                Alerts().showErrorAlert(for: self, error: error, completion: {
+                    
                 })
             }
         }
@@ -132,8 +154,8 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
 
-    func showPK(for wallet: KeyWalletModel, withPassword password: String) {
-        guard let pk = keysService.getPrivateKey(forWallet: wallet, password: password) else {
+    func showPK(for wallet: WalletModel, withPassword password: String) {
+        guard let pk = try? keysService.getPrivateKey(for: wallet, password: password) else {
             return
         }
         let privateKeyViewController = PrivateKeyViewController(pk: pk)

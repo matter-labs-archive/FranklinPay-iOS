@@ -7,9 +7,9 @@
 //
 
 import Foundation
-import web3swift
+import Web3swift
 
-struct ETHTransactionModel {
+public struct ETHTransactionModel {
     let transactionHash: String
     let from: String
     let to: String
@@ -21,13 +21,19 @@ struct ETHTransactionModel {
     var isPending = false
 }
 
-struct TransactionInfo {
+public struct WriteTransactionInfo {
     var contractAddress: String
-    var transactionIntermediate: TransactionIntermediate
+    var writeTransaction: WriteTransaction
     var methodName: String
 }
 
-enum TransactionType {
+public struct ReadTransactionInfo {
+    var contractAddress: String
+    var readTransaction: ReadTransaction
+    var methodName: String
+}
+
+public enum TransactionType {
     case custom
     case arbitraryMethodWithParams
 }

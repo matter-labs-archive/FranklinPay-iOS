@@ -7,39 +7,36 @@
 //
 
 import UIKit
+import EthereumAddress
 
 class WalletCellDropdown: UITableViewCell {
     @IBOutlet weak var walletBalance: UILabel!
     @IBOutlet weak var walletAddress: UILabel!
     @IBOutlet weak var walletName: UILabel!
 
-    let web3SwiftService = Web3SwiftService()
-    var currentWallet: KeyWalletModel?
+    let web3SwiftService = Web3Service()
+    var currentWallet: WalletModel?
 
-    func configure(_ wallet: KeyWalletModel) {
+    func configure(_ wallet: WalletModel) {
         currentWallet = wallet
         walletAddress.text = wallet.address.hideExtraSymbolsInAddress()
         walletName.text = wallet.name
-        if let tokenAddress = CurrentToken.currentToken?.address, !tokenAddress.isEmpty {
-            web3SwiftService.getERCBalance(for: CurrentToken.currentToken?.address ?? "", address: wallet.address) { (balance, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
-                        self.walletBalance.text = (balance ?? "0") + " " + (CurrentToken.currentToken?.symbol.uppercased() ?? "")
-                    }
+        do {
+            if let token = CurrentToken.currentToken {
+                let balance = try
+                    web3SwiftService.getERC20balance(for: wallet,
+                                                     token: token)
+                if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
+                    self.walletBalance.text = balance + " " + (CurrentToken.currentToken?.symbol.uppercased() ?? "")
+                }
+            } else {
+                let balance = try web3SwiftService.getETHbalance(for: wallet)
+                if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
+                    self.walletBalance.text = balance + " ETH"
                 }
             }
-        } else {
-            web3SwiftService.getETHbalance(forAddress: wallet.address) { (balance, error) in
-                if let error = error {
-                    print(error)
-                } else {
-                    if let currentAddress = self.currentWallet?.address, currentAddress == wallet.address {
-                        self.walletBalance.text = (balance ?? "0") + " ETH"
-                    }
-                }
-            }
+        } catch {
+            return
         }
     }
 

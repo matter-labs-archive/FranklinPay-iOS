@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import web3swift
+import Web3swift
 
 class SendArbitraryTransactionViewController: UIViewController {
 
@@ -20,9 +20,9 @@ class SendArbitraryTransactionViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var params: [Parameter]
-    var transactionInfo: TransactionInfo
+    var transactionInfo: WriteTransactionInfo
 
-    init(params: [Parameter], transactionInfo: TransactionInfo) {
+    init(params: [Parameter], transactionInfo: WriteTransactionInfo) {
         self.params = params
         self.transactionInfo = transactionInfo
         CurrentToken.currentToken = ERC20TokenModel(isEther: true)
@@ -44,28 +44,25 @@ class SendArbitraryTransactionViewController: UIViewController {
         self.title = "Transaction"
         // MARK: Setup outlets
         methodNameLabel.text = "Method name: " + transactionInfo.methodName
-        if let address = KeysService().selectedWallet()?.address {
+        if let address = try? WalletsService().getSelectedWallet().address {
             fromTextField.text = "From: \(address)"
         }
 
-        guard let wallet = LocalDatabase().getWallet() else {
+        guard let wallet = try? WalletsStorage().getSelectedWallet() else {
             return
         }
 
-        Web3SwiftService().getETHbalance(for: wallet) { (balance, _) in
-            if let balance = balance {
-                self.balanceOnWalletTextField.text = "Wallet balance: " + balance + " ETH"
-            }
+        if let balance = try? Web3Service().getETHbalance(for: wallet) {
+            self.balanceOnWalletTextField.text = "Wallet balance: " + balance + " ETH"
         }
         contractAddressTextField.text = transactionInfo.contractAddress
-        gasPriceTextField.text = transactionInfo.transactionIntermediate.transaction.gasPrice.description
-        gasLimitTextField.text = transactionInfo.transactionIntermediate.transaction.gasLimit.description
+        gasPriceTextField.text = transactionInfo.writeTransaction.transaction.gasPrice.description
+        gasLimitTextField.text = transactionInfo.writeTransaction.transaction.gasLimit.description
     }
 
     @IBAction func sendButtonWasTapped(_ sender: Any) {
         // MARK: Password
         enterPassword()
-
     }
 
     @IBAction func closeButtonWasTapped(_ sender: Any) {
@@ -83,15 +80,19 @@ class SendArbitraryTransactionViewController: UIViewController {
         }
         let enterPasswordAction = UIAlertAction(title: "Enter", style: .default) { (_) in
             let passwordText = alert.textFields![0].text!
-            if KeysService().getWalletPrivateKey(for: KeysService().selectedWallet()!, password: passwordText) != nil {
-
-                self.send(withPassword: passwordText)
-
-            } else {
-                showErrorAlert(for: self, error: SendErrors.wrongPassword, completion: {
-
+            guard let wallet = try? WalletsService().getSelectedWallet() else {
+                Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.noSelectedWallet, completion: {
+                    
                 })
+                return
             }
+            guard (try? WalletsService().getPrivateKey(for: wallet, password: passwordText)) != nil else {
+                Alerts().showErrorAlert(for: self, error: Errors.CommonErrors.wrongPassword, completion: {
+                    
+                })
+                return
+            }
+            self.send(withPassword: passwordText)
         }
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
 
@@ -107,20 +108,13 @@ class SendArbitraryTransactionViewController: UIViewController {
         guard (contractAddressTextField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)) != nil else {
             return
         }
-        TransactionsService().sendToContract(transaction: transactionInfo.transactionIntermediate, with: password) { (result) in
-            switch result {
-            case .Error(let error):
-                print(error)
-            case .Success(let success):
-                print(success)
-                showSuccessAlert(for: self, completion: {
-                    let c = self.goToApp()
-                    c.view.backgroundColor = UIColor.white
-                    UIApplication.shared.keyWindow?.rootViewController = c
-                })
-            }
+        if let _ = try? Web3Service().sendTx(transaction: transactionInfo.writeTransaction, password: password) != nil {
+            Alerts().showSuccessAlert(for: self, completion: {
+                let c = self.goToApp()
+                c.view.backgroundColor = UIColor.white
+                UIApplication.shared.keyWindow?.rootViewController = c
+            })
         }
-
     }
 
     func goToApp() -> UITabBarController {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18B75" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ETHTransaction" representedClassName="ETHTransaction" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="from" attributeType="String" syncable="YES"/>
+        <attribute name="isPending" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="networkID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="to" attributeType="String" syncable="YES"/>
+        <attribute name="transactionHash" attributeType="String" syncable="YES"/>
+        <relationship name="token" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="ETHTransaction" syncable="YES"/>
+        <relationship name="wallet" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="ETHTransaction" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ETHTransaction" positionX="-54" positionY="-9" width="128" height="195"/>
+    </elements>
+</model>

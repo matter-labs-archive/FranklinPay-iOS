@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import web3swift
+import Web3swift
 import Fabric
 import Crashlytics
 
@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var controller: AppController!
-    let transactionsService: ITransactionsService = TransactionsService()
+    let transactionsService = Web3Service()
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
 
         controller = AppController(window: window!, launchOptions: launchOptions, url: nil)
+        //controller = AppController(window: window!, launchOptions: nil, url: URL(string: "plasma:0x0A8dF54352eB4Eb6b18d0057B15009732EfB351c/split?chainId=4&value=0.3")!)
 
         return true
     }
@@ -32,7 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication,
                      open url: URL,
                      options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
-        controller = AppController(window: window!, launchOptions: nil, url: url)
+        Fabric.with([Crashlytics.self])
+        let window = self.window ?? UIWindow(frame: UIScreen.main.bounds)
+        controller = AppController(window: window, launchOptions: nil, url: url)
         return true
     }
 
