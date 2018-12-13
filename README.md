@@ -8,6 +8,7 @@
 <p align="center">
   <a href="https://github.com/matterinc/PlasmaContract">Contract</a> &bull;
   <a href="https://github.com/matterinc/plasma.js">TX & Block RLP</a> &bull;
+  <a href="https://github.com/matterinc/Plasma_API">API</a> &bull;
   <a href="https://github.com/matterinc/PlasmaManager">JS Lib</a> &bull;
   <a href="https://github.com/matterinc/PlasmaSwiftLib">Swift Lib</a> &bull;
   <a href="https://github.com/matterinc/PlasmaWebExplorer">Block Explorer</a> &bull;
