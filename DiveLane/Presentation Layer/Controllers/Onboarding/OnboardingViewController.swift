@@ -17,7 +17,6 @@ class OnboardingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Colors.BackgroundColors.main
-
         createPages()
     }
 

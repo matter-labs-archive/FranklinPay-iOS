@@ -90,10 +90,10 @@ class AppController {
                               withController: UIViewController,
                               tag: Int) -> UINavigationController {
         let nav = UINavigationController()
-        //nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
-        //nav.navigationBar.tintColor = UIColor.black
-        //nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        //nav.navigationBar.barStyle = .default
+        nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
+        nav.navigationBar.tintColor = UIColor.white
+        nav.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        nav.navigationBar.barStyle = .black
         let controller = withController
         controller.title = withTitle
         nav.viewControllers = [controller]

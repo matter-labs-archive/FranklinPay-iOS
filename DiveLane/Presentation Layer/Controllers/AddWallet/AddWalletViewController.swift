@@ -10,15 +10,6 @@ import UIKit
 
 class AddWalletViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-//
-//        self.navigationController?.navigationBar.barTintColor = UIColor.white
-//        self.navigationController?.navigationBar.tintColor = UIColor.lightGray
-//        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-//        self.navigationController?.navigationBar.barStyle = .black
-    }
-
     let isNavigationBarNeeded: Bool
 
     init(isNavigationBarNeeded: Bool = false) {

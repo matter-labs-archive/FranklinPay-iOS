@@ -75,6 +75,10 @@ class WalletCreationViewController: UIViewController {
         self.title = additionMode.title()
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.barTintColor = Colors.NavBarColors.mainTint
+        self.navigationController?.navigationBar.tintColor = UIColor.white
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        self.navigationController?.navigationBar.barStyle = .black
         if additionMode == .createWallet {
             enterPrivateKeyTextField.isHidden = true
             qrCodeButton.isHidden = true
@@ -176,7 +180,7 @@ class WalletCreationViewController: UIViewController {
                     !repeatPasswordIsEmpty
             hidePasswordWarning(passwordMatching || repeatPasswordIsEmpty || passwordIsEmpty)
             let privateKeyIsOK = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
-            let everyFieldIsOK = passwordMatching && privateKeyIsOK
+            let everyFieldIsOK = passwordMatching && privateKeyIsOK && !(walletNameTextField.text?.isEmpty ?? true)
             enterButton.isEnabled = everyFieldIsOK
         case repeatPasswordTextField:
             let passwordIsEmpty = (passwordTextField.text?.isEmpty ?? true)
@@ -186,7 +190,7 @@ class WalletCreationViewController: UIViewController {
                     !passwordIsEmpty
             hidePasswordWarning(passwordMatching || passwordIsEmpty || repeatPasswordIsEmpty)
             let privateKeyIsOK = (!(enterPrivateKeyTextField.text?.isEmpty ?? true) || additionMode == .createWallet)
-            let everyFieldIsOK = passwordMatching && privateKeyIsOK
+            let everyFieldIsOK = passwordMatching && privateKeyIsOK && !(walletNameTextField.text?.isEmpty ?? true)
             enterButton.isEnabled = everyFieldIsOK
         default:
             let privateKeyFieldIsOk =
@@ -260,6 +264,8 @@ class WalletCreationViewController: UIViewController {
                         case true:
                             self?.savingWallet(wallet: wallet, withPassword: withPassword)
                         case false:
+                            self?.animation.waitAnimation(isEnabled: false,
+                                                         on: (self?.view)!)
                             self?.addPincode(toWallet: wallet, with: withPassword)
                         }
                     }
