@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,12 +28,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Loading..." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="2fx-za-2Qf">
-                        <rect key="frame" x="238" y="11" width="67" height="24"/>
-                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Address" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B4m-oe-1hL">
                         <rect key="frame" x="16" y="39" width="39.5" height="26"/>
                         <fontDescription key="fontDescription" type="system" pointSize="10"/>
@@ -43,21 +36,16 @@
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="2dx-lg-xEl"/>
                     <constraint firstItem="AvA-bG-E6V" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" id="3hF-DH-Y5F"/>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="AvA-bG-E6V" secondAttribute="trailing" constant="8" id="FFx-cT-wM9"/>
                     <constraint firstItem="B4m-oe-1hL" firstAttribute="bottom" secondItem="H2p-sc-9uM" secondAttribute="bottomMargin" id="HXQ-bJ-lJl"/>
                     <constraint firstItem="B4m-oe-1hL" firstAttribute="top" secondItem="AvA-bG-E6V" secondAttribute="bottom" constant="4" id="LrC-iA-2vQ"/>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="bottom" secondItem="AvA-bG-E6V" secondAttribute="bottom" id="QT5-fa-0PQ"/>
                     <constraint firstItem="B4m-oe-1hL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="Ta3-HD-OVn"/>
                     <constraint firstItem="AvA-bG-E6V" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="gK2-QA-5mh"/>
-                    <constraint firstItem="2fx-za-2Qf" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="r9m-1N-Qc8"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="walletAddress" destination="B4m-oe-1hL" id="VqB-2X-zuQ"/>
-                <outlet property="walletBalance" destination="2fx-za-2Qf" id="M47-po-g9Z"/>
                 <outlet property="walletName" destination="AvA-bG-E6V" id="HSu-NM-nxK"/>
             </connections>
             <point key="canvasLocation" x="46.5" y="70"/>
