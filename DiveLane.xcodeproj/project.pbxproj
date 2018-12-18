@@ -1744,14 +1744,14 @@
 				BUNDLE_ID_SUFFIX = .dev;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DB897QKJA;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = inc.matter.MatterWallet;
 				PRODUCT_NAME = "DiveLane-dev";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
@@ -1768,7 +1768,7 @@
 				BUNDLE_ID_SUFFIX = "";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DB897QKJA;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1776,7 +1776,7 @@
 					"@executable_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = inc.matter.MatterWallet;
 				PRODUCT_NAME = DiveLane;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";
@@ -1848,7 +1848,7 @@
 				BUNDLE_ID_SUFFIX = .beta;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 8DB897QKJA;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
 				INFOPLIST_FILE = "$(SRCROOT)/DiveLane/App/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1856,7 +1856,7 @@
 					"@executable_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = io.matter.DiveLaneApp;
+				PRODUCT_BUNDLE_IDENTIFIER = inc.matter.MatterWallet;
 				PRODUCT_NAME = "DiveLane-beta";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "";

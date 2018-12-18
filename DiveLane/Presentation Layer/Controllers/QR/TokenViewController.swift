@@ -10,6 +10,7 @@ import UIKit
 import Web3swift
 import BigInt
 import EthereumAddress
+import PlasmaSwiftLib
 
 class TokenViewController: UIViewController {
 
@@ -19,7 +20,8 @@ class TokenViewController: UIViewController {
     @IBOutlet weak var copiedLabel: UILabel!
     @IBOutlet weak var copyAddressButton: UIButton!
     @IBOutlet weak var sendTokenButton: UIButton!
-
+    @IBOutlet weak var plasmaDeposit: UIButton!
+    
     var tokenBalance: String?
     var wallet: WalletModel?
     var token: ERC20TokenModel?
@@ -35,6 +37,12 @@ class TokenViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let network = CurrentNetwork.currentNetwork
+        if let token = self.token, token == ERC20TokenModel(isEther: true), (network.chainID == Networks.Rinkeby.chainID || network.chainID == Networks.Mainnet.chainID ) {
+            self.plasmaDeposit.isHidden = false
+        } else {
+            self.plasmaDeposit.isHidden = true
+        }
         qrImageView.image = generateQRCode(from: wallet?.address)
         addressLabel.text = wallet?.address.lowercased()
         tokenNameBalanceLabel.text = "Loading..."
@@ -53,26 +61,30 @@ class TokenViewController: UIViewController {
 
     func checkBalanceAndEnableSend() {
         guard let balance = Float(tokenBalance!) else {
-            disableSendButton()
+            disableButtons()
             return
         }
         guard balance > 0 else {
-            disableSendButton()
+            disableButtons()
             return
         }
-        enableSendButton()
+        enableButtons()
     }
 
-    func disableSendButton() {
+    func disableButtons() {
         tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
         sendTokenButton.isEnabled = false
         sendTokenButton.alpha = 0.5
+        plasmaDeposit.isEnabled = false
+        plasmaDeposit.alpha = 0.5
     }
 
-    func enableSendButton() {
+    func enableButtons() {
         tokenNameBalanceLabel.text = "\(token?.symbol ?? ""): \(tokenBalance ?? "0")"
         sendTokenButton.isEnabled = true
         sendTokenButton.alpha = 1.0
+        plasmaDeposit.isEnabled = true
+        plasmaDeposit.alpha = 1.0
     }
 
     func getBalance() {
@@ -158,6 +170,24 @@ class TokenViewController: UIViewController {
         let sendSettingsViewController = SendSettingsViewController(
                 tokenBalance: tokenBalance ?? "",
                 token: token)
+        self.navigationController?.pushViewController(sendSettingsViewController, animated: true)
+    }
+    
+    @IBAction func makePlasmaDeposit(_ sender: UIButton) {
+        guard let wallet = wallet else {
+            return
+        }
+        do {
+            try WalletsStorage().selectWallet(wallet: wallet)
+        } catch {
+            return
+        }
+        guard let token = token else {
+            return
+        }
+        let sendSettingsViewController = SendSettingsViewController(PlasmaContract.plasmaAddress,
+                                                                    tokenBalance: tokenBalance ?? "",
+                                                                    token: token)
         self.navigationController?.pushViewController(sendSettingsViewController, animated: true)
     }
 
