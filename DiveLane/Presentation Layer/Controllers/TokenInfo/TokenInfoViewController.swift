@@ -112,6 +112,9 @@ class TokenInfoViewController: UIViewController {
         if isAdded {
             do {
                 try TokensStorage().deleteToken(token: token, wallet: currentWallet, networkId: networkID)
+                DispatchQueue.main.async { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                }
             } catch {
                 DispatchQueue.main.async { [weak self] in
                     self?.dismiss(animated: true, completion: nil)
@@ -120,6 +123,9 @@ class TokenInfoViewController: UIViewController {
         } else {
             do {
                 try TokensStorage().saveCustomToken(token: token, wallet: currentWallet, networkId: networkID)
+                DispatchQueue.main.async { [weak self] in
+                    self?.dismiss(animated: true, completion: nil)
+                }
             } catch {
                 DispatchQueue.main.async { [weak self] in
                     self?.dismiss(animated: true, completion: nil)

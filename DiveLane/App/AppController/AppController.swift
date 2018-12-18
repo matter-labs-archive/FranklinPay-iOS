@@ -78,7 +78,7 @@ class AppController {
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 4)
         let nav5 = navigationController(withTitle: "Browser",
-                                        withImage: UIImage(named: "AppIcon"),
+                                        withImage: UIImage(named: "deselected"),
                                         withController: BrowserController(nibName: nil, bundle: nil),
                                         tag: 5)
         tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]

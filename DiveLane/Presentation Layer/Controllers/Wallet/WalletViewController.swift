@@ -203,9 +203,9 @@ class WalletViewController: UIViewController {
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        twoDimensionalTokensArray.removeAll()
-        twoDimensionalUTXOsArray.removeAll()
-        reloadDataInTable()
+//        twoDimensionalTokensArray.removeAll()
+//        twoDimensionalUTXOsArray.removeAll()
+//        reloadDataInTable()
         updateTable()
     }
 
@@ -218,9 +218,9 @@ class WalletViewController: UIViewController {
     }
 
     func updateTable() {
-//        twoDimensionalTokensArray.removeAll()
-//        twoDimensionalUTXOsArray.removeAll()
-//        reloadDataInTable()
+        twoDimensionalTokensArray.removeAll()
+        twoDimensionalUTXOsArray.removeAll()
+        reloadDataInTable()
         
         switch blockchainControl.selectedSegmentIndex {
         case Blockchain.ether.rawValue:
@@ -510,15 +510,18 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         guard blockchainControl.selectedSegmentIndex == Blockchain.ether.rawValue else {return}
-        let etherToken = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token == ERC20TokenModel(isEther: true)
-        let plasmaBlockchain = blockchainControl.selectedSegmentIndex == Blockchain.ether.rawValue
-        if etherToken || plasmaBlockchain {
+        let token = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token
+        let wallet = twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet
+        print(token.name)
+        let isEtherToken = token == ERC20TokenModel(isEther: true)
+        let plasmaBlockchain = blockchainControl.selectedSegmentIndex == Blockchain.plasma.rawValue
+        if isEtherToken || plasmaBlockchain {
             return
         }
         if editingStyle == .delete {
             let networkID = CurrentNetwork().getNetworkID()
             do {
-                try TokensStorage().deleteToken(token: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].token, wallet: twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].inWallet, networkId: networkID)
+                try TokensStorage().deleteToken(token: token, wallet: wallet, networkId: networkID)
                 self.updateTable()
             } catch {
                 return

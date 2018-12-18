@@ -76,8 +76,9 @@ class SearchTokenViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.tokensList?.removeAll()
+        self.tokensIsAdded?.removeAll()
         self.tokensTableView.reloadData()
-
     }
 
     @objc func scanTapped() {
@@ -172,6 +173,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
 
         tokenInfoViewController.transitioningDelegate = self
 
+        //self.navigationController?.pushViewController(tokenInfoViewController, animated: true)
         self.present(tokenInfoViewController, animated: true, completion: nil)
 
         tableView.deselectRow(at: indexPath, animated: true)

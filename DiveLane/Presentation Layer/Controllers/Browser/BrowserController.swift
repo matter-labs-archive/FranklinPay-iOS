@@ -107,7 +107,7 @@ class BrowserController: UIViewController {
         
         //webView.load(URLRequest(url: URL(string: "https://peepeth.com/")!))
         //webView.load(URLRequest(url: URL(string: "https://plasma-testnet.thematter.io/")!))
-        webView.load(URLRequest(url: URL(string: "https://instant.airswap.io")!))
+        webView.load(URLRequest(url: URL(string: "https://peepeth.com/")!))
         
         do {
             let wallet = try WalletsService().getSelectedWallet()
