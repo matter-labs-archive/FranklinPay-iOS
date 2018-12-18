@@ -97,7 +97,9 @@ class OnboardingViewController: UIViewController {
             case 2:
                 goToApp()
             default:
-                self.pageViewController.setViewControllers([self.viewControllerAtIndex(index: vc.pageIndex + 1)],
+                let index = vc.pageIndex + 1
+                changeOnboardingButtonStatus(for: index)
+                self.pageViewController.setViewControllers([self.viewControllerAtIndex(index: index)],
                         direction: .forward,
                         animated: true,
                         completion: nil)
@@ -126,12 +128,14 @@ class OnboardingViewController: UIViewController {
         return vc
     }
 
-    func changeOnboardingButtonTitle(for page: Int) {
+    func changeOnboardingButtonStatus(for page: Int) {
         switch page {
         case 2:
-            self.nextBtn.setTitle("LETS GO!", for: .normal)
+            //self.nextBtn.setTitle("LETS GO!", for: .normal)
+            self.skipBtn.isHidden = true
         default:
-            self.nextBtn.setTitle("NEXT", for: .normal)
+            self.skipBtn.isHidden = false
+            //self.nextBtn.setTitle("NEXT", for: .normal)
         }
     }
 
@@ -175,10 +179,9 @@ extension OnboardingViewController: UIPageViewControllerDataSource, UIPageViewCo
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-
-//        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
-//            //changeOnboardingButtonTitle(for: vc.pageIndex)
-//        }
+        if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
+            changeOnboardingButtonStatus(for: vc.pageIndex)
+        }
     }
 
 }
