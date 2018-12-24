@@ -136,7 +136,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             guard let wallet = wallet else {
                 return cell
             }
-            guard let tokensInWallet = try? TokensStorage().getAllTokens(for: wallet, networkId: networkID) else {
+            guard let tokensInWallet = try? TokensService().getAllTokens(for: wallet, networkId: networkID) else {
                 return cell
             }
             var isAdded = false
@@ -192,13 +192,13 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
 
         do {
             if isEnabled {
-                try TokensStorage().deleteToken(token: token, wallet: currentWallet, networkId: networkID)
+                try TokensService().deleteToken(token: token, wallet: currentWallet, networkId: networkID)
                 CurrentToken.currentToken = ERC20TokenModel(isEther: true)
                 DispatchQueue.main.async { [weak self] in
                     self?.tokensTableView.reloadData()
                 }
             } else {
-                try TokensStorage().saveCustomToken(token: token, wallet: currentWallet, networkId: networkID)
+                try TokensService().saveCustomToken(token: token, wallet: currentWallet, networkId: networkID)
                 CurrentToken.currentToken = token
                 DispatchQueue.main.async { [weak self] in
                     self?.tokensTableView.reloadData()

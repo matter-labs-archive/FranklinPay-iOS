@@ -66,7 +66,7 @@ class ContactsViewController: UIViewController {
     }
 
     func getAllContacts() {
-        guard let contacts = try? ContactsStorage().getAllContacts() else {
+        guard let contacts = try? ContactsService().getAllContacts() else {
             updateContactsList(with: [])
             return
         }
@@ -134,7 +134,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let contact = contactsList?[indexPath.row] else {return}
         if editingStyle == .delete {
             do {
-                try ContactsStorage().deleteContact(contact: contact)
+                try ContactsService().deleteContact(contact: contact)
                 let searchText = self.searchController.searchBar.text ?? ""
                 if searchText != "" {
                     self.searchContact(string: searchText)

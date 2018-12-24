@@ -5,7 +5,7 @@ target 'DiveLane' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   # Pods for DiveLane
-  pod 'PlasmaSwiftLib'
+  pod 'web3swift'
   pod 'QRCodeReader.swift'
   pod 'Fabric'
   pod 'Crashlytics'

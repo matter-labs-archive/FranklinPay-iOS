@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PlasmaSwiftLib
 import Web3swift
 import EthereumAddress
 import BigInt
@@ -63,7 +62,7 @@ class WalletViewController: UIViewController {
     }
 
     func initDatabase() {
-        guard let wallets = try? WalletsStorage().getAllWallets() else {
+        guard let wallets = try? WalletsService().getAllWallets() else {
             return
         }
         self.wallets = wallets
@@ -121,7 +120,7 @@ class WalletViewController: UIViewController {
         print(token)
         CurrentToken.currentToken = token.token
         do {
-            try WalletsStorage().selectWallet(wallet: token.inWallet)
+            try WalletsService().selectWallet(wallet: token.inWallet)
             self.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row].isSelected = true
             cell.changeSelectButton(isSelected: true)
         } catch {
@@ -176,7 +175,7 @@ class WalletViewController: UIViewController {
             guard let address = EthereumAddress(forWallet.address) else {return}
             let output = try TransactionOutput(outputNumberInTx: 0, receiverEthereumAddress: address, amount: mergedAmount)
             let outputs = [output]
-            let transaction = try Transaction(txType: .merge, inputs: inputs, outputs: outputs)
+            let transaction = try PlasmaTransaction(txType: .merge, inputs: inputs, outputs: outputs)
             checkPassword(forWallet: forWallet) { [weak self] (password) in
                 self?.enterPincode(for: transaction, withPassword: password)
             }
@@ -197,7 +196,7 @@ class WalletViewController: UIViewController {
         }
     }
 
-    func enterPincode(for transaction: Transaction, withPassword: String?) {
+    func enterPincode(for transaction: PlasmaTransaction, withPassword: String?) {
         let enterPincode = EnterPincodeViewController(from: .transaction, for: transaction, withPassword: withPassword ?? "", isFromDeepLink: false)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
@@ -259,7 +258,7 @@ class WalletViewController: UIViewController {
         }
         let networkID = CurrentNetwork().getNetworkID()
         for wallet in wallets {
-            guard let tokens = try? TokensStorage().getAllTokens(for: wallet, networkId: networkID) else {
+            guard let tokens = try? TokensService().getAllTokens(for: wallet, networkId: networkID) else {
                 completion()
                 return
             }
@@ -414,7 +413,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         let wallet = twoDimensionalTokensArray[section].tokens.first?.inWallet
         let token = twoDimensionalTokensArray[section].tokens.first
         do {
-            try WalletsStorage().selectWallet(wallet: wallet!)
+            try WalletsService().selectWallet(wallet: wallet!)
             CurrentToken.currentToken = token?.token
             let searchTokenController = SearchTokenViewController(for: wallet)
             self.navigationController?.pushViewController(searchTokenController, animated: true)
@@ -521,7 +520,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         if editingStyle == .delete {
             let networkID = CurrentNetwork().getNetworkID()
             do {
-                try TokensStorage().deleteToken(token: token, wallet: wallet, networkId: networkID)
+                try TokensService().deleteToken(token: token, wallet: wallet, networkId: networkID)
                 self.updateTable()
             } catch {
                 return

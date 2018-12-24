@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Contact" representedClassName="Contact" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="ERC20Token" representedClassName="ERC20Token" syncable="YES" codeGenerationType="class">
+        <attribute name="address" attributeType="String" syncable="YES"/>
+        <attribute name="decimals" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isAdded" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="networkID" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="symbol" attributeType="String" syncable="YES"/>
+        <attribute name="walletAddress" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ETHTransaction" inverseName="token" inverseEntity="ETHTransaction" syncable="YES"/>
+    </entity>
+    <entity name="ETHTransaction" representedClassName="ETHTransaction" syncable="YES" codeGenerationType="class">
+        <attribute name="amount" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="from" attributeType="String" syncable="YES"/>
+        <attribute name="isPending" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="networkID" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="to" attributeType="String" syncable="YES"/>
+        <attribute name="transactionHash" attributeType="String" syncable="YES"/>
+        <relationship name="token" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ERC20Token" inverseName="transactions" inverseEntity="ERC20Token" syncable="YES"/>
+        <relationship name="wallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Wallet" inverseName="transactions" inverseEntity="Wallet" syncable="YES"/>
+    </entity>
+    <entity name="Wallet" representedClassName="Wallet" syncable="YES" codeGenerationType="class">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="isHD" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isSelected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ETHTransaction" inverseName="wallet" inverseEntity="ETHTransaction" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Contact" positionX="-27" positionY="117" width="128" height="75"/>
+        <element name="ERC20Token" positionX="-45" positionY="0" width="128" height="165"/>
+        <element name="ETHTransaction" positionX="-27" positionY="63" width="128" height="195"/>
+        <element name="Wallet" positionX="-18" positionY="27" width="128" height="135"/>
+    </elements>
+</model>

@@ -12,7 +12,7 @@ class WalletsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
 
-    let localDatabase = WalletsStorage()
+    let localDatabase = WalletsService()
     let keysService = WalletsService()
     var wallets: [WalletModel] = []
 

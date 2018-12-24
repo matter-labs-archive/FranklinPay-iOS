@@ -59,7 +59,7 @@ class AddContactController: UIViewController {
     private func addContact(address: String, name: String) {
         let contact = ContactModel(address: address, name: name)
         do {
-            try ContactsStorage().saveContact(contact: contact)
+            try ContactsService().saveContact(contact: contact)
             self.navigationController?.popViewController(animated: true)
         } catch {
             return

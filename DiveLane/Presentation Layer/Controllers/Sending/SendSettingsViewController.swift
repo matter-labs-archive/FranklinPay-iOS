@@ -10,7 +10,6 @@ import UIKit
 import QRCodeReader
 import Web3swift
 import BigInt
-import PlasmaSwiftLib
 import EthereumAddress
 
 class SendSettingsViewController: UIViewController {
@@ -46,7 +45,7 @@ class SendSettingsViewController: UIViewController {
     var isFromDeepLink: Bool = false
     var amountInString: String?
     var destinationAddress: String?
-    let localStorage = WalletsStorage()
+    let localStorage = WalletsService()
     let transactionsService = Web3Service()
     let animation = AnimationController()
 
@@ -311,7 +310,7 @@ class SendSettingsViewController: UIViewController {
                     Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {})
                     return
                 }
-                guard let tokens = try? TokensStorage().getAllTokens(for: wallet, networkId: CurrentNetwork().getNetworkID()) else {
+                guard let tokens = try? TokensService().getAllTokens(for: wallet, networkId: CurrentNetwork().getNetworkID()) else {
                     Alerts().showErrorAlert(for: self!, error: Errors.CommonErrors.unknown, completion: {})
                     return
                 }
@@ -593,7 +592,7 @@ class SendSettingsViewController: UIViewController {
 
         let outputs = [output1, output2]
 
-        guard let transaction = try? Transaction(txType: .split, inputs: inputs, outputs: outputs) else {
+        guard let transaction = try? PlasmaTransaction(txType: .split, inputs: inputs, outputs: outputs) else {
             self.animation.waitAnimation(isEnabled: false,
                                          notificationText: "Preparing transaction",
                                          on: self.view)
@@ -641,7 +640,7 @@ class SendSettingsViewController: UIViewController {
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
-    func enterPincode(for transaction: Transaction, withPassword: String?) {
+    func enterPincode(for transaction: PlasmaTransaction, withPassword: String?) {
         let enterPincode = EnterPincodeViewController(from: .transaction,
                                                       for: transaction,
                                                       withPassword: withPassword ?? "",

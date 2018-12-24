@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import PlasmaSwiftLib
 
 struct ExpandableTableUTXOs {
     var isExpanded: Bool

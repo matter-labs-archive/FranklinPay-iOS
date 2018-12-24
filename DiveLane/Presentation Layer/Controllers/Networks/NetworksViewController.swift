@@ -76,7 +76,7 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         CurrentNetwork.currentNetwork = networks[indexPath.row]
-        CurrentWeb.currentWeb = webs[indexPath.row]
+        CurrentNetwork.currentWeb = webs[indexPath.row]
         DispatchQueue.main.async { [weak self] in
             self?.networksTableView.reloadData()
         }

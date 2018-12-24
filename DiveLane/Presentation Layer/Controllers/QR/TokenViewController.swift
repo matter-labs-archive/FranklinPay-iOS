@@ -10,7 +10,6 @@ import UIKit
 import Web3swift
 import BigInt
 import EthereumAddress
-import PlasmaSwiftLib
 
 class TokenViewController: UIViewController {
 
@@ -160,7 +159,7 @@ class TokenViewController: UIViewController {
             return
         }
         do {
-            try WalletsStorage().selectWallet(wallet: wallet)
+            try WalletsService().selectWallet(wallet: wallet)
         } catch {
             return
         }
@@ -178,7 +177,7 @@ class TokenViewController: UIViewController {
             return
         }
         do {
-            try WalletsStorage().selectWallet(wallet: wallet)
+            try WalletsService().selectWallet(wallet: wallet)
         } catch {
             return
         }

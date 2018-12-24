@@ -8,7 +8,6 @@
 
 import UIKit
 import Web3swift
-import PlasmaSwiftLib
 import EthereumAddress
 
 class TokenCellDropdown: UITableViewCell {

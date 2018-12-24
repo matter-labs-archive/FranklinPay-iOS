@@ -16,7 +16,7 @@ class CreateWalletPincodeViewController: PincodeViewController {
 
     var pincodeItems: [KeychainPasswordItem] = []
 
-    let localStorage = WalletsStorage()
+    let localStorage = WalletsService()
     let animationController = AnimationController()
 
     //var newWallet: Bool = false

@@ -26,7 +26,6 @@ class WalletCreationViewController: UIViewController {
     var importMode: WalletImportMode?
 
     let walletsService: WalletsService = WalletsService()
-    let walletsStorage = WalletsStorage()
     let web3service: Web3Service = Web3Service()
 
     let animation = AnimationController()
@@ -282,9 +281,9 @@ class WalletCreationViewController: UIViewController {
                                      on: self.view)
         DispatchQueue.global().async { [weak self] in
             do {
-                try self?.walletsStorage.saveWallet(wallet: wallet)
+                try self?.walletsService.saveWallet(wallet: wallet)
                 self?.createPassword(withPassword, forWallet: wallet)
-                try self?.walletsStorage.selectWallet(wallet: wallet)
+                try self?.walletsService.selectWallet(wallet: wallet)
                 if !UserDefaultKeys().isEtherAdded {
                     AppController().addFirstToken(for: wallet, completion: { [weak self] (error) in
                         if error == nil {
@@ -309,7 +308,7 @@ class WalletCreationViewController: UIViewController {
                                      on: self.view)
         if let wallet = needDeleteWallet {
             do {
-                try self.walletsStorage.deleteWallet(wallet: wallet)
+                try self.walletsService.deleteWallet(wallet: wallet)
             } catch let deleteErr {
                 Alerts().showErrorAlert(for: self,
                                         error: deleteErr,

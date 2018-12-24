@@ -122,7 +122,7 @@ class BrowserController: UIViewController {
             }, for: "getRPCurl")
             
             self.webView.bridge.register({ (_, completion) in
-                guard let allAccounts = try? WalletsStorage().getAllWallets().compactMap({$0.address}) else {
+                guard let allAccounts = try? WalletsService().getAllWallets().compactMap({$0.address}) else {
                     return
                 }
                 completion(.success(["accounts": allAccounts as Any]))

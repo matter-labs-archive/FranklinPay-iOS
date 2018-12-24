@@ -1,6 +1,0 @@
-framework module PlasmaSwiftLib {
-  umbrella header "PlasmaSwiftLib-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -9,7 +9,6 @@
 import UIKit
 import LocalAuthentication
 import Web3swift
-import PlasmaSwiftLib
 
 class EnterPincodeViewController: PincodeViewController {
 
@@ -18,7 +17,7 @@ class EnterPincodeViewController: PincodeViewController {
 
     var fromCase: EnterPincodeFromCases?
     var data: [String: Any]?
-    var transaction: Transaction?
+    var transaction: PlasmaTransaction?
     var password: String?
     var isFromDeepLink: Bool = false
     var isContract: Bool = false
@@ -37,7 +36,7 @@ class EnterPincodeViewController: PincodeViewController {
         self.isContract = isContract
     }
 
-    convenience init(from: EnterPincodeFromCases, for transaction: Transaction, withPassword: String, isFromDeepLink: Bool) {
+    convenience init(from: EnterPincodeFromCases, for transaction: PlasmaTransaction, withPassword: String, isFromDeepLink: Bool) {
         self.init()
         fromCase = from
         self.transaction = transaction
@@ -115,7 +114,7 @@ class EnterPincodeViewController: PincodeViewController {
         }
     }
 
-    func send(with transaction: Transaction) {
+    func send(with transaction: PlasmaTransaction) {
         guard let wallet = try? keysService.getSelectedWallet() else {
             Alerts().showErrorAlert(for: self, error: Errors.StorageErrors.noSelectedWallet, completion: {})
             return

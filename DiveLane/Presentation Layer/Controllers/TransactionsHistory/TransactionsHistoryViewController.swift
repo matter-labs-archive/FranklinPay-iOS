@@ -18,7 +18,7 @@ class TransactionsHistoryViewController: UIViewController {
     // MARK: - Services
     let keysService = WalletsService()
     let transactionsHistoryService = TransactionsHistoryService()
-    let localDatabase = TokensStorage()
+    let localDatabase = TokensService()
 
     // MARK: - Variables
     var transactions = [[ETHTransactionModel]]()
@@ -106,13 +106,13 @@ class TransactionsHistoryViewController: UIViewController {
             return
         }
         do {
-            try TransactionsStorage().saveTransactions(transactions: result, for: wallet)
+            try TransactionsHistoryService().saveTransactions(transactions: result, for: wallet)
         } catch {
             self.prepareTransactionsForView(transactions: [])
             return
         }
         let networkID = CurrentNetwork.currentNetwork.chainID
-        guard let txs = try? TransactionsStorage().getAllTransactions(for: wallet,
+        guard let txs = try? TransactionsHistoryService().getAllTransactions(for: wallet,
                                                                       networkId: Int64(networkID)) else {
             self.prepareTransactionsForView(transactions: [])
             return

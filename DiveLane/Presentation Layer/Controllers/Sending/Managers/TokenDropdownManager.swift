@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import PlasmaSwiftLib
 
 protocol TokenSelectionDelegate: class {
     func didSelectToken(token: ERC20TokenModel)
@@ -17,7 +16,7 @@ protocol TokenSelectionDelegate: class {
 class TokenDropdownManager: NSObject, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: TokenSelectionDelegate?
 
-    let localStorage = WalletsStorage()
+    let localStorage = WalletsService()
 
     var tokens = [ERC20TokenModel]()
     var utxos = [PlasmaUTXOs]()

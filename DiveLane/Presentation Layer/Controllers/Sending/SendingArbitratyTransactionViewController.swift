@@ -48,7 +48,7 @@ class SendArbitraryTransactionViewController: UIViewController {
             fromTextField.text = "From: \(address)"
         }
 
-        guard let wallet = try? WalletsStorage().getSelectedWallet() else {
+        guard let wallet = try? WalletsService().getSelectedWallet() else {
             return
         }
 

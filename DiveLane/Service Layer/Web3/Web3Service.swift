@@ -62,7 +62,7 @@ public class Web3Service: IWeb3Service {
     }
     
     public var web3Instance: web3 {
-        let web3 = CurrentWeb.currentWeb
+        let web3 = CurrentNetwork.currentWeb
         let keystoreManager = try! walletsService.keystoreManager()
         web3.addKeystoreManager(keystoreManager)
         return web3

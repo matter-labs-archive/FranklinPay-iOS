@@ -24,7 +24,7 @@ class SettingsViewController: UIViewController {
 
     func getSettings() {
         do {
-            self.settings["currentNetwork"] = (CurrentNetwork.currentNetwork ?? Networks.Mainnet)
+            self.settings["currentNetwork"] = (CurrentNetwork.currentNetwork )
             self.settings["currentWallet"] = try WalletsService().getSelectedWallet().name
         } catch let error {
             self.settings["currentWallet"] = error.localizedDescription

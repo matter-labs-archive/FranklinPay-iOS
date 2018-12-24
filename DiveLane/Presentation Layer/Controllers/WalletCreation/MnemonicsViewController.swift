@@ -12,7 +12,6 @@ class MnemonicsViewController: UIViewController {
     @IBOutlet weak var mnemonicsLabel: UILabel!
 
     let walletsService = WalletsService()
-    let walletsStorage = WalletsStorage()
     var mnemonics: String
     var name: String
     var password: String
@@ -49,7 +48,7 @@ class MnemonicsViewController: UIViewController {
                                      on: self.view)
         if let wallet = needDeleteWallet {
             do {
-                try self.walletsStorage.deleteWallet(wallet: wallet)
+                try self.walletsService.deleteWallet(wallet: wallet)
             } catch let deleteErr {
                 Alerts().showErrorAlert(for: self,
                                         error: deleteErr,
@@ -97,9 +96,9 @@ class MnemonicsViewController: UIViewController {
                                                                      password: password,
                                                                      mnemonics: mnemonics)
                 guard let wallet = hdwallet else {return}
-                try self?.walletsStorage.saveWallet(wallet: wallet)
+                try self?.walletsService.saveWallet(wallet: wallet)
                 self?.createPassword(password, forWallet: wallet)
-                try self?.walletsStorage.selectWallet(wallet: wallet)
+                try self?.walletsService.selectWallet(wallet: wallet)
                 if !UserDefaultKeys().isEtherAdded {
                     AppController().addFirstToken(for: wallet, completion: { (error) in
                         if error == nil {

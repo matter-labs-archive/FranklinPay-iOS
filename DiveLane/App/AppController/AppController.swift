@@ -14,7 +14,7 @@ class AppController {
 
     let transactionsService = Web3Service()
     let etherscanService = ContractsService()
-    let localDatabase = WalletsStorage()
+    let localDatabase = WalletsService()
     let routerEIP681 = EIP681Router()
     let plasmaRouter = PlasmaRouter()
 
@@ -161,7 +161,7 @@ class AppController {
     
     func selectNetwork() {
         CurrentNetwork.currentNetwork = (UserDefaultKeys().currentNetwork as? Networks) ?? Networks.Mainnet
-        CurrentWeb.currentWeb = (UserDefaultKeys().currentWeb as? web3) ?? Web3.InfuraMainnetWeb3()
+        CurrentNetwork.currentWeb = (UserDefaultKeys().currentWeb as? web3) ?? Web3.InfuraMainnetWeb3()
     }
     
     func selectWallet(completion: @escaping (WalletModel?) -> Void) {
@@ -176,7 +176,7 @@ class AppController {
     func selectToken(for wallet: WalletModel) {
         do {
             try localDatabase.selectWallet(wallet: wallet)
-            let token = try TokensStorage().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork.chainID)).first
+            let token = try TokensService().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork.chainID)).first
             CurrentToken.currentToken = token
         } catch let error {
             fatalError("Can't select token - \(String(describing: error))")
@@ -188,7 +188,7 @@ class AppController {
         for networkID in 1...42 {
             let etherToken = ERC20TokenModel(isEther: true)
             do {
-                try TokensStorage().saveCustomToken(token: etherToken,
+                try TokensService().saveCustomToken(token: etherToken,
                                             wallet: wallet,
                                             networkId: Int64(networkID))
             } catch let error {
