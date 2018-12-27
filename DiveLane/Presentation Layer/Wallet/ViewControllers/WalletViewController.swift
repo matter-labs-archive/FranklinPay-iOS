@@ -18,8 +18,8 @@ class WalletViewController: UIViewController {
 
     let conversionService = RatesService.service
 
-    var localDatabase = TokensService()
-    var keysService = WalletsService()
+    var tokensService = TokensService()
+    var walletsService = WalletsService()
     var wallets: [WalletModel]?
     var twoDimensionalTokensArray: [ExpandableTableTokens] = []
     var twoDimensionalUTXOsArray: [ExpandableTableUTXOs] = []
