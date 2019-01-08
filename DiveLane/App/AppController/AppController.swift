@@ -10,13 +10,15 @@ import UIKit
 import Web3swift
 import BigInt
 
-class AppController {
+public class AppController {
 
-    let transactionsService = Web3Service()
-    let etherscanService = ContractsService()
-    let localDatabase = WalletsService()
-    let routerEIP681 = EIP681Router()
-    let plasmaRouter = PlasmaRouter()
+    private let etherscanService = ContractsService()
+    private let walletsService = WalletsService()
+    private let routerEIP681 = EIP681Router()
+    private let plasmaRouter = PlasmaRouter()
+    private let userDefaultKeys = UserDefaultKeys()
+    private let tokensService = TokensService()
+    private let onboarding = OnboardingViewController()
 
     convenience init(
             window: UIWindow,
@@ -26,8 +28,7 @@ class AppController {
         start(in: window, launchOptions: launchOptions, url: url)
     }
 
-    func start(in window: UIWindow, launchOptions: [UIApplication.LaunchOptionsKey: Any]?, url: URL?) {
-        selectNetwork()
+    private func start(in window: UIWindow, launchOptions: [UIApplication.LaunchOptionsKey: Any]?, url: URL?) {
         if let launchOptions = launchOptions {
             if let url = launchOptions[UIApplication.LaunchOptionsKey.url] as? URL {
                 navigateViaDeepLink(url: url, in: window)
@@ -42,7 +43,7 @@ class AppController {
 
     }
 
-    func addWallet() -> UINavigationController {
+    private func addWalletController() -> UINavigationController {
         let nav = UINavigationController()
         let addWalletViewController = AddWalletViewController()
         nav.viewControllers.append(addWalletViewController)
@@ -50,43 +51,30 @@ class AppController {
         return nav
     }
 
-    func goToApp() -> UITabBarController {
+    private func goToApp() -> UITabBarController {
         let tabs = UITabBarController()
-        selectWallet { [unowned self] (wallet) in
-            if let wallet = wallet {
-                self.selectToken(for: wallet)
-            }
-        }
         let nav1 = navigationController(withTitle: "Wallet",
                                         withImage: UIImage(named: "wallet_gray"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: "Send",
-                                        withImage: UIImage(named: "send_gray"),
-                                        withController: SendSettingsViewController(),
-                                        tag: 2)
-        let nav3 = navigationController(withTitle: "Transactions History",
+        let nav2 = navigationController(withTitle: "Transactions History",
                                         withImage: UIImage(named: "transactions_gray"),
                                         withController: TransactionsHistoryViewController(),
-                                        tag: 3)
-//        let nav4 = navigationController(withTitle: "Settings",
-//                                        withImage: UIImage(named: "settings_gray"),
-//                                        withController: SettingsViewController(nibName: nil, bundle: nil),
-//                                        tag: 4)
-        let nav4 = navigationController(withTitle: "Contacts",
+                                        tag: 2)
+        let nav4 = navigationController(withTitle: "Settings",
+                                        withImage: UIImage(named: "settings_gray"),
+                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+                                        tag: 4)
+        let nav3 = navigationController(withTitle: "Contacts",
                                         withImage: UIImage(named: "contacts_gray"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
-                                        tag: 4)
-        let nav5 = navigationController(withTitle: "Browser",
-                                        withImage: UIImage(named: "deselected"),
-                                        withController: BrowserController(nibName: nil, bundle: nil),
-                                        tag: 5)
-        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
+                                        tag: 3)
+        tabs.viewControllers = [nav1, nav2, nav3, nav4]
 
         return tabs
     }
 
-    func navigationController(withTitle: String?, withImage: UIImage?,
+    private func navigationController(withTitle: String?, withImage: UIImage?,
                               withController: UIViewController,
                               tag: Int) -> UINavigationController {
         let nav = UINavigationController()
@@ -100,105 +88,82 @@ class AppController {
         nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
         return nav
     }
-
-    func startAsUsual(in window: UIWindow) {
-
-        var startViewController: UIViewController?
-
-        let isOnboardingPassed = UserDefaultKeys().isOnboardingPassed
-        let wallet: WalletModel?
-        do {
-            let w = try localDatabase.getSelectedWallet()
-            wallet = w
-        } catch {
-            wallet = nil
+    
+    private func initPreparations(for wallet: Wallet) {
+        let group = DispatchGroup()
+        group.enter()
+        
+        let tokensDownloaded = userDefaultKeys.tokensDownloaded
+        let etherAdded = userDefaultKeys.etherAdded
+        
+        
+        DispatchQueue.global().async { [unowned self] in
+            if !tokensDownloaded {
+                do {
+                    try self.tokensService.downloadAllAvailableTokensIfNeeded()
+                    self.userDefaultKeys.setTokensDownloaded()
+                } catch let error {
+                    fatalError("Can't download tokens - \(String(describing: error))")
+                }
+            }
         }
+        DispatchQueue.global().async { [unowned self] in
+            if !etherAdded {
+                self.addFirstToken(for: wallet)
+                self.userDefaultKeys.setEtherAdded()
+            }
+        }
+    }
 
-        if !isOnboardingPassed {
-            startViewController = OnboardingViewController()
-            startViewController?.view.backgroundColor = Colors.BackgroundColors.main
-        } else if wallet == nil {
-            startViewController = addWallet()
-            startViewController?.view.backgroundColor = UIColor.white
-        } else {
-            DispatchQueue.global().async {
-                if !UserDefaultKeys().tokensDownloaded {
-                    do {
-                        try TokensService().downloadAllAvailableTokensIfNeeded()
-                        UserDefaultKeys().setTokensDownloaded()
-                        UserDefaults.standard.synchronize()
-                    } catch let error {
-                        fatalError("Can't download tokens - \(String(describing: error))")
-                    }
-                }
-            }
-            DispatchQueue.global().async { [unowned self] in
-                if !UserDefaultKeys().isEtherAdded {
-                    do {
-                        let wallet = try self.localDatabase.getSelectedWallet()
-                        self.addFirstToken(for: wallet, completion: { (error) in
-                            if error == nil {
-                                UserDefaultKeys().setEtherAdded()
-                                UserDefaults.standard.synchronize()
-                                
-                            } else {
-                                fatalError("Can't add ether - \(String(describing: error))")
-                            }
-                        })
-                    } catch let error {
-                        fatalError("Can't get wallet - \(String(describing: error))")
-                    }
-                }
-            }
+    private func startAsUsual(in window: UIWindow) {
+
+        var startViewController: UIViewController
+
+        let onboardingPassed = userDefaultKeys.onboardingPassed
+        if !onboardingPassed {
+            startViewController = self.onboarding
+        }
+        
+        guard let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first else {
+            startViewController = self.addWalletController()
+        }
+        
+        if let selectedWallet = try? walletsService.getSelectedWallet() {
+            self.initPreparations(for: selectedWallet)
             startViewController = self.goToApp()
-            startViewController?.view.backgroundColor = UIColor.white
+        } else {
+            do {
+                try firstWallet.select()
+                self.initPreparations(for: firstWallet)
+                startViewController = self.goToApp()
+            } catch let error {
+                fatalError("Can't select existing wallet \(firstWallet.address), error: \(error.localizedDescription)")
+            }
         }
+        startViewController.view.backgroundColor = UIColor.white
         DispatchQueue.main.async {
-            window.rootViewController = startViewController ?? UIViewController()
+            window.rootViewController = startViewController
             window.makeKeyAndVisible()
         }
     }
     
-    func selectNetwork() {
-        CurrentNetwork.currentNetwork = (UserDefaultKeys().currentNetwork as? Networks) ?? Networks.Mainnet
-        CurrentNetwork.currentWeb = (UserDefaultKeys().currentWeb as? web3) ?? Web3.InfuraMainnetWeb3()
-    }
-    
-    func selectWallet(completion: @escaping (WalletModel?) -> Void) {
-        guard let firstWallet = try? localDatabase.getSelectedWallet() else {
-            completion(nil)
-            return
-        }
-        completion(firstWallet)
-
-    }
-    
-    func selectToken(for wallet: WalletModel) {
-        do {
-            try localDatabase.selectWallet(wallet: wallet)
-            let token = try TokensService().getAllTokens(for: wallet, networkId: Int64(CurrentNetwork.currentNetwork.chainID)).first
-            CurrentToken.currentToken = token
-        } catch let error {
-            fatalError("Can't select token - \(String(describing: error))")
-        }
-    }
-    
-    func addFirstToken(for wallet: WalletModel, completion: @escaping (Error?) -> Void) {
-        let currentNetworkID = Int64(String(CurrentNetwork.currentNetwork.chainID )) ?? 0
+    func addFirstToken(for wallet: Wallet) {
+        let group = DispatchGroup()
+        group.enter()
+        
+        let ether = ERC20Token(ether: true)
+        
         for networkID in 1...42 {
-            let etherToken = ERC20TokenModel(isEther: true)
             do {
-                try TokensService().saveCustomToken(token: etherToken,
-                                            wallet: wallet,
-                                            networkId: Int64(networkID))
+                try wallet.add(token: ether,
+                               network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
             } catch let error {
-                completion(error)
-            }
-            if Int64(networkID) == currentNetworkID {
-                CurrentToken.currentToken = etherToken
+                print("Can't add ether for \(wallet.address) on \(networkID), error: \(error.localizedDescription)")
+                continue
             }
         }
-        completion(nil)
+        CurrentToken.currentToken = ether
+        group.leave()
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {

@@ -12,7 +12,6 @@ import BigInt
 import EthereumAddress
 
 class EIP681Router {
-    let transactionsService = Web3Service()
     let etherscanService = ContractsService()
     let model = EIP681Model()
     public func sendCustomTransaction(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
@@ -43,19 +42,6 @@ class EIP681Router {
     }
     public func sendArbitraryTransactionToContract(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
         model.changeCurrentNetowrk(chainId: parsed.chainID)
-        let currentNetwork = CurrentNetwork.currentNetwork
-        let web3: web3
-        switch currentNetwork {
-        case .Ropsten:
-            web3 = Web3.InfuraRopstenWeb3()
-        case .Rinkeby:
-            web3 = Web3.InfuraRinkebyWeb3()
-        case .Mainnet:
-            web3 = Web3.InfuraMainnetWeb3()
-        default:
-            web3 = Web3.new(URL(string: "https://kovan.infura.io")!)!
-        }
-        CurrentNetwork.currentWeb = web3
         //Preparing the options
         var options: TransactionOptions = TransactionOptions.defaultOptions
         if let gl = parsed.gasLimit {
@@ -114,10 +100,11 @@ class EIP681Router {
                                            methodName: String,
                                            options: TransactionOptions,
                                            usingWindow window: UIWindow) {
-        if let tx = try? transactionsService.prepareWriteContractTx(contractABI: contractAbi,
-                                                            contractAddress: contractAddress.address,
-                                                            contractMethod: methodName,
-                                                            parameters: data) {
+        guard let wallet = CurrentWallet.currentWallet else {return}
+        if let tx = try? wallet.prepareWriteContractTx(contractABI: contractAbi,
+                                                       contractAddress: contractAddress.address,
+                                                       contractMethod: methodName,
+                                                       parameters: data) {
             let controller = SendArbitraryTransactionViewController(
                 params: params,
                 transactionInfo:

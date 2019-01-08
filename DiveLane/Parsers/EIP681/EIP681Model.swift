@@ -16,17 +16,16 @@ class EIP681Model {
     public func changeCurrentNetowrk(chainId: BigUInt?) {
         switch chainId {
         case 1?:
-            CurrentNetwork.currentNetwork = Networks.Mainnet
+            CurrentNetwork.currentNetwork = Web3Network(network: .Mainnet)
         case 3?:
-            CurrentNetwork.currentNetwork = Networks.Ropsten
-        case 4?:
-            CurrentNetwork.currentNetwork = Networks.Rinkeby
+            CurrentNetwork.currentNetwork = Web3Network(network: .Ropsten)        case 4?:
+            CurrentNetwork.currentNetwork = Web3Network(network: .Rinkeby)
         case 42?:
-            CurrentNetwork.currentNetwork = Networks.Kovan
+            CurrentNetwork.currentNetwork = Web3Network(network: .Kovan)
         case .some(let value):
-            CurrentNetwork.currentNetwork = Networks.Custom(networkID: value)
+            CurrentNetwork.currentNetwork = Web3Network(network: .Custom(networkID: value))
         default:
-            CurrentNetwork.currentNetwork = Networks.Mainnet
+            CurrentNetwork.currentNetwork = Web3Network(network: .Mainnet)
         }
     }
     // MARK: - ENS parser, when PR to w3s will be approved

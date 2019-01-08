@@ -5,7 +5,7 @@ import Dispatch
  A `Guarantee` is a functional abstraction around an asynchronous operation that cannot error.
  - See: `Thenable`
 */
-public final class Guarantee<T>: Thenable {
+public class Guarantee<T>: Thenable {
     let box: Box<T>
 
     fileprivate init(box: SealedBox<T>) {
@@ -116,7 +116,7 @@ public extension Guarantee {
     public func wait() -> T {
 
         if Thread.isMainThread {
-            conf.logHandler(.waitOnMainThread)
+            print("PromiseKit: warning: `wait()` called on main thread!")
         }
 
         var result = value

@@ -11,5 +11,6 @@ target 'DiveLane' do
   pod 'Crashlytics'
   pod 'Alamofire'
   pod 'WKBridge'
+  pod "PromiseKit", "~> 6.4.1"
 
 end

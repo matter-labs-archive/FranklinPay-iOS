@@ -1,9 +1,9 @@
 //
-//  PlasmaRouter.swift
+//  PlasmaParserRouter.swift
 //  DiveLane
 //
-//  Created by Anton Grigorev on 07/12/2018.
-//  Copyright © 2018 Matter Inc. All rights reserved.
+//  Created by Anton Grigorev on 09/01/2019.
+//  Copyright © 2019 Matter Inc. All rights reserved.
 //
 
 import UIKit
@@ -11,7 +11,6 @@ import EthereumAddress
 import BigInt
 
 public final class PlasmaRouter {
-    let model = PlasmaParserModel()
     public func sendCustomTransaction(parsed: PlasmaCode, usingWindow window: UIWindow) {
         switch parsed.txType {
         case .split:
@@ -28,9 +27,9 @@ public final class PlasmaRouter {
         guard let chainId = parsed.chainID else {return}
         switch chainId {
         case 1:
-            CurrentNetwork.currentNetwork = .Mainnet
+            CurrentNetwork.currentNetwork = Web3Network(network: .Mainnet)
         case 4:
-            CurrentNetwork.currentNetwork = .Rinkeby
+            CurrentNetwork.currentNetwork = Web3Network(network: .Rinkeby)
         default:
             print("wrong network")
             return
@@ -51,8 +50,8 @@ public final class PlasmaRouter {
     }
     
     private func navigationController(withTitle: String?, withImage: UIImage?,
-                              withController: UIViewController,
-                              tag: Int) -> UINavigationController {
+                                      withController: UIViewController,
+                                      tag: Int) -> UINavigationController {
         let nav = UINavigationController()
         //nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
         //nav.navigationBar.tintColor = UIColor.black
