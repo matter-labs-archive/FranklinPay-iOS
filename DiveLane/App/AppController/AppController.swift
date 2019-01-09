@@ -18,6 +18,7 @@ public class AppController {
     private let plasmaRouter = PlasmaRouter()
     private let userDefaultKeys = UserDefaultKeys()
     private let tokensService = TokensService()
+    private let networksService = NetworksService()
     private let onboarding = OnboardingViewController()
 
     convenience init(
@@ -96,6 +97,12 @@ public class AppController {
         let tokensDownloaded = userDefaultKeys.tokensDownloaded
         let etherAdded = userDefaultKeys.etherAdded
         
+        CurrentWallet.currentWallet = wallet
+        
+        guard let selectedNetwork = try? self.networksService.getSelectedNetwork() else {
+            fatalError("Can't select network)")
+        }
+        CurrentNetwork.currentNetwork = selectedNetwork
         
         DispatchQueue.global().async { [unowned self] in
             if !tokensDownloaded {
@@ -110,7 +117,12 @@ public class AppController {
         DispatchQueue.global().async { [unowned self] in
             if !etherAdded {
                 self.addFirstToken(for: wallet)
-                self.userDefaultKeys.setEtherAdded()
+            } else {
+                if let token = try? wallet.getSelectedToken(network: selectedNetwork) {
+                    CurrentToken.currentToken = token
+                } else {
+                    CurrentToken.currentToken = ERC20Token(ether: true)
+                }
             }
         }
     }
@@ -124,21 +136,16 @@ public class AppController {
             startViewController = self.onboarding
         }
         
-        guard let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first else {
-            startViewController = self.addWalletController()
-        }
-        
-        if let selectedWallet = try? walletsService.getSelectedWallet() {
-            self.initPreparations(for: selectedWallet)
-            startViewController = self.goToApp()
-        } else {
-            do {
-                try firstWallet.select()
+        if let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first {
+            if let selectedWallet = try? walletsService.getSelectedWallet() {
+                self.initPreparations(for: selectedWallet)
+                startViewController = self.goToApp()
+            } else {
                 self.initPreparations(for: firstWallet)
                 startViewController = self.goToApp()
-            } catch let error {
-                fatalError("Can't select existing wallet \(firstWallet.address), error: \(error.localizedDescription)")
             }
+        } else {
+            startViewController = self.addWalletController()
         }
         startViewController.view.backgroundColor = UIColor.white
         DispatchQueue.main.async {
@@ -148,9 +155,6 @@ public class AppController {
     }
     
     func addFirstToken(for wallet: Wallet) {
-        let group = DispatchGroup()
-        group.enter()
-        
         let ether = ERC20Token(ether: true)
         
         for networkID in 1...42 {
@@ -163,7 +167,7 @@ public class AppController {
             }
         }
         CurrentToken.currentToken = ether
-        group.leave()
+        self.userDefaultKeys.setEtherAdded()
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {

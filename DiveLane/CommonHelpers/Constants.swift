@@ -6,9 +6,24 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public struct Constants {
-    static let hightForRowInSettingsTableView = 60
-    static let heightForRowInNetworksTableView = 60
+    public struct rows {
+        public struct heights {
+            static let settings: CGFloat = 60
+            static let networks: CGFloat = 60
+            static let wallets: CGFloat = 120
+        }
+    }
+    public struct headers {
+        public struct heights {
+            static let wallets: CGFloat = 50
+        }
+    }
+    public struct segmentedControlls {
+        public struct heights {
+            static let wallets: CGFloat = 50
+        }
+    }
 }

@@ -10,11 +10,11 @@ import Foundation
 
 public struct UserDefaultKeys {
     
-    public var etherAdded = UserDefaults.standard.bool(forKey: "etherAddedForWallet\((try? WalletsService().getSelectedWallet().address) ?? "")")
-    public var onboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
-    public var tokensDownloaded = UserDefaults.standard.bool(forKey: "tokensDownloaded")
-    public var currentNetwork = UserDefaults.standard.object(forKey: "currentNetwork")
-    public var currentWeb = UserDefaults.standard.object(forKey: "currentWeb")
+    public let etherAdded = UserDefaults.standard.bool(forKey: "etherAddedForWallet\((try? WalletsService().getSelectedWallet().address) ?? "")")
+    public let onboardingPassed = UserDefaults.standard.bool(forKey: "isOnboardingPassed")
+    public let tokensDownloaded = UserDefaults.standard.bool(forKey: "tokensDownloaded")
+    public static let currentNetwork = "currentNetwork"
+    public static let currentWeb = "currentWeb"
 
     public func setEtherAdded() {
         guard let address = try? WalletsService().getSelectedWallet().address else {

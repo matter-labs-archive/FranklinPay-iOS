@@ -14,8 +14,10 @@ struct ExpandableTableTokens {
 }
 
 struct TableToken {
-    let token: ERC20TokenModel
-    let inWallet: WalletModel
+    var token: ERC20Token
+    var balance: String?
+    var balanceInDollars: String?
+    var inWallet: Wallet
     var isSelected: Bool
 }
 

@@ -17,24 +17,29 @@ public class CurrentToken: ERC20Token {
         get {
             if let token = _currentToken {
                 return token
-            } else {
-                let etherToken = Ether()
-                do {
-                    try etherToken.select()
-                    _currentToken = etherToken
-                    return etherToken
-                } catch {
-                    return nil
+            }
+            let etherToken = Ether()
+            do {
+                guard let wallet = CurrentWallet.currentWallet else {
+                    fatalError("Can't select wallet")
                 }
+                try etherToken.select(in: wallet)
+                _currentToken = etherToken
+                return etherToken
+            } catch let error {
+                fatalError("Can't select token \(etherToken.name), error: \(error.localizedDescription)")
             }
         }
         set(token) {
             if let token = token {
                 do {
-                    try token.select()
+                    guard let wallet = CurrentWallet.currentWallet else {
+                        fatalError("Can't select wallet")
+                    }
+                    try token.select(in: wallet)
                     _currentToken = token
                 } catch let error {
-                    print("can't select token")
+                    fatalError("Can't select token \(token.address), error: \(error.localizedDescription)")
                 }
             }
         }

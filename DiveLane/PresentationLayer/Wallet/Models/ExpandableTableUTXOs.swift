@@ -8,19 +8,19 @@
 
 import Foundation
 
-struct ExpandableTableUTXOs {
+public struct ExpandableTableUTXOs {
     var isExpanded: Bool
     var utxos: [TableUTXO]
 }
 
-struct TableUTXO {
+public struct TableUTXO {
     let utxo: PlasmaUTXOs
-    let inWallet: WalletModel
+    let inWallet: Wallet
     var isSelected: Bool
 }
 
 extension TableUTXO: Equatable {
-    static func ==(lhs: TableUTXO, rhs: TableUTXO) -> Bool {
+    public static func ==(lhs: TableUTXO, rhs: TableUTXO) -> Bool {
         let equalUTXOs = lhs.utxo == rhs.utxo
         return equalUTXOs &&
             lhs.inWallet == rhs.inWallet

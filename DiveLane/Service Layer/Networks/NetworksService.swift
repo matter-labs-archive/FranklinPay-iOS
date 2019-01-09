@@ -31,8 +31,10 @@ public class NetworksService: INetworksService {
     }
     
     public func getSelectedNetwork() throws -> Web3Network {
-        guard let networkFromUD = UserDefaults.standard.value(forKey: "CurrentNetwork") as? [String: Any] else {
-            throw Errors.StorageErrors.cantSelectNetwork
+        guard let networkFromUD = UserDefaults.standard.value(forKey: UserDefaultKeys.currentNetwork) as? [String: Any] else {
+            let mainnet = Web3Network(network: .Mainnet)
+            mainnet.select()
+            return mainnet
         }
         guard let id = networkFromUD["id"] as? Int64 else {
             throw Errors.StorageErrors.cantSelectNetwork

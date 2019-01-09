@@ -24,6 +24,17 @@ public struct Alerts {
         }
     }
     
+    public func showErrorAlert(for viewController: UIViewController, error: String, completion: (() -> Void)?) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Error", message: error, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+                completion?()
+            }
+            alert.addAction(cancelAction)
+            viewController.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     public func showSuccessAlert(for viewController: UIViewController, completion: (() -> Void)?) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: "Success", message: nil, preferredStyle: .alert)

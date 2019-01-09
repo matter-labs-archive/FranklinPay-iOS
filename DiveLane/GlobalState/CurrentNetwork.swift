@@ -15,7 +15,7 @@ public class CurrentNetwork {
     private static var _currentNetwork: Web3Network?
     private static var _currentWeb: web3?
 
-    public class var currentNetwork: Web3Network? {
+    public class var currentNetwork: Web3Network {
         get {
             if let net = _currentNetwork {
                 return net
@@ -23,22 +23,17 @@ public class CurrentNetwork {
                 if let selectedNetwork = try? NetworksService().getSelectedNetwork() {
                     _currentNetwork = selectedNetwork
                     return selectedNetwork
-                } else {
-                    let mainnet = Web3Network(network: Networks.Mainnet)
-                    mainnet.select()
-                    _currentNetwork = mainnet
-                    return mainnet
                 }
-                _currentNetwork = Web3Network(network: Networks.Mainnet)
-                return Web3Network(network: Networks.Mainnet)
+                let mainnet = Web3Network(network: Networks.Mainnet)
+                mainnet.select()
+                _currentNetwork = mainnet
+                return mainnet
             }
         }
 
         set(network) {
-            if let currentNetwork = network {
-                currentNetwork.select()
-                _currentNetwork = network
-            }
+            network.select()
+            _currentNetwork = network
         }
     }
     
@@ -47,16 +42,13 @@ public class CurrentNetwork {
             if let web = _currentWeb {
                 return web
             } else {
-                guard let network = self.currentNetwork else {
-                    return nil
-                }
                 let web3: web3
-                switch network.name {
-                case "mainnet":
+                switch self.currentNetwork.id {
+                case 1:
                     web3 = Web3.InfuraMainnetWeb3()
-                case "rinkeby":
+                case 4:
                     web3 = Web3.InfuraRinkebyWeb3()
-                case "ropsten":
+                case 3:
                     web3 = Web3.InfuraRopstenWeb3()
                 default:
                     return nil

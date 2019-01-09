@@ -21,17 +21,16 @@ public class CurrentWallet {
                 if let selectedWallet = try? walletsService.getSelectedWallet() {
                     _currentWallet = selectedWallet
                     return selectedWallet
-                } else {
-                    guard let wallets = try? walletsService.getAllWallets(), let wallet = wallets.first else {
-                        return nil
-                    }
-                    do {
-                        try wallet.select()
-                        _currentWallet = wallet
-                        return wallet
-                    } catch {
-                        return nil
-                    }
+                }
+                guard let wallets = try? walletsService.getAllWallets(), let wallet = wallets.first else {
+                    return nil
+                }
+                do {
+                    try wallet.select()
+                    _currentWallet = wallet
+                    return wallet
+                } catch {
+                    return nil
                 }
             }
         }
@@ -41,7 +40,7 @@ public class CurrentWallet {
                     try wallet.select()
                     _currentWallet = wallet
                 } catch let error {
-                    print("can't select wallet")
+                    fatalError("Can't select wallet \(wallet.name), error: \(error.localizedDescription)")
                 }
             }
         }
