@@ -133,10 +133,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="block" destination="e0o-EY-npz" id="MX0-ra-npF"/>
                 <outlet property="blockNumber" destination="cp2-Al-hFG" id="hCc-di-0q8"/>
                 <outlet property="bottomBackgroundView" destination="oiK-j1-pNt" id="oZK-L6-R9r"/>
+                <outlet property="etherUtxo" destination="xRQ-Pn-CiO" id="P0q-9b-pT9"/>
                 <outlet property="topBackgroundView" destination="waV-5H-dv6" id="QIj-IJ-beM"/>
-                <outlet property="txNumber" destination="QIw-Zu-ute" id="WFT-iJ-r7M"/>
+                <outlet property="txNumber" destination="QIw-Zu-ute" id="voT-tY-snx"/>
+                <outlet property="txnumb" destination="bEX-2J-UtF" id="YLW-D6-p1C"/>
                 <outlet property="value" destination="Wz6-Bz-4OT" id="mEj-iv-HCh"/>
                 <outlet property="valueInDollars" destination="d1t-se-OLg" id="ejc-SA-J0d"/>
             </connections>

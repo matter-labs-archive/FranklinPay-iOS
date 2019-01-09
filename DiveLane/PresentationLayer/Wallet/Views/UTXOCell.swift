@@ -18,6 +18,9 @@ class UTXOCell: UITableViewCell {
     @IBOutlet weak var valueInDollars: UILabel!
     @IBOutlet weak var blockNumber: UILabel!
     @IBOutlet weak var txNumber: UILabel!
+    @IBOutlet weak var etherUtxo: UILabel!
+    @IBOutlet weak var block: UILabel!
+    @IBOutlet weak var txnumb: UILabel!
     
     var link: WalletViewController?
 
@@ -30,6 +33,9 @@ class UTXOCell: UITableViewCell {
         self.valueInDollars.textColor = Colors.textSecond
         self.blockNumber.textColor = Colors.firstMain
         self.txNumber.textColor = Colors.firstMain
+        self.block.textColor = Colors.textSecond
+        self.txnumb.textColor = Colors.textSecond
+        self.etherUtxo.textColor = Colors.textFirst
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
