@@ -31,8 +31,8 @@ class UTXOCell: UITableViewCell {
         self.topBackgroundView.layer.cornerRadius = 10
         self.value.textColor = Colors.textFirst
         self.valueInDollars.textColor = Colors.textSecond
-        self.blockNumber.textColor = Colors.firstMain
-        self.txNumber.textColor = Colors.firstMain
+        self.blockNumber.textColor = Colors.active
+        self.txNumber.textColor = Colors.active
         self.block.textColor = Colors.textSecond
         self.txnumb.textColor = Colors.textSecond
         self.etherUtxo.textColor = Colors.textFirst

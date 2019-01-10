@@ -9,6 +9,8 @@
 import UIKit
 
 class OnboardingViewController: UIViewController {
+    
+    private let userDefaults = UserDefaultKeys()
 
     var pageViewController: UIPageViewController!
     let nextBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
@@ -16,16 +18,17 @@ class OnboardingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Colors.BackgroundColors.main
+        self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = Colors.firstMain
         createPages()
     }
 
     func createPages() {
 
         let pc = UIPageControl.appearance()
-        pc.pageIndicatorTintColor = UIColor.lightGray
-        pc.currentPageIndicatorTintColor = UIColor.black
-        pc.backgroundColor = Colors.BackgroundColors.main
+        pc.pageIndicatorTintColor = Colors.active
+        pc.currentPageIndicatorTintColor = Colors.secondMain
+        pc.backgroundColor = Colors.firstMain
 
         self.pageViewController = UIPageViewController(transitionStyle: .scroll,
                 navigationOrientation: .horizontal,
@@ -108,10 +111,10 @@ class OnboardingViewController: UIViewController {
     }
 
     func goToApp() {
-        UserDefaults.standard.set(true, forKey: "isOnboardingPassed")
-        let navViewController = addWallet()
-        navViewController.view.backgroundColor = UIColor.white
-        self.present(navViewController, animated: true, completion: nil)
+        userDefaults.setOnboardingPassed()
+        let vc = PincodeViewController(operation: .creatingPincode)
+        vc.view.backgroundColor = Colors.firstMain
+        self.present(vc, animated: true, completion: nil)
     }
 
     @objc func skipAction(sender: UIButton) {

@@ -31,7 +31,7 @@ class TokenCell: UITableViewCell {
         self.title.textColor = Colors.textFirst
         self.balanceInDollars.textColor = Colors.textSecond
         self.balance.textColor = Colors.textFirst
-        self.rate.textColor = Colors.firstMain
+        self.rate.textColor = Colors.active
         self.usdRate.textColor = Colors.textSecond
         self.hoursStat.textColor = Colors.textSecond
     }

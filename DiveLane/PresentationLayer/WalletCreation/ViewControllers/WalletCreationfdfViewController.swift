@@ -11,7 +11,7 @@ import QRCodeReader
 import Web3swift
 import EthereumAddress
 
-class WalletCreationViewController: UIViewController {
+class adfadf: UIViewController {
 
     @IBOutlet weak var passwordsDontMatch: UILabel!
     @IBOutlet weak var enterButton: UIButton!
@@ -21,14 +21,6 @@ class WalletCreationViewController: UIViewController {
     @IBOutlet weak var enterPrivateKeyTextField: UITextField!
     @IBOutlet weak var qrCodeButton: UIButton!
     @IBOutlet weak var walletNameTextField: UITextField!
-
-    var additionMode: WalletAdditionMode
-    var importMode: WalletImportMode?
-
-    let walletsService: WalletsService = WalletsService()
-    let web3service: Web3Service = Web3Service()
-
-    let animation = AnimationController()
 
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {

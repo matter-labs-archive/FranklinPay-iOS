@@ -22,8 +22,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5BW-OP-e77">
-                    <rect key="frame" x="0.0" y="84" width="375" height="583"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="5BW-OP-e77">
+                    <rect key="frame" x="0.0" y="68" width="375" height="599"/>
                     <color key="backgroundColor" red="0.20392156862745098" green="0.69803921568627447" blue="0.82352941176470584" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="LGj-t8-ntd"/>
@@ -31,11 +31,13 @@
                     </connections>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WqH-Nr-SVW" customClass="SegmentedControl" customModule="DiveLane" customModuleProvider="target">
-                    <rect key="frame" x="129" y="38" width="117" height="29"/>
+                    <rect key="frame" x="19" y="30" width="337.5" height="29"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <segments>
                         <segment title="ETH"/>
                         <segment title="Plasma"/>
                     </segments>
+                    <color key="tintColor" red="0.066666666666666666" green="0.5725490196078431" blue="0.20000000000000001" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                     <connections>
                         <action selector="blockchainChanged:" destination="-1" eventType="valueChanged" id="aZc-4Y-BRr"/>
                     </connections>
@@ -47,8 +49,9 @@
                 <constraint firstItem="1OW-lX-RfJ" firstAttribute="trailing" secondItem="5BW-OP-e77" secondAttribute="trailing" id="ZVP-Lz-T50"/>
                 <constraint firstItem="1OW-lX-RfJ" firstAttribute="bottom" secondItem="5BW-OP-e77" secondAttribute="bottom" id="dIT-LK-jjd"/>
                 <constraint firstItem="5BW-OP-e77" firstAttribute="leading" secondItem="1OW-lX-RfJ" secondAttribute="leading" id="dIV-fd-V7N"/>
-                <constraint firstItem="WqH-Nr-SVW" firstAttribute="top" secondItem="1OW-lX-RfJ" secondAttribute="top" constant="18" id="ld4-MJ-kZz"/>
-                <constraint firstItem="5BW-OP-e77" firstAttribute="top" secondItem="WqH-Nr-SVW" secondAttribute="bottom" constant="18" id="sut-8X-PTZ"/>
+                <constraint firstItem="WqH-Nr-SVW" firstAttribute="top" secondItem="1OW-lX-RfJ" secondAttribute="top" constant="10" id="ld4-MJ-kZz"/>
+                <constraint firstItem="WqH-Nr-SVW" firstAttribute="width" secondItem="i7G-Dn-Yqp" secondAttribute="width" multiplier="0.9" id="o5U-t9-gww"/>
+                <constraint firstItem="5BW-OP-e77" firstAttribute="top" secondItem="WqH-Nr-SVW" secondAttribute="bottom" constant="10" id="sut-8X-PTZ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="1OW-lX-RfJ"/>
             <point key="canvasLocation" x="119.2" y="52.623688155922046"/>

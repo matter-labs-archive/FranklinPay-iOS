@@ -15,12 +15,12 @@ class OnboardingContentViewController: UIViewController {
     func setViews() {
 
         let titleAttr = [
-            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: Colors.secondMain,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)
         ]
 
         let subtitleAttr = [
-            NSAttributedString.Key.foregroundColor: UIColor.black,
+            NSAttributedString.Key.foregroundColor: Colors.secondMain,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light)
         ]
 
@@ -81,7 +81,7 @@ class OnboardingContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = Colors.BackgroundColors.main
+        self.view.backgroundColor = Colors.firstMain
 
         setViews()
     }

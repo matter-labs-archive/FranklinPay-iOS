@@ -18,6 +18,9 @@ protocol INetworksService {
 }
 
 public class NetworksService: INetworksService {
+    
+    private let userDefault = UserDefaultKeys()
+    
     public func getAllCustomNetworks() throws -> [Web3Network] {
         let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
         do {
@@ -31,7 +34,7 @@ public class NetworksService: INetworksService {
     }
     
     public func getSelectedNetwork() throws -> Web3Network {
-        guard let networkFromUD = UserDefaults.standard.value(forKey: UserDefaultKeys.currentNetwork) as? [String: Any] else {
+        guard let networkFromUD = userDefault.getCurrentNetwork() else {
             let mainnet = Web3Network(network: .Mainnet)
             mainnet.select()
             return mainnet

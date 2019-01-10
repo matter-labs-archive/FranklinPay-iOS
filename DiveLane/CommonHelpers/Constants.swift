@@ -9,6 +9,23 @@
 import UIKit
 
 public struct Constants {
+    
+    static let widthCoef: CGFloat = 0.9
+    static let horizontalConst: CGFloat = 20
+    static let cornerRadius: CGFloat = 10
+    static let font: String = "HelveticaNeue"
+    static let boldFont: String = "HelveticaNeue-Bold"
+    
+    public struct textViews {
+        public struct heights {
+            static let main: CGFloat = 90
+        }
+    }
+    public struct buttons {
+        public struct heights {
+            static let main: CGFloat = 50
+        }
+    }
     public struct rows {
         public struct heights {
             static let settings: CGFloat = 60
@@ -18,12 +35,12 @@ public struct Constants {
     }
     public struct headers {
         public struct heights {
-            static let wallets: CGFloat = 50
+            static let wallets: CGFloat = 30
         }
     }
     public struct segmentedControlls {
         public struct heights {
-            static let wallets: CGFloat = 50
+            static let wallets: CGFloat = 30
         }
     }
 }

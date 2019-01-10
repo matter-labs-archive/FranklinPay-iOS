@@ -19,7 +19,7 @@ public class AppController {
     private let userDefaultKeys = UserDefaultKeys()
     private let tokensService = TokensService()
     private let networksService = NetworksService()
-    private let onboarding = OnboardingViewController()
+    private let designElements = DesignElements()
 
     convenience init(
             window: UIWindow,
@@ -43,59 +43,62 @@ public class AppController {
         }
 
     }
-
-    private func addWalletController() -> UINavigationController {
-        let nav = UINavigationController()
-        let addWalletViewController = AddWalletViewController()
-        nav.viewControllers.append(addWalletViewController)
-
+    
+    private func onboardingController() -> UINavigationController {
+        let vc = OnboardingViewController()
+        let nav = designElements.navigationController(withTitle: "Onboarding",
+                                                      withImage: nil,
+                                                      withController: vc,
+                                                      tag: 0)
+        return nav
+    }
+    
+    private func pincodeController() -> UINavigationController {
+        let vc = PincodeViewController(operation: .creatingPincode)
+        let nav = designElements.navigationController(withTitle: "Create Pincode",
+                                                      withImage: nil,
+                                                      withController: vc,
+                                                      tag: 0)
         return nav
     }
 
-    private func goToApp() -> UITabBarController {
+    private func addWalletController() -> UINavigationController {
+        let vc = AddWalletViewController(isNavigationBarNeeded: false)
+        let nav = designElements.navigationController(withTitle: "Add Wallet",
+                                                      withImage: nil,
+                                                      withController: vc,
+                                                      tag: 0)
+        return nav
+    }
+
+    public func goToApp() -> UITabBarController {
         let tabs = UITabBarController()
-        let nav1 = navigationController(withTitle: "Wallet",
+        let nav1 = designElements.navigationController(withTitle: "Wallet",
                                         withImage: UIImage(named: "wallet_gray"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: "Transactions History",
-                                        withImage: UIImage(named: "transactions_gray"),
-                                        withController: TransactionsHistoryViewController(),
-                                        tag: 2)
-        let nav4 = navigationController(withTitle: "Settings",
-                                        withImage: UIImage(named: "settings_gray"),
-                                        withController: SettingsViewController(nibName: nil, bundle: nil),
-                                        tag: 4)
-        let nav3 = navigationController(withTitle: "Contacts",
-                                        withImage: UIImage(named: "contacts_gray"),
-                                        withController: ContactsViewController(nibName: nil, bundle: nil),
-                                        tag: 3)
-        tabs.viewControllers = [nav1, nav2, nav3, nav4]
+//        let nav2 = navigationController(withTitle: "Transactions History",
+//                                        withImage: UIImage(named: "transactions_gray"),
+//                                        withController: TransactionsHistoryViewController(),
+//                                        tag: 2)
+//        let nav4 = navigationController(withTitle: "Settings",
+//                                        withImage: UIImage(named: "settings_gray"),
+//                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+//                                        tag: 4)
+//        let nav3 = navigationController(withTitle: "Contacts",
+//                                        withImage: UIImage(named: "contacts_gray"),
+//                                        withController: ContactsViewController(nibName: nil, bundle: nil),
+//                                        tag: 3)
+        tabs.viewControllers = [nav1]
 
         return tabs
-    }
-
-    private func navigationController(withTitle: String?, withImage: UIImage?,
-                              withController: UIViewController,
-                              tag: Int) -> UINavigationController {
-        let nav = UINavigationController()
-        nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
-        nav.navigationBar.tintColor = UIColor.white
-        nav.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        nav.navigationBar.barStyle = .black
-        let controller = withController
-        controller.title = withTitle
-        nav.viewControllers = [controller]
-        nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
-        return nav
     }
     
     private func initPreparations(for wallet: Wallet) {
         let group = DispatchGroup()
-        group.enter()
         
-        let tokensDownloaded = userDefaultKeys.tokensDownloaded
-        let etherAdded = userDefaultKeys.etherAdded
+        let tokensDownloaded = userDefaultKeys.areTokensDownloaded
+        let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
         
         CurrentWallet.currentWallet = wallet
         
@@ -104,57 +107,87 @@ public class AppController {
         }
         CurrentNetwork.currentNetwork = selectedNetwork
         
+        group.enter()
         DispatchQueue.global().async { [unowned self] in
             if !tokensDownloaded {
                 do {
                     try self.tokensService.downloadAllAvailableTokensIfNeeded()
                     self.userDefaultKeys.setTokensDownloaded()
+                    group.leave()
                 } catch let error {
                     fatalError("Can't download tokens - \(String(describing: error))")
                 }
             }
         }
+        
+        group.enter()
         DispatchQueue.global().async { [unowned self] in
             if !etherAdded {
-                self.addFirstToken(for: wallet)
+                do {
+                    try self.addFirstToken(for: wallet)
+                    group.leave()
+                } catch let error {
+                    fatalError("Can't add ether token - \(String(describing: error))")
+                }
             } else {
                 if let token = try? wallet.getSelectedToken(network: selectedNetwork) {
                     CurrentToken.currentToken = token
+                    group.leave()
                 } else {
                     CurrentToken.currentToken = ERC20Token(ether: true)
+                    group.leave()
                 }
             }
         }
+        group.wait()
     }
 
     private func startAsUsual(in window: UIWindow) {
 
         var startViewController: UIViewController
 
-        let onboardingPassed = userDefaultKeys.onboardingPassed
+        let onboardingPassed = userDefaultKeys.isOnboardingPassed
         if !onboardingPassed {
-            startViewController = self.onboarding
+            startViewController = self.onboardingController()
+            self.createRootViewController(startViewController, in: window)
+            return
+        }
+        
+        let pincodeExists = userDefaultKeys.isPincodeExists
+        if !pincodeExists {
+            startViewController = self.pincodeController()
+            self.createRootViewController(startViewController, in: window)
+            return
         }
         
         if let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first {
             if let selectedWallet = try? walletsService.getSelectedWallet() {
                 self.initPreparations(for: selectedWallet)
                 startViewController = self.goToApp()
+                self.createRootViewController(startViewController, in: window)
+                return
             } else {
                 self.initPreparations(for: firstWallet)
                 startViewController = self.goToApp()
+                self.createRootViewController(startViewController, in: window)
+                return
             }
         } else {
             startViewController = self.addWalletController()
+            self.createRootViewController(startViewController, in: window)
+            return
         }
-        startViewController.view.backgroundColor = UIColor.white
+    }
+    
+    private func createRootViewController(_ vc: UIViewController, in window: UIWindow) {
         DispatchQueue.main.async {
-            window.rootViewController = startViewController
+            vc.view.backgroundColor = Colors.firstMain
+            window.rootViewController = vc
             window.makeKeyAndVisible()
         }
     }
     
-    func addFirstToken(for wallet: Wallet) {
+    public func addFirstToken(for wallet: Wallet) throws {
         let ether = ERC20Token(ether: true)
         
         for networkID in 1...42 {
@@ -162,12 +195,11 @@ public class AppController {
                 try wallet.add(token: ether,
                                network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
             } catch let error {
-                print("Can't add ether for \(wallet.address) on \(networkID), error: \(error.localizedDescription)")
-                continue
+                throw error
             }
         }
         CurrentToken.currentToken = ether
-        self.userDefaultKeys.setEtherAdded()
+        self.userDefaultKeys.setEtherAdded(for: wallet)
     }
     
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {

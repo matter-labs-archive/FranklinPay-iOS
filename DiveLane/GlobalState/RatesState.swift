@@ -9,10 +9,11 @@
 import Foundation
 
 public class RatesState {
+    
     private static let service = RatesState()
     public var rates = [String: Double]()
     
-    class func shared() -> RatesState {
+    public class func shared() -> RatesState {
         return service
     }
     

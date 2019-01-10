@@ -154,7 +154,7 @@ class WalletViewController: UIViewController {
 
     func enterPincode(for transaction: PlasmaTransaction) {
         //need to wallet.getPassword
-        let enterPincode = EnterPincodeViewController(from: .transaction, for: transaction, isFromDeepLink: false)
+        let enterPincode = PincodeViewController(operation: .approvement)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 
@@ -179,6 +179,7 @@ class WalletViewController: UIViewController {
             }
         }
     }
+    
     func updatePlasmaBlockchain() {
         let utxos = self.plasmaCoordinator.getWalletsAndUTXOs()
         self.twoDimensionalUTXOsArray = utxos
