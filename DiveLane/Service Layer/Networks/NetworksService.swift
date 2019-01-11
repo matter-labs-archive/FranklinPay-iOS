@@ -35,9 +35,7 @@ public class NetworksService: INetworksService {
     
     public func getSelectedNetwork() throws -> Web3Network {
         guard let networkFromUD = userDefault.getCurrentNetwork() else {
-            let mainnet = Web3Network(network: .Mainnet)
-            mainnet.select()
-            return mainnet
+            throw Errors.StorageErrors.cantSelectNetwork
         }
         guard let id = networkFromUD["id"] as? Int64 else {
             throw Errors.StorageErrors.cantSelectNetwork

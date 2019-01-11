@@ -94,18 +94,14 @@ public class AppController {
         return tabs
     }
     
-    private func initPreparations(for wallet: Wallet) {
+    private func initPreparations(for wallet: Wallet, on network: Web3Network) {
         let group = DispatchGroup()
         
         let tokensDownloaded = userDefaultKeys.areTokensDownloaded
         let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
         
         CurrentWallet.currentWallet = wallet
-        
-        guard let selectedNetwork = try? self.networksService.getSelectedNetwork() else {
-            fatalError("Can't select network)")
-        }
-        CurrentNetwork.currentNetwork = selectedNetwork
+        CurrentNetwork.currentNetwork = network
         
         group.enter()
         DispatchQueue.global().async { [unowned self] in
@@ -130,7 +126,7 @@ public class AppController {
                     fatalError("Can't add ether token - \(String(describing: error))")
                 }
             } else {
-                if let token = try? wallet.getSelectedToken(network: selectedNetwork) {
+                if let token = try? wallet.getSelectedToken(network: network) {
                     CurrentToken.currentToken = token
                     group.leave()
                 } else {
@@ -145,6 +141,14 @@ public class AppController {
     private func startAsUsual(in window: UIWindow) {
 
         var startViewController: UIViewController
+        
+        let selectedNetwork: Web3Network
+        if let sn = try? self.networksService.getSelectedNetwork() {
+            selectedNetwork = sn
+        } else {
+            let mainnet = Web3Network(network: .Mainnet)
+            selectedNetwork = mainnet
+        }
 
         let onboardingPassed = userDefaultKeys.isOnboardingPassed
         if !onboardingPassed {
@@ -162,12 +166,12 @@ public class AppController {
         
         if let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first {
             if let selectedWallet = try? walletsService.getSelectedWallet() {
-                self.initPreparations(for: selectedWallet)
+                self.initPreparations(for: selectedWallet, on: selectedNetwork)
                 startViewController = self.goToApp()
                 self.createRootViewController(startViewController, in: window)
                 return
             } else {
-                self.initPreparations(for: firstWallet)
+                self.initPreparations(for: firstWallet, on: selectedNetwork)
                 startViewController = self.goToApp()
                 self.createRootViewController(startViewController, in: window)
                 return

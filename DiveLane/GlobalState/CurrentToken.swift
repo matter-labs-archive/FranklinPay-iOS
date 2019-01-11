@@ -18,16 +18,19 @@ public class CurrentToken: ERC20Token {
             if let token = _currentToken {
                 return token
             }
-            let etherToken = Ether()
             do {
                 guard let wallet = CurrentWallet.currentWallet else {
                     fatalError("Can't select wallet")
                 }
-                try etherToken.select(in: wallet)
+                if let token = try? wallet.getSelectedToken(network: CurrentNetwork.currentNetwork) {
+                    return token
+                }
+                let etherToken = Ether()
+                try etherToken.select(in: wallet, network: CurrentNetwork.currentNetwork)
                 _currentToken = etherToken
                 return etherToken
             } catch let error {
-                fatalError("Can't select token \(etherToken.name), error: \(error.localizedDescription)")
+                fatalError("Can't get selected token, error: \(error.localizedDescription)")
             }
         }
         set(token) {
@@ -36,7 +39,7 @@ public class CurrentToken: ERC20Token {
                     guard let wallet = CurrentWallet.currentWallet else {
                         fatalError("Can't select wallet")
                     }
-                    try token.select(in: wallet)
+                    try token.select(in: wallet, network: CurrentNetwork.currentNetwork)
                     _currentToken = token
                 } catch let error {
                     fatalError("Can't select token \(token.address), error: \(error.localizedDescription)")

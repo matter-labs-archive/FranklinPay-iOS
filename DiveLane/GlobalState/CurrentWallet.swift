@@ -17,21 +17,20 @@ public class CurrentWallet {
         get {
             if let wallet = _currentWallet {
                 return wallet
-            } else {
-                if let selectedWallet = try? walletsService.getSelectedWallet() {
-                    _currentWallet = selectedWallet
-                    return selectedWallet
-                }
-                guard let wallets = try? walletsService.getAllWallets(), let wallet = wallets.first else {
-                    return nil
-                }
-                do {
-                    try wallet.select()
-                    _currentWallet = wallet
-                    return wallet
-                } catch {
-                    return nil
-                }
+            }
+            if let selectedWallet = try? walletsService.getSelectedWallet() {
+                _currentWallet = selectedWallet
+                return selectedWallet
+            }
+            guard let wallets = try? walletsService.getAllWallets(), let wallet = wallets.first else {
+                return nil
+            }
+            do {
+                try wallet.select()
+                _currentWallet = wallet
+                return wallet
+            } catch {
+                return nil
             }
         }
         set(wallet) {

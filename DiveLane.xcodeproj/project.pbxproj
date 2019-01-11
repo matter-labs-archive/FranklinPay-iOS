@@ -790,10 +790,11 @@
 		B2091518214BA5D800C8B408 /* PresentationLayer */ = {
 			isa = PBXGroup;
 			children = (
-				E2C1109921E566D40012A978 /* Token */,
+				E2C1109921E566D40012A978 /* TokenInfo */,
 				E2C1109C21E566F50012A978 /* Contacts */,
 				E2C1109D21E566FB0012A978 /* Settings */,
 				E2C1109E21E567070012A978 /* old */,
+				E2C110D021E90D6A0012A978 /* TokensSearch */,
 				E2C110C121E7DB730012A978 /* Pincode */,
 				E2C1109821E566B60012A978 /* WalletCreation */,
 				E2C1109721E566AD0012A978 /* Onboarding */,
@@ -1305,14 +1306,14 @@
 			path = WalletCreation;
 			sourceTree = "<group>";
 		};
-		E2C1109921E566D40012A978 /* Token */ = {
+		E2C1109921E566D40012A978 /* TokenInfo */ = {
 			isa = PBXGroup;
 			children = (
 				E2C110B021E650920012A978 /* Models */,
 				E2C110AF21E6508D0012A978 /* Views */,
 				E2C110AE21E650840012A978 /* ViewControllers */,
 			);
-			path = Token;
+			path = TokenInfo;
 			sourceTree = "<group>";
 		};
 		E2C1109C21E566F50012A978 /* Contacts */ = {
@@ -1511,6 +1512,37 @@
 				914F229121499F3D00ED58E6 /* CreatePincodeViewController.swift */,
 				914F22972149BF2400ED58E6 /* EnterPincodeViewController.swift */,
 				914F228821499ACC00ED58E6 /* PincodeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E2C110D021E90D6A0012A978 /* TokensSearch */ = {
+			isa = PBXGroup;
+			children = (
+				E2C110D321E90DA70012A978 /* ViewControllers */,
+				E2C110D221E90DA20012A978 /* Views */,
+				E2C110D121E90D8B0012A978 /* Models */,
+			);
+			path = TokensSearch;
+			sourceTree = "<group>";
+		};
+		E2C110D121E90D8B0012A978 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E2C110D221E90DA20012A978 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		E2C110D321E90DA70012A978 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
