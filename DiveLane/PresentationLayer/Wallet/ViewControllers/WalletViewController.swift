@@ -154,7 +154,7 @@ class WalletViewController: UIViewController {
 
     func enterPincode(for transaction: PlasmaTransaction) {
         //need to wallet.getPassword
-        let enterPincode = EnterPincodeViewController(from: .transaction, for: transaction, isFromDeepLink: false)
+        let enterPincode = EnterPincodeViewController(for: .transaction, data: transaction)
         self.navigationController?.pushViewController(enterPincode, animated: true)
     }
 

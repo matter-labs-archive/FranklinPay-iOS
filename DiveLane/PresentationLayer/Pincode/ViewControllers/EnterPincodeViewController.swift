@@ -18,14 +18,12 @@ class EnterPincodeViewController: PincodeViewController {
     var enterCase: EnterPincodeCases = .enterWallet
     var plasmaTX: PlasmaTransaction?
     var etherTX: WriteTransaction?
-    var fromDeepLink: Bool = false
     
     let alerts = Alerts()
     let plasmaService = PlasmaService()
     
-    convenience init<T>(for enterCase: EnterPincodeCases, data: T?, fromDeepLink: Bool) {
+    convenience init<T>(for enterCase: EnterPincodeCases, data: T?) {
         self.init()
-        self.fromDeepLink = fromDeepLink
         self.enterCase = enterCase
         if T.self == PlasmaTransaction.self {
             self.plasmaTX = data as? PlasmaTransaction
@@ -150,13 +148,11 @@ class EnterPincodeViewController: PincodeViewController {
                 sendPlasmaTx(plasmaTX)
             } else {
                 alerts.showErrorAlert(for: self, error: "Transaction is wrong") { [unowned self] in
-                    self.navigationController?.popViewController(animated: true)
+                    self.returnToStartTab()
                 }
             }
         default:
-            let startViewController = AppController().goToApp()
-            startViewController.view.backgroundColor = Colors.firstMain
-            UIApplication.shared.keyWindow?.rootViewController = startViewController
+            self.returnToStartTab()
         }
     }
 
@@ -164,7 +160,7 @@ class EnterPincodeViewController: PincodeViewController {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else {
                 self.alerts.showErrorAlert(for: self, error: "Can't figure wallet to use") {
-                    self.navigationController?.popViewController(animated: true)
+                    self.returnToStartTab()
                 }
                 return
             }
@@ -175,7 +171,7 @@ class EnterPincodeViewController: PincodeViewController {
                 testnet = true
             } else {
                 self.alerts.showErrorAlert(for: self, error: "Wrong network \(CurrentNetwork.currentNetwork.name), please choose Mainnet or Rinkeby for tests") {
-                    self.navigationController?.popViewController(animated: true)
+                    self.returnToStartTab()
                 }
                 return
             }

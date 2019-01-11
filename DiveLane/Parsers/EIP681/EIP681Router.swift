@@ -24,6 +24,7 @@ class EIP681Router {
     }
     public func sendETHTransaction(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
         let targetAddress = model.getParsedAddress(targetAddress: parsed.targetAddress)
+        //TODO
         let controller = SendSettingsViewController(tokenAddress: "",
                                                     amount: parsed.amount ?? 0,
                                                     destinationAddress: targetAddress.address,
@@ -34,6 +35,7 @@ class EIP681Router {
         let tokenAddress = parsed.function?.inputs[0].name
         guard let amount = parsed.function?.inputs[1].name else { return }
         let targetAddress = model.getParsedAddress(targetAddress: parsed.targetAddress)
+        //TODO
         let controller = SendSettingsViewController(tokenAddress: tokenAddress,
                                                     amount: BigUInt(amount)!,
                                                     destinationAddress: targetAddress.address,
@@ -105,6 +107,7 @@ class EIP681Router {
                                                        contractAddress: contractAddress.address,
                                                        contractMethod: methodName,
                                                        parameters: data) {
+            //TODO
             let controller = SendArbitraryTransactionViewController(
                 params: params,
                 transactionInfo:
@@ -114,6 +117,7 @@ class EIP681Router {
             self.showController(controller,
                                 window: window)
         } else {
+            //TODO
             let controller = AppController().goToApp()
             self.showController(controller,
                                 window: window)
