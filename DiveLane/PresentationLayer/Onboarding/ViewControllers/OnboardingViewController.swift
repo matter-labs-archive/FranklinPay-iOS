@@ -97,7 +97,7 @@ class OnboardingViewController: UIViewController {
         if let vc = pageViewController.viewControllers?.first as? OnboardingContentViewController {
             switch vc.pageIndex {
             case 2:
-                goToApp()
+                goToPincode()
             default:
                 let index = vc.pageIndex + 1
                 changeOnboardingButtonStatus(for: index)
@@ -110,15 +110,15 @@ class OnboardingViewController: UIViewController {
 
     }
 
-    func goToApp() {
+    func goToPincode() {
         userDefaults.setOnboardingPassed()
-        let vc = PincodeViewController(operation: .creatingPincode)
+        let vc = AppController().createPincodeController()
         vc.view.backgroundColor = Colors.firstMain
         self.present(vc, animated: true, completion: nil)
     }
 
     @objc func skipAction(sender: UIButton) {
-        goToApp()
+        goToPincode()
     }
 
     func viewControllerAtIndex(index: Int) -> OnboardingContentViewController {

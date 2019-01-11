@@ -84,8 +84,8 @@ class WalletCreationViewController: UIViewController {
     @IBAction func createWalletButtonTapped(_ sender: Any) {
         DispatchQueue.global().async { [unowned self] in
             do {
-                let name = "ETH Wallet"
-                let password = "TheMatter"
+                let name = Constants.newWalletName
+                let password = Constants.newWalletPassword
                 guard let mnemonic = self.mnemonic.text else {
                     self.alerts.showErrorAlert(for: self, error: "Can't get mnemonic text", completion: nil)
                     return

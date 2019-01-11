@@ -44,7 +44,7 @@ public class AppController {
 
     }
     
-    private func onboardingController() -> UINavigationController {
+    public func onboardingController() -> UINavigationController {
         let vc = OnboardingViewController()
         let nav = designElements.navigationController(withTitle: "Onboarding",
                                                       withImage: nil,
@@ -53,8 +53,8 @@ public class AppController {
         return nav
     }
     
-    private func pincodeController() -> UINavigationController {
-        let vc = PincodeViewController(operation: .creatingPincode)
+    public func createPincodeController() -> UINavigationController {
+        let vc = CreatePincodeViewController()
         let nav = designElements.navigationController(withTitle: "Create Pincode",
                                                       withImage: nil,
                                                       withController: vc,
@@ -62,7 +62,7 @@ public class AppController {
         return nav
     }
 
-    private func addWalletController() -> UINavigationController {
+    public func addWalletController() -> UINavigationController {
         let vc = AddWalletViewController(isNavigationBarNeeded: false)
         let nav = designElements.navigationController(withTitle: "Add Wallet",
                                                       withImage: nil,
@@ -155,7 +155,7 @@ public class AppController {
         
         let pincodeExists = userDefaultKeys.isPincodeExists
         if !pincodeExists {
-            startViewController = self.pincodeController()
+            startViewController = self.createPincodeController()
             self.createRootViewController(startViewController, in: window)
             return
         }

@@ -31,11 +31,6 @@ class WalletImportingViewController: UIViewController {
     let appController = AppController()
     let userDefaults = UserDefaultKeys()
     let alerts = Alerts()
-    
-    private enum ImportType: Int {
-        case passphrase = 0
-        case privateKey = 1
-    }
 
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -120,8 +115,8 @@ class WalletImportingViewController: UIViewController {
     @IBAction func importWallet(_ sender: UIButton) {
         DispatchQueue.global().async { [unowned self] in
             do {
-                let name = "ETH Wallet"
-                let password = "TheMatter"
+                let name = Constants.newWalletName
+                let password = Constants.newWalletPassword
                 guard let text = self.textView.text else {
                     self.alerts.showErrorAlert(for: self,
                                                error: self.importTypeControl.selectedSegmentIndex == 0

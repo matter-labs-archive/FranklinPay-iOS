@@ -17,8 +17,9 @@ class PincodeViewController: UIViewController {
     @IBOutlet weak var thirdNum: UIImageView!
     @IBOutlet weak var fourthNum: UIImageView!
 
-    @IBOutlet weak var biometricsButton: UIButton!
-
+    @IBOutlet weak var biometricsButton: PinCodeNumberButton!
+    @IBOutlet weak var deleteButton: PinCodeNumberButton!
+    
     let animation = AnimationController()
 
     var numsIcons: [UIImageView]?
@@ -29,6 +30,10 @@ class PincodeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        biometricsButton.setImage(UIImage(named: "white_touch_id"), for: .normal)
+        deleteButton.setImage(UIImage(named: "white_delete"), for: .normal)
+        messageLabel.textColor = Colors.secondMain
+        messageLabel.font = UIFont(name: Constants.boldFont, size: 20) ?? UIFont.boldSystemFont(ofSize: 20)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
 
@@ -52,19 +57,7 @@ class PincodeViewController: UIViewController {
         }
     }
 
-    @IBAction func buttonTouchedDown(_ sender: UIButton) {
-        animation.pressButtonStartedAnimation(for: sender)
-    }
-
-    @IBAction func buttonTouchCanceled(_ sender: UIButton) {
-        animation.pressButtonCanceledAnimation(for: sender)
-    }
-
-    @IBAction func buttonTouchDragInside(_ sender: UIButton) {
-        animation.pressButtonStartedAnimation(for: sender)
-    }
-
-    @IBAction func buttonPressed(_ sender: PinCodeNumberButton) {
+    @IBAction func numButtonPressed(_ sender: PinCodeNumberButton) {
         let number = sender.currentTitle!
 
         animation.pressButtonCanceledAnimation(for: sender)

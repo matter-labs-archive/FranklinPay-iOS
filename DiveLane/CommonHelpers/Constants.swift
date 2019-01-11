@@ -16,6 +16,9 @@ public struct Constants {
     static let font: String = "HelveticaNeue"
     static let boldFont: String = "HelveticaNeue-Bold"
     
+    static let newWalletPassword = "Matter"
+    static let newWalletName = "ETH Wallet"
+    
     public struct textViews {
         public struct heights {
             static let main: CGFloat = 90

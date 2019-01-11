@@ -46,6 +46,17 @@ public struct Alerts {
         }
     }
     
+    public func showSuccessAlert(for viewController: UIViewController, with text: String?, completion: (() -> Void)?) {
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: "Success", message: text, preferredStyle: .alert)
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel) { (_) in
+                completion?()
+            }
+            alert.addAction(cancelAction)
+            viewController.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     public func showAccessAlert(for viewController: UIViewController, with text: String?, completion: ((Bool) -> Void)?) {
         DispatchQueue.main.async {
             let alert = UIAlertController(title: text ?? "Yes?", message: nil, preferredStyle: .alert)

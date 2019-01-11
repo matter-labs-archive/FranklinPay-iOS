@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -14,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EnterPincodeViewController" customModule="DiveLane" customModuleProvider="target">
             <connections>
                 <outlet property="biometricsButton" destination="z7V-VD-gZs" id="hQ5-gx-ovl"/>
+                <outlet property="deleteButton" destination="4Hy-pt-BvJ" id="MXg-1B-Q29"/>
                 <outlet property="firstNum" destination="Gja-nq-Ttx" id="5Yc-db-XGb"/>
                 <outlet property="fourthNum" destination="sua-dA-IHG" id="qP4-ab-dyY"/>
                 <outlet property="messageLabel" destination="NrW-eR-EAu" id="Cdy-tr-AfZ"/>
@@ -24,27 +24,27 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="osP-lW-mo6">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cnx-X2-vRL">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjM-MI-v3x">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                            <color key="backgroundColor" red="0.0" green="0.3479082912" blue="0.72482189119999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NrW-eR-EAu">
-                            <rect key="frame" x="71" y="81" width="234.5" height="23"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="NrW-eR-EAu">
+                            <rect key="frame" x="55" y="160.66666666666666" width="265.33333333333331" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="sFI-E3-vcr"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="HJh-GE-MWS">
-                            <rect key="frame" x="123" y="134" width="130" height="13"/>
+                            <rect key="frame" x="122.66666666666669" y="214.66666666666666" width="130" height="13"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_line" translatesAutoresizingMaskIntoConstraints="NO" id="Gja-nq-Ttx">
                                     <rect key="frame" x="0.0" y="0.0" width="13" height="13"/>
@@ -54,13 +54,13 @@
                                     </constraints>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_line" translatesAutoresizingMaskIntoConstraints="NO" id="XKP-2G-PyL">
-                                    <rect key="frame" x="39" y="0.0" width="13" height="13"/>
+                                    <rect key="frame" x="38.999999999999986" y="0.0" width="13" height="13"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_line" translatesAutoresizingMaskIntoConstraints="NO" id="lVU-Fk-Egc">
-                                    <rect key="frame" x="78" y="0.0" width="13" height="13"/>
+                                    <rect key="frame" x="77.999999999999986" y="0.0" width="13" height="13"/>
                                 </imageView>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_line" translatesAutoresizingMaskIntoConstraints="NO" id="sua-dA-IHG">
-                                    <rect key="frame" x="117" y="0.0" width="13" height="13"/>
+                                    <rect key="frame" x="116.99999999999999" y="0.0" width="13.000000000000014" height="13"/>
                                 </imageView>
                             </subviews>
                             <constraints>
@@ -74,22 +74,21 @@
                             </constraints>
                         </stackView>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7DT-mz-Hv5">
-                            <rect key="frame" x="50" y="197" width="275" height="373"/>
+                            <rect key="frame" x="56.333333333333343" y="257.66666666666674" width="262.33333333333326" height="358.33333333333326"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="xJm-X0-7Wp">
-                                    <rect key="frame" x="0.5" y="0.0" width="275" height="373"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="262.33333333333331" height="358.33333333333331"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="Feg-7a-g0f">
-                                            <rect key="frame" x="0.0" y="0.0" width="275" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="262.33333333333331" height="71"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqP-8z-ZA6" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="dqP-8z-ZA6" secondAttribute="height" multiplier="1:1" id="7Mr-Q1-d2L"/>
-                                                        <constraint firstAttribute="width" constant="75" id="Rjp-jv-pF2"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="1">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -100,186 +99,150 @@
                                                         </userDefinedRuntimeAttribute>
                                                     </userDefinedRuntimeAttributes>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="Trp-Vr-IgH"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="Azf-dl-vpQ"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="l72-wH-RRq"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="GD9-sG-ehG"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="mjJ-98-Uks"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OIb-7V-cMx" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="100" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="95.666666666666657" y="0.0" width="71" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="2">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="2M9-5S-Zyy"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="8cJ-wK-QBx"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="Djv-jI-rJm"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="Xp8-fH-67C"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="gw7-Ye-nMA"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yR-cZ-I3C" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="200" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="191.66666666666666" y="0.0" width="70.666666666666657" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="3">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="ceb-Ej-IGa"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="j8j-Gr-30W"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="jeu-UB-0qF"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="Q85-Rd-SpL"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="qae-x0-bUT"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="O2r-rJ-Gw7">
-                                            <rect key="frame" x="0.0" y="99.5" width="275" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="96" width="262.33333333333331" height="70.666666666666686"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t2h-1p-lQA" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="4">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="B4k-8b-SSt"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="Zjr-X7-h0P"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="Njf-5D-3iy"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="EOI-uJ-yRq"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="p57-Da-wdL"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tTy-Gv-poi" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="100" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="95.666666666666657" y="0.0" width="71" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="5">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="G13-ax-zOp"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="xqW-LC-hk0"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="Zpv-C1-2zt"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="h86-s4-DV5"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="fEX-b5-zdc"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mOM-1Y-XeF" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="200" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="191.66666666666666" y="0.0" width="70.666666666666657" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="6">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="1iz-Fx-Qab"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="u04-Ae-bSV"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="CmW-Gg-Mlj"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="lAH-6g-u2S"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="UbG-4h-tmY"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="gWU-Pp-lAR">
-                                            <rect key="frame" x="0.0" y="199" width="275" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="191.66666666666663" width="262.33333333333331" height="71"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FKh-Qe-SDc" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="7">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="GLa-pm-yKm"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="tgo-4U-lwE"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="qQg-0H-3BP"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="khB-zN-2V2"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="0cf-6B-sBF"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hCQ-kq-5K2" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="100" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="95.666666666666657" y="0.0" width="71" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="8">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="Rrb-e4-jON"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="0EH-Qw-9qH"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="9Vg-zP-szT"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="70S-z9-0xe"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="HHz-bY-Tcq"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Npo-LJ-DVh" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="200" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                                    <rect key="frame" x="191.66666666666666" y="0.0" width="70.666666666666657" height="71"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="9">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="h5W-g4-gBE"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="bfj-Wx-bAN"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="Jb5-vz-4qD"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="PDJ-lo-HYO"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="8SA-wr-y3I"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="QR6-cH-Omo">
-                                            <rect key="frame" x="0.0" y="298.5" width="275" height="74.5"/>
+                                            <rect key="frame" x="0.0" y="287.66666666666669" width="262.33333333333331" height="70.666666666666686"/>
                                             <subviews>
-                                                <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7V-VD-gZs">
-                                                    <rect key="frame" x="0.0" y="0.0" width="75" height="74.5"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z7V-VD-gZs" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <state key="normal" image="white_touch_id">
-                                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
+                                                    <state key="normal" image="white_touch_id"/>
                                                     <connections>
                                                         <action selector="biometricsPressed:" destination="-1" eventType="touchUpInside" id="QCe-rX-2UA"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="JFP-hn-Zag"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="SWW-hD-T2C"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="zJK-Wy-dC6"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jqn-bd-pFL" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
-                                                    <rect key="frame" x="100" y="0.0" width="75" height="74.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <rect key="frame" x="95.666666666666657" y="0.0" width="71" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" title="0">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonPressed:" destination="-1" eventType="touchUpInside" id="uaf-0x-XhD"/>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="apx-d7-uvg"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="jKe-t0-07Y"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="1fP-v5-X4t"/>
+                                                        <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="pZy-If-wgA"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Hy-pt-BvJ">
-                                                    <rect key="frame" x="200" y="0.0" width="75" height="74.5"/>
+                                                <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Hy-pt-BvJ" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
+                                                    <rect key="frame" x="191.66666666666666" y="0.0" width="70.666666666666657" height="70.666666666666671"/>
+                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="36"/>
                                                     <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <state key="normal" image="white_delete">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="buttonTouchCanceled:" destination="-1" eventType="touchCancel" id="6Iz-V3-QiG"/>
-                                                        <action selector="buttonTouchDragInside:" destination="-1" eventType="touchDragInside" id="hQs-gz-lc9"/>
-                                                        <action selector="buttonTouchedDown:" destination="-1" eventType="touchDown" id="V5k-zt-4c9"/>
                                                         <action selector="deletePressed:" destination="-1" eventType="touchUpInside" id="5ON-qE-LUQ"/>
                                                     </connections>
                                                 </button>
@@ -307,7 +270,8 @@
                         <constraint firstItem="NrW-eR-EAu" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="XlK-Jj-5Ir"/>
                         <constraint firstItem="HJh-GE-MWS" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="Zdu-ft-16B"/>
                         <constraint firstItem="qjM-MI-v3x" firstAttribute="leading" secondItem="cnx-X2-vRL" secondAttribute="leading" id="bYh-pv-hpi"/>
-                        <constraint firstItem="7DT-mz-Hv5" firstAttribute="top" secondItem="HJh-GE-MWS" secondAttribute="bottom" constant="50" id="isK-aI-o5d"/>
+                        <constraint firstItem="7DT-mz-Hv5" firstAttribute="top" secondItem="HJh-GE-MWS" secondAttribute="bottom" constant="30" id="isK-aI-o5d"/>
+                        <constraint firstItem="7DT-mz-Hv5" firstAttribute="width" secondItem="qjM-MI-v3x" secondAttribute="width" multiplier="0.7" id="x7s-Qj-xPX"/>
                     </constraints>
                 </view>
             </subviews>
@@ -322,8 +286,8 @@
         </view>
     </objects>
     <resources>
-        <image name="white_delete" width="48" height="36"/>
-        <image name="white_line" width="36" height="3"/>
-        <image name="white_touch_id" width="63" height="63"/>
+        <image name="white_delete" width="32" height="24"/>
+        <image name="white_line" width="24" height="2"/>
+        <image name="white_touch_id" width="42" height="42"/>
     </resources>
 </document>

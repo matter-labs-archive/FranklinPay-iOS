@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum EnterPincodeFromCases {
+enum EnterPincodeCases {
     case transaction
     case enterWallet
 }

@@ -39,12 +39,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
-func addWallet() -> UINavigationController {
-    let nav = UINavigationController()
-    let addWalletViewController = AddWalletViewController()
-    //addWalletViewController.title = "Add Wallet"
-    nav.viewControllers.append(addWalletViewController)
-
-    return nav
-}
