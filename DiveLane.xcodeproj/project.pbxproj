@@ -673,7 +673,6 @@
 				E2B45A5B2176374B00F38E50 /* AddContact */,
 				E2B45A4821761F1D00F38E50 /* Contacts */,
 				E2B45A332174D21100F38E50 /* Animations */,
-				91E72558214FEDCE003FAD76 /* AddressCell */,
 				91E72553214FDD24003FAD76 /* SearchToken */,
 				E2DCA65B219323B000F94FBA /* TransactionInfo */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
@@ -727,7 +726,6 @@
 		91E7254E214FDCED003FAD76 /* SearchToken */ = {
 			isa = PBXGroup;
 			children = (
-				91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */,
 			);
 			path = SearchToken;
 			sourceTree = "<group>";
@@ -735,9 +733,6 @@
 		91E72553214FDD24003FAD76 /* SearchToken */ = {
 			isa = PBXGroup;
 			children = (
-				91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */,
-				91E72554214FE104003FAD76 /* SearchTokenCell.swift */,
-				91E72555214FE104003FAD76 /* SearchTokenCell.xib */,
 			);
 			path = SearchToken;
 			sourceTree = "<group>";
@@ -795,10 +790,10 @@
 				E2C1109D21E566FB0012A978 /* Settings */,
 				E2C1109E21E567070012A978 /* old */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
+				9197F2EA2143B7A700C358AA /* Wallet */,
 				E2C110C121E7DB730012A978 /* Pincode */,
 				E2C1109821E566B60012A978 /* WalletCreation */,
 				E2C1109721E566AD0012A978 /* Onboarding */,
-				9197F2EA2143B7A700C358AA /* Wallet */,
 			);
 			path = PresentationLayer;
 			sourceTree = "<group>";
@@ -1536,6 +1531,10 @@
 		E2C110D221E90DA20012A978 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				91E72558214FEDCE003FAD76 /* AddressCell */,
+				91E72555214FE104003FAD76 /* SearchTokenCell.xib */,
+				91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */,
+				91E72554214FE104003FAD76 /* SearchTokenCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1543,6 +1542,7 @@
 		E2C110D321E90DA70012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

@@ -15,9 +15,6 @@ class BasicDeselectedButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
         let height: CGFloat = Constants.buttons.heights.main
-        let width: CGFloat = Constants.widthCoef * UIScreen.main.bounds.width
-        let frame = CGRect(x: 0, y: 0, width: width, height: height)
-        self.frame = frame
         self.layer.cornerRadius = height / 2
         self.clipsToBounds = true
         

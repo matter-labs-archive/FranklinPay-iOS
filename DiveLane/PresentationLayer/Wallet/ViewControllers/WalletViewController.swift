@@ -45,6 +45,7 @@ class WalletViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tabBarController?.tabBar.selectedItem?.title = nil
+        self.setupNavigation()
         self.setupTableView()
     }
     
@@ -52,17 +53,18 @@ class WalletViewController: UIViewController {
         let nibToken = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
-        self.walletTableView.tableFooterView = UIView()
+        let footerView = UIView()
+        footerView.backgroundColor = Colors.firstMain
+        self.walletTableView.tableFooterView = footerView
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nibToken, forCellReuseIdentifier: "TokenCell")
         twoDimensionalTokensArray.removeAll()
         twoDimensionalUTXOsArray.removeAll()
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+    
+    func setupNavigation() {
         self.title = "Wallets"
-        self.tabBarController?.tabBar.selectedItem?.title = nil
+        self.navigationController?.navigationBar.isHidden = false
     }
 
     override func viewWillAppear(_ animated: Bool) {

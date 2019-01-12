@@ -27,6 +27,10 @@ public struct Constants {
     public struct buttons {
         public struct heights {
             static let main: CGFloat = 50
+            static let onboarding: CGFloat = 30
+        }
+        public struct widths {
+            static let onboarding: CGFloat = 140
         }
     }
     public struct rows {

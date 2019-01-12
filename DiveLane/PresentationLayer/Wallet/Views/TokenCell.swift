@@ -20,6 +20,7 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var rate: UILabel!
     @IBOutlet weak var usdRate: UILabel!
     @IBOutlet weak var hoursStat: UILabel!
+    @IBOutlet weak var hoursStatProc: UILabel!
     
     var link: WalletViewController?
 
@@ -34,6 +35,7 @@ class TokenCell: UITableViewCell {
         self.rate.textColor = Colors.active
         self.usdRate.textColor = Colors.textSecond
         self.hoursStat.textColor = Colors.textSecond
+        self.hoursStatProc.textColor = Colors.textSecond
     }
 
     func configure(token: TableToken) {

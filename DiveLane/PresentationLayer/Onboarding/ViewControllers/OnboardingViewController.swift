@@ -13,8 +13,8 @@ class OnboardingViewController: UIViewController {
     private let userDefaults = UserDefaultKeys()
 
     var pageViewController: UIPageViewController!
-    let nextBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
-    let skipBtn = UIButton(frame: CGRect(x: 0, y: 0, width: 140, height: 30))
+    let nextBtn = UIButton(frame: CGRect(x: 0, y: 0, width: Constants.buttons.widths.onboarding, height: Constants.buttons.heights.onboarding))
+    let skipBtn = UIButton(frame: CGRect(x: 0, y: 0, width: Constants.buttons.widths.onboarding, height: Constants.buttons.heights.onboarding))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,12 +44,18 @@ class OnboardingViewController: UIViewController {
         self.nextBtn.addTarget(self,
                 action: #selector(onboardingAction(sender:)),
                 for: .touchUpInside)
-        self.nextBtn.setImage(UIImage(named: "next"), for: .normal)
+        self.nextBtn.setTitle("NEXT", for: .normal)
+        self.nextBtn.backgroundColor = Colors.firstMain
+        self.nextBtn.setTitleColor(Colors.secondMain, for: .normal)
+        self.nextBtn.layer.cornerRadius = Constants.buttons.heights.onboarding / 2
 
         self.skipBtn.addTarget(self,
                                action: #selector(skipAction(sender:)),
                                for: .touchUpInside)
-        self.skipBtn.setImage(UIImage(named: "skip"), for: .normal)
+        self.nextBtn.setTitle("SKIP", for: .normal)
+        self.nextBtn.backgroundColor = Colors.secondMain
+        self.nextBtn.setTitleColor(Colors.active, for: .normal)
+        self.nextBtn.layer.cornerRadius = Constants.buttons.heights.onboarding / 2
 
         let views = [
             "pg": self.pageViewController.view,
