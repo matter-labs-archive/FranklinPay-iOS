@@ -37,7 +37,7 @@
                         <segment title="ETH"/>
                         <segment title="Plasma"/>
                     </segments>
-                    <color key="tintColor" red="0.066666666666666666" green="0.44705882352941173" blue="0.53725490196078429" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="blockchainChanged:" destination="-1" eventType="valueChanged" id="aZc-4Y-BRr"/>
                     </connections>

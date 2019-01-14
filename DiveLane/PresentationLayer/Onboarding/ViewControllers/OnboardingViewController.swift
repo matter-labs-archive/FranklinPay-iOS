@@ -52,10 +52,10 @@ class OnboardingViewController: UIViewController {
         self.skipBtn.addTarget(self,
                                action: #selector(skipAction(sender:)),
                                for: .touchUpInside)
-        self.nextBtn.setTitle("SKIP", for: .normal)
-        self.nextBtn.backgroundColor = Colors.secondMain
-        self.nextBtn.setTitleColor(Colors.active, for: .normal)
-        self.nextBtn.layer.cornerRadius = Constants.buttons.heights.onboarding / 2
+        self.skipBtn.setTitle("SKIP", for: .normal)
+        self.skipBtn.backgroundColor = Colors.secondMain
+        self.skipBtn.setTitleColor(Colors.active, for: .normal)
+        self.skipBtn.layer.cornerRadius = Constants.buttons.heights.onboarding / 2
 
         let views = [
             "pg": self.pageViewController.view,
@@ -86,7 +86,15 @@ class OnboardingViewController: UIViewController {
                                     multiplier: 1,
                                     constant: 0)
                 ] +
-                NSLayoutConstraint.constraints(withVisualFormat: "H:|-[pg]-|",
+                NSLayoutConstraint.constraints(withVisualFormat: "H:|[pg]|",
+                                               options: .alignAllCenterX,
+                                               metrics: [:],
+                                               views: views as [String : Any]) +
+                NSLayoutConstraint.constraints(withVisualFormat: "H:|-[next(120)]-|",
+                                               options: .alignAllCenterX,
+                                               metrics: [:],
+                                               views: views as [String : Any]) +
+                NSLayoutConstraint.constraints(withVisualFormat: "H:|-[skip(120)]-|",
                                                options: .alignAllCenterX,
                                                metrics: [:],
                                                views: views as [String : Any]) +

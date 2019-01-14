@@ -14,9 +14,8 @@ public class DesignElements {
                                      tag: Int) -> UINavigationController {
         let nav = UINavigationController()
         nav.navigationBar.barTintColor = Colors.firstMain
-        nav.navigationBar.tintColor = UIColor.white
+        nav.navigationBar.tintColor = Colors.secondMain
         nav.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        nav.navigationBar.barStyle = .black
         let controller = withController
         controller.title = withTitle
         nav.viewControllers = [controller]
@@ -24,12 +23,3 @@ public class DesignElements {
         return nav
     }
 }
-
-
-
-
-
-
-
-
-

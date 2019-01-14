@@ -55,7 +55,9 @@ class WalletsViewController: UIViewController {
         let walletsArray = self.walletsCoordinator.getWallets()
         self.wallets = walletsArray
         self.reloadDataInTable()
-        self.updateWalletsBalances()
+        self.updateWalletsBalances {
+            self.reloadDataInTable()
+        }
     }
     
     func reloadDataInTable() {
@@ -64,20 +66,20 @@ class WalletsViewController: UIViewController {
         }
     }
     
-    func updateWalletsBalances() {
+    func updateWalletsBalances(completion: @escaping () -> Void) {
         guard !self.wallets.isEmpty else {return}
         var indexPath = IndexPath(row: 0, section: 0)
-        DispatchQueue.global().async { [unowned self] in
+        DispatchQueue.global().sync { [unowned self] in
             for wallet in self.wallets {
-                DispatchQueue.global().async {
-                    let dollarsBalance = self.walletsCoordinator.getDollarsBalance(for: wallet.wallet)
-                    self.wallets[indexPath.row].balanceUSD = dollarsBalance
-                    DispatchQueue.main.async {
-                        self.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
-                }
+                let dollarsBalance = self.walletsCoordinator.getDollarsBalance(for: wallet.wallet)
+                self.wallets[indexPath.row].balanceUSD = dollarsBalance
+                
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadRows(at: [indexPath], with: .none)
+//                }
                 indexPath.row += 1
             }
+            completion()
         }
     }
 

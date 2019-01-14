@@ -230,6 +230,5 @@ class EnterPincodeViewController: PincodeViewController {
             UIApplication.shared.keyWindow?.rootViewController = startViewController
         }
     }
-
     
 }

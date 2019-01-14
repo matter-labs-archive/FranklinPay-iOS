@@ -30,25 +30,22 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XXZ-xt-1Nj" customClass="SegmentedControl" customModule="DiveLane" customModuleProvider="target">
-                    <rect key="frame" x="19" y="30" width="337.5" height="31"/>
+                    <rect key="frame" x="19" y="30" width="337.5" height="29"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="le0-mX-ko0"/>
-                    </constraints>
                     <segments>
                         <segment title="MNEMONIC"/>
                         <segment title="PRIVATE KEY"/>
                     </segments>
                     <color key="tintColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
-                        <action selector="importTypeChanged:" destination="-1" eventType="valueChanged" id="qx9-o9-H82"/>
+                        <action selector="changeImportType:" destination="-1" eventType="valueChanged" id="R8a-qG-dsp"/>
                     </connections>
                 </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-0r-OwE">
-                    <rect key="frame" x="0.0" y="70" width="375" height="487"/>
+                    <rect key="frame" x="0.0" y="68" width="375" height="489"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-Wu-6bv" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="487"/>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-Wu-6bv" userLabel="Content View">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="489"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INPUT TYPE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFc-4s-hzz">
                                     <rect key="frame" x="140" y="10" width="95" height="20"/>
@@ -129,7 +126,7 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.51076144369999998" green="0.894153894" blue="0.93921083179999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="XXZ-xt-1Nj" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="2DL-am-rFc"/>
                 <constraint firstItem="XXZ-xt-1Nj" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="5lg-sf-sCy"/>

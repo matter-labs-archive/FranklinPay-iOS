@@ -25,22 +25,22 @@ class EIP681Router {
     public func sendETHTransaction(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
         let targetAddress = model.getParsedAddress(targetAddress: parsed.targetAddress)
         //TODO
-        let controller = SendSettingsViewController(tokenAddress: "",
-                                                    amount: parsed.amount ?? 0,
-                                                    destinationAddress: targetAddress.address,
-                                                    isFromDeepLink: true)
-        self.showController(controller, window: window)
+//        let controller = SendSettingsViewController(tokenAddress: "",
+//                                                    amount: parsed.amount ?? 0,
+//                                                    destinationAddress: targetAddress.address,
+//                                                    isFromDeepLink: true)
+//        self.showController(controller, window: window)
     }
     public func sendERC20TokenTransaction(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
         let tokenAddress = parsed.function?.inputs[0].name
         guard let amount = parsed.function?.inputs[1].name else { return }
         let targetAddress = model.getParsedAddress(targetAddress: parsed.targetAddress)
         //TODO
-        let controller = SendSettingsViewController(tokenAddress: tokenAddress,
-                                                    amount: BigUInt(amount)!,
-                                                    destinationAddress: targetAddress.address,
-                                                    isFromDeepLink: true)
-        showController(controller, window: window)
+//        let controller = SendSettingsViewController(tokenAddress: tokenAddress,
+//                                                    amount: BigUInt(amount)!,
+//                                                    destinationAddress: targetAddress.address,
+//                                                    isFromDeepLink: true)
+//        showController(controller, window: window)
     }
     public func sendArbitraryTransactionToContract(parsed: Web3.EIP681Code, usingWindow window: UIWindow) {
         model.changeCurrentNetowrk(chainId: parsed.chainID)
@@ -108,22 +108,22 @@ class EIP681Router {
                                                        contractMethod: methodName,
                                                        parameters: data) {
             //TODO
-            let controller = SendArbitraryTransactionViewController(
-                params: params,
-                transactionInfo:
-                WriteTransactionInfo(contractAddress: contractAddress.address,
-                                     writeTransaction: tx,
-                                     methodName: methodName))
-            self.showController(controller,
-                                window: window)
+//            let controller = SendArbitraryTransactionViewController(
+//                params: params,
+//                transactionInfo:
+//                WriteTransactionInfo(contractAddress: contractAddress.address,
+//                                     writeTransaction: tx,
+//                                     methodName: methodName))
+//            self.showController(controller,
+//                                window: window)
         } else {
             //TODO
-            let controller = AppController().goToApp()
-            self.showController(controller,
-                                window: window)
-            Alerts().showErrorAlert(for: controller,
-                                    error: Errors.CommonErrors.unknown,
-                                    completion: nil)
+//            let controller = AppController().goToApp()
+//            self.showController(controller,
+//                                window: window)
+//            Alerts().showErrorAlert(for: controller,
+//                                    error: Errors.CommonErrors.unknown,
+//                                    completion: nil)
         }
     }
     private func showController(_ controller: UIViewController, window: UIWindow) {

@@ -40,7 +40,7 @@ class AddContactController: UIViewController {
         self.view.backgroundColor = Colors.firstMain
         self.scrollView.backgroundColor = Colors.firstMain
         self.contentView.backgroundColor = Colors.firstMain
-        self.tapToQR.textColor = Colors.textFirst
+        self.tapToQR.textColor = Colors.secondMain
         self.qrCodeButton.setImage(UIImage(named: "qr"), for: .normal)
         self.nameTextView.delegate = self
         self.addressTextView.delegate = self

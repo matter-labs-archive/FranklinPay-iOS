@@ -35,7 +35,7 @@
                             <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="NrW-eR-EAu">
-                            <rect key="frame" x="55" y="160.66666666666666" width="265.33333333333331" height="24"/>
+                            <rect key="frame" x="55" y="140.66666666666666" width="265.33333333333331" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="sFI-E3-vcr"/>
                             </constraints>
@@ -44,7 +44,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="HJh-GE-MWS">
-                            <rect key="frame" x="122.66666666666669" y="214.66666666666666" width="130" height="13"/>
+                            <rect key="frame" x="122.66666666666669" y="194.66666666666666" width="130" height="13"/>
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="white_line" translatesAutoresizingMaskIntoConstraints="NO" id="Gja-nq-Ttx">
                                     <rect key="frame" x="0.0" y="0.0" width="13" height="13"/>
@@ -84,7 +84,7 @@
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqP-8z-ZA6" customClass="PinCodeNumberButton" customModule="DiveLane" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="0.0" width="70.666666666666671" height="71"/>
-                                                    <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <color key="backgroundColor" red="0.20784313725490194" green="0.70588235294117641" blue="0.82745098039215681" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="dqP-8z-ZA6" secondAttribute="height" multiplier="1:1" id="7Mr-Q1-d2L"/>
                                                     </constraints>
@@ -270,7 +270,7 @@
                         <constraint firstItem="NrW-eR-EAu" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="XlK-Jj-5Ir"/>
                         <constraint firstItem="HJh-GE-MWS" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="Zdu-ft-16B"/>
                         <constraint firstItem="qjM-MI-v3x" firstAttribute="leading" secondItem="cnx-X2-vRL" secondAttribute="leading" id="bYh-pv-hpi"/>
-                        <constraint firstItem="7DT-mz-Hv5" firstAttribute="top" secondItem="HJh-GE-MWS" secondAttribute="bottom" constant="30" id="isK-aI-o5d"/>
+                        <constraint firstItem="7DT-mz-Hv5" firstAttribute="top" secondItem="HJh-GE-MWS" secondAttribute="bottom" constant="50" id="isK-aI-o5d"/>
                         <constraint firstItem="7DT-mz-Hv5" firstAttribute="width" secondItem="qjM-MI-v3x" secondAttribute="width" multiplier="0.7" id="x7s-Qj-xPX"/>
                     </constraints>
                 </view>

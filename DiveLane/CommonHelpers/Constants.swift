@@ -30,7 +30,7 @@ public struct Constants {
             static let onboarding: CGFloat = 30
         }
         public struct widths {
-            static let onboarding: CGFloat = 140
+            static let onboarding: CGFloat = 300
         }
     }
     public struct rows {

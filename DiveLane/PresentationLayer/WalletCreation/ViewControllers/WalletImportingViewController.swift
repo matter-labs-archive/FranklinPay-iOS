@@ -61,8 +61,8 @@ class WalletImportingViewController: UIViewController {
         self.view.backgroundColor = Colors.firstMain
         self.scrollView.backgroundColor = Colors.firstMain
         self.contentView.backgroundColor = Colors.firstMain
-        self.inputType.textColor = Colors.textFirst
-        self.tapToQR.textColor = Colors.textFirst
+        self.inputType.textColor = Colors.secondMain
+        self.tapToQR.textColor = Colors.secondMain
         self.qr.setImage(UIImage(named: "qr"), for: .normal)
         self.textView.delegate = self
         
@@ -70,7 +70,6 @@ class WalletImportingViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
-        self.importTypeControl.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
     }
     
     @objc func returnTextView(gesture: UIGestureRecognizer) {
@@ -89,7 +88,7 @@ class WalletImportingViewController: UIViewController {
         present(readerVC, animated: true, completion: nil)
     }
     
-    @IBAction func importTypeChanged(_ sender: UISegmentedControl) {
+    @IBAction func changeImportType(_ sender: UISegmentedControl) {
         self.setImportView()
     }
     
@@ -198,6 +197,9 @@ extension WalletImportingViewController {
             })
             
             // move if keyboard hide input field
+            print((scrollView.frame.size.height))
+            print((activeView?.frame.origin.y))
+            print((activeView?.frame.size.height))
             let distanceToBottom = self.scrollView.frame.size.height - (activeView?.frame.origin.y)! - (activeView?.frame.size.height)!
             let collapseSpace = keyboardHeight - distanceToBottom
             
@@ -239,4 +241,3 @@ extension WalletImportingViewController: QRCodeReaderViewControllerDelegate {
     }
     
 }
-

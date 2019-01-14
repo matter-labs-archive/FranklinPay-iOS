@@ -17,11 +17,11 @@ class SegmentedControl: UISegmentedControl {
         self.frame = CGRect(x: 0, y: 0, width: width, height: height)
         let font = UIFont(name: Constants.boldFont, size: 20) ?? UIFont.boldSystemFont(ofSize: 20)
         self.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
-        self.tintColor = Colors.firstMain
-        self.backgroundColor = Colors.secondMain
+        self.tintColor = Colors.secondMain
+        self.backgroundColor = Colors.firstMain
         self.layer.cornerRadius = height/2
         self.clipsToBounds = true
-        self.layer.borderWidth = 0.0
-        //        self.layer.borderColor = Colors.secondMain.cgColor
+        self.layer.borderWidth = 1.0
+        self.layer.borderColor = Colors.active.cgColor
     }
 }

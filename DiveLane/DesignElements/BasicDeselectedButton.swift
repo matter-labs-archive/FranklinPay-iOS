@@ -35,8 +35,4 @@ class BasicDeselectedButton: UIButton {
     @objc func buttonTouchedUp(_ sender: UIButton) {
         animation.pressButtonCanceledAnimation(for: sender)
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

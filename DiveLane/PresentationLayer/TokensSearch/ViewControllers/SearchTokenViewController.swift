@@ -84,7 +84,6 @@ class SearchTokenViewController: UIViewController {
         self.searchController.hideKeyboardWhenTappedOutsideSearchBar(for: self)
     }
 
-
     @objc func scanTapped() {
         readerVC.delegate = self
         self.readerVC.modalPresentationStyle = .formSheet

@@ -81,15 +81,15 @@ public class AppController {
 //                                        withImage: UIImage(named: "transactions_gray"),
 //                                        withController: TransactionsHistoryViewController(),
 //                                        tag: 2)
-//        let nav4 = navigationController(withTitle: "Settings",
-//                                        withImage: UIImage(named: "settings_gray"),
-//                                        withController: SettingsViewController(nibName: nil, bundle: nil),
-//                                        tag: 4)
-//        let nav3 = navigationController(withTitle: "Contacts",
-//                                        withImage: UIImage(named: "contacts_gray"),
-//                                        withController: ContactsViewController(nibName: nil, bundle: nil),
-//                                        tag: 3)
-        tabs.viewControllers = [nav1]
+        let nav4 = designElements.navigationController(withTitle: "Settings",
+                                        withImage: UIImage(named: "settings_gray"),
+                                        withController: SettingsViewController(nibName: nil, bundle: nil),
+                                        tag: 4)
+        let nav3 = designElements.navigationController(withTitle: "Contacts",
+                                        withImage: UIImage(named: "contacts_gray"),
+                                        withController: ContactsViewController(nibName: nil, bundle: nil),
+                                        tag: 3)
+        tabs.viewControllers = [nav1, nav3, nav4]
 
         return tabs
     }
@@ -113,6 +113,8 @@ public class AppController {
                 } catch let error {
                     fatalError("Can't download tokens - \(String(describing: error))")
                 }
+            } else {
+                group.leave()
             }
         }
         

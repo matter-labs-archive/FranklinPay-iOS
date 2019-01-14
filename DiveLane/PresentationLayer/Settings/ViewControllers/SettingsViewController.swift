@@ -93,7 +93,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
                                                             return UITableViewCell()
             }
             let setting = mainSettings[indexPath.row]
-            cell.configure(setting: MainSetting)
+            cell.configure(setting: setting)
             return cell
         default:
             let cell = tableView.dequeueReusableCell(withIdentifier: "EmptySectionCell", for: indexPath)

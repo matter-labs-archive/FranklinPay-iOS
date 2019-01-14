@@ -24,7 +24,7 @@ public class WalletsCoordinator {
                 let token = try wallet.getSelectedToken(network: selectedNetwork)
                 let tableWallet = TableWallet(wallet: wallet,
                                               selectedToken: token,
-                                              balance: nil,
+                                              balanceUSD: nil,
                                               isSelected: (wallet == currentWallet)
                 )
                 walletsArray.append(tableWallet)

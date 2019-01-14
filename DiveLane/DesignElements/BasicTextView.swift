@@ -19,8 +19,4 @@ class BasicTextView: UITextView {
         self.textColor = Colors.active
         self.textAlignment = .left
     }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
 }

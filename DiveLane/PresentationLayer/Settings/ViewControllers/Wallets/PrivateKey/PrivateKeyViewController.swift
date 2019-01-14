@@ -37,7 +37,7 @@ class PrivateKeyViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = Colors.firstMain
-        self.privateKeyLabel.textColor = Colors.textFirst
+        self.privateKeyLabel.textColor = Colors.secondMain
         self.notificationLabel.textColor = Colors.active
         self.setupNavigation()
     }

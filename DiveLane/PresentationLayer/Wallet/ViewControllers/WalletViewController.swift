@@ -36,13 +36,14 @@ class WalletViewController: UIViewController {
         refreshControl.addTarget(self, action:
         #selector(self.handleRefresh(_:)),
                 for: UIControl.Event.valueChanged)
-        refreshControl.tintColor = UIColor.blue
+        refreshControl.tintColor = Colors.secondMain
 
         return refreshControl
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = Colors.firstMain
         self.tabBarController?.tabBar.selectedItem?.title = nil
         self.setupNavigation()
         self.setupTableView()
@@ -127,12 +128,14 @@ class WalletViewController: UIViewController {
                 self.alerts.showErrorAlert(for: self,
                                            error: "Can't select more than 2 utxos",
                                            completion: nil)
+                return
             }
             if let firstUTXO = self.chosenUTXOs.first {
                 guard wallet == firstUTXO.inWallet else {
                     self.alerts.showErrorAlert(for: self,
                                                error: "UTXOs must be in one wallet",
                                                completion: nil)
+                    return
                 }
                 self.chosenUTXOs.append(utxo)
             } else {
@@ -146,6 +149,7 @@ class WalletViewController: UIViewController {
                 if result {
                     guard let tx = try? self.plasmaCoordinator.formMergeUTXOsTransaction(for: wallet, utxos: self.chosenUTXOs) else {
                         self.alerts.showErrorAlert(for: self, error: "Can't merge UTXOs", completion: nil)
+                        return
                     }
                     self.enterPincode(for: tx)
                 }
@@ -171,13 +175,11 @@ class WalletViewController: UIViewController {
     }
 
     func updateTable() {
-        DispatchQueue.global().async { [weak self] in
-            switch self?.blockchainControl.selectedSegmentIndex {
-            case Blockchain.ether.rawValue:
-                self?.updateEtherBlockchain()
-            default:
-                self?.updatePlasmaBlockchain()
-            }
+        switch self.blockchainControl.selectedSegmentIndex {
+        case Blockchain.ether.rawValue:
+            self.updateEtherBlockchain()
+        default:
+            self.updatePlasmaBlockchain()
         }
     }
     
@@ -191,35 +193,30 @@ class WalletViewController: UIViewController {
         let tokens = self.etherCoordinator.getWalletsAndTokens()
         self.twoDimensionalTokensArray = tokens
         self.reloadDataInTable()
-        self.updateTokensBalances()
+        self.updateTokensBalances {
+            self.reloadDataInTable()
+        }
     }
     
-    func updateTokensBalances() {
+    func updateTokensBalances(completion: @escaping () -> Void) {
         guard !self.twoDimensionalTokensArray.isEmpty else {return}
         var indexPath = IndexPath(row: 0, section: 0)
         DispatchQueue.global().async { [unowned self] in
             for wallet in self.twoDimensionalTokensArray {
-                DispatchQueue.global().async {
-                    for token in wallet.tokens {
-                        DispatchQueue.global().async {
-                            let balance = self.etherCoordinator.getBalance(for: token.token, wallet: token.inWallet)
-                            self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balance = balance
-                            DispatchQueue.main.async {
-                                self.refreshControl.endRefreshing()
-                                self.walletTableView.reloadRows(at: [indexPath], with: .none)
-                            }
-                            let balanceInDollars = self.etherCoordinator.getBalanceInDollars(for: token.token, withBalance: balance)
-                            self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balanceInDollars = balanceInDollars
-                            DispatchQueue.main.async {
-                                self.refreshControl.endRefreshing()
-                                self.walletTableView.reloadRows(at: [indexPath], with: .none)
-                            }
-                        }
-                        indexPath.row += 1
-                    }
+                for token in wallet.tokens {
+                    let balance = self.etherCoordinator.getBalance(for: token.token, wallet: token.inWallet)
+                    self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balance = balance
+                    let balanceInDollars = self.etherCoordinator.getBalanceInDollars(for: token.token, withBalance: balance)
+                    self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balanceInDollars = balanceInDollars
+//                    DispatchQueue.main.async {
+//                        self.refreshControl.endRefreshing()
+//                        self.walletTableView.reloadRows(at: [indexPath], with: .none)
+//                    }
+                    indexPath.row += 1
                 }
                 indexPath.section += 1
             }
+            completion()
         }
     }
 
@@ -276,6 +273,7 @@ class WalletViewController: UIViewController {
         let section = sender.tag
         guard let wallet = self.twoDimensionalTokensArray[section].tokens.first?.inWallet else {
             self.alerts.showErrorAlert(for: self, error: "Can't select wallet", completion: nil)
+            return
         }
         let searchTokenController = SearchTokenViewController(for: wallet)
         self.navigationController?.pushViewController(searchTokenController, animated: true)
@@ -294,13 +292,14 @@ class WalletViewController: UIViewController {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource, TableHeaderDelegate {
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let background: UIView
+        let background: TableHeader
         switch self.blockchainControl.selectedSegmentIndex {
         case Blockchain.ether.rawValue:
             background = TableHeader(for: (self.twoDimensionalTokensArray[section].tokens.first?.inWallet)!, plasma: false, section: section)
         default:
             background = TableHeader(for: (self.twoDimensionalUTXOsArray[section].utxos.first?.inWallet)!, plasma: true, section: section)
         }
+        background.delegate = self
         return background
     }
 
@@ -372,7 +371,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource, Tabl
 
             let tableToken = self.twoDimensionalTokensArray[indexPathTapped.section].tokens[indexPathTapped.row]
 
-            let tokenViewController = TokenViewController(for: tableToken)
+            let tokenViewController = TokenViewController(token: tableToken.token)
             self.navigationController?.pushViewController(tokenViewController, animated: true)
             tableView.deselectRow(at: indexPath, animated: true)
         default:

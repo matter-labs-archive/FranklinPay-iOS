@@ -42,7 +42,6 @@ class SearchTokenCell: UITableViewCell {
         self.title.text = title
         self.rate.text = (token.rate != nil) ? ("$" + String(token.rate!)) : "-"
         
-        
         addressLabel.text = token.address
         addedIcon.alpha = isAdded ? 1.0 : 0.0
     }

@@ -29,6 +29,10 @@ class AddWalletViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainSetup()
+    }
+    
+    func mainSetup() {
         background.backgroundColor = Colors.firstMain
         matterWallet.textColor = Colors.secondMain
         subtitle.textColor = Colors.active
@@ -42,7 +46,7 @@ class AddWalletViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = !isNavigationBarNeeded
+        self.navigationController?.setNavigationBarHidden(!isNavigationBarNeeded, animated: true)
     }
 
     @IBAction func importWallet(_ sender: UIButton) {

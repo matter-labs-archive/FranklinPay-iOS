@@ -33,7 +33,11 @@ class WalletCreationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = false
+        mainSetup()
+        setMnemonic()
+    }
+    
+    func mainSetup() {
         self.mnemonic.text = "---"
         self.info.text = "Please, copy passphrase and save it. It is the only way to restore your wallet"
         self.attention.text = "ATTENTION!"
@@ -44,12 +48,20 @@ class WalletCreationViewController: UIViewController {
         self.mnemonic.textColor = Colors.secondMain
         self.topView.backgroundColor = Colors.negative
         self.bottomView.backgroundColor = Colors.firstMain
+    }
+    
+    func setMnemonic() {
         do {
             let mnemonicFrase = try walletsService.generateMnemonics(bitsOfEntropy: 128)
             self.mnemonic.text = mnemonicFrase
         } catch {
             fatalError("Can't create mnemonic")
         }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
     @IBAction func copyButtonTapped(_ sender: Any) {

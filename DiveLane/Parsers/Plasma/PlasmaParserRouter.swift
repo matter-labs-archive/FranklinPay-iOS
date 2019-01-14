@@ -11,6 +11,9 @@ import EthereumAddress
 import BigInt
 
 public final class PlasmaRouter {
+    
+    let designElements = DesignElements()
+    
     public func sendCustomTransaction(parsed: PlasmaCode, usingWindow window: UIWindow) {
         switch parsed.txType {
         case .split:
@@ -34,7 +37,7 @@ public final class PlasmaRouter {
             print("wrong network")
             return
         }
-        let controller = SendSettingsViewController(amount: amount, destinationAddress: targetAddress.address, isFromDeepLink: true)
+        let controller = TokenViewController(amount: amount, destinationAddress: targetAddress.address, isFromDeepLink: true)
         showController(controller, window: window)
         
     }
@@ -50,48 +53,33 @@ public final class PlasmaRouter {
         }
     }
     
-    private func navigationController(withTitle: String?, withImage: UIImage?,
-                                      withController: UIViewController,
-                                      tag: Int) -> UINavigationController {
-        let nav = UINavigationController()
-        //nav.navigationBar.barTintColor = Colors.NavBarColors.mainTint
-        //nav.navigationBar.tintColor = UIColor.black
-        //nav.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor: UIColor.white]
-        //nav.navigationBar.barStyle = .default
-        let controller = withController
-        controller.title = withTitle
-        nav.viewControllers = [controller]
-        nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
-        return nav
-    }
-    
     private func goToApp(controller: UIViewController) -> UITabBarController {
         let tabs = UITabBarController()
-        let nav1 = navigationController(withTitle: "Wallet",
+        let nav1 = designElements.navigationController(withTitle: "Wallet",
                                         withImage: UIImage(named: "wallet_gray"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: "Send",
-                                        withImage: UIImage(named: "send_gray"),
-                                        withController: controller,
-                                        tag: 2)
-        let nav3 = navigationController(withTitle: "Transactions History",
-                                        withImage: UIImage(named: "transactions_gray"),
-                                        withController: TransactionsHistoryViewController(),
-                                        tag: 3)
+//        let nav2 = navigationController(withTitle: "Send",
+//                                        withImage: UIImage(named: "send_gray"),
+//                                        withController: controller,
+//                                        tag: 2)
+//        let nav3 = navigationController(withTitle: "Transactions History",
+//                                        withImage: UIImage(named: "transactions_gray"),
+//                                        withController: TransactionsHistoryViewController(),
+//                                        tag: 3)
         //        let nav4 = navigationController(withTitle: "Settings",
         //                                        withImage: UIImage(named: "settings_gray"),
         //                                        withController: SettingsViewController(nibName: nil, bundle: nil),
         //                                        tag: 4)
-        let nav4 = navigationController(withTitle: "Contacts",
+        let nav4 = designElements.navigationController(withTitle: "Contacts",
                                         withImage: UIImage(named: "contacts_gray"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 4)
-        let nav5 = navigationController(withTitle: "Browser",
-                                        withImage: UIImage(named: "AppIcon"),
-                                        withController: BrowserController(nibName: nil, bundle: nil),
-                                        tag: 5)
-        tabs.viewControllers = [nav1, nav3, nav2, nav4, nav5]
+//        let nav5 = navigationController(withTitle: "Browser",
+//                                        withImage: UIImage(named: "AppIcon"),
+//                                        withController: BrowserController(nibName: nil, bundle: nil),
+//                                        tag: 5)
+        tabs.viewControllers = [nav1, nav4]
         
         return tabs
     }
