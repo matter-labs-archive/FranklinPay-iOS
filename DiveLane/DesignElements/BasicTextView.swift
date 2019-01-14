@@ -12,7 +12,6 @@ class BasicTextView: UITextView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.frame = frame
         self.layer.cornerRadius = Constants.cornerRadius
         self.clipsToBounds = true
         

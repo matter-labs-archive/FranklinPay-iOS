@@ -36,7 +36,7 @@ public struct Constants {
     public struct rows {
         public struct heights {
             static let settings: CGFloat = 80
-            static let contacts: CGFloat = 80
+            static let contacts: CGFloat = 120
             static let networks: CGFloat = 120
             static let wallets: CGFloat = 120
             static let tokens: CGFloat = 120

@@ -155,8 +155,9 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let contact = contactsList[indexPath.row]
-        let sendController = SendSettingsViewController(destinationAddress: contact.address)
-        self.navigationController?.pushViewController(sendController, animated: true)
+        let tokenController = TokenController(destinationAddress: contact.address)
+        tokenController.modalPresentationStyle = .overCurrentContext
+        present(tokenController, animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

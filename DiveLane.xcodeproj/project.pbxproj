@@ -583,7 +583,6 @@
 			isa = PBXGroup;
 			children = (
 				91F6E94221B533A70022CF61 /* Browser */,
-				E2B45A5B2176374B00F38E50 /* AddContact */,
 				E2B45A332174D21100F38E50 /* Animations */,
 				E2DCA65B219323B000F94FBA /* TransactionInfo */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
@@ -598,7 +597,6 @@
 			isa = PBXGroup;
 			children = (
 				91F6E93D21B5333A0022CF61 /* Browser */,
-				E2B45A622176379A00F38E50 /* AddContact */,
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
 				E2DCA6582193238400F94FBA /* TransactionInfo */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
@@ -1183,7 +1181,6 @@
 			isa = PBXGroup;
 			children = (
 				E2C110AA21E64B870012A978 /* ViewControllers */,
-				E2C110A921E64B820012A978 /* Views */,
 				E2C110A821E64B7B0012A978 /* Models */,
 			);
 			path = Onboarding;
@@ -1263,13 +1260,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E2C110A921E64B820012A978 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		E2C110AA21E64B870012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1331,6 +1321,7 @@
 		E2C110B121E650AD0012A978 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A5B2176374B00F38E50 /* AddContact */,
 				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
 				E2B45A4D217620D500F38E50 /* ContactCell.swift */,
 				E2B45A4E217620D500F38E50 /* ContactCell.xib */,
@@ -1341,6 +1332,7 @@
 		E2C110B221E650B20012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A622176379A00F38E50 /* AddContact */,
 				E2B45A4921761F4000F38E50 /* ContactsViewController.swift */,
 			);
 			path = ViewControllers;
