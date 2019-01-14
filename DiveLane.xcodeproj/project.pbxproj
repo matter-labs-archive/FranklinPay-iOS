@@ -82,6 +82,9 @@
 		B2E668DF2151238200C3CC2D /* Enumerations.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E668DE2151238200C3CC2D /* Enumerations.swift */; };
 		E20660012183DCEF00701068 /* ExpandableTableUTXOs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */; };
 		E20660A82188BF9A00701068 /* SelectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20660A72188BF9A00701068 /* SelectButton.swift */; };
+		E234C79D21E9E93E00F175AF /* TableWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C79C21E9E93E00F175AF /* TableWallet.swift */; };
+		E234C79F21EB4BEB00F175AF /* WalletsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C79E21EB4BEB00F175AF /* WalletsCoordinator.swift */; };
+		E234C7A621EBF62900F175AF /* BasicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C7A521EBF62900F175AF /* BasicTableView.swift */; };
 		E27BF76F21D1447A00951061 /* SignedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF74921D1447900951061 /* SignedTransaction.swift */; };
 		E27BF77021D1447A00951061 /* TransactionOutput.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF74A21D1447900951061 /* TransactionOutput.swift */; };
 		E27BF77121D1447A00951061 /* TransactionInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF74B21D1447900951061 /* TransactionInput.swift */; };
@@ -287,6 +290,9 @@
 		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
 		E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableTableUTXOs.swift; sourceTree = "<group>"; };
 		E20660A72188BF9A00701068 /* SelectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectButton.swift; sourceTree = "<group>"; };
+		E234C79C21E9E93E00F175AF /* TableWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableWallet.swift; sourceTree = "<group>"; };
+		E234C79E21EB4BEB00F175AF /* WalletsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletsCoordinator.swift; sourceTree = "<group>"; };
+		E234C7A521EBF62900F175AF /* BasicTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTableView.swift; sourceTree = "<group>"; };
 		E27BF74921D1447900951061 /* SignedTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignedTransaction.swift; sourceTree = "<group>"; };
 		E27BF74A21D1447900951061 /* TransactionOutput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionOutput.swift; sourceTree = "<group>"; };
 		E27BF74B21D1447900951061 /* TransactionInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionInput.swift; sourceTree = "<group>"; };
@@ -446,53 +452,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		914F228721499AA900ED58E6 /* Pincode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pincode;
-			sourceTree = "<group>";
-		};
-		914F228C21499ADB00ED58E6 /* Pincode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pincode;
-			sourceTree = "<group>";
-		};
-		914F22932149A23600ED58E6 /* Pincode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pincode;
-			sourceTree = "<group>";
-		};
 		9197F2D62143B4FE00C358AA /* WalletCreation */ = {
 			isa = PBXGroup;
 			children = (
 				9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */,
 				B2091516214AB04800C8B408 /* WalletImportMode.swift */,
-			);
-			path = WalletCreation;
-			sourceTree = "<group>";
-		};
-		9197F2DB2143B56400C358AA /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Onboarding;
-			sourceTree = "<group>";
-		};
-		9197F2E22143B63100C358AA /* WalletCreation */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = WalletCreation;
-			sourceTree = "<group>";
-		};
-		9197F2E72143B66400C358AA /* WalletCreation */ = {
-			isa = PBXGroup;
-			children = (
 			);
 			path = WalletCreation;
 			sourceTree = "<group>";
@@ -511,7 +475,6 @@
 			isa = PBXGroup;
 			children = (
 				9197F3002143BFC600C358AA /* TokenViewController.xib */,
-				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -520,7 +483,6 @@
 			isa = PBXGroup;
 			children = (
 				9197F2FF2143BFC600C358AA /* TokenViewController.swift */,
-				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
 			);
 			path = QR;
 			sourceTree = "<group>";
@@ -551,52 +513,6 @@
 				B271CF9D214BB2890023FC18 /* TransactionsHistoryState.swift */,
 			);
 			path = Transactions;
-			sourceTree = "<group>";
-		};
-		9197F31D2144038400C358AA /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				B2091500214A5A4D00C8B408 /* Wallets */,
-				9197F320214403A400C358AA /* SettingsViewController.xib */,
-				9197F3272144043500C358AA /* SettingsCell.xib */,
-				9197F3262144043500C358AA /* SettingsCell.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		9197F31E2144039000C358AA /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				B2091501214A5A9F00C8B408 /* Wallets */,
-				9197F31F214403A400C358AA /* SettingsViewController.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		9197F323214403FA00C358AA /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				9197F3242144041400C358AA /* SettingsTableViewSections.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		9197F32B2144210400C358AA /* Networks */ = {
-			isa = PBXGroup;
-			children = (
-				9197F32E2144213000C358AA /* NetworksViewController.xib */,
-				9197F3322144228B00C358AA /* NetworksCell.xib */,
-				9197F3312144228B00C358AA /* NetworksCell.swift */,
-			);
-			path = Networks;
-			sourceTree = "<group>";
-		};
-		9197F32C2144211300C358AA /* Networks */ = {
-			isa = PBXGroup;
-			children = (
-				9197F32D2144213000C358AA /* NetworksViewController.swift */,
-			);
-			path = Networks;
 			sourceTree = "<group>";
 		};
 		91B6A78A21435F5D0033A045 = {
@@ -644,12 +560,9 @@
 				E2B45A302174D1E100F38E50 /* TokenInfo */,
 				E2B45A2B2174D1CC00F38E50 /* Animators */,
 				B2E668DD2151237400C3CC2D /* Sending */,
-				914F22932149A23600ED58E6 /* Pincode */,
-				9197F323214403FA00C358AA /* Settings */,
 				9197F30C2143EF3300C358AA /* Transactions */,
 				E2B45A3D2174D29200F38E50 /* TokenInfo */,
 				9197F2D62143B4FE00C358AA /* WalletCreation */,
-				9197F2DB2143B56400C358AA /* Onboarding */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -671,19 +584,12 @@
 			children = (
 				91F6E94221B533A70022CF61 /* Browser */,
 				E2B45A5B2176374B00F38E50 /* AddContact */,
-				E2B45A4821761F1D00F38E50 /* Contacts */,
 				E2B45A332174D21100F38E50 /* Animations */,
-				91E72553214FDD24003FAD76 /* SearchToken */,
 				E2DCA65B219323B000F94FBA /* TransactionInfo */,
 				B271CF91214BAD080023FC18 /* Transactions History */,
-				914F228721499AA900ED58E6 /* Pincode */,
-				9197F32B2144210400C358AA /* Networks */,
-				9197F31D2144038400C358AA /* Settings */,
 				9197F3042143C33800C358AA /* Sending */,
 				E2B45A362174D27E00F38E50 /* TokenInfo */,
 				9197F2FC2143BF8300C358AA /* QR */,
-				9197F2E72143B66400C358AA /* WalletCreation */,
-				91B6A7E02143B3020033A045 /* AddWallet */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -693,48 +599,13 @@
 			children = (
 				91F6E93D21B5333A0022CF61 /* Browser */,
 				E2B45A622176379A00F38E50 /* AddContact */,
-				E2B45A4721761F0400F38E50 /* Contacts */,
 				E2B45A402174D2B400F38E50 /* TokenInfo */,
-				91E7254E214FDCED003FAD76 /* SearchToken */,
 				E2DCA6582193238400F94FBA /* TransactionInfo */,
 				B271CF98214BADD00023FC18 /* TransactionsHistory */,
-				914F228C21499ADB00ED58E6 /* Pincode */,
-				9197F32C2144211300C358AA /* Networks */,
-				9197F31E2144039000C358AA /* Settings */,
 				9197F30A2143C3A900C358AA /* Sending */,
 				9197F2FD2143BF9800C358AA /* QR */,
-				9197F2E22143B63100C358AA /* WalletCreation */,
-				91B6A7D92143B2A90033A045 /* AddWallet */,
 			);
 			path = Controllers;
-			sourceTree = "<group>";
-		};
-		91B6A7D92143B2A90033A045 /* AddWallet */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AddWallet;
-			sourceTree = "<group>";
-		};
-		91B6A7E02143B3020033A045 /* AddWallet */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = AddWallet;
-			sourceTree = "<group>";
-		};
-		91E7254E214FDCED003FAD76 /* SearchToken */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SearchToken;
-			sourceTree = "<group>";
-		};
-		91E72553214FDD24003FAD76 /* SearchToken */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = SearchToken;
 			sourceTree = "<group>";
 		};
 		91E72558214FEDCE003FAD76 /* AddressCell */ = {
@@ -767,6 +638,7 @@
 		B2091500214A5A4D00C8B408 /* Wallets */ = {
 			isa = PBXGroup;
 			children = (
+				E234C7A221EB5F9200F175AF /* PrivateKey */,
 				B20914FD214A564500C8B408 /* WalletsViewController.xib */,
 				B2091505214A5AD000C8B408 /* WalletCell.xib */,
 				B2091504214A5AD000C8B408 /* WalletCell.swift */,
@@ -777,6 +649,7 @@
 		B2091501214A5A9F00C8B408 /* Wallets */ = {
 			isa = PBXGroup;
 			children = (
+				E234C7A021EB5F8500F175AF /* PrivateKey */,
 				B20914FC214A564500C8B408 /* WalletsViewController.swift */,
 			);
 			path = Wallets;
@@ -786,9 +659,9 @@
 			isa = PBXGroup;
 			children = (
 				E2C1109921E566D40012A978 /* TokenInfo */,
+				E2C1109E21E567070012A978 /* old */,
 				E2C1109C21E566F50012A978 /* Contacts */,
 				E2C1109D21E566FB0012A978 /* Settings */,
-				E2C1109E21E567070012A978 /* old */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
 				9197F2EA2143B7A700C358AA /* Wallet */,
 				E2C110C121E7DB730012A978 /* Pincode */,
@@ -862,6 +735,49 @@
 				B2E668DE2151238200C3CC2D /* Enumerations.swift */,
 			);
 			path = Sending;
+			sourceTree = "<group>";
+		};
+		E234C79B21E9E92E00F175AF /* Wallets */ = {
+			isa = PBXGroup;
+			children = (
+				E234C79C21E9E93E00F175AF /* TableWallet.swift */,
+				E234C79E21EB4BEB00F175AF /* WalletsCoordinator.swift */,
+			);
+			path = Wallets;
+			sourceTree = "<group>";
+		};
+		E234C7A021EB5F8500F175AF /* PrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
+			);
+			path = PrivateKey;
+			sourceTree = "<group>";
+		};
+		E234C7A221EB5F9200F175AF /* PrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
+			);
+			path = PrivateKey;
+			sourceTree = "<group>";
+		};
+		E234C7A321EBF3B700F175AF /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32E2144213000C358AA /* NetworksViewController.xib */,
+				9197F3322144228B00C358AA /* NetworksCell.xib */,
+				9197F3312144228B00C358AA /* NetworksCell.swift */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
+		E234C7A421EBF3C900F175AF /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32D2144213000C358AA /* NetworksViewController.swift */,
+			);
+			path = Networks;
 			sourceTree = "<group>";
 		};
 		E27BF74721D1447900951061 /* PlasmaSwiftLib */ = {
@@ -1052,24 +968,6 @@
 				E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */,
 			);
 			path = TokenInfo;
-			sourceTree = "<group>";
-		};
-		E2B45A4721761F0400F38E50 /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				E2B45A4921761F4000F38E50 /* ContactsViewController.swift */,
-			);
-			path = Contacts;
-			sourceTree = "<group>";
-		};
-		E2B45A4821761F1D00F38E50 /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
-				E2B45A4D217620D500F38E50 /* ContactCell.swift */,
-				E2B45A4E217620D500F38E50 /* ContactCell.xib */,
-			);
-			path = Contacts;
 			sourceTree = "<group>";
 		};
 		E2B45A5B2176374B00F38E50 /* AddContact */ = {
@@ -1348,6 +1246,7 @@
 				E2C1104121E507260012A978 /* Alerts.swift */,
 				E2C1104221E507260012A978 /* DesignElements.swift */,
 				E2C110C721E8A86C0012A978 /* BasicSeletedButton.swift */,
+				E234C7A521EBF62900F175AF /* BasicTableView.swift */,
 				E2C110C921E8A89A0012A978 /* BasicDeselectedButton.swift */,
 				E2C110CB21E8A8B90012A978 /* BasicTextView.swift */,
 				E2C110CD21E8A8D90012A978 /* TableHeader.swift */,
@@ -1432,6 +1331,9 @@
 		E2C110B121E650AD0012A978 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
+				E2B45A4D217620D500F38E50 /* ContactCell.swift */,
+				E2B45A4E217620D500F38E50 /* ContactCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1439,6 +1341,7 @@
 		E2C110B221E650B20012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E2B45A4921761F4000F38E50 /* ContactsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1453,6 +1356,11 @@
 		E2C110B421E650C60012A978 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E234C7A321EBF3B700F175AF /* Networks */,
+				B2091500214A5A4D00C8B408 /* Wallets */,
+				9197F3262144043500C358AA /* SettingsCell.swift */,
+				9197F3272144043500C358AA /* SettingsCell.xib */,
+				9197F320214403A400C358AA /* SettingsViewController.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1460,6 +1368,9 @@
 		E2C110B521E650CB0012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E234C7A421EBF3C900F175AF /* Networks */,
+				B2091501214A5A9F00C8B408 /* Wallets */,
+				9197F31F214403A400C358AA /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1467,6 +1378,8 @@
 		E2C110B621E650D80012A978 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E234C79B21E9E92E00F175AF /* Wallets */,
+				9197F3242144041400C358AA /* SettingsTableViewSections.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1516,16 +1429,8 @@
 			children = (
 				E2C110D321E90DA70012A978 /* ViewControllers */,
 				E2C110D221E90DA20012A978 /* Views */,
-				E2C110D121E90D8B0012A978 /* Models */,
 			);
 			path = TokensSearch;
-			sourceTree = "<group>";
-		};
-		E2C110D121E90D8B0012A978 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		E2C110D221E90DA20012A978 /* Views */ = {
@@ -1922,12 +1827,14 @@
 				E2C1106721E507260012A978 /* CommonErrors.swift in Sources */,
 				E2C1109321E557FE0012A978 /* NameHash.swift in Sources */,
 				E27BF77721D1447A00951061 /* PaddableTree.swift in Sources */,
+				E234C79F21EB4BEB00F175AF /* WalletsCoordinator.swift in Sources */,
 				91F6E94021B5339F0022CF61 /* BrowserController.swift in Sources */,
 				E2C1108321E507340012A978 /* SearchControllerExtension.swift in Sources */,
 				E2C110C821E8A86C0012A978 /* BasicSeletedButton.swift in Sources */,
 				E2C1107421E507260012A978 /* Wallet.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				E2C110CE21E8A8D90012A978 /* TableHeader.swift in Sources */,
+				E234C7A621EBF62900F175AF /* BasicTableView.swift in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				E27BF77621D1447A00951061 /* SimpleContent.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
@@ -1966,6 +1873,7 @@
 				E2C110C021E7DB130012A978 /* ImportType.swift in Sources */,
 				E2C1106821E507260012A978 /* Parameter.swift in Sources */,
 				E27BF77821D1447A00951061 /* PlasmaParser.swift in Sources */,
+				E234C79D21E9E93E00F175AF /* TableWallet.swift in Sources */,
 				E2C1108221E507340012A978 /* ViewControllerExtensions.swift in Sources */,
 				9197F32F2144213000C358AA /* NetworksViewController.swift in Sources */,
 				E2C1108521E507340012A978 /* CurrentWallet.swift in Sources */,

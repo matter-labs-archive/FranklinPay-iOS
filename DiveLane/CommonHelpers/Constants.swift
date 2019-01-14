@@ -35,14 +35,17 @@ public struct Constants {
     }
     public struct rows {
         public struct heights {
-            static let settings: CGFloat = 60
-            static let networks: CGFloat = 60
+            static let settings: CGFloat = 80
+            static let contacts: CGFloat = 80
+            static let networks: CGFloat = 120
             static let wallets: CGFloat = 120
+            static let tokens: CGFloat = 120
         }
     }
     public struct headers {
         public struct heights {
             static let wallets: CGFloat = 30
+            static let tokens: CGFloat = 30
         }
     }
     public struct segmentedControlls {
