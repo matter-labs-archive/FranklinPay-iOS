@@ -12,6 +12,7 @@ PODS:
   - EthereumAddress (1.0.0):
     - CryptoSwift (~> 0.13)
   - Fabric (1.8.2)
+  - IHKeyboardAvoiding (4.6)
   - PromiseKit (6.4.1):
     - PromiseKit/CorePromise (= 6.4.1)
     - PromiseKit/Foundation (= 6.4.1)
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - Alamofire
   - Crashlytics
   - Fabric
+  - IHKeyboardAvoiding
   - PromiseKit (~> 6.4.1)
   - QRCodeReader.swift
   - web3swift
@@ -57,6 +59,7 @@ SPEC REPOS:
     - EthereumABI
     - EthereumAddress
     - Fabric
+    - IHKeyboardAvoiding
     - PromiseKit
     - QRCodeReader.swift
     - scrypt
@@ -74,6 +77,7 @@ SPEC CHECKSUMS:
   EthereumABI: f040f5429e5a4366d028c88b88d9441e137593af
   EthereumAddress: f476e1320dca3a0024431e713ede7a09c7eb7796
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
+  IHKeyboardAvoiding: 2a664fdb5f964359fa7ec8fc5c9aebb447583ff8
   PromiseKit: 4c76a6506638034e3d7bede97b2ff7743f7bd2dc
   QRCodeReader.swift: 96292a5612fbc2fd9a0b26f93fa5164c8d02f59d
   scrypt: 3fe5b1a3b0976f97cd87488673a8f7c65708cc84
@@ -83,6 +87,6 @@ SPEC CHECKSUMS:
   web3swift: aeb3d08ded961e0562919d4161f5af6ccb0ab30f
   WKBridge: 677fc36b9a9e4a80b6f9c4e915480d8fd91f5ad5
 
-PODFILE CHECKSUM: a45f03a38e34e62e58ab890c8415bde30a45a8bb
+PODFILE CHECKSUM: d8d426084318ddfd1565b3bb7cf253f683fe48be
 
 COCOAPODS: 1.6.0.beta.2

@@ -30,12 +30,19 @@ class TokenCell: UITableViewCell {
         self.topBackgroundView.backgroundColor = Colors.secondMain
         self.topBackgroundView.layer.cornerRadius = 10
         self.title.textColor = Colors.textFirst
+        self.title.font = UIFont(name: Constants.font, size: Constants.basicFontSize) ?? UIFont.systemFont(ofSize: Constants.basicFontSize)
         self.balanceInDollars.textColor = Colors.textSecond
+        self.balanceInDollars.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
         self.balance.textColor = Colors.textFirst
+        self.balance.font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
         self.rate.textColor = Colors.active
+        self.rate.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
         self.usdRate.textColor = Colors.textSecond
+        self.usdRate.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
         self.hoursStat.textColor = Colors.textSecond
+        self.hoursStat.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
         self.hoursStatProc.textColor = Colors.textSecond
+        self.hoursStatProc.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
     }
 
     func configure(token: TableToken) {

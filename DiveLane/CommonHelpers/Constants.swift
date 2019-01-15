@@ -15,6 +15,8 @@ public struct Constants {
     static let cornerRadius: CGFloat = 10
     static let font: String = "HelveticaNeue"
     static let boldFont: String = "HelveticaNeue-Bold"
+    static let basicFontSize: CGFloat = 18
+    static let smallFontSize: CGFloat = 14
     
     static let newWalletPassword = "Matter"
     static let newWalletName = "ETH Wallet"

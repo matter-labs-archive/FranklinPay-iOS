@@ -168,13 +168,13 @@ class WalletViewController: UIViewController {
     }
 
     func reloadDataInTable() {
-        DispatchQueue.main.async { [weak self] in
-            self?.refreshControl.endRefreshing()
-            self?.walletTableView.reloadData()
+        DispatchQueue.main.async { [unowned self] in
+            self.walletTableView.reloadData()
         }
     }
 
     func updateTable() {
+        self.setBlockchainControl(enabled: false)
         switch self.blockchainControl.selectedSegmentIndex {
         case Blockchain.ether.rawValue:
             self.updateEtherBlockchain()
@@ -184,40 +184,64 @@ class WalletViewController: UIViewController {
     }
     
     func updatePlasmaBlockchain() {
-        let utxos = self.plasmaCoordinator.getWalletsAndUTXOs()
-        self.twoDimensionalUTXOsArray = utxos
-        self.reloadDataInTable()
+        DispatchQueue.global().async { [unowned self] in
+            let utxos = self.plasmaCoordinator.getWalletsAndUTXOs()
+            self.twoDimensionalUTXOsArray = utxos
+            self.reloadDataInTable()
+            self.setBlockchainControl(enabled: true)
+            self.endRefreshing()
+        }
+    }
+    
+    func endRefreshing() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2,
+                                      execute: { [unowned self] in
+            self.refreshControl.endRefreshing()
+        })
+    }
+    
+    func setBlockchainControl(enabled: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.blockchainControl.isUserInteractionEnabled = enabled
+            self.blockchainControl.isEnabled = enabled
+        }
     }
 
     func updateEtherBlockchain() {
-        let tokens = self.etherCoordinator.getWalletsAndTokens()
-        self.twoDimensionalTokensArray = tokens
-        self.reloadDataInTable()
-        self.updateTokensBalances {
+        DispatchQueue.global().async { [unowned self] in
+            let tokens = self.etherCoordinator.getWalletsAndTokens()
+            self.twoDimensionalTokensArray = tokens
             self.reloadDataInTable()
+            self.updateTokensBalances {
+                self.reloadDataInTable()
+                self.setBlockchainControl(enabled: true)
+                self.endRefreshing()
+            }
+        }
+    }
+    
+    func updateTokenRow(rowIndexPath: IndexPath) {
+        DispatchQueue.main.async { [unowned self] in
+            self.walletTableView.reloadRows(at: [rowIndexPath], with: .none)
         }
     }
     
     func updateTokensBalances(completion: @escaping () -> Void) {
         guard !self.twoDimensionalTokensArray.isEmpty else {return}
         var indexPath = IndexPath(row: 0, section: 0)
-        DispatchQueue.global().async { [unowned self] in
-            for wallet in self.twoDimensionalTokensArray {
-                for token in wallet.tokens {
-                    let balance = self.etherCoordinator.getBalance(for: token.token, wallet: token.inWallet)
-                    self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balance = balance
-                    let balanceInDollars = self.etherCoordinator.getBalanceInDollars(for: token.token, withBalance: balance)
-                    self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balanceInDollars = balanceInDollars
-//                    DispatchQueue.main.async {
-//                        self.refreshControl.endRefreshing()
-//                        self.walletTableView.reloadRows(at: [indexPath], with: .none)
-//                    }
-                    indexPath.row += 1
-                }
-                indexPath.section += 1
+        for wallet in self.twoDimensionalTokensArray {
+            for token in wallet.tokens {
+                let balance = self.etherCoordinator.getBalance(for: token.token, wallet: token.inWallet)
+                self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balance = balance
+                let balanceInDollars = self.etherCoordinator.getBalanceInDollars(for: token.token, withBalance: balance)
+                self.twoDimensionalTokensArray[indexPath.section].tokens[indexPath.row].balanceInDollars = balanceInDollars
+//                    let ip = indexPath
+//                    self.updateTokenRow(rowIndexPath: ip)
+                indexPath.row += 1
             }
-            completion()
+            indexPath.section += 1
         }
+        completion()
     }
 
     @IBAction func blockchainChanged(_ sender: UISegmentedControl) {
@@ -269,6 +293,7 @@ class WalletViewController: UIViewController {
             self.walletTableView.insertRows(at: indexPaths, with: .fade)
         }
     }
+    
     func didPressAdd(sender: UIButton) {
         let section = sender.tag
         guard let wallet = self.twoDimensionalTokensArray[section].tokens.first?.inWallet else {

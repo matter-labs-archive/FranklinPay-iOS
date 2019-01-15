@@ -17,7 +17,8 @@ class BasicDeselectedButton: UIButton {
         let height: CGFloat = Constants.buttons.heights.main
         self.layer.cornerRadius = height / 2
         self.clipsToBounds = true
-        
+        let font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
+        self.titleLabel?.font = font
         self.backgroundColor = Colors.firstMain
         self.setTitleColor(Colors.secondMain, for: .normal)
         self.layer.borderWidth = 0.0

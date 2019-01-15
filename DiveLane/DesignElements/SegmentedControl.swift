@@ -15,7 +15,7 @@ class SegmentedControl: UISegmentedControl {
         let height: CGFloat = Constants.segmentedControlls.heights.wallets
         let width: CGFloat = Constants.widthCoef * UIScreen.main.bounds.width
         self.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        let font = UIFont(name: Constants.boldFont, size: 20) ?? UIFont.boldSystemFont(ofSize: 20)
+        let font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
         self.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
         self.tintColor = Colors.secondMain
         self.backgroundColor = Colors.firstMain

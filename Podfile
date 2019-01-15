@@ -12,5 +12,6 @@ target 'DiveLane' do
   pod 'Alamofire'
   pod 'WKBridge'
   pod "PromiseKit", "~> 6.4.1"
+  pod 'IHKeyboardAvoiding'
 
 end

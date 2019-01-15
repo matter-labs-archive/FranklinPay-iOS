@@ -203,7 +203,7 @@
 //        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 46))
 //        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 22))
 //        label.text = dateFormatter.string(from: transactions[section][0].date)
-//        label.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+//        label.font = UIFont.systemFont(ofSize: Constants.basicFontSize, weight: .semibold)
 //        view.backgroundColor = UIColor.white
 //        view.addSubview(label)
 //        return view

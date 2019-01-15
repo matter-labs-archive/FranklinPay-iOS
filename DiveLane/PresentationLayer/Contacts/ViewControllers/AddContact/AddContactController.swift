@@ -8,6 +8,7 @@
 
 import UIKit
 import QRCodeReader
+import IHKeyboardAvoiding
 
 class AddContactController: UIViewController {
 
@@ -16,19 +17,14 @@ class AddContactController: UIViewController {
     @IBOutlet weak var qrCodeButton: UIButton!
     @IBOutlet weak var nameTextView: BasicTextView!
     @IBOutlet weak var addressTextView: BasicTextView!
-    @IBOutlet weak var contentHeight: NSLayoutConstraint!
     @IBOutlet weak var tapToQR: UILabel!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var contentView: UIView!
-    
-    var activeView: UITextView?
-    var lastOffset: CGPoint!
-    var keyboardHeight: CGFloat!
     
     let alerts = Alerts()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        KeyboardAvoiding.avoidingView = self.contentView
     }
     
     func mainSetup() {
@@ -38,25 +34,11 @@ class AddContactController: UIViewController {
         updateEnterButtonAlpha()
         
         self.view.backgroundColor = Colors.firstMain
-        self.scrollView.backgroundColor = Colors.firstMain
         self.contentView.backgroundColor = Colors.firstMain
         self.tapToQR.textColor = Colors.secondMain
         self.qrCodeButton.setImage(UIImage(named: "qr"), for: .normal)
         self.nameTextView.delegate = self
         self.addressTextView.delegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        
-        self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
-    }
-    
-    @objc func returnTextView(gesture: UIGestureRecognizer) {
-        guard activeView != nil else {
-            return
-        }
-        activeView?.resignFirstResponder()
-        activeView = nil
     }
 
     lazy var readerVC: QRCodeReaderViewController = {
@@ -121,18 +103,6 @@ class AddContactController: UIViewController {
 }
 
 extension AddContactController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        activeView = textView
-        lastOffset = self.scrollView.contentOffset
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        activeView?.resignFirstResponder()
-        activeView = nil
-        if activeView?.returnKeyType == .done && enterButton.isEnabled {
-            addContactButtonTapped(self)
-        }
-    }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let currentText = (textView.text ?? "") as NSString
@@ -165,46 +135,4 @@ extension AddContactController: QRCodeReaderViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
 
-}
-
-extension AddContactController {
-    @objc func keyboardWillShow(notification: NSNotification) {
-        if keyboardHeight != nil {
-            return
-        }
-        
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-            
-            // so increase contentView's height by keyboard height
-            UIView.animate(withDuration: 0.3, animations: {
-                self.contentHeight.constant += self.keyboardHeight
-            })
-            
-            // move if keyboard hide input field
-            let distanceToBottom = self.scrollView.frame.size.height - (activeView?.frame.origin.y)! - (activeView?.frame.size.height)!
-            let collapseSpace = keyboardHeight - distanceToBottom
-            
-            if collapseSpace < 0 {
-                // no collapse
-                return
-            }
-            
-            // set new offset for scroll view
-            UIView.animate(withDuration: 0.3, animations: {
-                // scroll to the position above keyboard 10 points
-                self.scrollView.contentOffset = CGPoint(x: self.lastOffset.x, y: collapseSpace + 10)
-            })
-        }
-    }
-    
-    @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: 0.3) {
-            self.contentHeight.constant -= self.keyboardHeight
-            
-            self.scrollView.contentOffset = self.lastOffset
-        }
-        
-        keyboardHeight = nil
-    }
 }

@@ -15,7 +15,8 @@ public class DesignElements {
         let nav = UINavigationController()
         nav.navigationBar.barTintColor = Colors.firstMain
         nav.navigationBar.tintColor = Colors.secondMain
-        nav.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        let font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
+        nav.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: font]
         let controller = withController
         controller.title = withTitle
         nav.viewControllers = [controller]

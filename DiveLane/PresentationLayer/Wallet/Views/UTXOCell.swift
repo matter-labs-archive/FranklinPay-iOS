@@ -29,13 +29,20 @@ class UTXOCell: UITableViewCell {
         self.bottomBackgroundView.backgroundColor = Colors.firstMain
         self.topBackgroundView.backgroundColor = Colors.secondMain
         self.topBackgroundView.layer.cornerRadius = 10
-        self.value.textColor = Colors.textFirst
-        self.valueInDollars.textColor = Colors.textSecond
-        self.blockNumber.textColor = Colors.active
-        self.txNumber.textColor = Colors.active
-        self.block.textColor = Colors.textSecond
-        self.txnumb.textColor = Colors.textSecond
         self.etherUtxo.textColor = Colors.textFirst
+        self.etherUtxo.font = UIFont(name: Constants.font, size: Constants.basicFontSize) ?? UIFont.systemFont(ofSize: Constants.basicFontSize)
+        self.value.textColor = Colors.textFirst
+        self.value.font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
+        self.valueInDollars.textColor = Colors.textSecond
+        self.valueInDollars.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
+        self.blockNumber.textColor = Colors.active
+        self.blockNumber.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
+        self.txNumber.textColor = Colors.active
+        self.txNumber.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
+        self.block.textColor = Colors.textSecond
+        self.block.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
+        self.txnumb.textColor = Colors.textSecond
+        self.txnumb.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

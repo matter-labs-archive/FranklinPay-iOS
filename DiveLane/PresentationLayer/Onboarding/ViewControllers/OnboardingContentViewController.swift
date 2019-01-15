@@ -16,12 +16,12 @@ class OnboardingContentViewController: UIViewController {
 
         let titleAttr = [
             NSAttributedString.Key.foregroundColor: Colors.secondMain,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .bold)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Constants.basicFontSize, weight: .bold)
         ]
 
         let subtitleAttr = [
             NSAttributedString.Key.foregroundColor: Colors.secondMain,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: 17, weight: .light)
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: Constants.basicFontSize, weight: .light)
         ]
 
         let tv = UILabel()

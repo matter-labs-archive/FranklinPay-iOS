@@ -53,7 +53,7 @@ class AnimationController: UIView {
                         height: 20))
                 notification.textColor = UIColor.darkGray
                 notification.textAlignment = NSTextAlignment.center
-                notification.font = UIFont(name: "Helvetica", size: 17)
+                notification.font = UIFont(name: Constants.font, size: Constants.basicFontSize)
                 notification.numberOfLines = 1
                 notification.center = CGPoint(x: centerX, y: centerY + 10)
                 notification.tag = TagsForViews.notification.rawValue

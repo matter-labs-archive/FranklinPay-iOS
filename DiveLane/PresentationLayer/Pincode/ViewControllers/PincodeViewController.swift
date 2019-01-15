@@ -33,7 +33,8 @@ class PincodeViewController: UIViewController {
         biometricsButton.setImage(UIImage(named: "white_touch_id"), for: .normal)
         deleteButton.setImage(UIImage(named: "white_delete"), for: .normal)
         messageLabel.textColor = Colors.secondMain
-        messageLabel.font = UIFont(name: Constants.boldFont, size: 20) ?? UIFont.boldSystemFont(ofSize: 20)
+        messageLabel.font = UIFont(name: Constants.boldFont,
+                                   size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
 
