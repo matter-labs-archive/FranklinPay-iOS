@@ -46,14 +46,16 @@ class TokenCell: UITableViewCell {
     }
 
     func configure(token: TableToken) {
-        let balance = token.balance ?? "-"
-        let balanceInDollars = "$" + (token.balanceInDollars ?? "-")
+        let balance = token.token.balance ?? "-"
+        let balanceInDollars = "$" + (token.token.usdBalance ?? "-")
         let title = "\(token.token.name) (\(token.token.symbol.uppercased()))"
         
         self.title.text = title
         self.balanceInDollars.text = balanceInDollars
         self.balance.text = balance
         self.rate.text = (token.token.rate != nil) ? ("$" + String(token.token.rate!)) : "-"
+        self.hoursStatProc.text = (token.token.change24 != nil) ? (String(token.token.change24!) + "%") : "-"
+        self.hoursStatProc.textColor = (token.token.change24 ?? 0.0) < 0.0 ? Colors.negative : Colors.positive
         //self.changeSelectButton(isSelected: isSelected)
     }
 
@@ -79,5 +81,6 @@ class TokenCell: UITableViewCell {
         self.balanceInDollars.text = "-"
         self.balance.text = "-"
         self.rate.text = "-"
+        self.hoursStatProc.text = "-"
     }
 }

@@ -48,13 +48,13 @@ public class WalletsCoordinator {
                     balance = try wallet.getERC20balance(for: token)
                 }
                 let balanceInDollars: Double
-                if let conversion = RatesState.shared().rates[token.symbol.uppercased()] {
+                if let conversion = token.rate {
                     let resultInDouble: Double = Double(balance) ?? 0
                     let convertedAmount = Double(round(100*(conversion * resultInDouble))/100)
                     balanceInDollars = convertedAmount
                 } else {
-                    if let convertedAmount = try? token.updateConversionRate() {
-                        balanceInDollars = convertedAmount
+                    if let convertedRateAndChange = try? token.updateRateAndChange() {
+                        balanceInDollars = convertedRateAndChange.rate
                     } else {
                         balanceInDollars = 0
                     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TokenViewController: UIViewController {
+class TokenViewController: BasicViewController {
     
     convenience init(destinationAddress: String) {
         self.init()

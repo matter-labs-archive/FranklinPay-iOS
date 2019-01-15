@@ -1,10 +1,13 @@
 PODS:
   - Alamofire (4.8.0)
+  - AZTabBar (1.4.0):
+    - EasyNotificationBadge
   - BigInt (3.1.0):
     - SipHash (~> 1.2)
   - Crashlytics (3.11.1):
     - Fabric (~> 1.8.1)
   - CryptoSwift (0.13.1)
+  - EasyNotificationBadge (1.2.0)
   - EthereumABI (1.1.1):
     - BigInt (~> 3.1)
     - CryptoSwift (~> 0.13)
@@ -27,6 +30,8 @@ PODS:
     - CryptoSwift (~> 0.11)
   - secp256k1_swift (1.0.3)
   - SipHash (1.2.2)
+  - StatusBarOverlay (1.9):
+    - Alamofire (~> 4.1)
   - SwiftRLP (1.2):
     - BigInt (~> 3.1)
   - web3swift (2.0.4):
@@ -38,24 +43,26 @@ PODS:
     - scrypt (~> 2.0)
     - secp256k1_swift (~> 1.0.3)
     - SwiftRLP (~> 1.1)
-  - WKBridge (0.2.4)
 
 DEPENDENCIES:
   - Alamofire
+  - AZTabBar
   - Crashlytics
   - Fabric
   - IHKeyboardAvoiding
   - PromiseKit (~> 6.4.1)
   - QRCodeReader.swift
+  - StatusBarOverlay
   - web3swift
-  - WKBridge
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
+    - AZTabBar
     - BigInt
     - Crashlytics
     - CryptoSwift
+    - EasyNotificationBadge
     - EthereumABI
     - EthereumAddress
     - Fabric
@@ -65,15 +72,17 @@ SPEC REPOS:
     - scrypt
     - secp256k1_swift
     - SipHash
+    - StatusBarOverlay
     - SwiftRLP
     - web3swift
-    - WKBridge
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  AZTabBar: 401c86e656ed0f348a424be3d256e192f9e74a78
   BigInt: 76b5dfdfa3e2e478d4ffdf161aeede5502e2742f
   Crashlytics: ca7ab4bc304aa216bdc2e4c1a96389ee77252203
   CryptoSwift: ff68c35a53e03177d31aaa2c1e8b3e010aeed6cb
+  EasyNotificationBadge: afeb15ed6f9a4262d626a2b745297e96afa26c2e
   EthereumABI: f040f5429e5a4366d028c88b88d9441e137593af
   EthereumAddress: f476e1320dca3a0024431e713ede7a09c7eb7796
   Fabric: d2b22f443ba195d8a7cc204da230977c72733b40
@@ -83,10 +92,10 @@ SPEC CHECKSUMS:
   scrypt: 3fe5b1a3b0976f97cd87488673a8f7c65708cc84
   secp256k1_swift: 4fc5c4b2d2c6d21ee8ccb868cdc92da12f38bed9
   SipHash: fad90a4683e420c52ef28063063dbbce248ea6d4
+  StatusBarOverlay: ce2193d14935dce0c7097ac8f79a7145e87e0c07
   SwiftRLP: 98a02b2210128353ca02e4c2f4d83e2a9796db4f
   web3swift: aeb3d08ded961e0562919d4161f5af6ccb0ab30f
-  WKBridge: 677fc36b9a9e4a80b6f9c4e915480d8fd91f5ad5
 
-PODFILE CHECKSUM: d8d426084318ddfd1565b3bb7cf253f683fe48be
+PODFILE CHECKSUM: 8c9c2c4264f99ae940c8a76f7f4ee2af6fc0072f
 
 COCOAPODS: 1.6.0.beta.2

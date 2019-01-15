@@ -12,8 +12,6 @@ import BigInt
 
 public final class PlasmaRouter {
     
-    let designElements = DesignElements()
-    
     public func sendCustomTransaction(parsed: PlasmaCode, usingWindow window: UIWindow) {
         switch parsed.txType {
         case .split:
@@ -55,8 +53,8 @@ public final class PlasmaRouter {
     
     private func goToApp(controller: UIViewController) -> UITabBarController {
         let tabs = UITabBarController()
-        let nav1 = designElements.navigationController(withTitle: "Wallet",
-                                        withImage: UIImage(named: "wallet_gray"),
+        let nav1 = navigationController(withTitle: "Wallet",
+                                        withImage: UIImage(named: "wallet_white"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
 //        let nav2 = navigationController(withTitle: "Send",
@@ -71,8 +69,8 @@ public final class PlasmaRouter {
         //                                        withImage: UIImage(named: "settings_gray"),
         //                                        withController: SettingsViewController(nibName: nil, bundle: nil),
         //                                        tag: 4)
-        let nav4 = designElements.navigationController(withTitle: "Contacts",
-                                        withImage: UIImage(named: "contacts_gray"),
+        let nav4 = navigationController(withTitle: "Contacts",
+                                        withImage: UIImage(named: "contacts_white"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 4)
 //        let nav5 = navigationController(withTitle: "Browser",

@@ -19,7 +19,6 @@ public class AppController {
     private let userDefaultKeys = UserDefaultKeys()
     private let tokensService = TokensService()
     private let networksService = NetworksService()
-    private let designElements = DesignElements()
 
     convenience init(
             window: UIWindow,
@@ -46,7 +45,7 @@ public class AppController {
     
     public func onboardingController() -> UINavigationController {
         let vc = OnboardingViewController()
-        let nav = designElements.navigationController(withTitle: "Onboarding",
+        let nav = navigationController(withTitle: "Onboarding",
                                                       withImage: nil,
                                                       withController: vc,
                                                       tag: 0)
@@ -55,7 +54,7 @@ public class AppController {
     
     public func createPincodeController() -> UINavigationController {
         let vc = CreatePincodeViewController()
-        let nav = designElements.navigationController(withTitle: "Create Pincode",
+        let nav = navigationController(withTitle: "Create Pincode",
                                                       withImage: nil,
                                                       withController: vc,
                                                       tag: 0)
@@ -64,7 +63,7 @@ public class AppController {
 
     public func addWalletController() -> UINavigationController {
         let vc = AddWalletViewController(isNavigationBarNeeded: false)
-        let nav = designElements.navigationController(withTitle: "Add Wallet",
+        let nav = navigationController(withTitle: "Add Wallet",
                                                       withImage: nil,
                                                       withController: vc,
                                                       tag: 0)
@@ -73,22 +72,26 @@ public class AppController {
 
     public func goToApp() -> UITabBarController {
         let tabs = UITabBarController()
-        let nav1 = designElements.navigationController(withTitle: "Wallet",
-                                        withImage: UIImage(named: "wallet_gray"),
+        let nav1 = navigationController(withTitle: "Wallet",
+                                        withImage: UIImage(named: "wallet_white"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
 //        let nav2 = navigationController(withTitle: "Transactions History",
 //                                        withImage: UIImage(named: "transactions_gray"),
 //                                        withController: TransactionsHistoryViewController(),
 //                                        tag: 2)
-        let nav4 = designElements.navigationController(withTitle: "Settings",
-                                        withImage: UIImage(named: "settings_gray"),
+        let nav4 = navigationController(withTitle: "Settings",
+                                        withImage: UIImage(named: "settings_white"),
                                         withController: SettingsViewController(nibName: nil, bundle: nil),
                                         tag: 4)
-        let nav3 = designElements.navigationController(withTitle: "Contacts",
-                                        withImage: UIImage(named: "contacts_gray"),
+        let nav3 = navigationController(withTitle: "Contacts",
+                                        withImage: UIImage(named: "contacts_white"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 3)
+        tabs.tabBar.barTintColor = Colors.firstMain
+        tabs.tabBar.tintColor = Colors.secondMain
+        tabs.tabBar.unselectedItemTintColor = Colors.active
+        
         tabs.viewControllers = [nav1, nav3, nav4]
 
         return tabs

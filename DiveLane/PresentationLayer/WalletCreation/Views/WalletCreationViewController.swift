@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalletCreationViewController: UIViewController {
+class WalletCreationViewController: BasicViewController {
 
     @IBOutlet weak var mnemonic: UILabel!
     @IBOutlet weak var info: UILabel!

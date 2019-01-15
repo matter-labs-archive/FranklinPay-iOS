@@ -10,7 +10,7 @@ import UIKit
 import QRCodeReader
 import IHKeyboardAvoiding
 
-class AddContactController: UIViewController {
+class AddContactController: BasicViewController {
 
     @IBOutlet weak var enterButton: BasicSelectedButton!
     @IBOutlet var textViews: [BasicTextView]!

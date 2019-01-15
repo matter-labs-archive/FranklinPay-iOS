@@ -11,7 +11,7 @@ import EthereumAddress
 import Web3swift
 
 public struct URLs {
-    static let pricesFromCryptocompare = "https://min-api.cryptocompare.com/data/price?fsym=%@&tsyms=USD"
+    static let pricesFromCryptocompare = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=%@&tsyms=USD"
     static let downloadTokensList = "https://raw.githubusercontent.com/kvhnuke/etherwallet/mercury/app/scripts/tokens/ethTokens.json"
     
     public func getContractURL(for address: String) -> String {

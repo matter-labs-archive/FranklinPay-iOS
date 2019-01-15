@@ -9,7 +9,7 @@
 import UIKit
 import Web3swift
 
-class NetworksViewController: UIViewController {
+class NetworksViewController: BasicViewController {
 
     @IBOutlet weak var networksTableView: BasicTableView!
 

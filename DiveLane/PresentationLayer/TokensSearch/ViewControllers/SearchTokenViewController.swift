@@ -9,10 +9,12 @@
 import UIKit
 import QRCodeReader
 
-class SearchTokenViewController: UIViewController {
+class SearchTokenViewController: BasicViewController {
 
     @IBOutlet weak var tokensTableView: BasicTableView!
     @IBOutlet weak var helpLabel: UILabel!
+    
+    var ratesUpdating = false
 
     var tokensList: [ERC20Token] = []
     var tokensAreAdded: [Bool] = []
@@ -61,13 +63,15 @@ class SearchTokenViewController: UIViewController {
         self.tokensTableView.register(nibSearch, forCellReuseIdentifier: "SearchTokenCell")
         let nibAddress = UINib.init(nibName: "AddressTableViewCell", bundle: nil)
         self.tokensTableView.register(nibAddress, forCellReuseIdentifier: "AddressTableViewCell")
+    }
+    
+    func clearData() {
         self.tokensList.removeAll()
         self.tokensAreAdded.removeAll()
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.tokensTableView.reloadData()
         makeHelpLabel(enabled: true)
     }
     
@@ -99,20 +103,84 @@ class SearchTokenViewController: UIViewController {
             }
         }
     }
-
-    func isTokensListEmpty() -> Bool {
-        if tokensList.isEmpty {
-            return true
+    
+    func searchTokens(string: String) {
+        DispatchQueue.global().async { [unowned self] in
+            guard let list = try? self.tokensService.getFullTokensList(for: string) else {
+                self.emptyTokensList()
+                return
+            }
+            self.updateTokensList(with: list, completion: {
+                self.reloadTableData()
+                self.updateRates {
+                    self.reloadTableDataWithDelay() 
+                }
+            })
         }
-        return false
     }
-
+    
+    func updateRates(comletion: @escaping () -> Void) {
+        guard !self.ratesUpdating else { return }
+        self.ratesUpdating = true
+        let first10List: [ERC20Token]
+        if self.tokensList.count > 10 {
+            first10List = Array(self.tokensList.prefix(upTo: 10))
+        } else {
+            first10List = self.tokensList
+        }
+        for token in first10List {
+            do {
+                _ = try token.updateRateAndChange()
+            } catch {
+                continue
+            }
+        }
+        self.ratesUpdating = false
+        comletion()
+    }
+    
+    func makeHelpLabel(enabled: Bool) {
+        helpLabel.alpha = enabled ? 1 : 0
+    }
+    
+    func emptyTokensList() {
+        clearData()
+        reloadTableData()
+    }
+    
+    func reloadTableData() {
+        DispatchQueue.main.async { [unowned self] in
+            self.tokensTableView.reloadData()
+        }
+    }
+    
+    func reloadTableDataWithDelay() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [unowned self] in
+            self.tokensTableView.reloadData()
+        })
+    }
+    
+    func updateTokensList(with list: [ERC20Token], completion: @escaping () -> Void) {
+        clearData()
+        let network = CurrentNetwork.currentNetwork
+        if let wallet = wallet, let tokensInWallet = try? wallet.getAllTokens(network: network) {
+            tokensList = list
+            for tokenFromList in tokensList {
+                var isAdded = false
+                for tokenFromWallet in tokensInWallet where tokenFromList == tokenFromWallet {
+                    isAdded = true
+                }
+                tokensAreAdded.append(isAdded)
+            }
+        }
+        completion()
+    }
 }
 
 extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isTokensListEmpty() {
+        if tokensList.isEmpty {
             return 1
         } else {
             return tokensList.count
@@ -120,7 +188,11 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(Constants.rows.heights.tokens)
+        if tokensList.isEmpty {
+            return CGFloat(Constants.rows.heights.additionalButtons)
+        } else {
+            return CGFloat(Constants.rows.heights.tokens)
+        }
     }
 
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -128,27 +200,14 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !isTokensListEmpty() {
+        if !tokensList.isEmpty {
 
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell",
                                                            for: indexPath) as? SearchTokenCell else {
                 return UITableViewCell()
             }
 
-            let network = CurrentNetwork.currentNetwork
-            guard let wallet = wallet else {
-                return cell
-            }
-            guard let tokensInWallet = try? wallet.getAllTokens(network: network) else {
-                return cell
-            }
-            var isAdded = false
-            for token in tokensInWallet where token == tokensList[indexPath.row] {
-                isAdded = true
-            }
-            tokensAreAdded.append(isAdded)
-
-            cell.configure(with: tokensList[indexPath.row], isAdded: isAdded)
+            cell.configure(with: tokensList[indexPath.row], isAdded: tokensAreAdded[indexPath.row])
             return cell
 
         } else {
@@ -163,7 +222,10 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
+        if tableView.cellForRow(at: indexPath) is AddressTableViewCell {
+            tableView.deselectRow(at: indexPath, animated: true)
+            return
+        }
         let token = self.tokensList[indexPath.row]
         let isAdded = tokensAreAdded[indexPath.row]
         guard let wallet = self.wallet else {
@@ -172,14 +234,13 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         do {
             if isAdded {
                 try wallet.delete(token: token, network: CurrentNetwork.currentNetwork)
+                tokensAreAdded[indexPath.row] = false
                 CurrentToken.currentToken = Ether()
             } else {
                 try wallet.add(token: token, network: CurrentNetwork.currentNetwork)
-                CurrentToken.currentToken = token
+                tokensAreAdded[indexPath.row] = true
             }
-            DispatchQueue.main.async { [weak self] in
-                self?.tokensTableView.reloadData()
-            }
+            self.reloadTableData()
         } catch let error {
             alerts.showErrorAlert(for: self, error: error, completion: nil)
         }
@@ -194,34 +255,6 @@ extension SearchTokenViewController: UISearchControllerDelegate {
 }
 
 extension SearchTokenViewController: UISearchBarDelegate {
-
-    func searchTokens(string: String) {
-        guard let list = try? TokensService().getFullTokensList(for: string) else {
-            emptyTokensList()
-            return
-        }
-        updateTokensList(with: list)
-    }
-
-    func makeHelpLabel(enabled: Bool) {
-        helpLabel.alpha = enabled ? 1 : 0
-    }
-
-    func emptyTokensList() {
-        tokensList = []
-        tokensAreAdded = []
-        DispatchQueue.main.async { [weak self] in
-            self?.tokensTableView.reloadData()
-        }
-    }
-
-    func updateTokensList(with list: [ERC20Token]) {
-        tokensAreAdded = []
-        tokensList = list
-        DispatchQueue.main.async { [weak self] in
-            self?.tokensTableView.reloadData()
-        }
-    }
 
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if searchText == "" {

@@ -11,7 +11,7 @@ import QRCodeReader
 import Web3swift
 import EthereumAddress
 
-class WalletImportingViewController: UIViewController {
+class WalletImportingViewController: BasicViewController {
     
     @IBOutlet weak var importTypeControl: SegmentedControl!
     @IBOutlet weak var textView: BasicTextView!

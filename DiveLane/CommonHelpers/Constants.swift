@@ -42,6 +42,7 @@ public struct Constants {
             static let networks: CGFloat = 120
             static let wallets: CGFloat = 120
             static let tokens: CGFloat = 120
+            static let additionalButtons: CGFloat = 40
         }
     }
     public struct headers {

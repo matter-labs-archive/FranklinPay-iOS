@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ContactsViewController: UIViewController {
+class ContactsViewController: BasicViewController {
 
     @IBOutlet weak var contactsTableView: BasicTableView!
     @IBOutlet weak var helpLabel: UILabel!

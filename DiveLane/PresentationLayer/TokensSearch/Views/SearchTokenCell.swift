@@ -29,11 +29,20 @@ class SearchTokenCell: UITableViewCell {
         self.topBackgroundView.backgroundColor = Colors.secondMain
         self.topBackgroundView.layer.cornerRadius = 10
         self.title.textColor = Colors.textFirst
+        self.title.font = UIFont(name: Constants.font, size: Constants.basicFontSize) ?? UIFont.systemFont(ofSize: Constants.basicFontSize)
         self.addressLabel.textColor = Colors.textFirst
+        self.addressLabel.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
         self.rate.textColor = Colors.active
+        self.rate.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
         self.usdRate.textColor = Colors.textSecond
+        self.usdRate.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
         self.hoursStat.textColor = Colors.textSecond
+        self.hoursStat.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
+        self.hoursStatProc.textColor = Colors.textSecond
+        self.hoursStatProc.font = UIFont(name: Constants.boldFont, size: Constants.smallFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.smallFontSize)
         self.addedIcon.image = UIImage(named: "added")
+        
+        self.selectionStyle = .none
     }
 
     func configure(with token: ERC20Token, isAdded: Bool = false) {
@@ -41,8 +50,10 @@ class SearchTokenCell: UITableViewCell {
         
         self.title.text = title
         self.rate.text = (token.rate != nil) ? ("$" + String(token.rate!)) : "-"
+        self.hoursStatProc.text = (token.change24 != nil) ? (String(token.change24!) + "%") : "-"
+        self.hoursStatProc.textColor = (token.change24 ?? 0.0) < 0.0 ? Colors.negative : Colors.positive
         
-        addressLabel.text = token.address
+        addressLabel.text = token.address.hideExtraSymbolsInAddress()
         addedIcon.alpha = isAdded ? 1.0 : 0.0
     }
 
@@ -51,6 +62,7 @@ class SearchTokenCell: UITableViewCell {
 
         self.title.text = ""
         self.rate.text = "-"
+        self.hoursStatProc.text = "-"
         self.addressLabel.text = ""
         self.addedIcon.image = UIImage(named: "added")
         self.addedIcon.alpha = 0.0

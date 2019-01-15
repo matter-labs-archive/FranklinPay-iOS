@@ -9,7 +9,7 @@
 import UIKit
 import Web3swift
 
-class PrivateKeyViewController: UIViewController {
+class PrivateKeyViewController: BasicViewController {
     @IBOutlet weak var privateQRimageView: UIImageView!
     @IBOutlet weak var privateKeyLabel: UILabel!
     @IBOutlet weak var notificationLabel: UILabel!

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddWalletViewController: UIViewController {
+class AddWalletViewController: BasicViewController {
 
     @IBOutlet var background: UIView!
     @IBOutlet weak var matterWallet: UILabel!

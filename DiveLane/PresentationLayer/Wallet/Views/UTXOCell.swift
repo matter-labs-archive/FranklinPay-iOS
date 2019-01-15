@@ -65,14 +65,14 @@ class UTXOCell: UITableViewCell {
         
         DispatchQueue.global().async { [weak self] in
             let rateInDouble: Double
-            if let rate = RatesState.shared().rates["ETH"] {
+            if let rate = Ether().rate {
                 rateInDouble = rate
             } else {
-                guard let newRate = try? ERC20Token(ether: true).updateConversionRate() else {
+                guard let newRateAndChange = try? Ether().updateRateAndChange() else {
                     self?.valueInDollars.text = "-"
                     return
                 }
-                rateInDouble = newRate
+                rateInDouble = newRateAndChange.rate
             }
             guard let v = value else {
                 self?.valueInDollars.text = "-"

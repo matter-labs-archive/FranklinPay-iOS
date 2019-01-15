@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OnboardingViewController: UIViewController {
+class OnboardingViewController: BasicViewController {
     
     private let userDefaults = UserDefaultKeys()
 

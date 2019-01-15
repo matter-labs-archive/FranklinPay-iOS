@@ -8,7 +8,7 @@
 
 import UIKit
 
-class WalletsViewController: UIViewController {
+class WalletsViewController: BasicViewController {
 
     @IBOutlet weak var tableView: BasicTableView!
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PincodeViewController: UIViewController {
+class PincodeViewController: BasicViewController {
 
     @IBOutlet weak var messageLabel: UILabel!
 
@@ -24,9 +24,9 @@ class PincodeViewController: UIViewController {
 
     var numsIcons: [UIImageView]?
 
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
+//    override var preferredStatusBarStyle: UIStatusBarStyle {
+//        return .lightContent
+//    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

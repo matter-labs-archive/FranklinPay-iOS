@@ -9,7 +9,7 @@
 import UIKit
 import Web3swift
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: BasicViewController {
 
     @IBOutlet weak var settingsTableView: BasicTableView!
 
