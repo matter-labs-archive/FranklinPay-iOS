@@ -22,7 +22,10 @@ class ContactCell: UITableViewCell {
         self.topBackgroundView.backgroundColor = Colors.secondMain
         self.topBackgroundView.layer.cornerRadius = 10
         self.contactName.textColor = Colors.textFirst
+        self.contactName.font = UIFont(name: Constants.font, size: Constants.basicFontSize) ?? UIFont.systemFont(ofSize: Constants.basicFontSize)
         self.contactAddress.textColor = Colors.textSecond
+        
+        self.contactAddress.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
     }
     
     func configure(with contact: Contact) {

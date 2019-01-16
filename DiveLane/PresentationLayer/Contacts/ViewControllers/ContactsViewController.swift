@@ -90,13 +90,6 @@ class ContactsViewController: BasicViewController {
         let addContactController = AddContactController()
         self.navigationController?.pushViewController(addContactController, animated: true)
     }
-
-    func isContactsListEmpty() -> Bool {
-        if contactsList.isEmpty {
-            return true
-        }
-        return false
-    }
     
     func makeHelpLabel(enabled: Bool) {
         DispatchQueue.main.async { [weak self] in
@@ -125,7 +118,7 @@ class ContactsViewController: BasicViewController {
 extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if isContactsListEmpty() {
+        if contactsList.isEmpty {
             return 0
         } else {
             return contactsList.count
@@ -141,7 +134,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !isContactsListEmpty() {
+        if !contactsList.isEmpty {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "ContactCell",
                                                            for: indexPath) as? ContactCell else {
                                                             return UITableViewCell()
@@ -157,7 +150,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         let contact = contactsList[indexPath.row]
         let tokenController = TokenViewController(destinationAddress: contact.address)
         tokenController.modalPresentationStyle = .overCurrentContext
-        present(tokenController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(tokenController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
