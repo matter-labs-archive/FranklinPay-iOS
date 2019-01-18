@@ -91,8 +91,17 @@
 		E27BF78921D1447A00951061 /* BlockHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF76C21D1447900951061 /* BlockHeader.swift */; };
 		E27BF78A21D1447A00951061 /* Block.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF76D21D1447900951061 /* Block.swift */; };
 		E27BF78B21D1447A00951061 /* BlockHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF76E21D1447900951061 /* BlockHelpers.swift */; };
-		E27BF79721D16A4600951061 /* EtherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF79621D16A4600951061 /* EtherCoordinator.swift */; };
-		E27BF79921D181B400951061 /* PlasmaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27BF79821D181B400951061 /* PlasmaCoordinator.swift */; };
+		E2A8DAF621F1F6A00031AC58 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE221F1F6A00031AC58 /* CoreDataModel.xcdatamodeld */; };
+		E2A8DAF721F1F6A00031AC58 /* ContactsCD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE521F1F6A00031AC58 /* ContactsCD.xcdatamodeld */; };
+		E2A8DAF821F1F6A00031AC58 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE721F1F6A00031AC58 /* Contact.swift */; };
+		E2A8DAFA21F1F6A00031AC58 /* Web3Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */; };
+		E2A8DAFB21F1F6A00031AC58 /* ETHTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAED21F1F6A00031AC58 /* ETHTransaction.swift */; };
+		E2A8DAFC21F1F6A00031AC58 /* StorageErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAEE21F1F6A00031AC58 /* StorageErrors.swift */; };
+		E2A8DAFD21F1F6A00031AC58 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF021F1F6A00031AC58 /* Wallet.swift */; };
+		E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */; };
+		E2A8DAFF21F1F6A00031AC58 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */; };
+		E2A8DB0321F1FA480031AC58 /* EtherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */; };
+		E2A8DB0421F1FA480031AC58 /* PlasmaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */; };
 		E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2C2174D1CC00F38E50 /* Interactor.swift */; };
 		E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4921761F4000F38E50 /* ContactsViewController.swift */; };
 		E2B45A4C21761F4000F38E50 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */; };
@@ -119,14 +128,6 @@
 		E2C1106A21E507260012A978 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104121E507260012A978 /* Alerts.swift */; };
 		E2C1106B21E507260012A978 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104221E507260012A978 /* NavigationController.swift */; };
 		E2C1106C21E507260012A978 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104321E507260012A978 /* Colors.swift */; };
-		E2C1106D21E507260012A978 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104521E507260012A978 /* CoreDataModel.xcdatamodeld */; };
-		E2C1106F21E507260012A978 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104A21E507260012A978 /* Contact.swift */; };
-		E2C1107121E507260012A978 /* Web3Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104E21E507260012A978 /* Web3Network.swift */; };
-		E2C1107221E507260012A978 /* ETHTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1105021E507260012A978 /* ETHTransaction.swift */; };
-		E2C1107321E507260012A978 /* StorageErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1105121E507260012A978 /* StorageErrors.swift */; };
-		E2C1107421E507260012A978 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1105321E507260012A978 /* Wallet.swift */; };
-		E2C1107521E507260012A978 /* ContainerCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1105421E507260012A978 /* ContainerCD.swift */; };
-		E2C1107621E507260012A978 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1105621E507260012A978 /* ERC20Token.swift */; };
 		E2C1108121E507340012A978 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107921E507330012A978 /* FloatExtension.swift */; };
 		E2C1108321E507340012A978 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107B21E507330012A978 /* SearchControllerExtension.swift */; };
 		E2C1108421E507340012A978 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107C21E507330012A978 /* StringExtension.swift */; };
@@ -291,8 +292,17 @@
 		E27BF76C21D1447900951061 /* BlockHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHeader.swift; sourceTree = "<group>"; };
 		E27BF76D21D1447900951061 /* Block.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Block.swift; sourceTree = "<group>"; };
 		E27BF76E21D1447900951061 /* BlockHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BlockHelpers.swift; sourceTree = "<group>"; };
-		E27BF79621D16A4600951061 /* EtherCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EtherCoordinator.swift; path = ../../../../../../Documents/EtherCoordinator.swift; sourceTree = "<group>"; };
-		E27BF79821D181B400951061 /* PlasmaCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlasmaCoordinator.swift; path = ../../../../../../Documents/PlasmaCoordinator.swift; sourceTree = "<group>"; };
+		E2A8DAE321F1F6A00031AC58 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		E2A8DAE621F1F6A00031AC58 /* ContactsCD.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ContactsCD.xcdatamodel; sourceTree = "<group>"; };
+		E2A8DAE721F1F6A00031AC58 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Network.swift; sourceTree = "<group>"; };
+		E2A8DAED21F1F6A00031AC58 /* ETHTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETHTransaction.swift; sourceTree = "<group>"; };
+		E2A8DAEE21F1F6A00031AC58 /* StorageErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageErrors.swift; sourceTree = "<group>"; };
+		E2A8DAF021F1F6A00031AC58 /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
+		E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCD.swift; sourceTree = "<group>"; };
+		E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
+		E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherCoordinator.swift; sourceTree = "<group>"; };
+		E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlasmaCoordinator.swift; sourceTree = "<group>"; };
 		E2B45A2C2174D1CC00F38E50 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
 		E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
 		E2B45A312174D1E100F38E50 /* TokenInfoControllerRaws.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenInfoControllerRaws.swift; sourceTree = "<group>"; };
@@ -327,14 +337,6 @@
 		E2C1104121E507260012A978 /* Alerts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		E2C1104221E507260012A978 /* NavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		E2C1104321E507260012A978 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
-		E2C1104621E507260012A978 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		E2C1104A21E507260012A978 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		E2C1104E21E507260012A978 /* Web3Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Web3Network.swift; sourceTree = "<group>"; };
-		E2C1105021E507260012A978 /* ETHTransaction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ETHTransaction.swift; sourceTree = "<group>"; };
-		E2C1105121E507260012A978 /* StorageErrors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageErrors.swift; sourceTree = "<group>"; };
-		E2C1105321E507260012A978 /* Wallet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wallet.swift; sourceTree = "<group>"; };
-		E2C1105421E507260012A978 /* ContainerCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCD.swift; sourceTree = "<group>"; };
-		E2C1105621E507260012A978 /* ERC20Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		E2C1107921E507330012A978 /* FloatExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatExtension.swift; sourceTree = "<group>"; };
 		E2C1107B21E507330012A978 /* SearchControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchControllerExtension.swift; sourceTree = "<group>"; };
 		E2C1107C21E507330012A978 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -510,12 +512,12 @@
 		91B6A79521435F5D0033A045 /* DiveLane */ = {
 			isa = PBXGroup;
 			children = (
+				E2A8DAE121F1F6A00031AC58 /* Core */,
 				E2C110A721E61EDE0012A978 /* DesignElements */,
 				E2C1108821E556EE0012A978 /* Parsers */,
 				E2C1107821E507330012A978 /* CommonExtensions */,
 				E2C1107D21E507340012A978 /* GlobalState */,
 				E2C1103B21E507260012A978 /* CommonHelpers */,
-				E2C1104421E507260012A978 /* Core */,
 				E2C1102721E507250012A978 /* Service Layer */,
 				E27BF74721D1447900951061 /* PlasmaSwiftLib */,
 				91B6A7AB2143608B0033A045 /* App */,
@@ -879,12 +881,68 @@
 		E27BF79521D168A500951061 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E27BF79621D16A4600951061 /* EtherCoordinator.swift */,
-				E27BF79821D181B400951061 /* PlasmaCoordinator.swift */,
+				E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */,
+				E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */,
 				E2C59073215258B800FF53D3 /* ExpandableTableTokens.swift */,
 				E20660002183DCEE00701068 /* ExpandableTableUTXOs.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		E2A8DAE121F1F6A00031AC58 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAE221F1F6A00031AC58 /* CoreDataModel.xcdatamodeld */,
+				E2A8DAE421F1F6A00031AC58 /* Contacts */,
+				E2A8DAEA21F1F6A00031AC58 /* Networks */,
+				E2A8DAEC21F1F6A00031AC58 /* Transactions */,
+				E2A8DAEE21F1F6A00031AC58 /* StorageErrors.swift */,
+				E2A8DAEF21F1F6A00031AC58 /* Wallets */,
+				E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */,
+				E2A8DAF221F1F6A00031AC58 /* Tokens */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		E2A8DAE421F1F6A00031AC58 /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAE521F1F6A00031AC58 /* ContactsCD.xcdatamodeld */,
+				E2A8DAE721F1F6A00031AC58 /* Contact.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		E2A8DAEA21F1F6A00031AC58 /* Networks */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */,
+			);
+			path = Networks;
+			sourceTree = "<group>";
+		};
+		E2A8DAEC21F1F6A00031AC58 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAED21F1F6A00031AC58 /* ETHTransaction.swift */,
+			);
+			path = Transactions;
+			sourceTree = "<group>";
+		};
+		E2A8DAEF21F1F6A00031AC58 /* Wallets */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAF021F1F6A00031AC58 /* Wallet.swift */,
+			);
+			path = Wallets;
+			sourceTree = "<group>";
+		};
+		E2A8DAF221F1F6A00031AC58 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */,
+			);
+			path = Tokens;
 			sourceTree = "<group>";
 		};
 		E2B45A2B2174D1CC00F38E50 /* Animators */ = {
@@ -1039,62 +1097,6 @@
 				E2C1104021E507260012A978 /* Result.swift */,
 			);
 			path = CommonHelpers;
-			sourceTree = "<group>";
-		};
-		E2C1104421E507260012A978 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1104521E507260012A978 /* CoreDataModel.xcdatamodeld */,
-				E2C1105121E507260012A978 /* StorageErrors.swift */,
-				E2C1105421E507260012A978 /* ContainerCD.swift */,
-				E2C1104721E507260012A978 /* Contacts */,
-				E2C1104D21E507260012A978 /* Networks */,
-				E2C1104F21E507260012A978 /* Transactions */,
-				E2C1105221E507260012A978 /* Wallets */,
-				E2C1105521E507260012A978 /* Tokens */,
-			);
-			name = Core;
-			path = ../../../Downloads/DiveLane/Core;
-			sourceTree = "<group>";
-		};
-		E2C1104721E507260012A978 /* Contacts */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1104A21E507260012A978 /* Contact.swift */,
-			);
-			path = Contacts;
-			sourceTree = "<group>";
-		};
-		E2C1104D21E507260012A978 /* Networks */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1104E21E507260012A978 /* Web3Network.swift */,
-			);
-			path = Networks;
-			sourceTree = "<group>";
-		};
-		E2C1104F21E507260012A978 /* Transactions */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1105021E507260012A978 /* ETHTransaction.swift */,
-			);
-			path = Transactions;
-			sourceTree = "<group>";
-		};
-		E2C1105221E507260012A978 /* Wallets */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1105321E507260012A978 /* Wallet.swift */,
-			);
-			path = Wallets;
-			sourceTree = "<group>";
-		};
-		E2C1105521E507260012A978 /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				E2C1105621E507260012A978 /* ERC20Token.swift */,
-			);
-			path = Tokens;
 			sourceTree = "<group>";
 		};
 		E2C1107821E507330012A978 /* CommonExtensions */ = {
@@ -1768,28 +1770,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2C1107621E507260012A978 /* ERC20Token.swift in Sources */,
 				E2C1106621E507260012A978 /* UserDefaultKeys.swift in Sources */,
 				9197F3332144228B00C358AA /* NetworksCell.swift in Sources */,
 				914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */,
 				E27BF77F21D1447A00951061 /* PlasmaStringExtension.swift in Sources */,
 				E2C1108721E507340012A978 /* CurrentNetwork.swift in Sources */,
 				E20660A82188BF9A00701068 /* SelectButton.swift in Sources */,
+				E2A8DAF821F1F6A00031AC58 /* Contact.swift in Sources */,
 				E2C1105A21E507260012A978 /* BiometricsService.swift in Sources */,
+				E2A8DAFD21F1F6A00031AC58 /* Wallet.swift in Sources */,
+				E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */,
 				E27BF77521D1447A00951061 /* Hashing.swift in Sources */,
+				E2A8DAF621F1F6A00031AC58 /* CoreDataModel.xcdatamodeld in Sources */,
+				E2A8DAFB21F1F6A00031AC58 /* ETHTransaction.swift in Sources */,
 				E27BF78521D1447A00951061 /* PlasmaWeb3ServiceConvenient.swift in Sources */,
 				E27BF78421D1447A00951061 /* PlasmaContractMethods.swift in Sources */,
 				E2C1106421E507260012A978 /* URLs.swift in Sources */,
 				E2C1106121E507260012A978 /* TokensService.swift in Sources */,
-				E2C1107321E507260012A978 /* StorageErrors.swift in Sources */,
 				E27BF78621D1447A00951061 /* PlasmaWeb3Service.swift in Sources */,
-				E2C1106F21E507260012A978 /* Contact.swift in Sources */,
 				E27BF77B21D1447A00951061 /* BigIntExtension.swift in Sources */,
 				E27BF77021D1447A00951061 /* TransactionOutput.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				E2C110BD21E755330012A978 /* WalletImportingViewController.swift in Sources */,
 				91E7255B214FEDE3003FAD76 /* AddressTableViewCell.swift in Sources */,
-				E2C1106D21E507260012A978 /* CoreDataModel.xcdatamodeld in Sources */,
 				E27BF78821D1447A00951061 /* PlasmaService.swift in Sources */,
 				E2C1109221E557FE0012A978 /* ENS.swift in Sources */,
 				E2C1108421E507340012A978 /* StringExtension.swift in Sources */,
@@ -1798,6 +1801,7 @@
 				E234C7A921ECCA4400F175AF /* TokenViewController.swift in Sources */,
 				E2D451D721EE331600218872 /* BasicSegmentedControl.swift in Sources */,
 				E2C1105921E507260012A978 /* KeychainService.swift in Sources */,
+				E2A8DAFF21F1F6A00031AC58 /* ERC20Token.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				E2C110B921E67D1D0012A978 /* WalletCreationViewController.swift in Sources */,
 				E2C1108621E507340012A978 /* CurrentToken.swift in Sources */,
@@ -1819,30 +1823,29 @@
 				E27BF77E21D1447A00951061 /* DataExtension.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				E2C1109421E557FE0012A978 /* EIP681.swift in Sources */,
+				E2A8DAFA21F1F6A00031AC58 /* Web3Network.swift in Sources */,
 				E27BF76F21D1447A00951061 /* SignedTransaction.swift in Sources */,
+				E2A8DB0421F1FA480031AC58 /* PlasmaCoordinator.swift in Sources */,
 				E2D451DD21EE980B00218872 /* DoubleExtension.swift in Sources */,
 				E2C1105D21E507260012A978 /* NetworkErrors.swift in Sources */,
 				E2C1106C21E507260012A978 /* Colors.swift in Sources */,
 				E2D451C621EE292700218872 /* BasicViewController.swift in Sources */,
 				E2C1108121E507340012A978 /* FloatExtension.swift in Sources */,
 				E2C59074215258B800FF53D3 /* ExpandableTableTokens.swift in Sources */,
-				E27BF79921D181B400951061 /* PlasmaCoordinator.swift in Sources */,
 				914F22952149A24C00ED58E6 /* PincodeCreationStatus.swift in Sources */,
-				E2C1107121E507260012A978 /* Web3Network.swift in Sources */,
 				914F22982149BF2400ED58E6 /* EnterPincodeViewController.swift in Sources */,
 				E2C1106221E507260012A978 /* GenericParsedURL.swift in Sources */,
 				E2C1105E21E507260012A978 /* ContactsService.swift in Sources */,
-				E2C1107221E507260012A978 /* ETHTransaction.swift in Sources */,
 				E2C1106721E507260012A978 /* CommonErrors.swift in Sources */,
 				E2C1109321E557FE0012A978 /* NameHash.swift in Sources */,
 				E27BF77721D1447A00951061 /* PaddableTree.swift in Sources */,
 				E234C79F21EB4BEB00F175AF /* WalletsCoordinator.swift in Sources */,
 				E2C1108321E507340012A978 /* SearchControllerExtension.swift in Sources */,
 				E2C110C821E8A86C0012A978 /* BasicSeletedButton.swift in Sources */,
-				E2C1107421E507260012A978 /* Wallet.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				E2C110CE21E8A8D90012A978 /* TableHeader.swift in Sources */,
 				E234C7A621EBF62900F175AF /* BasicTableView.swift in Sources */,
+				E2A8DAF721F1F6A00031AC58 /* ContactsCD.xcdatamodeld in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				E27BF77621D1447A00951061 /* SimpleContent.swift in Sources */,
 				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
@@ -1860,18 +1863,18 @@
 				E2C110CC21E8A8B90012A978 /* BasicTextView.swift in Sources */,
 				914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */,
 				E27BF78321D1447A00951061 /* PlasmaContract.swift in Sources */,
+				E2A8DB0321F1FA480031AC58 /* EtherCoordinator.swift in Sources */,
 				E27BF77C21D1447A00951061 /* ArrayExtension.swift in Sources */,
 				E27BF78121D1447A00951061 /* PlasmaErrors.swift in Sources */,
 				9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */,
-				E2C1107521E507260012A978 /* ContainerCD.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreatePincodeViewController.swift in Sources */,
 				E2B45A4F217620D500F38E50 /* ContactCell.swift in Sources */,
 				E27BF77321D1447A00951061 /* OutputsManagement.swift in Sources */,
+				E2A8DAFC21F1F6A00031AC58 /* StorageErrors.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				E27BF77921D1447A00951061 /* PlasmaCode.swift in Sources */,
 				E2C110A421E5EDBF0012A978 /* UTXOCell.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
-				E27BF79721D16A4600951061 /* EtherCoordinator.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 				E27BF78721D1447A00951061 /* PlasmaUTXOs.swift in Sources */,
 				E2C110C021E7DB130012A978 /* ImportType.swift in Sources */,
@@ -2346,13 +2349,23 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		E2C1104521E507260012A978 /* CoreDataModel.xcdatamodeld */ = {
+		E2A8DAE221F1F6A00031AC58 /* CoreDataModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E2C1104621E507260012A978 /* CoreDataModel.xcdatamodel */,
+				E2A8DAE321F1F6A00031AC58 /* CoreDataModel.xcdatamodel */,
 			);
-			currentVersion = E2C1104621E507260012A978 /* CoreDataModel.xcdatamodel */;
+			currentVersion = E2A8DAE321F1F6A00031AC58 /* CoreDataModel.xcdatamodel */;
 			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+		E2A8DAE521F1F6A00031AC58 /* ContactsCD.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E2A8DAE621F1F6A00031AC58 /* ContactsCD.xcdatamodel */,
+			);
+			currentVersion = E2A8DAE621F1F6A00031AC58 /* ContactsCD.xcdatamodel */;
+			path = ContactsCD.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

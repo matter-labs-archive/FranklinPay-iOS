@@ -45,6 +45,9 @@ class WalletViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(CurrentWallet.currentWallet?.address)
+        print(CurrentToken.currentToken?.name)
+        print(CurrentNetwork.currentNetwork.name)
         self.view.backgroundColor = Colors.firstMain
         self.tabBarController?.tabBar.selectedItem?.title = nil
         self.setupNavigation()
