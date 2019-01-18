@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreatePincodeViewController" customModule="DiveLane" customModuleProvider="target">
             <connections>
                 <outlet property="biometricsButton" destination="LU6-42-Bws" id="dfn-gn-aJH"/>
+                <outlet property="container" destination="IHU-Bk-7yI" id="QGM-5w-iY0"/>
                 <outlet property="deleteButton" destination="55z-uZ-1Sp" id="ee6-cm-kRe"/>
                 <outlet property="firstNum" destination="Vdk-ZD-X6A" id="a41-6w-BxT"/>
                 <outlet property="fourthNum" destination="QNk-sE-N3O" id="7lk-Ak-nRe"/>
@@ -31,7 +32,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IHU-Bk-7yI">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="717"/>
                             <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="JOq-Mz-csV">
@@ -270,7 +271,6 @@
                         <constraint firstItem="IHU-Bk-7yI" firstAttribute="leading" secondItem="jha-8t-SnR" secondAttribute="leading" id="RwR-FT-ONA"/>
                         <constraint firstItem="vvT-0a-Rty" firstAttribute="centerX" secondItem="jha-8t-SnR" secondAttribute="centerX" id="YG3-bv-oYs"/>
                         <constraint firstItem="vaK-OM-Dea" firstAttribute="centerX" secondItem="jha-8t-SnR" secondAttribute="centerX" id="aj3-kT-WIe"/>
-                        <constraint firstAttribute="bottom" secondItem="IHU-Bk-7yI" secondAttribute="bottom" id="bPd-po-SLB"/>
                         <constraint firstItem="IHU-Bk-7yI" firstAttribute="top" secondItem="jha-8t-SnR" secondAttribute="top" id="lKS-gI-3TO"/>
                         <constraint firstAttribute="trailing" secondItem="IHU-Bk-7yI" secondAttribute="trailing" id="ol4-16-7Lr"/>
                         <constraint firstItem="6nN-F3-DrJ" firstAttribute="centerY" secondItem="jha-8t-SnR" secondAttribute="centerY" id="sDV-wm-356"/>
@@ -283,6 +283,7 @@
                 <constraint firstItem="jha-8t-SnR" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="Fe0-wd-OXy"/>
                 <constraint firstItem="jha-8t-SnR" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="W4o-sO-3lh"/>
                 <constraint firstItem="jha-8t-SnR" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="auT-Il-Ywe"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="IHU-Bk-7yI" secondAttribute="bottom" constant="-50" id="h1f-rs-PdQ"/>
                 <constraint firstItem="jha-8t-SnR" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="o9x-4j-qdG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

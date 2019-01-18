@@ -27,13 +27,13 @@ class NetworksViewController: BasicViewController {
     }
     
     private func setupTableView() {
-        let nibToken = UINib.init(nibName: "NetworkCell", bundle: nil)
+        let nibToken = UINib.init(nibName: "NetworksCell", bundle: nil)
         networksTableView.delegate = self
         networksTableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.firstMain
         networksTableView.tableFooterView = footerView
-        networksTableView.register(nibToken, forCellReuseIdentifier: "NetworkCell")
+        networksTableView.register(nibToken, forCellReuseIdentifier: "NetworksCell")
         networks.removeAll()
     }
 
@@ -84,8 +84,8 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
         if currentNetwork == networkInCell {
             isChosen = true
         }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworkCell",
-                                                       for: indexPath) as? NetworkCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
+                                                       for: indexPath) as? NetworksCell else {
                                                         return UITableViewCell()
         }
         cell.configure(network: networkInCell, isChosen: isChosen)

@@ -9,7 +9,7 @@
 import UIKit
 import Web3swift
 
-class NetworkCell: UITableViewCell {
+class NetworksCell: UITableViewCell {
 
     @IBOutlet weak var bottomBackgroundView: UIView!
     @IBOutlet weak var topBackgroundView: UIView!

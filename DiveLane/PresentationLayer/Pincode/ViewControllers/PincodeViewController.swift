@@ -16,7 +16,8 @@ class PincodeViewController: BasicViewController {
     @IBOutlet weak var secondNum: UIImageView!
     @IBOutlet weak var thirdNum: UIImageView!
     @IBOutlet weak var fourthNum: UIImageView!
-
+    @IBOutlet weak var container: UIView!
+    
     @IBOutlet weak var biometricsButton: PinCodeNumberButton!
     @IBOutlet weak var deleteButton: PinCodeNumberButton!
     
@@ -30,6 +31,7 @@ class PincodeViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        container.backgroundColor = Colors.firstMain
         biometricsButton.setImage(UIImage(named: "white_touch_id"), for: .normal)
         deleteButton.setImage(UIImage(named: "white_delete"), for: .normal)
         messageLabel.textColor = Colors.secondMain

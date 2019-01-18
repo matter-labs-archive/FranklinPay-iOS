@@ -13,6 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="EnterPincodeViewController" customModule="DiveLane" customModuleProvider="target">
             <connections>
                 <outlet property="biometricsButton" destination="z7V-VD-gZs" id="hQ5-gx-ovl"/>
+                <outlet property="container" destination="qjM-MI-v3x" id="12C-7l-8RY"/>
                 <outlet property="deleteButton" destination="4Hy-pt-BvJ" id="MXg-1B-Q29"/>
                 <outlet property="firstNum" destination="Gja-nq-Ttx" id="5Yc-db-XGb"/>
                 <outlet property="fourthNum" destination="sua-dA-IHG" id="qP4-ab-dyY"/>
@@ -31,7 +32,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qjM-MI-v3x">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="828"/>
                             <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="NrW-eR-EAu">
@@ -264,7 +265,6 @@
                         <constraint firstAttribute="trailing" secondItem="qjM-MI-v3x" secondAttribute="trailing" id="5hw-Qg-iPg"/>
                         <constraint firstItem="HJh-GE-MWS" firstAttribute="top" secondItem="NrW-eR-EAu" secondAttribute="bottom" constant="30" id="8Dk-ui-wTU"/>
                         <constraint firstItem="qjM-MI-v3x" firstAttribute="top" secondItem="cnx-X2-vRL" secondAttribute="top" id="D6o-HS-z00"/>
-                        <constraint firstAttribute="bottom" secondItem="qjM-MI-v3x" secondAttribute="bottom" id="Kw0-nj-W4T"/>
                         <constraint firstItem="O2r-rJ-Gw7" firstAttribute="centerY" secondItem="cnx-X2-vRL" secondAttribute="centerY" id="NWq-Tb-bZg"/>
                         <constraint firstItem="7DT-mz-Hv5" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="Rek-oy-keI"/>
                         <constraint firstItem="NrW-eR-EAu" firstAttribute="centerX" secondItem="cnx-X2-vRL" secondAttribute="centerX" id="XlK-Jj-5Ir"/>
@@ -277,6 +277,7 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="ZhK-0l-1FX" firstAttribute="bottom" secondItem="qjM-MI-v3x" secondAttribute="bottom" constant="-50" id="a7C-BO-9Zj"/>
                 <constraint firstItem="cnx-X2-vRL" firstAttribute="top" secondItem="osP-lW-mo6" secondAttribute="top" id="dtB-xj-OIz"/>
                 <constraint firstItem="cnx-X2-vRL" firstAttribute="trailing" secondItem="ZhK-0l-1FX" secondAttribute="trailing" id="oBj-p3-3Jx"/>
                 <constraint firstItem="cnx-X2-vRL" firstAttribute="bottom" secondItem="ZhK-0l-1FX" secondAttribute="bottom" id="oUY-tK-yKX"/>

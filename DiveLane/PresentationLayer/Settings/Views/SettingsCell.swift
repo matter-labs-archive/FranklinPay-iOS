@@ -23,7 +23,9 @@ class SettingsCell: UITableViewCell {
         self.topBackgroundView.backgroundColor = Colors.secondMain
         self.topBackgroundView.layer.cornerRadius = 10
         self.param.textColor = Colors.textFirst
+        self.param.font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
         self.value.textColor = Colors.textSecond
+        self.value.font = UIFont(name: Constants.font, size: Constants.smallFontSize) ?? UIFont.systemFont(ofSize: Constants.smallFontSize)
     }
 
     func configure(setting: MainSetting) {
