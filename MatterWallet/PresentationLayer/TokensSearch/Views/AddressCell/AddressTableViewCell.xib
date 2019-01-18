@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddressTableViewCell" rowHeight="40" id="KGk-i7-Jjw" customClass="AddressTableViewCell" customModule="DiveLane" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISY-2J-ywn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWc-cg-CHh">
+                                <rect key="frame" x="150" y="5" width="150" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="3Br-iy-4Ey"/>
+                                    <constraint firstAttribute="height" constant="30" id="Ld9-tj-mrd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                <state key="normal" title="PASTE">
+                                    <color key="titleColor" red="0.066666666669999999" green="0.44705882349999998" blue="0.53725490200000003" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtc-Qe-pOG">
+                                <rect key="frame" x="100" y="5" width="30" height="30"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mtc-Qe-pOG" secondAttribute="height" multiplier="1:1" id="UjB-hQ-cM5"/>
+                                    <constraint firstAttribute="height" constant="30" id="uSc-7F-0b2"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="qr"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="AWc-cg-CHh" firstAttribute="leading" secondItem="mtc-Qe-pOG" secondAttribute="trailing" constant="20" id="B3l-w1-K7E"/>
+                            <constraint firstItem="mtc-Qe-pOG" firstAttribute="centerY" secondItem="ISY-2J-ywn" secondAttribute="centerY" id="EBg-ul-Q80"/>
+                            <constraint firstAttribute="height" constant="40" id="fuD-Gj-fiR"/>
+                            <constraint firstAttribute="trailing" secondItem="AWc-cg-CHh" secondAttribute="trailing" constant="20" id="mIn-e2-5ta"/>
+                            <constraint firstItem="AWc-cg-CHh" firstAttribute="centerY" secondItem="ISY-2J-ywn" secondAttribute="centerY" id="qUN-XZ-W15"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ISY-2J-ywn" secondAttribute="trailing" id="7kM-H6-IBC"/>
+                    <constraint firstItem="ISY-2J-ywn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="UWq-dc-jPR"/>
+                    <constraint firstItem="ISY-2J-ywn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="v2w-6Y-y9A"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="backView" destination="ISY-2J-ywn" id="heJ-Ic-ITB"/>
+                <outlet property="paste" destination="AWc-cg-CHh" id="BRI-vH-is8"/>
+                <outlet property="qr" destination="mtc-Qe-pOG" id="Eeg-M3-OkR"/>
+            </connections>
+            <point key="canvasLocation" x="168" y="55.772113943028494"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="qr" width="34" height="34"/>
+    </resources>
+</document>

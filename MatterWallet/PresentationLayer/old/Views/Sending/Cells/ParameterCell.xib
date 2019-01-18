@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" restorationIdentifier="ParameterCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ParameterCell" rowHeight="50" id="KGk-i7-Jjw" customClass="ParameterCell" customModule="DiveLane" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="482" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="482" height="49.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="uint256" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dFB-h4-AHr">
+                        <rect key="frame" x="20" y="13" width="60" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uh0-3C-vAO">
+                        <rect key="frame" x="88" y="13" width="374" height="24"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="uh0-3C-vAO" firstAttribute="leading" secondItem="dFB-h4-AHr" secondAttribute="trailing" constant="8" id="2Lz-KR-n8i"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="uh0-3C-vAO" secondAttribute="trailing" id="6CZ-tv-kGw"/>
+                    <constraint firstItem="uh0-3C-vAO" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="9px-RW-kGD"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="dFB-h4-AHr" secondAttribute="bottom" constant="2" id="MFA-p9-Oww"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="uh0-3C-vAO" secondAttribute="bottom" constant="2" id="Rrl-Zd-cbk"/>
+                    <constraint firstItem="dFB-h4-AHr" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="fDF-tv-SMN"/>
+                    <constraint firstItem="dFB-h4-AHr" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="lrc-dd-nPF"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="typeLabel" destination="dFB-h4-AHr" id="tmz-3z-QoW"/>
+                <outlet property="valueLabel" destination="uh0-3C-vAO" id="f8C-hK-gQO"/>
+            </connections>
+            <point key="canvasLocation" x="119" y="57"/>
+        </tableViewCell>
+    </objects>
+</document>

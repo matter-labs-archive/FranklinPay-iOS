@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TokenInfoViewController" customModule="DiveLane" customModuleProvider="target">
+            <connections>
+                <outlet property="addingButton" destination="jI5-E6-Bvh" id="GPE-lO-M7M"/>
+                <outlet property="tokenInfoTableView" destination="qHH-NJ-AdC" id="j4f-38-7HZ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="isU-qg-Qqx">
+                    <rect key="frame" x="169.5" y="45" width="36" height="4"/>
+                    <color key="backgroundColor" red="0.8980392157" green="0.90196078430000004" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="36" id="RJU-Uc-iFf"/>
+                        <constraint firstAttribute="height" constant="4" id="biJ-3n-EEk"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="shadowRadius">
+                            <real key="value" value="0.0"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yKW-3R-Nns">
+                    <rect key="frame" x="325" y="59" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="hsN-VK-aUB"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" image="close_btn"/>
+                    <connections>
+                        <action selector="closeWithSender:" destination="-1" eventType="touchUpInside" id="9Pc-12-Xdg"/>
+                    </connections>
+                </button>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qHH-NJ-AdC">
+                    <rect key="frame" x="0.0" y="109" width="375" height="456"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="2es-8e-0tI"/>
+                        <outlet property="delegate" destination="-1" id="MKo-yy-Uis"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jI5-E6-Bvh">
+                    <rect key="frame" x="115.5" y="585" width="144" height="32"/>
+                    <color key="backgroundColor" red="0.16078431372549021" green="0.51764705882352946" blue="0.92941176470588238" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="144" id="R3u-Qh-FRk"/>
+                        <constraint firstAttribute="height" constant="32" id="SKy-9z-Yzu"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <state key="normal" title="Add">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="addTokenAction:" destination="-1" eventType="touchUpInside" id="Poi-Vd-NhZ"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <gestureRecognizers/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="jI5-E6-Bvh" secondAttribute="bottom" constant="50" id="8S0-J1-kgk"/>
+                <constraint firstItem="yKW-3R-Nns" firstAttribute="top" secondItem="isU-qg-Qqx" secondAttribute="bottom" constant="10" id="9dF-rb-UD0"/>
+                <constraint firstItem="jI5-E6-Bvh" firstAttribute="top" secondItem="qHH-NJ-AdC" secondAttribute="bottom" constant="20" id="BhF-JH-Cdg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="yKW-3R-Nns" secondAttribute="trailing" constant="20" id="QHb-Te-1xk"/>
+                <constraint firstItem="isU-qg-Qqx" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="25" id="QVn-T3-wpE"/>
+                <constraint firstItem="qHH-NJ-AdC" firstAttribute="top" secondItem="yKW-3R-Nns" secondAttribute="bottom" constant="20" id="Scg-gp-kG5"/>
+                <constraint firstItem="jI5-E6-Bvh" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XgZ-Pq-lNK"/>
+                <constraint firstItem="yKW-3R-Nns" firstAttribute="width" secondItem="yKW-3R-Nns" secondAttribute="height" multiplier="1:1" id="ark-0i-IXG"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="qHH-NJ-AdC" secondAttribute="trailing" id="kev-5a-8At"/>
+                <constraint firstItem="isU-qg-Qqx" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="lu6-9E-dBo"/>
+                <constraint firstItem="qHH-NJ-AdC" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="oQJ-ZN-zc9"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <connections>
+                <outletCollection property="gestureRecognizers" destination="YCQ-78-Dew" appends="YES" id="bZS-TA-XVG"/>
+            </connections>
+            <point key="canvasLocation" x="104.8" y="48.125937031484263"/>
+        </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="YCQ-78-Dew">
+            <connections>
+                <action selector="handlePanGesture:" destination="-1" id="Htt-8F-20s"/>
+            </connections>
+        </panGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="close_btn" width="100" height="100"/>
+    </resources>
+</document>

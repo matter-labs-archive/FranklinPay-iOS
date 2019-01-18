@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -99,7 +100,7 @@
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" red="1" green="0.50196078430000002" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="backgroundColor" red="0.12156862765550613" green="0.12941177189350128" blue="0.14117647707462311" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="6Dd-zY-Gbx" firstAttribute="leading" secondItem="lFq-V4-OUf" secondAttribute="leading" id="6Bo-W7-n1z"/>
                         <constraint firstItem="6Dd-zY-Gbx" firstAttribute="top" secondItem="lFq-V4-OUf" secondAttribute="top" id="7Yy-v6-02B"/>
@@ -203,6 +204,6 @@
     <resources>
         <image name="ArrowRight" width="30" height="30"/>
         <image name="Close" width="22" height="22"/>
-        <image name="NoWifi" width="40" height="33.5"/>
+        <image name="NoWifi" width="40" height="33"/>
     </resources>
 </document>

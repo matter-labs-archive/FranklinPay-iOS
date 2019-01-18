@@ -24,7 +24,7 @@ import SystemConfiguration
     public static let bundle = StatusBarOverlay.bundleUrl != nil ? Bundle(url: StatusBarOverlay.bundleUrl!) : nil // set to use your own bundle
     
     public static let networkChangedToReachableNotification = Notification.Name(rawValue: "networkChangedToReachable")
-    public static var defaultBackgroundColor = UIColor(red: 255 / 255, green: 128 / 255, blue: 39 / 255, alpha: 1) {
+    public static var defaultBackgroundColor = UIColor.black {
         didSet {
             StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarBackgroundColor(color: StatusBarOverlay.defaultBackgroundColor)
         }
@@ -34,7 +34,7 @@ import SystemConfiguration
             StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarTextColor(color: StatusBarOverlay.defaultTextColor)
         }
     }
-    public static var defaultFont = UIFont(name: "HelveticaNeue-Bold", size: 14) ?? UIFont.boldSystemFont(ofSize: 14) {
+    public static var defaultFont = UIFont.boldSystemFont(ofSize: 14) {
         didSet {
             StatusBarOverlay.shared.statusBarOverlayViewController?.setStatusBarFont(font: StatusBarOverlay.defaultFont)
         }
@@ -63,7 +63,7 @@ import SystemConfiguration
         }
     }
     public static var isReachable = true
-    @objc public static var preferredStatusBarStyle = UIStatusBarStyle.lightContent {
+    @objc public static var preferredStatusBarStyle = UIStatusBarStyle.default {
         didSet {
             StatusBarOverlay.setNeedsStatusBarAppearanceUpdate()
         }
@@ -173,7 +173,7 @@ import SystemConfiguration
         }
         else {
             // UIStatusBarStyleDefault
-            StatusBarOverlay.preferredStatusBarStyle = .lightContent
+            StatusBarOverlay.preferredStatusBarStyle = .default
         }
     }
     
