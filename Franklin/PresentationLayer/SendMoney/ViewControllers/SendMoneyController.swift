@@ -30,6 +30,7 @@ class SendMoneyController: BasicViewController {
         case confirm
         case sending
         case ready
+        case saving
     }
     
     @IBOutlet weak var amountTextField: BasicTextField!
@@ -54,6 +55,8 @@ class SendMoneyController: BasicViewController {
     @IBOutlet weak var addressTextField: BasicTextField!
     @IBOutlet weak var sendButton: BasicWhiteButton!
     @IBOutlet weak var orEnterAddressLabel: UILabel!
+    @IBOutlet weak var sendToLabel: UILabel!
+    @IBOutlet weak var addressStackView: UIStackView!
     
     var searchStackOrigin: CGFloat = 0
     weak var delegate: ModalViewDelegate?
@@ -82,14 +85,22 @@ class SendMoneyController: BasicViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        searchStackOrigin = searchStackView.frame.origin.y
         showStart(animated: false)
         getAllContacts()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setMiddleStackPosition()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         chosenContact = nil
+    }
+    
+    func setMiddleStackPosition() {
+        searchStackOrigin = searchStackView.frame.origin.y
     }
     
     func setupTextFields() {
@@ -123,16 +134,31 @@ class SendMoneyController: BasicViewController {
     }
     
     func mainSetup() {
+        setupNavigation()
+        setupBackground()
+        setupContentView()
+        setupGestures()
+        setupGif()
+    }
+    
+    func setupNavigation() {
         self.navigationController?.navigationBar.isHidden = true
-        
+    }
+    
+    func setupBackground() {
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
+    }
+    
+    func setupContentView() {
         self.contentView.backgroundColor = Colors.background
         self.contentView.alpha = 1
         self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
         self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
         self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
-        
+    }
+    
+    func setupGestures() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(self.dismissView))
         tap.cancelsTouchesInView = false
@@ -141,97 +167,81 @@ class SendMoneyController: BasicViewController {
         let tapOnChosenContact: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.showSearch(animated:)))
         tapOnChosenContact.cancelsTouchesInView = false
         contactStack.addGestureRecognizer(tapOnChosenContact)
-        
+    }
+    
+    func setupGif() {
         sendingGif.setGifImage(UIImage(gifName: "loading.gif"))
         sendingGif.loopCount = -1
         sendingGif.contentMode = .center
         sendingGif.isUserInteractionEnabled = false
     }
     
-    func showStart(animated: Bool) {
-        self.screenStatus = .start
-        UIView.animate(withDuration: animated ?
-            Constants.ModalView.animationDuration : 0) { [unowned self] in
-            self.titleLabel.text = "Send money"
-            self.sendingGif.alpha = 0
-            self.shareLabel.alpha = 1
-            self.collectionView.alpha = 0
-            self.collectionView.isUserInteractionEnabled = false
-            self.collectionView.isHidden = true
-            self.mainButton.setTitle("Other app...", for: .normal)
-            self.mainButton.changeColorOn(background: Colors.textWhite, text: Colors.mainBlue)
-            self.mainButton.setImage(UIImage(named: "share-blue"), for: .normal)
-//            self.mainButton.setTitleColor(Colors.mainBlue, for: .normal)
-//            self.mainButton.backgroundColor = .white
-            self.mainButton.layer.borderWidth = 1
-            
-            self.sendButton.isUserInteractionEnabled = true
-            self.sendButton.alpha = 1
-            self.sendButton.setTitle("Send", for: .normal)
-            self.sendButton.setImage(UIImage(named: "send-white"), for: .normal)
-            //            self.mainButton.setTitleColor(.white, for: .normal)
-            //            self.mainButton.backgroundColor = Colors.orange
-            self.sendButton.layer.borderWidth = 0
-            self.sendButton.changeColorOn(background: Colors.orange, text: Colors.textWhite)
-                
-            self.addressTextField.alpha = 1
-            self.addressTextField.isUserInteractionEnabled = true
-                
-            self.orEnterAddressLabel.alpha = 1
-                
-            self.searchStackView.frame.origin.y = self.searchStackOrigin
-            self.searchTextField.alpha = 1
-            self.searchTextField.isUserInteractionEnabled = true
-            self.amountLabel.alpha = 1
-            self.contactStack.alpha = 0
-            self.contactStack.isUserInteractionEnabled = false
-            self.separatorView.alpha = 1
-            self.sendToContactLabel.alpha = 1
-            self.readyIcon.alpha = 0
+    func setTitle(text: String?, color: UIColor) {
+        self.titleLabel.text = text
+        self.titleLabel.textColor = color
+    }
+    
+    func setBottomLabel(text: String?, color: UIColor, hidden: Bool) {
+        self.shareLabel.text = text
+        self.shareLabel.textColor = color
+        self.shareLabel.alpha = hidden ? 0 : 1
+    }
+    
+    func setCollectionView(hidden: Bool) {
+        self.collectionView.alpha = hidden ? 0 : 1
+        self.collectionView.isUserInteractionEnabled = !hidden
+    }
+    
+    func setBottomButton(text: String?, imageName: String?, backgroundColor: UIColor, textColor: UIColor, hidden: Bool, borderNeeded: Bool) {
+        self.mainButton.setTitle(text, for: .normal)
+        self.mainButton.changeColorOn(background: backgroundColor, text: textColor)
+        self.mainButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
+        self.mainButton.layer.borderWidth = borderNeeded ? 1 : 0
+        self.mainButton.alpha = hidden ? 0 : 1
+        self.mainButton.isUserInteractionEnabled = !hidden
+    }
+    
+    func setTopButton(text: String?, imageName: String?, backgroundColor: UIColor, textColor: UIColor, hidden: Bool, borderNeeded: Bool) {
+        self.sendButton.setTitle(text, for: .normal)
+        self.sendButton.changeColorOn(background: backgroundColor, text: textColor)
+        self.sendButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
+        self.sendButton.layer.borderWidth = borderNeeded ? 1 : 0
+        self.sendButton.alpha = hidden ? 0 : 1
+        self.sendButton.isUserInteractionEnabled = !hidden
+    }
+    
+    func setTopStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, resetText: Bool = false, keyboardType: UIKeyboardType = .decimalPad) {
+        self.amountLabel.text = labelText
+        self.amountTextField.placeholder = placeholder
+        self.amountStackView.alpha = hidden ? 0 : 1
+        self.amountStackView.isUserInteractionEnabled = interactive
+        self.amountTextField.keyboardType = keyboardType
+        if resetText {
+            self.amountTextField.text = nil
         }
     }
     
-    @objc func showSearch(animated: Bool) {
-        self.screenStatus = .searching
-        self.chosenContact = nil
-        UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
-            self.titleLabel.text = "Send money"
-            self.sendingGif.alpha = 0
-            self.shareLabel.alpha = 0
-            self.collectionView.alpha = 1
-            self.collectionView.isUserInteractionEnabled = true
-            self.collectionView.isHidden = false
-            self.mainButton.setTitle("Back", for: .normal)
-            self.mainButton.changeColorOn(background: Colors.textWhite, text: Colors.mainBlue)
-            self.mainButton.setImage(UIImage(named: "left-blue"), for: .normal)
-//            self.mainButton.setTitleColor(Colors.mainBlue, for: .normal)
-//            self.mainButton.backgroundColor = .white
-            self.mainButton.layer.borderWidth = 1
-            
-            self.sendButton.isUserInteractionEnabled = false
-            self.sendButton.alpha = 0
-            self.addressTextField.alpha = 0
-            self.addressTextField.isUserInteractionEnabled = false
-            
-            self.orEnterAddressLabel.alpha = 0
-            
-            self.searchTextField.alpha = 1
-            self.searchTextField.isUserInteractionEnabled = true
-            self.contactStack.alpha = 0
-            self.contactStack.isUserInteractionEnabled = false
-            self.separatorView.alpha = 0
-            self.sendToContactLabel.alpha = 1
-        }
-        UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
-            self.searchStackView.frame.origin.y = self.amountStackView.frame.origin.y
-        }
+    func setMiddleStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, position: CGFloat) {
+        self.sendToLabel.text = labelText
+        self.searchTextField.placeholder = placeholder
+        self.searchStackView.alpha = hidden ? 0 : 1
+        self.searchStackView.isUserInteractionEnabled = interactive
+        self.searchStackView.frame.origin.y = position
     }
     
-    func showConfirmScreen(animated: Bool, for contact: Contact) {
-        self.screenStatus = .confirm
+    func setBottomStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?) {
+        self.orEnterAddressLabel.text = labelText
+        self.addressTextField.placeholder = placeholder
+        self.addressStackView.alpha = hidden ? 0 : 1
+        self.addressStackView.isUserInteractionEnabled = interactive
+    }
+    
+    func setContactStack(hidden: Bool, interactive: Bool, contact: Contact?, labelText: String?) {
+        self.sendToContactLabel.text = labelText
         self.chosenContact = contact
-        
-        let blockies = Blockies(seed: contact.address,
+        self.contactStack.alpha = hidden ? 0 : 1
+        self.contactStack.isUserInteractionEnabled = interactive
+        let blockies = Blockies(seed: contact?.address,
                                 size: 5,
                                 scale: 4,
                                 color: Colors.mainGreen,
@@ -241,39 +251,80 @@ class SendMoneyController: BasicViewController {
         self.contactImage.image = img
         self.contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius
         self.contactImage.clipsToBounds = true
-        self.contactName.text = contact.name
-        self.contactAddress.text = contact.address
+        guard let contactAddress = contact?.address else {
+            return
+        }
+        self.contactAddress.text = contactAddress
+        guard let contactName = contact?.name else {
+            return
+        }
+        self.contactName.text = contactName
+    }
+    
+    func setSeparator(hidden: Bool) {
+        self.separatorView.alpha = hidden ? 0 : 1
+    }
+    
+    func setReadyIcon(hidden: Bool) {
+        self.readyIcon.alpha = hidden ? 0 : 1
+        self.readyIcon.transform = hidden ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: 2, y: 2)
+    }
+    
+    func showGif(_ show: Bool) {
+        self.sendingGif.alpha = show ? 1 : 0
+    }
+    
+    func showStart(animated: Bool) {
+        self.screenStatus = .start
+        UIView.animate(withDuration: animated ?
+            Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.setTitle(text: "Send money", color: Colors.mainBlue)
+            self.showGif(false)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: false)
+            self.setCollectionView(hidden: true)
+            self.setBottomButton(text: "Other app...", imageName: "share-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
+            self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
+            self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to contact:")
+            self.setReadyIcon(hidden: true)
+        }
+    }
+    
+    @objc func showSearch(animated: Bool) {
+        self.screenStatus = .searching
+        UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
+            self.setTitle(text: "Send money", color: Colors.mainBlue)
+            self.showGif(false)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
+            self.setCollectionView(hidden: false)
+            self.setBottomButton(text: "Back", imageName: "left-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
+            self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
+            self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to contact:")
+            self.setReadyIcon(hidden: true)
+        }
+    }
+    
+    func showConfirmScreen(animated: Bool, for contact: Contact) {
+        self.screenStatus = .confirm
         
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
-            self.titleLabel.text = "Send money"
-            self.sendingGif.alpha = 0
-            self.shareLabel.alpha = 0
-            self.collectionView.alpha = 0
-            self.collectionView.isUserInteractionEnabled = false
-            self.collectionView.isHidden = true
-            
-            self.mainButton.setTitle("Send to \(contact.name)", for: .normal)
-            self.mainButton.setImage(UIImage(named: "send-white"), for: .normal)
-//            self.mainButton.setTitleColor(.white, for: .normal)
-//            self.mainButton.backgroundColor = Colors.orange
-            self.mainButton.layer.borderWidth = 0
-            self.mainButton.changeColorOn(background: Colors.orange, text: Colors.textWhite)
-                
-            self.sendButton.isUserInteractionEnabled = false
-            self.sendButton.alpha = 0
-            self.addressTextField.alpha = 0
-            self.addressTextField.isUserInteractionEnabled = false
-                
-            self.orEnterAddressLabel.alpha = 0
-            
-            self.searchStackView.frame.origin.y = self.searchStackOrigin
-            self.searchTextField.alpha = 0
-            self.searchTextField.isUserInteractionEnabled = false
-            self.contactStack.alpha = 1
-            self.contactStack.isUserInteractionEnabled = true
-            self.separatorView.alpha = 0
-            self.sendToContactLabel.alpha = 0
+            self.setTitle(text: "Send money", color: Colors.mainBlue)
+            self.showGif(false)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
+            self.setCollectionView(hidden: true)
+            self.setBottomButton(text: "Send to \(contact.name)", imageName: "ssend-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
+            self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "Send to contact:")
+            self.setReadyIcon(hidden: true)
         }
     }
     
@@ -281,21 +332,17 @@ class SendMoneyController: BasicViewController {
         self.screenStatus = .sending
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
-            self.titleLabel.text = "Sending..."
-            self.sendingGif.alpha = 1
-            self.sendToContactLabel.alpha = 0
-            self.searchTextField.alpha = 0
-            self.mainButton.alpha = 0
-            self.sendButton.isUserInteractionEnabled = false
-            self.sendButton.alpha = 0
-            self.addressTextField.alpha = 0
-            self.orEnterAddressLabel.alpha = 0
-            self.shareLabel.alpha = 0
-            self.addressTextField.isUserInteractionEnabled = false
-            self.searchTextField.isUserInteractionEnabled = false
-            self.amountTextField.isUserInteractionEnabled = false
-            self.addressTextField.isUserInteractionEnabled = false
-            self.contactStack.isUserInteractionEnabled = false
+            self.setTitle(text: "Sending...", color: Colors.mainBlue)
+            self.showGif(true)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
+            self.setCollectionView(hidden: true)
+            self.setBottomButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
+            self.setTopButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "Send to contact:")
+            self.setReadyIcon(hidden: true)
         }) { [unowned self] (completed) in
             if completed {
                 self.sending()
@@ -314,25 +361,41 @@ class SendMoneyController: BasicViewController {
     
     @objc func showReady(animated: Bool) {
         self.screenStatus = .ready
+        guard let contact = self.chosenContact else {return}
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
-            self.readyIcon.alpha = 1
-            self.readyIcon.transform = CGAffineTransform(scaleX: 3, y: 3)
+            self.setReadyIcon(hidden: false)
         }
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
-            self.titleLabel.text = "Sent!"
-            self.titleLabel.textColor = Colors.mainGreen
-            self.sendingGif.alpha = 0
-            self.mainButton.alpha = 1
-            self.sendButton.alpha = 0
-            self.orEnterAddressLabel.alpha = 0
-            self.shareLabel.alpha = 0
-            self.mainButton.setTitle("Close", for: .normal)
-            self.mainButton.setImage(nil, for: .normal)
-            //            self.mainButton.backgroundColor = Colors.mainBlue
-            
-            self.mainButton.changeColorOn(background: Colors.mainBlue, text: Colors.textWhite)
+            self.setTitle(text: "Sent!", color: Colors.mainGreen)
+            self.showGif(false)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
+            self.setCollectionView(hidden: true)
+            self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: true)
+            self.setTopButton(text: "Save contact", imageName: "add-contacts", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: contact.name == "" ? false : true, borderNeeded: true)
+            self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "Send to contact:")
+        }
+    }
+    
+    @objc func showSaving(animated: Bool) {
+        self.screenStatus = .saving
+        UIView.animate(withDuration: animated ?
+            Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.setTitle(text: "Add contact", color: Colors.mainBlue)
+            self.showGif(false)
+            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
+            self.setCollectionView(hidden: true)
+            self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
+            self.setTopButton(text: "Save", imageName: "button-save", backgroundColor: Colors.mainGreen, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Enter name", labelText: "Contact name:", resetText: true, keyboardType: .default)
+            self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "Send to contact:")
+            self.setReadyIcon(hidden: true)
         }
     }
     
@@ -395,6 +458,8 @@ class SendMoneyController: BasicViewController {
             self.dismissView()
         case .sending:
             self.dismissView()
+        case .saving:
+            self.dismissView()
         }
     }
     
@@ -426,9 +491,26 @@ class SendMoneyController: BasicViewController {
 //                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
 //                return
 //            }
+            let contact = Contact(address: address, name: "")
+            self.chosenContact = contact
             showSending(animated: true)
+        case .ready:
+            showSaving(animated: true)
+        case .saving:
+            guard let text = self.amountTextField.text else {
+                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+            let contact = Contact(address: (self.chosenContact?.address)!, name: text)
+            do {
+                try contact.saveContact()
+                self.dismissView()
+            } catch {
+                self.dismissView()
+            }
         default:
-            break
+            self.dismissView()
         }
     }
     
