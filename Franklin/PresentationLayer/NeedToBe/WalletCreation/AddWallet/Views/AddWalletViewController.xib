@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddWalletViewController" customModule="MatterWallet_dev" customModuleProvider="target">
+            <connections>
+                <outlet property="background" destination="iEO-iG-X63" id="AQ3-Xe-R80"/>
+                <outlet property="createButton" destination="3xO-5S-uBI" id="joI-HV-WXN"/>
+                <outlet property="importButton" destination="qFq-jZ-J7Z" id="Jlx-K1-M5S"/>
+                <outlet property="matterWallet" destination="wTj-yS-aSH" id="ptm-pS-elt"/>
+                <outlet property="subtitle" destination="3fC-wv-nXt" id="ewP-JF-igq"/>
+                <outlet property="view" destination="iEO-iG-X63" id="mTC-1c-OxH"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="iEO-iG-X63">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hef-J9-OQI">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="291"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding1" translatesAutoresizingMaskIntoConstraints="NO" id="76K-wD-r5P">
+                            <rect key="frame" x="56.5" y="69.5" width="262.5" height="221.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="76K-wD-r5P" secondAttribute="height" multiplier="262:221" id="bGp-3Q-Inf"/>
+                            </constraints>
+                        </imageView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="76K-wD-r5P" firstAttribute="width" secondItem="hef-J9-OQI" secondAttribute="width" multiplier="0.7" id="AzN-7K-1H0"/>
+                        <constraint firstAttribute="bottom" secondItem="76K-wD-r5P" secondAttribute="bottom" id="Q3e-Bo-VGc"/>
+                        <constraint firstItem="76K-wD-r5P" firstAttribute="centerX" secondItem="hef-J9-OQI" secondAttribute="centerX" id="XbK-kj-XZH"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lka-km-YhV">
+                    <rect key="frame" x="0.0" y="291" width="375" height="376"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="GnM-dK-GCy">
+                            <rect key="frame" x="0.0" y="41" width="375" height="285"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Matter Wallet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTj-yS-aSH">
+                                    <rect key="frame" x="19" y="0.0" width="337.5" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="35" id="4hN-KP-RNl"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="30"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The First Ethereum Wallet with Plasma onboard" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3fC-wv-nXt">
+                                    <rect key="frame" x="19" y="65" width="337.5" height="60"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="60" id="nUA-TY-pjy"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="Helvetica-Bold" family="Helvetica" pointSize="17"/>
+                                    <color key="textColor" red="0.51076144366197185" green="0.894153893951947" blue="0.93921083177989506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="bVN-Yh-V2J">
+                                    <rect key="frame" x="19" y="155" width="337.5" height="130"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3xO-5S-uBI" customClass="BasicGreenButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="337.5" height="50"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="Fxz-sh-7eJ"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Create wallet">
+                                                <color key="titleColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="createWallet:" destination="-1" eventType="touchUpInside" id="wge-Tk-qXE"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qFq-jZ-J7Z" customClass="BasicBlueButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="80" width="337.5" height="50"/>
+                                            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="Import wallet">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="importWallet:" destination="-1" eventType="touchUpInside" id="xvv-PH-S5D"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="130" id="3O7-Nq-ADE"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="wTj-yS-aSH" firstAttribute="width" secondItem="GnM-dK-GCy" secondAttribute="width" multiplier="0.9" id="HQq-fr-dBv"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="GnM-dK-GCy" secondAttribute="bottom" constant="50" id="Qjf-F0-kyR"/>
+                        <constraint firstItem="GnM-dK-GCy" firstAttribute="centerX" secondItem="Lka-km-YhV" secondAttribute="centerX" id="as6-Lg-gYS"/>
+                        <constraint firstItem="GnM-dK-GCy" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Lka-km-YhV" secondAttribute="top" id="eVW-A0-an6"/>
+                        <constraint firstAttribute="bottom" secondItem="bVN-Yh-V2J" secondAttribute="bottom" constant="50" id="omQ-oI-VAf"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="hef-J9-OQI" firstAttribute="trailing" secondItem="mOM-MJ-t3B" secondAttribute="trailing" id="73d-vd-KUr"/>
+                <constraint firstItem="Lka-km-YhV" firstAttribute="leading" secondItem="mOM-MJ-t3B" secondAttribute="leading" id="7ek-Qz-pFE"/>
+                <constraint firstItem="Lka-km-YhV" firstAttribute="trailing" secondItem="mOM-MJ-t3B" secondAttribute="trailing" id="Knb-Fi-Jw9"/>
+                <constraint firstItem="GnM-dK-GCy" firstAttribute="width" secondItem="mOM-MJ-t3B" secondAttribute="width" id="RyL-Gh-sRO"/>
+                <constraint firstItem="hef-J9-OQI" firstAttribute="leading" secondItem="mOM-MJ-t3B" secondAttribute="leading" id="T8m-Dt-PCj"/>
+                <constraint firstItem="hef-J9-OQI" firstAttribute="top" secondItem="iEO-iG-X63" secondAttribute="top" id="UiU-Ky-GC6"/>
+                <constraint firstItem="3fC-wv-nXt" firstAttribute="width" secondItem="mOM-MJ-t3B" secondAttribute="width" multiplier="0.9" id="iqc-sT-p5R"/>
+                <constraint firstItem="Lka-km-YhV" firstAttribute="top" secondItem="hef-J9-OQI" secondAttribute="bottom" id="nEI-S1-9Oz"/>
+                <constraint firstItem="bVN-Yh-V2J" firstAttribute="width" secondItem="mOM-MJ-t3B" secondAttribute="width" multiplier="0.9" id="oVI-dT-pmn"/>
+                <constraint firstItem="Lka-km-YhV" firstAttribute="bottom" secondItem="mOM-MJ-t3B" secondAttribute="bottom" id="tgI-w8-Z5Y"/>
+                <constraint firstItem="hef-J9-OQI" firstAttribute="height" secondItem="mOM-MJ-t3B" secondAttribute="height" multiplier="0.45" id="xUi-ym-OX9"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="mOM-MJ-t3B"/>
+            <point key="canvasLocation" x="32.799999999999997" y="52.623688155922046"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="onboarding1" width="277" height="221"/>
+    </resources>
+</document>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletCreationViewController" customModule="MatterWallet_dev" customModuleProvider="target">
+            <connections>
+                <outlet property="attention" destination="tWC-hP-xMC" id="wr4-OG-0Ac"/>
+                <outlet property="bottomView" destination="55n-mB-Oed" id="mHG-Uo-Ail"/>
+                <outlet property="copyButton" destination="UCa-GS-gxg" id="qeG-EH-fiQ"/>
+                <outlet property="info" destination="9I1-2D-cmS" id="8Tg-Iv-RyZ"/>
+                <outlet property="mnemonic" destination="Xay-yf-8rk" id="mMC-XZ-KSV"/>
+                <outlet property="nextButton" destination="sDr-fR-xEJ" id="jwi-Fr-GXR"/>
+                <outlet property="topView" destination="x53-h0-UIA" id="Kdl-2h-y8h"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x53-h0-UIA">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="291"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ATTENTION!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tWC-hP-xMC">
+                            <rect key="frame" x="69.5" y="107" width="236.5" height="48"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="40"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please, write down your passphrase and save it in the safe place. It is the only way to restore your wallet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9I1-2D-cmS">
+                            <rect key="frame" x="0.0" y="237.5" width="375" height="33.5"/>
+                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="1" green="0.50196078431372548" blue="0.15294117647058825" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="9I1-2D-cmS" secondAttribute="bottom" constant="20" id="1ry-aQ-gHH"/>
+                        <constraint firstItem="tWC-hP-xMC" firstAttribute="centerY" secondItem="x53-h0-UIA" secondAttribute="centerY" multiplier="0.9" id="GiN-cx-xaG"/>
+                        <constraint firstItem="tWC-hP-xMC" firstAttribute="centerX" secondItem="x53-h0-UIA" secondAttribute="centerX" id="aYm-Nf-L19"/>
+                        <constraint firstAttribute="trailing" secondItem="9I1-2D-cmS" secondAttribute="trailing" id="njQ-C0-cnp"/>
+                        <constraint firstItem="9I1-2D-cmS" firstAttribute="leading" secondItem="x53-h0-UIA" secondAttribute="leading" id="vPm-gB-dbH"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="55n-mB-Oed">
+                    <rect key="frame" x="0.0" y="291" width="375" height="376"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="55" translatesAutoresizingMaskIntoConstraints="NO" id="Ugf-GT-Gpg">
+                            <rect key="frame" x="19" y="50" width="337.5" height="276"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="---" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xay-yf-8rk">
+                                    <rect key="frame" x="0.0" y="0.0" width="337.5" height="91"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="npd-W9-e8k">
+                                    <rect key="frame" x="0.0" y="146" width="337.5" height="130"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCa-GS-gxg" customClass="BasicBlueButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="337.5" height="50"/>
+                                            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="COPY">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="copyButtonTapped:" destination="-1" eventType="touchUpInside" id="vIp-td-Av6"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sDr-fR-xEJ" customClass="BasicGreenButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="80" width="337.5" height="50"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="50" id="tv6-s5-tDF"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <state key="normal" title="NEXT">
+                                                <color key="titleColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="createWalletButtonTapped:" destination="-1" eventType="touchUpInside" id="E8y-oZ-lOT"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="130" id="bKF-gg-s06"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="tintColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstItem="Ugf-GT-Gpg" firstAttribute="width" secondItem="55n-mB-Oed" secondAttribute="width" multiplier="0.9" id="0RM-Lv-YUK"/>
+                        <constraint firstItem="Ugf-GT-Gpg" firstAttribute="centerY" secondItem="55n-mB-Oed" secondAttribute="centerY" id="Ey8-oe-RLA"/>
+                        <constraint firstItem="Ugf-GT-Gpg" firstAttribute="centerX" secondItem="55n-mB-Oed" secondAttribute="centerX" id="PVZ-Yf-7gc"/>
+                        <constraint firstAttribute="bottom" secondItem="Ugf-GT-Gpg" secondAttribute="bottom" constant="50" id="xt0-Lp-FBl"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="x53-h0-UIA" firstAttribute="height" secondItem="fnl-2z-Ty3" secondAttribute="height" multiplier="0.45" id="11q-PW-WCC"/>
+                <constraint firstItem="x53-h0-UIA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="472-mG-cp2"/>
+                <constraint firstItem="55n-mB-Oed" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="AMj-Yx-MlG"/>
+                <constraint firstItem="55n-mB-Oed" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="AtN-ND-Ac3"/>
+                <constraint firstItem="55n-mB-Oed" firstAttribute="top" secondItem="x53-h0-UIA" secondAttribute="bottom" id="GLA-V7-pbB"/>
+                <constraint firstItem="55n-mB-Oed" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Olb-5P-8R0"/>
+                <constraint firstItem="x53-h0-UIA" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="RPN-OC-3pB"/>
+                <constraint firstItem="x53-h0-UIA" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="xGY-tn-wtv"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="157.59999999999999" y="158.77061469265368"/>
+        </view>
+    </objects>
+</document>

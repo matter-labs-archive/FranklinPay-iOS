@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletImportingViewController" customModule="MatterWallet_dev" customModuleProvider="target">
+            <connections>
+                <outlet property="contentHeight" destination="f8h-hW-6OK" id="DKC-9p-BLP"/>
+                <outlet property="contentView" destination="m9d-Wu-6bv" id="UU0-NS-Lw6"/>
+                <outlet property="importButton" destination="9yD-XD-0yU" id="NZF-kZ-cCZ"/>
+                <outlet property="importTypeControl" destination="XXZ-xt-1Nj" id="kSl-MJ-qhl"/>
+                <outlet property="inputType" destination="BFc-4s-hzz" id="beq-19-o05"/>
+                <outlet property="qr" destination="SzC-Sy-YUO" id="oWp-tK-JZg"/>
+                <outlet property="scrollView" destination="DD8-0r-OwE" id="6rk-DZ-0BV"/>
+                <outlet property="tapToQR" destination="wN5-jl-UJa" id="GQd-qO-SC1"/>
+                <outlet property="textView" destination="QtX-yh-Su4" id="yl6-qE-qka"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XXZ-xt-1Nj" customClass="SegmentedControl" customModule="MatterWallet_dev" customModuleProvider="target">
+                    <rect key="frame" x="19" y="30" width="337.5" height="29"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <segments>
+                        <segment title="MNEMONIC"/>
+                        <segment title="PRIVATE KEY"/>
+                    </segments>
+                    <color key="tintColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="changeImportType:" destination="-1" eventType="valueChanged" id="R8a-qG-dsp"/>
+                    </connections>
+                </segmentedControl>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-0r-OwE">
+                    <rect key="frame" x="0.0" y="68" width="375" height="489"/>
+                    <subviews>
+                        <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-Wu-6bv" userLabel="Content View">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="489"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INPUT TYPE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFc-4s-hzz">
+                                    <rect key="frame" x="140" y="10" width="95" height="20"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QtX-yh-Su4" customClass="BasicTextView" customModule="MatterWallet_dev" customModuleProvider="target">
+                                    <rect key="frame" x="19" y="40" width="337.5" height="90"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="90" id="JfS-U5-cO7"/>
+                                    </constraints>
+                                    <color key="textColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                </textView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzC-Sy-YUO">
+                                    <rect key="frame" x="322.5" y="140" width="34" height="34"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="SzC-Sy-YUO" secondAttribute="height" multiplier="1:1" id="KKo-4X-kK6"/>
+                                        <constraint firstAttribute="width" constant="34" id="M79-yb-0Cg"/>
+                                    </constraints>
+                                    <state key="normal" image="qr"/>
+                                    <connections>
+                                        <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="xOa-qw-xnb"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to scan qr-code" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wN5-jl-UJa">
+                                    <rect key="frame" x="236" y="140" width="76.5" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="118" id="jpc-I7-jyc"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
+                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="SzC-Sy-YUO" firstAttribute="leading" secondItem="wN5-jl-UJa" secondAttribute="trailing" constant="10" id="4AL-jz-UVn"/>
+                                <constraint firstItem="SzC-Sy-YUO" firstAttribute="trailing" secondItem="QtX-yh-Su4" secondAttribute="trailing" id="6V5-Jd-Edn"/>
+                                <constraint firstItem="wN5-jl-UJa" firstAttribute="centerY" secondItem="SzC-Sy-YUO" secondAttribute="centerY" id="H73-Yp-tv0"/>
+                                <constraint firstItem="QtX-yh-Su4" firstAttribute="width" secondItem="m9d-Wu-6bv" secondAttribute="width" multiplier="0.9" id="HrP-Li-goP"/>
+                                <constraint firstItem="BFc-4s-hzz" firstAttribute="top" secondItem="m9d-Wu-6bv" secondAttribute="top" constant="10" id="Mwp-U0-ol8"/>
+                                <constraint firstItem="wN5-jl-UJa" firstAttribute="height" secondItem="SzC-Sy-YUO" secondAttribute="height" id="Wdh-eJ-FJx"/>
+                                <constraint firstItem="BFc-4s-hzz" firstAttribute="centerX" secondItem="m9d-Wu-6bv" secondAttribute="centerX" id="WtZ-yO-k0i"/>
+                                <constraint firstItem="SzC-Sy-YUO" firstAttribute="top" secondItem="QtX-yh-Su4" secondAttribute="bottom" constant="10" id="bHn-4V-wRt"/>
+                                <constraint firstItem="QtX-yh-Su4" firstAttribute="top" secondItem="BFc-4s-hzz" secondAttribute="bottom" constant="10" id="cfd-Nq-Plk"/>
+                                <constraint firstItem="QtX-yh-Su4" firstAttribute="centerX" secondItem="m9d-Wu-6bv" secondAttribute="centerX" id="qFT-bq-KbQ"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="m9d-Wu-6bv" secondAttribute="bottom" id="0VC-dj-ChW"/>
+                        <constraint firstItem="m9d-Wu-6bv" firstAttribute="top" secondItem="DD8-0r-OwE" secondAttribute="top" id="cFF-Wp-Bgz"/>
+                        <constraint firstItem="m9d-Wu-6bv" firstAttribute="width" secondItem="DD8-0r-OwE" secondAttribute="width" id="cIw-DB-4sF"/>
+                        <constraint firstItem="m9d-Wu-6bv" firstAttribute="height" secondItem="DD8-0r-OwE" secondAttribute="height" id="f8h-hW-6OK"/>
+                        <constraint firstItem="m9d-Wu-6bv" firstAttribute="leading" secondItem="DD8-0r-OwE" secondAttribute="leading" id="hCJ-DJ-veP"/>
+                        <constraint firstAttribute="trailing" secondItem="m9d-Wu-6bv" secondAttribute="trailing" id="yYr-dV-ePa"/>
+                    </constraints>
+                </scrollView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9yD-XD-0yU" customClass="BasicGreenButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                    <rect key="frame" x="19" y="567" width="337.5" height="50"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="SJW-ZM-paH"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <state key="normal" title="ADDING TYPE">
+                        <color key="titleColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <connections>
+                        <action selector="importWallet:" destination="-1" eventType="touchUpInside" id="LFk-8Z-qYX"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="XXZ-xt-1Nj" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="2DL-am-rFc"/>
+                <constraint firstItem="XXZ-xt-1Nj" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="5lg-sf-sCy"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="9yD-XD-0yU" secondAttribute="bottom" constant="50" id="A6g-3e-YUb"/>
+                <constraint firstItem="9yD-XD-0yU" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="N5x-U6-SKm"/>
+                <constraint firstItem="9yD-XD-0yU" firstAttribute="top" secondItem="DD8-0r-OwE" secondAttribute="bottom" constant="10" id="Nv4-2w-LQC"/>
+                <constraint firstItem="DD8-0r-OwE" firstAttribute="top" secondItem="XXZ-xt-1Nj" secondAttribute="bottom" constant="10" id="TzI-s1-PMo"/>
+                <constraint firstItem="DD8-0r-OwE" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="e6s-28-o8i"/>
+                <constraint firstItem="XXZ-xt-1Nj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="p85-AP-XDs"/>
+                <constraint firstItem="DD8-0r-OwE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tdr-It-5A2"/>
+                <constraint firstItem="9yD-XD-0yU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="uhv-mg-Yeu"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="138.40000000000001" y="152.47376311844079"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="qr" width="34" height="34"/>
+    </resources>
+</document>

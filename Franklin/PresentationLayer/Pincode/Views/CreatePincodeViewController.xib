@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Bold.otf">
+            <string>SFProDisplay-Bold</string>
+        </array>
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CreatePincodeViewController" customModule="Franklin" customModuleProvider="target">
+            <connections>
+                <outlet property="biometricsButton" destination="KPq-UO-WCU" id="1Hw-uQ-yyo"/>
+                <outlet property="container" destination="LwT-lo-MSB" id="af9-Uw-Qt1"/>
+                <outlet property="deleteButton" destination="UcP-em-Yvu" id="Sj9-Ld-iNi"/>
+                <outlet property="firstNum" destination="Vgz-sb-bGT" id="k1w-Rm-dqS"/>
+                <outlet property="fourthNum" destination="uCD-t6-vrd" id="Yiv-LG-ByF"/>
+                <outlet property="messageLabel" destination="nu7-20-UMG" id="eBb-hB-1Md"/>
+                <outlet property="secondNum" destination="M8e-0V-Tni" id="983-rZ-JId"/>
+                <outlet property="thirdNum" destination="OXL-5f-MeJ" id="M0L-LJ-oHK"/>
+                <outlet property="view" destination="XBe-Bd-WsY" id="L5f-D5-LdE"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="XBe-Bd-WsY">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aep-zn-bX9">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufc-i8-gAC" userLabel="Content View">
+                    <rect key="frame" x="-1" y="45" width="377" height="622"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-lo-MSB">
+                            <rect key="frame" x="19" y="12.5" width="339" height="584.5"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZF-Ns-Jmf">
+                                    <rect key="frame" x="0.0" y="0.0" width="339" height="165.5"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </view>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNB-yG-xhX">
+                                    <rect key="frame" x="304" y="0.0" width="35" height="35"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="aNB-yG-xhX" secondAttribute="height" multiplier="1:1" id="524-1b-Q4s"/>
+                                    </constraints>
+                                    <state key="normal" image="close_blue"/>
+                                    <connections>
+                                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="nnK-ni-gmG"/>
+                                    </connections>
+                                </button>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nu7-20-UMG">
+                                    <rect key="frame" x="0.0" y="53" width="339" height="26.5"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="22"/>
+                                    <color key="textColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="5cO-bY-ikN">
+                                    <rect key="frame" x="72" y="101.5" width="195" height="29"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-sb-bGT">
+                                            <rect key="frame" x="0.0" y="0.0" width="29.5" height="29"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="Vgz-sb-bGT" secondAttribute="height" multiplier="1:1" id="xy2-AO-APg"/>
+                                            </constraints>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="M8e-0V-Tni">
+                                            <rect key="frame" x="55.5" y="0.0" width="29" height="29"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="OXL-5f-MeJ">
+                                            <rect key="frame" x="110.5" y="0.0" width="29" height="29"/>
+                                        </imageView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="uCD-t6-vrd">
+                                            <rect key="frame" x="165.5" y="0.0" width="29.5" height="29"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="OXL-5f-MeJ" firstAttribute="width" secondItem="M8e-0V-Tni" secondAttribute="width" id="JFI-Dw-RQE"/>
+                                        <constraint firstItem="OXL-5f-MeJ" firstAttribute="height" secondItem="M8e-0V-Tni" secondAttribute="height" id="KeU-gV-O7g"/>
+                                        <constraint firstItem="uCD-t6-vrd" firstAttribute="width" secondItem="OXL-5f-MeJ" secondAttribute="width" id="XNy-85-sIV"/>
+                                        <constraint firstItem="M8e-0V-Tni" firstAttribute="height" secondItem="Vgz-sb-bGT" secondAttribute="height" id="bAA-tD-ozY"/>
+                                        <constraint firstItem="uCD-t6-vrd" firstAttribute="height" secondItem="OXL-5f-MeJ" secondAttribute="height" id="diJ-yD-bKf"/>
+                                        <constraint firstItem="M8e-0V-Tni" firstAttribute="width" secondItem="Vgz-sb-bGT" secondAttribute="width" id="ml8-oL-DQk"/>
+                                    </constraints>
+                                </stackView>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQx-Vi-9J1">
+                                    <rect key="frame" x="34" y="165.5" width="271" height="370.5"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="vPf-tp-DGq">
+                                            <rect key="frame" x="0.0" y="0.0" width="271" height="370.5"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="4NB-NQ-ndl">
+                                                    <rect key="frame" x="0.0" y="0.0" width="271" height="74"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Rz-1C-HlV" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" secondItem="4Rz-1C-HlV" secondAttribute="height" multiplier="1:1" id="XK7-xl-ukA"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="1">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="point" keyPath="shadowOffset">
+                                                                    <point key="value" x="0.0" y="0.0"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="rJy-8d-3Mt"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20F-hv-B11" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="2">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="7hG-Hc-bci"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAS-Hz-BZt" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="3">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="gni-2W-yO9"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="hme-4D-bPq">
+                                                    <rect key="frame" x="0.0" y="99" width="271" height="73.5"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqm-jd-4l7" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="73.5"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="4">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="IXO-4N-gNi"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1P3-WG-ap8" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="73.5"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="5">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="5Al-M1-gHI"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRz-ux-Q57" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="73.5"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="6">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="yZ8-kr-JRl"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ZbT-fo-OAa">
+                                                    <rect key="frame" x="0.0" y="197.5" width="271" height="74"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8a-Nf-p6p" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="7">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="odm-zY-bRp"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-dD-wgt" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="8">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="APr-lT-yCn"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eE-ba-hmN" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="9">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="cJ3-2R-DT3"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="oEt-jZ-OoF">
+                                                    <rect key="frame" x="0.0" y="296.5" width="271" height="74"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPq-UO-WCU" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" image="touch_id">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="biometricsPressed:" destination="-1" eventType="touchUpInside" id="PGY-oP-PB5"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-Zg-9Po" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" title="0">
+                                                                <color key="titleColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="3uS-Xg-Vzm"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcP-em-Yvu" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <state key="normal" image="delete">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="deletePressed:" destination="-1" eventType="touchUpInside" id="CyQ-cz-b57"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="vPf-tp-DGq" secondAttribute="bottom" id="U0l-0C-REW"/>
+                                        <constraint firstItem="vPf-tp-DGq" firstAttribute="top" secondItem="GQx-Vi-9J1" secondAttribute="top" id="VPU-U6-1ZG"/>
+                                        <constraint firstAttribute="trailing" secondItem="vPf-tp-DGq" secondAttribute="trailing" id="cyK-Vo-zhe"/>
+                                        <constraint firstItem="vPf-tp-DGq" firstAttribute="leading" secondItem="GQx-Vi-9J1" secondAttribute="leading" id="gJr-zA-3ao"/>
+                                    </constraints>
+                                </view>
+                            </subviews>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <constraints>
+                                <constraint firstItem="aNB-yG-xhX" firstAttribute="height" secondItem="LwT-lo-MSB" secondAttribute="height" multiplier="0.06" id="7tO-8M-lzV"/>
+                                <constraint firstItem="GQx-Vi-9J1" firstAttribute="width" secondItem="LwT-lo-MSB" secondAttribute="width" multiplier="0.8" id="BZs-Mt-eFO"/>
+                                <constraint firstItem="5cO-bY-ikN" firstAttribute="height" secondItem="LwT-lo-MSB" secondAttribute="height" multiplier="0.05" id="Czj-3K-CLh"/>
+                                <constraint firstItem="GQx-Vi-9J1" firstAttribute="centerY" secondItem="LwT-lo-MSB" secondAttribute="centerY" multiplier="1.2" id="KHf-DR-0AS"/>
+                                <constraint firstAttribute="trailing" secondItem="LZF-Ns-Jmf" secondAttribute="trailing" id="PEl-5S-YdF"/>
+                                <constraint firstItem="5cO-bY-ikN" firstAttribute="centerY" secondItem="LZF-Ns-Jmf" secondAttribute="centerY" multiplier="1.4" id="QHv-9a-Kbw"/>
+                                <constraint firstItem="nu7-20-UMG" firstAttribute="centerX" secondItem="LZF-Ns-Jmf" secondAttribute="centerX" id="QMx-Nw-vTH"/>
+                                <constraint firstItem="LZF-Ns-Jmf" firstAttribute="top" secondItem="LwT-lo-MSB" secondAttribute="top" id="QP3-t1-Oud"/>
+                                <constraint firstItem="GQx-Vi-9J1" firstAttribute="top" secondItem="LZF-Ns-Jmf" secondAttribute="bottom" id="SUn-Ba-gmZ"/>
+                                <constraint firstItem="GQx-Vi-9J1" firstAttribute="centerX" secondItem="LwT-lo-MSB" secondAttribute="centerXWithinMargins" id="aih-SV-EHe"/>
+                                <constraint firstItem="LZF-Ns-Jmf" firstAttribute="leading" secondItem="LwT-lo-MSB" secondAttribute="leading" id="kbd-sO-5V5"/>
+                                <constraint firstItem="nu7-20-UMG" firstAttribute="width" secondItem="LwT-lo-MSB" secondAttribute="width" id="qNx-KK-shh"/>
+                                <constraint firstItem="nu7-20-UMG" firstAttribute="centerY" secondItem="LZF-Ns-Jmf" secondAttribute="centerY" multiplier="0.8" id="qb4-nK-B4f"/>
+                                <constraint firstAttribute="trailing" secondItem="aNB-yG-xhX" secondAttribute="trailing" constant="1.1368683772161603e-13" id="rDD-hg-1Qk"/>
+                                <constraint firstItem="aNB-yG-xhX" firstAttribute="top" secondItem="LwT-lo-MSB" secondAttribute="top" id="ry2-15-Fgb"/>
+                                <constraint firstItem="5cO-bY-ikN" firstAttribute="centerX" secondItem="LwT-lo-MSB" secondAttribute="centerX" id="wkG-yN-6Ox"/>
+                                <constraint firstItem="5cO-bY-ikN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LwT-lo-MSB" secondAttribute="leading" id="x9n-ke-ion"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="LwT-lo-MSB" firstAttribute="centerY" secondItem="ufc-i8-gAC" secondAttribute="centerY" multiplier="0.98" id="3sn-y4-R8G"/>
+                        <constraint firstItem="LwT-lo-MSB" firstAttribute="width" secondItem="ufc-i8-gAC" secondAttribute="width" multiplier="0.9" id="4Mn-el-1pY"/>
+                        <constraint firstItem="LwT-lo-MSB" firstAttribute="height" secondItem="ufc-i8-gAC" secondAttribute="height" multiplier="0.94" id="FNP-JY-btr"/>
+                        <constraint firstItem="LwT-lo-MSB" firstAttribute="centerX" secondItem="ufc-i8-gAC" secondAttribute="centerX" id="ZEC-u1-44G"/>
+                    </constraints>
+                </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lR3-Kw-deF">
+                    <rect key="frame" x="-1" y="637" width="377" height="100"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="QIJ-y1-pPQ"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="aep-zn-bX9" firstAttribute="trailing" secondItem="dkS-qC-AsM" secondAttribute="trailing" id="EAc-uP-Y4f"/>
+                <constraint firstItem="aep-zn-bX9" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="top" id="VhX-uN-LqN"/>
+                <constraint firstItem="lR3-Kw-deF" firstAttribute="leading" secondItem="XBe-Bd-WsY" secondAttribute="leading" constant="-1" id="W51-4p-B7A"/>
+                <constraint firstItem="dkS-qC-AsM" firstAttribute="bottom" secondItem="aep-zn-bX9" secondAttribute="bottom" id="a5L-12-SsX"/>
+                <constraint firstItem="dkS-qC-AsM" firstAttribute="bottom" secondItem="ufc-i8-gAC" secondAttribute="bottom" id="bmX-tb-Web"/>
+                <constraint firstItem="aep-zn-bX9" firstAttribute="leading" secondItem="dkS-qC-AsM" secondAttribute="leading" id="bwU-Yu-91Z"/>
+                <constraint firstItem="lR3-Kw-deF" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="bottom" constant="-30" id="h9O-Fl-Nmb"/>
+                <constraint firstItem="ufc-i8-gAC" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="top" constant="25" id="kzl-xj-A7y"/>
+                <constraint firstAttribute="trailing" secondItem="ufc-i8-gAC" secondAttribute="trailing" constant="-1" id="p0x-NQ-X1V"/>
+                <constraint firstItem="ufc-i8-gAC" firstAttribute="leading" secondItem="XBe-Bd-WsY" secondAttribute="leading" constant="-1" id="qMm-Nm-aSU"/>
+                <constraint firstAttribute="trailing" secondItem="lR3-Kw-deF" secondAttribute="trailing" constant="-1" id="xzK-XQ-jpG"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="dkS-qC-AsM"/>
+            <point key="canvasLocation" x="886.95652173913049" y="112.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_blue" width="115" height="111"/>
+        <image name="delete" width="48" height="48"/>
+        <image name="line" width="48" height="48"/>
+        <image name="touch_id" width="48" height="48"/>
+    </resources>
+</document>

@@ -1,7 +1,7 @@
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '11.0'
 
-target 'MatterWallet' do
+target 'Franklin' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   # Pods for DiveLane
@@ -13,6 +13,11 @@ target 'MatterWallet' do
   pod 'IHKeyboardAvoiding'
   pod 'StatusBarOverlay'
   pod 'Alamofire'
-  pod 'AZTabBar'
+  pod 'NVActivityIndicatorView'
+  pod 'TransitionableTab', '~> 0.2.0'
+  pod 'SwiftyGif'
+  pod 'SideMenu'
+  pod 'BlockiesSwift'
+  pod 'BadgeSwift', '~> 7.0'
 
 end

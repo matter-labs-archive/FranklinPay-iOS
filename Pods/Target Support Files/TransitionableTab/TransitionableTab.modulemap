@@ -1,0 +1,6 @@
+framework module TransitionableTab {
+  umbrella header "TransitionableTab-umbrella.h"
+
+  export *
+  module * { export * }
+}

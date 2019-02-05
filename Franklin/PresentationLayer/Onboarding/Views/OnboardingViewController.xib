@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="librefranklin-medium.ttf">
+            <string>LibreFranklin-Medium</string>
+        </array>
+        <array key="librefranklin-semibold.ttf">
+            <string>LibreFranklin-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="OnboardingViewController" customModule="Franklin" customModuleProvider="target">
+            <connections>
+                <outlet property="animationImageView" destination="T7T-dq-jmR" id="0nv-sr-V9Y"/>
+                <outlet property="bottomInfo" destination="a1r-5y-Fyt" id="Fee-jU-zAA"/>
+                <outlet property="continueButton" destination="KFu-TQ-CFK" id="9Ef-kr-Nje"/>
+                <outlet property="iv" destination="66Y-EM-95G" id="uEx-Zh-Xko"/>
+                <outlet property="link" destination="5jd-DQ-sd1" id="C4W-0U-wjL"/>
+                <outlet property="prodName" destination="hRf-R9-Slc" id="cbN-gB-O6f"/>
+                <outlet property="settingUp" destination="F6C-uN-FK3" id="18B-5g-6a6"/>
+                <outlet property="subtitle" destination="z8E-X5-bRF" id="VoK-JY-PSZ"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uva-wy-8uq">
+                    <rect key="frame" x="19" y="59.5" width="337.5" height="547"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T7T-dq-jmR">
+                            <rect key="frame" x="0.0" y="415" width="337.5" height="124"/>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="k9L-rX-Kju">
+                            <rect key="frame" x="50.5" y="0.0" width="236" height="415"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FRANKLIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="hRf-R9-Slc">
+                                    <rect key="frame" x="0.0" y="0.0" width="236" height="55.5"/>
+                                    <fontDescription key="fontDescription" name="LibreFranklin-SemiBold" family="Libre Franklin" pointSize="55"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE DOLLAR WALLET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="z8E-X5-bRF">
+                                    <rect key="frame" x="0.0" y="55.5" width="236" height="22.5"/>
+                                    <fontDescription key="fontDescription" name="LibreFranklin-Medium" family="Libre Franklin" pointSize="22"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="franklin" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66Y-EM-95G">
+                                    <rect key="frame" x="0.0" y="78" width="236" height="337"/>
+                                </imageView>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="xni-O0-GEr"/>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFu-TQ-CFK" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
+                            <rect key="frame" x="37.5" y="451.5" width="262.5" height="47"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By cliking 'Continue' you agree to the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a1r-5y-Fyt">
+                            <rect key="frame" x="37.5" y="503.5" width="262.5" height="22"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="16"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="terms and conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5jd-DQ-sd1">
+                            <rect key="frame" x="37.5" y="525.5" width="262.5" height="21.5"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="16"/>
+                            <color key="textColor" red="0.52156862749999999" green="0.73333333329999995" blue="0.39607843139999999" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="F6C-uN-FK3">
+                            <rect key="frame" x="0.0" y="515" width="337.5" height="24"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="24"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="k9L-rX-Kju" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" multiplier="0.7" id="0oi-Bg-Z6l"/>
+                        <constraint firstAttribute="bottom" secondItem="5jd-DQ-sd1" secondAttribute="bottom" id="2iM-Vk-qAI"/>
+                        <constraint firstItem="F6C-uN-FK3" firstAttribute="leading" secondItem="T7T-dq-jmR" secondAttribute="leading" id="8q5-8E-1bP"/>
+                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="AZW-Tf-sRj"/>
+                        <constraint firstItem="T7T-dq-jmR" firstAttribute="top" secondItem="66Y-EM-95G" secondAttribute="bottom" id="Dxs-2p-Z7h"/>
+                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="width" secondItem="KFu-TQ-CFK" secondAttribute="width" id="Ixm-gY-51s"/>
+                        <constraint firstItem="5jd-DQ-sd1" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerXWithinMargins" id="JB2-ze-QT5"/>
+                        <constraint firstAttribute="bottomMargin" secondItem="T7T-dq-jmR" secondAttribute="bottom" id="JPK-Gu-ntG"/>
+                        <constraint firstItem="KFu-TQ-CFK" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="KqJ-D7-21H"/>
+                        <constraint firstItem="k9L-rX-Kju" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="MQJ-AX-0hI"/>
+                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="height" secondItem="uva-wy-8uq" secondAttribute="height" multiplier="0.04" id="PFJ-rW-tfT"/>
+                        <constraint firstItem="5jd-DQ-sd1" firstAttribute="width" secondItem="a1r-5y-Fyt" secondAttribute="width" id="PSb-fd-pXU"/>
+                        <constraint firstItem="KFu-TQ-CFK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="66Y-EM-95G" secondAttribute="bottom" id="Rsd-c0-cQK"/>
+                        <constraint firstItem="k9L-rX-Kju" firstAttribute="top" secondItem="uva-wy-8uq" secondAttribute="top" id="U0C-DT-40M"/>
+                        <constraint firstItem="66Y-EM-95G" firstAttribute="centerY" secondItem="uva-wy-8uq" secondAttribute="centerY" multiplier="0.9" id="awS-YZ-rB0"/>
+                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="top" secondItem="KFu-TQ-CFK" secondAttribute="bottom" constant="5" id="bX9-dl-VxR"/>
+                        <constraint firstItem="T7T-dq-jmR" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="fkk-gN-wt4"/>
+                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="height" secondItem="5jd-DQ-sd1" secondAttribute="height" id="hiJ-mT-8NM"/>
+                        <constraint firstItem="5jd-DQ-sd1" firstAttribute="top" secondItem="a1r-5y-Fyt" secondAttribute="bottom" id="kEo-CC-j4G"/>
+                        <constraint firstItem="T7T-dq-jmR" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" id="kdg-IY-LIP"/>
+                        <constraint firstItem="T7T-dq-jmR" firstAttribute="bottom" secondItem="F6C-uN-FK3" secondAttribute="bottom" id="mzj-6G-b4s"/>
+                        <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.1" id="p8s-b4-PAS"/>
+                        <constraint firstItem="T7T-dq-jmR" firstAttribute="trailing" secondItem="F6C-uN-FK3" secondAttribute="trailing" id="qUz-Ds-r59"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="uva-wy-8uq" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="09O-z5-NbC"/>
+                <constraint firstItem="uva-wy-8uq" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.82" id="mbi-p8-TBh"/>
+                <constraint firstItem="uva-wy-8uq" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="mst-ra-8r1"/>
+                <constraint firstItem="KFu-TQ-CFK" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.7" id="nTG-4z-vPV"/>
+                <constraint firstItem="KFu-TQ-CFK" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="otx-Sw-2v7"/>
+                <constraint firstItem="uva-wy-8uq" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" multiplier="0.97" id="rbh-Yr-ACL"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="130.40000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="franklin" width="272" height="408"/>
+    </resources>
+</document>
