@@ -9,6 +9,7 @@
 import UIKit
 import BlockiesSwift
 import SwiftyGif
+import EthereumAddress
 
 protocol ModalViewDelegate : class {
     func modalViewBeenDismissed()
@@ -18,8 +19,9 @@ protocol ModalViewDelegate : class {
 class SendMoneyController: BasicViewController {
     
     enum TextFieldsTags: Int {
-        case amount = 1
-        case search = 2
+        case amount = 0
+        case search = 1
+        case address = 2
     }
     
     enum SendingScreenStatus {
@@ -49,6 +51,9 @@ class SendMoneyController: BasicViewController {
     @IBOutlet weak var sendingGif: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var readyIcon: UIImageView!
+    @IBOutlet weak var addressTextField: BasicTextField!
+    @IBOutlet weak var sendButton: BasicWhiteButton!
+    @IBOutlet weak var orEnterAddressLabel: UILabel!
     
     var searchStackOrigin: CGFloat = 0
     weak var delegate: ModalViewDelegate?
@@ -90,9 +95,11 @@ class SendMoneyController: BasicViewController {
     func setupTextFields() {
         searchTextField.delegate = self
         amountTextField.delegate = self
+        addressTextField.delegate = self
         
         amountTextField.tag = TextFieldsTags.amount.rawValue
         searchTextField.tag = TextFieldsTags.search.rawValue
+        addressTextField.tag = TextFieldsTags.address.rawValue
     }
     
     func getAllContacts() {
@@ -157,6 +164,21 @@ class SendMoneyController: BasicViewController {
 //            self.mainButton.setTitleColor(Colors.mainBlue, for: .normal)
 //            self.mainButton.backgroundColor = .white
             self.mainButton.layer.borderWidth = 1
+            
+            self.sendButton.isUserInteractionEnabled = true
+            self.sendButton.alpha = 1
+            self.sendButton.setTitle("Send", for: .normal)
+            self.sendButton.setImage(UIImage(named: "send-white"), for: .normal)
+            //            self.mainButton.setTitleColor(.white, for: .normal)
+            //            self.mainButton.backgroundColor = Colors.orange
+            self.sendButton.layer.borderWidth = 0
+            self.sendButton.changeColorOn(background: Colors.orange, text: Colors.textWhite)
+                
+            self.addressTextField.alpha = 1
+            self.addressTextField.isUserInteractionEnabled = true
+                
+            self.orEnterAddressLabel.alpha = 1
+                
             self.searchStackView.frame.origin.y = self.searchStackOrigin
             self.searchTextField.alpha = 1
             self.searchTextField.isUserInteractionEnabled = true
@@ -185,6 +207,14 @@ class SendMoneyController: BasicViewController {
 //            self.mainButton.setTitleColor(Colors.mainBlue, for: .normal)
 //            self.mainButton.backgroundColor = .white
             self.mainButton.layer.borderWidth = 1
+            
+            self.sendButton.isUserInteractionEnabled = false
+            self.sendButton.alpha = 0
+            self.addressTextField.alpha = 0
+            self.addressTextField.isUserInteractionEnabled = false
+            
+            self.orEnterAddressLabel.alpha = 0
+            
             self.searchTextField.alpha = 1
             self.searchTextField.isUserInteractionEnabled = true
             self.contactStack.alpha = 0
@@ -229,6 +259,13 @@ class SendMoneyController: BasicViewController {
 //            self.mainButton.backgroundColor = Colors.orange
             self.mainButton.layer.borderWidth = 0
             self.mainButton.changeColorOn(background: Colors.orange, text: Colors.textWhite)
+                
+            self.sendButton.isUserInteractionEnabled = false
+            self.sendButton.alpha = 0
+            self.addressTextField.alpha = 0
+            self.addressTextField.isUserInteractionEnabled = false
+                
+            self.orEnterAddressLabel.alpha = 0
             
             self.searchStackView.frame.origin.y = self.searchStackOrigin
             self.searchTextField.alpha = 0
@@ -249,8 +286,15 @@ class SendMoneyController: BasicViewController {
             self.sendToContactLabel.alpha = 0
             self.searchTextField.alpha = 0
             self.mainButton.alpha = 0
+            self.sendButton.isUserInteractionEnabled = false
+            self.sendButton.alpha = 0
+            self.addressTextField.alpha = 0
+            self.orEnterAddressLabel.alpha = 0
+            self.shareLabel.alpha = 0
+            self.addressTextField.isUserInteractionEnabled = false
             self.searchTextField.isUserInteractionEnabled = false
             self.amountTextField.isUserInteractionEnabled = false
+            self.addressTextField.isUserInteractionEnabled = false
             self.contactStack.isUserInteractionEnabled = false
         }) { [unowned self] (completed) in
             if completed {
@@ -281,6 +325,9 @@ class SendMoneyController: BasicViewController {
             self.titleLabel.textColor = Colors.mainGreen
             self.sendingGif.alpha = 0
             self.mainButton.alpha = 1
+            self.sendButton.alpha = 0
+            self.orEnterAddressLabel.alpha = 0
+            self.shareLabel.alpha = 0
             self.mainButton.setTitle("Close", for: .normal)
             self.mainButton.setImage(nil, for: .normal)
             //            self.mainButton.backgroundColor = Colors.mainBlue
@@ -348,6 +395,40 @@ class SendMoneyController: BasicViewController {
             self.dismissView()
         case .sending:
             self.dismissView()
+        }
+    }
+    
+    @IBAction func sendToAddress(_ sender: BasicWhiteButton) {
+        switch screenStatus {
+        case .start:
+            guard let text = self.amountTextField.text else {
+                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+            guard let amount = Float(text) else {
+                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+            guard amount > 0 else {
+                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
+                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+            guard let address = self.addressTextField.text, !address.isEmpty else {
+                self.addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
+                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+//            guard let address = EthereumAddress(addressText) else {
+//                self.addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter correct address",
+//                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+//                return
+//            }
+            showSending(animated: true)
+        default:
+            break
         }
     }
     
