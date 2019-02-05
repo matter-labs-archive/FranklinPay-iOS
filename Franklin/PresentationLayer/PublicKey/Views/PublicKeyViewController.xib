@@ -81,14 +81,11 @@
                             </constraints>
                         </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="7fp-Ke-mtx">
-                            <rect key="frame" x="41.666666666666657" y="713" width="332.66666666666674" height="50"/>
+                            <rect key="frame" x="41.666666666666657" y="700.33333333333337" width="332.66666666666674" height="62.666666666666629"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQk-R7-vhh" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="151.33333333333334" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="151.33333333333334" height="62.666666666666664"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="Pz1-Vl-uGu"/>
-                                    </constraints>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <state key="normal" title="Copy">
@@ -99,11 +96,8 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LkY-Rn-nIz" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="181.33333333333331" y="0.0" width="151.33333333333331" height="50"/>
+                                    <rect key="frame" x="181.33333333333331" y="0.0" width="151.33333333333331" height="62.666666666666664"/>
                                     <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="50" id="wWi-2U-SVY"/>
-                                    </constraints>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -117,7 +111,8 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="height" constant="50" id="iZk-oW-Goh"/>
+                                <constraint firstItem="LkY-Rn-nIz" firstAttribute="height" secondItem="7fp-Ke-mtx" secondAttribute="height" id="Hlv-GO-anF"/>
+                                <constraint firstItem="sQk-R7-vhh" firstAttribute="height" secondItem="7fp-Ke-mtx" secondAttribute="height" id="q2q-kn-jaG"/>
                             </constraints>
                         </stackView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="TgL-FS-Y6B">
@@ -159,6 +154,7 @@
                 <constraint firstAttribute="trailing" secondItem="dld-Ob-gjN" secondAttribute="trailing" constant="-1" id="9hW-Cn-ogD"/>
                 <constraint firstItem="dld-Ob-gjN" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-1" id="NbI-bZ-s2L"/>
                 <constraint firstItem="zGY-SN-Oku" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ViP-J4-d4q"/>
+                <constraint firstItem="7fp-Ke-mtx" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="c1r-Jj-Yu5"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="hzI-x3-zK3" secondAttribute="bottom" id="cM5-Oq-fKA"/>
                 <constraint firstItem="dld-Ob-gjN" firstAttribute="top" secondItem="7fp-Ke-mtx" secondAttribute="bottom" id="e1L-bJ-ijU"/>
                 <constraint firstItem="dld-Ob-gjN" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-30" id="gCA-c0-SKi"/>

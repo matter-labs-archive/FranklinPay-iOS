@@ -39,7 +39,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="gZc-jg-Soc">
-                    <rect key="frame" x="37.5" y="203" width="300" height="364"/>
+                    <rect key="frame" x="37.5" y="203" width="300" height="367.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3Qw-dE-OWW">
                         <size key="itemSize" width="50" height="50"/>
@@ -49,11 +49,8 @@
                     </collectionViewFlowLayout>
                 </collectionView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rZs-6I-w5i" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
-                    <rect key="frame" x="37.5" y="587" width="300" height="50"/>
+                    <rect key="frame" x="37.5" y="590.5" width="300" height="46.5"/>
                     <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="jrX-vp-DnZ"/>
-                    </constraints>
                     <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Add contact" image="add-contacts">
                         <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -93,6 +90,7 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="rZs-6I-w5i" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="1Ag-sm-ZjN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BBh-M9-TID" secondAttribute="trailing" constant="20" id="8vJ-aH-8Dp"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="8yr-nb-mOa"/>
                 <constraint firstItem="BBh-M9-TID" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="Fiv-Us-DmC"/>
@@ -117,7 +115,7 @@
         </view>
     </objects>
     <resources>
-        <image name="add-contacts" width="48" height="48"/>
+        <image name="add-contacts" width="24" height="24"/>
         <image name="menu" width="30" height="30"/>
     </resources>
 </document>
