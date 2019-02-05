@@ -69,7 +69,10 @@ extension MainSetting: Equatable {
 
 public class SettingInteractor {
     func getMainSettings() -> [MainSetting] {
-        if CurrentWallet.currentWallet?.backup != nil {
+        guard let currentWallet = CurrentWallet.currentWallet else {
+            return []
+        }
+        if !UserDefaultKeys().isBackupReady(for: currentWallet) {
             return [MainSetting(.backup),
                     MainSetting(.pincode),
                     MainSetting(.topup),

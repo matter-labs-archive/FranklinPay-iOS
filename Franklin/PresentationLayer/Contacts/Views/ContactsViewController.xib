@@ -23,6 +23,7 @@
                 <outlet property="addContactButton" destination="rZs-6I-w5i" id="6Dn-qU-dP1"/>
                 <outlet property="collectionView" destination="gZc-jg-Soc" id="P8K-bV-Aiu"/>
                 <outlet property="helpLabel" destination="f0m-LF-rrX" id="fHe-1W-tRY"/>
+                <outlet property="marker" destination="Rj0-W1-E7y" id="Cm4-3K-Int"/>
                 <outlet property="searchTextField" destination="sAc-Ei-VFq" id="t5Z-rL-jaS"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -78,6 +79,9 @@
                         <action selector="showMenu:" destination="-1" eventType="touchUpInside" id="NDf-MU-sSs"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="Rj0-W1-E7y">
+                    <rect key="frame" x="25" y="30" width="15" height="15"/>
+                </imageView>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contact name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sAc-Ei-VFq" customClass="BasicTextField" customModule="Franklin" customModuleProvider="target">
                     <rect key="frame" x="37.5" y="119" width="300" height="59"/>
                     <constraints>
@@ -93,7 +97,10 @@
                 <constraint firstItem="rZs-6I-w5i" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="1Ag-sm-ZjN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BBh-M9-TID" secondAttribute="trailing" constant="20" id="8vJ-aH-8Dp"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="8yr-nb-mOa"/>
+                <constraint firstItem="Rj0-W1-E7y" firstAttribute="top" secondItem="QYc-oH-GL0" secondAttribute="top" id="Bed-30-gwr"/>
+                <constraint firstItem="Rj0-W1-E7y" firstAttribute="width" secondItem="QYc-oH-GL0" secondAttribute="width" multiplier="0.5" id="D1S-fD-isv"/>
                 <constraint firstItem="BBh-M9-TID" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="Fiv-Us-DmC"/>
+                <constraint firstItem="Rj0-W1-E7y" firstAttribute="trailing" secondItem="QYc-oH-GL0" secondAttribute="trailing" id="KRU-vW-tgT"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.8" id="KcJ-mE-IWc"/>
                 <constraint firstItem="f0m-LF-rrX" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="OCB-j7-ILc"/>
                 <constraint firstItem="f0m-LF-rrX" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="QC8-jN-Who"/>
@@ -101,6 +108,7 @@
                 <constraint firstItem="QYc-oH-GL0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="ZTL-B9-Vih"/>
                 <constraint firstItem="gZc-jg-Soc" firstAttribute="top" secondItem="sAc-Ei-VFq" secondAttribute="bottom" constant="25" id="aDz-YE-1v3"/>
                 <constraint firstItem="BBh-M9-TID" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="adm-jx-6j6"/>
+                <constraint firstItem="Rj0-W1-E7y" firstAttribute="height" secondItem="QYc-oH-GL0" secondAttribute="height" multiplier="0.5" id="gD0-qL-xbd"/>
                 <constraint firstItem="rZs-6I-w5i" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.8" id="lNh-PP-XkH"/>
                 <constraint firstItem="gZc-jg-Soc" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.8" id="mK5-Qj-OBK"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="top" secondItem="BBh-M9-TID" secondAttribute="bottom" constant="25" id="nDp-Vq-YFx"/>
@@ -116,6 +124,7 @@
     </objects>
     <resources>
         <image name="add-contacts" width="24" height="24"/>
+        <image name="marker" width="22" height="22"/>
         <image name="menu" width="30" height="30"/>
     </resources>
 </document>

@@ -17,7 +17,9 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     @IBOutlet weak var walletTableView: BasicTableView!
     @IBOutlet weak var sendMoneyButton: BasicBlueButton!
     @IBOutlet weak var scanQrButton: ScanButton!
+    @IBOutlet weak var marker: UIImageView!
     
+    private let userKeys = UserDefaultKeys()
     private var tokensService = TokensService()
     private var walletsService = WalletsService()
     private var tokensArray: [TableToken] = []
@@ -49,6 +51,18 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         self.additionalSetup()
         self.setupSideBar()
         self.additionalSetup()
+    }
+    
+    func setupMarker() {
+        self.marker.isUserInteractionEnabled = false
+        guard let wallet = CurrentWallet.currentWallet else {
+            return
+        }
+        if userKeys.isBackupReady(for: wallet) {
+            self.marker.alpha = 0
+        } else {
+            self.marker.alpha = 1
+        }
     }
     
     func additionalSetup() {
@@ -86,6 +100,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.setupMarker()
         self.appearAnimation()
         self.setTokensList()
         

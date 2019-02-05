@@ -24,6 +24,7 @@ class BackupViewController: BasicViewController {
     }
     
     let alerts = Alerts()
+    let userKeys = UserDefaultKeys()
     
     @IBOutlet weak var firstTitle: UILabel!
     @IBOutlet weak var secondTitle: UILabel!
@@ -109,6 +110,7 @@ class BackupViewController: BasicViewController {
             try wallet.performBackup()
             let selectedWallet = try WalletsService().getSelectedWallet()
             CurrentWallet.currentWallet = selectedWallet
+            userKeys.setBackupReady(for: selectedWallet)
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [unowned self] in
                 self.navigationController?.popViewController(animated: true)
             })

@@ -17,6 +17,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
+                <outlet property="marker" destination="xNa-Qj-KS6" id="a4w-zt-JhP"/>
                 <outlet property="scanQrButton" destination="yRA-Np-TwH" id="ybF-MD-AFY"/>
                 <outlet property="sendMoneyButton" destination="amZ-Py-VCG" id="xOQ-3g-2sX"/>
                 <outlet property="view" destination="LUp-ao-XXN" id="Zfs-5h-OsT"/>
@@ -47,6 +48,9 @@
                         <action selector="showMenu:" destination="-1" eventType="touchUpInside" id="7ID-fu-5ua"/>
                     </connections>
                 </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="xNa-Qj-KS6">
+                    <rect key="frame" x="25" y="54" width="15" height="15"/>
+                </imageView>
                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QDe-ca-gsZ">
                     <rect key="frame" x="41.333333333333343" y="769.33333333333337" width="331.33333333333326" height="62.666666666666629"/>
                     <subviews>
@@ -80,12 +84,16 @@
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="rb0-dq-Wdw" firstAttribute="top" secondItem="iPF-hr-DoE" secondAttribute="top" constant="10" id="1g8-9F-bHn"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="top" secondItem="rb0-dq-Wdw" secondAttribute="top" id="9NC-nF-qHx"/>
                 <constraint firstItem="khk-pc-SNg" firstAttribute="top" secondItem="rb0-dq-Wdw" secondAttribute="bottom" constant="10" id="Dne-io-FYS"/>
                 <constraint firstItem="iPF-hr-DoE" firstAttribute="trailing" secondItem="khk-pc-SNg" secondAttribute="trailing" id="IgP-rW-3wG"/>
                 <constraint firstItem="rb0-dq-Wdw" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" constant="10" id="U0t-su-4pe"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="trailing" secondItem="rb0-dq-Wdw" secondAttribute="trailing" id="Vfz-Sh-dXf"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="width" secondItem="rb0-dq-Wdw" secondAttribute="width" multiplier="0.5" id="ZEV-w1-JZW"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="centerX" secondItem="iPF-hr-DoE" secondAttribute="centerX" id="d6a-er-OD2"/>
                 <constraint firstItem="khk-pc-SNg" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" id="g7x-Q7-D0u"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="width" secondItem="LUp-ao-XXN" secondAttribute="width" multiplier="0.8" id="lo2-vh-DSc"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="height" secondItem="rb0-dq-Wdw" secondAttribute="height" multiplier="0.5" id="mNs-IM-5OV"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="height" secondItem="LUp-ao-XXN" secondAttribute="height" multiplier="0.07" id="mtx-pp-RKR"/>
                 <constraint firstItem="iPF-hr-DoE" firstAttribute="bottom" secondItem="QDe-ca-gsZ" secondAttribute="bottom" constant="30" id="peW-PH-R19"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="top" secondItem="khk-pc-SNg" secondAttribute="bottom" constant="10" id="q8p-4J-dBj"/>
@@ -95,8 +103,9 @@
         </view>
     </objects>
     <resources>
+        <image name="marker" width="22" height="22"/>
         <image name="menu" width="30" height="30"/>
         <image name="photo" width="96" height="96"/>
-        <image name="writing-tool" width="96" height="96"/>
+        <image name="writing-tool" width="48" height="48"/>
     </resources>
 </document>

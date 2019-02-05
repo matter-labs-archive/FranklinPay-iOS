@@ -13,8 +13,11 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var marker: UIImageView!
     
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    
+    let userKeys = UserDefaultKeys()
 
     // MARK: - Services
 //    let keysService = WalletsService()
@@ -64,6 +67,18 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
     func setupNavigation() {
         self.navigationController?.navigationBar.isHidden = true
     }
+    
+    func setupMarker() {
+        self.marker.isUserInteractionEnabled = false
+        guard let wallet = CurrentWallet.currentWallet else {
+            return
+        }
+        if userKeys.isBackupReady(for: wallet) {
+            self.marker.alpha = 0
+        } else {
+            self.marker.alpha = 1
+        }
+    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,6 +86,11 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
             self.reloadTableView()
             //self.uploadTransactions()
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setupMarker()
     }
 
     private func setupTableView() {

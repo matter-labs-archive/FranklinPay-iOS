@@ -15,10 +15,12 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var addContactButton: BasicBlueButton!
     @IBOutlet weak var searchTextField: BasicTextField!
+    @IBOutlet weak var marker: UIImageView!
     
     var contactsList: [Contact] = []
     var filteredContactsList: [Contact] = []
     
+    let userKeys = UserDefaultKeys()
     let contactsService = ContactsService()
     let alerts = Alerts()
     //let interactor = Interactor()
@@ -40,6 +42,18 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
         self.setupSearch()
         self.additionalSetup()
         self.setupSideBar()
+    }
+    
+    func setupMarker() {
+        self.marker.isUserInteractionEnabled = false
+        guard let wallet = CurrentWallet.currentWallet else {
+            return
+        }
+        if userKeys.isBackupReady(for: wallet) {
+            self.marker.alpha = 0
+        } else {
+            self.marker.alpha = 1
+        }
     }
     
     func additionalSetup() {
@@ -71,11 +85,16 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
         definesPresentationContext = true
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.setupMarker()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.makeHelpLabel(enabled: false)
         //self.setGestureForSidebar()
-        getAllContacts()
+        self.getAllContacts()
     }
     
     func setupSideBar() {
