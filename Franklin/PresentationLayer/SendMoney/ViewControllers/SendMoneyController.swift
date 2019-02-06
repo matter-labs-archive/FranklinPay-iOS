@@ -42,7 +42,7 @@ class SendMoneyController: BasicViewController {
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: BasicTableView!
     @IBOutlet weak var searchStackView: UIStackView!
     @IBOutlet weak var amountStackView: UIStackView!
     @IBOutlet weak var contactStack: UIStackView!
@@ -65,7 +65,7 @@ class SendMoneyController: BasicViewController {
     var chosenContact: Contact?
     var screenStatus: SendingScreenStatus = .start
     
-    private let reuseIdentifier = "ContactCell"
+    private let reuseIdentifier = "ContactTableCell"
     private let sectionInsets = UIEdgeInsets(top: 0,
                                              left: 0,
                                              bottom: 0,
@@ -123,13 +123,13 @@ class SendMoneyController: BasicViewController {
     }
     
     func setupTableView() {
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
         
-        let nibSearch = UINib.init(nibName: "ContactCell", bundle: nil)
-        self.collectionView.register(nibSearch, forCellWithReuseIdentifier: reuseIdentifier)
+        let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
+        self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
         self.contactsList.removeAll()
     }
     
@@ -188,8 +188,8 @@ class SendMoneyController: BasicViewController {
     }
     
     func setCollectionView(hidden: Bool) {
-        self.collectionView.alpha = hidden ? 0 : 1
-        self.collectionView.isUserInteractionEnabled = !hidden
+        self.tableView.alpha = hidden ? 0 : 1
+        self.tableView.isUserInteractionEnabled = !hidden
     }
     
     func setBottomButton(text: String?, imageName: String?, backgroundColor: UIColor, textColor: UIColor, hidden: Bool, borderNeeded: Bool) {
@@ -517,14 +517,14 @@ class SendMoneyController: BasicViewController {
     func emptyContactsList() {
         contactsList = []
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView?.reloadData()
+            self?.tableView?.reloadData()
         }
     }
     
     func updateContactsList(with list: [Contact]) {
         DispatchQueue.main.async { [weak self] in
             self?.contactsList = list
-            self?.collectionView?.reloadData()
+            self?.tableView?.reloadData()
         }
     }
     
@@ -537,13 +537,12 @@ class SendMoneyController: BasicViewController {
     }
 }
 
-extension SendMoneyController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension SendMoneyController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                        numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if contactsList.isEmpty {
             return 0
         } else {
@@ -551,46 +550,80 @@ extension SendMoneyController: UICollectionViewDelegate, UICollectionViewDataSou
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if !contactsList.isEmpty {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell",
-                                                                for: indexPath) as? ContactCell else {
-                                                                    return UICollectionViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                           for: indexPath) as? ContactTableCell else {
+                                                            return UITableViewCell()
             }
             cell.configure(with: contactsList[indexPath.row])
             return cell
         } else {
-            return UICollectionViewCell()
+            return UITableViewCell()
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
         let contact = contactsList[indexPath.row]
         self.showConfirmScreen(animated: true, for: contact)
     }
 }
 
-extension SendMoneyController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
-
-        return CGSize(width: width, height: Constants.CollectionCell.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
-    }
-}
+//extension SendMoneyController: UICollectionViewDelegate, UICollectionViewDataSource {
+//    func numberOfSections(in collectionView: UICollectionView) -> Int {
+//        return 1
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView,
+//                        numberOfItemsInSection section: Int) -> Int {
+//        if contactsList.isEmpty {
+//            return 0
+//        } else {
+//            return contactsList.count
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        if !contactsList.isEmpty {
+//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell",
+//                                                                for: indexPath) as? ContactCell else {
+//                                                                    return UICollectionViewCell()
+//            }
+//            cell.configure(with: contactsList[indexPath.row])
+//            return cell
+//        } else {
+//            return UICollectionViewCell()
+//        }
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let contact = contactsList[indexPath.row]
+//        self.showConfirmScreen(animated: true, for: contact)
+//    }
+//}
+//
+//extension SendMoneyController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
+//
+//        return CGSize(width: width, height: Constants.CollectionCell.height)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInsets
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInsets.left
+//    }
+//}
 
 extension SendMoneyController: UITextFieldDelegate {
     
