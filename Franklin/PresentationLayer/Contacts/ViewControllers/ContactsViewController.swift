@@ -11,11 +11,11 @@ import SideMenu
 
 class ContactsViewController: BasicViewController, ModalViewDelegate {
 
-    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var addContactButton: BasicBlueButton!
     @IBOutlet weak var searchTextField: BasicTextField!
     @IBOutlet weak var marker: UIImageView!
+    @IBOutlet weak var tableView: BasicTableView!
     
     var contactsList: [Contact] = []
     var filteredContactsList: [Contact] = []
@@ -27,7 +27,7 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
-    private let reuseIdentifier = "ContactCell"
+    private let reuseIdentifier = "ContactTableCell"
     private let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     private let itemsPerRow: CGFloat = 3
     
@@ -70,13 +70,13 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     }
 
     func setupTableView() {
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
         
-        let nibSearch = UINib.init(nibName: "ContactCell", bundle: nil)
-        self.collectionView.register(nibSearch, forCellWithReuseIdentifier: reuseIdentifier)
+        let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
+        self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
         self.contactsList.removeAll()
     }
 
@@ -161,7 +161,7 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     func emptyContactsList() {
         contactsList = []
         DispatchQueue.main.async { [weak self] in
-            self?.collectionView?.reloadData()
+            self?.tableView?.reloadData()
         }
     }
     
@@ -171,7 +171,7 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
             if list.count == 0 && self?.searchTextField.text == "" {
                 self?.makeHelpLabel(enabled: true)
             }
-            self?.collectionView?.reloadData()
+            self?.tableView?.reloadData()
         }
     }
     
@@ -184,13 +184,12 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     }
 }
 
-extension ContactsViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
+extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView,
-                                 numberOfItemsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if contactsList.isEmpty {
             return 0
         } else {
@@ -198,17 +197,21 @@ extension ContactsViewController: UICollectionViewDelegate, UICollectionViewData
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if !contactsList.isEmpty {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell",
-                                                           for: indexPath) as? ContactCell else {
-                                                            return UICollectionViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
+                                                                for: indexPath) as? ContactTableCell else {
+                                                                    return UITableViewCell()
             }
             cell.configure(with: contactsList[indexPath.row])
             return cell
         } else {
-            return UICollectionViewCell()
+            return UITableViewCell()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
@@ -227,28 +230,28 @@ extension ContactsViewController: UITextFieldDelegate {
     }
 }
 
-extension ContactsViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
-        
-        return CGSize(width: width, height: Constants.CollectionCell.height)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        insetForSectionAt section: Int) -> UIEdgeInsets {
-        return sectionInsets
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return sectionInsets.left
-    }
-}
+//extension ContactsViewController: UICollectionViewDelegateFlowLayout {
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        
+//        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
+//        
+//        return CGSize(width: width, height: Constants.CollectionCell.height)
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        insetForSectionAt section: Int) -> UIEdgeInsets {
+//        return sectionInsets
+//    }
+//    
+//    func collectionView(_ collectionView: UICollectionView,
+//                        layout collectionViewLayout: UICollectionViewLayout,
+//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+//        return sectionInsets.left
+//    }
+//}
 
 extension ContactsViewController: UISideMenuNavigationControllerDelegate {
     func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {

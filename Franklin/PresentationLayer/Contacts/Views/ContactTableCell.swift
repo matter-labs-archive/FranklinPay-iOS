@@ -1,37 +1,37 @@
 //
-//  ContactCell.swift
-//  DiveLane
+//  ContactTableCell.swift
+//  Franklin
 //
-//  Created by Anton Grigorev on 16.10.2018.
-//  Copyright © 2018 Matter Inc. All rights reserved.
+//  Created by Anton Grigorev on 06/02/2019.
+//  Copyright © 2019 Matter Inc. All rights reserved.
 //
 
 import UIKit
+import BlockiesSwift
 
 class ContactTableCell: UITableViewCell {
     
-    @IBOutlet weak var bottomBackgroundView: UIView!
-    @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var contactImage: UIImageView!
     @IBOutlet weak var contactName: UILabel!
     @IBOutlet weak var contactAddress: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.bottomBackgroundView.backgroundColor = Colors.background
-        self.topBackgroundView.backgroundColor = Colors.background
-        //self.topBackgroundView.layer.cornerRadius = 10
-        self.contactName.textColor = Colors.textDarkGray
-        self.contactName.font = UIFont(name: Constants.TableContact.font, size: Constants.TableContact.maximumFontSize) ?? UIFont.systemFont(ofSize: Constants.TableContact.maximumFontSize)
-        self.contactAddress.textColor = Colors.textLightGray
-        
-        self.contactAddress.font = UIFont(name: Constants.TableContact.font, size: Constants.TableContact.minimumFontSize) ?? UIFont.systemFont(ofSize: Constants.TableContact.minimumFontSize)
+        // Initialization code
     }
-    
+
     func configure(with contact: Contact) {
         self.contactName.text = contact.name
         self.contactAddress.text = contact.address
-        self.contactImage.image = UIImage(named: "contacts_gray")
+        let blockies = Blockies(seed: contact.address,
+                                size: 5,
+                                scale: 4,
+                                color: Colors.mainGreen,
+                                bgColor: Colors.mostLightGray, spotColor: Colors.mainBlue)
+        let img = blockies.createImage()
+        self.contactImage.image = img
+        self.contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius
+        self.contactImage.clipsToBounds = true
     }
     
     override func prepareForReuse() {
@@ -39,5 +39,5 @@ class ContactTableCell: UITableViewCell {
         self.contactName.text = ""
         self.contactAddress.text = ""
     }
-
+    
 }

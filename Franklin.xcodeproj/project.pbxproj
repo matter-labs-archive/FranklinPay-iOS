@@ -55,6 +55,8 @@
 		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		B219DC2C215B77A80035BF94 /* MatterWalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC2B215B77A80035BF94 /* MatterWalletUITests.swift */; };
 		B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC33215B786D0035BF94 /* SnapshotHelper.swift */; };
+		E20F3DFB220AFD1000669C8B /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */; };
+		E20F3DFC220AFD1000669C8B /* ContactTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */; };
 		E2215AC021FF44A700FC79AB /* AcceptChequeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215ABE21FF44A600FC79AB /* AcceptChequeController.swift */; };
 		E2215AC121FF44A700FC79AB /* AcceptChequeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2215ABF21FF44A600FC79AB /* AcceptChequeController.xib */; };
 		E2215AC421FF4B1400FC79AB /* AcceptChequeFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC221FF4B1400FC79AB /* AcceptChequeFormController.swift */; };
@@ -115,8 +117,6 @@
 		E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2C2174D1CC00F38E50 /* Interactor.swift */; };
 		E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4921761F4000F38E50 /* ContactsViewController.swift */; };
 		E2B45A4C21761F4000F38E50 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */; };
-		E2B45A4F217620D500F38E50 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4D217620D500F38E50 /* ContactTableCell.swift */; };
-		E2B45A50217620D500F38E50 /* ContactTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4E217620D500F38E50 /* ContactTableCell.xib */; };
 		E2B45A602176379100F38E50 /* AddContactController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5E2176379100F38E50 /* AddContactController.swift */; };
 		E2B45A612176379100F38E50 /* AddContactController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A5F2176379100F38E50 /* AddContactController.xib */; };
 		E2C1105921E507260012A978 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102921E507250012A978 /* KeychainService.swift */; };
@@ -336,6 +336,8 @@
 		CBC201C3B485F2719151925D /* Pods-MatterWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatterWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MatterWallet/Pods-MatterWallet.debug.xcconfig"; sourceTree = "<group>"; };
 		D2A83FAAE20C73BE712E321A /* Pods-MatterWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatterWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-MatterWallet/Pods-MatterWallet.release.xcconfig"; sourceTree = "<group>"; };
 		D5B44D77536C7320086DD73C /* Pods-Franklin.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.beta.xcconfig"; sourceTree = "<group>"; };
+		E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
+		E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableCell.xib; sourceTree = "<group>"; };
 		E2215ABE21FF44A600FC79AB /* AcceptChequeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptChequeController.swift; sourceTree = "<group>"; };
 		E2215ABF21FF44A600FC79AB /* AcceptChequeController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AcceptChequeController.xib; sourceTree = "<group>"; };
 		E2215AC221FF4B1400FC79AB /* AcceptChequeFormController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptChequeFormController.swift; sourceTree = "<group>"; };
@@ -404,8 +406,6 @@
 		E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenInfoViewController.swift; sourceTree = "<group>"; };
 		E2B45A4921761F4000F38E50 /* ContactsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewController.swift; sourceTree = "<group>"; };
 		E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsViewController.xib; sourceTree = "<group>"; };
-		E2B45A4D217620D500F38E50 /* ContactTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
-		E2B45A4E217620D500F38E50 /* ContactTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableCell.xib; sourceTree = "<group>"; };
 		E2B45A5E2176379100F38E50 /* AddContactController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactController.swift; sourceTree = "<group>"; };
 		E2B45A5F2176379100F38E50 /* AddContactController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddContactController.xib; sourceTree = "<group>"; };
 		E2C1102921E507250012A978 /* KeychainService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
@@ -1548,10 +1548,10 @@
 			isa = PBXGroup;
 			children = (
 				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
-				E2B45A4D217620D500F38E50 /* ContactTableCell.swift */,
+				E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */,
+				E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */,
 				E2F0EF7B21F7FCC700F11AD1 /* ContactCell.swift */,
 				E2F0EF7C21F7FCC700F11AD1 /* ContactCell.xib */,
-				E2B45A4E217620D500F38E50 /* ContactTableCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2103,6 +2103,7 @@
 				E2F686A921F9DEF600BD3D14 /* SendMoneyController.xib in Resources */,
 				E2F0EFB821F8BA2700F11AD1 /* SF-Pro-Display-Bold.otf in Resources */,
 				E2215AC121FF44A700FC79AB /* AcceptChequeController.xib in Resources */,
+				E20F3DFC220AFD1000669C8B /* ContactTableCell.xib in Resources */,
 				E2E20215220309340046C956 /* OnboardingViewController.xib in Resources */,
 				E2F0EF7E21F7FCC700F11AD1 /* ContactCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
@@ -2127,7 +2128,6 @@
 				E2F0EFA821F8BA2700F11AD1 /* SF-Pro-Display-Heavy.otf in Resources */,
 				E2F0EFA921F8BA2700F11AD1 /* SF-Pro-Display-Ultralight.otf in Resources */,
 				91E72557214FE104003FAD76 /* SearchTokenCell.xib in Resources */,
-				E2B45A50217620D500F38E50 /* ContactTableCell.xib in Resources */,
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				E2F0EFB521F8BA2700F11AD1 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				E2F0EFD021F8BD1500F11AD1 /* librefranklin-lightitalic.ttf in Resources */,
@@ -2405,7 +2405,6 @@
 				E27BF78121D1447A00951061 /* PlasmaErrors.swift in Sources */,
 				9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */,
 				914F229221499F3D00ED58E6 /* CreatePincodeViewController.swift in Sources */,
-				E2B45A4F217620D500F38E50 /* ContactTableCell.swift in Sources */,
 				E27BF77321D1447A00951061 /* OutputsManagement.swift in Sources */,
 				E2A8DAFC21F1F6A00031AC58 /* StorageErrors.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
@@ -2427,6 +2426,7 @@
 				9197F3252144041400C358AA /* SettingsModels.swift in Sources */,
 				9197F321214403A400C358AA /* SettingsViewController.swift in Sources */,
 				E2A8DB9721F616A40031AC58 /* Ether.swift in Sources */,
+				E20F3DFB220AFD1000669C8B /* ContactTableCell.swift in Sources */,
 				E2C1106021E507260012A978 /* WalletsService.swift in Sources */,
 				E2F0EF7821F7DD6000F11AD1 /* DismissAnimator.swift in Sources */,
 			);
