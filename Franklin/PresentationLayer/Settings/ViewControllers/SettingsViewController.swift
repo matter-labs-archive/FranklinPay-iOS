@@ -122,14 +122,19 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
             return
         }
+        var vc = UIViewController()
         let setting = mainSettings[indexPathForSelectedRow.row]
-        if setting == MainSetting(.backup) {
-            let backupVC = BackupViewController()
-            self.navigationController?.pushViewController(backupVC, animated: true)
-        } else if setting == MainSetting(.pincode) {
-            let pincodeVC = CreatePincodeViewController()
-            self.navigationController?.pushViewController(pincodeVC, animated: true)
+        switch setting {
+        case MainSetting(.backup):
+            vc = BackupViewController()
+        case MainSetting(.pincode):
+            vc = CreatePincodeViewController()
+        case MainSetting(.wallet):
+            vc = WalletsViewController()
+        default:
+            break
         }
+        self.navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }

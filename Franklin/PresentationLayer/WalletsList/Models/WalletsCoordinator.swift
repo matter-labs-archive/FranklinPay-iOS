@@ -44,17 +44,19 @@ public class WalletsCoordinator {
                 let balance: String
                 if token == ERC20Token(ether: true) {
                     balance = try wallet.getETHbalance()
+                } else if token == Franklin() {
+                    balance = try wallet.getFranklinBalance()
                 } else {
                     balance = try wallet.getERC20balance(for: token)
                 }
                 let balanceInDollars: Double
-                if let conversion = token.rate {
-                    let resultInDouble: Double = Double(balance) ?? 0
-                    let convertedAmount = Double(round(100*(conversion * resultInDouble))/100)
-                    balanceInDollars = convertedAmount
+                if token == Franklin() {
+                    balanceInDollars = Double(balance) ?? 0
                 } else {
-                    if let convertedRateAndChange = try? token.updateRateAndChange() {
-                        balanceInDollars = convertedRateAndChange.rate
+                    if let conversion = try? token.updateRateAndChange() {
+                        let resultInDouble: Double = Double(balance) ?? 0
+                        let convertedAmount = Double(round(100*(conversion.rate * resultInDouble))/100)
+                        balanceInDollars = convertedAmount
                     } else {
                         balanceInDollars = 0
                     }

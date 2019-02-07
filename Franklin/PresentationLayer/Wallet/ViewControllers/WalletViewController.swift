@@ -25,7 +25,6 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     private var tokensArray: [TableToken] = []
 
     private let alerts = Alerts()
-    private let plasmaCoordinator = PlasmaCoordinator()
     private let etherCoordinator = EtherCoordinator()
     
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
@@ -134,6 +133,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
             self.reloadDataInTable(completion: {
                 self.updateTokensBalances {
                     self.reloadDataInTable {
+                        // TODO: - need to update rates?
                     }
                 }
             })
@@ -178,12 +178,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
                 var currentTableToken = token
                 let currentToken = token.token
                 let currentWallet = token.inWallet
-                let balance: String
-                if currentToken.isFranklin() {
-                    balance = self.plasmaCoordinator.getBalance(wallet: currentWallet)
-                } else {
-                    balance = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
-                }
+                let balance: String = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
                 currentToken.balance = balance
                 currentTableToken.token = currentToken
                 self.tokensArray[index] = currentTableToken

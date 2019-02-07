@@ -46,6 +46,7 @@ protocol IWalletTransactions {
 }
 
 protocol IWalletActions {
+    func getFranklinBalance() throws -> String
     func getERC20balance(for token: ERC20Token) throws -> String
     func getETHbalance() throws -> String
     func prepareSendEthTx(toAddress: String,
@@ -487,6 +488,11 @@ extension Wallet: IWalletTokens {
 }
 
 extension Wallet: IWalletActions {
+    
+    // TODO: - need to unmock
+    public func getFranklinBalance() throws -> String {
+        return "1000"
+    }
     
     public func getETHbalance() throws -> String {
         guard let walletAddress = EthereumAddress(self.address),

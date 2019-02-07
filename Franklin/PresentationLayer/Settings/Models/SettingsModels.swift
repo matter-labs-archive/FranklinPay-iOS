@@ -29,7 +29,7 @@ public struct MainSetting {
             self.notification = true
         case .wallet:
             self.title = "Current wallet"
-            self.subtitle = CurrentWallet.currentWallet?.address
+            self.subtitle = CurrentWallet.currentWallet?.address.hideExtraSymbolsInAddress()
             self.image = UIImage(named: "wallet_settings") ?? UIImage()
             self.currentState = nil
             self.notification = false

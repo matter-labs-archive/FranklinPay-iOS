@@ -31,16 +31,19 @@ class WalletCell: UITableViewCell {
         self.walletName.textColor = Colors.textDarkGray
         self.walletAddress.textColor = Colors.textLightGray
         self.walletBalance.textColor = Colors.textDarkGray
-        self.infoButton.setImage(UIImage(named: "info"), for: .normal)
+        
+        //self.infoButton.setImage(UIImage(named: "info"), for: .normal)
+        self.infoButton.alpha = 0
+        
         self.selectedWalletIcon.image = UIImage(named: "added")
     }
 
     func configureCell(model: TableWallet) {
-        walletName.text = "Wallet " + model.wallet.name
+        walletName.text = model.wallet.name
         walletAddress.text = model.wallet.address.hideExtraSymbolsInAddress()
         let balance = model.balanceUSD ?? "-"
-        let token = model.selectedToken.symbol
-        self.walletBalance.text = balance + " " + token
+        let token = model.selectedToken.name
+        self.walletBalance.text = balance + " $"
         self.selectedWalletIcon.alpha = model.isSelected ? 1.0 : 0.0
     }
     
@@ -53,8 +56,6 @@ class WalletCell: UITableViewCell {
         self.walletBalance.text = "-"
         self.walletName.text = "-"
         self.walletName.text = "-"
-        self.infoButton.setImage(nil, for: .normal)
-        self.selectedWalletIcon.image = UIImage(named: "added")
     }
 
 }

@@ -107,7 +107,6 @@
 		E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */; };
 		E2A8DAFF21F1F6A00031AC58 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */; };
 		E2A8DB0321F1FA480031AC58 /* EtherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */; };
-		E2A8DB0421F1FA480031AC58 /* PlasmaCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */; };
 		E2A8DB9721F616A40031AC58 /* Ether.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9621F616A40031AC58 /* Ether.swift */; };
 		E2A8DB9921F616BE0031AC58 /* Franklin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9821F616BE0031AC58 /* Franklin.swift */; };
 		E2A8DBA021F676780031AC58 /* TextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9F21F676780031AC58 /* TextViewExtension.swift */; };
@@ -388,7 +387,6 @@
 		E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCD.swift; sourceTree = "<group>"; };
 		E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ERC20Token.swift; sourceTree = "<group>"; };
 		E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EtherCoordinator.swift; sourceTree = "<group>"; };
-		E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlasmaCoordinator.swift; sourceTree = "<group>"; };
 		E2A8DB9621F616A40031AC58 /* Ether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ether.swift; sourceTree = "<group>"; };
 		E2A8DB9821F616BE0031AC58 /* Franklin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Franklin.swift; sourceTree = "<group>"; };
 		E2A8DB9F21F676780031AC58 /* TextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewExtension.swift; sourceTree = "<group>"; };
@@ -759,6 +757,7 @@
 			isa = PBXGroup;
 			children = (
 				E2F686A421F9DE5A00BD3D14 /* NeedToBe */,
+				E2A8DBBA21F780280031AC58 /* WalletsList */,
 				E20F3D17220857E600669C8B /* Pincode */,
 				E2C14A912204898300B060AD /* Backup */,
 				E2215ABA21FF43CD00FC79AB /* AcceptCheque */,
@@ -1025,7 +1024,6 @@
 			isa = PBXGroup;
 			children = (
 				E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */,
-				E2A8DB0221F1FA480031AC58 /* PlasmaCoordinator.swift */,
 				E2C59073215258B800FF53D3 /* TableTokens.swift */,
 			);
 			path = Models;
@@ -1892,7 +1890,6 @@
 				E2C110C121E7DB730012A978 /* Pincode */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
 				E234C7A421EBF3C900F175AF /* Networks */,
-				E2A8DBBA21F780280031AC58 /* WalletsList */,
 				E234C7A021EB5F8500F175AF /* PrivateKey */,
 				E2C1109E21E567070012A978 /* old */,
 				E2C1109921E566D40012A978 /* Token */,
@@ -2356,7 +2353,6 @@
 				E2A8DBA321F676E80031AC58 /* WalletCreationAnimationViewController.swift in Sources */,
 				E2A8DAFA21F1F6A00031AC58 /* Web3Network.swift in Sources */,
 				E27BF76F21D1447A00951061 /* SignedTransaction.swift in Sources */,
-				E2A8DB0421F1FA480031AC58 /* PlasmaCoordinator.swift in Sources */,
 				E2D451DD21EE980B00218872 /* DoubleExtension.swift in Sources */,
 				E2C1105D21E507260012A978 /* NetworkErrors.swift in Sources */,
 				E2C1106C21E507260012A978 /* Colors.swift in Sources */,

@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import EthereumAddress
+import Web3swift
+import BigInt
 
 public class EtherCoordinator {
     
@@ -38,6 +41,8 @@ public class EtherCoordinator {
             let balance: String
             if token == ERC20Token(ether: true) {
                 balance = try wallet.getETHbalance()
+            } else if token == ERC20Token(franklin: true) {
+                balance = try wallet.getFranklinBalance()
             } else {
                 balance = try wallet.getERC20balance(for: token)
             }
@@ -46,6 +51,28 @@ public class EtherCoordinator {
             return getBalance(for: token, wallet: wallet)
         }
     }
+    
+//    func getFranklin() -> [TableToken] {
+//        let selectedNetwork = CurrentNetwork.currentNetwork
+//        let mainnet = selectedNetwork.id == Int64(Networks.Mainnet.chainID)
+//        let testnet = !mainnet
+//            && selectedNetwork.id == Int64(Networks.Rinkeby.chainID)
+//        if !testnet && !mainnet {
+//            return []
+//        }
+//        guard let wallet = CurrentWallet.currentWallet else {
+//            return []
+//        }
+//        if CurrentToken.currentToken == nil {
+//            CurrentToken.currentToken = ERC20Token(franklin: true)
+//        }
+//        // TODO : - GET FRANKLIN
+//        let franklin = ERC20Token(franklin: true)
+//        let franklinTableToken = TableToken(token: franklin,
+//                                            inWallet: wallet,
+//                                            isSelected: (franklin == CurrentToken.currentToken))
+//        return [franklinTableToken]
+//    }
     
     // TODO: - need to fix
     func getBalanceInDollars(for token: ERC20Token, withBalance: String) -> String {
