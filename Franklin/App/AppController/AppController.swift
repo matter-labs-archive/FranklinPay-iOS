@@ -136,7 +136,7 @@ public class AppController {
     private func initPreparations(for wallet: Wallet, on network: Web3Network) {
         let group = DispatchGroup()
         
-        let tokensDownloaded = userDefaultKeys.areTokensDownloaded
+        let tokensDownloaded = userDefaultKeys.areTokensDownloaded()
 //        let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
 //        let franklinAdded = userDefaultKeys.isFranklinAdded(for: wallet)
         
@@ -215,7 +215,7 @@ public class AppController {
         
         if let selectedWallet = CurrentWallet.currentWallet {
             self.initPreparations(for: selectedWallet, on: selectedNetwork)
-            if self.userDefaultKeys.isPincodeExists {
+            if self.userDefaultKeys.isPincodeExists() {
                 startViewController = self.enterPincodeController()
             } else {
                 startViewController = self.goToApp()

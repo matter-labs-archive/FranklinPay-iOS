@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func downloadTokens() {
-        let tokensDownloaded = userDefaultKeys.areTokensDownloaded
+        let tokensDownloaded = userDefaultKeys.areTokensDownloaded()
         DispatchQueue.global().async { [unowned self] in
             if !tokensDownloaded {
                 do {

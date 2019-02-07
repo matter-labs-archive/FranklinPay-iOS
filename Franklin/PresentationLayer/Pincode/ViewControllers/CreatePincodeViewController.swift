@@ -100,7 +100,7 @@ class CreatePincodeViewController: PincodeViewController {
     }
 
     func finish() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
             self.navigationController?.popViewController(animated: true)
         })
     }

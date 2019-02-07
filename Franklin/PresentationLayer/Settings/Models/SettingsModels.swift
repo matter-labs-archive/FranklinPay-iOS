@@ -77,7 +77,7 @@ public class SettingInteractor {
         }
         var settings = [MainSetting(.help),
                         MainSetting(.topup)]
-        if !userKeys.isPincodeExists {
+        if !userKeys.isPincodeExists() {
             settings.append(MainSetting(.pincode))
         }
         if !userKeys.isBackupReady(for: currentWallet) {

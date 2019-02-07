@@ -34,13 +34,17 @@ public struct UserDefaultKeys {
         UserDefaults.standard.synchronize()
     }
     
-    public let isOnboardingPassed = UserDefaults.standard.bool(forKey: "OnboardingPassed")
+    public func isOnboardingPassed() -> Bool {
+        return UserDefaults.standard.bool(forKey: "OnboardingPassed")
+    }
     public func setOnboardingPassed() {
         UserDefaults.standard.set(true, forKey: "OnboardingPassed")
         UserDefaults.standard.synchronize()
     }
     
-    public let isPincodeExists = UserDefaults.standard.bool(forKey: "PincodeExists")
+    public func isPincodeExists() -> Bool {
+        return UserDefaults.standard.bool(forKey: "PincodeExists")
+    }
     public func setPincodeExists() {
         UserDefaults.standard.set(true, forKey: "PincodeExists")
         UserDefaults.standard.synchronize()
@@ -55,7 +59,9 @@ public struct UserDefaultKeys {
         UserDefaults.standard.synchronize()
     }
     
-    public let areTokensDownloaded = UserDefaults.standard.bool(forKey: "TokensDownloaded")
+    public func areTokensDownloaded() -> Bool {
+        return UserDefaults.standard.bool(forKey: "TokensDownloaded")
+    }
     public func setTokensDownloaded() {
         UserDefaults.standard.set(true, forKey: "TokensDownloaded")
         UserDefaults.standard.synchronize()

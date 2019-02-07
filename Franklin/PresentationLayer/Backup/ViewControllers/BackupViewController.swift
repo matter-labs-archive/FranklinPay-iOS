@@ -111,7 +111,7 @@ class BackupViewController: BasicViewController {
             let selectedWallet = try WalletsService().getSelectedWallet()
             CurrentWallet.currentWallet = selectedWallet
             userKeys.setBackupReady(for: selectedWallet)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [unowned self] in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
                 self.navigationController?.popViewController(animated: true)
             })
         } catch let error {
