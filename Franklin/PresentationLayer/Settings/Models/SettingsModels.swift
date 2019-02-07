@@ -24,37 +24,37 @@ public struct MainSetting {
         case .backup:
             self.title = "Backup now"
             self.subtitle = "Your money are at risk!"
-            self.image = UIImage(named: "backup")!
+            self.image = UIImage(named: "backup") ?? UIImage()
             self.currentState = nil
             self.notification = true
         case .wallet:
             self.title = "Current wallet"
-            self.subtitle = nil
-            self.image = UIImage(named: "wallet_gray")!
-            self.currentState = CurrentWallet.currentWallet
+            self.subtitle = CurrentWallet.currentWallet?.address
+            self.image = UIImage(named: "wallet_settings") ?? UIImage()
+            self.currentState = nil
             self.notification = false
         case .network:
-            self.title = "Network"
-            self.subtitle = nil
-            self.image = UIImage(named: "ether")!
-            self.currentState = CurrentNetwork.currentNetwork
+            self.title = "Current network"
+            self.subtitle = CurrentNetwork.currentNetwork.name
+            self.image = UIImage(named: "network") ?? UIImage()
+            self.currentState = nil
             self.notification = false
         case .pincode:
             self.title = "Set up PIN code"
             self.subtitle = "Protect your phone"
-            self.image = UIImage(named: "pincode")!
+            self.image = UIImage(named: "pincode") ?? UIImage()
             self.currentState = nil
             self.notification = false
         case .topup:
             self.title = "Top up"
             self.subtitle = nil
-            self.image = UIImage(named: "topup")!
+            self.image = UIImage(named: "topup") ?? UIImage()
             self.currentState = nil
             self.notification = false
         case .help:
             self.title = "Get help"
             self.subtitle = nil
-            self.image = UIImage(named: "help")!
+            self.image = UIImage(named: "help") ?? UIImage()
             self.currentState = nil
             self.notification = false
         }
@@ -76,7 +76,9 @@ public class SettingInteractor {
             return []
         }
         var settings = [MainSetting(.help),
-                        MainSetting(.topup)]
+                        MainSetting(.topup),
+                        MainSetting(.wallet),
+                        MainSetting(.network)]
         if !userKeys.isPincodeExists() {
             settings.append(MainSetting(.pincode))
         }
