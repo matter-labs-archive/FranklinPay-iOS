@@ -19,8 +19,8 @@ class PincodeViewController: BasicViewController {
     @IBOutlet weak var fourthNum: UIImageView!
     @IBOutlet weak var container: UIView!
     
-    @IBOutlet weak var biometricsButton: PinCodeNumberButton!
-    @IBOutlet weak var deleteButton: PinCodeNumberButton!
+    @IBOutlet weak var biometricsButton: PinCodeBiometricsButton!
+    @IBOutlet weak var deleteButton: PinCodeDeleteButton!
     
     let animation = AnimationController()
 
@@ -29,20 +29,23 @@ class PincodeViewController: BasicViewController {
 //    override var preferredStatusBarStyle: UIStatusBarStyle {
 //        return .lightContent
 //    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         container.backgroundColor = Colors.background
         var image = UIImage()
         let context = LAContext()
-        if #available(iOS 11, *) {
-            switch context.biometryType {
-            case .touchID:
-                image = UIImage(named: "touch_id") ?? UIImage()
-            case .faceID:
-                image = UIImage(named: "face_id") ?? UIImage()
-            case .none:
-                image = UIImage()
+        var error: NSError?
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            if #available(iOS 11, *) {
+                switch context.biometryType {
+                case .touchID:
+                    image = UIImage(named: "touch_id") ?? UIImage()
+                case .faceID:
+                    image = UIImage(named: "face_id") ?? UIImage()
+                case .none:
+                    image = UIImage()
+                }
             }
         }
         biometricsButton.setImage(image, for: .normal)
@@ -83,14 +86,14 @@ class PincodeViewController: BasicViewController {
 
     }
 
-    @IBAction func deletePressed(_ sender: UIButton) {
+    @IBAction func deletePressed(_ sender: PinCodeDeleteButton) {
         animation.pressButtonCanceledAnimation(for: sender, color: Colors.lightBlue)
 
         deletePressedAction()
     }
 
-    @IBAction func biometricsPressed(_ sender: UIButton) {
-        animation.pressButtonCanceledAnimation(for: sender, color: Colors.mostLightGray)
+    @IBAction func biometricsPressed(_ sender: PinCodeBiometricsButton) {
+        animation.pressButtonCanceledAnimation(for: sender, color: Colors.lightBlue)
 
         biometricsPressedAction()
     }

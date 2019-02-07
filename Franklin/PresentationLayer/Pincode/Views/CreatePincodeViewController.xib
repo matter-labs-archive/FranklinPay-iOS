@@ -234,7 +234,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="oEt-jZ-OoF">
                                                     <rect key="frame" x="0.0" y="296.5" width="271" height="74"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPq-UO-WCU" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPq-UO-WCU" customClass="PinCodeBiometricsButton" customModule="Franklin" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -257,11 +257,11 @@
                                                                 <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="3uS-Xg-Vzm"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcP-em-Yvu" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcP-em-Yvu" customClass="PinCodeDeleteButton" customModule="Franklin" customModuleProvider="target">
                                                             <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <state key="normal" image="delete">
+                                                            <state key="normal" backgroundImage="delete">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
                                                             <connections>

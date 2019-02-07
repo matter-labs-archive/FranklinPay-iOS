@@ -232,7 +232,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="sFw-oi-0dz">
                                                     <rect key="frame" x="0.0" y="296.33333333333337" width="271.66666666666669" height="74"/>
                                                     <subviews>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhL-wm-QFI" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fhL-wm-QFI" customClass="PinCodeBiometricsButton" customModule="Franklin" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="74" height="74"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -255,7 +255,7 @@
                                                                 <action selector="numButtonPressed:" destination="-1" eventType="touchUpInside" id="zUM-k6-Ykg"/>
                                                             </connections>
                                                         </button>
-                                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo2-Lx-JXg" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
+                                                        <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo2-Lx-JXg" customClass="PinCodeDeleteButton" customModule="Franklin" customModuleProvider="target">
                                                             <rect key="frame" x="197.66666666666669" y="0.0" width="74" height="74"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
