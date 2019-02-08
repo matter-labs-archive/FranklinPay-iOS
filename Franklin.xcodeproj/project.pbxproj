@@ -253,6 +253,7 @@
 		1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
+		3A84FE02220D9D1E00B5A069 /* Franklin-dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Franklin-dev.entitlements"; sourceTree = "<group>"; };
 		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.release.xcconfig"; sourceTree = "<group>"; };
@@ -661,6 +662,7 @@
 		91B6A79521435F5D0033A045 /* Franklin */ = {
 			isa = PBXGroup;
 			children = (
+				3A84FE02220D9D1E00B5A069 /* Franklin-dev.entitlements */,
 				E2A8DAE121F1F6A00031AC58 /* Core */,
 				E2C110A721E61EDE0012A978 /* DesignElements */,
 				E2C1108821E556EE0012A978 /* Parsers */,
@@ -2033,6 +2035,11 @@
 					91B6A79221435F5D0033A045 = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1010;
+						SystemCapabilities = {
+							com.apple.SafariKeychain = {
+								enabled = 1;
+							};
+						};
 					};
 					B219DC28215B77A80035BF94 = {
 						CreatedOnToolsVersion = 10.0;
@@ -2631,6 +2638,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = .dev;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Franklin/Franklin-dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5UH69GW6GE;
@@ -2658,6 +2666,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Franklin/Franklin-dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5UH69GW6GE;
@@ -2739,6 +2748,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon${BUNDLE_ID_SUFFIX}";
 				BUNDLE_ID_SUFFIX = .beta;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "Franklin/Franklin-dev.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5UH69GW6GE;

@@ -35,11 +35,12 @@
 			<array>
 				<string>plasma</string>
 				<string>ethereum</string>
+				<string>franklin</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>13</string>
+	<string>14</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>

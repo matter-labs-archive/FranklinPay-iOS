@@ -491,7 +491,14 @@ extension Wallet: IWalletActions {
     
     // TODO: - need to unmock
     public func getFranklinBalance() throws -> String {
-        return "1000"
+        let currentNetwork = CurrentNetwork.currentNetwork
+        let tokens = try self.getAllTokens(network: currentNetwork)
+        for token in tokens {
+            if token == ERC20Token(franklin: true) {
+                return token.balance ?? "0"
+            }
+        }
+        return "0"
     }
     
     public func getETHbalance() throws -> String {

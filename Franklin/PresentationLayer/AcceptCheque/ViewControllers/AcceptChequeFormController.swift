@@ -179,8 +179,37 @@ class AcceptChequeFormController: BasicViewController {
         }
     }
     
+    func updateFranklinBalance() {
+        let currentNetwork = CurrentNetwork.currentNetwork
+        guard let currentWallet = CurrentWallet.currentWallet else {return}
+        guard let tokens = try? currentWallet.getAllTokens(network: currentNetwork) else {return}
+        for token in tokens {
+            if token == ERC20Token(franklin: true) {
+                guard let balance = token.balance else {return}
+                guard var currBalance = Double(balance) else {return}
+                guard let chequeAmount = Double(cheque.amount) else {return}
+                currBalance += chequeAmount
+                let stringCurrBalance = String(currBalance)
+//                do {
+//                    try currentWallet.delete(token: token, network: currentNetwork)
+//                    let fr = Franklin()
+//                    fr.balance = stringCurrBalance
+//                    try currentWallet.add(token: fr, network: currentNetwork)
+//                } catch {
+//                    continue
+//                }
+                do {
+                    try token.saveBalance(in: currentWallet, network: currentNetwork, balance: stringCurrBalance)
+                } catch {
+                    continue
+                }
+            }
+        }
+    }
+    
     func showAccepting(animated: Bool) {
         self.screenStatus = .accepting
+        self.updateFranklinBalance()
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
             self.titleLabel.text = "You got a cheque!"

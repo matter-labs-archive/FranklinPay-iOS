@@ -47,6 +47,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        print("Continue User Activity called: ")
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            let url = userActivity.webpageURL!
+            print(url.absoluteString)
+            //handle url and open whatever page you want to open.
+        }
+        return true
+    }
+    
     func downloadTokens() {
         let tokensDownloaded = userDefaultKeys.areTokensDownloaded()
         DispatchQueue.global().async { [unowned self] in

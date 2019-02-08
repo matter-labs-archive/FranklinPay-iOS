@@ -133,6 +133,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
             self.reloadDataInTable(completion: {
                 self.updateTokensBalances {
                     self.reloadDataInTable {
+                        //self.saveTokensBalances()
                         // TODO: - need to update rates?
                     }
                 }
@@ -174,10 +175,10 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     func updateTokensBalances(completion: @escaping () -> Void) {
         DispatchQueue.global().async { [unowned self] in
             var index = 0
-            for token in self.tokensArray {
-                var currentTableToken = token
-                let currentToken = token.token
-                let currentWallet = token.inWallet
+            for tabToken in self.tokensArray {
+                var currentTableToken = tabToken
+                let currentToken = tabToken.token
+                let currentWallet = tabToken.inWallet
                 let balance: String = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
                 currentToken.balance = balance
                 currentTableToken.token = currentToken
@@ -187,7 +188,18 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
             completion()
         }
     }
-        
+    
+//    func saveTokensBalances() {
+//        for tabToken in tokensArray {
+//            let currentToken = tabToken.token
+//            let currentWallet = tabToken.inWallet
+//            let currentNetwork = CurrentNetwork.currentNetwork
+//            if let balance = currentToken.balance {
+//                try? currentToken.saveBalance(in: currentWallet, network: currentNetwork, balance: balance)
+//            }
+//        }
+//    }
+    
 //        guard !self.ratesUpdating else {return}
 //        self.ratesUpdating = true
 //        guard !self.twoDimensionalTokensArray.isEmpty else {return}

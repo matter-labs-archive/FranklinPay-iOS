@@ -20,6 +20,7 @@ protocol IERC20Token {
 protocol IERC20TokenStorage {
     func saveIn(wallet: Wallet, network: Web3Network) throws
     func select(in wallet: Wallet, network: Web3Network) throws
+    func saveBalance(in wallet: Wallet, network: Web3Network, balance: String) throws
     func saveRate(rate: Double, change24: Double) throws 
 }
 
@@ -169,6 +170,36 @@ extension ERC20Token: IERC20TokenStorage {
             for item in results {
                 let isEqual = item.address == self.address
                 item.isSelected = isEqual
+            }
+            try ContainerCD.context.save()
+            group.leave()
+        } catch let someErr {
+            error = someErr
+            group.leave()
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
+    }
+    
+    public func saveBalance(in wallet: Wallet, network: Web3Network, balance: String) throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
+        let requestToken: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
+        requestToken.predicate = NSPredicate(format:
+            "networkId == %@ && isAdded == %@ && walletAddress == %@",
+                                             NSNumber(value: network.id),
+                                             NSNumber(value: true),
+                                             NSString(string: wallet.address)
+        )
+        do {
+            let results = try ContainerCD.context.fetch(requestToken)
+            for item in results {
+                if item.address == self.address {
+                    item.balance = balance
+                }
             }
             try ContainerCD.context.save()
             group.leave()
