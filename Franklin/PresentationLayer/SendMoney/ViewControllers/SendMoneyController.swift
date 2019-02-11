@@ -286,11 +286,8 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         self.contactStack.alpha = hidden ? 0 : 1
         self.contactStack.isUserInteractionEnabled = interactive
         let blockies = Blockies(seed: contact?.address,
-                                size: 5,
-                                scale: 4,
-                                color: Colors.mainGreen,
-                                bgColor: Colors.mostLightGray,
-                                spotColor: Colors.mainBlue)
+                                size: 10,
+                                scale: 100)
         let img = blockies.createImage()
         self.contactImage.image = img
         self.contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius
