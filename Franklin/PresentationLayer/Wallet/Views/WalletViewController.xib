@@ -60,6 +60,9 @@
                                 <constraint firstAttribute="width" secondItem="yRA-Np-TwH" secondAttribute="height" multiplier="1:1" id="I89-6T-g9w"/>
                             </constraints>
                             <state key="normal" backgroundImage="photo"/>
+                            <connections>
+                                <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="tF5-hh-iVH"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amZ-Py-VCG" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
                             <rect key="frame" x="82.666666666666657" y="0.0" width="291.33333333333337" height="62.666666666666664"/>

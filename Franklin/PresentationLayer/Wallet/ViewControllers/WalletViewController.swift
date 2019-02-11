@@ -11,6 +11,7 @@ import Web3swift
 import EthereumAddress
 import BigInt
 import SideMenu
+import QRCodeReader
 
 class WalletViewController: BasicViewController, ModalViewDelegate {
 
@@ -38,6 +39,23 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
 
         return refreshControl
     }()
+    
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+        }
+        
+        return QRCodeReaderViewController(builder: builder)
+    }()
+    
+    @IBAction func qrScanTapped(_ sender: Any) {
+        readerVC.delegate = self
+        
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
+        }
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -366,5 +384,24 @@ extension WalletViewController: UISideMenuNavigationControllerDelegate {
     
     func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
         modalViewBeenDismissed()
+    }
+}
+
+extension WalletViewController: QRCodeReaderViewControllerDelegate {
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+        reader.stopScanning()
+        reader.dismiss(animated: true) { [unowned self] in
+            self.modalViewAppeared()
+            let sendMoneyVC = SendMoneyController(address: result.value)
+            sendMoneyVC.delegate = self
+            sendMoneyVC.modalPresentationStyle = .overCurrentContext
+            sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
+            self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
+        }
+    }
+    
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+        reader.stopScanning()
+        reader.dismiss(animated: true, completion: nil)
     }
 }

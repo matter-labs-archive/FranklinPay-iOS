@@ -67,6 +67,8 @@ class SendMoneyController: BasicViewController {
     
     let alerts = Alerts()
     
+    var initAddress: String?
+    
     private let reuseIdentifier = "ContactTableCell"
     private let sectionInsets = UIEdgeInsets(top: 0,
                                              left: 0,
@@ -75,6 +77,11 @@ class SendMoneyController: BasicViewController {
     private let itemsPerRow: CGFloat = 3
     
     weak var animationTimer: Timer?
+    
+    convenience init(address: String) {
+        self.init()
+        self.initAddress = address
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +113,11 @@ class SendMoneyController: BasicViewController {
     }
     
     func setupTextFields() {
+        
+        if initAddress != nil {
+            addressTextField.text = initAddress
+        }
+        
         searchTextField.delegate = self
         amountTextField.delegate = self
         addressTextField.delegate = self
