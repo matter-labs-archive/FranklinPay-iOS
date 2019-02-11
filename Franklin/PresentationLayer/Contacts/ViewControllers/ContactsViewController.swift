@@ -178,7 +178,7 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     
     func searchContact(string: String) {
         guard let list = try? ContactsService().getFullContactsList(for: string) else {
-            self.emptyContactsList()
+            self.getAllContacts() 
             return
         }
         self.updateContactsList(with: list)
@@ -213,6 +213,35 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let contact = contactsList[indexPath.row]
+        let alert = UIAlertController(title: contact.name, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (action) in
+            let vc = SendMoneyController(address: contact.address)
+            self.searchTextField.endEditing(true)
+            self.modalViewAppeared()
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.layer.speed = Constants.ModalView.animationSpeed
+            self.tabBarController?.present(vc, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { [unowned self] (action) in
+            let vc = AddContactController(contact: contact)
+            self.searchTextField.endEditing(true)
+            self.modalViewAppeared()
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            vc.view.layer.speed = Constants.ModalView.animationSpeed
+            self.tabBarController?.present(vc, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [unowned self] (action) in
+            DispatchQueue.main.async { [unowned self] in
+                let searchString = self.searchTextField.text
+                try? contact.deleteContact()
+                self.searchContact(string: searchString ?? "")
+            }
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
 }
 

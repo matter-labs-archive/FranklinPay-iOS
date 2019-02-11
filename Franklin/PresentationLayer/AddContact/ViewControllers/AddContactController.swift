@@ -33,13 +33,12 @@ class AddContactController: BasicViewController {
         case address = 1
     }
     
-    var initName: String?
+    var initContact: Contact?
     var initAddress: String?
     
-    convenience init(name: String, address: String) {
+    convenience init(contact: Contact) {
         self.init()
-        self.initName = name
-        self.initAddress = address
+        self.initContact = contact
     }
     
     override func viewDidLoad() {
@@ -61,11 +60,9 @@ class AddContactController: BasicViewController {
     }
     
     func setupTextField() {
-        if initAddress != nil {
-            self.addressTextField.text = initAddress
-        }
-        if initName != nil {
-            self.nameTextField.text = initName
+        if initContact != nil {
+            self.addressTextField.text = initContact?.address
+            self.nameTextField.text = initContact?.name
         }
         
         self.nameTextField.delegate = self
@@ -144,6 +141,9 @@ class AddContactController: BasicViewController {
     private func addContact(address: String, name: String) {
         let contact = Contact(address: address, name: name)
         do {
+            if initContact != nil {
+                try initContact?.deleteContact()
+            }
             try contact.saveContact()
             self.dismissView()
         } catch let error {
