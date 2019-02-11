@@ -11,11 +11,11 @@ import SideMenu
 
 class ContactsViewController: BasicViewController, ModalViewDelegate {
 
-    @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var addContactButton: BasicBlueButton!
     @IBOutlet weak var searchTextField: BasicTextField!
     @IBOutlet weak var marker: UIImageView!
     @IBOutlet weak var tableView: BasicTableView!
+    @IBOutlet weak var emptyContactsView: UIView!
     
     var contactsList: [Contact] = []
     var filteredContactsList: [Contact] = []
@@ -70,10 +70,12 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     }
 
     func setupTableView() {
+        self.emptyContactsView.isUserInteractionEnabled = false
         self.tableView.delegate = self
         self.tableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
+        self.tableView.tableFooterView = footerView
         
         let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
         self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
@@ -92,7 +94,6 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.makeHelpLabel(enabled: false)
         //self.setGestureForSidebar()
         self.getAllContacts()
     }
@@ -134,7 +135,8 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
             let contacts = try contactsService.getAllContacts()
             updateContactsList(with: contacts)
         } catch {
-            updateContactsList(with: [])
+            emptyContactsList()
+            //updateContactsList(with: [])
         }
     }
     
@@ -152,26 +154,25 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
         self.tabBarController?.present(addContactController, animated: true, completion: nil)
     }
     
-    func makeHelpLabel(enabled: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            self?.helpLabel.alpha = enabled ? 1 : 0
+    func emptyAttention(enabled: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.emptyContactsView.alpha = enabled ? 1 : 0
         }
     }
     
     func emptyContactsList() {
         contactsList = []
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView?.reloadData()
+        emptyAttention(enabled: true)
+        DispatchQueue.main.async { [unowned self] in
+            self.tableView?.reloadData()
         }
     }
     
     func updateContactsList(with list: [Contact]) {
-        DispatchQueue.main.async { [weak self] in
-            self?.contactsList = list
-            if list.count == 0 && self?.searchTextField.text == "" {
-                self?.makeHelpLabel(enabled: true)
-            }
-            self?.tableView?.reloadData()
+        DispatchQueue.main.async { [unowned self] in
+            self.contactsList = list
+            self.emptyAttention(enabled: list.isEmpty)
+            self.tableView?.reloadData()
         }
     }
     

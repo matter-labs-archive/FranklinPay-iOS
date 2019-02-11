@@ -10,13 +10,14 @@ import UIKit
 import BlockiesSwift
 import SwiftyGif
 import EthereumAddress
+import QRCodeReader
 
-protocol ModalViewDelegate : class {
+protocol ModalViewDelegate: class {
     func modalViewBeenDismissed()
     func modalViewAppeared()
 }
 
-class SendMoneyController: BasicViewController {
+class SendMoneyController: BasicViewController, ModalViewDelegate {
     
     enum TextFieldsTags: Int {
         case amount = 0
@@ -57,6 +58,9 @@ class SendMoneyController: BasicViewController {
     @IBOutlet weak var orEnterAddressLabel: UILabel!
     @IBOutlet weak var sendToLabel: UILabel!
     @IBOutlet weak var addressStackView: UIStackView!
+    @IBOutlet weak var emptyContactsView: UIView!
+    
+    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
     var searchStackOrigin: CGFloat = 0
     weak var delegate: ModalViewDelegate?
@@ -78,6 +82,23 @@ class SendMoneyController: BasicViewController {
     
     weak var animationTimer: Timer?
     
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+        }
+        
+        return QRCodeReaderViewController(builder: builder)
+    }()
+    
+    @IBAction func qrScanTapped(_ sender: Any) {
+        readerVC.delegate = self
+        
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
+        }
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
+    }
+    
     convenience init(address: String) {
         self.init()
         self.initAddress = address
@@ -95,12 +116,12 @@ class SendMoneyController: BasicViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         showStart(animated: false)
-        getAllContacts()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setMiddleStackPosition()
+        getAllContacts()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -140,7 +161,7 @@ class SendMoneyController: BasicViewController {
             let contacts = try contactsService.getAllContacts()
             updateContactsList(with: contacts)
         } catch {
-            updateContactsList(with: [])
+            emptyContactsList()
         }
     }
     
@@ -149,6 +170,7 @@ class SendMoneyController: BasicViewController {
         self.tableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
+        self.tableView.tableFooterView = footerView
         
         let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
         self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
@@ -326,7 +348,7 @@ class SendMoneyController: BasicViewController {
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
             self.setCollectionView(hidden: false)
             self.setBottomButton(text: "Back", imageName: "left-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
-            self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
+            self.setTopButton(text: "Add contact", imageName: "add-contacts", backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
             self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
             self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
@@ -529,6 +551,14 @@ class SendMoneyController: BasicViewController {
             let contact = Contact(address: address, name: "")
             self.chosenContact = contact
             showSending(animated: true)
+        case .searching:
+            self.searchTextField.endEditing(true)
+            self.modalViewAppeared()
+            let addContactController = AddContactController()
+            addContactController.delegate = self
+            addContactController.modalPresentationStyle = .overCurrentContext
+            addContactController.view.layer.speed = Constants.ModalView.animationSpeed
+            self.present(addContactController, animated: true, completion: nil)
         case .ready:
             showSaving(animated: true)
         case .saving:
@@ -551,15 +581,17 @@ class SendMoneyController: BasicViewController {
     
     func emptyContactsList() {
         contactsList = []
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView?.reloadData()
+        emptyAttention(enabled: true)
+        DispatchQueue.main.async { [unowned self] in
+            self.tableView?.reloadData()
         }
     }
     
     func updateContactsList(with list: [Contact]) {
-        DispatchQueue.main.async { [weak self] in
-            self?.contactsList = list
-            self?.tableView?.reloadData()
+        DispatchQueue.main.async { [unowned self] in
+            self.contactsList = list
+            self.emptyAttention(enabled: list.isEmpty)
+            self.tableView?.reloadData()
         }
     }
     
@@ -569,6 +601,29 @@ class SendMoneyController: BasicViewController {
             return
         }
         self.updateContactsList(with: list)
+    }
+    
+    func emptyAttention(enabled: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.emptyContactsView.alpha = enabled ? 1 : 0
+        }
+    }
+    
+    func modalViewBeenDismissed() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+                self.topViewForModalAnimation.alpha = 0
+            })
+        }
+        getAllContacts()
+    }
+    
+    func modalViewAppeared() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+                self.topViewForModalAnimation.alpha = 0.5
+            })
+        }
     }
 }
 
@@ -682,5 +737,18 @@ extension SendMoneyController: UITextFieldDelegate {
             showSearch(animated: true)
         }
         return true
+    }
+}
+
+extension SendMoneyController: QRCodeReaderViewControllerDelegate {
+    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
+        reader.stopScanning()
+        addressTextField.text = result.value
+        reader.dismiss(animated: true, completion: nil)
+    }
+    
+    func readerDidCancel(_ reader: QRCodeReaderViewController) {
+        reader.stopScanning()
+        reader.dismiss(animated: true, completion: nil)
     }
 }

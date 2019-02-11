@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
         <array key="SF-Pro-Text-Regular.otf">
             <string>SFProText-Regular</string>
         </array>
@@ -21,7 +24,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ContactsViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
                 <outlet property="addContactButton" destination="rZs-6I-w5i" id="6Dn-qU-dP1"/>
-                <outlet property="helpLabel" destination="f0m-LF-rrX" id="fHe-1W-tRY"/>
+                <outlet property="emptyContactsView" destination="ODd-1H-dhR" id="8Vu-Qb-1w5"/>
                 <outlet property="marker" destination="Rj0-W1-E7y" id="Cm4-3K-Int"/>
                 <outlet property="searchTextField" destination="sAc-Ei-VFq" id="t5Z-rL-jaS"/>
                 <outlet property="tableView" destination="PDP-WB-SwR" id="Tht-VZ-bBQ"/>
@@ -50,12 +53,6 @@
                         <action selector="addContact:" destination="-1" eventType="touchUpInside" id="ehO-94-7JN"/>
                     </connections>
                 </button>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No contacts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f0m-LF-rrX">
-                    <rect key="frame" x="37.5" y="331.5" width="300" height="24"/>
-                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                    <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QYc-oH-GL0">
                     <rect key="frame" x="10" y="30" width="30" height="30"/>
                     <constraints>
@@ -82,6 +79,22 @@
                     <rect key="frame" x="20" y="190.5" width="335" height="380.5"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ODd-1H-dhR">
+                    <rect key="frame" x="20" y="190.5" width="335" height="380.5"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No contacts" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiQ-as-lFt">
+                            <rect key="frame" x="117" y="178.5" width="101.5" height="24"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                            <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="fiQ-as-lFt" firstAttribute="centerY" secondItem="ODd-1H-dhR" secondAttribute="centerY" id="Ryy-HS-gbx"/>
+                        <constraint firstItem="fiQ-as-lFt" firstAttribute="centerX" secondItem="ODd-1H-dhR" secondAttribute="centerX" id="WFB-oX-4jz"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
@@ -92,22 +105,23 @@
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="7Ws-F0-p1v"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="BBh-M9-TID" secondAttribute="trailing" constant="20" id="8vJ-aH-8Dp"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="8yr-nb-mOa"/>
+                <constraint firstItem="ODd-1H-dhR" firstAttribute="top" secondItem="PDP-WB-SwR" secondAttribute="top" id="9CM-4f-ka1"/>
                 <constraint firstItem="PDP-WB-SwR" firstAttribute="width" secondItem="rZs-6I-w5i" secondAttribute="width" id="9bC-Nt-ax9"/>
                 <constraint firstItem="Rj0-W1-E7y" firstAttribute="top" secondItem="QYc-oH-GL0" secondAttribute="top" id="Bed-30-gwr"/>
                 <constraint firstItem="Rj0-W1-E7y" firstAttribute="width" secondItem="QYc-oH-GL0" secondAttribute="width" multiplier="0.5" id="D1S-fD-isv"/>
                 <constraint firstItem="PDP-WB-SwR" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="DUv-jS-YsO"/>
                 <constraint firstItem="BBh-M9-TID" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="Fiv-Us-DmC"/>
                 <constraint firstItem="rZs-6I-w5i" firstAttribute="top" secondItem="PDP-WB-SwR" secondAttribute="bottom" constant="19.5" id="Gso-uo-tZt"/>
+                <constraint firstItem="ODd-1H-dhR" firstAttribute="trailing" secondItem="PDP-WB-SwR" secondAttribute="trailing" id="J5J-yt-yLZ"/>
                 <constraint firstItem="Rj0-W1-E7y" firstAttribute="trailing" secondItem="QYc-oH-GL0" secondAttribute="trailing" id="KRU-vW-tgT"/>
-                <constraint firstItem="f0m-LF-rrX" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="OCB-j7-ILc"/>
-                <constraint firstItem="f0m-LF-rrX" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" id="QC8-jN-Who"/>
                 <constraint firstItem="QYc-oH-GL0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="ZTL-B9-Vih"/>
                 <constraint firstItem="BBh-M9-TID" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="adm-jx-6j6"/>
                 <constraint firstItem="Rj0-W1-E7y" firstAttribute="height" secondItem="QYc-oH-GL0" secondAttribute="height" multiplier="0.5" id="gD0-qL-xbd"/>
+                <constraint firstItem="ODd-1H-dhR" firstAttribute="bottom" secondItem="PDP-WB-SwR" secondAttribute="bottom" id="m2k-9N-KUE"/>
                 <constraint firstItem="sAc-Ei-VFq" firstAttribute="top" secondItem="BBh-M9-TID" secondAttribute="bottom" constant="25" id="nDp-Vq-YFx"/>
                 <constraint firstItem="rZs-6I-w5i" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="nyf-WN-mki"/>
-                <constraint firstItem="f0m-LF-rrX" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.8" id="qjI-N7-2P5"/>
                 <constraint firstItem="QYc-oH-GL0" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="rXF-Qs-dSm"/>
+                <constraint firstItem="ODd-1H-dhR" firstAttribute="leading" secondItem="PDP-WB-SwR" secondAttribute="leading" id="u2H-P6-mfS"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="rZs-6I-w5i" secondAttribute="bottom" constant="30" id="xw9-so-K2M"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
