@@ -232,7 +232,7 @@ class EnterPincodeViewController: PincodeViewController {
 //    }
 
     func returnToStartTab() {
-        DispatchQueue.main.asyncAfter(deadline: .now()+1.0) { [unowned self] in
+        DispatchQueue.main.asyncAfter(deadline: .now()+0.25) { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) {
                 self.view.alpha = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
