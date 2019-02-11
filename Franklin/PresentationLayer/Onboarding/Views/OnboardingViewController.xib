@@ -70,23 +70,23 @@
                             <viewLayoutGuide key="safeArea" id="xni-O0-GEr"/>
                         </stackView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFu-TQ-CFK" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
-                            <rect key="frame" x="37.5" y="451.5" width="262.5" height="47"/>
+                            <rect key="frame" x="1" y="451.5" width="335" height="47"/>
                             <state key="normal" title="Button"/>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="By cliking 'Continue' you agree to the" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="a1r-5y-Fyt">
-                            <rect key="frame" x="37.5" y="503.5" width="262.5" height="22"/>
+                            <rect key="frame" x="46" y="503.5" width="245" height="22"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="16"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="terms and conditions" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="5jd-DQ-sd1">
-                            <rect key="frame" x="37.5" y="525.5" width="262.5" height="21.5"/>
+                            <rect key="frame" x="46" y="525.5" width="245" height="21.5"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="16"/>
                             <color key="textColor" red="0.52156862749999999" green="0.73333333329999995" blue="0.39607843139999999" alpha="0.84705882349999995" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="F6C-uN-FK3">
-                            <rect key="frame" x="0.0" y="515" width="337.5" height="24"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="F6C-uN-FK3">
+                            <rect key="frame" x="0.0" y="513" width="337.5" height="26"/>
                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="24"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -99,7 +99,6 @@
                         <constraint firstItem="F6C-uN-FK3" firstAttribute="leading" secondItem="T7T-dq-jmR" secondAttribute="leading" id="8q5-8E-1bP"/>
                         <constraint firstItem="a1r-5y-Fyt" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="AZW-Tf-sRj"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="top" secondItem="66Y-EM-95G" secondAttribute="bottom" id="Dxs-2p-Z7h"/>
-                        <constraint firstItem="a1r-5y-Fyt" firstAttribute="width" secondItem="KFu-TQ-CFK" secondAttribute="width" id="Ixm-gY-51s"/>
                         <constraint firstItem="5jd-DQ-sd1" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerXWithinMargins" id="JB2-ze-QT5"/>
                         <constraint firstAttribute="bottomMargin" secondItem="T7T-dq-jmR" secondAttribute="bottom" id="JPK-Gu-ntG"/>
                         <constraint firstItem="KFu-TQ-CFK" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="KqJ-D7-21H"/>
@@ -115,7 +114,7 @@
                         <constraint firstItem="5jd-DQ-sd1" firstAttribute="top" secondItem="a1r-5y-Fyt" secondAttribute="bottom" id="kEo-CC-j4G"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" id="kdg-IY-LIP"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="bottom" secondItem="F6C-uN-FK3" secondAttribute="bottom" id="mzj-6G-b4s"/>
-                        <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.1" id="p8s-b4-PAS"/>
+                        <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.2" id="p8s-b4-PAS"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="trailing" secondItem="F6C-uN-FK3" secondAttribute="trailing" id="qUz-Ds-r59"/>
                     </constraints>
                 </view>
@@ -123,9 +122,9 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="uva-wy-8uq" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="09O-z5-NbC"/>
+                <constraint firstItem="KFu-TQ-CFK" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="KTt-lb-4z0"/>
                 <constraint firstItem="uva-wy-8uq" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.82" id="mbi-p8-TBh"/>
                 <constraint firstItem="uva-wy-8uq" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="mst-ra-8r1"/>
-                <constraint firstItem="KFu-TQ-CFK" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.7" id="nTG-4z-vPV"/>
                 <constraint firstItem="KFu-TQ-CFK" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="otx-Sw-2v7"/>
                 <constraint firstItem="uva-wy-8uq" firstAttribute="centerY" secondItem="fnl-2z-Ty3" secondAttribute="centerY" multiplier="0.97" id="rbh-Yr-ACL"/>
             </constraints>

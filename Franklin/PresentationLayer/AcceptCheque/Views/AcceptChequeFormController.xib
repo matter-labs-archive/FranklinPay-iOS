@@ -112,7 +112,7 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="PV4-dS-ioM">
-                                    <rect key="frame" x="21.666666666666657" y="134" width="331.33333333333337" height="100.66666666666669"/>
+                                    <rect key="frame" x="-0.66666666666662877" y="134" width="376" height="100.66666666666669"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCT-kR-3bE">
                                             <rect key="frame" x="0.0" y="0.0" width="58.666666666666664" height="32"/>
@@ -122,7 +122,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dGc-qH-5Qc">
-                                            <rect key="frame" x="0.0" y="32.000000000000007" width="331.33333333333331" height="68.666666666666686"/>
+                                            <rect key="frame" x="0.0" y="32.000000000000007" width="376" height="68.666666666666686"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts_gray" translatesAutoresizingMaskIntoConstraints="NO" id="Ocv-O5-2aC">
                                                     <rect key="frame" x="0.0" y="10.666666666666682" width="47.666666666666664" height="47.666666666666657"/>
@@ -131,16 +131,16 @@
                                                     </constraints>
                                                 </imageView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="bottom" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="HXF-mF-0QO">
-                                                    <rect key="frame" x="67.666666666666657" y="2.6666666666666607" width="263.66666666666674" height="63.333333333333343"/>
+                                                    <rect key="frame" x="67.666666666666657" y="2.6666666666666607" width="308.33333333333337" height="63.333333333333343"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NS1-FH-17s">
-                                                            <rect key="frame" x="0.0" y="0.0" width="263.66666666666669" height="30"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="308.33333333333331" height="30"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="26"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="addressdfdafjkdjfkasdjfklasdjfjadshfjadhfjdsahfjdshafaddressdfdafjkdjfkasdjfklasdjfjadshfjadhfjdsahfjdshaf" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GMu-37-mxK">
-                                                            <rect key="frame" x="0.0" y="35.000000000000028" width="263.66666666666669" height="28.333333333333329"/>
+                                                            <rect key="frame" x="0.0" y="35.000000000000028" width="308.33333333333331" height="28.333333333333329"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="11"/>
                                                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -156,7 +156,7 @@
                                     </subviews>
                                 </stackView>
                                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Contact name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qde-JJ-oSh" customClass="BasicTextField" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="21.666666666666657" y="169.33333333333334" width="331.33333333333337" height="62.666666666666657"/>
+                                    <rect key="frame" x="-0.66666666666662877" y="169.33333333333334" width="376" height="62.666666666666657"/>
                                     <nil key="textColor"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
@@ -165,7 +165,7 @@
                                     <rect key="frame" x="0.0" y="428.33333333333337" width="374.66666666666669" height="317"/>
                                 </imageView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zu3-Bp-zRf" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="21.666666666666657" y="672.66666666666663" width="331.33333333333337" height="62.666666666666629"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="672.66666666666663" width="376" height="62.666666666666629"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -179,7 +179,7 @@
                                     </connections>
                                 </button>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Kaf-dp-o6E">
-                                    <rect key="frame" x="21.666666666666657" y="254.66666666666666" width="331.33333333333337" height="100.66666666666666"/>
+                                    <rect key="frame" x="-0.66666666666662877" y="254.66666666666666" width="376" height="100.66666666666666"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ii-w5-dYf">
                                             <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="32"/>
@@ -198,7 +198,7 @@
                                     </subviews>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="CJg-Wd-gcX">
-                                    <rect key="frame" x="21.666666666666657" y="286.66666666666669" width="331.33333333333337" height="141.66666666666669"/>
+                                    <rect key="frame" x="-0.66666666666662877" y="286.66666666666669" width="376" height="141.66666666666669"/>
                                     <string key="text">Save your cheque recepient as a contact in order to send money to them easier and more securely in the future.
 
 Your privacy is protected! Contacts in Franklin wallet are never uploaded to the Internet.</string>
@@ -207,7 +207,7 @@ Your privacy is protected! Contacts in Franklin wallet are never uploaded to the
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9SW-Aq-CZw" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="21.666666666666657" y="600" width="331.33333333333337" height="62.666666666666629"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="600" width="376" height="62.666666666666629"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -248,7 +248,7 @@ Your privacy is protected! Contacts in Franklin wallet are never uploaded to the
                                 <constraint firstAttribute="bottom" secondItem="zu3-Bp-zRf" secondAttribute="bottom" constant="10" id="SxZ-08-BNq"/>
                                 <constraint firstItem="FmS-1f-yMD" firstAttribute="leading" secondItem="653-fn-kqf" secondAttribute="leading" id="TRU-GL-OOx"/>
                                 <constraint firstItem="PV4-dS-ioM" firstAttribute="centerX" secondItem="653-fn-kqf" secondAttribute="centerX" id="TV4-HI-xYQ"/>
-                                <constraint firstItem="zu3-Bp-zRf" firstAttribute="width" secondItem="PV4-dS-ioM" secondAttribute="width" id="V6s-7e-UEo"/>
+                                <constraint firstItem="PV4-dS-ioM" firstAttribute="width" secondItem="zu3-Bp-zRf" secondAttribute="width" id="XSp-ej-osN"/>
                                 <constraint firstItem="DM9-yA-1Jb" firstAttribute="leading" secondItem="FmS-1f-yMD" secondAttribute="leading" id="dMh-6Y-Kro"/>
                                 <constraint firstItem="Gv0-fR-VCR" firstAttribute="height" secondItem="653-fn-kqf" secondAttribute="height" multiplier="0.07" id="dR4-S7-YRw"/>
                                 <constraint firstItem="Ect-Z3-o5Y" firstAttribute="height" secondItem="653-fn-kqf" secondAttribute="height" multiplier="0.06" id="dar-dZ-bt6"/>
@@ -285,6 +285,7 @@ Your privacy is protected! Contacts in Franklin wallet are never uploaded to the
                     <constraints>
                         <constraint firstItem="dCd-oB-wo1" firstAttribute="centerY" secondItem="moM-n6-WyN" secondAttribute="centerY" multiplier="0.85" id="CPN-bY-ePa"/>
                         <constraint firstItem="zu3-Bp-zRf" firstAttribute="centerX" secondItem="iTO-PP-3T6" secondAttribute="centerX" id="EmR-qE-Xzu"/>
+                        <constraint firstItem="zu3-Bp-zRf" firstAttribute="leading" secondItem="iTO-PP-3T6" secondAttribute="leading" constant="20" id="cxL-XM-B6S"/>
                         <constraint firstItem="dCd-oB-wo1" firstAttribute="centerX" secondItem="moM-n6-WyN" secondAttribute="centerX" id="eha-pb-oGV"/>
                         <constraint firstItem="653-fn-kqf" firstAttribute="height" secondItem="iTO-PP-3T6" secondAttribute="height" multiplier="0.94" id="ixK-aO-JWw"/>
                         <constraint firstItem="dCd-oB-wo1" firstAttribute="height" secondItem="653-fn-kqf" secondAttribute="height" multiplier="0.063" id="jFE-QX-VJe"/>
@@ -309,7 +310,6 @@ Your privacy is protected! Contacts in Franklin wallet are never uploaded to the
                 <constraint firstAttribute="trailing" secondItem="iTO-PP-3T6" secondAttribute="trailing" constant="-1" id="Bon-Za-RVO"/>
                 <constraint firstItem="zu3-Bp-zRf" firstAttribute="height" secondItem="Q37-ks-oOl" secondAttribute="height" multiplier="0.07" id="FxJ-qa-laO"/>
                 <constraint firstItem="2mO-1u-m5j" firstAttribute="bottom" secondItem="iTO-PP-3T6" secondAttribute="bottom" id="K1U-Pz-ag4"/>
-                <constraint firstItem="PV4-dS-ioM" firstAttribute="width" secondItem="mRJ-Uj-mdI" secondAttribute="width" multiplier="0.8" id="YMd-R3-D32"/>
                 <constraint firstItem="mRJ-Uj-mdI" firstAttribute="top" secondItem="2mO-1u-m5j" secondAttribute="top" id="i1G-m5-Ax4"/>
                 <constraint firstItem="xxF-d9-05X" firstAttribute="top" secondItem="2mO-1u-m5j" secondAttribute="bottom" constant="-30" id="psC-4G-EhR"/>
                 <constraint firstItem="iTO-PP-3T6" firstAttribute="top" secondItem="2mO-1u-m5j" secondAttribute="top" constant="25" id="tbF-tS-Ub2"/>

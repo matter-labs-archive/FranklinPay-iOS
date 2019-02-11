@@ -13,26 +13,57 @@ import IHKeyboardAvoiding
 class AddContactController: BasicViewController {
 
     @IBOutlet weak var enterButton: BasicBlueButton!
-    @IBOutlet var textViews: [BasicTextView]!
+    @IBOutlet var textFields: [BasicTextField]!
     @IBOutlet weak var qrCodeButton: ScanButton!
-    @IBOutlet weak var nameTextView: BasicTextView!
-    @IBOutlet weak var addressTextView: BasicTextView!
+    @IBOutlet weak var nameTextField: BasicTextField!
+    @IBOutlet weak var addressTextField: BasicTextField!
     @IBOutlet weak var tapToQR: UILabel!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backgroundView: UIView!
+    @IBOutlet weak var contactNameLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     
     let alerts = Alerts()
     
     weak var delegate: ModalViewDelegate?
     
+    enum TextFieldsTags: Int {
+        case name = 0
+        case address = 1
+    }
+    
+    convenience init(name: String, address: String) {
+        self.init()
+        self.nameTextField.text = name
+        self.addressTextField.text = address
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mainSetup()
+        self.setupTextField()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        self.showLabels(true)
         KeyboardAvoiding.avoidingView = self.contentView
+    }
+    
+    func showLabels(_ show: Bool) {
+        self.contactNameLabel.alpha = show ? 1 : 0
+        self.addressLabel.alpha = show ? 1 : 0
+        self.titleLabel.alpha = show ? 1 : 0
+    }
+    
+    func setupTextField() {
+        self.nameTextField.delegate = self
+        self.addressTextField.delegate = self
+        self.nameTextField.tag = TextFieldsTags.name.rawValue
+        self.addressTextField.tag = TextFieldsTags.address.rawValue
+        nameTextField.returnKeyType = .next
+        addressTextField.returnKeyType = .next
     }
     
     func mainSetup() {
@@ -48,18 +79,16 @@ class AddContactController: BasicViewController {
         self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
         self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
         self.qrCodeButton.setImage(UIImage(named: "photo"), for: .normal)
-        self.nameTextView.delegate = self
-        self.addressTextView.delegate = self
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
                                                                  action: #selector(self.dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
         
-        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissKeyboard))
-        dismissKeyboard.cancelsTouchesInView = false
-        self.contentView.addGestureRecognizer(dismissKeyboard)
+//        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+//                                                                 action: #selector(self.dismissKeyboard))
+//        dismissKeyboard.cancelsTouchesInView = false
+//        self.contentView.addGestureRecognizer(dismissKeyboard)
     }
     
     @objc func dismissView() {
@@ -86,11 +115,11 @@ class AddContactController: BasicViewController {
 
     @IBAction func addContactButtonTapped(_ sender: Any) {
 
-        guard let address = addressTextView.text else {
+        guard let address = addressTextField.text else {
             return
         }
 
-        guard let name = nameTextView.text else {
+        guard let name = nameTextField.text else {
             return
         }
 
@@ -118,41 +147,63 @@ class AddContactController: BasicViewController {
         enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
     }
 
-    private func isEnterButtonEnabled(afterChanging textView: UITextView, with string: String) {
+    private func isEnterButtonEnabled(afterChanging textField: UITextField, with string: String) {
         enterButton.isEnabled = false
-        let everyViewIsOK: Bool
-        switch textView {
-        case addressTextView:
-            everyViewIsOK = !(nameTextView.text?.isEmpty ?? true) && !string.isEmpty
+        let everyFieldIsOK: Bool
+        switch textField {
+        case addressTextField:
+            everyFieldIsOK = !(nameTextField.text?.isEmpty ?? true) && !string.isEmpty
         default:
-            everyViewIsOK = !(addressTextView.text?.isEmpty ?? true) && !string.isEmpty
+            everyFieldIsOK = !(addressTextField.text?.isEmpty ?? true) && !string.isEmpty
         }
-        enterButton.isEnabled = everyViewIsOK
+        enterButton.isEnabled = everyFieldIsOK
     }
 
 }
 
-extension AddContactController: UITextViewDelegate {
+extension AddContactController: UITextFieldDelegate {
     
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText = (textView.text ?? "") as NSString
-        let futureString = currentText.replacingCharacters(in: range, with: text) as String
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = (textField.text ?? "") as NSString
+        let futureString = currentText.replacingCharacters(in: range, with: string) as String
         
-        isEnterButtonEnabled(afterChanging: textView, with: futureString)
+        isEnterButtonEnabled(afterChanging: textField, with: futureString)
         
         updateEnterButtonAlpha()
         
-        textView.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
+        textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
         
         return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField.tag == TextFieldsTags.name.rawValue && !enterButton.isEnabled {
+            addressTextField.becomeFirstResponder()
+            return false
+        } else if textField.tag == TextFieldsTags.address.rawValue && !enterButton.isEnabled {
+            nameTextField.becomeFirstResponder()
+            return false
+        } else if enterButton.isEnabled {
+            textField.resignFirstResponder()
+            return true
+        }
+        return false
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.showLabels(false)
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        self.showLabels(true)
     }
 }
 
 extension AddContactController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
-        addressTextView.text = result.value
-        if !(nameTextView.text?.isEmpty ?? true) {
+        addressTextField.text = result.value
+        if !(nameTextField.text?.isEmpty ?? true) {
             enterButton.isEnabled = true
             enterButton.alpha = 1
         }

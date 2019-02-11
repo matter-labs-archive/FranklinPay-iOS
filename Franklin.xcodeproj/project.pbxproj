@@ -567,6 +567,33 @@
 			path = FranklinTests;
 			sourceTree = "<group>";
 		};
+		3A8096C92211794600DAB8DC /* NetworksList */ = {
+			isa = PBXGroup;
+			children = (
+				3A8096CB2211796F00DAB8DC /* Views */,
+				3A8096CA2211796600DAB8DC /* ViewControllers */,
+			);
+			path = NetworksList;
+			sourceTree = "<group>";
+		};
+		3A8096CA2211796600DAB8DC /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32D2144213000C358AA /* NetworksViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3A8096CB2211796F00DAB8DC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9197F32E2144213000C358AA /* NetworksViewController.xib */,
+				9197F3322144228B00C358AA /* NetworksCell.xib */,
+				9197F3312144228B00C358AA /* NetworksCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		6DE660421B91D607B06623B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +786,7 @@
 			isa = PBXGroup;
 			children = (
 				E2F686A421F9DE5A00BD3D14 /* NeedToBe */,
+				3A8096C92211794600DAB8DC /* NetworksList */,
 				E2A8DBBA21F780280031AC58 /* WalletsList */,
 				E20F3D17220857E600669C8B /* Pincode */,
 				E2C14A912204898300B060AD /* Backup */,
@@ -884,17 +912,6 @@
 				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
 			);
 			path = PrivateKey;
-			sourceTree = "<group>";
-		};
-		E234C7A421EBF3C900F175AF /* Networks */ = {
-			isa = PBXGroup;
-			children = (
-				9197F32E2144213000C358AA /* NetworksViewController.xib */,
-				9197F3322144228B00C358AA /* NetworksCell.xib */,
-				9197F3312144228B00C358AA /* NetworksCell.swift */,
-				9197F32D2144213000C358AA /* NetworksViewController.swift */,
-			);
-			path = Networks;
 			sourceTree = "<group>";
 		};
 		E27BF74721D1447900951061 /* PlasmaSwiftLib */ = {
@@ -1590,13 +1607,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E2C110C121E7DB730012A978 /* Pincode */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Pincode;
-			sourceTree = "<group>";
-		};
 		E2C110C221E7DBAE0012A978 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1889,9 +1899,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C1109821E566B60012A978 /* WalletCreation */,
-				E2C110C121E7DB730012A978 /* Pincode */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
-				E234C7A421EBF3C900F175AF /* Networks */,
 				E234C7A021EB5F8500F175AF /* PrivateKey */,
 				E2C1109E21E567070012A978 /* old */,
 				E2C1109921E566D40012A978 /* Token */,

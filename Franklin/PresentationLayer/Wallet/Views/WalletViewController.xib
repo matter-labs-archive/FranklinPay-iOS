@@ -51,8 +51,8 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="xNa-Qj-KS6">
                     <rect key="frame" x="25" y="54" width="15" height="15"/>
                 </imageView>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="QDe-ca-gsZ">
-                    <rect key="frame" x="41.333333333333343" y="769.33333333333337" width="331.33333333333326" height="62.666666666666629"/>
+                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="QDe-ca-gsZ">
+                    <rect key="frame" x="20" y="769.33333333333337" width="374" height="62.666666666666629"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRA-Np-TwH" customClass="ScanButton" customModule="Franklin" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="62.666666666666664" height="62.666666666666664"/>
@@ -62,7 +62,7 @@
                             <state key="normal" backgroundImage="photo"/>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amZ-Py-VCG" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
-                            <rect key="frame" x="77.666666666666671" y="0.0" width="253.66666666666663" height="62.666666666666664"/>
+                            <rect key="frame" x="82.666666666666657" y="0.0" width="291.33333333333337" height="62.666666666666664"/>
                             <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                             <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -92,11 +92,11 @@
                 <constraint firstItem="xNa-Qj-KS6" firstAttribute="width" secondItem="rb0-dq-Wdw" secondAttribute="width" multiplier="0.5" id="ZEV-w1-JZW"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="centerX" secondItem="iPF-hr-DoE" secondAttribute="centerX" id="d6a-er-OD2"/>
                 <constraint firstItem="khk-pc-SNg" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" id="g7x-Q7-D0u"/>
-                <constraint firstItem="QDe-ca-gsZ" firstAttribute="width" secondItem="LUp-ao-XXN" secondAttribute="width" multiplier="0.8" id="lo2-vh-DSc"/>
                 <constraint firstItem="xNa-Qj-KS6" firstAttribute="height" secondItem="rb0-dq-Wdw" secondAttribute="height" multiplier="0.5" id="mNs-IM-5OV"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="height" secondItem="LUp-ao-XXN" secondAttribute="height" multiplier="0.07" id="mtx-pp-RKR"/>
                 <constraint firstItem="iPF-hr-DoE" firstAttribute="bottom" secondItem="QDe-ca-gsZ" secondAttribute="bottom" constant="30" id="peW-PH-R19"/>
                 <constraint firstItem="QDe-ca-gsZ" firstAttribute="top" secondItem="khk-pc-SNg" secondAttribute="bottom" constant="10" id="q8p-4J-dBj"/>
+                <constraint firstItem="QDe-ca-gsZ" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" constant="20" id="xVR-AV-Gz4"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="iPF-hr-DoE"/>
             <point key="canvasLocation" x="119.2" y="52.623688155922046"/>

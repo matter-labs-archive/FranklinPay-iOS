@@ -42,7 +42,7 @@
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IOa-Op-Lkm">
                     <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4ig-kl-caf" userLabel="Content View">
                     <rect key="frame" x="-1" y="69" width="416" height="793"/>
@@ -85,7 +85,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r5g-Tl-nA2" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="21.666666666666657" y="677.66666666666663" width="331.33333333333337" height="62.666666666666629"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="677.66666666666663" width="376" height="62.666666666666629"/>
                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
                                     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -99,21 +99,21 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="k7p-A9-lay">
-                                    <rect key="frame" x="21.666666666666657" y="253" width="331.33333333333337" height="239"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="265" width="376" height="215"/>
                                     <string key="text">Your private key now is stored in a local secure vault on your device.  Until you back up it you can loose it just by deleting this Wallet.  We strongly recommend that you write the recovery phrase (passphrase) with a pen on paper and keep it in a safe place.</string>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
                                     <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your private key now is stored in a local secure vault on" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Oq4-l1-bg4">
-                                    <rect key="frame" x="21.666666666666657" y="161.33333333333337" width="331.33333333333337" height="337"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="161.33333333333337" width="376" height="337"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="24"/>
                                     <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                     <string key="userLabel">Your private key now is stored in a local secure vault on your device.  Until you back up it you can loose it just by deleting this Wallet.  We strongly recommend that you write the recovery phrase (passphrase) with a pen on paper and keep it in a safe place.</string>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you shure that you've copied it to a secure place?  It is the last chance for this!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="tYF-eN-9ka">
-                                    <rect key="frame" x="21.666666666666657" y="508.33333333333331" width="331.33333333333337" height="149.33333333333331"/>
+                                    <rect key="frame" x="-0.66666666666665719" y="508.33333333333331" width="376" height="149.33333333333331"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="22"/>
                                     <color key="textColor" red="1" green="0.50196078430000002" blue="0.1529411765" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
@@ -153,6 +153,7 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="BVY-Ov-R7w" firstAttribute="width" secondItem="4ig-kl-caf" secondAttribute="width" multiplier="0.9" id="Bqx-rh-u5H"/>
+                        <constraint firstItem="r5g-Tl-nA2" firstAttribute="leading" secondItem="4ig-kl-caf" secondAttribute="leading" constant="20" id="GBa-WT-Tsz"/>
                         <constraint firstItem="BVY-Ov-R7w" firstAttribute="centerY" secondItem="4ig-kl-caf" secondAttribute="centerY" multiplier="0.98" id="Jve-UT-zcN"/>
                         <constraint firstItem="BVY-Ov-R7w" firstAttribute="height" secondItem="4ig-kl-caf" secondAttribute="height" multiplier="0.94" id="nwh-U4-zoM"/>
                         <constraint firstItem="BVY-Ov-R7w" firstAttribute="centerX" secondItem="4ig-kl-caf" secondAttribute="centerX" id="uJ2-QS-iTX"/>
@@ -172,7 +173,6 @@
                 <constraint firstItem="IOa-Op-Lkm" firstAttribute="leading" secondItem="daA-Sc-VVt" secondAttribute="leading" id="8tW-lf-WgK"/>
                 <constraint firstItem="IOa-Op-Lkm" firstAttribute="top" secondItem="daA-Sc-VVt" secondAttribute="top" id="BxJ-ZN-0mR"/>
                 <constraint firstItem="4ig-kl-caf" firstAttribute="leading" secondItem="j2x-r3-CMR" secondAttribute="leading" constant="-1" id="C07-Q8-s0Q"/>
-                <constraint firstItem="r5g-Tl-nA2" firstAttribute="width" secondItem="j2x-r3-CMR" secondAttribute="width" multiplier="0.8" id="CPR-sO-1FA"/>
                 <constraint firstItem="IG3-Wu-hvJ" firstAttribute="leading" secondItem="j2x-r3-CMR" secondAttribute="leading" constant="-1" id="FwI-pg-0jU"/>
                 <constraint firstItem="daA-Sc-VVt" firstAttribute="bottom" secondItem="IOa-Op-Lkm" secondAttribute="bottom" id="IKx-RX-ikg"/>
                 <constraint firstItem="r5g-Tl-nA2" firstAttribute="height" secondItem="j2x-r3-CMR" secondAttribute="height" multiplier="0.07" id="VO0-xv-TY4"/>
@@ -188,6 +188,6 @@
     </objects>
     <resources>
         <image name="close_blue" width="115" height="111"/>
-        <image name="writing-tool" width="96" height="96"/>
+        <image name="writing-tool" width="48" height="48"/>
     </resources>
 </document>

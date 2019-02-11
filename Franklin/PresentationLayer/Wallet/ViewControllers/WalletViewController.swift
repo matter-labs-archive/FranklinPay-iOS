@@ -303,19 +303,19 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
-            return
-        }
-        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
-        guard let selectedCell = cell else {
-            return
-        }
-        guard let indexPathTapped = self.walletTableView.indexPath(for: selectedCell) else {
-            return
-        }
-        let tableToken = self.tokensArray[indexPathTapped.row]
-        let tokenViewController = TokenViewController(token: tableToken.token)
-        self.navigationController?.pushViewController(tokenViewController, animated: true)
+//        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
+//            return
+//        }
+//        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+//        guard let selectedCell = cell else {
+//            return
+//        }
+//        guard let indexPathTapped = self.walletTableView.indexPath(for: selectedCell) else {
+//            return
+//        }
+//        let tableToken = self.tokensArray[indexPathTapped.row]
+//        let tokenViewController = TokenViewController(token: tableToken.token)
+//        self.navigationController?.pushViewController(tokenViewController, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 

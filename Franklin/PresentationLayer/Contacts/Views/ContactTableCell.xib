@@ -20,7 +20,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactTableCell" rowHeight="100" id="KGk-i7-Jjw" customClass="ContactTableCell" customModule="Franklin" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ContactTableCell" rowHeight="90" id="KGk-i7-Jjw" customClass="ContactTableCell" customModule="Franklin" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
@@ -28,17 +28,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="YYD-fg-Iaj">
-                        <rect key="frame" x="10" y="5" width="300" height="80"/>
+                        <rect key="frame" x="10" y="10" width="300" height="70"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts_gray" translatesAutoresizingMaskIntoConstraints="NO" id="slY-QD-UgL">
-                                <rect key="frame" x="0.0" y="16" width="48" height="48"/>
+                                <rect key="frame" x="0.0" y="11" width="48" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="slY-QD-UgL" secondAttribute="height" multiplier="1:1" id="VHn-hy-THh"/>
                                     <constraint firstAttribute="height" constant="48" id="jw2-7J-fMk"/>
                                 </constraints>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="bottom" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="ihC-6U-m8I">
-                                <rect key="frame" x="68" y="8.5" width="232" height="63"/>
+                                <rect key="frame" x="68" y="3.5" width="232" height="63"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ln-7P-qr1">
                                         <rect key="frame" x="0.0" y="0.0" width="232" height="30"/>
@@ -66,15 +66,15 @@
                             </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="K0X-3Y-Rex"/>
+                            <constraint firstAttribute="height" constant="70" id="K0X-3Y-Rex"/>
                         </constraints>
                     </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="YYD-fg-Iaj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="YnC-pi-rL8"/>
+                    <constraint firstItem="YYD-fg-Iaj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="YnC-pi-rL8"/>
                     <constraint firstItem="YYD-fg-Iaj" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="exL-Om-fTi"/>
                     <constraint firstAttribute="trailing" secondItem="YYD-fg-Iaj" secondAttribute="trailing" constant="10" id="oGG-Wz-dAs"/>
-                    <constraint firstAttribute="bottom" secondItem="YYD-fg-Iaj" secondAttribute="bottom" constant="5" id="rK0-sP-PDI"/>
+                    <constraint firstAttribute="bottom" secondItem="YYD-fg-Iaj" secondAttribute="bottom" constant="10" id="rK0-sP-PDI"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

@@ -17,6 +17,7 @@ class SettingsViewController: BasicViewController, ModalViewDelegate {
     var mainSettings: [MainSetting] = []
     var walletsService = WalletsService()
     var settingsInteractor = SettingInteractor()
+    let alerts = Alerts()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,23 +119,26 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
         guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
             return
         }
-        var vc = UIViewController()
         let setting = mainSettings[indexPathForSelectedRow.row]
         switch setting {
         case MainSetting(.backup):
-            vc = BackupViewController()
+            self.presentVC(BackupViewController())
         case MainSetting(.pincode):
-            vc = CreatePincodeViewController()
+            self.presentVC(CreatePincodeViewController())
         case MainSetting(.wallet):
-            vc = WalletsViewController()
+            self.presentVC(WalletsViewController())
+        case MainSetting(.network):
+            self.presentVC(NetworksViewController())
         default:
-            break
+            alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
         }
-        self.navigationController?.pushViewController(vc, animated: true)
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func presentVC(_ vc: UIViewController) {
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

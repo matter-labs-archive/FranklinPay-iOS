@@ -24,10 +24,8 @@ class ContactTableCell: UITableViewCell {
         self.contactName.text = contact.name
         self.contactAddress.text = contact.address
         let blockies = Blockies(seed: contact.address,
-                                size: 5,
-                                scale: 4,
-                                color: Colors.mainGreen,
-                                bgColor: Colors.mostLightGray, spotColor: Colors.mainBlue)
+                                size: 10,
+                                scale: 100)
         let img = blockies.createImage()
         self.contactImage.image = img
         self.contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius

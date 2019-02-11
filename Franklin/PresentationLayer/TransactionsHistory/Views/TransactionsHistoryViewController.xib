@@ -33,13 +33,19 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2QD-ja-FLv">
-                    <rect key="frame" x="37.5" y="114" width="300" height="29"/>
+                    <rect key="frame" x="20" y="114" width="335" height="29"/>
                     <segments>
                         <segment title="All"/>
                         <segment title="Sent"/>
                         <segment title="Received"/>
                         <segment title="Confirming"/>
                     </segments>
+                    <color key="tintColor" red="0.27450980392156865" green="0.49803921568627452" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="changedState:" destination="-1" eventType="valueChanged" id="Icl-N8-Swk"/>
                     </connections>
@@ -75,6 +81,7 @@
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="top" secondItem="nzT-Xk-IIZ" secondAttribute="top" id="K4d-id-EHE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1v0-2Z-m9X" secondAttribute="bottom" id="KIi-MP-i6Q"/>
                 <constraint firstItem="tLb-oQ-tLY" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="MEl-SD-0za"/>
+                <constraint firstItem="2QD-ja-FLv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Oxa-Qc-pb5"/>
                 <constraint firstItem="nzT-Xk-IIZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="SNf-Or-3Wc"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="top" secondItem="2QD-ja-FLv" secondAttribute="bottom" constant="16" id="Set-cZ-Fpg"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="height" secondItem="nzT-Xk-IIZ" secondAttribute="height" multiplier="0.5" id="hDa-6A-jBn"/>
@@ -83,7 +90,6 @@
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="trailing" secondItem="nzT-Xk-IIZ" secondAttribute="trailing" id="nZB-9V-i7i"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="width" secondItem="nzT-Xk-IIZ" secondAttribute="width" multiplier="0.5" id="riu-z0-Lxx"/>
                 <constraint firstItem="nzT-Xk-IIZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="uc4-yc-AlR"/>
-                <constraint firstItem="2QD-ja-FLv" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.8" id="ueJ-ky-SuG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="32.799999999999997" y="57.121439280359823"/>

@@ -65,6 +65,8 @@ class SendMoneyController: BasicViewController {
     var chosenContact: Contact?
     var screenStatus: SendingScreenStatus = .start
     
+    let alerts = Alerts()
+    
     private let reuseIdentifier = "ContactTableCell"
     private let sectionInsets = UIEdgeInsets(top: 0,
                                              left: 0,
@@ -107,6 +109,14 @@ class SendMoneyController: BasicViewController {
         searchTextField.delegate = self
         amountTextField.delegate = self
         addressTextField.delegate = self
+        
+        searchTextField.enablesReturnKeyAutomatically = true
+        amountTextField.enablesReturnKeyAutomatically = true
+        addressTextField.enablesReturnKeyAutomatically = true
+        
+        searchTextField.returnKeyType = .next
+        searchTextField.returnKeyType = .next
+        searchTextField.returnKeyType = .next
         
         amountTextField.tag = TextFieldsTags.amount.rawValue
         searchTextField.tag = TextFieldsTags.search.rawValue
@@ -278,6 +288,8 @@ class SendMoneyController: BasicViewController {
         self.screenStatus = .start
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.mainButton.isEnabled = true
+                
             self.setTitle(text: "Send money", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: false)
@@ -286,8 +298,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
             self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-            self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to contact:")
+            self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
             self.setReadyIcon(hidden: true)
         }
     }
@@ -295,6 +307,8 @@ class SendMoneyController: BasicViewController {
     @objc func showSearch(animated: Bool) {
         self.screenStatus = .searching
         UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
+            self.mainButton.isEnabled = true
+            
             self.setTitle(text: "Send money", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
@@ -303,8 +317,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
             self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to contact:")
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
             self.setReadyIcon(hidden: true)
         }
     }
@@ -314,6 +328,8 @@ class SendMoneyController: BasicViewController {
         
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.mainButton.isEnabled = true
+                
             self.setTitle(text: "Send money", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
@@ -322,8 +338,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
             self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "Send to contact:")
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "or send to contact:")
             self.setReadyIcon(hidden: true)
         }
     }
@@ -332,6 +348,8 @@ class SendMoneyController: BasicViewController {
         self.screenStatus = .sending
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
+            self.mainButton.isEnabled = true
+                
             self.setTitle(text: "Sending...", color: Colors.mainBlue)
             self.showGif(true)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
@@ -340,8 +358,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
             self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "Send to contact:")
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "or send to contact:")
             self.setReadyIcon(hidden: true)
         }) { [unowned self] (completed) in
             if completed {
@@ -368,6 +386,8 @@ class SendMoneyController: BasicViewController {
         }
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.mainButton.isEnabled = true
+                
             self.setTitle(text: "Sent!", color: Colors.mainGreen)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
@@ -376,8 +396,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: "Save contact", imageName: "add-contacts", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: contact.name == "" ? false : true, borderNeeded: true)
             self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "Send to contact:")
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
         }
     }
     
@@ -385,6 +405,8 @@ class SendMoneyController: BasicViewController {
         self.screenStatus = .saving
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
+            self.mainButton.isEnabled = true
+                
             self.setTitle(text: "Add contact", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
@@ -393,8 +415,8 @@ class SendMoneyController: BasicViewController {
             self.setTopButton(text: "Save", imageName: "button-save", backgroundColor: Colors.mainGreen, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
             self.setTopStack(hidden: false, interactive: true, placeholder: "Enter name", labelText: "Contact name:", resetText: true, keyboardType: .default)
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "or enter address:")
-            self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "Send to contact:")
+            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
             self.setReadyIcon(hidden: true)
         }
     }
@@ -411,30 +433,31 @@ class SendMoneyController: BasicViewController {
     @IBAction func buttonAction(_ sender: UIButton) {
         switch screenStatus {
         case .start:
-            guard let text = self.amountTextField.text else {
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard let amount = Float(text) else {
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard amount > 0 else {
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            
-            let stringToShare = "I have sent you a cheque of \(text)"
-            
-            let itemsToShare = [ stringToShare ]
-            let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
-            // exclude some activity types from the list (optional)
-            activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.mail, UIActivity.ActivityType.message, UIActivity.ActivityType.copyToPasteboard, UIActivity.ActivityType.markupAsPDF ]
-            self.present(activityViewController, animated: true, completion: nil)
+            alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
+//            guard let text = self.amountTextField.text else {
+//                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+//                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+//                return
+//            }
+//            guard let amount = Float(text) else {
+//                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+//                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+//                return
+//            }
+//            guard amount > 0 else {
+//                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
+//                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+//                return
+//            }
+//
+//            let stringToShare = "I have sent you a cheque of \(text)"
+//
+//            let itemsToShare = [ stringToShare ]
+//            let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
+//            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+//            // exclude some activity types from the list (optional)
+//            activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.mail, UIActivity.ActivityType.message, UIActivity.ActivityType.copyToPasteboard, UIActivity.ActivityType.markupAsPDF ]
+//            self.present(activityViewController, animated: true, completion: nil)
         case .searching:
             showStart(animated: true)
         case .confirm:
