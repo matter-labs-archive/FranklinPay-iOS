@@ -115,6 +115,20 @@ public struct Constants {
     }
     
     public struct TokenCell {
+        static let heightCoef: CGFloat = 0.08
+        public struct Balance {
+            static let font = Constants.Fonts.regular
+            static let size: CGFloat = 24
+            static let color = Colors.textBlack
+        }
+        public struct Title {
+            static let font = Constants.Fonts.regular
+            static let size: CGFloat = 24
+            static let color = Colors.textBlack
+        }
+    }
+    
+    public struct CardCell {
         static let heightCoef: CGFloat = 0.35
         public struct Balance {
             static let font = Constants.Fonts.regular
@@ -160,12 +174,13 @@ public struct Constants {
     }
     
     public struct Headers {
-        static let maximumFontSize: CGFloat = 18
-        static let minimumFontSize: CGFloat = 9
+        static let leftItemWalletFontSize: CGFloat = 28
+        static let rightItemWalletFontSize: CGFloat = 36
+        static let leftItemTransactionsFontSize: CGFloat = 24
         public struct Heights {
             static let txHistory: CGFloat = 46
             static let wallets: CGFloat = 30
-            static let tokens: CGFloat = 30
+            static let tokens: CGFloat = 50
         }
     }
     

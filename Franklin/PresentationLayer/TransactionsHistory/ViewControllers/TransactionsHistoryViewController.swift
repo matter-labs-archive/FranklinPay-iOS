@@ -258,8 +258,8 @@ extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDat
                                           width: UIScreen.main.bounds.width,
                                           height: Constants.Headers.Heights.txHistory/2))
         label.text = dateFormatter.string(from: transactions[section][0].date)
-        label.font = UIFont(name: Constants.Fonts.semibold,
-                            size: Constants.Headers.maximumFontSize)!
+        label.font = UIFont(name: Constants.Fonts.regular,
+                            size: Constants.Headers.leftItemTransactionsFontSize)!
         view.backgroundColor = UIColor.white
         view.addSubview(label)
         let separator = UIView(frame: CGRect(x: 0,

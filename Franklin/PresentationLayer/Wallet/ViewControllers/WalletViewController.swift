@@ -13,6 +13,11 @@ import BigInt
 import SideMenu
 import QRCodeReader
 
+enum WalletSections: Int {
+    case franklin = 0
+    case tokens = 1
+}
+
 class WalletViewController: BasicViewController, ModalViewDelegate {
 
     @IBOutlet weak var walletTableView: BasicTableView!
@@ -24,6 +29,8 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     private var tokensService = TokensService()
     private var walletsService = WalletsService()
     private var tokensArray: [TableToken] = []
+    
+    private let walletSections: [WalletSections] = [.franklin, .tokens]
 
     private let alerts = Alerts()
     private let etherCoordinator = EtherCoordinator()
@@ -105,6 +112,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
 
     func setupTableView() {
+        let nibCard = UINib.init(nibName: "CardCell", bundle: nil)
         let nibToken = UINib.init(nibName: "TokenCell", bundle: nil)
         self.walletTableView.delegate = self
         self.walletTableView.dataSource = self
@@ -113,6 +121,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         self.walletTableView.tableFooterView = footerView
         self.walletTableView.addSubview(self.refreshControl)
         self.walletTableView.register(nibToken, forCellReuseIdentifier: "TokenCell")
+        self.walletTableView.register(nibCard, forCellReuseIdentifier: "CardCell")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -162,12 +171,6 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     @IBAction func showMenu(_ sender: Any) {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
-
-//    func enterPincode(for transaction: PlasmaTransaction) {
-//        //need to wallet.getPassword
-//        let enterPincode = EnterPincodeViewController(for: .transaction, data: transaction)
-//        self.navigationController?.pushViewController(enterPincode, animated: true)
-//    }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.updateTokensBalances {
@@ -299,28 +302,94 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     
 }
 
-extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
+extension WalletViewController: UITableViewDelegate, UITableViewDataSource, TableHeaderDelegate {
+    
+    func didPressAdd(sender: UIButton) {
+        alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
+//        let section = sender.tag
+//        guard let wallet = self.twoDimensionalTokensArray[section].tokens.first?.inWallet else {
+//            self.alerts.showErrorAlert(for: self, error: "Can't select wallet", completion: nil)
+//            return
+//        }
+//        let searchTokenController = SearchTokenViewController(for: wallet)
+//        self.navigationController?.pushViewController(searchTokenController, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        guard let wallet = CurrentWallet.currentWallet else {return nil}
+        let background: TableHeader = TableHeader(for: wallet)
+        background.delegate = self
+        return background
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        switch section {
+        case WalletSections.franklin.rawValue:
+            return 0
+        case WalletSections.tokens.rawValue:
+            return Constants.Headers.Heights.tokens
+        default:
+            return 0
+        }
+    }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height * Constants.TokenCell.heightCoef
+        switch indexPath.section {
+        case WalletSections.franklin.rawValue:
+            return UIScreen.main.bounds.height * Constants.CardCell.heightCoef
+        case WalletSections.tokens.rawValue:
+            return UIScreen.main.bounds.height * Constants.TokenCell.heightCoef
+        default:
+            return 0
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return walletSections.count
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.tokensArray.count
+        switch section {
+        case WalletSections.franklin.rawValue:
+            return 1
+        case WalletSections.tokens.rawValue:
+            return tokensArray.count - 1
+        default:
+            return 0
+        }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
-                                                       for: indexPath) as? TokenCell else {
-                                                        return UITableViewCell()
+        if tokensArray.isEmpty {return UITableViewCell()}
+        let franklin = tokensArray[0]
+        var tokens = tokensArray
+        tokens.removeFirst()
+        switch indexPath.section {
+        case WalletSections.franklin.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell",
+                                                           for: indexPath) as? CardCell else {
+                                                            return UITableViewCell()
+            }
+            let tableToken = franklin
+            cell.configure(token: tableToken)
+            cell.delegate = self
+            return cell
+        case WalletSections.tokens.rawValue:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "TokenCell",
+                                                           for: indexPath) as? TokenCell else {
+                                                            return UITableViewCell()
+            }
+            let tableToken = tokens[indexPath.row]
+            cell.configure(token: tableToken)
+            return cell
+        default:
+            return UITableViewCell()
         }
-        let tableToken = self.tokensArray[indexPath.row]
-        cell.configure(token: tableToken)
-        cell.delegate = self
-        return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
 //        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
 //            return
 //        }
@@ -347,6 +416,9 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
             return false
         }
+        if indexPath.section == WalletSections.franklin.rawValue {
+            return false
+        }
         let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
         guard let selectedCell = cell else {
             return false
@@ -355,15 +427,15 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
             return false
         }
         let token = self.tokensArray[indexPathTapped.row].token
-        if token.isEther() || token.isFranklin() {
+        if token.isEther() || token.isDai() {
             return false
         }
         return true
     }
 }
 
-extension WalletViewController: TokenCellDelegate {
-    func tokenInfoTapped(_ sender: TokenCell) {
+extension WalletViewController: CardCellDelegate {
+    func cardInfoTapped(_ sender: CardCell) {
         guard let indexPathTapped = self.walletTableView.indexPath(for: sender) else {
             return
         }

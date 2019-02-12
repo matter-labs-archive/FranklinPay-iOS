@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		1CF54A75215CCF0E009CC78F /* MatterWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */; };
+		3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CC2212D1CC00DAB8DC /* Dai.swift */; };
+		3A8096D02212E9FC00DAB8DC /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */; };
+		3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
 		694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
 		914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
@@ -19,12 +22,10 @@
 		914F22A1214A783E00ED58E6 /* EnterPincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */; };
 		914F22A3214AA8DB00ED58E6 /* EnterPincodeFromCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */; };
 		9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */; };
-		9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */; };
-		9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2E02143B5EE00C358AA /* OnboardingContent.swift */; };
 		9197F2ED2143B92B00C358AA /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2EB2143B92B00C358AA /* WalletViewController.swift */; };
 		9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2EC2143B92B00C358AA /* WalletViewController.xib */; };
-		9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F02143B9D600C358AA /* TokenCell.swift */; };
-		9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2F12143B9D600C358AA /* TokenCell.xib */; };
+		9197F2F22143B9D600C358AA /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F02143B9D600C358AA /* CardCell.swift */; };
+		9197F2F32143B9D600C358AA /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2F12143B9D600C358AA /* CardCell.xib */; };
 		9197F2FB2143BD7E00C358AA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2FA2143BD7E00C358AA /* Assets.xcassets */; };
 		9197F321214403A400C358AA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F31F214403A400C358AA /* SettingsViewController.swift */; };
 		9197F322214403A400C358AA /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F320214403A400C358AA /* SettingsViewController.xib */; };
@@ -171,8 +172,6 @@
 		E2F0EF7821F7DD6000F11AD1 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */; };
 		E2F0EF7921F7DD8C00F11AD1 /* TokenInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */; };
 		E2F0EF7A21F7DD9600F11AD1 /* TokenInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A392174D27E00F38E50 /* TokenInfoCell.swift */; };
-		E2F0EF7D21F7FCC700F11AD1 /* ContactCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F0EF7B21F7FCC700F11AD1 /* ContactCell.swift */; };
-		E2F0EF7E21F7FCC700F11AD1 /* ContactCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF7C21F7FCC700F11AD1 /* ContactCell.xib */; };
 		E2F0EF9E21F8BA2700F11AD1 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8021F8BA2100F11AD1 /* SF-Pro-Text-RegularItalic.otf */; };
 		E2F0EF9F21F8BA2700F11AD1 /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8121F8BA2200F11AD1 /* SF-Pro-Display-HeavyItalic.otf */; };
 		E2F0EFA021F8BA2700F11AD1 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8221F8BA2200F11AD1 /* SF-Pro-Display-BoldItalic.otf */; };
@@ -253,6 +252,9 @@
 		1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
+		3A8096CC2212D1CC00DAB8DC /* Dai.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dai.swift; sourceTree = "<group>"; };
+		3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
+		3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCell.xib; sourceTree = "<group>"; };
 		3A84FE02220D9D1E00B5A069 /* Franklin-dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Franklin-dev.entitlements"; sourceTree = "<group>"; };
 		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -268,12 +270,10 @@
 		914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPincodeFromCases.swift; sourceTree = "<group>"; };
 		9197F2D72143B52F00C358AA /* WalletAdditionMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletAdditionMode.swift; sourceTree = "<group>"; };
 		9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
-		9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContentViewController.swift; sourceTree = "<group>"; };
-		9197F2E02143B5EE00C358AA /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
 		9197F2EB2143B92B00C358AA /* WalletViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
 		9197F2EC2143B92B00C358AA /* WalletViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletViewController.xib; sourceTree = "<group>"; };
-		9197F2F02143B9D600C358AA /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
-		9197F2F12143B9D600C358AA /* TokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCell.xib; sourceTree = "<group>"; };
+		9197F2F02143B9D600C358AA /* CardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCell.swift; sourceTree = "<group>"; };
+		9197F2F12143B9D600C358AA /* CardCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CardCell.xib; sourceTree = "<group>"; };
 		9197F2FA2143BD7E00C358AA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9197F2FF2143BFC600C358AA /* TokenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenViewController.swift; sourceTree = "<group>"; };
 		9197F3002143BFC600C358AA /* TokenViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenViewController.xib; sourceTree = "<group>"; };
@@ -456,8 +456,6 @@
 		E2DCA65E219323B000F94FBA /* TransactionInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransactionInfoController.xib; sourceTree = "<group>"; };
 		E2E20213220309340046C956 /* OnboardingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OnboardingViewController.xib; sourceTree = "<group>"; };
 		E2F0EF6C21F7C2F500F11AD1 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		E2F0EF7B21F7FCC700F11AD1 /* ContactCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCell.swift; sourceTree = "<group>"; };
-		E2F0EF7C21F7FCC700F11AD1 /* ContactCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactCell.xib; sourceTree = "<group>"; };
 		E2F0EF8021F8BA2100F11AD1 /* SF-Pro-Text-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Text-RegularItalic.otf"; sourceTree = "<group>"; };
 		E2F0EF8121F8BA2200F11AD1 /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
 		E2F0EF8221F8BA2200F11AD1 /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
@@ -1033,8 +1031,10 @@
 			isa = PBXGroup;
 			children = (
 				9197F2EC2143B92B00C358AA /* WalletViewController.xib */,
-				9197F2F12143B9D600C358AA /* TokenCell.xib */,
-				9197F2F02143B9D600C358AA /* TokenCell.swift */,
+				9197F2F12143B9D600C358AA /* CardCell.xib */,
+				9197F2F02143B9D600C358AA /* CardCell.swift */,
+				3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */,
+				3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1102,6 +1102,7 @@
 				E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */,
 				E2A8DB9621F616A40031AC58 /* Ether.swift */,
 				E2A8DB9821F616BE0031AC58 /* Franklin.swift */,
+				3A8096CC2212D1CC00DAB8DC /* Dai.swift */,
 			);
 			path = Tokens;
 			sourceTree = "<group>";
@@ -1447,7 +1448,6 @@
 			children = (
 				E2E202162203093A0046C956 /* Views */,
 				E2C110AA21E64B870012A978 /* ViewControllers */,
-				E2C110A821E64B7B0012A978 /* Models */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -1521,18 +1521,9 @@
 			path = DesignElements;
 			sourceTree = "<group>";
 		};
-		E2C110A821E64B7B0012A978 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				9197F2E02143B5EE00C358AA /* OnboardingContent.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		E2C110AA21E64B870012A978 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				9197F2DE2143B5B800C358AA /* OnboardingContentViewController.swift */,
 				9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */,
 			);
 			path = ViewControllers;
@@ -1567,8 +1558,6 @@
 				E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */,
 				E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */,
 				E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */,
-				E2F0EF7B21F7FCC700F11AD1 /* ContactCell.swift */,
-				E2F0EF7C21F7FCC700F11AD1 /* ContactCell.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2105,7 +2094,7 @@
 				E2F0EFD221F8BD1500F11AD1 /* librefranklin-semibolditalic.ttf in Resources */,
 				E2C14A97220489BC00B060AD /* BackupViewController.xib in Resources */,
 				E2F0EFA721F8BA2700F11AD1 /* SF-Pro-Display-RegularItalic.otf in Resources */,
-				9197F2F32143B9D600C358AA /* TokenCell.xib in Resources */,
+				9197F2F32143B9D600C358AA /* CardCell.xib in Resources */,
 				E2F0EFB621F8BA2700F11AD1 /* SF-Pro-Text-BoldItalic.otf in Resources */,
 				E2F0EFD721F8BD1500F11AD1 /* librefranklin-semibold.ttf in Resources */,
 				914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */,
@@ -2117,7 +2106,6 @@
 				E2215AC121FF44A700FC79AB /* AcceptChequeController.xib in Resources */,
 				E20F3DFC220AFD1000669C8B /* ContactTableCell.xib in Resources */,
 				E2E20215220309340046C956 /* OnboardingViewController.xib in Resources */,
-				E2F0EF7E21F7FCC700F11AD1 /* ContactCell.xib in Resources */,
 				9197F2EE2143B92B00C358AA /* WalletViewController.xib in Resources */,
 				B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */,
 				E2F0EFA121F8BA2700F11AD1 /* SF-Pro-Text-Semibold.otf in Resources */,
@@ -2164,6 +2152,7 @@
 				E2F0EFD421F8BD1500F11AD1 /* librefranklin-extralight.ttf in Resources */,
 				E2F0EFAC21F8BA2700F11AD1 /* SF-Pro-Display-Black.otf in Resources */,
 				E2F0EFD521F8BD1500F11AD1 /* librefranklin-light.ttf in Resources */,
+				3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				E2F0EF9E21F8BA2700F11AD1 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				E2F0EFD621F8BD1500F11AD1 /* librefranklin-extralightitalic.ttf in Resources */,
@@ -2320,6 +2309,7 @@
 				E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */,
 				E27BF77521D1447A00951061 /* Hashing.swift in Sources */,
 				E2A8DAF621F1F6A00031AC58 /* CoreDataModel.xcdatamodeld in Sources */,
+				3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */,
 				E2A8DAFB21F1F6A00031AC58 /* ETHTransaction.swift in Sources */,
 				E27BF78521D1447A00951061 /* PlasmaWeb3ServiceConvenient.swift in Sources */,
 				E27BF78421D1447A00951061 /* PlasmaContractMethods.swift in Sources */,
@@ -2345,10 +2335,8 @@
 				E2215AC92201B0ED00FC79AB /* LabelExtension.swift in Sources */,
 				E2C110B921E67D1D0012A978 /* WalletCreationViewController.swift in Sources */,
 				E2C1108621E507340012A978 /* CurrentToken.swift in Sources */,
-				9197F2E12143B5EE00C358AA /* OnboardingContent.swift in Sources */,
 				E27BF77D21D1447A00951061 /* NSRegularExpressionExtension.swift in Sources */,
 				E2C1105F21E507260012A978 /* NetworksService.swift in Sources */,
-				E2F0EF7D21F7FCC700F11AD1 /* ContactCell.swift in Sources */,
 				9197F2DD2143B57E00C358AA /* OnboardingViewController.swift in Sources */,
 				91E72556214FE104003FAD76 /* SearchTokenCell.swift in Sources */,
 				E2C1106521E507260012A978 /* Constants.swift in Sources */,
@@ -2371,6 +2359,7 @@
 				E2D451DD21EE980B00218872 /* DoubleExtension.swift in Sources */,
 				E2C1105D21E507260012A978 /* NetworkErrors.swift in Sources */,
 				E2C1106C21E507260012A978 /* Colors.swift in Sources */,
+				3A8096D02212E9FC00DAB8DC /* TokenCell.swift in Sources */,
 				E2D451C621EE292700218872 /* BasicViewController.swift in Sources */,
 				E2F0EFEE21F9519500F11AD1 /* PublicKeyViewController.swift in Sources */,
 				E2C1108121E507340012A978 /* FloatExtension.swift in Sources */,
@@ -2395,12 +2384,11 @@
 				E2A8DAF721F1F6A00031AC58 /* ContactsCD.xcdatamodeld in Sources */,
 				91E72551214FDD1E003FAD76 /* SearchTokenViewController.swift in Sources */,
 				E27BF77621D1447A00951061 /* SimpleContent.swift in Sources */,
-				9197F2DF2143B5B800C358AA /* OnboardingContentViewController.swift in Sources */,
 				E2C1106B21E507260012A978 /* NavigationController.swift in Sources */,
 				E2C1109621E557FE0012A978 /* EIP681Model.swift in Sources */,
 				E2C1106A21E507260012A978 /* Alerts.swift in Sources */,
 				E27BF77A21D1447A00951061 /* PlasmaConstants.swift in Sources */,
-				9197F2F22143B9D600C358AA /* TokenCell.swift in Sources */,
+				9197F2F22143B9D600C358AA /* CardCell.swift in Sources */,
 				E234C7AC21ECCC1800F175AF /* AnimationController.swift in Sources */,
 				E2F686AC21F9E0C600BD3D14 /* BasicTextField.swift in Sources */,
 				E2C1106321E507260012A978 /* ABIs.swift in Sources */,

@@ -8,52 +8,50 @@
 
 import UIKit
 
-//@objc protocol TableHeaderDelegate: class {
-//    func didPressAdd(sender: UIButton)
-//    func didPressExpand(sender: UIButton)
-//}
-//
-//class TableHeader: UIView {
-//    private let expandButton = UIButton(type: .system)
-//    private let addButton = UIButton(type: .system)
-//    weak var delegate: TableHeaderDelegate? {
-//        didSet {
-//            expandButton.addTarget(delegate, action:  #selector(delegate?.didPressExpand(sender:)), for: .touchUpInside)
-//            addButton.addTarget(delegate, action:  #selector(delegate?.didPressAdd(sender:)), for: .touchUpInside)
-//        }
-//    }
-//    
-//    init(for wallet: Wallet, plasma: Bool, section: Int) {
-//        let height: CGFloat = Constants.headers.heights.wallets
-//        let width: CGFloat = UIScreen.main.bounds.width
-//        let coef: CGFloat = 0.7
-//        let frame = CGRect(x: 0, y: 0, width: width, height: height)
-//        super.init(frame: frame)
-//        self.backgroundColor = Colors.background
-//        self.clipsToBounds = true
-//        
-//        expandButton.setTitle("\(wallet.name)", for: .normal)
-//        expandButton.setTitleColor(Colors.textBlack, for: .normal)
-//        expandButton.contentHorizontalAlignment = .left
-//        expandButton.titleLabel?.font = UIFont(name: Constants.boldFont, size: Constants.basicFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.basicFontSize)
-//        expandButton.frame = CGRect(x: Constants.horizontalConst, y: 0, width: coef*(width-Constants.horizontalConst), height: height)
-//        expandButton.tag = section
-//        self.addSubview(expandButton)
-//        
-//        if !plasma {
-//            addButton.setTitle("Add token", for: .normal)
-//            addButton.setTitleColor(Colors.textDarkGray, for: .normal)
-//            addButton.titleLabel?.font = UIFont(name: Constants.semiboldFont, size: Constants.basicFontSize) ?? UIFont.systemFont(ofSize: Constants.basicFontSize)
-//            addButton.frame = CGRect(x: coef*(width-Constants.horizontalConst), y: 0, width: (1-coef)*(width-Constants.horizontalConst), height: height)
-//            addButton.backgroundColor = Colors.textBlack
-//            addButton.layer.cornerRadius = height/2
-//            addButton.tag = section
-//            self.addSubview(addButton)
-//        }
-//        
-//    }
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//}
+@objc protocol TableHeaderDelegate: class {
+    func didPressAdd(sender: UIButton)
+}
+
+class TableHeader: UIView {
+    private let addButton = UIButton(type: .system)
+    private let titleButton = UIButton(type: .system)
+    weak var delegate: TableHeaderDelegate? {
+        didSet {
+            addButton.addTarget(delegate, action:  #selector(delegate?.didPressAdd(sender:)), for: .touchUpInside)
+        }
+    }
+    
+    init(for wallet: Wallet) {
+        let height: CGFloat = Constants.Headers.Heights.tokens
+        let width: CGFloat = UIScreen.main.bounds.width
+        let coef: CGFloat = 0.7
+        let const: CGFloat = 20
+        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        super.init(frame: frame)
+        self.backgroundColor = Colors.background
+        self.clipsToBounds = true
+        
+        titleButton.setTitle("Tokens", for: .normal)
+        titleButton.setTitleColor(Colors.textBlack, for: .normal)
+        titleButton.contentHorizontalAlignment = .left
+        titleButton.titleLabel?.font = UIFont(name: Constants.Fonts.semibold, size: Constants.Headers.leftItemWalletFontSize) ?? UIFont.boldSystemFont(ofSize: Constants.Headers.leftItemWalletFontSize)
+        titleButton.frame = CGRect(x: const, y: 0, width: coef*(width-const), height: height)
+        //titleButton.tag = section
+        self.addSubview(titleButton)
+        
+        addButton.setTitle("+", for: .normal)
+        addButton.setTitleColor(Colors.textDarkGray, for: .normal)
+        addButton.titleLabel?.font = UIFont(name: Constants.Fonts.regular, size: Constants.Headers.rightItemWalletFontSize) ?? UIFont.systemFont(ofSize: Constants.Headers.rightItemWalletFontSize)
+        addButton.frame = CGRect(x: coef*(width-const), y: 0, width: (1-coef)*(width-const), height: height)
+        addButton.backgroundColor = Colors.background
+        addButton.contentHorizontalAlignment = .right
+        addButton.layer.cornerRadius = height/2
+        //addButton.tag = section
+        self.addSubview(addButton)
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}

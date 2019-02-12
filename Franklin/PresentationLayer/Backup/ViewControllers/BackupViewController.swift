@@ -97,7 +97,7 @@ class BackupViewController: BasicViewController {
                 self.mnemonic.alpha = 1
                 self.alert.alpha = 1
                 
-                self.mainButton.setTitle("I AM SHURE", for: .normal)
+                self.mainButton.setTitle("I AM SURE", for: .normal)
                 self.mainButton.setImage(UIImage(named: "save-button"), for: .normal)
                 self.mainButton.layer.borderColor = Colors.orange.cgColor
                 self.mainButton.changeColorOn(background: Colors.orange, text: Colors.textWhite)

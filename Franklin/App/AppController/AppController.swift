@@ -309,6 +309,20 @@ public class AppController {
         self.userDefaultKeys.setEtherAdded(for: wallet)
     }
     
+    public func addDai(for wallet: Wallet) throws {
+        let dai = ERC20Token(dai: true)
+        
+        for networkID in 1...42 {
+            do {
+                try wallet.add(token: dai,
+                               network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
+            } catch let error {
+                throw error
+            }
+        }
+        self.userDefaultKeys.setDaiAdded(for: wallet)
+    }
+    
     private func navigateViaDeepLink(url: URL, in window: UIWindow) {
         if url.absoluteString.hasPrefix("ethereum:") {
             // TODO :- ether deeplink

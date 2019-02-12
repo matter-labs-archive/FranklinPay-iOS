@@ -15,6 +15,8 @@ private typealias PromiseResult = PromiseKit.Result
 
 protocol IERC20Token {
     func isEther() -> Bool
+    func isFranklin() -> Bool
+    func isDai() -> Bool
 }
 
 protocol IERC20TokenStorage {
@@ -90,6 +92,20 @@ public class ERC20Token: IERC20Token {
         }
     }
     
+    public init(dai: Bool = true) {
+        if dai {
+            self.name = "Dai Stablecoin"
+            self.address = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
+            self.decimals = "18"
+            self.symbol = "DAI"
+        } else {
+            self.name = ""
+            self.address = ""
+            self.decimals = ""
+            self.symbol = ""
+        }
+    }
+    
     public init(token: ERC20Token) {
         self.name = token.name
         self.address = token.address
@@ -115,6 +131,12 @@ public class ERC20Token: IERC20Token {
     
     public func isFranklin() -> Bool {
         return self == Franklin()
+            ? true
+            : false
+    }
+    
+    public func isDai() -> Bool {
+        return self == Dai()
             ? true
             : false
     }
