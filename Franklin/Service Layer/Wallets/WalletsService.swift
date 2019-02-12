@@ -57,7 +57,8 @@ public class WalletsService: IWalletsService {
                        data: keyData,
                        name: name,
                        isHD: false,
-                       backup: nil)
+                       backup: nil,
+                       plasmaID: nil)
         return w
     }
     
@@ -79,7 +80,8 @@ public class WalletsService: IWalletsService {
                        data: keyData,
                        name: name,
                        isHD: false,
-                       backup: nil)
+                       backup: nil,
+                       plasmaID: nil)
         return w
     }
     
@@ -103,7 +105,8 @@ public class WalletsService: IWalletsService {
                        data: keyData,
                        name: name,
                        isHD: true,
-                       backup: backupNeeded ? mnemonics : nil)
+                       backup: backupNeeded ? mnemonics : nil,
+                       plasmaID: nil)
         return w
     }
     

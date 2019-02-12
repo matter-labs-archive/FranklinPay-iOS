@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D42" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ContactModel" representedClassName="ContactModel" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -47,6 +47,7 @@
         <attribute name="isHD" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isSelected" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="plasmaID" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="tokens" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ERC20TokenModel" inverseName="wallet" inverseEntity="ERC20TokenModel" syncable="YES"/>
         <relationship name="transactions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ETHTransactionModel" inverseName="wallet" inverseEntity="ETHTransactionModel" syncable="YES"/>
     </entity>
@@ -55,6 +56,6 @@
         <element name="ERC20TokenModel" positionX="-45" positionY="0" width="128" height="270"/>
         <element name="ETHTransactionModel" positionX="-27" positionY="36" width="128" height="210"/>
         <element name="NetworkModel" positionX="-27" positionY="117" width="128" height="105"/>
-        <element name="WalletModel" positionX="-18" positionY="27" width="128" height="165"/>
+        <element name="WalletModel" positionX="-18" positionY="27" width="128" height="180"/>
     </elements>
 </model>

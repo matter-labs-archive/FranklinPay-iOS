@@ -11,6 +11,10 @@
 		3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CC2212D1CC00DAB8DC /* Dai.swift */; };
 		3A8096D02212E9FC00DAB8DC /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */; };
 		3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
+		3A8096D722130FE500DAB8DC /* IgnisTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096D622130FE500DAB8DC /* IgnisTransaction.swift */; };
+		3A8096D92213111100DAB8DC /* IgnisService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096D82213111100DAB8DC /* IgnisService.swift */; };
+		3A8096DB2213125A00DAB8DC /* IgnisURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DA2213125A00DAB8DC /* IgnisURLs.swift */; };
+		3A8096DD2213828100DAB8DC /* CurrentNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DC2213828100DAB8DC /* CurrentNonce.swift */; };
 		694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
 		914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
@@ -255,6 +259,10 @@
 		3A8096CC2212D1CC00DAB8DC /* Dai.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dai.swift; sourceTree = "<group>"; };
 		3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCell.xib; sourceTree = "<group>"; };
+		3A8096D622130FE500DAB8DC /* IgnisTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnisTransaction.swift; sourceTree = "<group>"; };
+		3A8096D82213111100DAB8DC /* IgnisService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnisService.swift; sourceTree = "<group>"; };
+		3A8096DA2213125A00DAB8DC /* IgnisURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnisURLs.swift; sourceTree = "<group>"; };
+		3A8096DC2213828100DAB8DC /* CurrentNonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentNonce.swift; sourceTree = "<group>"; };
 		3A84FE02220D9D1E00B5A069 /* Franklin-dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Franklin-dev.entitlements"; sourceTree = "<group>"; };
 		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -592,6 +600,16 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3A8096D522130FCE00DAB8DC /* Ignis */ = {
+			isa = PBXGroup;
+			children = (
+				3A8096D622130FE500DAB8DC /* IgnisTransaction.swift */,
+				3A8096D82213111100DAB8DC /* IgnisService.swift */,
+				3A8096DA2213125A00DAB8DC /* IgnisURLs.swift */,
+			);
+			path = Ignis;
+			sourceTree = "<group>";
+		};
 		6DE660421B91D607B06623B4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,7 +713,6 @@
 				E2C1107D21E507340012A978 /* GlobalState */,
 				E2C1103B21E507260012A978 /* CommonHelpers */,
 				E2C1102721E507250012A978 /* Service Layer */,
-				E27BF74721D1447900951061 /* PlasmaSwiftLib */,
 				91B6A7AB2143608B0033A045 /* App */,
 				B2091518214BA5D800C8B408 /* PresentationLayer */,
 			);
@@ -1315,6 +1332,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C1102E21E507250012A978 /* NetworkErrors.swift */,
+				3A8096D522130FCE00DAB8DC /* Ignis */,
 				E2C1102821E507250012A978 /* App */,
 				E2C1102C21E507250012A978 /* Contracts */,
 				E2C1102F21E507250012A978 /* Contacts */,
@@ -1417,6 +1435,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C1107E21E507340012A978 /* CurrentWallet.swift */,
+				3A8096DC2213828100DAB8DC /* CurrentNonce.swift */,
 				E2C1107F21E507340012A978 /* CurrentToken.swift */,
 				E2C1108021E507340012A978 /* CurrentNetwork.swift */,
 			);
@@ -1495,6 +1514,7 @@
 		E2C1109E21E567070012A978 /* old */ = {
 			isa = PBXGroup;
 			children = (
+				E27BF74721D1447900951061 /* PlasmaSwiftLib */,
 				91B6A7A82143606E0033A045 /* Models */,
 				91B6A7D72143B26D0033A045 /* Views */,
 				91B6A7D82143B2940033A045 /* Controllers */,
@@ -2306,10 +2326,12 @@
 				E2A8DAF821F1F6A00031AC58 /* Contact.swift in Sources */,
 				E2C1105A21E507260012A978 /* BiometricsService.swift in Sources */,
 				E2A8DAFD21F1F6A00031AC58 /* Wallet.swift in Sources */,
+				3A8096D92213111100DAB8DC /* IgnisService.swift in Sources */,
 				E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */,
 				E27BF77521D1447A00951061 /* Hashing.swift in Sources */,
 				E2A8DAF621F1F6A00031AC58 /* CoreDataModel.xcdatamodeld in Sources */,
 				3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */,
+				3A8096D722130FE500DAB8DC /* IgnisTransaction.swift in Sources */,
 				E2A8DAFB21F1F6A00031AC58 /* ETHTransaction.swift in Sources */,
 				E27BF78521D1447A00951061 /* PlasmaWeb3ServiceConvenient.swift in Sources */,
 				E27BF78421D1447A00951061 /* PlasmaContractMethods.swift in Sources */,
@@ -2318,6 +2340,7 @@
 				E2C1106121E507260012A978 /* TokensService.swift in Sources */,
 				E27BF78621D1447A00951061 /* PlasmaWeb3Service.swift in Sources */,
 				E27BF77B21D1447A00951061 /* BigIntExtension.swift in Sources */,
+				3A8096DD2213828100DAB8DC /* CurrentNonce.swift in Sources */,
 				E27BF77021D1447A00951061 /* TransactionOutput.swift in Sources */,
 				914F229A2149C0F600ED58E6 /* PincodeEnterStatus.swift in Sources */,
 				E2C110BD21E755330012A978 /* WalletImportingViewController.swift in Sources */,
@@ -2415,6 +2438,7 @@
 				E2C110C021E7DB130012A978 /* ImportType.swift in Sources */,
 				E2A8DBB921F6A96F0031AC58 /* ViewExtension.swift in Sources */,
 				E2C1106821E507260012A978 /* Parameter.swift in Sources */,
+				3A8096DB2213125A00DAB8DC /* IgnisURLs.swift in Sources */,
 				E27BF77821D1447A00951061 /* PlasmaParser.swift in Sources */,
 				E234C79D21E9E93E00F175AF /* TableWallet.swift in Sources */,
 				9197F32F2144213000C358AA /* NetworksViewController.swift in Sources */,

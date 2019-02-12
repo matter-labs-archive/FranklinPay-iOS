@@ -11,6 +11,7 @@ import BlockiesSwift
 import SwiftyGif
 import EthereumAddress
 import QRCodeReader
+import BigInt
 
 protocol ModalViewDelegate: class {
     func modalViewBeenDismissed()
@@ -401,6 +402,25 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     
     func sending() {
         self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+//        guard let address = chosenContact?.address ?? addressTextField.text else {
+//            self.showReady(animated: true)
+//        }
+//        guard let ethAddress = EthereumAddress(address) else {
+//            self.showReady(animated: true)
+//        }
+//        guard let amount = amountTextField.text else {
+//            self.showReady(animated: true)
+//        }
+//        guard let wallet = CurrentWallet.currentWallet else {
+//            self.showReady(animated: true)
+//        }
+//        let currentNetwork = CurrentNetwork.currentNetwork
+//        do {
+//            try wallet.sendPlasmaTx(nonce: CurrentNonce.currentNonce ?? 0, to: ethAddress, value: amount, network: currentNetwork)
+//            self.showReady(animated: true)
+//        } catch {
+//            self.showReady(animated: true)
+//        }
     }
     
     @objc func fireTimer() {
@@ -490,6 +510,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
 //            activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.mail, UIActivity.ActivityType.message, UIActivity.ActivityType.copyToPasteboard, UIActivity.ActivityType.markupAsPDF ]
 //            self.present(activityViewController, animated: true, completion: nil)
         case .searching:
+            chosenContact = nil
             showStart(animated: true)
         case .confirm:
             guard let text = self.amountTextField.text else {

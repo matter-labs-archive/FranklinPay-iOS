@@ -80,12 +80,41 @@ protocol IWalletActions {
                 options: TransactionOptions?) throws -> [String : Any]
 }
 
+protocol IWalletPlasma {
+    func getID() throws -> String
+    func setID(_ id: String) throws
+    func sendPlasmaTx(nonce: BigUInt, to: EthereumAddress, value: String, network: Web3Network) throws
+    func loadTransactions(network: Web3Network) throws -> [ETHTransaction]
+}
+
 public class Wallet: IWallet {
     let address: String
     let data: Data
     let name: String
     let isHD: Bool
+    let plasmaID: String?
     var backup: String?
+    
+    private func request(url: URL,
+                         data: Data?,
+                         method: Method,
+                         contentType: ContentType) -> URLRequest? {
+        var request = URLRequest(url: url)
+        request.httpShouldHandleCookies = true
+        request.httpMethod = method.rawValue
+        request.setValue(contentType.rawValue, forHTTPHeaderField: "Content-Type")
+        request.httpBody = data
+        
+        return request
+    }
+    
+    var session: URLSession {
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig,
+                                 delegate: nil,
+                                 delegateQueue: nil)
+        return session
+    }
     
     private var web3Instance: web3? {
         let web3 = CurrentNetwork.currentWeb
@@ -115,24 +144,28 @@ public class Wallet: IWallet {
                 throw Web3Error.walletError
         }
         let backup = crModel.backup
+        let plasmaID = crModel.plasmaID
         
         self.address = address
         self.data = data
         self.name = name
         self.isHD = crModel.isHD
         self.backup = backup
+        self.plasmaID = plasmaID
     }
     
     public init(address: String,
                 data: Data,
                 name: String,
                 isHD: Bool,
-                backup: String?) {
+                backup: String?,
+                plasmaID: String?) {
         self.address = address
         self.data = data
         self.name = name
         self.isHD = isHD
         self.backup = backup
+        self.plasmaID = plasmaID
     }
     
     public init(wallet: Wallet) {
@@ -141,6 +174,7 @@ public class Wallet: IWallet {
         self.name = wallet.name
         self.isHD = wallet.isHD
         self.backup = wallet.backup
+        self.plasmaID = wallet.plasmaID
     }
     
     public func getPrivateKey(withPassword: String) throws -> String {
@@ -904,6 +938,139 @@ extension Wallet: IWalletTransactions {
     }
 }
 
+extension Wallet: IWalletPlasma {
+    
+    public func getID() throws -> String {
+        let plasmaService = IgnisService()
+        do {
+            let id = try plasmaService.getID(for: EthereumAddress(self.address)!)
+            return id
+        } catch let error {
+            throw error
+        }
+    }
+    
+    public func setID(_ id: String) throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
+        let requestWallet: NSFetchRequest<WalletModel> = WalletModel.fetchRequest()
+        do {
+            let results = try ContainerCD.context.fetch(requestWallet)
+            for item in results {
+                if item.address == self.address {
+                    item.plasmaID = id
+                }
+            }
+            try ContainerCD.context.save()
+            group.leave()
+        } catch let someErr {
+            error = someErr
+            group.leave()
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
+    }
+    
+    public func sendPlasmaTx(nonce: BigUInt, to: EthereumAddress, value: String, network: Web3Network) throws {
+        guard let id = self.plasmaID else {
+            throw Errors.NetworkErrors.noData
+        }
+        if network.id != 1 && network.id != 4 {
+            throw Errors.NetworkErrors.wrongURL
+        }
+        let onTestnet = network.id == 4 ? true : false
+        let plasmaService = IgnisService()
+        guard let from = BigUInt(id) else {
+            throw Web3Error.dataError
+        }
+        // TODO: - get fee, nonce, goodUntilBlock and to in another way
+        let toString = try plasmaService.getID(for: to)
+        guard let to = BigUInt(toString) else {
+            throw Web3Error.dataError
+        }
+        let fee = "0"
+        let goodUntilBlock = BigUInt(10000)
+        let tx = IgnisTransaction(from: from,
+                                  to: to,
+                                  amount: value,
+                                  fee: fee,
+                                  nonce: nonce,
+                                  goodUntilBlock: goodUntilBlock)
+        do {
+            let password = try self.getPassword()
+            let pk = try self.getPrivateKey(withPassword: password)
+            let dataPk = Data(hex: pk)
+            let signedTx = try tx.sign(privateKey: dataPk)
+            let result = try plasmaService.sendRawTX(transaction: signedTx, onTestnet: onTestnet)
+            if !result {
+                throw Errors.NetworkErrors.noData
+            }
+        } catch let error {
+            throw error
+        }
+    }
+    
+    public func loadTransactions(network: Web3Network) throws -> [ETHTransaction] {
+        if network.id != 1 && network.id != 4 {
+            throw Errors.NetworkErrors.wrongURL
+        }
+        let onTestnet = network.id == 4 ? true : false
+        return try self.loadTransactionsPromise(onTestnet: onTestnet).wait()
+    }
+    
+    private func loadTransactionsPromise(onTestnet: Bool) -> Promise<[ETHTransaction]> {
+        let returnPromise = Promise<[ETHTransaction]> { (seal) in
+            guard let id = self.plasmaID else {
+                seal.reject(Errors.NetworkErrors.noData)
+                return
+            }
+            let url = onTestnet ? IgnisURLs.getTXsTestnet : IgnisURLs.getTXsMainnet
+            let json: [String: Any] = ["address": id]
+            let jsonData = try? JSONSerialization.data(withJSONObject: json)
+            guard let request = request(url: url,
+                                        data: jsonData,
+                                        method: .get,
+                                        contentType: .json) else {
+                                            seal.reject(PlasmaErrors.NetErrors.cantCreateRequest)
+                                            return
+            }
+            session.dataTask(with: request, completionHandler: { (data, response, error) in
+                if let error = error {
+                    seal.reject(error)
+                }
+                guard let data = data else {
+                    seal.reject(Errors.NetworkErrors.noData)
+                    return
+                }
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
+                        return
+                    }
+                    guard let results = json["result"] as? [[String: Any]] else {
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
+                        return
+                    }
+                    do {
+                        let transaction = try self.buildTXlist(from: results,
+                                                               txType: .custom,
+                                                               networkId: onTestnet ? 4 : 1)
+                        seal.fulfill(transaction)
+                    } catch let err {
+                        seal.reject(err)
+                    }
+                } catch let err {
+                    seal.reject(err)
+                }
+            }).resume()
+        }
+        return returnPromise
+    }
+}
+
 extension Wallet: Equatable {
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
         return lhs.address == rhs.address
@@ -913,4 +1080,14 @@ extension Wallet: Equatable {
 public struct HDKey {
     let name: String?
     let address: String
+}
+
+private enum Method: String {
+    case post = "POST"
+    case get = "GET"
+}
+
+private enum ContentType: String {
+    case json = "application/json"
+    case octet = "application/octet-stream"
 }
