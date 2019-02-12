@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
         <array key="librefranklin-semibold.ttf">
             <string>LibreFranklin-SemiBold</string>
         </array>
@@ -17,6 +20,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="TransactionsHistoryViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
+                <outlet property="emptyTXsView" destination="420-XG-4Bt" id="hsK-KR-DSC"/>
                 <outlet property="marker" destination="Zdu-Xb-D8P" id="9YJ-V3-W7f"/>
                 <outlet property="tableView" destination="1v0-2Z-m9X" id="weW-q2-Wlc"/>
                 <outlet property="transactionsTypeSegmentedControl" destination="2QD-ja-FLv" id="I4y-u2-45F"/>
@@ -72,10 +76,27 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="Zdu-Xb-D8P">
                     <rect key="frame" x="25" y="30" width="15" height="15"/>
                 </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="420-XG-4Bt">
+                    <rect key="frame" x="0.0" y="158" width="375" height="509"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No transactions yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OB9-7R-Npr">
+                            <rect key="frame" x="20" y="242.5" width="335" height="24"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                            <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="OB9-7R-Npr" firstAttribute="centerY" secondItem="420-XG-4Bt" secondAttribute="centerY" id="M6W-1Y-ksP"/>
+                        <constraint firstItem="OB9-7R-Npr" firstAttribute="centerX" secondItem="420-XG-4Bt" secondAttribute="centerX" id="ZvZ-Vx-3fj"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="tLb-oQ-tLY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="780-yq-X12"/>
+                <constraint firstItem="420-XG-4Bt" firstAttribute="bottom" secondItem="1v0-2Z-m9X" secondAttribute="bottom" id="Bv7-hy-QBf"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="Eq5-Bh-XCX"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="IZZ-aK-chy"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="top" secondItem="nzT-Xk-IIZ" secondAttribute="top" id="K4d-id-EHE"/>
@@ -83,13 +104,17 @@
                 <constraint firstItem="tLb-oQ-tLY" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="MEl-SD-0za"/>
                 <constraint firstItem="2QD-ja-FLv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Oxa-Qc-pb5"/>
                 <constraint firstItem="nzT-Xk-IIZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="SNf-Or-3Wc"/>
+                <constraint firstItem="420-XG-4Bt" firstAttribute="top" secondItem="1v0-2Z-m9X" secondAttribute="top" id="SXv-cc-xbx"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="top" secondItem="2QD-ja-FLv" secondAttribute="bottom" constant="16" id="Set-cZ-Fpg"/>
+                <constraint firstItem="420-XG-4Bt" firstAttribute="trailing" secondItem="1v0-2Z-m9X" secondAttribute="trailing" id="ekH-iX-gjk"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="height" secondItem="nzT-Xk-IIZ" secondAttribute="height" multiplier="0.5" id="hDa-6A-jBn"/>
                 <constraint firstItem="2QD-ja-FLv" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="juL-ou-l7d"/>
                 <constraint firstItem="2QD-ja-FLv" firstAttribute="top" secondItem="tLb-oQ-tLY" secondAttribute="bottom" constant="20" id="kPr-4N-g7B"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="trailing" secondItem="nzT-Xk-IIZ" secondAttribute="trailing" id="nZB-9V-i7i"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="width" secondItem="nzT-Xk-IIZ" secondAttribute="width" multiplier="0.5" id="riu-z0-Lxx"/>
                 <constraint firstItem="nzT-Xk-IIZ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="uc4-yc-AlR"/>
+                <constraint firstItem="420-XG-4Bt" firstAttribute="leading" secondItem="1v0-2Z-m9X" secondAttribute="leading" id="vcx-WW-ZvE"/>
+                <constraint firstItem="OB9-7R-Npr" firstAttribute="width" secondItem="2QD-ja-FLv" secondAttribute="width" id="zbY-Q2-PCJ"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="32.799999999999997" y="57.121439280359823"/>

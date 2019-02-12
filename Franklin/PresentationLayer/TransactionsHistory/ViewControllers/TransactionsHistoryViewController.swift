@@ -14,6 +14,7 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var marker: UIImageView!
+    @IBOutlet weak var emptyTXsView: UIView!
     
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
@@ -56,7 +57,7 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         self.setupSideBar()
         self.additionalSetup()
         
-        self.txsMock()
+        //self.txsMock()
         //CurrentWallet.currentWallet = Wallet(address: "0x832a630B949575b87C0E3C00f624f773D9B160f4", data: Data(), name: "dfad", isHD: true)
     }
     
@@ -84,7 +85,7 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         super.viewWillAppear(animated)
         DispatchQueue.global().async { [unowned self] in
             self.reloadTableView()
-            //self.uploadTransactions()
+            self.uploadTransactions()
         }
     }
     
@@ -94,6 +95,7 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
     }
 
     private func setupTableView() {
+        self.emptyTXsView.isUserInteractionEnabled = false
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TransactionCell")
         let footerView = UIView()
@@ -216,8 +218,9 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
     }
     
     private func reloadTableView() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
+        DispatchQueue.main.async { [unowned self] in
+            self.emptyAttention(enabled: self.transactions.isEmpty)
+            self.tableView.reloadData()
         }
     }
 
@@ -227,6 +230,12 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         let month = calendar.component(.month, from: date)
         let day = calendar.component(.day, from: date)
         return (day, month, year)
+    }
+    
+    func emptyAttention(enabled: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.emptyTXsView.alpha = enabled ? 1 : 0
+        }
     }
     
     @IBAction func showMenu(_ sender: UIButton) {
