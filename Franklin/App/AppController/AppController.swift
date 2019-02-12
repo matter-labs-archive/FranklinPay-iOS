@@ -137,8 +137,9 @@ public class AppController {
         let group = DispatchGroup()
         
         let tokensDownloaded = userDefaultKeys.areTokensDownloaded()
-//        let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
-//        let franklinAdded = userDefaultKeys.isFranklinAdded(for: wallet)
+        let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
+        let franklinAdded = userDefaultKeys.isFranklinAdded(for: wallet)
+        let daiAdded = userDefaultKeys.isDaiAdded(for: wallet)
         
         CurrentWallet.currentWallet = wallet
         CurrentNetwork.currentNetwork = network
@@ -159,39 +160,45 @@ public class AppController {
         }
         
         group.enter()
-//        DispatchQueue.global().async { [unowned self] in
-//            if !etherAdded && !franklinAdded {
-//                do {
-//                    try self.addEther(for: wallet)
-//                    try self.addFranklin(for: wallet)
-//                    group.leave()
-//                } catch let error {
-//                    fatalError("Can't add ether token - \(String(describing: error))")
-//                }
-//            } else if !franklinAdded {
-//                do {
-//                    try self.addFranklin(for: wallet)
-//                    group.leave()
-//                } catch let error {
-//                    fatalError("Can't add ether token - \(String(describing: error))")
-//                }
-//            } else if !etherAdded {
-//                do {
-//                    try self.addEther(for: wallet)
-//                    group.leave()
-//                } catch let error {
-//                    fatalError("Can't add ether token - \(String(describing: error))")
-//                }
-//            } else {
-//                if let token = try? wallet.getSelectedToken(network: network) {
-//                    CurrentToken.currentToken = token
-//                    group.leave()
-//                } else {
-//                    CurrentToken.currentToken = ERC20Token(franklin: true)
-//                    group.leave()
-//                }
-//            }
-//        }
+        DispatchQueue.global().async { [unowned self] in
+            if !franklinAdded {
+                do {
+                    try self.addFranklin(for: wallet)
+                    group.leave()
+                } catch let error {
+                    fatalError("Can't add ether token - \(String(describing: error))")
+                }
+            } else {
+                group.leave()
+            }
+        }
+        group.enter()
+        DispatchQueue.global().async { [unowned self] in
+            if !etherAdded {
+                do {
+                    try self.addEther(for: wallet)
+                    group.leave()
+                } catch let error {
+                    fatalError("Can't add ether token - \(String(describing: error))")
+                }
+            } else {
+                group.leave()
+            }
+        }
+        group.enter()
+        DispatchQueue.global().async { [unowned self] in
+            if !daiAdded {
+                do {
+                    try self.addDai(for: wallet)
+                    group.leave()
+                } catch let error {
+                    fatalError("Can't add ether token - \(String(describing: error))")
+                }
+            } else {
+                group.leave()
+            }
+        }
+        group.enter()
         if let token = try? wallet.getSelectedToken(network: network) {
             CurrentToken.currentToken = token
             group.leave()
@@ -306,7 +313,7 @@ public class AppController {
             }
         }
         CurrentToken.currentToken = franklin
-        self.userDefaultKeys.setEtherAdded(for: wallet)
+        self.userDefaultKeys.setFranklinAdded(for: wallet)
     }
     
     public func addDai(for wallet: Wallet) throws {

@@ -42,7 +42,8 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         refreshControl.addTarget(self, action:
         #selector(self.handleRefresh(_:)),
                 for: UIControl.Event.valueChanged)
-        refreshControl.alpha = 0
+        //refreshControl.alpha = 0
+        refreshControl.tintColor = Colors.mainBlue
 
         return refreshControl
     }()
@@ -157,10 +158,10 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         DispatchQueue.global().async { [unowned self] in
             let tokens = self.etherCoordinator.getTokens()
             self.tokensArray = tokens
-            self.reloadDataInTable(completion: {
-                self.updateTokensBalances {
-                    self.reloadDataInTable {
-                        //self.saveTokensBalances()
+            self.reloadDataInTable(completion: { [unowned self] in
+                self.updateTokensBalances { [unowned self] in
+                    self.reloadDataInTable { [unowned self] in
+                        self.saveTokensBalances()
                         // TODO: - need to update rates?
                     }
                 }
@@ -173,8 +174,9 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.updateTokensBalances {
-            self.reloadDataInTable {
+        self.updateTokensBalances { [unowned self] in
+            self.reloadDataInTable { [unowned self] in
+                self.saveTokensBalances()
                 self.refreshControl.endRefreshing()
             }
         }
@@ -210,16 +212,16 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         }
     }
     
-//    func saveTokensBalances() {
-//        for tabToken in tokensArray {
-//            let currentToken = tabToken.token
-//            let currentWallet = tabToken.inWallet
-//            let currentNetwork = CurrentNetwork.currentNetwork
-//            if let balance = currentToken.balance {
-//                try? currentToken.saveBalance(in: currentWallet, network: currentNetwork, balance: balance)
-//            }
-//        }
-//    }
+    func saveTokensBalances() {
+        for tabToken in tokensArray {
+            let currentToken = tabToken.token
+            let currentWallet = tabToken.inWallet
+            let currentNetwork = CurrentNetwork.currentNetwork
+            if let balance = currentToken.balance {
+                try? currentToken.saveBalance(in: currentWallet, network: currentNetwork, balance: balance)
+            }
+        }
+    }
     
 //        guard !self.ratesUpdating else {return}
 //        self.ratesUpdating = true

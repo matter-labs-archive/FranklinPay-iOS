@@ -24,30 +24,30 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mbZ-SH-Uzh">
-                        <rect key="frame" x="18.5" y="6" width="328.5" height="111.5"/>
+                        <rect key="frame" x="18.5" y="6" width="328.5" height="108"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xAs-sP-2zs">
-                                <rect key="frame" x="0.0" y="0.0" width="328.5" height="111.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="328.5" height="108"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Ig-kK-9Fx">
-                                        <rect key="frame" x="0.0" y="0.0" width="328.5" height="111.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="328.5" height="108"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Von-dE-5BG">
-                                                <rect key="frame" x="0.0" y="0.0" width="328.5" height="111.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Von-dE-5BG">
+                                                <rect key="frame" x="0.0" y="0.0" width="328.5" height="108"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ItZ-6v-6Uu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="111" height="111.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="108" height="108"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="ItZ-6v-6Uu" secondAttribute="height" multiplier="1:1" id="qYu-sO-UPP"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ethereum" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mxk-Gj-YpH">
-                                                        <rect key="frame" x="121" y="0.0" width="95.5" height="111.5"/>
+                                                        <rect key="frame" x="118" y="0.0" width="97" height="108"/>
                                                         <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text=" 0.00 ETH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xea-Lu-Od5">
-                                                        <rect key="frame" x="226.5" y="0.0" width="102" height="111.5"/>
+                                                        <rect key="frame" x="225" y="0.0" width="103.5" height="108"/>
                                                         <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="24"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -57,6 +57,7 @@
                                                     <constraint firstItem="ItZ-6v-6Uu" firstAttribute="height" secondItem="Von-dE-5BG" secondAttribute="height" multiplier="0.8" id="DYH-Mo-hbo"/>
                                                     <constraint firstItem="mxk-Gj-YpH" firstAttribute="centerY" secondItem="ItZ-6v-6Uu" secondAttribute="centerY" id="ML3-BZ-mbg"/>
                                                     <constraint firstItem="mxk-Gj-YpH" firstAttribute="height" secondItem="ItZ-6v-6Uu" secondAttribute="height" id="ejb-bz-3JF"/>
+                                                    <constraint firstItem="mxk-Gj-YpH" firstAttribute="leading" secondItem="ItZ-6v-6Uu" secondAttribute="trailing" constant="10" id="hAE-px-0HU"/>
                                                     <constraint firstItem="xea-Lu-Od5" firstAttribute="centerY" secondItem="mxk-Gj-YpH" secondAttribute="centerY" id="vcQ-GO-1cp"/>
                                                 </constraints>
                                             </stackView>
