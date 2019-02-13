@@ -279,6 +279,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     
     func modalViewBeenDismissed() {
         DispatchQueue.main.async { [unowned self] in
+            self.setTokensList()
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0
             })

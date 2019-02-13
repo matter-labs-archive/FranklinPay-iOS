@@ -435,7 +435,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     
     func sending() {
         guard let token = self.chosenToken else { return }
-        if token.isFranklin(){
+        if token.isFranklin() {
             self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
         } else if token.isEther() {
             self.sendEther()

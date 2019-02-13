@@ -42,9 +42,9 @@ public class WalletsCoordinator {
             var dollarsWalletBalance: Double = 0
             for token in tokens {
                 let balance: String
-                if token == ERC20Token(ether: true) {
+                if token.isEther() {
                     balance = try wallet.getETHbalance()
-                } else if token == Franklin() {
+                } else if token.isFranklin() {
                     balance = try wallet.getFranklinBalance()
                 } else {
                     balance = try wallet.getERC20balance(for: token)

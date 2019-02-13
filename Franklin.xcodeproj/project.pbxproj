@@ -802,6 +802,7 @@
 			children = (
 				E2F686A421F9DE5A00BD3D14 /* NeedToBe */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
+				E2C1109821E566B60012A978 /* WalletCreation */,
 				3A8096C92211794600DAB8DC /* NetworksList */,
 				E2A8DBBA21F780280031AC58 /* WalletsList */,
 				E20F3D17220857E600669C8B /* Pincode */,
@@ -1908,7 +1909,6 @@
 		E2F686A421F9DE5A00BD3D14 /* NeedToBe */ = {
 			isa = PBXGroup;
 			children = (
-				E2C1109821E566B60012A978 /* WalletCreation */,
 				E234C7A021EB5F8500F175AF /* PrivateKey */,
 				E2C1109E21E567070012A978 /* old */,
 				E2C1109921E566D40012A978 /* Token */,

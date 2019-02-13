@@ -13,6 +13,6 @@ public class Ether: ERC20Token {
         super.init(name: "Ether",
                    address: "",
                    decimals: "18",
-                   symbol: "Eth")
+                   symbol: "ETH")
     }
 }

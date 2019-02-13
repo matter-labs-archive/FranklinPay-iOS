@@ -33,7 +33,7 @@ class TokenCell: UITableViewCell {
         
         self.balance.text = balance
         self.title.text = title
-        self.tokenImage.image = UIImage(named: token.token.symbol.lowercased())
+        self.tokenImage.image = UIImage(named: token.token.symbol.lowercased()) ?? UIImage(named: "dot")
     }
     
     override func prepareForReuse() {

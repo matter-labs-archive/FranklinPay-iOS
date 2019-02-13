@@ -35,15 +35,8 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6dv-wk-QRv">
                                         <rect key="frame" x="10" y="5" width="355" height="80"/>
                                         <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="added" translatesAutoresizingMaskIntoConstraints="NO" id="ZpM-1n-LtY">
-                                                <rect key="frame" x="0.0" y="25" width="30" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="ZpM-1n-LtY" secondAttribute="height" multiplier="1:1" id="282-nw-DI7"/>
-                                                    <constraint firstAttribute="width" constant="30" id="WbL-SR-Rzi"/>
-                                                </constraints>
-                                            </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="sxa-bd-7wd">
-                                                <rect key="frame" x="50" y="9.5" width="255" height="61"/>
+                                                <rect key="frame" x="0.0" y="9.5" width="305" height="61"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="erf-L9-7Mw">
                                                         <rect key="frame" x="0.0" y="0.0" width="171" height="26.5"/>
@@ -75,17 +68,13 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bbe-zT-8Sg">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="added" translatesAutoresizingMaskIntoConstraints="NO" id="ZpM-1n-LtY">
                                                 <rect key="frame" x="325" y="25" width="30" height="30"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="30" id="SJ9-GS-MPJ"/>
-                                                    <constraint firstAttribute="width" secondItem="bbe-zT-8Sg" secondAttribute="height" multiplier="1:1" id="gTS-hm-5Zv"/>
+                                                    <constraint firstAttribute="width" secondItem="ZpM-1n-LtY" secondAttribute="height" multiplier="1:1" id="282-nw-DI7"/>
+                                                    <constraint firstAttribute="width" constant="30" id="WbL-SR-Rzi"/>
                                                 </constraints>
-                                                <state key="normal" title="Button" image="info"/>
-                                                <connections>
-                                                    <action selector="infoTapped:" destination="q6e-Ss-nd1" eventType="touchUpInside" id="Ih6-TR-pRC"/>
-                                                </connections>
-                                            </button>
+                                            </imageView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="bhD-IL-CmE"/>
@@ -127,7 +116,6 @@
             </accessibility>
             <connections>
                 <outlet property="bottomBackgroundView" destination="Jav-sR-QtU" id="FkW-rk-9Bw"/>
-                <outlet property="infoButton" destination="bbe-zT-8Sg" id="jLt-XR-wf0"/>
                 <outlet property="selectedWalletIcon" destination="ZpM-1n-LtY" id="Byj-tV-qg9"/>
                 <outlet property="topBackgroundView" destination="pcX-ws-V7T" id="geY-hF-XfG"/>
                 <outlet property="walletAddress" destination="eZq-o9-Vnw" id="4kd-al-ccD"/>
@@ -139,6 +127,5 @@
     </objects>
     <resources>
         <image name="added" width="40.069564819335938" height="40.069564819335938"/>
-        <image name="info" width="34" height="34"/>
     </resources>
 </document>

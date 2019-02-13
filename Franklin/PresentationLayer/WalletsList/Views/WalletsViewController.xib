@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
         <array key="librefranklin-semibold.ttf">
             <string>LibreFranklin-SemiBold</string>
         </array>
@@ -57,15 +60,29 @@
                                     </connections>
                                 </button>
                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="naW-6z-nSQ" customClass="BasicTableView" customModule="Franklin" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="58.5" width="339" height="526"/>
+                                    <rect key="frame" x="0.0" y="58.5" width="339" height="464.5"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </tableView>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jps-iJ-Raz" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="533" width="339" height="46.5"/>
+                                    <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Add Wallet">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="addWallet:" destination="-1" eventType="touchUpInside" id="5SP-Z0-YcG"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstAttribute="trailing" secondItem="ZNI-MG-smD" secondAttribute="trailing" constant="1.1368683772161603e-13" id="5OG-96-AIf"/>
                                 <constraint firstItem="fl0-at-vfo" firstAttribute="centerY" secondItem="nEc-Ny-oyP" secondAttribute="centerY" id="69V-DN-L2P"/>
-                                <constraint firstAttribute="bottom" secondItem="naW-6z-nSQ" secondAttribute="bottom" id="9PN-fE-8LK"/>
+                                <constraint firstItem="jps-iJ-Raz" firstAttribute="top" secondItem="naW-6z-nSQ" secondAttribute="bottom" constant="10" id="6Ao-6h-ZaG"/>
                                 <constraint firstItem="ZNI-MG-smD" firstAttribute="height" secondItem="TLN-DJ-7cK" secondAttribute="height" multiplier="0.06" id="BE9-jf-YVv"/>
                                 <constraint firstItem="nEc-Ny-oyP" firstAttribute="leading" secondItem="TLN-DJ-7cK" secondAttribute="leading" id="C19-Gg-4HG"/>
                                 <constraint firstItem="nEc-Ny-oyP" firstAttribute="top" secondItem="TLN-DJ-7cK" secondAttribute="top" id="G0R-k9-wgT"/>
@@ -83,9 +100,12 @@
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="jps-iJ-Raz" firstAttribute="centerX" secondItem="UR4-pK-ANb" secondAttribute="centerX" id="7v8-M6-WLr"/>
                         <constraint firstItem="TLN-DJ-7cK" firstAttribute="height" secondItem="UR4-pK-ANb" secondAttribute="height" multiplier="0.94" id="B06-Pj-CbT"/>
                         <constraint firstItem="TLN-DJ-7cK" firstAttribute="centerX" secondItem="UR4-pK-ANb" secondAttribute="centerX" id="MPF-PM-xdK"/>
                         <constraint firstItem="TLN-DJ-7cK" firstAttribute="centerY" secondItem="UR4-pK-ANb" secondAttribute="centerY" multiplier="0.98" id="XKG-gr-7gN"/>
+                        <constraint firstItem="jps-iJ-Raz" firstAttribute="width" secondItem="UR4-pK-ANb" secondAttribute="width" multiplier="0.9" id="k5U-x4-0Vb"/>
+                        <constraint firstAttribute="bottom" secondItem="jps-iJ-Raz" secondAttribute="bottom" constant="30" id="o2v-46-1OT"/>
                         <constraint firstItem="TLN-DJ-7cK" firstAttribute="width" secondItem="UR4-pK-ANb" secondAttribute="width" multiplier="0.9" id="pGU-Om-XAA"/>
                     </constraints>
                 </view>
@@ -103,6 +123,7 @@
                 <constraint firstItem="jL2-Rc-fEf" firstAttribute="top" secondItem="2RP-Pk-aeL" secondAttribute="bottom" constant="-30" id="IFn-1b-uXM"/>
                 <constraint firstItem="Bck-Tg-Uh9" firstAttribute="top" secondItem="2RP-Pk-aeL" secondAttribute="top" id="NDA-8C-vAX"/>
                 <constraint firstItem="UR4-pK-ANb" firstAttribute="leading" secondItem="c7d-eV-rXN" secondAttribute="leading" constant="-1" id="OG2-ik-rFR"/>
+                <constraint firstItem="jps-iJ-Raz" firstAttribute="height" secondItem="c7d-eV-rXN" secondAttribute="height" multiplier="0.07" id="Xi5-Jj-aCs"/>
                 <constraint firstItem="UR4-pK-ANb" firstAttribute="top" secondItem="2RP-Pk-aeL" secondAttribute="top" constant="25" id="cai-zx-7Lz"/>
                 <constraint firstItem="Bck-Tg-Uh9" firstAttribute="trailing" secondItem="2RP-Pk-aeL" secondAttribute="trailing" id="fbW-KF-wCo"/>
                 <constraint firstItem="jL2-Rc-fEf" firstAttribute="leading" secondItem="c7d-eV-rXN" secondAttribute="leading" constant="-1" id="jFF-CD-R8z"/>

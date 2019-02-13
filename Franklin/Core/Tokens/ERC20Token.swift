@@ -69,7 +69,7 @@ public class ERC20Token: IERC20Token {
             self.name = "Ether"
             self.address = ""
             self.decimals = "18"
-            self.symbol = "Eth"
+            self.symbol = "ETH"
         } else {
             self.name = ""
             self.address = ""
@@ -83,7 +83,7 @@ public class ERC20Token: IERC20Token {
             self.name = "Franklin"
             self.address = ""
             self.decimals = "18"
-            self.symbol = "FRN"
+            self.symbol = "ETH"
         } else {
             self.name = ""
             self.address = ""
@@ -94,7 +94,7 @@ public class ERC20Token: IERC20Token {
     
     public init(dai: Bool = true) {
         if dai {
-            self.name = "Dai Stablecoin"
+            self.name = "DAI"
             self.address = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359"
             self.decimals = "18"
             self.symbol = "DAI"

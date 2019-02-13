@@ -20,7 +20,6 @@ class WalletCell: UITableViewCell {
     @IBOutlet weak var bottomBackgroundView: UIView!
     @IBOutlet weak var topBackgroundView: UIView!
     @IBOutlet weak var selectedWalletIcon: UIImageView!
-    @IBOutlet weak var infoButton: UIButton!
     weak var delegate: WalletCellDelegate?
     
     override func awakeFromNib() {
@@ -31,9 +30,6 @@ class WalletCell: UITableViewCell {
         self.walletName.textColor = Colors.textDarkGray
         self.walletAddress.textColor = Colors.textLightGray
         self.walletBalance.textColor = Colors.textDarkGray
-        
-        //self.infoButton.setImage(UIImage(named: "info"), for: .normal)
-        self.infoButton.alpha = 0
         
         self.selectedWalletIcon.image = UIImage(named: "added")
     }

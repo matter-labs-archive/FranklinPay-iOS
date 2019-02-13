@@ -52,11 +52,13 @@ class WalletsViewController: BasicViewController {
     }
     
     private func getWallets() {
-        let walletsArray = self.walletsCoordinator.getWallets()
-        self.wallets = walletsArray
-        self.reloadDataInTable()
-        self.updateWalletsBalances {
+        DispatchQueue.global().async {
+            let walletsArray = self.walletsCoordinator.getWallets()
+            self.wallets = walletsArray
             self.reloadDataInTable()
+            self.updateWalletsBalances {
+                self.reloadDataInTable()
+            }
         }
     }
     
@@ -82,6 +84,11 @@ class WalletsViewController: BasicViewController {
             completion()
         }
     }
+    
+    @IBAction func addWallet(_ sender: BasicBlueButton) {
+        let vc = AddWalletViewController()
+        self.present(vc, animated: true, completion: nil)
+    }
 
     @objc func addButtonTapped() {
 //        let addWalletViewController = AddWalletViewController(isNavigationBarNeeded: true)
@@ -96,9 +103,8 @@ class WalletsViewController: BasicViewController {
                         try self.wallets[indexPath.row].wallet.delete()
                         CurrentWallet.currentWallet = nil
                         CurrentToken.currentToken = nil
-//                        let vc = AddWalletViewController(isNavigationBarNeeded: false)
-//                        vc.view.backgroundColor = Colors.background
-//                        self.present(vc, animated: true, completion: nil)
+                        let vc = OnboardingViewController()
+                        self.present(vc, animated: true, completion: nil)
                     } else {
                         try self.wallets[indexPath.row].wallet.delete()
                         DispatchQueue.main.async {
@@ -160,8 +166,15 @@ extension WalletsViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         CurrentWallet.currentWallet = wallets[indexPath.row].wallet
-        self.tableView.deselectRow(at: indexPath, animated: true)
+        var walletsArray = [TableWallet]()
+        for wallet in wallets {
+            var w = wallet
+            w.isSelected = wallet.wallet.address == wallets[indexPath.row].wallet.address ? true : false
+            walletsArray.append(w)
+        }
+        self.wallets = walletsArray
         self.reloadDataInTable()
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
