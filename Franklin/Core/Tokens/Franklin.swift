@@ -13,6 +13,6 @@ public class Franklin: ERC20Token {
         super.init(name: "Franklin",
                    address: "",
                    decimals: "18",
-                   symbol: "FRN")
+                   symbol: "ETH")
     }
 }

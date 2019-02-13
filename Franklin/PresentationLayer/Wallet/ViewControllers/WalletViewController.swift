@@ -52,13 +52,13 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         let builder = QRCodeReaderViewControllerBuilder {
             $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
         }
-        
+
         return QRCodeReaderViewController(builder: builder)
     }()
     
     @IBAction func qrScanTapped(_ sender: Any) {
         readerVC.delegate = self
-        
+
         readerVC.completionBlock = { (result: QRCodeReaderResult?) in
         }
         readerVC.modalPresentationStyle = .formSheet
@@ -91,7 +91,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
     
     func additionalSetup() {
-        self.sendMoneyButton.setTitle("Write cheque", for: .normal)
+        self.sendMoneyButton.setTitle("Send money", for: .normal)
         self.topViewForModalAnimation.blurView()
         self.topViewForModalAnimation.alpha = 0
         self.topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
@@ -295,7 +295,8 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     
     @IBAction func writeCheque(_ sender: UIButton) {
         self.modalViewAppeared()
-        let sendMoneyVC = SendMoneyController()
+        let token = tokensArray[0].token
+        let sendMoneyVC = SendMoneyController(token: token)
         sendMoneyVC.delegate = self
         sendMoneyVC.modalPresentationStyle = .overCurrentContext
         sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
@@ -307,14 +308,13 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource, TableHeaderDelegate {
     
     func didPressAdd(sender: UIButton) {
-        alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
-//        let section = sender.tag
-//        guard let wallet = self.twoDimensionalTokensArray[section].tokens.first?.inWallet else {
-//            self.alerts.showErrorAlert(for: self, error: "Can't select wallet", completion: nil)
-//            return
-//        }
-//        let searchTokenController = SearchTokenViewController(for: wallet)
-//        self.navigationController?.pushViewController(searchTokenController, animated: true)
+        self.modalViewAppeared()
+        guard let wallet = CurrentWallet.currentWallet else {return}
+        let sendMoneyVC = SearchTokenViewController(for: wallet)
+        sendMoneyVC.delegate = self
+        sendMoneyVC.modalPresentationStyle = .overCurrentContext
+        sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
+        self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -390,21 +390,27 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource, Tabl
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
-//        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
-//            return
-//        }
-//        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
-//        guard let selectedCell = cell else {
-//            return
-//        }
-//        guard let indexPathTapped = self.walletTableView.indexPath(for: selectedCell) else {
-//            return
-//        }
-//        let tableToken = self.tokensArray[indexPathTapped.row]
-//        let tokenViewController = TokenViewController(token: tableToken.token)
-//        self.navigationController?.pushViewController(tokenViewController, animated: true)
+        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
+            return
+        }
+        let cell = indexPath.section == WalletSections.franklin.rawValue ?
+            tableView.cellForRow(at: indexPathForSelectedRow) as? CardCell :
+            tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+        guard let selectedCell = cell else {
+            return
+        }
+        guard let indexPathTapped = self.walletTableView.indexPath(for: selectedCell) else {
+            return
+        }
+        let tableToken = indexPath.section == WalletSections.franklin.rawValue ?
+            self.tokensArray[0] :
+            self.tokensArray[indexPathTapped.row+1]
+        self.modalViewAppeared()
+        let sendMoneyVC = SendMoneyController(token: tableToken.token)
+        sendMoneyVC.delegate = self
+        sendMoneyVC.modalPresentationStyle = .overCurrentContext
+        sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
+        self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
         tableView.deselectRow(at: indexPath, animated: true)
     }
 
@@ -466,14 +472,15 @@ extension WalletViewController: QRCodeReaderViewControllerDelegate {
         reader.stopScanning()
         reader.dismiss(animated: true) { [unowned self] in
             self.modalViewAppeared()
-            let sendMoneyVC = SendMoneyController(address: result.value)
+            let token = self.tokensArray[0].token
+            let sendMoneyVC = SendMoneyController(token: token, address: result.value)
             sendMoneyVC.delegate = self
             sendMoneyVC.modalPresentationStyle = .overCurrentContext
             sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
             self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
         }
     }
-    
+
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
         reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)

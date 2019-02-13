@@ -164,6 +164,7 @@ public struct Constants {
             static let contacts: CGFloat = 90
             static let networks: CGFloat = 90
             static let wallets: CGFloat = 90
+            static let tokensSearch: CGFloat = 80
             static let tokens: CGFloat = 270
             static let additionalButtons: CGFloat = 40
         }

@@ -68,6 +68,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     var contactsList: [Contact] = []
     let contactsService = ContactsService()
     var chosenContact: Contact?
+    var chosenToken: ERC20Token?
     var screenStatus: SendingScreenStatus = .start
     
     let alerts = Alerts()
@@ -100,9 +101,15 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         present(readerVC, animated: true, completion: nil)
     }
     
-    convenience init(address: String) {
+    convenience init(token: ERC20Token, address: String) {
         self.init()
+        self.chosenToken = token
         self.initAddress = address
+    }
+    
+    convenience init(token: ERC20Token) {
+        self.init()
+        self.chosenToken = token
     }
     
     override func viewDidLoad() {
@@ -328,7 +335,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.setCollectionView(hidden: true)
             self.setBottomButton(text: "Other app...", imageName: "share-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
             self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+                self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
             self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
             self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "Enter address:")
             self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
@@ -347,7 +354,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.setCollectionView(hidden: false)
             self.setBottomButton(text: "Back", imageName: "left-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
             self.setTopButton(text: "Add contact", imageName: "add-contacts", backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-            self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
             self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
             self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
             self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
@@ -368,7 +375,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.setCollectionView(hidden: true)
             self.setBottomButton(text: "Send to \(contact.name)", imageName: "ssend-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
             self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
-            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
             self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
             self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "or send to contact:")
@@ -388,7 +395,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.setCollectionView(hidden: true)
             self.setBottomButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
             self.setTopButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
-            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
             self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
             self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "or send to contact:")
@@ -400,8 +407,43 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         }
     }
     
+    func sendToken(_ token: ERC20Token) {
+        guard let wallet = CurrentWallet.currentWallet else { return }
+        guard let amount = self.amountTextField.text else { return }
+        guard let address = self.chosenContact?.address else { return }
+        do {
+            let tx = try wallet.prepareSendERC20Tx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
+            let password = try wallet.getPassword()
+            let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+        } catch let error {
+            return
+        }
+    }
+    
+    func sendEther() {
+        guard let wallet = CurrentWallet.currentWallet else { return }
+        guard let amount = self.amountTextField.text else { return }
+        guard let address = self.chosenContact?.address else { return }
+        do {
+            let tx = try wallet.prepareSendEthTx(toAddress: address, value: amount, gasLimit: .automatic, gasPrice: .automatic)
+            let password = try wallet.getPassword()
+            let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+        } catch let error {
+            return
+        }
+    }
+    
     func sending() {
-        self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        guard let token = self.chosenToken else { return }
+        if token.isFranklin(){
+            self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        } else if token.isEther() {
+            self.sendEther()
+            self.showReady(animated: true)
+        } else {
+            self.sendToken(token)
+            self.showReady(animated: true)
+        }
 //        guard let address = chosenContact?.address ?? addressTextField.text else {
 //            self.showReady(animated: true)
 //        }
@@ -445,7 +487,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.setCollectionView(hidden: true)
             self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: true)
             self.setTopButton(text: "Save contact", imageName: "add-contacts", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: contact.name == "" ? false : true, borderNeeded: true)
-            self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in USD", labelText: "Amount (USD):")
+            self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
             self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
             self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
             self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")

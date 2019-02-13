@@ -28,8 +28,6 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
     private let reuseIdentifier = "ContactTableCell"
-    private let sectionInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    private let itemsPerRow: CGFloat = 3
     
     var searchActive : Bool = false
 
@@ -216,7 +214,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         let contact = contactsList[indexPath.row]
         let alert = UIAlertController(title: contact.name, message: nil, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (action) in
-            let vc = SendMoneyController(address: contact.address)
+            let vc = SendMoneyController(token: Franklin(), address: contact.address)
             self.searchTextField.endEditing(true)
             self.modalViewAppeared()
             vc.delegate = self
