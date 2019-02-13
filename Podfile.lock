@@ -39,7 +39,6 @@ PODS:
     - BigInt (~> 3.1)
   - SwiftyGif (4.2.0)
   - TransitionableTab (0.2.0)
-  - Wallet (1.4.1)
   - web3swift (2.0.4):
     - BigInt (~> 3.1)
     - CryptoSwift (~> 0.13)
@@ -64,7 +63,6 @@ DEPENDENCIES:
   - StatusBarOverlay
   - SwiftyGif
   - TransitionableTab (~> 0.2.0)
-  - Wallet
   - web3swift
 
 SPEC REPOS:
@@ -90,7 +88,6 @@ SPEC REPOS:
     - SwiftRLP
     - SwiftyGif
     - TransitionableTab
-    - Wallet
     - web3swift
 
 SPEC CHECKSUMS:
@@ -115,9 +112,8 @@ SPEC CHECKSUMS:
   SwiftRLP: 98a02b2210128353ca02e4c2f4d83e2a9796db4f
   SwiftyGif: a149bf84df23370592f3f075561ae02c8632a314
   TransitionableTab: 54a5d0af475033bdb83959fde4e5d6201af7e2ab
-  Wallet: 9f2942aa81aacf627fee3a42c11acf97fbacbd5d
   web3swift: aeb3d08ded961e0562919d4161f5af6ccb0ab30f
 
-PODFILE CHECKSUM: 18f6f40cf9fc2c67fad22f16438c2fd4cf093302
+PODFILE CHECKSUM: f6293673afba98dc3e86bf018eaa8b98e7e50e22
 
 COCOAPODS: 1.5.3

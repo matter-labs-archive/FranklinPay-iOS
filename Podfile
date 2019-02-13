@@ -19,6 +19,5 @@ target 'Franklin' do
   pod 'SideMenu'
   pod 'BlockiesSwift'
   pod 'BadgeSwift', '~> 7.0'
-  pod 'Wallet'
 
 end
