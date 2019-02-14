@@ -23,7 +23,7 @@ public struct MainSetting {
         switch setting {
         case .backup:
             self.title = "Backup now"
-            self.subtitle = "Your money are at risk!"
+            self.subtitle = "Your money is at risk!"
             self.image = UIImage(named: "backup") ?? UIImage()
             self.currentState = nil
             self.notification = true
