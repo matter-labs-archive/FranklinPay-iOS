@@ -164,8 +164,8 @@ class AddWalletViewController: BasicViewController {
     }
     
     @objc func importAction(sender: UIButton) {
-//        let vc = WalletImportingViewController()
-//        self.present(vc, animated: true, completion: nil)
+        let vc = WalletImportingViewController()
+        self.present(vc, animated: true, completion: nil)
     }
     
     func animation() {

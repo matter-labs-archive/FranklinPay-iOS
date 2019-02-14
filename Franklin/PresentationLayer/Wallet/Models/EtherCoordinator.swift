@@ -39,9 +39,9 @@ public class EtherCoordinator {
     func getBalance(for token: ERC20Token, wallet: Wallet) -> String {
         do {
             let balance: String
-            if token == ERC20Token(ether: true) {
+            if token.isEther() {
                 balance = try wallet.getETHbalance()
-            } else if token == ERC20Token(franklin: true) {
+            } else if token.isFranklin() {
                 balance = try wallet.getFranklinBalance()
             } else {
                 balance = try wallet.getERC20balance(for: token)

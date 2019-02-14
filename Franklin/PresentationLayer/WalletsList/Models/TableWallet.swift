@@ -10,7 +10,6 @@ import Foundation
 
 struct TableWallet {
     var wallet: Wallet
-    var selectedToken: ERC20Token
     var balanceUSD: String?
     var isSelected: Bool
 }

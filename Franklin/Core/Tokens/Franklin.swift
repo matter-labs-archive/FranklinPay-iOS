@@ -11,7 +11,7 @@ import Foundation
 public class Franklin: ERC20Token {
     public init() {
         super.init(name: "Franklin",
-                   address: "",
+                   address: "Plasma",
                    decimals: "18",
                    symbol: "ETH")
     }

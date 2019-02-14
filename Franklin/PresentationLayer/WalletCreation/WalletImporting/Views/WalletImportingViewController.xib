@@ -9,9 +9,18 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+    </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletImportingViewController" customModule="MatterWallet_dev" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WalletImportingViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
+                <outlet property="animationImageView" destination="iQY-jQ-gZf" id="qyH-Ts-pj8"/>
                 <outlet property="contentHeight" destination="f8h-hW-6OK" id="DKC-9p-BLP"/>
                 <outlet property="contentView" destination="m9d-Wu-6bv" id="UU0-NS-Lw6"/>
                 <outlet property="importButton" destination="9yD-XD-0yU" id="NZF-kZ-cCZ"/>
@@ -19,6 +28,7 @@
                 <outlet property="inputType" destination="BFc-4s-hzz" id="beq-19-o05"/>
                 <outlet property="qr" destination="SzC-Sy-YUO" id="oWp-tK-JZg"/>
                 <outlet property="scrollView" destination="DD8-0r-OwE" id="6rk-DZ-0BV"/>
+                <outlet property="settingUp" destination="XVA-mh-fx2" id="BOk-3c-rA9"/>
                 <outlet property="tapToQR" destination="wN5-jl-UJa" id="GQd-qO-SC1"/>
                 <outlet property="textView" destination="QtX-yh-Su4" id="yl6-qE-qka"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -29,59 +39,63 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XXZ-xt-1Nj" customClass="SegmentedControl" customModule="MatterWallet_dev" customModuleProvider="target">
-                    <rect key="frame" x="19" y="30" width="337.5" height="29"/>
+                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="XXZ-xt-1Nj">
+                    <rect key="frame" x="19" y="80" width="337.5" height="29"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <segments>
                         <segment title="MNEMONIC"/>
                         <segment title="PRIVATE KEY"/>
                     </segments>
-                    <color key="tintColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="tintColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="8"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <action selector="changeImportType:" destination="-1" eventType="valueChanged" id="R8a-qG-dsp"/>
                     </connections>
                 </segmentedControl>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DD8-0r-OwE">
-                    <rect key="frame" x="0.0" y="68" width="375" height="489"/>
+                    <rect key="frame" x="0.0" y="118" width="375" height="439"/>
                     <subviews>
                         <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m9d-Wu-6bv" userLabel="Content View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="489"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="439"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="INPUT TYPE" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BFc-4s-hzz">
                                     <rect key="frame" x="140" y="10" width="95" height="20"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QtX-yh-Su4" customClass="BasicTextView" customModule="MatterWallet_dev" customModuleProvider="target">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QtX-yh-Su4" customClass="BasicTextView" customModule="Franklin" customModuleProvider="target">
                                     <rect key="frame" x="19" y="40" width="337.5" height="90"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="90" id="JfS-U5-cO7"/>
                                     </constraints>
-                                    <color key="textColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SzC-Sy-YUO">
-                                    <rect key="frame" x="322.5" y="140" width="34" height="34"/>
+                                    <rect key="frame" x="309.5" y="140" width="47" height="46.5"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="SzC-Sy-YUO" secondAttribute="height" multiplier="1:1" id="KKo-4X-kK6"/>
-                                        <constraint firstAttribute="width" constant="34" id="M79-yb-0Cg"/>
                                     </constraints>
-                                    <state key="normal" image="qr"/>
+                                    <state key="normal" image="photo"/>
                                     <connections>
                                         <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="xOa-qw-xnb"/>
                                     </connections>
                                 </button>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to scan qr-code" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wN5-jl-UJa">
-                                    <rect key="frame" x="236" y="140" width="76.5" height="34"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap to scan qr-code" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wN5-jl-UJa">
+                                    <rect key="frame" x="190.5" y="140" width="109" height="46.5"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="118" id="jpc-I7-jyc"/>
                                     </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="14"/>
-                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -110,7 +124,16 @@
                         <constraint firstAttribute="trailing" secondItem="m9d-Wu-6bv" secondAttribute="trailing" id="yYr-dV-ePa"/>
                     </constraints>
                 </scrollView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9yD-XD-0yU" customClass="BasicGreenButton" customModule="MatterWallet_dev" customModuleProvider="target">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iQY-jQ-gZf">
+                    <rect key="frame" x="19" y="483.5" width="337.5" height="133.5"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="XVA-mh-fx2">
+                    <rect key="frame" x="19" y="589" width="337.5" height="28"/>
+                    <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="24"/>
+                    <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9yD-XD-0yU" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
                     <rect key="frame" x="19" y="567" width="337.5" height="50"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
@@ -126,16 +149,24 @@
                     </connections>
                 </button>
             </subviews>
-            <color key="backgroundColor" red="0.20392156859999999" green="0.69803921570000005" blue="0.82352941180000006" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="XXZ-xt-1Nj" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="2DL-am-rFc"/>
+                <constraint firstItem="iQY-jQ-gZf" firstAttribute="bottom" secondItem="9yD-XD-0yU" secondAttribute="bottom" id="2no-se-rYR"/>
                 <constraint firstItem="XXZ-xt-1Nj" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="5lg-sf-sCy"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="9yD-XD-0yU" secondAttribute="bottom" constant="50" id="A6g-3e-YUb"/>
+                <constraint firstItem="XVA-mh-fx2" firstAttribute="centerX" secondItem="9yD-XD-0yU" secondAttribute="centerX" id="Gjq-ae-Mor"/>
                 <constraint firstItem="9yD-XD-0yU" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" multiplier="0.9" id="N5x-U6-SKm"/>
+                <constraint firstItem="SzC-Sy-YUO" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="NFc-41-OP4"/>
                 <constraint firstItem="9yD-XD-0yU" firstAttribute="top" secondItem="DD8-0r-OwE" secondAttribute="bottom" constant="10" id="Nv4-2w-LQC"/>
                 <constraint firstItem="DD8-0r-OwE" firstAttribute="top" secondItem="XXZ-xt-1Nj" secondAttribute="bottom" constant="10" id="TzI-s1-PMo"/>
                 <constraint firstItem="DD8-0r-OwE" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="e6s-28-o8i"/>
-                <constraint firstItem="XXZ-xt-1Nj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="p85-AP-XDs"/>
+                <constraint firstItem="iQY-jQ-gZf" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="fBb-GO-fCA"/>
+                <constraint firstItem="iQY-jQ-gZf" firstAttribute="width" secondItem="9yD-XD-0yU" secondAttribute="width" id="ksV-F4-dx3"/>
+                <constraint firstItem="XVA-mh-fx2" firstAttribute="width" secondItem="9yD-XD-0yU" secondAttribute="width" id="olw-fe-O71"/>
+                <constraint firstItem="XXZ-xt-1Nj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="60" id="p85-AP-XDs"/>
+                <constraint firstItem="XVA-mh-fx2" firstAttribute="bottom" secondItem="iQY-jQ-gZf" secondAttribute="bottom" id="sIq-Jb-b63"/>
+                <constraint firstItem="iQY-jQ-gZf" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2" id="tU1-MZ-hpv"/>
                 <constraint firstItem="DD8-0r-OwE" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="tdr-It-5A2"/>
                 <constraint firstItem="9yD-XD-0yU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="uhv-mg-Yeu"/>
             </constraints>
@@ -144,6 +175,6 @@
         </view>
     </objects>
     <resources>
-        <image name="qr" width="34" height="34"/>
+        <image name="photo" width="96" height="96"/>
     </resources>
 </document>

@@ -13,7 +13,6 @@ import BigInt
 public class CurrentNetwork {
 
     private static var _currentNetwork: Web3Network?
-    private static var _currentWeb: web3?
 
     public class var currentNetwork: Web3Network {
         get {
@@ -39,23 +38,18 @@ public class CurrentNetwork {
     
     public class var currentWeb: web3? {
         get {
-            if let web = _currentWeb {
-                return web
-            } else {
-                let web3: web3
-                switch self.currentNetwork.id {
-                case 1:
-                    web3 = Web3.InfuraMainnetWeb3()
-                case 4:
-                    web3 = Web3.InfuraRinkebyWeb3()
-                case 3:
-                    web3 = Web3.InfuraRopstenWeb3()
-                default:
-                    return nil
-                }
-                _currentWeb = web3
-                return web3
+            let web3: web3
+            switch self.currentNetwork.id {
+            case 1:
+                web3 = Web3.InfuraMainnetWeb3()
+            case 4:
+                web3 = Web3.InfuraRinkebyWeb3()
+            case 3:
+                web3 = Web3.InfuraRopstenWeb3()
+            default:
+                return nil
             }
+            return web3
         }
     }
 }

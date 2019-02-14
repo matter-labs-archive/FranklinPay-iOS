@@ -218,6 +218,7 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
             let currentWallet = tabToken.inWallet
             let currentNetwork = CurrentNetwork.currentNetwork
             if let balance = currentToken.balance {
+                
                 try? currentToken.saveBalance(in: currentWallet, network: currentNetwork, balance: balance)
             }
         }

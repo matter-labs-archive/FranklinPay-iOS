@@ -56,7 +56,7 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="FRANKLIN" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tp0-1a-f7y">
-                                                <rect key="frame" x="100.33333333333334" y="5.9999999999999947" width="124.66666666666666" height="20.666666666666671"/>
+                                                <rect key="frame" x="100.33333333333334" y="0.0" width="124.66666666666666" height="20.666666666666668"/>
                                                 <fontDescription key="fontDescription" name="LibreFranklin-Medium" family="Libre Franklin" pointSize="24"/>
                                                 <color key="textColor" red="0.61176470588235299" green="0.71764705882352942" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -107,12 +107,12 @@
                                             <constraint firstItem="TX4-il-rDp" firstAttribute="leading" secondItem="ynQ-OU-fb2" secondAttribute="leading" id="HJ9-3d-xFa"/>
                                             <constraint firstAttribute="bottom" secondItem="TX4-il-rDp" secondAttribute="bottom" id="Iyq-Bh-m9D"/>
                                             <constraint firstItem="cuE-z3-LMU" firstAttribute="height" secondItem="ynQ-OU-fb2" secondAttribute="height" multiplier="0.233" id="Olj-R4-OD6"/>
-                                            <constraint firstItem="tp0-1a-f7y" firstAttribute="top" secondItem="ynQ-OU-fb2" secondAttribute="top" constant="6" id="UXO-rk-SRh"/>
                                             <constraint firstItem="ARw-hr-KAA" firstAttribute="height" secondItem="ynQ-OU-fb2" secondAttribute="height" multiplier="0.087" id="YuK-QP-Lsj"/>
                                             <constraint firstItem="tp0-1a-f7y" firstAttribute="height" secondItem="ynQ-OU-fb2" secondAttribute="height" multiplier="0.169" id="dj9-lL-syF"/>
                                             <constraint firstItem="tp0-1a-f7y" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="cuE-z3-LMU" secondAttribute="trailing" constant="10" id="p8S-cC-C0W"/>
                                             <constraint firstItem="kKp-h8-59m" firstAttribute="height" secondItem="ynQ-OU-fb2" secondAttribute="height" multiplier="0.087" id="rDw-k3-fUP"/>
                                             <constraint firstItem="bFW-Is-L2G" firstAttribute="top" secondItem="ynQ-OU-fb2" secondAttribute="top" id="rhw-jO-smb"/>
+                                            <constraint firstItem="tp0-1a-f7y" firstAttribute="top" secondItem="bFW-Is-L2G" secondAttribute="top" id="y2s-vj-6Ep"/>
                                         </constraints>
                                     </view>
                                 </subviews>

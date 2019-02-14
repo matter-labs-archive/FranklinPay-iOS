@@ -81,7 +81,7 @@ public class ERC20Token: IERC20Token {
     public init(franklin: Bool = true) {
         if franklin {
             self.name = "Franklin"
-            self.address = ""
+            self.address = "Plasma"
             self.decimals = "18"
             self.symbol = "ETH"
         } else {

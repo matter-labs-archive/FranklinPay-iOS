@@ -115,8 +115,6 @@
 		E2A8DB9721F616A40031AC58 /* Ether.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9621F616A40031AC58 /* Ether.swift */; };
 		E2A8DB9921F616BE0031AC58 /* Franklin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9821F616BE0031AC58 /* Franklin.swift */; };
 		E2A8DBA021F676780031AC58 /* TextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9F21F676780031AC58 /* TextViewExtension.swift */; };
-		E2A8DBA321F676E80031AC58 /* WalletCreationAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DBA121F676E80031AC58 /* WalletCreationAnimationViewController.swift */; };
-		E2A8DBA421F676E80031AC58 /* WalletCreationAnimationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2A8DBA221F676E80031AC58 /* WalletCreationAnimationViewController.xib */; };
 		E2A8DBB921F6A96F0031AC58 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DBB821F6A96F0031AC58 /* ViewExtension.swift */; };
 		E2B45A2E2174D1CD00F38E50 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2C2174D1CC00F38E50 /* Interactor.swift */; };
 		E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4921761F4000F38E50 /* ContactsViewController.swift */; };
@@ -152,8 +150,6 @@
 		E2C1109421E557FE0012A978 /* EIP681.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1108F21E557FD0012A978 /* EIP681.swift */; };
 		E2C1109521E557FE0012A978 /* EIP681Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1109021E557FE0012A978 /* EIP681Router.swift */; };
 		E2C1109621E557FE0012A978 /* EIP681Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1109121E557FE0012A978 /* EIP681Model.swift */; };
-		E2C110B921E67D1D0012A978 /* WalletCreationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110B721E67D1D0012A978 /* WalletCreationViewController.swift */; };
-		E2C110BA21E67D1D0012A978 /* WalletCreationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C110B821E67D1D0012A978 /* WalletCreationViewController.xib */; };
 		E2C110BD21E755330012A978 /* WalletImportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110BB21E755330012A978 /* WalletImportingViewController.swift */; };
 		E2C110BE21E755330012A978 /* WalletImportingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C110BC21E755330012A978 /* WalletImportingViewController.xib */; };
 		E2C110C021E7DB130012A978 /* ImportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110BF21E7DB130012A978 /* ImportType.swift */; };
@@ -399,8 +395,6 @@
 		E2A8DB9621F616A40031AC58 /* Ether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ether.swift; sourceTree = "<group>"; };
 		E2A8DB9821F616BE0031AC58 /* Franklin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Franklin.swift; sourceTree = "<group>"; };
 		E2A8DB9F21F676780031AC58 /* TextViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextViewExtension.swift; sourceTree = "<group>"; };
-		E2A8DBA121F676E80031AC58 /* WalletCreationAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCreationAnimationViewController.swift; sourceTree = "<group>"; };
-		E2A8DBA221F676E80031AC58 /* WalletCreationAnimationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCreationAnimationViewController.xib; sourceTree = "<group>"; };
 		E2A8DBB821F6A96F0031AC58 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		E2B45A2C2174D1CC00F38E50 /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
 		E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DismissAnimator.swift; sourceTree = "<group>"; };
@@ -444,8 +438,6 @@
 		E2C1108F21E557FD0012A978 /* EIP681.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP681.swift; sourceTree = "<group>"; };
 		E2C1109021E557FE0012A978 /* EIP681Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP681Router.swift; sourceTree = "<group>"; };
 		E2C1109121E557FE0012A978 /* EIP681Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EIP681Model.swift; sourceTree = "<group>"; };
-		E2C110B721E67D1D0012A978 /* WalletCreationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCreationViewController.swift; sourceTree = "<group>"; };
-		E2C110B821E67D1D0012A978 /* WalletCreationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCreationViewController.xib; sourceTree = "<group>"; };
 		E2C110BB21E755330012A978 /* WalletImportingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletImportingViewController.swift; sourceTree = "<group>"; };
 		E2C110BC21E755330012A978 /* WalletImportingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletImportingViewController.xib; sourceTree = "<group>"; };
 		E2C110BF21E7DB130012A978 /* ImportType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportType.swift; sourceTree = "<group>"; };
@@ -1126,31 +1118,6 @@
 			path = Tokens;
 			sourceTree = "<group>";
 		};
-		E2A8DB9B21F676380031AC58 /* WalletCreationAnimation */ = {
-			isa = PBXGroup;
-			children = (
-				E2A8DBAE21F67FBD0031AC58 /* ViewControllers */,
-				E2A8DBAD21F67FB80031AC58 /* Views */,
-			);
-			path = WalletCreationAnimation;
-			sourceTree = "<group>";
-		};
-		E2A8DB9C21F676410031AC58 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				E2C110B721E67D1D0012A978 /* WalletCreationViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		E2A8DB9D21F676470031AC58 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E2C110B821E67D1D0012A978 /* WalletCreationViewController.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
 		E2A8DBA521F67EEA0031AC58 /* AddWallet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,31 +1175,6 @@
 				E2C110BF21E7DB130012A978 /* ImportType.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		E2A8DBAC21F67F730031AC58 /* WalletCreation */ = {
-			isa = PBXGroup;
-			children = (
-				E2A8DB9C21F676410031AC58 /* ViewControllers */,
-				E2A8DB9D21F676470031AC58 /* Views */,
-			);
-			path = WalletCreation;
-			sourceTree = "<group>";
-		};
-		E2A8DBAD21F67FB80031AC58 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E2A8DBA221F676E80031AC58 /* WalletCreationAnimationViewController.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		E2A8DBAE21F67FBD0031AC58 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				E2A8DBA121F676E80031AC58 /* WalletCreationAnimationViewController.swift */,
-			);
-			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		E2A8DBBA21F780280031AC58 /* WalletsList */ = {
@@ -1476,10 +1418,8 @@
 		E2C1109821E566B60012A978 /* WalletCreation */ = {
 			isa = PBXGroup;
 			children = (
-				E2A8DBAC21F67F730031AC58 /* WalletCreation */,
 				E2A8DBA821F67F3C0031AC58 /* WalletImporting */,
 				E2A8DBA521F67EEA0031AC58 /* AddWallet */,
-				E2A8DB9B21F676380031AC58 /* WalletCreationAnimation */,
 			);
 			path = WalletCreation;
 			sourceTree = "<group>";
@@ -2098,7 +2038,6 @@
 			files = (
 				E2EB2C0621FBC5C200F2864D /* TransactionsHistoryViewController.xib in Resources */,
 				E2EB2C0721FBC5C200F2864D /* TransactionCell.xib in Resources */,
-				E2C110BA21E67D1D0012A978 /* WalletCreationViewController.xib in Resources */,
 				91F6E94521B534D20022CF61 /* Web3Swift.js in Resources */,
 				E2F0EFA521F8BA2700F11AD1 /* SF-Pro-Display-ThinItalic.otf in Resources */,
 				E2F0EFEF21F9519500F11AD1 /* PublicKeyViewController.xib in Resources */,
@@ -2164,7 +2103,6 @@
 				E2215AC521FF4B1400FC79AB /* AcceptChequeFormController.xib in Resources */,
 				E2F0EFD821F8BD1500F11AD1 /* librefranklin-extrabolditalic.ttf in Resources */,
 				E2F0EF9F21F8BA2700F11AD1 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
-				E2A8DBA421F676E80031AC58 /* WalletCreationAnimationViewController.xib in Resources */,
 				E2F0EFD921F8BD1500F11AD1 /* librefranklin-black.ttf in Resources */,
 				E2F0EFB021F8BA2700F11AD1 /* SF-Pro-Display-BlackItalic.otf in Resources */,
 				E2F0EFB421F8BA2700F11AD1 /* SF-Pro-Text-MediumItalic.otf in Resources */,
@@ -2356,7 +2294,6 @@
 				E2A8DAFF21F1F6A00031AC58 /* ERC20Token.swift in Sources */,
 				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				E2215AC92201B0ED00FC79AB /* LabelExtension.swift in Sources */,
-				E2C110B921E67D1D0012A978 /* WalletCreationViewController.swift in Sources */,
 				E2C1108621E507340012A978 /* CurrentToken.swift in Sources */,
 				E27BF77D21D1447A00951061 /* NSRegularExpressionExtension.swift in Sources */,
 				E2C1105F21E507260012A978 /* NetworksService.swift in Sources */,
@@ -2376,7 +2313,6 @@
 				E27BF77E21D1447A00951061 /* DataExtension.swift in Sources */,
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				E2C1109421E557FE0012A978 /* EIP681.swift in Sources */,
-				E2A8DBA321F676E80031AC58 /* WalletCreationAnimationViewController.swift in Sources */,
 				E2A8DAFA21F1F6A00031AC58 /* Web3Network.swift in Sources */,
 				E27BF76F21D1447A00951061 /* SignedTransaction.swift in Sources */,
 				E2D451DD21EE980B00218872 /* DoubleExtension.swift in Sources */,

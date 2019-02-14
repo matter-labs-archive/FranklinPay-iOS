@@ -44,20 +44,23 @@ class TransactionCell: UITableViewCell {
             //Sent
             if model.isPending {
                 transactionTypeImageView?.image = UIImage(named: "pending")
+                timeLabel.text = "Tap to view or cancel"
             } else {
                 transactionTypeImageView?.image = UIImage(named: "to")
+                timeLabel.text = dateFormatter.string(from: model.date)
             }
             addressLabel.text = "To " + model.to.hideExtraSymbolsInAddress()
-            timeLabel.text = dateFormatter.string(from: model.date)
+            
         } else if model.to.lowercased() == wallet.address.lowercased() {
             //Received
             if model.isPending {
                 transactionTypeImageView?.image = UIImage(named: "pending")
+                timeLabel.text = "Tap to view or cancel"
             } else {
                 transactionTypeImageView?.image = UIImage(named: "from")
+                timeLabel.text = dateFormatter.string(from: model.date)
             }
             addressLabel.text = "From " + model.from.hideExtraSymbolsInAddress()
-            timeLabel.text = "Tap to view or cancel"
         }
     }
 
