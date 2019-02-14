@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddWalletViewController: BasicViewController {
+class AddWalletViewController: BasicViewController, ModalViewDelegate {
 
     weak var animationTimer: Timer?
     let walletsService = WalletsService()
@@ -27,6 +27,8 @@ class AddWalletViewController: BasicViewController {
     @IBOutlet weak var createWallet: BasicGreenButton!
     @IBOutlet weak var animationImageView: UIImageView!
     
+    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    
     weak var delegate: ModalViewDelegate?
     
     override func viewDidLoad() {
@@ -38,6 +40,15 @@ class AddWalletViewController: BasicViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        additionalSetup()
+    }
+    
+    func additionalSetup() {
+        self.topViewForModalAnimation.blurView()
+        self.topViewForModalAnimation.alpha = 0
+        self.topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
+        self.topViewForModalAnimation.isUserInteractionEnabled = false
+        self.view.addSubview(topViewForModalAnimation)
     }
     
     func createView() {
@@ -165,6 +176,9 @@ class AddWalletViewController: BasicViewController {
     
     @objc func importAction(sender: UIButton) {
         let vc = WalletImportingViewController()
+        vc.delegate = self
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.view.layer.speed = Constants.ModalView.animationSpeed
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -205,6 +219,22 @@ class AddWalletViewController: BasicViewController {
                     self.present(tabViewController, animated: false, completion: nil)
                 })
             }
+        }
+    }
+    
+    func modalViewBeenDismissed() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+                self.topViewForModalAnimation.alpha = 0
+            })
+        }
+    }
+    
+    func modalViewAppeared() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+                self.topViewForModalAnimation.alpha = Constants.ModalView.ShadowView.alpha
+            })
         }
     }
     

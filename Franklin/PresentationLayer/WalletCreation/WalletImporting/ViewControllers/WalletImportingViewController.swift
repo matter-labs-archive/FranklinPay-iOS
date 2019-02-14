@@ -35,6 +35,7 @@ class WalletImportingViewController: BasicViewController {
     let alerts = Alerts()
     var walletCreated = false
     weak var animationTimer: Timer?
+    weak var delegate: ModalViewDelegate?
 
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -255,6 +256,15 @@ class WalletImportingViewController: BasicViewController {
                 })
             }
         }
+    }
+    
+    @IBAction func closeAction(_ sender: UIButton) {
+        self.dismissView()
+    }
+    
+    @objc func dismissView() {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.modalViewBeenDismissed()
     }
 }
 
