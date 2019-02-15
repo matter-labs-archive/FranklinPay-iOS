@@ -9,6 +9,7 @@
 import UIKit
 import QRCodeReader
 import IHKeyboardAvoiding
+import EthereumAddress
 
 class AddContactController: BasicViewController {
 
@@ -123,6 +124,11 @@ class AddContactController: BasicViewController {
     @IBAction func addContactButtonTapped(_ sender: Any) {
 
         guard let address = addressTextField.text else {
+            return
+        }
+        
+        guard let ethAddress = EthereumAddress(address) else {
+            alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
             return
         }
 

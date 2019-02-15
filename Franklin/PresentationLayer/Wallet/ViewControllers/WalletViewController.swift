@@ -12,6 +12,7 @@ import EthereumAddress
 import BigInt
 import SideMenu
 import QRCodeReader
+import secp256k1_swift
 
 enum WalletSections: Int {
     case franklin = 0
@@ -70,12 +71,16 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         self.parent?.view.backgroundColor = .white
         self.view.alpha = 0
         self.view.backgroundColor = Colors.background
-        self.tabBarController?.tabBar.selectedItem?.title = nil
         self.setupNavigation()
         self.setupTableView()
         self.additionalSetup()
         self.setupSideBar()
         self.additionalSetup()
+        
+//        let t = TransactionIgnis()
+//        t.main()
+//        
+//        print("ho")
     }
     
     func setupMarker() {
@@ -296,13 +301,128 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
     
     @IBAction func writeCheque(_ sender: UIButton) {
-        self.modalViewAppeared()
         let token = tokensArray[0].token
+        self.showSend(token: token)
+    }
+    
+    func showSend(token: ERC20Token) {
+        self.modalViewAppeared()
         let sendMoneyVC = SendMoneyController(token: token)
         sendMoneyVC.delegate = self
         sendMoneyVC.modalPresentationStyle = .overCurrentContext
         sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
         self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
+    }
+    
+    func showAlert(error: String?) {
+        DispatchQueue.main.async { [unowned self] in
+            self.alerts.showErrorAlert(for: self, error: error ?? "Unknown error", completion: nil)
+        }
+    }
+    
+    func showWithdraw() {
+        let alert = UIAlertController(title: "Withdraw to \(CurrentNetwork.currentNetwork.name)", message: nil, preferredStyle: UIAlertController.Style.alert)
+        
+        let enterAction = UIAlertAction(title: "Apply", style: .default) { [unowned self] (_) in
+            guard let wallet = CurrentWallet.currentWallet else {
+                self.showAlert(error: "Cant get wallet")
+                return
+            }
+            DispatchQueue.global().async {
+                do {
+                    let password = try wallet.getPassword()
+                    let maxIteractions = BigUInt(1)
+                    let tx = try wallet.prepareWriteContractTx(contractABI: ignisABI, contractAddress: ignisAddress, contractMethod: "withdrawUserBalance", value: "0", gasLimit: .automatic, gasPrice: .automatic, parameters: [maxIteractions] as [AnyObject], extraData: Data())
+                    let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                } catch let error {
+                    self.showAlert(error: error.localizedDescription)
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            
+        }
+        
+        alert.addAction(enterAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showDeposit() {
+        let alert = UIAlertController(title: "Deposit to Franklin", message: nil, preferredStyle: UIAlertController.Style.alert)
+        
+        alert.addTextField { (textField) in
+            textField.placeholder = "Enter amount"
+            textField.keyboardType = .decimalPad
+        }
+        
+        let enterAction = UIAlertAction(title: "Apply", style: .default) { [unowned self] (_) in
+            guard let wallet = CurrentWallet.currentWallet else {
+                self.showAlert(error: "Cant get wallet")
+                return
+            }
+            guard let amount = alert.textFields![0].text else {
+                self.showAlert(error: "Cant get amount")
+                return
+            }
+            guard Float(amount)! > 0 else {
+                self.showAlert(error: "Can't be zero")
+                return
+            }
+            DispatchQueue.global().async {
+                do {
+                    let password = try wallet.getPassword()
+                    let pk = try wallet.getPrivateKey(withPassword: password)
+                    let dataPK = Data(hex: pk)
+                    guard let publicKey = SECP256K1.privateToPublic(privateKey: dataPK) else {
+                        self.showAlert(error: "Cant get public key")
+                        return
+                    }
+                    var stringPublicKey = publicKey.toHexString()
+                    stringPublicKey.removeFirst(2)
+                    let count = stringPublicKey.count
+                    let x = String(stringPublicKey.prefix(count/2))
+                    let y = String(stringPublicKey.suffix(count/2))
+                    guard let bnY = BigUInt(y, radix: 16) else {
+                        self.showAlert(error: "Cant get public key y")
+                        return
+                    }
+                    guard let bnX = BigUInt(x, radix: 16) else {
+                        self.showAlert(error: "Cant get public key x")
+                        return
+                    }
+                    let fee = BigUInt(0)
+                    let tx = try wallet.prepareWriteContractTx(contractABI: ignisABI, contractAddress: ignisAddress, contractMethod: "deposit", value: amount, gasLimit: .automatic, gasPrice: .automatic, parameters: [[bnX, bnY], fee] as [AnyObject], extraData: Data())
+                    let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                } catch let error {
+                    self.showAlert(error: error.localizedDescription)
+                }
+            }
+        }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { (_) in
+            
+        }
+        
+        alert.addAction(enterAction)
+        alert.addAction(cancelAction)
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func showAlert(token: ERC20Token) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (action) in
+            self.showSend(token: token)
+        }))
+        alert.addAction(UIAlertAction(title: "Deposit", style: .default, handler: { [unowned self] (action) in
+            self.showDeposit()
+        }))
+        alert.addAction(UIAlertAction(title: "Withdraw", style: .default, handler: { [unowned self] (action) in
+            self.showWithdraw()
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(alert, animated: true)
     }
     
 }
@@ -395,7 +515,8 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource, Tabl
         guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
             return
         }
-        let cell = indexPath.section == WalletSections.franklin.rawValue ?
+        let isFranklin = indexPath.section == WalletSections.franklin.rawValue
+        let cell = isFranklin ?
             tableView.cellForRow(at: indexPathForSelectedRow) as? CardCell :
             tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
         guard let selectedCell = cell else {
@@ -404,16 +525,14 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource, Tabl
         guard let indexPathTapped = self.walletTableView.indexPath(for: selectedCell) else {
             return
         }
-        let tableToken = indexPath.section == WalletSections.franklin.rawValue ?
+        let tableToken = isFranklin ?
             self.tokensArray[0] :
             self.tokensArray[indexPathTapped.row+1]
-        self.modalViewAppeared()
-        let sendMoneyVC = SendMoneyController(token: tableToken.token)
-        sendMoneyVC.delegate = self
-        sendMoneyVC.modalPresentationStyle = .overCurrentContext
-        sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
-        self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
-        tableView.deselectRow(at: indexPath, animated: true)
+        if isFranklin {
+            self.showAlert(token: tableToken.token)
+        } else {
+            self.showSend(token: tableToken.token)
+        }
     }
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
@@ -475,16 +594,22 @@ extension WalletViewController: QRCodeReaderViewControllerDelegate {
         reader.dismiss(animated: true) { [unowned self] in
             self.modalViewAppeared()
             let token = self.tokensArray[0].token
-            let sendMoneyVC = SendMoneyController(token: token, address: result.value)
-            sendMoneyVC.delegate = self
-            sendMoneyVC.modalPresentationStyle = .overCurrentContext
-            sendMoneyVC.view.layer.speed = Constants.ModalView.animationSpeed
-            self.tabBarController?.present(sendMoneyVC, animated: true, completion: nil)
+            self.showSend(token: token)
         }
     }
 
     func readerDidCancel(_ reader: QRCodeReaderViewController) {
         reader.stopScanning()
         reader.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension WalletViewController: IFundsDelegate {
+    func makeDeposit() {
+        print("deposit")
+    }
+    
+    func makeWithdraw() {
+        print("withdraw")
     }
 }

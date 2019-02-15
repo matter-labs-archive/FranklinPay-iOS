@@ -13,7 +13,8 @@ import SideMenu
 class SettingsViewController: BasicViewController, ModalViewDelegate {
 
     @IBOutlet weak var settingsTableView: BasicTableView!
-
+    @IBOutlet weak var version: UILabel!
+    
     var mainSettings: [MainSetting] = []
     var walletsService = WalletsService()
     var settingsInteractor = SettingInteractor()
@@ -28,6 +29,14 @@ class SettingsViewController: BasicViewController, ModalViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateTable()
+        self.setupVersion()
+    }
+    
+    func setupVersion() {
+        let dictionary = Bundle.main.infoDictionary!
+        let version = dictionary["CFBundleShortVersionString"] as! String
+        let build = dictionary["CFBundleVersion"] as! String
+        self.version.text = "Version \(version) (\(build))"
     }
     
     func setupNavigation() {

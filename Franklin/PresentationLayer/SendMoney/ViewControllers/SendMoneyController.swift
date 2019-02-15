@@ -408,28 +408,34 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     }
     
     func sendToken(_ token: ERC20Token) {
-        guard let wallet = CurrentWallet.currentWallet else { return }
-        guard let amount = self.amountTextField.text else { return }
-        guard let address = self.chosenContact?.address else { return }
-        do {
-            let tx = try wallet.prepareSendERC20Tx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
-            let password = try wallet.getPassword()
-            let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-        } catch let error {
-            return
+        DispatchQueue.global().async {
+            guard let wallet = CurrentWallet.currentWallet else { return }
+            guard let amount = self.amountTextField.text else { return }
+            guard let address = self.chosenContact?.address else { return }
+            do {
+                let tx = try wallet.prepareSendERC20Tx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
+                let password = try wallet.getPassword()
+                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                self.showReady(animated: true)
+            } catch let error {
+                return
+            }
         }
     }
     
     func sendEther() {
-        guard let wallet = CurrentWallet.currentWallet else { return }
-        guard let amount = self.amountTextField.text else { return }
-        guard let address = self.chosenContact?.address else { return }
-        do {
-            let tx = try wallet.prepareSendEthTx(toAddress: address, value: amount, gasLimit: .automatic, gasPrice: .automatic)
-            let password = try wallet.getPassword()
-            let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-        } catch let error {
-            return
+        DispatchQueue.global().async {
+            guard let wallet = CurrentWallet.currentWallet else { return }
+            guard let amount = self.amountTextField.text else { return }
+            guard let address = self.chosenContact?.address else { return }
+            do {
+                let tx = try wallet.prepareSendEthTx(toAddress: address, value: amount, gasLimit: .automatic, gasPrice: .automatic)
+                let password = try wallet.getPassword()
+                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                self.showReady(animated: true)
+            } catch let error {
+                return
+            }
         }
     }
     
@@ -439,10 +445,8 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
         } else if token.isEther() {
             self.sendEther()
-            self.showReady(animated: true)
         } else {
             self.sendToken(token)
-            self.showReady(animated: true)
         }
 //        guard let address = chosenContact?.address ?? addressTextField.text else {
 //            self.showReady(animated: true)
@@ -556,18 +560,25 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             showStart(animated: true)
         case .confirm:
             guard let text = self.amountTextField.text else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
             guard let amount = Float(text) else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
             guard amount > 0 else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+                return
+            }
+            guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
+                alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
                 return
             }
             showSending(animated: true)
@@ -584,30 +595,37 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         switch screenStatus {
         case .start:
             guard let text = self.amountTextField.text else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
             guard let amount = Float(text) else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
             guard amount > 0 else {
+                self.amountTextField.text = nil
                 self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
+            guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
+                alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
+                return
+            }
             guard let address = self.addressTextField.text, !address.isEmpty else {
+                self.addressTextField.text = nil
                 self.addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
                 return
             }
-//            guard let address = EthereumAddress(addressText) else {
-//                self.addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter correct address",
-//                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-//                return
-//            }
+            guard let ethAddress = EthereumAddress(address) else {
+                alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
+                return
+            }
             let contact = Contact(address: address, name: "")
             self.chosenContact = contact
             showSending(animated: true)

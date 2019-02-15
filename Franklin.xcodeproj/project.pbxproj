@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1CF54A75215CCF0E009CC78F /* MatterWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */; };
+		3A5D7AA52216080D0032B20C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA42216080D0032B20C /* bundle.js */; };
+		3A5D7AA8221622FC0032B20C /* FundsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA6221622FC0032B20C /* FundsCell.swift */; };
+		3A5D7AA9221622FC0032B20C /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
+		3A5D7AAB221632410032B20C /* IgnisConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AAA221632410032B20C /* IgnisConstants.swift */; };
 		3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CC2212D1CC00DAB8DC /* Dai.swift */; };
 		3A8096D02212E9FC00DAB8DC /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */; };
 		3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
@@ -252,6 +256,10 @@
 		1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
+		3A5D7AA42216080D0032B20C /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = Plasma/bundle.js; sourceTree = SOURCE_ROOT; };
+		3A5D7AA6221622FC0032B20C /* FundsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundsCell.swift; sourceTree = "<group>"; };
+		3A5D7AA7221622FC0032B20C /* FundsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FundsCell.xib; sourceTree = "<group>"; };
+		3A5D7AAA221632410032B20C /* IgnisConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IgnisConstants.swift; sourceTree = "<group>"; };
 		3A8096CC2212D1CC00DAB8DC /* Dai.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dai.swift; sourceTree = "<group>"; };
 		3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCell.swift; sourceTree = "<group>"; };
 		3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCell.xib; sourceTree = "<group>"; };
@@ -595,7 +603,9 @@
 		3A8096D522130FCE00DAB8DC /* Ignis */ = {
 			isa = PBXGroup;
 			children = (
+				3A5D7AA42216080D0032B20C /* bundle.js */,
 				3A8096D622130FE500DAB8DC /* IgnisTransaction.swift */,
+				3A5D7AAA221632410032B20C /* IgnisConstants.swift */,
 				3A8096D82213111100DAB8DC /* IgnisService.swift */,
 				3A8096DA2213125A00DAB8DC /* IgnisURLs.swift */,
 			);
@@ -1042,6 +1052,8 @@
 			isa = PBXGroup;
 			children = (
 				9197F2EC2143B92B00C358AA /* WalletViewController.xib */,
+				3A5D7AA6221622FC0032B20C /* FundsCell.swift */,
+				3A5D7AA7221622FC0032B20C /* FundsCell.xib */,
 				9197F2F12143B9D600C358AA /* CardCell.xib */,
 				9197F2F02143B9D600C358AA /* CardCell.swift */,
 				3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */,
@@ -2058,6 +2070,7 @@
 				E2F0EFD721F8BD1500F11AD1 /* librefranklin-semibold.ttf in Resources */,
 				914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */,
 				9197F3292144043500C358AA /* SettingsCell.xib in Resources */,
+				3A5D7AA52216080D0032B20C /* bundle.js in Resources */,
 				E2F0EFA621F8BA2700F11AD1 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				E2F0EFAA21F8BA2700F11AD1 /* SF-Pro-Text-Heavy.otf in Resources */,
 				E2F686A921F9DEF600BD3D14 /* SendMoneyController.xib in Resources */,
@@ -2110,6 +2123,7 @@
 				E2F0EFD421F8BD1500F11AD1 /* librefranklin-extralight.ttf in Resources */,
 				E2F0EFAC21F8BA2700F11AD1 /* SF-Pro-Display-Black.otf in Resources */,
 				E2F0EFD521F8BD1500F11AD1 /* librefranklin-light.ttf in Resources */,
+				3A5D7AA9221622FC0032B20C /* FundsCell.xib in Resources */,
 				3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */,
 				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				E2F0EF9E21F8BA2700F11AD1 /* SF-Pro-Text-RegularItalic.otf in Resources */,
@@ -2348,6 +2362,7 @@
 				E2C1106A21E507260012A978 /* Alerts.swift in Sources */,
 				E27BF77A21D1447A00951061 /* PlasmaConstants.swift in Sources */,
 				9197F2F22143B9D600C358AA /* CardCell.swift in Sources */,
+				3A5D7AAB221632410032B20C /* IgnisConstants.swift in Sources */,
 				E234C7AC21ECCC1800F175AF /* AnimationController.swift in Sources */,
 				E2F686AC21F9E0C600BD3D14 /* BasicTextField.swift in Sources */,
 				E2C1106321E507260012A978 /* ABIs.swift in Sources */,
@@ -2367,6 +2382,7 @@
 				E2A8DAFC21F1F6A00031AC58 /* StorageErrors.swift in Sources */,
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				E27BF77921D1447A00951061 /* PlasmaCode.swift in Sources */,
+				3A5D7AA8221622FC0032B20C /* FundsCell.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 				E2F0EF7A21F7DD9600F11AD1 /* TokenInfoCell.swift in Sources */,

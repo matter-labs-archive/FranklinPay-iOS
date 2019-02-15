@@ -92,7 +92,7 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     func setupContact() {
-        self.amountLabel.text = "$" + self.cheque.amount
+        self.amountLabel.text = self.cheque.amount + " ETH"
         let name = self.isContactExists(address: self.cheque.address) ?? "Unknown contact"
         self.contactName.text = name
         self.contactAddress.text = self.cheque.address.address

@@ -128,6 +128,20 @@ public struct Constants {
         }
     }
     
+    public struct FundsCell {
+        static let heightCoef: CGFloat = 0.08
+        public struct Balance {
+            static let font = Constants.Fonts.regular
+            static let size: CGFloat = 24
+            static let color = Colors.textBlack
+        }
+        public struct Title {
+            static let font = Constants.Fonts.regular
+            static let size: CGFloat = 24
+            static let color = Colors.textBlack
+        }
+    }
+    
     public struct CardCell {
         static let heightCoef: CGFloat = 0.35
         public struct Balance {

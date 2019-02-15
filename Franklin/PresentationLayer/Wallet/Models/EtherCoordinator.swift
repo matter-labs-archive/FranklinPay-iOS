@@ -48,7 +48,7 @@ public class EtherCoordinator {
             }
             return balance
         } catch {
-            return getBalance(for: token, wallet: wallet)
+            return "-"
         }
     }
     

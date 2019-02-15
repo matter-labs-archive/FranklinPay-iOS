@@ -88,15 +88,15 @@ public class AppController {
         
         let nav = UINavigationController()
         let tabs = TabBarController()
-        let nav1 = navigationController(withTitle: nil,
+        let nav1 = navigationController(withTitle: "Wallet",
                                         withImage: UIImage(named: "wallet"),
                                         withController: WalletViewController(nibName: nil, bundle: nil),
                                         tag: 1)
-        let nav2 = navigationController(withTitle: nil,
+        let nav2 = navigationController(withTitle: "Transactions",
                                         withImage: UIImage(named: "list"),
                                         withController: TransactionsHistoryViewController(nibName: nil, bundle: nil),
                                         tag: 2)
-        let nav3 = navigationController(withTitle: nil,
+        let nav3 = navigationController(withTitle: "Contacts",
                                         withImage: UIImage(named: "user_male"),
                                         withController: ContactsViewController(nibName: nil, bundle: nil),
                                         tag: 3)

@@ -23,8 +23,7 @@ public func navigationController(withTitle: String?, withImage: UIImage?,
     let controller = withController
     controller.title = withTitle
     nav.viewControllers = [controller]
-    nav.tabBarItem = UITabBarItem(title: nil, image: withImage, tag: tag)
-    nav.tabBarItem.title = withTitle
+    nav.tabBarItem = UITabBarItem(title: withTitle, image: withImage, tag: tag)
     return nav
 }
 
