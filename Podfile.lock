@@ -15,6 +15,7 @@ PODS:
     - CryptoSwift (~> 0.13)
   - Fabric (1.9.0)
   - IHKeyboardAvoiding (4.6)
+  - Kingfisher (5.1.1)
   - NVActivityIndicatorView (4.6.0):
     - NVActivityIndicatorView/Presenter (= 4.6.0)
   - NVActivityIndicatorView/Presenter (4.6.0)
@@ -56,6 +57,7 @@ DEPENDENCIES:
   - Crashlytics
   - Fabric
   - IHKeyboardAvoiding
+  - Kingfisher (~> 5.0)
   - NVActivityIndicatorView
   - PromiseKit (~> 6.4.1)
   - QRCodeReader.swift
@@ -77,6 +79,7 @@ SPEC REPOS:
     - EthereumAddress
     - Fabric
     - IHKeyboardAvoiding
+    - Kingfisher
     - NVActivityIndicatorView
     - PromiseKit
     - QRCodeReader.swift
@@ -101,6 +104,7 @@ SPEC CHECKSUMS:
   EthereumAddress: f476e1320dca3a0024431e713ede7a09c7eb7796
   Fabric: f988e33c97f08930a413e08123064d2e5f68d655
   IHKeyboardAvoiding: 2a664fdb5f964359fa7ec8fc5c9aebb447583ff8
+  Kingfisher: 2558186963e5be42d98c5b110ccb3130148b77e4
   NVActivityIndicatorView: 9c3704896798b042315e2a154dc27e48384756f0
   PromiseKit: 4c76a6506638034e3d7bede97b2ff7743f7bd2dc
   QRCodeReader.swift: 96292a5612fbc2fd9a0b26f93fa5164c8d02f59d
@@ -114,6 +118,6 @@ SPEC CHECKSUMS:
   TransitionableTab: 54a5d0af475033bdb83959fde4e5d6201af7e2ab
   web3swift: aeb3d08ded961e0562919d4161f5af6ccb0ab30f
 
-PODFILE CHECKSUM: f6293673afba98dc3e86bf018eaa8b98e7e50e22
+PODFILE CHECKSUM: 80c1dfa636585b281176567181daf3ad1e4c86bb
 
 COCOAPODS: 1.5.3

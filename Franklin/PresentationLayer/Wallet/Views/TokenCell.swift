@@ -9,6 +9,7 @@
 import UIKit
 import Web3swift
 import EthereumAddress
+import Kingfisher
 
 class TokenCell: UITableViewCell {
     
@@ -33,7 +34,35 @@ class TokenCell: UITableViewCell {
         
         self.balance.text = balance
         self.title.text = title
-        self.tokenImage.image = UIImage(named: token.token.symbol.lowercased()) ?? UIImage(named: "dot")
+        self.tokenImage.layer.cornerRadius = self.tokenImage.bounds.height/2
+        
+        self.tokenImage.image = UIImage(named: "eth")
+        if let url = URL(string: "https://trustwalletapp.com/images/tokens/\(token.token.address).png"), !token.token.isEther() {
+            loadImage(url: url)
+        }
+    }
+    
+    func loadImage(url: URL?) {
+        let processor = DownsamplingImageProcessor(size: self.tokenImage.bounds.size)
+            >> RoundCornerImageProcessor(cornerRadius: self.tokenImage.bounds.height/2)
+        self.tokenImage.kf.indicatorType = .activity
+        self.tokenImage.kf.setImage(
+            with: url,
+            placeholder: UIImage(named: "placeholderImage"),
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale),
+                .transition(.fade(1)),
+                .cacheOriginalImage
+            ]) {
+            result in
+            switch result {
+            case .success(let value):
+                print("Task done for: \(value.source.url?.absoluteString ?? "")")
+            case .failure(let error):
+                print("Job failed: \(error.localizedDescription)")
+            }
+        }
     }
     
     override func prepareForReuse() {
