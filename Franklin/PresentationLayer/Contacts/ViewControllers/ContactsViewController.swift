@@ -111,13 +111,13 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
         SideMenuManager.default.menuShadowRadius = 5
     }
     
-    func modalViewBeenDismissed() {
+    func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0
             })
         }
-        getAllContacts()
+        if updateNeeded { getAllContacts() }
     }
     
     func modalViewAppeared() {
@@ -287,6 +287,6 @@ extension ContactsViewController: UISideMenuNavigationControllerDelegate {
     }
     
     func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-        modalViewBeenDismissed()
+        modalViewBeenDismissed(updateNeeded: false)
     }
 }

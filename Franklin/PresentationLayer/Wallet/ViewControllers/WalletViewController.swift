@@ -77,11 +77,12 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         self.setupSideBar()
         self.additionalSetup()
         
-//        let transaction = TransactionIgnis()
 //        guard let wallet = CurrentWallet.currentWallet else {return}
 //        do {
 //            let pv = try wallet.getPassword()
 //            let pk = try wallet.getPrivateKey(withPassword: pv)
+//            let nonce = try CurrentWallet.currentWallet!.getIgnisNonce(network: CurrentNetwork.currentNetwork)
+//            let transaction = TransactionIgnis()
 //            try transaction.createTransaction(from: 150, to: 151, amount: 10, privateKey: pk)
 //            print("ho")
 //        } catch {
@@ -165,16 +166,22 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
     
     func setTokensList() {
-        self.clearData()
+        //self.clearData()
         DispatchQueue.global().async { [unowned self] in
             let tokens = self.etherCoordinator.getTokens()
             self.tokensArray = tokens
             self.reloadDataInTable(completion: { [unowned self] in
-                self.updateTokensBalances { [unowned self] in
-                    self.reloadDataInTable { [unowned self] in
-                        self.saveTokensBalances()
-                        // TODO: - need to update rates?
+                self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
+                    self.saveTokensBalances(tokens: uTokens)
+                    self.tokensArray = uTokens
+                    self.reloadDataInTable {
+                        self.refreshControl.endRefreshing()
+                        print("Updated")
                     }
+//                    self.reloadDataInTable { [unowned self] in
+//                        self.saveTokensBalances()
+//                        // TODO: - need to update rates?
+//                    }
                 }
             })
         }
@@ -185,11 +192,16 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        self.updateTokensBalances { [unowned self] in
-            self.reloadDataInTable { [unowned self] in
-                self.saveTokensBalances()
+        self.updateTokensBalances(tokens: self.tokensArray) { [unowned self] uTokens in
+            self.saveTokensBalances(tokens: uTokens)
+            self.tokensArray = uTokens
+            self.reloadDataInTable {
                 self.refreshControl.endRefreshing()
+                print("Updated")
             }
+//            self.reloadDataInTable { [unowned self] in
+//                self.refreshControl.endRefreshing()
+//            }
         }
     }
 
@@ -206,25 +218,27 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         }
     }
 
-    func updateTokensBalances(completion: @escaping () -> Void) {
+    func updateTokensBalances(tokens: [TableToken], completion: @escaping ([TableToken]) -> Void) {
         DispatchQueue.global().async { [unowned self] in
-            var index = 0
-            for tabToken in self.tokensArray {
+//            var index = 0
+            var newTokens = [TableToken]()
+            for tabToken in tokens {
                 var currentTableToken = tabToken
                 let currentToken = tabToken.token
                 let currentWallet = tabToken.inWallet
                 let balance: String = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
                 currentToken.balance = balance
                 currentTableToken.token = currentToken
-                self.tokensArray[index] = currentTableToken
-                index += 1
+                newTokens.append(currentTableToken)
+//                self.tokensArray[index] = currentTableToken
+//                index += 1
             }
-            completion()
+            completion(newTokens)
         }
     }
     
-    func saveTokensBalances() {
-        for tabToken in tokensArray {
+    func saveTokensBalances(tokens: [TableToken]) {
+        for tabToken in tokens {
             let currentToken = tabToken.token
             let currentWallet = tabToken.inWallet
             let currentNetwork = CurrentNetwork.currentNetwork
@@ -289,9 +303,9 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
 //        self.navigationController?.pushViewController(searchTokenController, animated: true)
 //    }
     
-    func modalViewBeenDismissed() {
+    func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
-            self.setTokensList()
+            if updateNeeded { self.setTokensList() }
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0
             })
@@ -590,7 +604,7 @@ extension WalletViewController: UISideMenuNavigationControllerDelegate {
     }
     
     func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-        modalViewBeenDismissed()
+        modalViewBeenDismissed(updateNeeded: false)
     }
 }
 

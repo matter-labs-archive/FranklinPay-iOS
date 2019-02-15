@@ -222,7 +222,7 @@ class AddWalletViewController: BasicViewController, ModalViewDelegate {
         }
     }
     
-    func modalViewBeenDismissed() {
+    func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0
@@ -244,7 +244,7 @@ class AddWalletViewController: BasicViewController, ModalViewDelegate {
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed()
+        delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
 
 }

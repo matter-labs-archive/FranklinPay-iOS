@@ -1079,11 +1079,12 @@ extension Wallet: IWalletPlasma {
                         seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
                     }
-                    guard let nonce = verified["nonce"] as? BigUInt else {
+                    guard let nonce = verified["nonce"] as? UInt else {
                         seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
                     }
-                    seal.fulfill(nonce)
+                    let bnNonce = BigUInt(nonce)
+                    seal.fulfill(bnNonce)
                 } catch let err {
                     seal.reject(err)
                 }

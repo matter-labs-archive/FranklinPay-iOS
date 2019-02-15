@@ -101,7 +101,7 @@ class AddContactController: BasicViewController {
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed()
+        delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
 
     lazy var readerVC: QRCodeReaderViewController = {

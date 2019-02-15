@@ -54,7 +54,7 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
         self.present(acceptChequeForm, animated: true, completion: nil)
     }
     
-    func modalViewBeenDismissed() {
+    func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0

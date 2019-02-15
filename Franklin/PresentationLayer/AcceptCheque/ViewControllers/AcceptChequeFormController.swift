@@ -133,7 +133,7 @@ class AcceptChequeFormController: BasicViewController {
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed()
+        delegate?.modalViewBeenDismissed(updateNeeded: false)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {

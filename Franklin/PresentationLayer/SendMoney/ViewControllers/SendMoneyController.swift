@@ -14,7 +14,7 @@ import QRCodeReader
 import BigInt
 
 protocol ModalViewDelegate: class {
-    func modalViewBeenDismissed()
+    func modalViewBeenDismissed(updateNeeded: Bool)
     func modalViewAppeared()
 }
 
@@ -520,7 +520,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed()
+        delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
@@ -687,13 +687,13 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         }
     }
     
-    func modalViewBeenDismissed() {
+    func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = 0
             })
         }
-        getAllContacts()
+        if updateNeeded { getAllContacts() }
     }
     
     func modalViewAppeared() {

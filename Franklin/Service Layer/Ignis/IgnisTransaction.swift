@@ -24,7 +24,8 @@ public class TransactionIgnis {
                 return nil
         }
         do {
-            let bundle = try String(contentsOfFile: jsPath, encoding: String.Encoding.utf8)
+            var bundle = try String(contentsOfFile: jsPath, encoding: String.Encoding.utf8)
+            bundle = "var window = this; \(bundle)"
             print(bundle)
             context?.evaluateScript(bundle)
         } catch (let error) {
@@ -46,6 +47,13 @@ public class TransactionIgnis {
             }
         }
         
+        let fromUInt32 = UInt32(from)
+        let toUInt32 = UInt32(to)
+        let amountUInt32 = UInt32(amount)
+        let feeUInt32 = UInt32(fee)
+        let nonceUInt32 = UInt32(nonce)
+        let goodUntilBlockUInt32 = UInt32(goodUntilBlock)
+        
 //        guard let createTransactionFunction = context.objectForKeyedSubscript("add") else {
 //            print("Unable to parse JSON")
 //            return
@@ -57,7 +65,7 @@ public class TransactionIgnis {
         }
 //        let add = addFunction?.invokeMethod("add", withArguments: [])
 //        return add
-        guard let createTransaction = createTransactionFunction.call(withArguments: [from, to, amount, fee, nonce, goodUntilBlock, privateKey]) else {
+        guard let createTransaction = createTransactionFunction.call(withArguments: [fromUInt32, toUInt32, amountUInt32, feeUInt32, nonceUInt32, goodUntilBlockUInt32, privateKey]) else {
             print("Unable to parse JSON")
             throw PlasmaErrors.StructureErrors.wrongData
         }

@@ -1,17 +1,29 @@
-'use strict';
-
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
+(function (global){
 const elliptic = require('elliptic');
 const BN = require("bn.js");
 const assert = require("assert");
 const Buffer = require('buffer/').Buffer  // note: the trailing slash is important!
 
-function add() {
+
+const babyJubjubParams = {
+    a: new BN("21888242871839275222246405745257275088548364400416034343698204186575808495616"),
+    d: new BN("12181644023421730124874158521699555681764249180949974110617291017600649128846"),
+    n: new BN("2736030358979909402780800718157159386076813972158567259200215660948447373041"),
+    p: new BN("21888242871839275222246405745257275088548364400416034343698204186575808495617"),
+    c: "1",
+    g: ["2ef3f9b423a2c8c74e9803958f6c320e854a1c1c06cd5cc8fd221dc052d76df7",
+        "05a01167ea785d3f784224644a68e4067532c815f5f6d57d984b5c0e9c6c94b7"]
+}
+
+const altBabyJubjub = new elliptic.curve.edwards(babyJubjubParams);
+
+add = function() {
     return 10;
 };
 
-function sign(message, privateKey, curve) {
-    const r = (new BN(elliptic.rand(32), 16, "be")).umod(curve.n);
+sign = function(message, privateKey, curve) {
+    const r = (new BN("8a74c0ed82de81d5854583267e17b6ac5140929814aa53c6c5ae0d31b4216bd8", 16, "be")).umod(curve.n);
     var R = curve.g.mul(r);
     if (R.isInfinity()) {
         throw Error("R is infinity")
@@ -19,9 +31,9 @@ function sign(message, privateKey, curve) {
     var s_ = (new BN(message, 16, "be")).mul(privateKey);
     var S = r.add(s_).umod(curve.n);
     return { R: R, S: S};
-  };
-  
-function verify(message, signature, publicKey, curve) {
+};
+
+verify = function(message, signature, publicKey, curve) {
     var key = publicKey;
     var h = new BN(message, 16, "be");
     console.log("C = " + h.toString(16));
@@ -30,7 +42,7 @@ function verify(message, signature, publicKey, curve) {
     return RplusAh.eq(SG);
 };
 
-function serializeSignature(signature) {
+serializeSignature = function(signature) {
     const R_X = signature.R.getX();
     const R_Y = signature.R.getY();
     const r_coords = [R_X.toString(16), R_Y.toString(16)];
@@ -38,15 +50,9 @@ function serializeSignature(signature) {
         R: r_coords,
         S: signature.S.toString(16)
     };
-}
+};
 
-function parseSignature(obj, curve) {
-    const R = curve.pointFromJSON(obj.R);
-    const S = new BN(obj.S, 16);
-    return {R: R, S: S};
-}
-
-function floatToInteger(floatBytes, exp_bits, mantissa_bits, exp_base) {
+floatToInteger = function(floatBytes, exp_bits, mantissa_bits, exp_base) {
     assert(floatBytes.length*8 == (exp_bits + mantissa_bits));
     const floatHolder = new BN(floatBytes, 16, "be"); // keep bit order
     const totalBits = floatBytes.length*8 - 1; // starts from zero
@@ -70,9 +76,9 @@ function floatToInteger(floatBytes, exp_bits, mantissa_bits, exp_base) {
         mantissa_power_of_to = mantissa_power_of_to.mul(two);
     }
     return exponent.mul(mantissa);
-}
+};
 
-function integerToFloat(integer, exp_bits, mantissa_bits, exp_base) {
+integerToFloat = function(integer, exp_bits, mantissa_bits, exp_base) {
     const maxMantissa = (new BN(1)).ushln(mantissa_bits).subn(1);
     const maxExponent = (new BN(exp_base)).pow((new BN(1)).ushln(exp_bits).subn(1));
     assert(integer.lte(maxMantissa.mul(maxExponent)));
@@ -112,9 +118,9 @@ function integerToFloat(integer, exp_bits, mantissa_bits, exp_base) {
     console.log(exp_bits, mantissa_bits)
     console.log((exp_bits + mantissa_bits)/8)
     return encoding.toArrayLike(Buffer, "be", (exp_bits + mantissa_bits)/8)
-}
+};
 
-function packBnLe(bn, numBits) {
+packBnLe = function(bn, numBits) {
     let bin = bn.toString(2);
     assert(bin.length <= numBits)
     bin = bin.padStart(numBits, "0");
@@ -127,13 +133,9 @@ function packBnLe(bn, numBits) {
         buff = Buffer.concat([buff, Buffer.alloc(numBits / 8 - buff.length)])
     }
     return buff;
-}
+};
 
-function reverseByte(b) {
-
-}
-
-function serializeTransaction(tx) {
+serializeTransaction = function(tx) {
     const {from, to, amount, fee, nonce, good_until_block} = tx;
     assert(from.bitLength() <= 24);
     assert(to.bitLength() <= 24);
@@ -176,54 +178,9 @@ function serializeTransaction(tx) {
         nonce: nonce,
         good_until_block: good_until_block
     }
-}
+};
 
-function getPublicData(tx) {
-    const {from, to, amount, fee} = tx;
-    assert(from.bitLength() <= 24);
-    assert(to.bitLength() <= 24);
-    assert(amount.bitLength() <= 128);
-    assert(fee.bitLength() <= 128);
-
-    const components = [];
-    components.push(from.toArrayLike(Buffer, "be", 3));
-    components.push(to.toArrayLike(Buffer, "be", 3));
-    let amountFloatBytes = integerToFloat(amount, 5, 11, 10);
-    components.push(amountFloatBytes);
-    let feeFloatBytes = integerToFloat(fee, 5, 3, 10);
-    components.push(feeFloatBytes);
-
-    let serialized = Buffer.concat(components);
-    let newAmount = floatToInteger(amountFloatBytes, 5, 11, 10);
-    let newFee = floatToInteger(feeFloatBytes, 5, 3, 10);
-
-    return {
-        bytes: serialized,
-        amount: newAmount,
-        fee: newFee
-    }
-}
-
-function parsePublicData(bytes) {
-    assert(bytes.length % 9 === 0);
-    const results = [];
-    for (let i = 0; i < bytes.length/9; i++) {
-        const slice = bytes.slice(9*i, 9*i + 9);
-        const res = parseSlice(slice);
-        results.push(res);
-    }
-    return results;
-}
-
-function parseSlice(slice) {
-    const from = new BN(slice.slice(0, 3), 16, "be");
-    const to = new BN(slice.slice(3, 6), 16, "be");
-    const amount = floatToInteger(slice.slice(6, 8), 5, 11, 10)
-    const fee = floatToInteger(slice.slice(8, 9), 5, 3, 10)
-    return {from, to, amount, fee};
-}
-
-function toApiForm(tx, sig) {
+toApiForm = function(tx, sig) {
     // expected by API server
     // pub from:               u32,
     // pub to:                 u32,
@@ -258,10 +215,9 @@ function toApiForm(tx, sig) {
     }
 
     return txForApi;
+};
 
-}
-
-function createTransaction(from, to, amount, fee, nonce, good_until_block, privateKey) {
+createTransaction = function(from, to, amount, fee, nonce, good_until_block, privateKey) {
     let tx = {
         from: new BN(from),
         to: new BN(to),
@@ -280,58 +236,9 @@ function createTransaction(from, to, amount, fee, nonce, good_until_block, priva
     console.log("Public = " + pub.getX().toString(16) + ", " + pub.getY().toString(16));
     const apiForm = toApiForm(serializedTx, signature);
     return apiForm;
-}
+};
 
-
-function main() {
-    for (let i = 0; i < 20; i++) {
-        let bn = new BN(i);
-        let enc = integerToFloat(bn, 5, 11, 10);
-        console.log(enc.toString("hex"));
-    }
-    const sk = (new BN(elliptic.rand(32), 16, "be")).umod(altBabyJubjub.n);
-    const pub = altBabyJubjub.g.mul(sk);
-    const message = elliptic.rand(16);
-    const signature = sign(message, sk, altBabyJubjub);
-    const isValid = verify(message, signature, pub, altBabyJubjub);
-    assert(isValid);
-    const sigJSON = serializeSignature(signature);
-    const parsedSig = parseSignature(sigJSON, altBabyJubjub);
-    const isValidParsed = verify(message, parsedSig, pub, altBabyJubjub);
-    assert(isValidParsed);
-
-    // exp = 1, mantissa = 1 => 10
-    // const floatBytes = (new BN("1000010000000000", 2)).toArrayLike(Buffer, );
-    // const integer = floatToInteger(floatBytes, 5, 11, 10);
-    // assert(integer.toString(10) === "10");
-    const someInt = new BN("1234556678")
-    const encoding = integerToFloat(someInt, 5, 11, 10);
-    const decoded = floatToInteger(encoding, 5, 11, 10);
-    assert(decoded.lte(someInt));
-    console.log("encoded-decoded = " + decoded.toString(10));
-    console.log("original = " + someInt.toString(10));
-}
-
-function newKey(seed) {
-    const sk = (new BN(seed || elliptic.rand(32), 16, "be")).umod(altBabyJubjub.n);
-    const pub = altBabyJubjub.g.mul(sk);
-    let y = pub.getY();
-    const x = pub.getX();
-    const x_parity = x.testn(0);
-    let y_packed = y;
-    if (x_parity) {
-        y_packed = y_packed.add(((new BN(1)).ushln(255)));
-    }
-    return {
-        privateKey: sk,
-        publicKey: {x: x, y: y},
-        packedPublicKey: y_packed
-    };
-}
-
-// main();
-
-module.exports = {
+global.exports = {
     add,
     sign,
     verify,
@@ -345,6 +252,8 @@ module.exports = {
     parsePublicData,
     createTransaction
 }
+
+}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"assert":39,"bn.js":3,"buffer/":5,"elliptic":6}],2:[function(require,module,exports){
 'use strict'
 

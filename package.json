@@ -6,10 +6,15 @@
     "axios": "^0.18.0",
     "bn.js": "^4.11.8",
     "buffer": "^5.2.1",
+    "crypto": "^1.0.1",
+    "crypto-browserify": "^3.12.0",
     "elliptic": "^6.4.1",
     "ethers": "^4.0.25",
     "ethjs": "^0.4.0",
-    "ethjs-util": "^0.1.6"
+    "ethjs-util": "^0.1.6",
+    "random-bytes": "^1.0.0",
+    "randombytes": "^2.0.6",
+    "secure-random-bytes": "^1.0.1"
   },
   "devDependencies": {}
 }
