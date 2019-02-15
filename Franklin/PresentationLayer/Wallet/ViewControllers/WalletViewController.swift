@@ -77,10 +77,16 @@ class WalletViewController: BasicViewController, ModalViewDelegate {
         self.setupSideBar()
         self.additionalSetup()
         
-//        let t = TransactionIgnis()
-//        t.main()
-//        
-//        print("ho")
+//        let transaction = TransactionIgnis()
+//        guard let wallet = CurrentWallet.currentWallet else {return}
+//        do {
+//            let pv = try wallet.getPassword()
+//            let pk = try wallet.getPrivateKey(withPassword: pv)
+//            try transaction.createTransaction(from: 150, to: 151, amount: 10, privateKey: pk)
+//            print("ho")
+//        } catch {
+//            return
+//        }
     }
     
     func setupMarker() {

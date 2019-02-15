@@ -1,30 +1,14 @@
+'use strict';
+
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 const elliptic = require('elliptic');
 const BN = require("bn.js");
 const assert = require("assert");
 const Buffer = require('buffer/').Buffer  // note: the trailing slash is important!
 
-//! `Fr modulus = 21888242871839275222246405745257275088548364400416034343698204186575808495617`
-//! 
-//! It takes the form `-x^2 + y^2 = 1 + dx^2y^2` with
-//! `d = -(168696/168700)` using the isomorphism from usual Baby Jubjub 
-//! with a requirement that `a' = -1, a = 168696`, that results in 
-//! ```
-//! scaling = 1911982854305225074381251344103329931637610209014896889891168275855466657090 
-//! a' = 21888242871839275222246405745257275088548364400416034343698204186575808495616 == -1 = a*scale^2 mod P
-//! d' = 12181644023421730124874158521699555681764249180949974110617291017600649128846 == -(168696/168700) = d*scale^2
-//! ```
-const babyJubjubParams = {
-    a: new BN("21888242871839275222246405745257275088548364400416034343698204186575808495616"),
-    d: new BN("12181644023421730124874158521699555681764249180949974110617291017600649128846"),
-    n: new BN("2736030358979909402780800718157159386076813972158567259200215660948447373041"),
-    p: new BN("21888242871839275222246405745257275088548364400416034343698204186575808495617"),
-    c: "1",
-    g: ["2ef3f9b423a2c8c74e9803958f6c320e854a1c1c06cd5cc8fd221dc052d76df7",
-        "05a01167ea785d3f784224644a68e4067532c815f5f6d57d984b5c0e9c6c94b7"]
-}
-
-const altBabyJubjub = new elliptic.curve.edwards(babyJubjubParams);
+function add() {
+    return 10;
+};
 
 function sign(message, privateKey, curve) {
     const r = (new BN(elliptic.rand(32), 16, "be")).umod(curve.n);
@@ -348,6 +332,7 @@ function newKey(seed) {
 // main();
 
 module.exports = {
+    add,
     sign,
     verify,
     floatToInteger,
