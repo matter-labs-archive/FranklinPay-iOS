@@ -562,13 +562,10 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource, Tabl
     }
 
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        guard let indexPathForSelectedRow = tableView.indexPathForSelectedRow else {
-            return false
-        }
         if indexPath.section == WalletSections.franklin.rawValue {
             return false
         }
-        let cell = tableView.cellForRow(at: indexPathForSelectedRow) as? TokenCell
+        let cell = tableView.cellForRow(at: indexPath) as? TokenCell
         guard let selectedCell = cell else {
             return false
         }

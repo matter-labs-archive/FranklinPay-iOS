@@ -17,6 +17,10 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
     
     let cheque: PlasmaCode
     
+    let walletsService = WalletsService()
+    let userDefaults = UserDefaultKeys()
+    let alerts = Alerts()
+    
     let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
     init(cheque: PlasmaCode) {
@@ -42,6 +46,71 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
         self.view.addSubview(topViewForModalAnimation)
         
         self.titleLabel.alpha = 0
+    }
+    
+    func creatingWallet() {
+        DispatchQueue.global().async { [unowned self] in
+            do {
+                let mnemonicFrase = try self.walletsService.generateMnemonics(bitsOfEntropy: 128)
+                let name = Constants.Wallet.newName
+                let password = Constants.Wallet.newPassword
+                let wallet = try self.walletsService.createHDWallet(name: name,
+                                                                    password: password,
+                                                                    mnemonics: mnemonicFrase,
+                                                                    backupNeeded: true)
+                try wallet.save()
+                try wallet.addPassword(password)
+                CurrentWallet.currentWallet = wallet
+                let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
+                let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
+                let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
+                if !franklinAdded {
+                    do {
+                        try self.appController.addFranklin(for: wallet)
+                    } catch let error {
+                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
+                    }
+                }
+                if !etherAdded {
+                    do {
+                        try self.appController.addEther(for: wallet)
+                    } catch let error {
+                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
+                    }
+                }
+                if !daiAdded {
+                    do {
+                        try self.appController.addDai(for: wallet)
+                    } catch let error {
+                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
+                    }
+                }
+                
+                let passphraseItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassphrase,
+                                                          account: wallet.address,
+                                                          accessGroup: KeychainConfiguration.accessGroup)
+                try passphraseItem.savePassword(mnemonicFrase)
+                
+                self.finishSavingWallet(with: nil, needDeleteWallet: nil)
+            } catch let error {
+                self.finishSavingWallet(with: error, needDeleteWallet: nil)
+            }
+        }
+    }
+    
+    func finishSavingWallet(with error: Error?, needDeleteWallet: Wallet?) {
+        if let wallet = needDeleteWallet {
+            do {
+                try wallet.delete()
+            } catch let deleteErr {
+                //TODO: - need to do something
+                alerts.showErrorAlert(for: self, error: deleteErr, completion: nil)
+            }
+        }
+        if let err = error {
+            //TODO: - need to do something
+            alerts.showErrorAlert(for: self, error: err, completion: nil)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,6 +153,9 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
     }
     
     func modalViewAppeared() {
+        if let wallets = try? walletsService.getAllWallets(), wallets.isEmpty {
+            self.creatingWallet()
+        }
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
                 self.topViewForModalAnimation.alpha = Constants.ModalView.ShadowView.alpha

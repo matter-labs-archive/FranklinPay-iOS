@@ -75,12 +75,12 @@ class PublicKeyViewController: BasicViewController {
     }
     
     func generateQRCode(from string: String) -> UIImage? {
-        var code: String
-        if let c = Web3.EIP67Code(address: string)?.toString() {
-            code = c
-        } else {
-            code = string
-        }
+        var code: String = string
+//        if let c = Web3.EIP67Code(address: string)?.toString() {
+//            code = c
+//        } else {
+//            code = string
+//        }
         let data = code.data(using: String.Encoding.ascii)
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
