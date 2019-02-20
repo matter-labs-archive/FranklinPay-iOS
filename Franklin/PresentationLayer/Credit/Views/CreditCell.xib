@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Display-Semibold.otf">
+            <string>SFProDisplay-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="CreditCell" rowHeight="120" id="FbA-Si-VbN" userLabel="Credit Cell" customClass="CreditCell" customModule="BuffiOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="FbA-Si-VbN" id="RrR-Le-66V">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uON-gl-XHA">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wld-Ez-KcG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="f6d-Rd-4Ol">
+                                        <rect key="frame" x="10" y="5" width="355" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Wallet First" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="J9E-3c-nOR">
+                                                <rect key="frame" x="0.0" y="26.5" width="198" height="26.5"/>
+                                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0 ETH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="p37-cZ-0BL">
+                                                <rect key="frame" x="218" y="26.5" width="137" height="26.5"/>
+                                                <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="5oy-OB-Uon"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="f6d-Rd-4Ol" secondAttribute="trailing" constant="10" id="QOd-Zl-kEp"/>
+                                    <constraint firstAttribute="bottom" secondItem="f6d-Rd-4Ol" secondAttribute="bottom" constant="5" id="coX-32-ya0"/>
+                                    <constraint firstItem="f6d-Rd-4Ol" firstAttribute="leading" secondItem="Wld-Ez-KcG" secondAttribute="leading" constant="10" id="dpb-NI-NGf"/>
+                                    <constraint firstAttribute="height" constant="90" id="t6W-Na-7kq"/>
+                                    <constraint firstItem="f6d-Rd-4Ol" firstAttribute="top" secondItem="Wld-Ez-KcG" secondAttribute="top" constant="5" id="zYt-au-eR5"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Wld-Ez-KcG" secondAttribute="bottom" id="5Tb-qT-3mj"/>
+                            <constraint firstItem="Wld-Ez-KcG" firstAttribute="leading" secondItem="uON-gl-XHA" secondAttribute="leading" id="APA-GG-f5y"/>
+                            <constraint firstAttribute="height" constant="90" id="YSN-lN-3j2"/>
+                            <constraint firstItem="Wld-Ez-KcG" firstAttribute="top" secondItem="uON-gl-XHA" secondAttribute="top" id="c9R-ml-981"/>
+                            <constraint firstAttribute="trailing" secondItem="Wld-Ez-KcG" secondAttribute="trailing" id="oRi-xP-0Hq"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstItem="uON-gl-XHA" firstAttribute="top" secondItem="RrR-Le-66V" secondAttribute="top" id="KY7-dd-1vr"/>
+                    <constraint firstAttribute="bottom" secondItem="uON-gl-XHA" secondAttribute="bottom" id="SGj-AT-CXh"/>
+                    <constraint firstItem="uON-gl-XHA" firstAttribute="leading" secondItem="RrR-Le-66V" secondAttribute="leading" id="izR-Bd-br4"/>
+                    <constraint firstAttribute="trailing" secondItem="uON-gl-XHA" secondAttribute="trailing" id="kGT-Gt-T0F"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" identifier="WalletCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
+            <connections>
+                <outlet property="amount" destination="p37-cZ-0BL" id="pXz-zV-G6C"/>
+                <outlet property="bottomBackgroundView" destination="uON-gl-XHA" id="kUg-KJ-dI1"/>
+                <outlet property="date" destination="J9E-3c-nOR" id="sra-cI-lSQ"/>
+                <outlet property="topBackgroundView" destination="Wld-Ez-KcG" id="b8h-jm-Qbh"/>
+            </connections>
+            <point key="canvasLocation" x="96.799999999999997" y="-62.068965517241381"/>
+        </tableViewCell>
+    </objects>
+</document>

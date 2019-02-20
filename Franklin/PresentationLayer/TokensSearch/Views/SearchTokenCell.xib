@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="SearchTokenCell" rowHeight="60" id="NAc-X6-Fy2" userLabel="Search Token Cell" customClass="SearchTokenCell" customModule="Franklin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="NAc-X6-Fy2" id="QJA-rN-kWU">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IRZ-fI-Jig">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TpY-Mo-faF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Y9r-Yv-pwl">
+                                        <rect key="frame" x="20" y="10" width="335" height="55"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nuU-cn-I86">
+                                                <rect key="frame" x="0.0" y="0.0" width="55" height="55"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="nuU-cn-I86" secondAttribute="height" multiplier="1:1" id="jQ5-Ay-hdK"/>
+                                                </constraints>
+                                            </imageView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="pcR-Ok-vaA">
+                                                <rect key="frame" x="65" y="0.0" width="227" height="55"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Ethereum (ETH)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LZH-gd-H0V">
+                                                        <rect key="frame" x="0.0" y="0.0" width="148" height="25"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="25" id="82F-WK-q0p"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="22"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0x0123...4567" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gcW-Oy-CRQ">
+                                                        <rect key="frame" x="0.0" y="30" width="127.5" height="25"/>
+                                                        <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                                                        <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="gcW-Oy-CRQ" firstAttribute="height" secondItem="LZH-gd-H0V" secondAttribute="height" id="Q4q-pm-432"/>
+                                                </constraints>
+                                            </stackView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="added" translatesAutoresizingMaskIntoConstraints="NO" id="tB1-Yl-FDW">
+                                                <rect key="frame" x="302" y="11" width="33" height="33"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="tB1-Yl-FDW" secondAttribute="height" multiplier="1:1" id="hqg-2S-2OL"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="pcR-Ok-vaA" firstAttribute="top" secondItem="Y9r-Yv-pwl" secondAttribute="top" id="71u-RW-Eph"/>
+                                            <constraint firstItem="nuU-cn-I86" firstAttribute="leading" secondItem="Y9r-Yv-pwl" secondAttribute="leading" id="H5r-Nf-5lf"/>
+                                            <constraint firstItem="nuU-cn-I86" firstAttribute="bottom" secondItem="pcR-Ok-vaA" secondAttribute="bottom" id="MHs-Xj-E5X"/>
+                                            <constraint firstItem="pcR-Ok-vaA" firstAttribute="leading" secondItem="nuU-cn-I86" secondAttribute="trailing" constant="10" id="S68-5R-6cr"/>
+                                            <constraint firstItem="tB1-Yl-FDW" firstAttribute="height" secondItem="Y9r-Yv-pwl" secondAttribute="height" multiplier="0.6" id="TMB-NE-kPs"/>
+                                            <constraint firstItem="tB1-Yl-FDW" firstAttribute="centerY" secondItem="pcR-Ok-vaA" secondAttribute="centerY" id="ZsH-b0-oZd"/>
+                                            <constraint firstItem="nuU-cn-I86" firstAttribute="top" secondItem="pcR-Ok-vaA" secondAttribute="top" id="eyy-eS-2Ce"/>
+                                            <constraint firstItem="pcR-Ok-vaA" firstAttribute="centerY" secondItem="Y9r-Yv-pwl" secondAttribute="centerY" id="isO-U4-Rof"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="Y9r-Yv-pwl" firstAttribute="leading" secondItem="TpY-Mo-faF" secondAttribute="leading" constant="20" id="8Wq-Zx-HGI"/>
+                                    <constraint firstItem="Y9r-Yv-pwl" firstAttribute="top" secondItem="TpY-Mo-faF" secondAttribute="top" constant="10" id="Bue-OQ-yVj"/>
+                                    <constraint firstAttribute="trailing" secondItem="Y9r-Yv-pwl" secondAttribute="trailing" constant="20" id="RyA-dA-2hD"/>
+                                    <constraint firstAttribute="bottom" secondItem="Y9r-Yv-pwl" secondAttribute="bottom" constant="10" id="lqx-l6-Qjl"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="TpY-Mo-faF" firstAttribute="leading" secondItem="IRZ-fI-Jig" secondAttribute="leading" id="3ag-cG-5r7"/>
+                            <constraint firstAttribute="trailing" secondItem="TpY-Mo-faF" secondAttribute="trailing" id="gyo-Nw-sbL"/>
+                            <constraint firstAttribute="bottom" secondItem="TpY-Mo-faF" secondAttribute="bottom" id="k1g-bj-52b"/>
+                            <constraint firstItem="TpY-Mo-faF" firstAttribute="top" secondItem="IRZ-fI-Jig" secondAttribute="top" id="xsn-Ac-hNB"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="IRZ-fI-Jig" secondAttribute="trailing" id="D1c-Q0-gZm"/>
+                    <constraint firstItem="IRZ-fI-Jig" firstAttribute="leading" secondItem="QJA-rN-kWU" secondAttribute="leading" id="Y0s-De-WUo"/>
+                    <constraint firstItem="IRZ-fI-Jig" firstAttribute="top" secondItem="QJA-rN-kWU" secondAttribute="top" id="Zj3-kN-xVF"/>
+                    <constraint firstAttribute="bottom" secondItem="IRZ-fI-Jig" secondAttribute="bottom" id="ijz-fw-lsA"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" identifier="SearchTokenCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
+            <connections>
+                <outlet property="addedIcon" destination="tB1-Yl-FDW" id="Ogj-NK-ebK"/>
+                <outlet property="addressLabel" destination="gcW-Oy-CRQ" id="N1R-nt-nNa"/>
+                <outlet property="bottomBackgroundView" destination="IRZ-fI-Jig" id="WcW-gL-rr7"/>
+                <outlet property="title" destination="LZH-gd-H0V" id="0gw-RE-1o8"/>
+                <outlet property="tokenIcon" destination="nuU-cn-I86" id="zOF-Ai-s1A"/>
+                <outlet property="topBackgroundView" destination="TpY-Mo-faF" id="4u0-tW-w2D"/>
+            </connections>
+            <point key="canvasLocation" x="152.80000000000001" y="-67.466266866566727"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="added" width="40.069564819335938" height="40.069564819335938"/>
+    </resources>
+</document>

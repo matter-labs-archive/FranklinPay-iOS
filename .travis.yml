@@ -1,0 +1,11 @@
+language: swift
+osx_image: xcode10
+xcode_project: DiveLane.xcworkspace # path to your xcodeproj folder
+xcode_scheme: DiveLane
+xcode_destination: platform=iOS Simulator, OS=11.4, name=iPhone X
+before_install:
+  - brew install swiftlint
+script:
+  - swiftlint
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

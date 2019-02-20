@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_5" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShopViewController" customModule="BuffiOS" customModuleProvider="target">
+            <connections>
+                <outlet property="marker" destination="xNa-Qj-KS6" id="a4w-zt-JhP"/>
+                <outlet property="scanQrButton" destination="yRA-Np-TwH" id="ybF-MD-AFY"/>
+                <outlet property="sendMoneyButton" destination="amZ-Py-VCG" id="xOQ-3g-2sX"/>
+                <outlet property="view" destination="LUp-ao-XXN" id="Zfs-5h-OsT"/>
+                <outlet property="walletTableView" destination="khk-pc-SNg" id="Lzs-RA-zU6"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="LUp-ao-XXN">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="khk-pc-SNg" customClass="BasicTableView" customModule="BuffiOS" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="94" width="414" height="555.66666666666663"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="eYH-5o-rLM"/>
+                        <outlet property="delegate" destination="-1" id="CqB-E8-dwZ"/>
+                    </connections>
+                </tableView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rb0-dq-Wdw">
+                    <rect key="frame" x="10" y="54" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="rb0-dq-Wdw" secondAttribute="height" multiplier="1:1" id="10P-tB-fxM"/>
+                        <constraint firstAttribute="height" constant="30" id="BoZ-g8-dud"/>
+                    </constraints>
+                    <state key="normal" image="menu"/>
+                    <connections>
+                        <action selector="showMenu:" destination="-1" eventType="touchUpInside" id="7ID-fu-5ua"/>
+                    </connections>
+                </button>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="marker" translatesAutoresizingMaskIntoConstraints="NO" id="xNa-Qj-KS6">
+                    <rect key="frame" x="25" y="54" width="15" height="15"/>
+                </imageView>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="wm1-qS-XmC">
+                    <rect key="frame" x="20.666666666666657" y="659.66666666666663" width="372.66666666666674" height="187.33333333333337"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="QDe-ca-gsZ">
+                            <rect key="frame" x="0.0" y="0.0" width="372.66666666666669" height="52.333333333333336"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yRA-Np-TwH" customClass="ScanButton" customModule="BuffiOS" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="52.333333333333336"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="yRA-Np-TwH" secondAttribute="height" multiplier="1:1" id="I89-6T-g9w"/>
+                                    </constraints>
+                                    <state key="normal" backgroundImage="photo"/>
+                                    <connections>
+                                        <action selector="qrScanTapped:" destination="-1" eventType="touchUpInside" id="tF5-hh-iVH"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="amZ-Py-VCG" customClass="BasicBlueButton" customModule="BuffiOS" customModuleProvider="target">
+                                    <rect key="frame" x="72.666666666666657" y="0.0" width="300" height="52.333333333333336"/>
+                                    <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                                    <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Write cheque" image="writing-tool">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="writeCheque:" destination="-1" eventType="touchUpInside" id="iDb-42-7C1"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="yRA-Np-TwH" firstAttribute="height" secondItem="QDe-ca-gsZ" secondAttribute="height" id="8ae-96-RuV"/>
+                                <constraint firstItem="amZ-Py-VCG" firstAttribute="height" secondItem="QDe-ca-gsZ" secondAttribute="height" id="nHw-hR-khu"/>
+                            </constraints>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SeC-Yc-xLo" customClass="BasicGreenButton" customModule="BuffiOS" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="67.333333333333371" width="372.66666666666669" height="52.666666666666657"/>
+                            <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                            <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Deposit">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="deposit:" destination="-1" eventType="touchUpInside" id="1y6-91-x04"/>
+                                <action selector="writeCheque:" destination="-1" eventType="touchUpInside" id="OA4-39-x86"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="O6z-RS-LwM" customClass="BasicOrangeButton" customModule="BuffiOS" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="135" width="372.66666666666669" height="52.333333333333343"/>
+                            <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                            <inset key="titleEdgeInsets" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="imageEdgeInsets" minX="-20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <state key="normal" title="Credit">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="credit:" destination="-1" eventType="touchUpInside" id="GOO-hB-gbR"/>
+                                <action selector="writeCheque:" destination="-1" eventType="touchUpInside" id="Y5W-VI-lky"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="QDe-ca-gsZ" firstAttribute="height" secondItem="SeC-Yc-xLo" secondAttribute="height" id="O3u-wc-eAi"/>
+                        <constraint firstItem="QDe-ca-gsZ" firstAttribute="height" secondItem="wm1-qS-XmC" secondAttribute="height" multiplier="0.28" id="T7e-mc-BBB"/>
+                        <constraint firstItem="O6z-RS-LwM" firstAttribute="height" secondItem="QDe-ca-gsZ" secondAttribute="height" id="yIW-iX-YdY"/>
+                    </constraints>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="rb0-dq-Wdw" firstAttribute="top" secondItem="iPF-hr-DoE" secondAttribute="top" constant="10" id="1g8-9F-bHn"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="top" secondItem="rb0-dq-Wdw" secondAttribute="top" id="9NC-nF-qHx"/>
+                <constraint firstItem="iPF-hr-DoE" firstAttribute="bottom" secondItem="wm1-qS-XmC" secondAttribute="bottom" constant="15" id="Bk5-8r-nZ5"/>
+                <constraint firstItem="khk-pc-SNg" firstAttribute="top" secondItem="rb0-dq-Wdw" secondAttribute="bottom" constant="10" id="Dne-io-FYS"/>
+                <constraint firstItem="wm1-qS-XmC" firstAttribute="width" secondItem="khk-pc-SNg" secondAttribute="width" multiplier="0.9" id="HMZ-4z-YBv"/>
+                <constraint firstItem="iPF-hr-DoE" firstAttribute="trailing" secondItem="khk-pc-SNg" secondAttribute="trailing" id="IgP-rW-3wG"/>
+                <constraint firstItem="rb0-dq-Wdw" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" constant="10" id="U0t-su-4pe"/>
+                <constraint firstItem="wm1-qS-XmC" firstAttribute="centerX" secondItem="iPF-hr-DoE" secondAttribute="centerX" id="UcL-qZ-cJQ"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="trailing" secondItem="rb0-dq-Wdw" secondAttribute="trailing" id="Vfz-Sh-dXf"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="width" secondItem="rb0-dq-Wdw" secondAttribute="width" multiplier="0.5" id="ZEV-w1-JZW"/>
+                <constraint firstItem="khk-pc-SNg" firstAttribute="leading" secondItem="iPF-hr-DoE" secondAttribute="leading" id="g7x-Q7-D0u"/>
+                <constraint firstItem="xNa-Qj-KS6" firstAttribute="height" secondItem="rb0-dq-Wdw" secondAttribute="height" multiplier="0.5" id="mNs-IM-5OV"/>
+                <constraint firstItem="wm1-qS-XmC" firstAttribute="top" secondItem="khk-pc-SNg" secondAttribute="bottom" constant="10" id="w3Y-Kn-BLZ"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="iPF-hr-DoE"/>
+            <point key="canvasLocation" x="118.84057971014494" y="52.232142857142854"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="marker" width="22" height="22"/>
+        <image name="menu" width="30" height="30"/>
+        <image name="photo" width="96" height="96"/>
+        <image name="writing-tool" width="48" height="48"/>
+    </resources>
+</document>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Display-Semibold.otf">
+            <string>SFProDisplay-Semibold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="DepositCell" rowHeight="120" id="4NX-lZ-MeD" userLabel="Deposit Cell" customClass="DepositCell" customModule="BuffiOS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="120"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="4NX-lZ-MeD" id="gPd-Rt-53j">
+                <rect key="frame" x="0.0" y="0.0" width="375" height="119.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yI7-OM-geW">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPV-Tm-uxp">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="90"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="tpf-0t-5yp">
+                                        <rect key="frame" x="10" y="5" width="355" height="80"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Wallet First" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="yPl-ed-UZA">
+                                                <rect key="frame" x="0.0" y="26.5" width="198" height="26.5"/>
+                                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="0 ETH" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="JYd-ca-zvh">
+                                                <rect key="frame" x="218" y="26.5" width="137" height="26.5"/>
+                                                <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="22"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="96c-Ld-TSE"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="tpf-0t-5yp" firstAttribute="top" secondItem="GPV-Tm-uxp" secondAttribute="top" constant="5" id="07u-Tm-Qhc"/>
+                                    <constraint firstItem="tpf-0t-5yp" firstAttribute="leading" secondItem="GPV-Tm-uxp" secondAttribute="leading" constant="10" id="25V-sp-jwL"/>
+                                    <constraint firstAttribute="height" constant="90" id="CWQ-QV-Ukp"/>
+                                    <constraint firstAttribute="bottom" secondItem="tpf-0t-5yp" secondAttribute="bottom" constant="5" id="Eec-pb-QQ5"/>
+                                    <constraint firstAttribute="trailing" secondItem="tpf-0t-5yp" secondAttribute="trailing" constant="10" id="epF-wK-YAb"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="GPV-Tm-uxp" secondAttribute="trailing" id="CJs-hA-kq0"/>
+                            <constraint firstAttribute="bottom" secondItem="GPV-Tm-uxp" secondAttribute="bottom" id="FEO-Mj-tnR"/>
+                            <constraint firstItem="GPV-Tm-uxp" firstAttribute="leading" secondItem="yI7-OM-geW" secondAttribute="leading" id="SSZ-o1-ZxZ"/>
+                            <constraint firstItem="GPV-Tm-uxp" firstAttribute="top" secondItem="yI7-OM-geW" secondAttribute="top" id="Xf1-fR-9Of"/>
+                            <constraint firstAttribute="height" constant="90" id="ziy-vA-0MC"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="yI7-OM-geW" secondAttribute="bottom" id="DdO-4u-yHm"/>
+                    <constraint firstAttribute="trailing" secondItem="yI7-OM-geW" secondAttribute="trailing" id="Eua-C3-vd0"/>
+                    <constraint firstItem="yI7-OM-geW" firstAttribute="leading" secondItem="gPd-Rt-53j" secondAttribute="leading" id="GdJ-cf-t5W"/>
+                    <constraint firstItem="yI7-OM-geW" firstAttribute="top" secondItem="gPd-Rt-53j" secondAttribute="top" id="wq6-ZS-OM7"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <accessibility key="accessibilityConfiguration" identifier="WalletCell">
+                <bool key="isElement" value="YES"/>
+            </accessibility>
+            <connections>
+                <outlet property="amount" destination="JYd-ca-zvh" id="Q0l-EV-jyD"/>
+                <outlet property="bottomBackgroundView" destination="yI7-OM-geW" id="SHi-JL-DrL"/>
+                <outlet property="date" destination="yPl-ed-UZA" id="FG9-AN-ddx"/>
+                <outlet property="topBackgroundView" destination="GPV-Tm-uxp" id="1Gv-Mv-dad"/>
+            </connections>
+            <point key="canvasLocation" x="96.799999999999997" y="-62.068965517241381"/>
+        </tableViewCell>
+    </objects>
+</document>

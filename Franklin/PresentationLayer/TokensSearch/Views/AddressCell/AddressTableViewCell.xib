@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AddressTableViewCell" rowHeight="40" id="KGk-i7-Jjw" customClass="AddressTableViewCell" customModule="Franklin" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ISY-2J-ywn">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AWc-cg-CHh" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
+                                <rect key="frame" x="200" y="0.0" width="100" height="59.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="3Br-iy-4Ey"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                                <state key="normal" title="PASTE">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtc-Qe-pOG" customClass="ScanButton" customModule="Franklin" customModuleProvider="target">
+                                <rect key="frame" x="120.5" y="0.0" width="59.5" height="59.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="mtc-Qe-pOG" secondAttribute="height" multiplier="1:1" id="UjB-hQ-cM5"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="photo"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="AWc-cg-CHh" firstAttribute="leading" secondItem="mtc-Qe-pOG" secondAttribute="trailing" constant="20" id="B3l-w1-K7E"/>
+                            <constraint firstItem="mtc-Qe-pOG" firstAttribute="centerY" secondItem="ISY-2J-ywn" secondAttribute="centerY" id="EBg-ul-Q80"/>
+                            <constraint firstItem="mtc-Qe-pOG" firstAttribute="height" secondItem="ISY-2J-ywn" secondAttribute="height" id="Edu-Yf-gqb"/>
+                            <constraint firstItem="AWc-cg-CHh" firstAttribute="height" secondItem="ISY-2J-ywn" secondAttribute="height" id="ljh-Yx-hXb"/>
+                            <constraint firstAttribute="trailing" secondItem="AWc-cg-CHh" secondAttribute="trailing" constant="20" id="mIn-e2-5ta"/>
+                            <constraint firstItem="AWc-cg-CHh" firstAttribute="centerY" secondItem="ISY-2J-ywn" secondAttribute="centerY" id="qUN-XZ-W15"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="ISY-2J-ywn" secondAttribute="trailing" id="7kM-H6-IBC"/>
+                    <constraint firstItem="ISY-2J-ywn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="UWq-dc-jPR"/>
+                    <constraint firstAttribute="bottom" secondItem="ISY-2J-ywn" secondAttribute="bottom" id="pzP-92-UGZ"/>
+                    <constraint firstItem="ISY-2J-ywn" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="v2w-6Y-y9A"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="backView" destination="ISY-2J-ywn" id="heJ-Ic-ITB"/>
+                <outlet property="paste" destination="AWc-cg-CHh" id="BRI-vH-is8"/>
+                <outlet property="qr" destination="mtc-Qe-pOG" id="Eeg-M3-OkR"/>
+            </connections>
+            <point key="canvasLocation" x="168" y="55.772113943028494"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="photo" width="96" height="96"/>
+    </resources>
+</document>

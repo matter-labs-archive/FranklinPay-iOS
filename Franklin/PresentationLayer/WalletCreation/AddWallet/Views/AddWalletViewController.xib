@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Text-Regular.otf">
+            <string>SFProText-Regular</string>
+        </array>
+        <array key="librefranklin-medium.ttf">
+            <string>LibreFranklin-Medium</string>
+        </array>
+        <array key="librefranklin-semibold.ttf">
+            <string>LibreFranklin-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddWalletViewController" customModule="Franklin" customModuleProvider="target">
+            <connections>
+                <outlet property="animationImageView" destination="rjK-Uh-51Z" id="NPD-bo-gHZ"/>
+                <outlet property="createWallet" destination="Qih-5a-ZOa" id="vkH-3J-3cQ"/>
+                <outlet property="importWallet" destination="JDS-uz-3qj" id="iXB-Am-9fz"/>
+                <outlet property="iv" destination="gxB-hy-7A9" id="rS8-co-qR9"/>
+                <outlet property="prodName" destination="fiA-mZ-y0a" id="HPF-Qm-sqL"/>
+                <outlet property="settingUp" destination="Cmt-Ew-osr" id="fh9-IG-9xR"/>
+                <outlet property="subtitle" destination="C5i-Vv-kGO" id="cCy-Iw-A7K"/>
+                <outlet property="view" destination="a2G-f6-oZG" id="Ov6-Xe-S0L"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="a2G-f6-oZG">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x0q-Sz-xBY">
+                    <rect key="frame" x="19" y="59.5" width="337.5" height="547"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rjK-Uh-51Z">
+                            <rect key="frame" x="0.0" y="427" width="337.5" height="112"/>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Wmb-Ri-0qL">
+                            <rect key="frame" x="50.5" y="0.0" width="236" height="427"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Franklin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fiA-mZ-y0a">
+                                    <rect key="frame" x="13" y="0.0" width="210" height="44"/>
+                                    <fontDescription key="fontDescription" name="LibreFranklin-SemiBold" family="Libre Franklin" pointSize="55"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE DOLLAR WALLET" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="C5i-Vv-kGO">
+                                    <rect key="frame" x="0.0" y="44" width="236" height="22"/>
+                                    <fontDescription key="fontDescription" name="LibreFranklin-Medium" family="Libre Franklin" pointSize="22"/>
+                                    <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="franklin" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gxB-hy-7A9">
+                                    <rect key="frame" x="0.0" y="66" width="236" height="361"/>
+                                </imageView>
+                            </subviews>
+                            <viewLayoutGuide key="safeArea" id="7V4-xO-mCf"/>
+                        </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JDS-uz-3qj" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
+                            <rect key="frame" x="1" y="434" width="335" height="46.5"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.30000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="Cmt-Ew-osr">
+                            <rect key="frame" x="0.0" y="510" width="337.5" height="29"/>
+                            <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="24"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTL-Qy-nUt">
+                            <rect key="frame" x="302.5" y="5.5" width="33.5" height="33.5"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="hTL-Qy-nUt" secondAttribute="height" multiplier="1:1" id="8Kv-m3-sWL"/>
+                            </constraints>
+                            <state key="normal" image="close_blue"/>
+                            <connections>
+                                <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="hKC-fs-tDm"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qih-5a-ZOa" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
+                            <rect key="frame" x="1" y="490.5" width="335" height="46.5"/>
+                            <state key="normal" title="Button"/>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="rjK-Uh-51Z" firstAttribute="top" secondItem="gxB-hy-7A9" secondAttribute="bottom" id="5DL-0C-ceE"/>
+                        <constraint firstItem="hTL-Qy-nUt" firstAttribute="width" secondItem="hTL-Qy-nUt" secondAttribute="height" multiplier="1:1" id="5So-BC-xqy"/>
+                        <constraint firstItem="gxB-hy-7A9" firstAttribute="centerY" secondItem="x0q-Sz-xBY" secondAttribute="centerY" multiplier="0.9" id="8F2-aV-N9K"/>
+                        <constraint firstItem="rjK-Uh-51Z" firstAttribute="trailing" secondItem="Cmt-Ew-osr" secondAttribute="trailing" id="D6h-dZ-Wzi"/>
+                        <constraint firstItem="Qih-5a-ZOa" firstAttribute="centerX" secondItem="JDS-uz-3qj" secondAttribute="centerX" id="EBP-2i-Tif"/>
+                        <constraint firstItem="JDS-uz-3qj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="gxB-hy-7A9" secondAttribute="bottom" id="F4S-lQ-lEX"/>
+                        <constraint firstAttribute="bottom" secondItem="Qih-5a-ZOa" secondAttribute="bottom" constant="10" id="HDf-kB-OrV"/>
+                        <constraint firstItem="Wmb-Ri-0qL" firstAttribute="top" secondItem="x0q-Sz-xBY" secondAttribute="top" id="I9K-mw-noq"/>
+                        <constraint firstItem="C5i-Vv-kGO" firstAttribute="height" secondItem="x0q-Sz-xBY" secondAttribute="height" multiplier="0.04" id="Tnk-df-L8p"/>
+                        <constraint firstItem="Qih-5a-ZOa" firstAttribute="width" secondItem="JDS-uz-3qj" secondAttribute="width" id="VDo-ep-d23"/>
+                        <constraint firstItem="Qih-5a-ZOa" firstAttribute="height" secondItem="JDS-uz-3qj" secondAttribute="height" id="WD1-Pg-9zr"/>
+                        <constraint firstItem="rjK-Uh-51Z" firstAttribute="bottom" secondItem="Cmt-Ew-osr" secondAttribute="bottom" id="We7-Aa-Eaa"/>
+                        <constraint firstItem="rjK-Uh-51Z" firstAttribute="centerX" secondItem="x0q-Sz-xBY" secondAttribute="centerX" id="X1e-Pd-h03"/>
+                        <constraint firstItem="Wmb-Ri-0qL" firstAttribute="centerX" secondItem="x0q-Sz-xBY" secondAttribute="centerX" id="cMk-ee-kJQ"/>
+                        <constraint firstItem="JDS-uz-3qj" firstAttribute="centerX" secondItem="x0q-Sz-xBY" secondAttribute="centerX" id="kbZ-qK-WHP"/>
+                        <constraint firstAttribute="bottomMargin" secondItem="rjK-Uh-51Z" secondAttribute="bottom" id="ncs-Lt-rNt"/>
+                        <constraint firstItem="Qih-5a-ZOa" firstAttribute="top" secondItem="JDS-uz-3qj" secondAttribute="bottom" constant="10" id="neM-l6-u8X"/>
+                        <constraint firstItem="fiA-mZ-y0a" firstAttribute="height" secondItem="x0q-Sz-xBY" secondAttribute="height" multiplier="0.08" id="pp8-Kv-AuE"/>
+                        <constraint firstItem="Wmb-Ri-0qL" firstAttribute="width" secondItem="x0q-Sz-xBY" secondAttribute="width" multiplier="0.7" id="qCD-Zw-1eY"/>
+                        <constraint firstItem="rjK-Uh-51Z" firstAttribute="width" secondItem="x0q-Sz-xBY" secondAttribute="width" id="tLw-nf-352"/>
+                        <constraint firstItem="Cmt-Ew-osr" firstAttribute="leading" secondItem="rjK-Uh-51Z" secondAttribute="leading" id="u56-44-WPl"/>
+                        <constraint firstItem="hTL-Qy-nUt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fiA-mZ-y0a" secondAttribute="trailing" constant="5" id="vgJ-tj-vmi"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="hTL-Qy-nUt" firstAttribute="top" secondItem="T4y-Tu-pta" secondAttribute="top" constant="45" id="4q0-R0-yUj"/>
+                <constraint firstItem="x0q-Sz-xBY" firstAttribute="centerY" secondItem="T4y-Tu-pta" secondAttribute="centerY" multiplier="0.97" id="93c-IK-onK"/>
+                <constraint firstItem="x0q-Sz-xBY" firstAttribute="width" secondItem="a2G-f6-oZG" secondAttribute="width" multiplier="0.9" id="DYJ-5L-E46"/>
+                <constraint firstItem="x0q-Sz-xBY" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.82" id="T1V-P0-Auz"/>
+                <constraint firstItem="T4y-Tu-pta" firstAttribute="trailing" secondItem="hTL-Qy-nUt" secondAttribute="trailing" constant="20" id="XpW-jm-zfn"/>
+                <constraint firstItem="JDS-uz-3qj" firstAttribute="leading" secondItem="T4y-Tu-pta" secondAttribute="leading" constant="20" id="iFa-4t-hJN"/>
+                <constraint firstItem="x0q-Sz-xBY" firstAttribute="centerX" secondItem="T4y-Tu-pta" secondAttribute="centerX" id="nI8-ru-PR1"/>
+                <constraint firstItem="hTL-Qy-nUt" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.05" id="ne2-D9-h17"/>
+                <constraint firstItem="JDS-uz-3qj" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.07" id="wCt-a1-nSx"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="T4y-Tu-pta"/>
+            <point key="canvasLocation" x="726" y="53"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="close_blue" width="115" height="111"/>
+        <image name="franklin" width="848" height="1135"/>
+    </resources>
+</document>
