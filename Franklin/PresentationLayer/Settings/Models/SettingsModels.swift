@@ -8,11 +8,7 @@
 
 import UIKit
 
-public enum SettingsTableViewSections: Int {
-    case main = 0
-}
-
-public struct MainSetting {
+public struct SettingsModel {
     let title: String
     let subtitle: String?
     let image: UIImage
@@ -61,37 +57,8 @@ public struct MainSetting {
     }
 }
 
-extension MainSetting: Equatable {
-    public static func ==(lhs: MainSetting, rhs: MainSetting) -> Bool {
+extension SettingsModel: Equatable {
+    public static func ==(lhs: SettingsModel, rhs: SettingsModel) -> Bool {
         return lhs.title == rhs.title
     }
-}
-
-public class SettingInteractor {
-    
-    let userKeys = UserDefaultKeys()
-    
-    func getMainSettings() -> [MainSetting] {
-        guard let currentWallet = CurrentWallet.currentWallet else {
-            return []
-        }
-        var settings = [MainSetting(.wallet),
-                        MainSetting(.network)]
-        if !userKeys.isPincodeExists() {
-            settings.append(MainSetting(.pincode))
-        }
-        if !userKeys.isBackupReady(for: currentWallet) {
-            settings.append(MainSetting(.backup))
-        }
-        return settings.reversed()
-    }
-}
-
-public enum MainSettings {
-    case backup
-    case network
-    case wallet
-    case pincode
-    case help
-    case topup
 }

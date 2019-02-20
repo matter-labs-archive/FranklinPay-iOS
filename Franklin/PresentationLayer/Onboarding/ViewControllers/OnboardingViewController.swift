@@ -10,11 +10,8 @@ import UIKit
 import SwiftyGif
 
 class OnboardingViewController: BasicViewController {
-    weak var animationTimer: Timer?
-    let walletCreating = WalletCreating()
-    let appController = AppController()
-    let alerts = Alerts()
-    var walletCreated = false
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var settingUp: UILabel!
     @IBOutlet weak var iv: UIImageView!
@@ -24,6 +21,19 @@ class OnboardingViewController: BasicViewController {
     @IBOutlet weak var subtitle: UILabel!
     @IBOutlet weak var continueButton: BasicGreenButton!
     @IBOutlet weak var animationImageView: UIImageView!
+    
+    // MARK: - Internal lets
+    
+    let walletCreating = WalletCreating()
+    let appController = AppController()
+    let alerts = Alerts()
+    var walletCreated = false
+    
+    // MARK: - Lazy vars
+    
+    weak var animationTimer: Timer?
+    
+    // MARK: - Lifesycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,13 +41,15 @@ class OnboardingViewController: BasicViewController {
         setupNavigation()
     }
     
-    func setupNavigation() {
-        navigationController?.navigationBar.isHidden = true
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         showStart()
+    }
+    
+    // MARK: - Main setup
+    
+    func setupNavigation() {
+        navigationController?.navigationBar.isHidden = true
     }
     
     func showStart() {
@@ -103,7 +115,32 @@ class OnboardingViewController: BasicViewController {
         
     }
     
-    // TODO: - need to make it better
+    // MARK: - Animations
+    
+    func animation() {
+        animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        creatingWalletAnimation()
+    }
+    
+    @objc func fireTimer() {
+        animationTimer?.invalidate()
+        if walletCreated {
+            goToApp()
+        }
+    }
+    
+    func creatingWalletAnimation() {
+        UIView.animate(withDuration: Constants.Main.animationDuration) {
+            self.continueButton.alpha = 0
+            self.link.alpha = 0
+            self.bottomInfo.alpha = 0
+            self.animationImageView.alpha = 1
+            self.settingUp.alpha = 1
+        }
+    }
+    
+    // MARK: - Actions
+    
     func creatingWallet() {
         DispatchQueue.global().async { [unowned self] in
             do {
@@ -138,39 +175,6 @@ class OnboardingViewController: BasicViewController {
         }
     }
     
-    @objc func continueAction(sender: UIButton) {
-        continueButton.isUserInteractionEnabled = false
-        animation()
-        creatingWallet()
-    }
-    
-    @objc func readTerms(sender: UIButton) {
-        //TODO: - need to read terms
-        print("Need to open terms")
-    }
-    
-    func animation() {
-        animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
-        creatingWalletAnimation()
-    }
-    
-    @objc func fireTimer() {
-        animationTimer?.invalidate()
-        if walletCreated {
-            goToApp()
-        }
-    }
-    
-    func creatingWalletAnimation() {
-        UIView.animate(withDuration: Constants.Main.animationDuration) {
-            self.continueButton.alpha = 0
-            self.link.alpha = 0
-            self.bottomInfo.alpha = 0
-            self.animationImageView.alpha = 1
-            self.settingUp.alpha = 1
-        }
-    }
-    
     func goToApp() {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
@@ -188,6 +192,18 @@ class OnboardingViewController: BasicViewController {
                 })
             }
         }
+    }
+    
+    // MARK: - Buttons actions
+    
+    @objc func continueAction(sender: UIButton) {
+        continueButton.isUserInteractionEnabled = false
+        animation()
+        creatingWallet()
+    }
+    
+    @objc func readTerms(sender: UIButton) {
+        print("Need to open terms")
     }
 
 }
