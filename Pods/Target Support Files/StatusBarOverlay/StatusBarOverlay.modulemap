@@ -1,6 +1,0 @@
-framework module StatusBarOverlay {
-  umbrella header "StatusBarOverlay-umbrella.h"
-
-  export *
-  module * { export * }
-}
