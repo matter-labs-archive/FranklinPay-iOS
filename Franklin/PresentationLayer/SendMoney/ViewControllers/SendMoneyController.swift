@@ -13,12 +13,9 @@ import EthereumAddress
 import QRCodeReader
 import BigInt
 
-protocol ModalViewDelegate: class {
-    func modalViewBeenDismissed(updateNeeded: Bool)
-    func modalViewAppeared()
-}
-
-class SendMoneyController: BasicViewController, ModalViewDelegate {
+class SendMoneyController: BasicViewController {
+    
+    // MARK: - Enums
     
     enum TextFieldsTags: Int {
         case amount = 0
@@ -34,6 +31,8 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         case ready
         case saving
     }
+    
+    // MARK: - Outlets
     
     @IBOutlet weak var amountTextField: BasicTextField!
     @IBOutlet weak var searchTextField: BasicTextField!
@@ -61,28 +60,35 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     @IBOutlet weak var addressStackView: UIStackView!
     @IBOutlet weak var emptyContactsView: UIView!
     
-    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    // MARK: - Internal lets
     
-    var searchStackOrigin: CGFloat = 0
+    internal let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    
+    internal var searchStackOrigin: CGFloat = 0
+    
+    internal let contactsService = ContactsService()
+    internal let alerts = Alerts()
+    
+    internal let reuseIdentifier = "ContactTableCell"
+    internal let sectionInsets = UIEdgeInsets(top: 0,
+                                              left: 0,
+                                              bottom: 0,
+                                              right: 0)
+    internal let itemsPerRow: CGFloat = 3
+    
+    internal var contactsList: [Contact] = []
+    internal var screenStatus: SendingScreenStatus = .start
+    
+    internal var chosenContact: Contact?
+    internal var chosenToken: ERC20Token?
+    internal var initAddress: String?
+    
+    // MARK: - Weak vars
+    
     weak var delegate: ModalViewDelegate?
-    var contactsList: [Contact] = []
-    let contactsService = ContactsService()
-    var chosenContact: Contact?
-    var chosenToken: ERC20Token?
-    var screenStatus: SendingScreenStatus = .start
-    
-    let alerts = Alerts()
-    
-    var initAddress: String?
-    
-    private let reuseIdentifier = "ContactTableCell"
-    private let sectionInsets = UIEdgeInsets(top: 0,
-                                             left: 0,
-                                             bottom: 0,
-                                             right: 0)
-    private let itemsPerRow: CGFloat = 3
-    
     weak var animationTimer: Timer?
+    
+    // MARK: - Lazy vars
     
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -92,33 +98,28 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         return QRCodeReaderViewController(builder: builder)
     }()
     
-    @IBAction func qrScanTapped(_ sender: Any) {
-        readerVC.delegate = self
-        
-        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
-        }
-        readerVC.modalPresentationStyle = .formSheet
-        present(readerVC, animated: true, completion: nil)
-    }
+    // MARK: - Inits
     
     convenience init(token: ERC20Token, address: String) {
         self.init()
-        self.chosenToken = token
-        self.initAddress = address
+        chosenToken = token
+        initAddress = address
     }
     
     convenience init(token: ERC20Token) {
         self.init()
-        self.chosenToken = token
+        chosenToken = token
     }
+    
+    // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        self.mainSetup()
-        self.setupTextFields()
-        self.setupTableView()
-        //self.setup()
+        hideKeyboardWhenTappedAround()
+        mainSetup()
+        setupTextFields()
+        setupTableView()
+        //setup()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -136,6 +137,8 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         super.viewDidDisappear(animated)
         chosenContact = nil
     }
+    
+    // MARK: - Main setup
     
     func setMiddleStackPosition() {
         searchStackOrigin = searchStackView.frame.origin.y
@@ -174,15 +177,15 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     }
     
     func setupTableView() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+        tableView.delegate = self
+        tableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
-        self.tableView.tableFooterView = footerView
+        tableView.tableFooterView = footerView
         
         let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
-        self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
-        self.contactsList.removeAll()
+        tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
+        contactsList.removeAll()
     }
     
     func mainSetup() {
@@ -194,7 +197,7 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     }
     
     func setupNavigation() {
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
     }
     
     func setupBackground() {
@@ -203,20 +206,20 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
     }
     
     func setupContentView() {
-        self.contentView.backgroundColor = Colors.background
-        self.contentView.alpha = 1
-        self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
-        self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
-        self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
+        contentView.backgroundColor = Colors.background
+        contentView.alpha = 1
+        contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
+        contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
+        contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
     }
     
     func setupGestures() {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissView))
+                                                                 action: #selector(dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
         
-        let tapOnChosenContact: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.showSearch(animated:)))
+        let tapOnChosenContact: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(showSearch(animated:)))
         tapOnChosenContact.cancelsTouchesInView = false
         contactStack.addGestureRecognizer(tapOnChosenContact)
     }
@@ -228,371 +231,181 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
         sendingGif.isUserInteractionEnabled = false
     }
     
+    // MARK: - Components setup with status
+    
     func setTitle(text: String?, color: UIColor) {
-        self.titleLabel.text = text
-        self.titleLabel.textColor = color
+        titleLabel.text = text
+        titleLabel.textColor = color
     }
     
     func setBottomLabel(text: String?, color: UIColor, hidden: Bool) {
-        self.shareLabel.text = text
-        self.shareLabel.textColor = color
-        self.shareLabel.alpha = hidden ? 0 : 1
+        shareLabel.text = text
+        shareLabel.textColor = color
+        shareLabel.alpha = hidden ? 0 : 1
     }
     
     func setCollectionView(hidden: Bool) {
-        self.tableView.alpha = hidden ? 0 : 1
-        self.tableView.isUserInteractionEnabled = !hidden
+        tableView.alpha = hidden ? 0 : 1
+        tableView.isUserInteractionEnabled = !hidden
     }
     
     func setBottomButton(text: String?, imageName: String?, backgroundColor: UIColor, textColor: UIColor, hidden: Bool, borderNeeded: Bool) {
-        self.mainButton.setTitle(text, for: .normal)
-        self.mainButton.changeColorOn(background: backgroundColor, text: textColor)
-        self.mainButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
-        self.mainButton.layer.borderWidth = borderNeeded ? 1 : 0
-        self.mainButton.alpha = hidden ? 0 : 1
-        self.mainButton.isUserInteractionEnabled = !hidden
+        mainButton.setTitle(text, for: .normal)
+        mainButton.changeColorOn(background: backgroundColor, text: textColor)
+        mainButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
+        mainButton.layer.borderWidth = borderNeeded ? 1 : 0
+        mainButton.alpha = hidden ? 0 : 1
+        mainButton.isUserInteractionEnabled = !hidden
     }
     
     func setTopButton(text: String?, imageName: String?, backgroundColor: UIColor, textColor: UIColor, hidden: Bool, borderNeeded: Bool) {
-        self.sendButton.setTitle(text, for: .normal)
-        self.sendButton.changeColorOn(background: backgroundColor, text: textColor)
-        self.sendButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
-        self.sendButton.layer.borderWidth = borderNeeded ? 1 : 0
-        self.sendButton.alpha = hidden ? 0 : 1
-        self.sendButton.isUserInteractionEnabled = !hidden
+        sendButton.setTitle(text, for: .normal)
+        sendButton.changeColorOn(background: backgroundColor, text: textColor)
+        sendButton.setImage(UIImage(named: imageName ?? ""), for: .normal)
+        sendButton.layer.borderWidth = borderNeeded ? 1 : 0
+        sendButton.alpha = hidden ? 0 : 1
+        sendButton.isUserInteractionEnabled = !hidden
     }
     
     func setTopStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, resetText: Bool = false, keyboardType: UIKeyboardType = .decimalPad) {
-        self.amountLabel.text = labelText
-        self.amountTextField.placeholder = placeholder
-        self.amountStackView.alpha = hidden ? 0 : 1
-        self.amountStackView.isUserInteractionEnabled = interactive
-        self.amountTextField.keyboardType = keyboardType
+        amountLabel.text = labelText
+        amountTextField.placeholder = placeholder
+        amountStackView.alpha = hidden ? 0 : 1
+        amountStackView.isUserInteractionEnabled = interactive
+        amountTextField.keyboardType = keyboardType
         if resetText {
-            self.amountTextField.text = nil
+            amountTextField.text = nil
         }
     }
     
     func setMiddleStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, position: CGFloat) {
-        self.sendToLabel.text = labelText
-        self.searchTextField.placeholder = placeholder
-        self.searchStackView.alpha = hidden ? 0 : 1
-        self.searchStackView.isUserInteractionEnabled = interactive
-        self.searchStackView.frame.origin.y = position
+        sendToLabel.text = labelText
+        searchTextField.placeholder = placeholder
+        searchStackView.alpha = hidden ? 0 : 1
+        searchStackView.isUserInteractionEnabled = interactive
+        searchStackView.frame.origin.y = position
     }
     
     func setBottomStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?) {
-        self.orEnterAddressLabel.text = labelText
-        self.addressTextField.placeholder = placeholder
-        self.addressStackView.alpha = hidden ? 0 : 1
-        self.addressStackView.isUserInteractionEnabled = interactive
+        orEnterAddressLabel.text = labelText
+        addressTextField.placeholder = placeholder
+        addressStackView.alpha = hidden ? 0 : 1
+        addressStackView.isUserInteractionEnabled = interactive
     }
     
     func setContactStack(hidden: Bool, interactive: Bool, contact: Contact?, labelText: String?) {
-        self.sendToContactLabel.text = labelText
-        self.chosenContact = contact
-        self.contactStack.alpha = hidden ? 0 : 1
-        self.contactStack.isUserInteractionEnabled = interactive
+        sendToContactLabel.text = labelText
+        chosenContact = contact
+        contactStack.alpha = hidden ? 0 : 1
+        contactStack.isUserInteractionEnabled = interactive
         let blockies = Blockies(seed: contact?.address,
                                 size: 10,
                                 scale: 100)
         let img = blockies.createImage()
-        self.contactImage.image = img
-        self.contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius
-        self.contactImage.clipsToBounds = true
-        guard let contactAddress = contact?.address else {
+        contactImage.image = img
+        contactImage.layer.cornerRadius = Constants.CollectionCell.Image.cornerRadius
+        contactImage.clipsToBounds = true
+        guard let contactAddressString = contact?.address else {
             return
         }
-        self.contactAddress.text = contactAddress
-        guard let contactName = contact?.name else {
+        contactAddress.text = contactAddressString
+        guard let contactNameString = contact?.name else {
             return
         }
-        self.contactName.text = contactName
+        contactName.text = contactNameString
     }
     
     func setSeparator(hidden: Bool) {
-        self.separatorView.alpha = hidden ? 0 : 1
+        separatorView.alpha = hidden ? 0 : 1
     }
     
     func setReadyIcon(hidden: Bool) {
-        self.readyIcon.alpha = hidden ? 0 : 1
-        self.readyIcon.transform = hidden ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: 2, y: 2)
+        readyIcon.alpha = hidden ? 0 : 1
+        readyIcon.transform = hidden ? CGAffineTransform(scaleX: 1, y: 1) : CGAffineTransform(scaleX: 2, y: 2)
     }
     
     func showGif(_ show: Bool) {
-        self.sendingGif.alpha = show ? 1 : 0
+        sendingGif.alpha = show ? 1 : 0
     }
     
-    func showStart(animated: Bool) {
-        self.screenStatus = .start
-        UIView.animate(withDuration: animated ?
-            Constants.ModalView.animationDuration : 0) { [unowned self] in
-                self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Send money", color: Colors.mainBlue)
-                self.showGif(false)
-                self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: false)
-                self.setCollectionView(hidden: true)
-                self.setBottomButton(text: "Other app...", imageName: "share-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
-                self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-                self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
-                self.setReadyIcon(hidden: true)
-        }
-    }
-    
-    @objc func showSearch(animated: Bool) {
-        self.screenStatus = .searching
-        UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
-            self.mainButton.isEnabled = true
-            
-            self.setTitle(text: "Send money", color: Colors.mainBlue)
-            self.showGif(false)
-            self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
-            self.setCollectionView(hidden: false)
-            self.setBottomButton(text: "Back", imageName: "left-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
-            self.setTopButton(text: "Add contact", imageName: "add-contacts", backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-            self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-            self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
-            self.setReadyIcon(hidden: true)
-        }
-    }
-    
-    func showConfirmScreen(animated: Bool, for contact: Contact) {
-        self.screenStatus = .confirm
-        
-        UIView.animate(withDuration: animated ?
-            Constants.ModalView.animationDuration : 0) { [unowned self] in
-                self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Send money", color: Colors.mainBlue)
-                self.showGif(false)
-                self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
-                self.setCollectionView(hidden: true)
-                self.setBottomButton(text: "Send to \(contact.name)", imageName: "ssend-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-                self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
-                self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "or send to contact:")
-                self.setReadyIcon(hidden: true)
-        }
-    }
-    
-    @objc func showSending(animated: Bool) {
-        self.screenStatus = .sending
-        self.showGif(true)
-        UIView.animate(withDuration: animated ?
-            Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
-                self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Sending...", color: Colors.mainBlue)
-                self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
-                self.setCollectionView(hidden: true)
-                self.setBottomButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
-                self.setTopButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
-                self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "or send to contact:")
-                self.setReadyIcon(hidden: true)
-        }) { [unowned self] (completed) in
-            if completed {
-                self.sending()
-            }
-        }
-    }
-    
-    func sendToken(_ token: ERC20Token) {
-        DispatchQueue.global().async {
-            guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
-            guard let address = self.chosenContact?.address else { return }
-            do {
-                let tx = try wallet.prepareSendERC20Tx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
-                let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
-                self.showReady(animated: true)
-            } catch let error {
-                return
-            }
-        }
-    }
-    
-    func sendTokenXDai(_ token: ERC20Token) {
-        DispatchQueue.global().async {
-            guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
-            guard let address = self.chosenContact?.address else { return }
-            do {
-                let tx = try wallet.prepareSendERC20XDaiTx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
-                let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
-                self.showReady(animated: true)
-            } catch let error {
-                return
-            }
-        }
-    }
-    
-    func sendEther() {
-        DispatchQueue.global().async {
-            guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
-            guard let address = self.chosenContact?.address else { return }
-            do {
-                let tx = try wallet.prepareSendEthTx(toAddress: address, value: amount, gasLimit: .automatic, gasPrice: .automatic)
-                let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
-                self.showReady(animated: true)
-            } catch let error {
-                return
-            }
-        }
-    }
-    
-    func sendXDai() {
-        DispatchQueue.global().async {
-            guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
-            guard let address = self.chosenContact?.address else { return }
-            do {
-                let password = try wallet.getPassword()
-                let tx = try wallet.prepareSendXDaiTx(toAddress: address, value: amount)
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
-                self.showReady(animated: true)
-            } catch let error {
-                return
-            }
-        }
-    }
-    
-    func sending() {
-        guard let token = self.chosenToken else { return }
-        if token.isFranklin() {
-            self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
-        } else if token.isXDai() {
-            self.sendXDai()
-        } else if token.isEther() {
-            self.sendEther()
-        } else if !CurrentNetwork().isXDai() {
-            self.sendToken(token)
-        } else {
-            self.sendTokenXDai(token)
-        }
-        //        guard let address = chosenContact?.address ?? addressTextField.text else {
-        //            self.showReady(animated: true)
-        //        }
-        //        guard let ethAddress = EthereumAddress(address) else {
-        //            self.showReady(animated: true)
-        //        }
-        //        guard let amount = amountTextField.text else {
-        //            self.showReady(animated: true)
-        //        }
-        //        guard let wallet = CurrentWallet.currentWallet else {
-        //            self.showReady(animated: true)
-        //        }
-        //        let currentNetwork = CurrentNetwork.currentNetwork
-        //        do {
-        //            try wallet.sendPlasmaTx(nonce: CurrentNonce.currentNonce ?? 0, to: ethAddress, value: amount, network: currentNetwork)
-        //            self.showReady(animated: true)
-        //        } catch {
-        //            self.showReady(animated: true)
-        //        }
-    }
+    // MARK: - Timer mock for plasma animation
     
     @objc func fireTimer() {
         animationTimer?.invalidate()
-        self.showReady(animated: true)
+        showReady(animated: true)
     }
     
-    @objc func showReady(animated: Bool) {
-        self.screenStatus = .ready
-        DispatchQueue.main.async {
-            self.showGif(false)
-            guard let contact = self.chosenContact else {return}
-            UIView.animate(withDuration: animated ?
-                Constants.ModalView.animationDuration : 0) { [unowned self] in
-                    self.setReadyIcon(hidden: false)
-            }
-            UIView.animate(withDuration: animated ?
-                Constants.ModalView.animationDuration : 0) { [unowned self] in
-                    self.mainButton.isEnabled = true
-                    
-                    self.setTitle(text: "Sent!", color: Colors.mainGreen)
-                    self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
-                    self.setCollectionView(hidden: true)
-                    self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: true)
-                    self.setTopButton(text: "Save contact", imageName: "add-contacts", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: contact.name == "" ? false : true, borderNeeded: true)
-                    self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                    self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                    self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                    self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
-            }
+    // MARK: - Data verifications
+    
+    func checkAmountAndNotifyIfError() -> Bool {
+        guard let text = amountTextField.text else {
+            amountTextField.text = nil
+            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            return false
         }
+        guard let amount = Float(text) else {
+            amountTextField.text = nil
+            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            return false
+        }
+        guard amount > 0 else {
+            amountTextField.text = nil
+            amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            return false
+        }
+        guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
+            alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
+            return false
+        }
+        return true
     }
     
-    @objc func showSaving(animated: Bool) {
-        self.screenStatus = .saving
-        UIView.animate(withDuration: animated ?
-            Constants.ModalView.animationDuration : 0) { [unowned self] in
-                self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Add contact", color: Colors.mainBlue)
-                self.showGif(false)
-                self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
-                self.setCollectionView(hidden: true)
-                self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
-                self.setTopButton(text: "Save", imageName: "button-save", backgroundColor: Colors.mainGreen, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
-                self.setTopStack(hidden: false, interactive: true, placeholder: "Enter name", labelText: "Contact name:", resetText: true, keyboardType: .default)
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
-                self.setReadyIcon(hidden: true)
+    func checkAddressAndCreateContact() -> Bool {
+        guard let address = addressTextField.text, !address.isEmpty else {
+            addressTextField.text = nil
+            addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
+                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            return false
         }
+        guard EthereumAddress(address) != nil else {
+            alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
+            return false
+        }
+        let contact = Contact(address: address, name: "")
+        chosenContact = contact
+        return true
     }
+    
+    // MARK: - Buttons actions
     
     @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+        dismissView()
     }
     
     @IBAction func buttonAction(_ sender: UIButton) {
         switch screenStatus {
         case .start:
             alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
-            //            guard let text = self.amountTextField.text else {
-            //                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+            //            guard let text = amountTextField.text else {
+            //                amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
             //                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             //                return
             //            }
             //            guard let amount = Float(text) else {
-            //                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+            //                amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
             //                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             //                return
             //            }
             //            guard amount > 0 else {
-            //                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
+            //                amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
             //                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             //                return
             //            }
@@ -601,282 +414,74 @@ class SendMoneyController: BasicViewController, ModalViewDelegate {
             //
             //            let itemsToShare = [ stringToShare ]
             //            let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-            //            activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+            //            activityViewController.popoverPresentationController?.sourceView = view // so that iPads won't crash
             //            // exclude some activity types from the list (optional)
             //            activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.mail, UIActivity.ActivityType.message, UIActivity.ActivityType.copyToPasteboard, UIActivity.ActivityType.markupAsPDF ]
-        //            self.present(activityViewController, animated: true, completion: nil)
+        //            present(activityViewController, animated: true, completion: nil)
         case .searching:
-            chosenContact = nil
             showStart(animated: true)
         case .confirm:
-            guard let text = self.amountTextField.text else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
+            if checkAmountAndNotifyIfError() {
+                showSending(animated: true)
             }
-            guard let amount = Float(text) else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard amount > 0 else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
-                alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
-                return
-            }
-            showSending(animated: true)
         case .ready:
-            self.dismissView()
+            dismissView()
         case .sending:
-            self.dismissView()
+            dismissView()
         case .saving:
-            self.dismissView()
+            dismissView()
         }
     }
     
     @IBAction func sendToAddress(_ sender: BasicWhiteButton) {
         switch screenStatus {
         case .start:
-            guard let text = self.amountTextField.text else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
+            if checkAmountAndNotifyIfError(), checkAddressAndCreateContact() {
+                showSending(animated: true)
             }
-            guard let amount = Float(text) else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard amount > 0 else {
-                self.amountTextField.text = nil
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
-                alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
-                return
-            }
-            guard let address = self.addressTextField.text, !address.isEmpty else {
-                self.addressTextField.text = nil
-                self.addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
-                                                                                 attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            guard EthereumAddress(address) != nil else {
-                alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
-                return
-            }
-            let contact = Contact(address: address, name: "")
-            self.chosenContact = contact
-            showSending(animated: true)
         case .searching:
-            self.searchTextField.endEditing(true)
-            self.modalViewAppeared()
-            let addContactController = AddContactController()
-            addContactController.delegate = self
-            addContactController.modalPresentationStyle = .overCurrentContext
-            addContactController.view.layer.speed = Constants.ModalView.animationSpeed
-            self.present(addContactController, animated: true, completion: nil)
+            addContact()
         case .ready:
             showSaving(animated: true)
         case .saving:
-            guard let text = self.amountTextField.text else {
-                self.amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
-                return
-            }
-            let contact = Contact(address: (self.chosenContact?.address)!, name: text)
-            do {
-                try contact.saveContact()
-                self.dismissView()
-            } catch {
-                self.dismissView()
-            }
+            saveContact()
         default:
-            self.dismissView()
+            dismissView()
         }
     }
     
-    func emptyContactsList() {
-        contactsList = []
-        emptyAttention(enabled: true)
-        DispatchQueue.main.async { [unowned self] in
-            self.tableView?.reloadData()
-        }
-    }
-    
-    func updateContactsList(with list: [Contact]) {
-        DispatchQueue.main.async { [unowned self] in
-            self.contactsList = list
-            self.emptyAttention(enabled: list.isEmpty)
-            self.tableView?.reloadData()
-        }
-    }
-    
-    func searchContact(string: String) {
-        guard let list = try? ContactsService().getFullContactsList(for: string) else {
-            self.emptyContactsList()
+    func saveContact() {
+        guard let text = amountTextField.text else {
+            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return
         }
-        self.updateContactsList(with: list)
-    }
-    
-    func emptyAttention(enabled: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            self.emptyContactsView.alpha = enabled ? 1 : 0
+        let contact = Contact(address: (chosenContact?.address)!, name: text)
+        do {
+            try contact.saveContact()
+            dismissView()
+        } catch {
+            dismissView()
         }
     }
     
-    func modalViewBeenDismissed(updateNeeded: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0
-            })
+    func addContact() {
+        searchTextField.endEditing(true)
+        modalViewAppeared()
+        let addContactController = AddContactController()
+        addContactController.delegate = self
+        addContactController.modalPresentationStyle = .overCurrentContext
+        addContactController.view.layer.speed = Constants.ModalView.animationSpeed
+        present(addContactController, animated: true, completion: nil)
+    }
+    
+    @IBAction func qrScanTapped(_ sender: Any) {
+        readerVC.delegate = self
+        
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
         }
-        if updateNeeded { getAllContacts() }
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
     }
     
-    func modalViewAppeared() {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0.5
-            })
-        }
-    }
-}
-
-extension SendMoneyController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if contactsList.isEmpty {
-            return 0
-        } else {
-            return contactsList.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !contactsList.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
-                                                           for: indexPath) as? ContactTableCell else {
-                                                            return UITableViewCell()
-            }
-            cell.configure(with: contactsList[indexPath.row])
-            return cell
-        } else {
-            return UITableViewCell()
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let contact = contactsList[indexPath.row]
-        self.showConfirmScreen(animated: true, for: contact)
-    }
-}
-
-//extension SendMoneyController: UICollectionViewDelegate, UICollectionViewDataSource {
-//    func numberOfSections(in collectionView: UICollectionView) -> Int {
-//        return 1
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        numberOfItemsInSection section: Int) -> Int {
-//        if contactsList.isEmpty {
-//            return 0
-//        } else {
-//            return contactsList.count
-//        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if !contactsList.isEmpty {
-//            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ContactCell",
-//                                                                for: indexPath) as? ContactCell else {
-//                                                                    return UICollectionViewCell()
-//            }
-//            cell.configure(with: contactsList[indexPath.row])
-//            return cell
-//        } else {
-//            return UICollectionViewCell()
-//        }
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let contact = contactsList[indexPath.row]
-//        self.showConfirmScreen(animated: true, for: contact)
-//    }
-//}
-//
-//extension SendMoneyController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
-//
-//        return CGSize(width: width, height: Constants.CollectionCell.height)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//}
-
-extension SendMoneyController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text ?? "") as NSString
-        let newText = currentText.replacingCharacters(in: range, with: string) as String
-        if textField == searchTextField {
-            if newText == "" {
-                getAllContacts()
-            } else {
-                let contact = newText
-                searchContact(string: contact)
-            }
-        }
-        return true
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        print(textField.tag)
-        if textField == searchTextField {
-            showSearch(animated: true)
-        }
-        return true
-    }
-}
-
-extension SendMoneyController: QRCodeReaderViewControllerDelegate {
-    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-        reader.stopScanning()
-        addressTextField.text = result.value
-        reader.dismiss(animated: true, completion: nil)
-    }
-    
-    func readerDidCancel(_ reader: QRCodeReaderViewController) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
-    }
 }

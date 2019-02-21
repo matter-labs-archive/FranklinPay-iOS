@@ -31,28 +31,28 @@ class CardCell: UITableViewCell {
     weak var delegate: CardCellDelegate?
     
     override func awakeFromNib() {
-        self.balance.font = UIFont(name: Constants.CardCell.Balance.font, size: Constants.CardCell.Balance.size)
-        self.balance.textColor = Constants.CardCell.Balance.color
-        self.balanceLabel.font = UIFont(name: Constants.CardCell.BalanceLabel.font, size: Constants.CardCell.BalanceLabel.size)
-        self.balanceLabel.textColor = Constants.CardCell.BalanceLabel.color
-        self.title.font = UIFont(name: Constants.CardCell.Title.font, size: Constants.CardCell.Title.size)
-        self.title.textColor = Constants.CardCell.Title.color
-        self.accountNumber.font = UIFont(name: Constants.CardCell.AccountNumber.font, size: Constants.CardCell.AccountNumber.size)
-        self.accountNumber.textColor = Constants.CardCell.AccountNumber.color
-        self.accountNumberLabel.font = UIFont(name: Constants.CardCell.AccountNumberLabel.font, size: Constants.CardCell.AccountNumberLabel.size)
-        self.accountNumberLabel.textColor = Constants.CardCell.AccountNumberLabel.color
+        balance.font = UIFont(name: Constants.CardCell.Balance.font, size: Constants.CardCell.Balance.size)
+        balance.textColor = Constants.CardCell.Balance.color
+        balanceLabel.font = UIFont(name: Constants.CardCell.BalanceLabel.font, size: Constants.CardCell.BalanceLabel.size)
+        balanceLabel.textColor = Constants.CardCell.BalanceLabel.color
+        title.font = UIFont(name: Constants.CardCell.Title.font, size: Constants.CardCell.Title.size)
+        title.textColor = Constants.CardCell.Title.color
+        accountNumber.font = UIFont(name: Constants.CardCell.AccountNumber.font, size: Constants.CardCell.AccountNumber.size)
+        accountNumber.textColor = Constants.CardCell.AccountNumber.color
+        accountNumberLabel.font = UIFont(name: Constants.CardCell.AccountNumberLabel.font, size: Constants.CardCell.AccountNumberLabel.size)
+        accountNumberLabel.textColor = Constants.CardCell.AccountNumberLabel.color
     }
 
     func configure(token: TableToken) {
-        let balance = ((token.token.balance ?? "...") + " \(token.token.symbol)")
-        let title = token.token.isFranklin() ?
+        let balanceString = ((token.token.balance ?? "...") + " \(token.token.symbol)")
+        let titleString = token.token.isFranklin() ?
             "FRANKLIN" :
             token.token.name.uppercased()
-        let accountNumber = token.inWallet.address.hideExtraSymbolsInAddress()
+        let accountNumberString = token.inWallet.address.hideExtraSymbolsInAddress()
         
-        self.balance.text = balance
-        self.title.text = title
-        self.accountNumber.text = accountNumber
+        balance.text = balanceString
+        title.text = titleString
+        accountNumber.text = accountNumberString
     }
 
     @IBAction func infoTapped(_ sender: UIButton) {
@@ -61,8 +61,8 @@ class CardCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.balance.text = "-"
-        self.title.text = "-"
-        self.accountNumber.text = "-"
+        balance.text = "-"
+        title.text = "-"
+        accountNumber.text = "-"
     }
 }

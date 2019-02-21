@@ -211,6 +211,19 @@ extension Wallet: IWalletTransactionsHistory {
         return transactions
     }
     
+//    public func loadTransactionsPool() throws -> Bool {
+//        let web3 = web3Instance ?? Web3.InfuraMainnetWeb3()
+//        do {
+//            let txPoolContent = try web3.txPool.getContent()
+//            print(txPoolContent.pending)
+//            print(txPoolContent.queued)
+//            print(txPoolContent.pending.first?.value)
+//            return false
+//        } catch let error {
+//            throw error
+//        }
+//    }
+    
     public func loadTransactions(txType: TransactionType?,
                                  network: Web3Network) throws -> [ETHTransaction] {
         let type = txType ?? .arbitraryMethodWithParams

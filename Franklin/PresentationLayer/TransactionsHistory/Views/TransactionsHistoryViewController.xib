@@ -42,7 +42,6 @@
                         <segment title="All"/>
                         <segment title="Sent"/>
                         <segment title="Received"/>
-                        <segment title="Confirming"/>
                     </segments>
                     <color key="tintColor" red="0.27450980392156865" green="0.49803921568627452" blue="0.84313725490196079" alpha="1" colorSpace="calibratedRGB"/>
                     <userDefinedRuntimeAttributes>

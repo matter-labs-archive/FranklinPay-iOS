@@ -61,7 +61,7 @@ class WalletViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createView()
+        mainSetup()
         setupNavigation()
         setupTableView()
         additionalSetup()
@@ -83,10 +83,12 @@ class WalletViewController: BasicViewController {
     
     // MARK: - Main setup
     
-    func createView() {
+    func mainSetup() {
         parent?.view.backgroundColor = .white
         view.alpha = 0
         view.backgroundColor = Colors.background
+        tabBarController?.view.addSubview(topViewForModalAnimation)
+        sendMoneyButton.setTitle("Send money", for: .normal)
     }
     
     func setupMarker() {
@@ -102,12 +104,10 @@ class WalletViewController: BasicViewController {
     }
     
     func additionalSetup() {
-        sendMoneyButton.setTitle("Send money", for: .normal)
         topViewForModalAnimation.blurView()
         topViewForModalAnimation.alpha = 0
         topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
         topViewForModalAnimation.isUserInteractionEnabled = false
-        tabBarController?.view.addSubview(topViewForModalAnimation)
     }
     
     func setupSideBar() {
@@ -274,7 +274,7 @@ class WalletViewController: BasicViewController {
         }
     }
     
-    // MARK: - Buttons acitons
+    // MARK: - Buttons actions
     
     @IBAction func writeCheque(_ sender: UIButton) {
         let token = tokensArray[0].token

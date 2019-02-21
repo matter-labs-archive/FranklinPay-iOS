@@ -12,6 +12,8 @@ import IHKeyboardAvoiding
 import EthereumAddress
 
 class AddContactController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var enterButton: BasicBlueButton!
     @IBOutlet var textFields: [BasicTextField]!
@@ -25,22 +27,44 @@ class AddContactController: BasicViewController {
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     
-    let alerts = Alerts()
+    // MARK: - Internal lets
+    
+    internal let alerts = Alerts()
+    
+    // MARK: - Public vars
+    
+    var initContact: Contact?
+    var initAddress: String?
+    
+    // MARK: - Lazy vars
+    
+    lazy var readerVC: QRCodeReaderViewController = {
+        let builder = QRCodeReaderViewControllerBuilder {
+            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
+        }
+        
+        return QRCodeReaderViewController(builder: builder)
+    }()
+    
+    // MARK: - Weak vars
     
     weak var delegate: ModalViewDelegate?
+    
+    // MARK: - Enums
     
     enum TextFieldsTags: Int {
         case name = 0
         case address = 1
     }
     
-    var initContact: Contact?
-    var initAddress: String?
+    // MARK: - Inits
     
     convenience init(contact: Contact) {
         self.init()
         self.initContact = contact
     }
+    
+    // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,6 +78,8 @@ class AddContactController: BasicViewController {
         KeyboardAvoiding.avoidingView = self.contentView
     }
     
+    // MARK: - Main setup
+    
     func showLabels(_ show: Bool) {
         self.contactNameLabel.alpha = show ? 1 : 0
         self.addressLabel.alpha = show ? 1 : 0
@@ -65,7 +91,6 @@ class AddContactController: BasicViewController {
             self.addressTextField.text = initContact?.address
             self.nameTextField.text = initContact?.name
         }
-        
         self.nameTextField.delegate = self
         self.addressTextField.delegate = self
         self.nameTextField.tag = TextFieldsTags.name.rawValue
@@ -77,12 +102,13 @@ class AddContactController: BasicViewController {
     func mainSetup() {
         self.hideKeyboardWhenTappedAround()
         
+        view.backgroundColor = UIColor.clear
+        view.isOpaque = false
+        
         self.navigationController?.navigationBar.isHidden = true
         enterButton.isEnabled = false
         updateEnterButtonAlpha()
         
-        view.backgroundColor = UIColor.clear
-        view.isOpaque = false
         self.contentView.backgroundColor = Colors.background
         self.contentView.alpha = 1
         self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
@@ -94,57 +120,29 @@ class AddContactController: BasicViewController {
                                                                  action: #selector(self.dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
-        
-//        let dismissKeyboard: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-//                                                                 action: #selector(self.dismissKeyboard))
-//        dismissKeyboard.cancelsTouchesInView = false
-//        self.contentView.addGestureRecognizer(dismissKeyboard)
     }
     
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed(updateNeeded: true)
-    }
-
-    lazy var readerVC: QRCodeReaderViewController = {
-        let builder = QRCodeReaderViewControllerBuilder {
-            $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
-        }
-
-        return QRCodeReaderViewController(builder: builder)
-    }()
-
-    @IBAction func qrScanTapped(_ sender: Any) {
-        readerVC.delegate = self
-
-        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
-        }
-        readerVC.modalPresentationStyle = .formSheet
-        present(readerVC, animated: true, completion: nil)
-    }
-
-    @IBAction func addContactButtonTapped(_ sender: Any) {
-
-        guard let address = addressTextField.text else {
-            return
-        }
-        
-        guard EthereumAddress(address) != nil else {
-            alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
-            return
-        }
-
-        guard let name = nameTextField.text else {
-            return
-        }
-
-        self.addContact(address: address, name: name)
-
+    // MARK: - Screen updates
+    
+    internal func updateEnterButtonAlpha() {
+        enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
     }
     
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+    // MARK: - Screen status
+    
+    internal func isEnterButtonEnabled(afterChanging textField: UITextField, with string: String) {
+        enterButton.isEnabled = false
+        let everyFieldIsOK: Bool
+        switch textField {
+        case addressTextField:
+            everyFieldIsOK = !(nameTextField.text?.isEmpty ?? true) && !string.isEmpty
+        default:
+            everyFieldIsOK = !(addressTextField.text?.isEmpty ?? true) && !string.isEmpty
+        }
+        enterButton.isEnabled = everyFieldIsOK
     }
+    
+    // MARK: - Actions
     
     private func addContact(address: String, name: String) {
         let contact = Contact(address: address, name: name)
@@ -160,76 +158,37 @@ class AddContactController: BasicViewController {
             }
         }
     }
-
-    private func updateEnterButtonAlpha() {
-        enterButton.alpha = enterButton.isEnabled ? 1.0 : 0.5
+    
+    // MARK: - Buttons actions
+    
+    @objc func dismissView() {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
 
-    private func isEnterButtonEnabled(afterChanging textField: UITextField, with string: String) {
-        enterButton.isEnabled = false
-        let everyFieldIsOK: Bool
-        switch textField {
-        case addressTextField:
-            everyFieldIsOK = !(nameTextField.text?.isEmpty ?? true) && !string.isEmpty
-        default:
-            everyFieldIsOK = !(addressTextField.text?.isEmpty ?? true) && !string.isEmpty
+    @IBAction func qrScanTapped(_ sender: Any) {
+        readerVC.delegate = self
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
         }
-        enterButton.isEnabled = everyFieldIsOK
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
     }
 
-}
-
-extension AddContactController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text ?? "") as NSString
-        let futureString = currentText.replacingCharacters(in: range, with: string) as String
-        
-        isEnterButtonEnabled(afterChanging: textField, with: futureString)
-        
-        updateEnterButtonAlpha()
-        
-        textField.returnKeyType = enterButton.isEnabled ? UIReturnKeyType.done : .next
-        
-        return true
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.tag == TextFieldsTags.name.rawValue && !enterButton.isEnabled {
-            addressTextField.becomeFirstResponder()
-            return false
-        } else if textField.tag == TextFieldsTags.address.rawValue && !enterButton.isEnabled {
-            nameTextField.becomeFirstResponder()
-            return false
-        } else if enterButton.isEnabled {
-            textField.resignFirstResponder()
-            return true
+    @IBAction func addContactButtonTapped(_ sender: Any) {
+        guard let address = addressTextField.text else {
+            return
         }
-        return false
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        self.showLabels(false)
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        self.showLabels(true)
-    }
-}
-
-extension AddContactController: QRCodeReaderViewControllerDelegate {
-    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-        reader.stopScanning()
-        addressTextField.text = result.value
-        if !(nameTextField.text?.isEmpty ?? true) {
-            enterButton.isEnabled = true
-            enterButton.alpha = 1
+        guard EthereumAddress(address) != nil else {
+            alerts.showErrorAlert(for: self, error: "Please, enter correct address", completion: nil)
+            return
         }
-        reader.dismiss(animated: true, completion: nil)
+        guard let name = nameTextField.text else {
+            return
+        }
+        self.addContact(address: address, name: name)
     }
-
-    func readerDidCancel(_ reader: QRCodeReaderViewController) {
-        reader.stopScanning()
-        reader.dismiss(animated: true, completion: nil)
+    
+    @IBAction func closeAction(_ sender: UIButton) {
+        self.dismissView()
     }
 }

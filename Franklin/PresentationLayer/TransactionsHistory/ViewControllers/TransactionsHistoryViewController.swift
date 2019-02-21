@@ -9,24 +9,22 @@
 import UIKit
 import SideMenu
 
-class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate {
+class TransactionsHistoryViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var marker: UIImageView!
     @IBOutlet weak var emptyTXsView: UIView!
     
-    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    // MARK: - Internal lets
     
-    let userKeys = UserDefaultKeys()
-
-    // MARK: - Services
-//    let keysService = WalletsService()
-//    let transactionsHistoryService = TransactionsHistoryService()
-//    let localDatabase = TokensService()
+    internal let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
     
-    var transactions = [[ETHTransaction]]()
-    var state: TransactionsHistoryState = .all {
+    internal let userKeys = UserDefaultKeys()
+    internal var transactions = [[ETHTransaction]]()
+    internal var state: TransactionsHistoryState = .all {
         didSet {
             DispatchQueue.global().async { [weak self] in
                 self?.uploadTransactions()
@@ -34,73 +32,96 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         }
     }
     
-    func additionalSetup() {
-        self.topViewForModalAnimation.blurView()
-        self.topViewForModalAnimation.alpha = 0
-        self.topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
-        self.topViewForModalAnimation.isUserInteractionEnabled = false
-        self.tabBarController?.view.addSubview(topViewForModalAnimation)
-    }
-
+    // MARK: - Lazy vars
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(handleRefresh(_:)),
+                                 for: UIControl.Event.valueChanged)
+        refreshControl.tintColor = Colors.mainBlue
+        
+        return refreshControl
+    }()
+    
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM dd, yyyy"
         dateFormatter.locale = Locale(identifier: "en_US")
         return dateFormatter
     }()
-
+    
+    // MARK: - Lifesycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        self.setupNavigation()
-        self.setupTableView()
-        self.setupSideBar()
-        self.additionalSetup()
+        hideKeyboardWhenTappedAround()
+        setupNavigation()
+        setupTableView()
+        setupSideBar()
+        additionalSetup()
         
-        //self.txsMock()
+        //txsMock()
         //CurrentWallet.currentWallet = Wallet(address: "0x832a630B949575b87C0E3C00f624f773D9B160f4", data: Data(), name: "dfad", isHD: true)
     }
     
-    func txsMock() {
-        self.transactions = [[ETHTransaction(transactionHash: "123", from: (CurrentWallet.currentWallet?.address)!, to: "Bob", amount: "123.12", date: dateFormatter.date(from: "June 10, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false)], [ETHTransaction(transactionHash: "123", from: "Mike", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false), ETHTransaction(transactionHash: "123", from: "Ann", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false), ETHTransaction(transactionHash: "123", from: "Joe", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false)], [ETHTransaction(transactionHash: "123", from: (CurrentWallet.currentWallet?.address)!, to: "0x0kxdmklfamdlkfm13r214dsfsd12rfsd", amount: "1", date: dateFormatter.date(from: "June 07, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: true)]]
-    }
-    
-    func setupNavigation() {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
-    func setupMarker() {
-        self.marker.isUserInteractionEnabled = false
-        guard let wallet = CurrentWallet.currentWallet else {
-            return
-        }
-        if userKeys.isBackupReady(for: wallet) {
-            self.marker.alpha = 0
-        } else {
-            self.marker.alpha = 1
-        }
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        getTransactions()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupMarker()
+    }
+    
+    // MARK: - Mock
+    
+    func txsMock() {
+        transactions = [[ETHTransaction(transactionHash: "123", from: (CurrentWallet.currentWallet?.address)!, to: "Bob", amount: "123.12", date: dateFormatter.date(from: "June 10, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false)], [ETHTransaction(transactionHash: "123", from: "Mike", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false), ETHTransaction(transactionHash: "123", from: "Ann", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false), ETHTransaction(transactionHash: "123", from: "Joe", to: (CurrentWallet.currentWallet?.address)!, amount: "12", date: dateFormatter.date(from: "June 09, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: false)], [ETHTransaction(transactionHash: "123", from: (CurrentWallet.currentWallet?.address)!, to: "0x0kxdmklfamdlkfm13r214dsfsd12rfsd", amount: "1", date: dateFormatter.date(from: "June 07, 2018")!, data: nil, token: Franklin(), networkId: 1, isPending: true)]]
+    }
+    
+    // MARK: - Main setup
+    
+    func getTransactions() {
         DispatchQueue.global().async { [unowned self] in
             self.reloadTableView()
             self.uploadTransactions()
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.setupMarker()
+    func additionalSetup() {
+        topViewForModalAnimation.blurView()
+        topViewForModalAnimation.alpha = 0
+        topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
+        topViewForModalAnimation.isUserInteractionEnabled = false
+        tabBarController?.view.addSubview(topViewForModalAnimation)
+    }
+    
+    func setupNavigation() {
+        navigationController?.navigationBar.isHidden = true
+    }
+    
+    func setupMarker() {
+        marker.isUserInteractionEnabled = false
+        guard let wallet = CurrentWallet.currentWallet else {
+            return
+        }
+        if userKeys.isBackupReady(for: wallet) {
+            marker.alpha = 0
+        } else {
+            marker.alpha = 1
+        }
     }
 
-    private func setupTableView() {
-        self.emptyTXsView.isUserInteractionEnabled = false
+    internal func setupTableView() {
+        emptyTXsView.isUserInteractionEnabled = false
         let nib = UINib(nibName: "TransactionCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: "TransactionCell")
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
         tableView.tableFooterView = footerView
+        tableView.addSubview(refreshControl)
         tableView.delegate = self
         tableView.dataSource = self
     }
@@ -109,8 +130,8 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingsViewController())
         SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
         
-        //SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.view)
+        //SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: view)
         
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuPresentMode = .menuSlideIn
@@ -120,52 +141,30 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         SideMenuManager.default.menuShadowRadius = 5
     }
     
-    func modalViewBeenDismissed(updateNeeded: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0
-            })
-        }
-        if updateNeeded { uploadTransactions() }
+    // MARK: - Updating table view
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        getTransactions()
     }
     
-    func modalViewAppeared() {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = Constants.ModalView.ShadowView.alpha
-            })
-        }
-    }
-
-    @IBAction func changedState(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            state = .all
-        case 1:
-            state = .sent
-        case 2:
-            state = .received
-        case 3:
-            state = .confirming
-        default:
-            state = .all
-        }
-    }
-
-    private func uploadTransactions() {
+    internal func uploadTransactions() {
         guard let wallet = CurrentWallet.currentWallet else {
-            self.prepareTransactionsForView(transactions: [])
+            prepareTransactionsForView(transactions: [])
             return
         }
         let net = CurrentNetwork.currentNetwork
         guard let txs = try? wallet.loadTransactions(txType: .custom, network: net) else {
-            self.prepareTransactionsForView(transactions: [])
+            prepareTransactionsForView(transactions: [])
             return
         }
-        self.prepareTransactionsForView(transactions: txs)
+//        guard let pendingTxs = try? wallet.loadTransactionsPool() else {
+//            prepareTransactionsForView(transactions: txs)
+//            return
+//        }
+        prepareTransactionsForView(transactions: txs)
     }
-
-    private func prepareTransactionsForView(transactions: [ETHTransaction]) {
+    
+    internal func prepareTransactionsForView(transactions: [ETHTransaction]) {
         var txsArray = transactions
         if transactions.isEmpty {
             reloadTableView()
@@ -205,8 +204,8 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
                 }
                 let previousTransactionCalendarDate = calendarDate(date: lastTransaction.date)
                 if transactionCalendarDate.day == previousTransactionCalendarDate.day
-                           && transactionCalendarDate.month == previousTransactionCalendarDate.month
-                           && transactionCalendarDate.year == previousTransactionCalendarDate.year {
+                    && transactionCalendarDate.month == previousTransactionCalendarDate.month
+                    && transactionCalendarDate.year == previousTransactionCalendarDate.year {
                     sortedTx[sortedTx.count - 1].append(tx)
                 } else {
                     sortedTx.append([tx])
@@ -217,19 +216,12 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         reloadTableView()
     }
     
-    private func reloadTableView() {
+    internal func reloadTableView() {
         DispatchQueue.main.async { [unowned self] in
             self.emptyAttention(enabled: self.transactions.isEmpty)
             self.tableView.reloadData()
+            self.refreshControl.endRefreshing()
         }
-    }
-
-    private func calendarDate(date: Date) -> (day: Int, month: Int, year: Int) {
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: date)
-        let month = calendar.component(.month, from: date)
-        let day = calendar.component(.day, from: date)
-        return (day, month, year)
     }
     
     func emptyAttention(enabled: Bool) {
@@ -238,101 +230,34 @@ class TransactionsHistoryViewController: BasicViewController, ModalViewDelegate 
         }
     }
     
+    // MARK: - Buttons actions
+
+    @IBAction func changedState(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            state = .all
+        case 1:
+            state = .sent
+        case 2:
+            state = .received
+        case 3:
+            state = .confirming
+        default:
+            state = .all
+        }
+    }
+    
     @IBAction func showMenu(_ sender: UIButton) {
         present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
-}
 
-extension TransactionsHistoryViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return Constants.Headers.Heights.txHistory
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return transactions.count
-    }
+    // MARK: - Date helper
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return transactions[section].count
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0,
-                                        y: 0,
-                                        width: UIScreen.main.bounds.width,
-                                        height: Constants.Headers.Heights.txHistory))
-        let label = UILabel(frame: CGRect(x: 20,
-                                          y: Constants.Headers.Heights.txHistory/4,
-                                          width: UIScreen.main.bounds.width,
-                                          height: Constants.Headers.Heights.txHistory/2))
-        label.text = dateFormatter.string(from: transactions[section][0].date)
-        label.font = UIFont(name: Constants.Fonts.regular,
-                            size: Constants.Headers.leftItemTransactionsFontSize)!
-        view.backgroundColor = UIColor.white
-        view.addSubview(label)
-        let separator = UIView(frame: CGRect(x: 0,
-                                             y: Constants.Headers.Heights.txHistory - 1,
-                                             width: UIScreen.main.bounds.width,
-                                             height: 1))
-        separator.backgroundColor = Colors.mostLightGray
-        view.addSubview(separator)
-        return view
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TransactionCell") as? TransactionCell else {
-            return UITableViewCell()
-        }
-        guard let wallet = CurrentWallet.currentWallet else {
-            return UITableViewCell()
-        }
-        cell.longPressDelegate = self
-        cell.configureCell(with: transactions[indexPath.section][indexPath.row], wallet: wallet)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-//        let transaction = transactions[indexPath.section][indexPath.row]
-//
-//        let transactionInfoVC = TransactionInfoController(nibName: TransactionInfoController.nibName, bundle: nil)
-//        transactionInfoVC.transactionModel = transaction
-//        navigationController?.pushViewController(transactionInfoVC, animated: true)
-    }
-
-}
-
-extension TransactionsHistoryViewController: LongPressDelegate {
-    func didLongPressCell(transaction: ETHTransaction?) {
-//        guard let transaction = transaction else {
-//            return
-//        }
-//        let nibName = TransactionInfoWebController.nibName
-//        let transactionInfoWebVC = TransactionInfoWebController(nibName: nibName, bundle: nil)
-//        transactionInfoWebVC.transactionHash = transaction.transactionHash
-//        let navigationController = UINavigationController(rootViewController: transactionInfoWebVC)
-//
-//        guard let topController = self.topViewController() else { return }
-//        topController.present(navigationController, animated: true, completion: nil)
-    }
-
-    private func topViewController() -> UIViewController? {
-        var topController: UIViewController? = UIApplication.shared.keyWindow?.rootViewController
-        while topController?.presentedViewController != nil {
-            topController = topController?.presentedViewController
-        }
-        return topController
-    }
-}
-
-extension TransactionsHistoryViewController: UISideMenuNavigationControllerDelegate {
-    func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
-        modalViewAppeared()
-    }
-    
-    func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-        modalViewBeenDismissed(updateNeeded: false)
+    internal func calendarDate(date: Date) -> (day: Int, month: Int, year: Int) {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: date)
+        let month = calendar.component(.month, from: date)
+        let day = calendar.component(.day, from: date)
+        return (day, month, year)
     }
 }

@@ -8,20 +8,25 @@
 
 import UIKit
 
-class AcceptChequeController: BasicViewController, ModalViewDelegate {
+class AcceptChequeController: BasicViewController {
     
-    let appController = AppController()
+    // MARK: - Outlets
     
     @IBOutlet weak var logoImage: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     
-    let cheque: PlasmaCode
+    // MARK: - Internal lets
     
-    let walletsService = WalletsService()
-    let userDefaults = UserDefaultKeys()
-    let alerts = Alerts()
+    internal let cheque: PlasmaCode
     
-    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    internal let appController = AppController()
+    internal let walletCreating = WalletCreating()
+    internal let walletsService = WalletsService()
+    internal let alerts = Alerts()
+    
+    internal let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    
+    // MARK: - Inits
     
     init(cheque: PlasmaCode) {
         self.cheque = cheque
@@ -32,120 +37,77 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        setupNavigation()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.topViewForModalAnimation.blurView()
-        self.topViewForModalAnimation.alpha = 0
-        self.topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
-        self.topViewForModalAnimation.isUserInteractionEnabled = false
-        self.view.addSubview(topViewForModalAnimation)
+        createView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        showAcceptForm()
+    }
+    
+    // MARK: - Main setup
+    
+    func setupNavigation() {
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    func createView() {
+        topViewForModalAnimation.blurView()
+        topViewForModalAnimation.alpha = 0
+        topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
+        topViewForModalAnimation.isUserInteractionEnabled = false
         
-        self.titleLabel.alpha = 0
+        view.addSubview(topViewForModalAnimation)
+        
+        titleLabel.alpha = 0
+    }
+    
+    // MARK: - Actions
+    
+    func showAcceptForm() {
+        modalViewAppeared()
+        let acceptChequeForm = AcceptChequeFormController(cheque: cheque)
+        acceptChequeForm.delegate = self
+        acceptChequeForm.modalPresentationStyle = .overCurrentContext
+        acceptChequeForm.view.layer.speed = Constants.ModalView.animationSpeed
+        present(acceptChequeForm, animated: true, completion: nil)
     }
     
     func creatingWallet() {
         DispatchQueue.global().async { [unowned self] in
             do {
-                let mnemonicFrase = try self.walletsService.generateMnemonics(bitsOfEntropy: 128)
-                let name = Constants.Wallet.newName
-                let password = Constants.Wallet.newPassword
-                let wallet = try self.walletsService.createHDWallet(name: name,
-                                                                    password: password,
-                                                                    mnemonics: mnemonicFrase,
-                                                                    backupNeeded: true)
-                try wallet.save()
-                try wallet.addPassword(password)
-                CurrentWallet.currentWallet = wallet
-                let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
-                let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
-                let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
-                let xdaiAdded = self.userDefaults.isXDaiAdded(for: wallet)
-                let buffAdded = self.userDefaults.isBuffAdded(for: wallet)
-                if !xdaiAdded {
-                    do {
-                        try self.appController.addXDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !franklinAdded {
-                    do {
-                        try self.appController.addFranklin(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !etherAdded {
-                    do {
-                        try self.appController.addEther(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !daiAdded {
-                    do {
-                        try self.appController.addDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !buffAdded {
-                    do {
-                        try self.appController.addBuff(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                
-                let passphraseItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassphrase,
-                                                          account: wallet.address,
-                                                          accessGroup: KeychainConfiguration.accessGroup)
-                try passphraseItem.savePassword(mnemonicFrase)
-                
-                self.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                let wallet = try self.walletCreating.createWallet()
+                self.finishSavingWallet(wallet)
             } catch let error {
-                self.finishSavingWallet(with: error, needDeleteWallet: nil)
+                self.alerts.showErrorAlert(for: self, error: error, completion: nil)
             }
         }
     }
     
-    func finishSavingWallet(with error: Error?, needDeleteWallet: Wallet?) {
-        if let wallet = needDeleteWallet {
-            do {
-                try wallet.delete()
-            } catch let deleteErr {
-                //TODO: - need to do something
-                alerts.showErrorAlert(for: self, error: deleteErr, completion: nil)
-            }
-        }
-        if let err = error {
-            //TODO: - need to do something
-            alerts.showErrorAlert(for: self, error: err, completion: nil)
+    func finishSavingWallet(_ wallet: Wallet) {
+        do {
+            try walletCreating.prepareWallet(wallet)
+            CurrentWallet.currentWallet = wallet
+        } catch let error {
+            deleteWallet(wallet: wallet, withError: error)
         }
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.modalViewAppeared()
-        let acceptChequeForm = AcceptChequeFormController(cheque: cheque)
-        acceptChequeForm.delegate = self
-        acceptChequeForm.modalPresentationStyle = .overCurrentContext
-        acceptChequeForm.view.layer.speed = Constants.ModalView.animationSpeed
-        self.present(acceptChequeForm, animated: true, completion: nil)
-    }
-    
-    func modalViewBeenDismissed(updateNeeded: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0
-                self.titleLabel.alpha = 0
-                self.goToApp()
-            })
+    func deleteWallet(wallet: Wallet, withError error: Error) {
+        do {
+            try wallet.delete()
+            alerts.showErrorAlert(for: self, error: error, completion: nil)
+        } catch let deleteErr {
+            alerts.showErrorAlert(for: self, error: deleteErr, completion: nil)
         }
     }
     
@@ -153,7 +115,7 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) {
                 self.view.alpha = 0
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
                     let tabViewController = self.appController.goToApp()
                     tabViewController.view.backgroundColor = Colors.background
                     let transition = CATransition()
@@ -167,17 +129,4 @@ class AcceptChequeController: BasicViewController, ModalViewDelegate {
             }
         }
     }
-    
-    func modalViewAppeared() {
-        if let wallets = try? walletsService.getAllWallets(), wallets.isEmpty {
-            self.creatingWallet()
-        }
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = Constants.ModalView.ShadowView.alpha
-                self.titleLabel.alpha = 1.0
-            })
-        }
-    }
-
 }

@@ -21,24 +21,24 @@ class TokenCell: UITableViewCell {
     @IBOutlet weak var balance: UILabel!
     
     override func awakeFromNib() {
-        self.balance.font = UIFont(name: Constants.TokenCell.Balance.font, size: Constants.TokenCell.Balance.size)
-        self.balance.textColor = Constants.TokenCell.Balance.color
-        self.title.font = UIFont(name: Constants.TokenCell.Title.font, size: Constants.TokenCell.Title.size)
-        self.title.textColor = Constants.TokenCell.Title.color
-        self.tokenImage.layer.cornerRadius = tokenImage.bounds.height/2
+        balance.font = UIFont(name: Constants.TokenCell.Balance.font, size: Constants.TokenCell.Balance.size)
+        balance.textColor = Constants.TokenCell.Balance.color
+        title.font = UIFont(name: Constants.TokenCell.Title.font, size: Constants.TokenCell.Title.size)
+        title.textColor = Constants.TokenCell.Title.color
+        tokenImage.layer.cornerRadius = tokenImage.bounds.height/2
     }
     
     func configure(token: TableToken) {
-        let balance = (token.token.balance ?? "...") + " \(token.token.symbol.uppercased())"
-        let title = ("\(token.token.name)")
+        let balanceString = (token.token.balance ?? "...") + " \(token.token.symbol.uppercased())"
+        let titleString = ("\(token.token.name)")
         
-        self.balance.text = balance
-        self.title.text = title
-        self.tokenImage.layer.cornerRadius = self.tokenImage.bounds.height/2
+        balance.text = balanceString
+        title.text = titleString
+        tokenImage.layer.cornerRadius = tokenImage.bounds.height/2
         
-        self.tokenImage.image = UIImage(named: "eth")
+        tokenImage.image = UIImage(named: "eth")
         if let image = UIImage(named: token.token.address) {
-            self.tokenImage.image = image
+            tokenImage.image = image
         }
         if let url = URL(string: "https://trustwalletapp.com/images/tokens/\(token.token.address).png"), !token.token.isEther(), !token.token.isBuff() {
             loadImage(url: url)
@@ -46,10 +46,10 @@ class TokenCell: UITableViewCell {
     }
     
     func loadImage(url: URL?) {
-        let processor = DownsamplingImageProcessor(size: self.tokenImage.bounds.size)
-            >> RoundCornerImageProcessor(cornerRadius: self.tokenImage.bounds.height/2)
-        self.tokenImage.kf.indicatorType = .activity
-        self.tokenImage.kf.setImage(
+        let processor = DownsamplingImageProcessor(size: tokenImage.bounds.size)
+            >> RoundCornerImageProcessor(cornerRadius: tokenImage.bounds.height/2)
+        tokenImage.kf.indicatorType = .activity
+        tokenImage.kf.setImage(
             with: url,
             placeholder: UIImage(named: "placeholderImage"),
             options: [
@@ -68,7 +68,7 @@ class TokenCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.balance.text = "-"
-        self.title.text = "-"
+        balance.text = "-"
+        title.text = "-"
     }
 }

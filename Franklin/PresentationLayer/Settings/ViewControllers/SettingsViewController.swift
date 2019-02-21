@@ -11,19 +11,26 @@ import Web3swift
 import SideMenu
 
 class SettingsViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var settingsTableView: BasicTableView!
     @IBOutlet weak var version: UILabel!
     @IBOutlet weak var prodName: UILabel!
     @IBOutlet weak var slogan: UILabel!
     
-    var mainSettings: [SettingsModel] = []
-    var walletsService = WalletsService()
-    var settingsInteractor = SettingInteractor()
-    let alerts = Alerts()
+    // MARK: - Internal lets
+    
+    internal var mainSettings: [SettingsModel] = []
+    internal var walletsService = WalletsService()
+    internal var settingsInteractor = SettingInteractor()
+    internal let alerts = Alerts()
+    
+    // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        mainSetup()
         setupNavigation()
         setupTableView()
     }
@@ -32,15 +39,20 @@ class SettingsViewController: BasicViewController {
         super.viewWillAppear(animated)
         updateTable()
         setupVersion()
+    }
+    
+    // MARK: - Main setup
+    
+    func mainSetup() {
         prodName.text = Constants.prodName
         slogan.text = Constants.slogan
     }
     
     func setupVersion() {
         let dictionary = Bundle.main.infoDictionary!
-        let version = dictionary["CFBundleShortVersionString"] as! String
-        let build = dictionary["CFBundleVersion"] as! String
-        version.text = "Version \(version) (\(build))"
+        guard let vrsn = dictionary["CFBundleShortVersionString"] as? String else { return }
+        guard let build = dictionary["CFBundleVersion"] as? String else { return }
+        version.text = "Version \(vrsn) (\(build))"
     }
     
     func setupNavigation() {
@@ -57,6 +69,8 @@ class SettingsViewController: BasicViewController {
         settingsTableView.register(nibToken, forCellReuseIdentifier: "SettingsCell")
         mainSettings.removeAll()
     }
+    
+    // MARK: - Table view setup and updates
     
     func updateTable() {
         DispatchQueue.global().async { [weak self] in
@@ -76,6 +90,4 @@ class SettingsViewController: BasicViewController {
         reloadDataInTable()
     }
     
-    
 }
-

@@ -9,7 +9,9 @@
 import UIKit
 import SideMenu
 
-class ContactsViewController: BasicViewController, ModalViewDelegate {
+class ContactsViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var addContactButton: BasicBlueButton!
     @IBOutlet weak var searchTextField: BasicTextField!
@@ -17,91 +19,82 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     @IBOutlet weak var tableView: BasicTableView!
     @IBOutlet weak var emptyContactsView: UIView!
     
-    var contactsList: [Contact] = []
-    var filteredContactsList: [Contact] = []
+    // MARK: - Internal lets
     
-    let userKeys = UserDefaultKeys()
-    let contactsService = ContactsService()
-    let alerts = Alerts()
-    //let interactor = Interactor()
+    internal let reuseIdentifier = "ContactTableCell"
     
-    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    internal var contactsList: [Contact] = []
+    internal var filteredContactsList: [Contact] = []
     
-    private let reuseIdentifier = "ContactTableCell"
+    internal let userKeys = UserDefaultKeys()
+    internal let contactsService = ContactsService()
+    internal let alerts = Alerts()
     
-    var searchActive : Bool = false
+    internal let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    
+    internal var searchActive : Bool = false
+    
+    // MARK: - Lifesycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Colors.background
-        self.hideKeyboardWhenTappedAround()
-        self.setupNavigation()
-        self.setupTableView()
-        self.setupSearch()
-        self.additionalSetup()
-        self.setupSideBar()
-    }
-    
-    func setupMarker() {
-        self.marker.isUserInteractionEnabled = false
-        guard let wallet = CurrentWallet.currentWallet else {
-            return
-        }
-        if userKeys.isBackupReady(for: wallet) {
-            self.marker.alpha = 0
-        } else {
-            self.marker.alpha = 1
-        }
-    }
-    
-    func additionalSetup() {
-        self.addContactButton.setTitle("Add contact", for: .normal)
-        self.topViewForModalAnimation.blurView()
-        self.topViewForModalAnimation.alpha = 0
-        self.topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
-        self.topViewForModalAnimation.isUserInteractionEnabled = false
-        self.tabBarController?.view.addSubview(topViewForModalAnimation)
-    }
-
-    func setupNavigation() {
-        self.navigationController?.navigationBar.isHidden = true
-    }
-
-    func setupTableView() {
-        self.emptyContactsView.isUserInteractionEnabled = false
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        let footerView = UIView()
-        footerView.backgroundColor = Colors.background
-        self.tableView.tableFooterView = footerView
-        
-        let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
-        self.tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
-        self.contactsList.removeAll()
-    }
-
-    func setupSearch() {
-        searchTextField.delegate = self
-        definesPresentationContext = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        self.setupMarker()
+        createView()
+        hideKeyboardWhenTappedAround()
+        setupNavigation()
+        setupTableView()
+        setupSearch()
+        additionalSetup()
+        setupSideBar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //self.setGestureForSidebar()
-        self.getAllContacts()
+        //setGestureForSidebar()
+        getAllContacts()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupMarker()
+    }
+    
+    // MARK: - Main setup
+    
+    func createView() {
+        view.backgroundColor = Colors.background
+        tabBarController?.view.addSubview(topViewForModalAnimation)
+        addContactButton.setTitle("Add contact", for: .normal)
+    }
+    
+    func setupMarker() {
+        marker.isUserInteractionEnabled = false
+        guard let wallet = CurrentWallet.currentWallet else {
+            return
+        }
+        if userKeys.isBackupReady(for: wallet) {
+            marker.alpha = 0
+        } else {
+            marker.alpha = 1
+        }
+    }
+    
+    func additionalSetup() {
+        topViewForModalAnimation.blurView()
+        topViewForModalAnimation.alpha = 0
+        topViewForModalAnimation.tag = Constants.ModalView.ShadowView.tag
+        topViewForModalAnimation.isUserInteractionEnabled = false
+    }
+
+    func setupNavigation() {
+        navigationController?.navigationBar.isHidden = true
     }
     
     func setupSideBar() {
         let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingsViewController())
         SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
         
-        //SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.view)
+        //SideMenuManager.default.menuAddPanGestureToPresent(toView: navigationController!.navigationBar)
+        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: view)
         
         SideMenuManager.default.menuFadeStatusBar = false
         SideMenuManager.default.menuPresentMode = .menuSlideIn
@@ -111,22 +104,27 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
         SideMenuManager.default.menuShadowRadius = 5
     }
     
-    func modalViewBeenDismissed(updateNeeded: Bool) {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0
-            })
-        }
-        if updateNeeded { getAllContacts() }
+    // MARK: - Table view setup and updates
+
+    func setupTableView() {
+        emptyContactsView.isUserInteractionEnabled = false
+        tableView.delegate = self
+        tableView.dataSource = self
+        let footerView = UIView()
+        footerView.backgroundColor = Colors.background
+        tableView.tableFooterView = footerView
+        
+        let nibSearch = UINib.init(nibName: reuseIdentifier, bundle: nil)
+        tableView.register(nibSearch, forCellReuseIdentifier: reuseIdentifier)
+        contactsList.removeAll()
+    }
+
+    func setupSearch() {
+        searchTextField.delegate = self
+        definesPresentationContext = true
     }
     
-    func modalViewAppeared() {
-        DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
-                self.topViewForModalAnimation.alpha = 0.5
-            })
-        }
-    }
+    // MARK: - Table view setup and updates
 
     func getAllContacts() {
         do {
@@ -136,20 +134,6 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
             emptyContactsList()
             //updateContactsList(with: [])
         }
-    }
-    
-    @IBAction func showMenu(_ sender: UIButton) {
-        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-    }
-
-    @IBAction func addContact(_ sender: Any) {
-        self.searchTextField.endEditing(true)
-        self.modalViewAppeared()
-        let addContactController = AddContactController()
-        addContactController.delegate = self
-        addContactController.modalPresentationStyle = .overCurrentContext
-        addContactController.view.layer.speed = Constants.ModalView.animationSpeed
-        self.tabBarController?.present(addContactController, animated: true, completion: nil)
     }
     
     func emptyAttention(enabled: Bool) {
@@ -176,117 +160,25 @@ class ContactsViewController: BasicViewController, ModalViewDelegate {
     
     func searchContact(string: String) {
         guard let list = try? ContactsService().getFullContactsList(for: string) else {
-            self.getAllContacts() 
+            getAllContacts()
             return
         }
-        self.updateContactsList(with: list)
-    }
-}
-
-extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        updateContactsList(with: list)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if contactsList.isEmpty {
-            return 0
-        } else {
-            return contactsList.count
-        }
-    }
+    // MARK: - Buttons actions
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !contactsList.isEmpty {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier,
-                                                                for: indexPath) as? ContactTableCell else {
-                                                                    return UITableViewCell()
-            }
-            cell.configure(with: contactsList[indexPath.row])
-            return cell
-        } else {
-            return UITableViewCell()
-        }
+    @IBAction func showMenu(_ sender: UIButton) {
+        present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let contact = contactsList[indexPath.row]
-        let alert = UIAlertController(title: contact.name, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (action) in
-            let vc = SendMoneyController(token: Franklin(), address: contact.address)
-            self.searchTextField.endEditing(true)
-            self.modalViewAppeared()
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.view.layer.speed = Constants.ModalView.animationSpeed
-            self.tabBarController?.present(vc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { [unowned self] (action) in
-            let vc = AddContactController(contact: contact)
-            self.searchTextField.endEditing(true)
-            self.modalViewAppeared()
-            vc.delegate = self
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.view.layer.speed = Constants.ModalView.animationSpeed
-            self.tabBarController?.present(vc, animated: true, completion: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [unowned self] (action) in
-            DispatchQueue.main.async { [unowned self] in
-                let searchString = self.searchTextField.text
-                try? contact.deleteContact()
-                self.searchContact(string: searchString ?? "")
-            }
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        self.present(alert, animated: true)
-    }
-}
 
-extension ContactsViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text ?? "") as NSString
-        let newText = currentText.replacingCharacters(in: range, with: string) as String
-        if newText == "" {
-            getAllContacts()
-        } else {
-            let contact = newText
-            searchContact(string: contact)
-        }
-        return true
-    }
-}
-
-//extension ContactsViewController: UICollectionViewDelegateFlowLayout {
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        
-//        let width = UIScreen.main.bounds.width * Constants.CollectionView.widthCoeff - 15
-//        
-//        return CGSize(width: width, height: Constants.CollectionCell.height)
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        insetForSectionAt section: Int) -> UIEdgeInsets {
-//        return sectionInsets
-//    }
-//    
-//    func collectionView(_ collectionView: UICollectionView,
-//                        layout collectionViewLayout: UICollectionViewLayout,
-//                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-//        return sectionInsets.left
-//    }
-//}
-
-extension ContactsViewController: UISideMenuNavigationControllerDelegate {
-    func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
+    @IBAction func addContact(_ sender: Any) {
+        searchTextField.endEditing(true)
         modalViewAppeared()
-    }
-    
-    func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-        modalViewBeenDismissed(updateNeeded: false)
+        let addContactController = AddContactController()
+        addContactController.delegate = self
+        addContactController.modalPresentationStyle = .overCurrentContext
+        addContactController.view.layer.speed = Constants.ModalView.animationSpeed
+        tabBarController?.present(addContactController, animated: true, completion: nil)
     }
 }

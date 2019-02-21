@@ -19,7 +19,7 @@ class FundsCell: UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.selectionStyle = .none
+        selectionStyle = .none
     }
 
     @IBAction func deposit(_ sender: BasicGreenButton) {

@@ -37,7 +37,7 @@ class OnboardingViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        createView()
+        mainSetup()
         setupNavigation()
     }
     
@@ -58,7 +58,7 @@ class OnboardingViewController: BasicViewController {
         }
     }
     
-    func createView() {
+    func mainSetup() {
         link.alpha = 0
         bottomInfo.alpha = 0
         

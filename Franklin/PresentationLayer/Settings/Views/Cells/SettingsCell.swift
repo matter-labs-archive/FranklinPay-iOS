@@ -19,10 +19,10 @@ class SettingsCell: UITableViewCell {
     @IBOutlet weak var markerIcon: UIImageView!
     @IBOutlet weak var heightConstraint: NSLayoutConstraint!
     
-    func configure(setting: MainSetting) {
-        self.settingIcon.image = setting.image
-        self.title.text = setting.title
-        self.subtitle.text = setting.subtitle
+    func configure(setting: SettingsModel) {
+        settingIcon.image = setting.image
+        title.text = setting.title
+        subtitle.text = setting.subtitle
         if setting.subtitle == nil {
             heightConstraint.constant = 0
         } else {
@@ -33,8 +33,8 @@ class SettingsCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.title.text = ""
-        self.subtitle.text = ""
+        title.text = ""
+        subtitle.text = ""
         markerIcon.alpha = 0
     }
 }

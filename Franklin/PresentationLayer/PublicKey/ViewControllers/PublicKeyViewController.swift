@@ -11,6 +11,8 @@ import Web3swift
 
 class PublicKeyViewController: BasicViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var shareAddress: BasicBlueButton!
     @IBOutlet weak var copyAddress: BasicWhiteButton!
     @IBOutlet weak var contentView: UIView!
@@ -18,18 +20,23 @@ class PublicKeyViewController: BasicViewController {
     @IBOutlet weak var qrCode: UIImageView!
     @IBOutlet weak var publicKey: UILabel!
     
-    var wallet: Wallet
+    // MARK: - Internal lets
     
-    let alerts = Alerts()
+    internal var wallet: Wallet
+    internal let alerts = Alerts()
     
-    weak var delegate: ModalViewDelegate?
-    
-    var pk: String = "" {
+    internal var pk: String = "" {
         didSet {
             self.publicKey.text = pk
             self.qrCode.image = self.generateQRCode(from: pk)
         }
     }
+    
+    // MARK: - Weak vars
+    
+    weak var delegate: ModalViewDelegate?
+    
+    // MARK: - Inits
     
     init(for wallet: Wallet) {
         self.wallet = wallet
@@ -40,21 +47,22 @@ class PublicKeyViewController: BasicViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Lifesycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mainSetup()
         self.setup()
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
+    // MARK: - Main setup
     
     func mainSetup() {
         self.navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
+        
         self.contentView.backgroundColor = Colors.background
         self.contentView.alpha = 1
         self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
@@ -76,11 +84,6 @@ class PublicKeyViewController: BasicViewController {
     
     func generateQRCode(from string: String) -> UIImage? {
         let code: String = string
-//        if let c = Web3.EIP67Code(address: string)?.toString() {
-//            code = c
-//        } else {
-//            code = string
-//        }
         let data = code.data(using: String.Encoding.ascii)
         if let filter = CIFilter(name: "CIQRCodeGenerator") {
             filter.setValue(data, forKey: "inputMessage")
@@ -92,6 +95,8 @@ class PublicKeyViewController: BasicViewController {
         }
         return nil
     }
+    
+    // MARK: - Buttons actions
     
     @objc func dismissView() {
         self.dismiss(animated: true, completion: nil)

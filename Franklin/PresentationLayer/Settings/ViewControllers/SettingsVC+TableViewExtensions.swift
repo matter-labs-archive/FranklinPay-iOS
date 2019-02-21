@@ -52,13 +52,13 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let setting = mainSettings[indexPathForSelectedRow.row]
         switch setting {
-        case MainSetting(.backup):
+        case SettingsModel(.backup):
             presentVC(BackupViewController())
-        case MainSetting(.pincode):
+        case SettingsModel(.pincode):
             presentVC(CreatePincodeViewController())
-        case MainSetting(.wallet):
+        case SettingsModel(.wallet):
             presentVC(WalletsViewController())
-        case MainSetting(.network):
+        case SettingsModel(.network):
             presentVC(NetworksViewController())
         default:
             alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
@@ -70,4 +70,3 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
