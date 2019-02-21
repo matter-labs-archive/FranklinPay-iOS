@@ -35,8 +35,15 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        // TODO: - just for now
+        let unsupportedPlasmaNetworks = CurrentNetwork.currentNetwork != Web3Network(network: .Mainnet) && CurrentNetwork.currentNetwork != Web3Network(network: .Rinkeby) && !CurrentNetwork().isXDai()
+        
         switch indexPath.section {
         case WalletSections.card.rawValue:
+            if unsupportedPlasmaNetworks {
+                return 0
+            }
             return UIScreen.main.bounds.height * Constants.CardCell.heightCoef
         case WalletSections.tokens.rawValue:
             return UIScreen.main.bounds.height * Constants.TokenCell.heightCoef

@@ -48,8 +48,9 @@ public class EtherCoordinator {
                 balance = try wallet.getERC20balance(for: token, web3instance: web3)
             }
             return balance
-        } catch {
-            return "-"
+        } catch let error {
+            print(error.localizedDescription)
+            return "..."
         }
     }
     

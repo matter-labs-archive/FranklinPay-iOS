@@ -55,10 +55,10 @@ extension Wallet: IWalletTransactions {
     public func getFranklinBalance() throws -> String {
         let id = try self.getID()
         try self.setID(String(id))
-        print(id)
+        print("plasma id : \(id.description)")
         
         let currentNetwork = CurrentNetwork.currentNetwork
-        let balance = try self.getIgnisBalance(network: currentNetwork)
+        let balance = try self.getPlasmaBalance(network: currentNetwork)
         return balance
     }
     

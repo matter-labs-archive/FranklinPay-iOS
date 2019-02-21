@@ -17,8 +17,8 @@ private typealias PromiseResult = PromiseKit.Result
 protocol IWalletPlasma {
     func getID() throws -> BigUInt
     func setID(_ id: String) throws
-    func getIgnisBalance(network: Web3Network) throws -> String
-    func getIgnisNonce(network: Web3Network) throws -> BigUInt
+    func getPlasmaBalance(network: Web3Network) throws -> String
+    func getPlasmaNonce(network: Web3Network) throws -> BigUInt
     func sendPlasmaTx(nonce: BigUInt, to: EthereumAddress, value: String, network: Web3Network) throws -> Bool
     //func loadTransactions(network: Web3Network) throws -> [ETHTransaction]
 }
@@ -58,15 +58,15 @@ extension Wallet: IWalletPlasma {
         }
     }
     
-    public func getIgnisBalance(network: Web3Network) throws -> String {
+    public func getPlasmaBalance(network: Web3Network) throws -> String {
         if network.id != 1 && network.id != 4 {
             throw Errors.NetworkErrors.wrongURL
         }
         let onTestnet = network.id == 4 ? true : false
-        return try self.getIgnisBalancePromise(onTestnet: onTestnet).wait()
+        return try self.getPlasmaBalancePromise(onTestnet: onTestnet).wait()
     }
     
-    private func getIgnisBalancePromise(onTestnet: Bool) -> Promise<String> {
+    private func getPlasmaBalancePromise(onTestnet: Bool) -> Promise<String> {
         let returnPromise = Promise<String> { (seal) in
             guard let id = self.plasmaID else {
                 seal.reject(Errors.NetworkErrors.noData)
@@ -119,15 +119,15 @@ extension Wallet: IWalletPlasma {
         return returnPromise
     }
     
-    public func getIgnisNonce(network: Web3Network) throws -> BigUInt {
+    public func getPlasmaNonce(network: Web3Network) throws -> BigUInt {
         if network.id != 1 && network.id != 4 {
             throw Errors.NetworkErrors.wrongURL
         }
         let onTestnet = network.id == 4 ? true : false
-        return try self.getIgnisNoncePromise(onTestnet: onTestnet).wait()
+        return try self.getPlasmaNoncePromise(onTestnet: onTestnet).wait()
     }
     
-    private func getIgnisNoncePromise(onTestnet: Bool) -> Promise<BigUInt> {
+    private func getPlasmaNoncePromise(onTestnet: Bool) -> Promise<BigUInt> {
         let returnPromise = Promise<BigUInt> { (seal) in
             guard let id = self.plasmaID else {
                 seal.reject(Errors.NetworkErrors.noData)
@@ -188,7 +188,7 @@ extension Wallet: IWalletPlasma {
             throw Errors.CommonErrors.wrongType
         }
         let toID = try PlasmaService().getID(for: to)
-        let nonce = try self.getIgnisNonce(network: network)
+        let nonce = try self.getPlasmaNonce(network: network)
         guard let amount = BigUInt(value) else {
             throw Errors.CommonErrors.wrongType
         }

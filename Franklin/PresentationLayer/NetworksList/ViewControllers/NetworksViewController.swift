@@ -46,8 +46,7 @@ class NetworksViewController: BasicViewController {
         DispatchQueue.global().async {
             let basicNetworks: [Networks] = [.Mainnet,
                                              .Rinkeby,
-                                             .Ropsten,
-                                             .Kovan]
+                                             .Ropsten]
             var web3networks: [Web3Network]
             let basicWeb3Nets = basicNetworks.map({
                 Web3Network(network: $0)

@@ -80,7 +80,7 @@
 ////        do {
 ////            let pv = try wallet.getPassword()
 ////            let pk = try wallet.getPrivateKey(withPassword: pv)
-////            let nonce = try CurrentWallet.currentWallet!.getIgnisNonce(network: CurrentNetwork.currentNetwork)
+////            let nonce = try CurrentWallet.currentWallet!.getPlasmaNonce(network: CurrentNetwork.currentNetwork)
 ////            let transaction = TransactionIgnis()
 ////            try transaction.createTransaction(from: 150, to: 151, amount: 10, privateKey: pk)
 ////            print("ho")
