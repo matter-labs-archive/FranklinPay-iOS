@@ -41,48 +41,38 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </view>
                 <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ufc-i8-gAC" userLabel="Content View">
-                    <rect key="frame" x="-1" y="45" width="377" height="622"/>
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwT-lo-MSB">
-                            <rect key="frame" x="19" y="12.5" width="339" height="584.5"/>
+                            <rect key="frame" x="19" y="13" width="337.5" height="608"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LZF-Ns-Jmf">
-                                    <rect key="frame" x="0.0" y="0.0" width="339" height="165.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="337.5" height="180.5"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </view>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aNB-yG-xhX">
-                                    <rect key="frame" x="304" y="0.0" width="35" height="35"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" secondItem="aNB-yG-xhX" secondAttribute="height" multiplier="1:1" id="524-1b-Q4s"/>
-                                    </constraints>
-                                    <state key="normal" image="close_blue"/>
-                                    <connections>
-                                        <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="nnK-ni-gmG"/>
-                                    </connections>
-                                </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Touch ID or Enter Passcode" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nu7-20-UMG">
-                                    <rect key="frame" x="0.0" y="53" width="339" height="26.5"/>
+                                    <rect key="frame" x="0.0" y="59" width="337.5" height="26.5"/>
                                     <fontDescription key="fontDescription" name="SFProDisplay-Bold" family="SF Pro Display" pointSize="22"/>
                                     <color key="textColor" red="0.28627450980000002" green="0.50588235290000005" blue="0.83137254900000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="5cO-bY-ikN">
-                                    <rect key="frame" x="72" y="101.5" width="195" height="29"/>
+                                    <rect key="frame" x="68.5" y="111.5" width="200" height="30"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="Vgz-sb-bGT">
-                                            <rect key="frame" x="0.0" y="0.0" width="29.5" height="29"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="30.5" height="30"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="Vgz-sb-bGT" secondAttribute="height" multiplier="1:1" id="xy2-AO-APg"/>
                                             </constraints>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="M8e-0V-Tni">
-                                            <rect key="frame" x="55.5" y="0.0" width="29" height="29"/>
+                                            <rect key="frame" x="56.5" y="0.0" width="30.5" height="30"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="OXL-5f-MeJ">
-                                            <rect key="frame" x="110.5" y="0.0" width="29" height="29"/>
+                                            <rect key="frame" x="113" y="0.0" width="30.5" height="30"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="line" translatesAutoresizingMaskIntoConstraints="NO" id="uCD-t6-vrd">
-                                            <rect key="frame" x="165.5" y="0.0" width="29.5" height="29"/>
+                                            <rect key="frame" x="169.5" y="0.0" width="30.5" height="30"/>
                                         </imageView>
                                     </subviews>
                                     <constraints>
@@ -95,16 +85,16 @@
                                     </constraints>
                                 </stackView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GQx-Vi-9J1">
-                                    <rect key="frame" x="34" y="165.5" width="271" height="370.5"/>
+                                    <rect key="frame" x="33.5" y="180.5" width="270" height="368.5"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="vPf-tp-DGq">
-                                            <rect key="frame" x="0.0" y="0.0" width="271" height="370.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="270" height="368.5"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="4NB-NQ-ndl">
-                                                    <rect key="frame" x="0.0" y="0.0" width="271" height="74"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="270" height="73.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Rz-1C-HlV" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="4Rz-1C-HlV" secondAttribute="height" multiplier="1:1" id="XK7-xl-ukA"/>
@@ -124,7 +114,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20F-hv-B11" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <rect key="frame" x="98.5" y="0.0" width="73" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -136,7 +126,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HAS-Hz-BZt" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="196.5" y="0.0" width="73.5" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -150,7 +140,7 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="hme-4D-bPq">
-                                                    <rect key="frame" x="0.0" y="99" width="271" height="73.5"/>
+                                                    <rect key="frame" x="0.0" y="98.5" width="270" height="73.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kqm-jd-4l7" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="73.5" height="73.5"/>
@@ -165,7 +155,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1P3-WG-ap8" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="73.5"/>
+                                                            <rect key="frame" x="98.5" y="0.0" width="73" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -177,7 +167,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRz-ux-Q57" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="73.5"/>
+                                                            <rect key="frame" x="196.5" y="0.0" width="73.5" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -191,10 +181,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="ZbT-fo-OAa">
-                                                    <rect key="frame" x="0.0" y="197.5" width="271" height="74"/>
+                                                    <rect key="frame" x="0.0" y="197" width="270" height="73"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A8a-Nf-p6p" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="73"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -206,7 +196,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WiW-dD-wgt" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <rect key="frame" x="98.5" y="0.0" width="73" height="73"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -218,7 +208,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8eE-ba-hmN" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="196.5" y="0.0" width="73.5" height="73"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -232,10 +222,10 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="oEt-jZ-OoF">
-                                                    <rect key="frame" x="0.0" y="296.5" width="271" height="74"/>
+                                                    <rect key="frame" x="0.0" y="295" width="270" height="73.5"/>
                                                     <subviews>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KPq-UO-WCU" customClass="PinCodeBiometricsButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="73.5" height="73.5"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="touch_id">
@@ -246,7 +236,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-Zg-9Po" customClass="PinCodeNumberButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="98.5" y="0.0" width="74" height="74"/>
+                                                            <rect key="frame" x="98.5" y="0.0" width="73" height="73.5"/>
                                                             <color key="backgroundColor" red="0.75686274509999996" green="0.83137254900000002" blue="0.94117647059999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="50"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -258,7 +248,7 @@
                                                             </connections>
                                                         </button>
                                                         <button opaque="NO" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UcP-em-Yvu" customClass="PinCodeDeleteButton" customModule="Franklin" customModuleProvider="target">
-                                                            <rect key="frame" x="197.5" y="0.0" width="73.5" height="74"/>
+                                                            <rect key="frame" x="196.5" y="0.0" width="73.5" height="73.5"/>
                                                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="35"/>
                                                             <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <state key="normal" image="delete">
@@ -283,7 +273,6 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="aNB-yG-xhX" firstAttribute="height" secondItem="LwT-lo-MSB" secondAttribute="height" multiplier="0.06" id="7tO-8M-lzV"/>
                                 <constraint firstItem="GQx-Vi-9J1" firstAttribute="width" secondItem="LwT-lo-MSB" secondAttribute="width" multiplier="0.8" id="BZs-Mt-eFO"/>
                                 <constraint firstItem="5cO-bY-ikN" firstAttribute="height" secondItem="LwT-lo-MSB" secondAttribute="height" multiplier="0.05" id="Czj-3K-CLh"/>
                                 <constraint firstItem="GQx-Vi-9J1" firstAttribute="centerY" secondItem="LwT-lo-MSB" secondAttribute="centerY" multiplier="1.2" id="KHf-DR-0AS"/>
@@ -296,8 +285,6 @@
                                 <constraint firstItem="LZF-Ns-Jmf" firstAttribute="leading" secondItem="LwT-lo-MSB" secondAttribute="leading" id="kbd-sO-5V5"/>
                                 <constraint firstItem="nu7-20-UMG" firstAttribute="width" secondItem="LwT-lo-MSB" secondAttribute="width" id="qNx-KK-shh"/>
                                 <constraint firstItem="nu7-20-UMG" firstAttribute="centerY" secondItem="LZF-Ns-Jmf" secondAttribute="centerY" multiplier="0.8" id="qb4-nK-B4f"/>
-                                <constraint firstAttribute="trailing" secondItem="aNB-yG-xhX" secondAttribute="trailing" constant="1.1368683772161603e-13" id="rDD-hg-1Qk"/>
-                                <constraint firstItem="aNB-yG-xhX" firstAttribute="top" secondItem="LwT-lo-MSB" secondAttribute="top" id="ry2-15-Fgb"/>
                                 <constraint firstItem="5cO-bY-ikN" firstAttribute="centerX" secondItem="LwT-lo-MSB" secondAttribute="centerX" id="wkG-yN-6Ox"/>
                                 <constraint firstItem="5cO-bY-ikN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="LwT-lo-MSB" secondAttribute="leading" id="x9n-ke-ion"/>
                             </constraints>
@@ -319,7 +306,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="aep-zn-bX9" firstAttribute="trailing" secondItem="dkS-qC-AsM" secondAttribute="trailing" id="EAc-uP-Y4f"/>
                 <constraint firstItem="aep-zn-bX9" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="top" id="VhX-uN-LqN"/>
@@ -328,9 +315,9 @@
                 <constraint firstItem="dkS-qC-AsM" firstAttribute="bottom" secondItem="ufc-i8-gAC" secondAttribute="bottom" id="bmX-tb-Web"/>
                 <constraint firstItem="aep-zn-bX9" firstAttribute="leading" secondItem="dkS-qC-AsM" secondAttribute="leading" id="bwU-Yu-91Z"/>
                 <constraint firstItem="lR3-Kw-deF" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="bottom" constant="-30" id="h9O-Fl-Nmb"/>
-                <constraint firstItem="ufc-i8-gAC" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="top" constant="25" id="kzl-xj-A7y"/>
-                <constraint firstAttribute="trailing" secondItem="ufc-i8-gAC" secondAttribute="trailing" constant="-1" id="p0x-NQ-X1V"/>
-                <constraint firstItem="ufc-i8-gAC" firstAttribute="leading" secondItem="XBe-Bd-WsY" secondAttribute="leading" constant="-1" id="qMm-Nm-aSU"/>
+                <constraint firstItem="ufc-i8-gAC" firstAttribute="top" secondItem="dkS-qC-AsM" secondAttribute="top" id="kzl-xj-A7y"/>
+                <constraint firstAttribute="trailing" secondItem="ufc-i8-gAC" secondAttribute="trailing" id="p0x-NQ-X1V"/>
+                <constraint firstItem="ufc-i8-gAC" firstAttribute="leading" secondItem="XBe-Bd-WsY" secondAttribute="leading" id="qMm-Nm-aSU"/>
                 <constraint firstAttribute="trailing" secondItem="lR3-Kw-deF" secondAttribute="trailing" constant="-1" id="xzK-XQ-jpG"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="dkS-qC-AsM"/>
@@ -338,7 +325,6 @@
         </view>
     </objects>
     <resources>
-        <image name="close_blue" width="115" height="111"/>
         <image name="delete" width="48" height="48"/>
         <image name="line" width="48" height="48"/>
         <image name="touch_id" width="48" height="48"/>

@@ -26,6 +26,21 @@ class CreatePincodeViewController: PincodeViewController {
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation(hidden: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
+    }
+    
     func disableBiometricsButton(_ disable: Bool = false) {
         biometricsButton.alpha = disable ? 0.0 : 1.0
         biometricsButton.isUserInteractionEnabled = !disable

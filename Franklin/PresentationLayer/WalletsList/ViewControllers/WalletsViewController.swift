@@ -19,19 +19,23 @@ class WalletsViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigation()
         self.setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setNavigation(hidden: false)
         self.updateTable()
     }
     
-    func setupNavigation() {
-        navigationItem.title = "Wallets"
-        navigationController?.navigationBar.isHidden = false
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
     }
     
     private func setupTableView() {
@@ -87,7 +91,8 @@ class WalletsViewController: BasicViewController {
     
     @IBAction func addWallet(_ sender: BasicBlueButton) {
         let vc = AddWalletViewController()
-        self.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+        //self.present(vc, animated: true, completion: nil)
     }
 
     @objc func addButtonTapped() {

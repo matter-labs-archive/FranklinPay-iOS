@@ -16,7 +16,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TokenCell" rowHeight="90" id="0rD-mz-83U" userLabel="Token Cell" customClass="TokenCell" customModule="BuffiOS" customModuleProvider="target">
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="TokenCell" rowHeight="90" id="0rD-mz-83U" userLabel="Token Cell" customClass="TokenCell" customModule="Franklin" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="365" height="159"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0rD-mz-83U" id="ST4-I9-6YA">
@@ -54,7 +54,7 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="xea-Lu-Od5" firstAttribute="height" secondItem="mxk-Gj-YpH" secondAttribute="height" id="41f-de-5i8"/>
-                                                    <constraint firstItem="ItZ-6v-6Uu" firstAttribute="height" secondItem="Von-dE-5BG" secondAttribute="height" multiplier="0.8" id="DYH-Mo-hbo"/>
+                                                    <constraint firstItem="ItZ-6v-6Uu" firstAttribute="height" secondItem="Von-dE-5BG" secondAttribute="height" multiplier="0.6" id="DYH-Mo-hbo"/>
                                                     <constraint firstItem="mxk-Gj-YpH" firstAttribute="centerY" secondItem="ItZ-6v-6Uu" secondAttribute="centerY" id="ML3-BZ-mbg"/>
                                                     <constraint firstItem="mxk-Gj-YpH" firstAttribute="height" secondItem="ItZ-6v-6Uu" secondAttribute="height" id="ejb-bz-3JF"/>
                                                     <constraint firstItem="mxk-Gj-YpH" firstAttribute="leading" secondItem="ItZ-6v-6Uu" secondAttribute="trailing" constant="10" id="hAE-px-0HU"/>

@@ -17,9 +17,7 @@ class WalletImportingViewController: BasicViewController {
     @IBOutlet weak var textView: BasicTextView!
     @IBOutlet weak var inputType: UILabel!
     @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var importButton: BasicGreenButton!
-    @IBOutlet weak var contentHeight: NSLayoutConstraint!
     @IBOutlet weak var tapToQR: UILabel!
     @IBOutlet weak var qr: UIButton!
     @IBOutlet weak var animationImageView: UIImageView!
@@ -52,8 +50,17 @@ class WalletImportingViewController: BasicViewController {
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation(hidden: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
     func mainSetup() {
-        self.navigationController?.navigationBar.isHidden = false
         
         animationImageView.setGifImage(UIImage(gifName: "loading.gif"))
         animationImageView.loopCount = -1
@@ -63,7 +70,6 @@ class WalletImportingViewController: BasicViewController {
         animationImageView.isUserInteractionEnabled = false
         
         self.view.backgroundColor = Colors.background
-        self.scrollView.backgroundColor = Colors.background
         self.contentView.backgroundColor = Colors.background
         self.inputType.textColor = Colors.textDarkGray
         self.tapToQR.textColor = Colors.textDarkGray
@@ -74,6 +80,11 @@ class WalletImportingViewController: BasicViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
+    }
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
     }
     
     @objc func returnTextView(gesture: UIGestureRecognizer) {
@@ -287,7 +298,6 @@ class WalletImportingViewController: BasicViewController {
 extension WalletImportingViewController: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         activeView = textView
-        lastOffset = self.scrollView.contentOffset
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         activeView?.resignFirstResponder()
@@ -297,44 +307,9 @@ extension WalletImportingViewController: UITextViewDelegate {
 
 extension WalletImportingViewController {
     @objc func keyboardWillShow(notification: NSNotification) {
-        if keyboardHeight != nil {
-            return
-        }
-        
-        if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            keyboardHeight = keyboardSize.height
-            
-            // so increase contentView's height by keyboard height
-            UIView.animate(withDuration: Constants.Main.animationDuration, animations: {
-                self.contentHeight.constant += self.keyboardHeight
-            })
-            
-            // move if keyboard hide input field
-            print((scrollView.frame.size.height))
-            print((activeView?.frame.origin.y))
-            print((activeView?.frame.size.height))
-            let distanceToBottom = self.scrollView.frame.size.height - (activeView?.frame.origin.y ?? 0) - (activeView?.frame.size.height ?? 0)
-            let collapseSpace = keyboardHeight - distanceToBottom
-            
-            if collapseSpace < 0 {
-                // no collapse
-                return
-            }
-            
-            // set new offset for scroll view
-            UIView.animate(withDuration: Constants.Main.animationDuration, animations: {
-                // scroll to the position above keyboard 10 points
-                self.scrollView.contentOffset = CGPoint(x: self.lastOffset.x, y: collapseSpace + 10)
-            })
-        }
     }
     
     @objc func keyboardWillHide(notification: NSNotification) {
-        UIView.animate(withDuration: Constants.Main.animationDuration) {
-            self.contentHeight.constant -= self.keyboardHeight
-            self.scrollView.contentOffset = self.lastOffset
-        }
-        keyboardHeight = nil
     }
 }
 

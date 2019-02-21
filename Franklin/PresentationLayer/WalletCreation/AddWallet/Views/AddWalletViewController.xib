@@ -75,16 +75,6 @@
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hTL-Qy-nUt">
-                            <rect key="frame" x="302.5" y="5.5" width="33.5" height="33.5"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="hTL-Qy-nUt" secondAttribute="height" multiplier="1:1" id="8Kv-m3-sWL"/>
-                            </constraints>
-                            <state key="normal" image="close_blue"/>
-                            <connections>
-                                <action selector="closeAction:" destination="-1" eventType="touchUpInside" id="hKC-fs-tDm"/>
-                            </connections>
-                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qih-5a-ZOa" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
                             <rect key="frame" x="1" y="490.5" width="335" height="46.5"/>
                             <state key="normal" title="Button"/>
@@ -93,7 +83,6 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="rjK-Uh-51Z" firstAttribute="top" secondItem="gxB-hy-7A9" secondAttribute="bottom" id="5DL-0C-ceE"/>
-                        <constraint firstItem="hTL-Qy-nUt" firstAttribute="width" secondItem="hTL-Qy-nUt" secondAttribute="height" multiplier="1:1" id="5So-BC-xqy"/>
                         <constraint firstItem="gxB-hy-7A9" firstAttribute="centerY" secondItem="x0q-Sz-xBY" secondAttribute="centerY" multiplier="0.9" id="8F2-aV-N9K"/>
                         <constraint firstItem="rjK-Uh-51Z" firstAttribute="trailing" secondItem="Cmt-Ew-osr" secondAttribute="trailing" id="D6h-dZ-Wzi"/>
                         <constraint firstItem="Qih-5a-ZOa" firstAttribute="centerX" secondItem="JDS-uz-3qj" secondAttribute="centerX" id="EBP-2i-Tif"/>
@@ -113,20 +102,16 @@
                         <constraint firstItem="Wmb-Ri-0qL" firstAttribute="width" secondItem="x0q-Sz-xBY" secondAttribute="width" multiplier="0.7" id="qCD-Zw-1eY"/>
                         <constraint firstItem="rjK-Uh-51Z" firstAttribute="width" secondItem="x0q-Sz-xBY" secondAttribute="width" id="tLw-nf-352"/>
                         <constraint firstItem="Cmt-Ew-osr" firstAttribute="leading" secondItem="rjK-Uh-51Z" secondAttribute="leading" id="u56-44-WPl"/>
-                        <constraint firstItem="hTL-Qy-nUt" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="fiA-mZ-y0a" secondAttribute="trailing" constant="5" id="vgJ-tj-vmi"/>
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="hTL-Qy-nUt" firstAttribute="top" secondItem="T4y-Tu-pta" secondAttribute="top" constant="45" id="4q0-R0-yUj"/>
                 <constraint firstItem="x0q-Sz-xBY" firstAttribute="centerY" secondItem="T4y-Tu-pta" secondAttribute="centerY" multiplier="0.97" id="93c-IK-onK"/>
                 <constraint firstItem="x0q-Sz-xBY" firstAttribute="width" secondItem="a2G-f6-oZG" secondAttribute="width" multiplier="0.9" id="DYJ-5L-E46"/>
                 <constraint firstItem="x0q-Sz-xBY" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.82" id="T1V-P0-Auz"/>
-                <constraint firstItem="T4y-Tu-pta" firstAttribute="trailing" secondItem="hTL-Qy-nUt" secondAttribute="trailing" constant="20" id="XpW-jm-zfn"/>
                 <constraint firstItem="JDS-uz-3qj" firstAttribute="leading" secondItem="T4y-Tu-pta" secondAttribute="leading" constant="20" id="iFa-4t-hJN"/>
                 <constraint firstItem="x0q-Sz-xBY" firstAttribute="centerX" secondItem="T4y-Tu-pta" secondAttribute="centerX" id="nI8-ru-PR1"/>
-                <constraint firstItem="hTL-Qy-nUt" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.05" id="ne2-D9-h17"/>
                 <constraint firstItem="JDS-uz-3qj" firstAttribute="height" secondItem="a2G-f6-oZG" secondAttribute="height" multiplier="0.07" id="wCt-a1-nSx"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="T4y-Tu-pta"/>
@@ -134,7 +119,6 @@
         </view>
     </objects>
     <resources>
-        <image name="close_blue" width="115" height="111"/>
-        <image name="franklin" width="848" height="1135"/>
+        <image name="franklin" width="272" height="408"/>
     </resources>
 </document>

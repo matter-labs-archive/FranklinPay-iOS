@@ -27,6 +27,15 @@ public func navigationController(withTitle: String?, withImage: UIImage?,
     return nav
 }
 
+extension UINavigationController {
+    public func makeClearNavigationController() {
+        self.navigationBar.barTintColor = Colors.background
+        self.navigationBar.tintColor = Colors.mainBlue
+        self.navigationBar.shadowImage = UIImage()
+        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
+    }
+}
+
 //class NavigationController: UINavigationController {
 //
 //    override func awakeFromNib() {

@@ -36,6 +36,26 @@ class BackupViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupMnemonic()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation(hidden: false)
+        showStart(animated: false)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
+    }
+    
+    func setupMnemonic() {
         guard let mnemonic = CurrentWallet.currentWallet?.backup else {
             alerts.showErrorAlert(for: self, error: "Can't get mnemonic - reinstall app") {
                 self.navigationController?.popViewController(animated: true)
@@ -43,11 +63,6 @@ class BackupViewController: BasicViewController {
             return
         }
         self.mnemonicString = mnemonic
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        showStart(animated: false)
     }
     
     func showStart(animated: Bool) {

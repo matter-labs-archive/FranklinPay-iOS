@@ -339,6 +339,281 @@
 		3A3D3EEE221E9B0000506F98 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9321F8BA2500F11AD1 /* SF-Pro-Text-SemiboldItalic.otf */; };
 		3A3D3EEF221E9B0000506F98 /* DeeplinkPayVIewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A982219616F00F385C2 /* DeeplinkPayVIewController.xib */; };
 		3A3D3EF0221E9B0000506F98 /* WalletImportingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C110BC21E755330012A978 /* WalletImportingViewController.xib */; };
+		3A3D3EFD221ECD5500506F98 /* TransactionsHistoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF9D214BB2890023FC18 /* TransactionsHistoryState.swift */; };
+		3A3D3EFE221ECD5500506F98 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF99214BAEDB0023FC18 /* TransactionCell.swift */; };
+		3A3D3EFF221ECD5500506F98 /* TransactionsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B271CF94214BAD730023FC18 /* TransactionsHistoryViewController.swift */; };
+		3A3D3F00221ECD5500506F98 /* UserDefaultKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103D21E507260012A978 /* UserDefaultKeys.swift */; };
+		3A3D3F01221ECD5500506F98 /* Web3NetworkEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D63221D72B700506F98 /* Web3NetworkEquatable.swift */; };
+		3A3D3F02221ECD5500506F98 /* NetworksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3312144228B00C358AA /* NetworksCell.swift */; };
+		3A3D3F03221ECD5500506F98 /* EnterPincodeFromCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22A2214AA8DB00ED58E6 /* EnterPincodeFromCases.swift */; };
+		3A3D3F04221ECD5500506F98 /* CurrentNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1108021E507340012A978 /* CurrentNetwork.swift */; };
+		3A3D3F05221ECD5500506F98 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE721F1F6A00031AC58 /* Contact.swift */; };
+		3A3D3F06221ECD5500506F98 /* ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DBD221DD30200506F98 /* ModalViewDelegate.swift */; };
+		3A3D3F07221ECD5500506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DBA221DD1D100506F98 /* SendMoneyVC+ModalViewDelegate.swift */; };
+		3A3D3F08221ECD5500506F98 /* BiometricsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102A21E507250012A978 /* BiometricsService.swift */; };
+		3A3D3F09221ECD5500506F98 /* DepositsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A7F221937A700F385C2 /* DepositsCoordinator.swift */; };
+		3A3D3F0A221ECD5500506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DCE221E0AFA00506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift */; };
+		3A3D3F0B221ECD5500506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DD0221E0B3F00506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift */; };
+		3A3D3F0C221ECD5500506F98 /* Wallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF021F1F6A00031AC58 /* Wallet.swift */; };
+		3A3D3F0D221ECD5500506F98 /* PlasmaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096D82213111100DAB8DC /* PlasmaService.swift */; };
+		3A3D3F0E221ECD5500506F98 /* ContainerCD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF121F1F6A00031AC58 /* ContainerCD.swift */; };
+		3A3D3F0F221ECD5500506F98 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE221F1F6A00031AC58 /* CoreDataModel.xcdatamodeld */; };
+		3A3D3F10221ECD5500506F98 /* Dai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CC2212D1CC00DAB8DC /* Dai.swift */; };
+		3A3D3F11221ECD5500506F98 /* TransactionsHistoryVC+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DD2221E0B7300506F98 /* TransactionsHistoryVC+TableViewExtensions.swift */; };
+		3A3D3F12221ECD5500506F98 /* PlasmaTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096D622130FE500DAB8DC /* PlasmaTransaction.swift */; };
+		3A3D3F13221ECD5500506F98 /* SendMoneyVC+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DC5221E060900506F98 /* SendMoneyVC+TableViewExtensions.swift */; };
+		3A3D3F14221ECD5500506F98 /* ETHTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAED21F1F6A00031AC58 /* ETHTransaction.swift */; };
+		3A3D3F15221ECD5500506F98 /* ContactsVC+UISideMenuNavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB2221DC92F00506F98 /* ContactsVC+UISideMenuNavigationControllerDelegate.swift */; };
+		3A3D3F16221ECD5500506F98 /* TableDeposit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A7E221937A700F385C2 /* TableDeposit.swift */; };
+		3A3D3F17221ECD5500506F98 /* URLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103A21E507250012A978 /* URLs.swift */; };
+		3A3D3F18221ECD5500506F98 /* AcceptChequeFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC221FF4B1400FC79AB /* AcceptChequeFormController.swift */; };
+		3A3D3F19221ECD5500506F98 /* TokensService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103621E507250012A978 /* TokensService.swift */; };
+		3A3D3F1A221ECD5500506F98 /* DepositsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A81221937A700F385C2 /* DepositsViewController.swift */; };
+		3A3D3F1B221ECD5500506F98 /* PlasmaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5B221D6E5800506F98 /* PlasmaParser.swift */; };
+		3A3D3F1C221ECD5500506F98 /* CurrentNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DC2213828100DAB8DC /* CurrentNonce.swift */; };
+		3A3D3F1D221ECD5500506F98 /* WalletTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D6F221D73AC00506F98 /* WalletTokens.swift */; };
+		3A3D3F1E221ECD5500506F98 /* PincodeEnterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22992149C0F600ED58E6 /* PincodeEnterStatus.swift */; };
+		3A3D3F1F221ECD5500506F98 /* HDKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D79221D775A00506F98 /* HDKey.swift */; };
+		3A3D3F20221ECD5500506F98 /* WalletStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D6D221D735B00506F98 /* WalletStorage.swift */; };
+		3A3D3F21221ECD5500506F98 /* AcceptChequeVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DD5221E119000506F98 /* AcceptChequeVC+ModalViewDelegate.swift */; };
+		3A3D3F22221ECD5500506F98 /* WalletImportingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110BB21E755330012A978 /* WalletImportingViewController.swift */; };
+		3A3D3F23221ECD5500506F98 /* AddressTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E72559214FEDE3003FAD76 /* AddressTableViewCell.swift */; };
+		3A3D3F24221ECD5500506F98 /* ENS.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1108D21E557FD0012A978 /* ENS.swift */; };
+		3A3D3F25221ECD5500506F98 /* Buff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A4D2218EBBC00F385C2 /* Buff.swift */; };
+		3A3D3F26221ECD5500506F98 /* ContactsVC+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DAE221DC78100506F98 /* ContactsVC+TableViewExtensions.swift */; };
+		3A3D3F27221ECD5500506F98 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107C21E507330012A978 /* StringExtension.swift */; };
+		3A3D3F28221ECD5500506F98 /* PinCodeNumberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228D21499D4500ED58E6 /* PinCodeNumberButton.swift */; };
+		3A3D3F29221ECD5500506F98 /* ShopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A532219238C00F385C2 /* ShopCell.swift */; };
+		3A3D3F2A221ECD5500506F98 /* ERC20TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D7F221D813200506F98 /* ERC20TokenStorage.swift */; };
+		3A3D3F2B221ECD5500506F98 /* TokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C7A721ECCA4300F175AF /* TokenViewController.swift */; };
+		3A3D3F2C221ECD5500506F98 /* PlasmaCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D59221D6E3B00506F98 /* PlasmaCode.swift */; };
+		3A3D3F2D221ECD5500506F98 /* BasicSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D451D621EE331600218872 /* BasicSegmentedControl.swift */; };
+		3A3D3F2E221ECD5500506F98 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102921E507250012A978 /* KeychainService.swift */; };
+		3A3D3F2F221ECD5500506F98 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */; };
+		3A3D3F30221ECD5500506F98 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
+		3A3D3F31221ECD5500506F98 /* LabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC82201B0ED00FC79AB /* LabelExtension.swift */; };
+		3A3D3F32221ECD5500506F98 /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107F21E507340012A978 /* CurrentToken.swift */; };
+		3A3D3F33221ECD5500506F98 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103221E507250012A978 /* NetworksService.swift */; };
+		3A3D3F34221ECD5500506F98 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2DC2143B57E00C358AA /* OnboardingViewController.swift */; };
+		3A3D3F35221ECD5500506F98 /* CreditCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A6D221937A200F385C2 /* CreditCell.swift */; };
+		3A3D3F36221ECD5500506F98 /* SearchTokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E72554214FE104003FAD76 /* SearchTokenCell.swift */; };
+		3A3D3F37221ECD5500506F98 /* TransactionsHistoryVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DCC221E0A5800506F98 /* TransactionsHistoryVC+ModalViewDelegate.swift */; };
+		3A3D3F38221ECD5500506F98 /* PayForCheque.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A952219616F00F385C2 /* PayForCheque.swift */; };
+		3A3D3F39221ECD5500506F98 /* TableCredit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A6F221937A200F385C2 /* TableCredit.swift */; };
+		3A3D3F3A221ECD5500506F98 /* SendMoneyVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DC9221E06C000506F98 /* SendMoneyVC+QRCodeReaderViewControllerDelegate.swift */; };
+		3A3D3F3B221ECD5500506F98 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103C21E507260012A978 /* Constants.swift */; };
+		3A3D3F3C221ECD5500506F98 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F0EFE921F8F1C000F11AD1 /* ColorExtension.swift */; };
+		3A3D3F3D221ECD5500506F98 /* BuffiParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A9022195E2200F385C2 /* BuffiParser.swift */; };
+		3A3D3F3E221ECD5500506F98 /* AddContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A5E2176379100F38E50 /* AddContactViewController.swift */; };
+		3A3D3F3F221ECD5500506F98 /* ContractsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102D21E507250012A978 /* ContractsService.swift */; };
+		3A3D3F40221ECD5500506F98 /* WalletTransactions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D73221D753500506F98 /* WalletTransactions.swift */; };
+		3A3D3F41221ECD5500506F98 /* TextViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9F21F676780031AC58 /* TextViewExtension.swift */; };
+		3A3D3F42221ECD5500506F98 /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2C2174D1CC00F38E50 /* Interactor.swift */; };
+		3A3D3F43221ECD5500506F98 /* BalanceJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A492217AAC500F385C2 /* BalanceJSON.swift */; };
+		3A3D3F44221ECD5500506F98 /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091504214A5AD000C8B408 /* WalletCell.swift */; };
+		3A3D3F45221ECD5500506F98 /* WalletsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20914FC214A564500C8B408 /* WalletsViewController.swift */; };
+		3A3D3F46221ECD5500506F98 /* SendMoneyVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DC1221DD74500506F98 /* SendMoneyVC+Actions.swift */; };
+		3A3D3F47221ECD5500506F98 /* ContactEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D61221D727200506F98 /* ContactEquatable.swift */; };
+		3A3D3F48221ECD5500506F98 /* SettingsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DA2221DBD2100506F98 /* SettingsInteractor.swift */; };
+		3A3D3F49221ECD5500506F98 /* ContactsVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB4221DC97700506F98 /* ContactsVC+ModalViewDelegate.swift */; };
+		3A3D3F4A221ECD5500506F98 /* EIP681.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1108F21E557FD0012A978 /* EIP681.swift */; };
+		3A3D3F4B221ECD5500506F98 /* AcceptChequeFormVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DD7221E18F700506F98 /* AcceptChequeFormVC+TextFieldDelegate.swift */; };
+		3A3D3F4C221ECD5500506F98 /* Web3Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */; };
+		3A3D3F4D221ECD5500506F98 /* DoubleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D451DC21EE980B00218872 /* DoubleExtension.swift */; };
+		3A3D3F4E221ECD5500506F98 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104321E507260012A978 /* Colors.swift */; };
+		3A3D3F4F221ECD5500506F98 /* TokenCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096CE2212E9FC00DAB8DC /* TokenCell.swift */; };
+		3A3D3F50221ECD5500506F98 /* SettingsVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DA8221DBDB400506F98 /* SettingsVC+ModalViewDelegate.swift */; };
+		3A3D3F51221ECD5500506F98 /* BasicViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D451C521EE292700218872 /* BasicViewController.swift */; };
+		3A3D3F52221ECD5500506F98 /* WalletCreating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D8B221DA8CB00506F98 /* WalletCreating.swift */; };
+		3A3D3F53221ECD5500506F98 /* PublicKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F0EFEC21F9519400F11AD1 /* PublicKeyViewController.swift */; };
+		3A3D3F54221ECD5500506F98 /* DepositCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A7C221937A700F385C2 /* DepositCell.swift */; };
+		3A3D3F55221ECD5500506F98 /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A72221937A200F385C2 /* CreditsViewController.swift */; };
+		3A3D3F56221ECD5500506F98 /* FloatExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107921E507330012A978 /* FloatExtension.swift */; };
+		3A3D3F57221ECD5500506F98 /* TableTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59073215258B800FF53D3 /* TableTokens.swift */; };
+		3A3D3F58221ECD5500506F98 /* SendMoneyVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DC7221E069E00506F98 /* SendMoneyVC+TextFieldDelegate.swift */; };
+		3A3D3F59221ECD5500506F98 /* PincodeCreationStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22942149A24C00ED58E6 /* PincodeCreationStatus.swift */; };
+		3A3D3F5A221ECD5500506F98 /* BackupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C14A94220489BC00B060AD /* BackupViewController.swift */; };
+		3A3D3F5B221ECD5500506F98 /* WriteTranscationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D65221D72D400506F98 /* WriteTranscationInfo.swift */; };
+		3A3D3F5C221ECD5500506F98 /* EnterPincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F22972149BF2400ED58E6 /* EnterPincodeViewController.swift */; };
+		3A3D3F5D221ECD5500506F98 /* WalletVC+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DA0221DBB0600506F98 /* WalletVC+Actions.swift */; };
+		3A3D3F5E221ECD5500506F98 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F0EF6C21F7C2F500F11AD1 /* TabBarController.swift */; };
+		3A3D3F5F221ECD5500506F98 /* Franklin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9821F616BE0031AC58 /* Franklin.swift */; };
+		3A3D3F60221ECD5500506F98 /* GenericParsedURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103821E507250012A978 /* GenericParsedURL.swift */; };
+		3A3D3F61221ECD5500506F98 /* ContactsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103021E507250012A978 /* ContactsService.swift */; };
+		3A3D3F62221ECD5500506F98 /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103E21E507260012A978 /* Errors.swift */; };
+		3A3D3F63221ECD5500506F98 /* NameHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1108E21E557FD0012A978 /* NameHash.swift */; };
+		3A3D3F64221ECD5500506F98 /* WalletsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C79E21EB4BEB00F175AF /* WalletsCoordinator.swift */; };
+		3A3D3F65221ECD5500506F98 /* WalletVC+CardCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D98221DBA3000506F98 /* WalletVC+CardCellDelegate.swift */; };
+		3A3D3F66221ECD5500506F98 /* SearchControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107B21E507330012A978 /* SearchControllerExtension.swift */; };
+		3A3D3F67221ECD5500506F98 /* BasicButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110C721E8A86C0012A978 /* BasicButtons.swift */; };
+		3A3D3F68221ECD5500506F98 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3262144043500C358AA /* SettingsCell.swift */; };
+		3A3D3F69221ECD5500506F98 /* SendMoneyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F686A621F9DEF600BD3D14 /* SendMoneyController.swift */; };
+		3A3D3F6A221ECD5500506F98 /* TableHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110CD21E8A8D90012A978 /* TableHeader.swift */; };
+		3A3D3F6B221ECD5500506F98 /* BasicTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C7A521EBF62900F175AF /* BasicTableView.swift */; };
+		3A3D3F6C221ECD5500506F98 /* WalletEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D7D221D780C00506F98 /* WalletEquatable.swift */; };
+		3A3D3F6D221ECD5500506F98 /* ContactsCD.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAE521F1F6A00031AC58 /* ContactsCD.xcdatamodeld */; };
+		3A3D3F6E221ECD5500506F98 /* SearchTokenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91E7254F214FDD1E003FAD76 /* SearchTokenViewController.swift */; };
+		3A3D3F6F221ECD5500506F98 /* WalletVC+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D90221DB4F400506F98 /* WalletVC+TableViewExtensions.swift */; };
+		3A3D3F70221ECD5500506F98 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104221E507260012A978 /* NavigationController.swift */; };
+		3A3D3F71221ECD5500506F98 /* EIP681Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1109121E557FE0012A978 /* EIP681Model.swift */; };
+		3A3D3F72221ECD5500506F98 /* ERC20TokenRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D83221D820900506F98 /* ERC20TokenRate.swift */; };
+		3A3D3F73221ECD5500506F98 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1104121E507260012A978 /* Alerts.swift */; };
+		3A3D3F74221ECD5500506F98 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A4B2218746200F385C2 /* DateExtension.swift */; };
+		3A3D3F75221ECD5500506F98 /* CardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2F02143B9D600C358AA /* CardCell.swift */; };
+		3A3D3F76221ECD5500506F98 /* MainSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DA4221DBD3700506F98 /* MainSettings.swift */; };
+		3A3D3F77221ECD5500506F98 /* SettingsVC+TableViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DAA221DBE2300506F98 /* SettingsVC+TableViewExtensions.swift */; };
+		3A3D3F78221ECD5500506F98 /* PlasmaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AAA221632410032B20C /* PlasmaConstants.swift */; };
+		3A3D3F79221ECD5500506F98 /* WalletVC+FundsDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D9E221DBAB900506F98 /* WalletVC+FundsDelegate.swift */; };
+		3A3D3F7A221ECD5500506F98 /* AnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C7AB21ECCC1800F175AF /* AnimationController.swift */; };
+		3A3D3F7B221ECD5500506F98 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D81221D81CE00506F98 /* Token.swift */; };
+		3A3D3F7C221ECD5500506F98 /* BasicTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2F686AB21F9E0C600BD3D14 /* BasicTextField.swift */; };
+		3A3D3F7D221ECD5500506F98 /* ABIs.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103921E507250012A978 /* ABIs.swift */; };
+		3A3D3F7E221ECD5500506F98 /* AcceptChequeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215ABE21FF44A600FC79AB /* AcceptChequeController.swift */; };
+		3A3D3F7F221ECD5500506F98 /* ContactsVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB0221DC7D800506F98 /* ContactsVC+TextFieldDelegate.swift */; };
+		3A3D3F80221ECD5500506F98 /* WalletVC+ModalViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D94221DB70600506F98 /* WalletVC+ModalViewDelegate.swift */; };
+		3A3D3F81221ECD5500506F98 /* EIP681Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1109021E557FE0012A978 /* EIP681Router.swift */; };
+		3A3D3F82221ECD5500506F98 /* AddDepositViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A8C22194CB200F385C2 /* AddDepositViewController.swift */; };
+		3A3D3F83221ECD5500506F98 /* SendMoneyVC+ScreenStatuses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DC3221DD80F00506F98 /* SendMoneyVC+ScreenStatuses.swift */; };
+		3A3D3F84221ECD5500506F98 /* WalletSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D96221DB8F500506F98 /* WalletSections.swift */; };
+		3A3D3F85221ECD5500506F98 /* BasicTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110CB21E8A8B90012A978 /* BasicTextView.swift */; };
+		3A3D3F86221ECD5500506F98 /* ERC20TokenEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D85221D822D00506F98 /* ERC20TokenEquatable.swift */; };
+		3A3D3F87221ECD5500506F98 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
+		3A3D3F88221ECD5500506F98 /* TokenInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A412174D2B400F38E50 /* TokenInfoViewController.swift */; };
+		3A3D3F89221ECD5500506F98 /* AddContactVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB6221DCFD800506F98 /* AddContactVC+TextFieldDelegate.swift */; };
+		3A3D3F8A221ECD5500506F98 /* SettingsTableViewSections.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DA6221DBD5700506F98 /* SettingsTableViewSections.swift */; };
+		3A3D3F8B221ECD5500506F98 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC62201B0C400FC79AB /* FontExtension.swift */; };
+		3A3D3F8C221ECD5500506F98 /* WalletPlasma.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D77221D76A200506F98 /* WalletPlasma.swift */; };
+		3A3D3F8D221ECD5500506F98 /* EtherCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */; };
+		3A3D3F8E221ECD5500506F98 /* ShopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A5C2219238D00F385C2 /* ShopViewController.swift */; };
+		3A3D3F8F221ECD5500506F98 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F2EB2143B92B00C358AA /* WalletViewController.swift */; };
+		3A3D3F90221ECD5500506F98 /* CreatePincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F229121499F3D00ED58E6 /* CreatePincodeViewController.swift */; };
+		3A3D3F91221ECD5500506F98 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A79621435F5D0033A045 /* AppDelegate.swift */; };
+		3A3D3F92221ECD5500506F98 /* CreditsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A70221937A200F385C2 /* CreditsCoordinator.swift */; };
+		3A3D3F93221ECD5500506F98 /* FundsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA6221622FC0032B20C /* FundsCell.swift */; };
+		3A3D3F94221ECD5500506F98 /* ContactsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A4921761F4000F38E50 /* ContactsViewController.swift */; };
+		3A3D3F95221ECD5500506F98 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7C52143660B0033A045 /* AppController.swift */; };
+		3A3D3F96221ECD5500506F98 /* WalletVC+TableViewHeaderDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D92221DB57400506F98 /* WalletVC+TableViewHeaderDelegate.swift */; };
+		3A3D3F97221ECD5500506F98 /* WalletTransactionsHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D75221D763700506F98 /* WalletTransactionsHistory.swift */; };
+		3A3D3F98221ECD5500506F98 /* TokenInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A392174D27E00F38E50 /* TokenInfoCell.swift */; };
+		3A3D3F99221ECD5500506F98 /* ImportType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C110BF21E7DB130012A978 /* ImportType.swift */; };
+		3A3D3F9A221ECD5500506F98 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DBB821F6A96F0031AC58 /* ViewExtension.swift */; };
+		3A3D3F9B221ECD5500506F98 /* Parameter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103F21E507260012A978 /* Parameter.swift */; };
+		3A3D3F9C221ECD5500506F98 /* PlasmaURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DA2213125A00DAB8DC /* PlasmaURLs.swift */; };
+		3A3D3F9D221ECD5500506F98 /* TableWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E234C79C21E9E93E00F175AF /* TableWallet.swift */; };
+		3A3D3F9E221ECD5500506F98 /* WalletBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D71221D741900506F98 /* WalletBlock.swift */; };
+		3A3D3F9F221ECD5500506F98 /* ReadTransactionInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D67221D72E600506F98 /* ReadTransactionInfo.swift */; };
+		3A3D3FA0221ECD5500506F98 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D88221D829F00506F98 /* Request.swift */; };
+		3A3D3FA1221ECD5500506F98 /* WalletXDai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D7B221D77AD00506F98 /* WalletXDai.swift */; };
+		3A3D3FA2221ECD5500506F98 /* XDaiURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A472217A8AD00F385C2 /* XDaiURLs.swift */; };
+		3A3D3FA3221ECD5500506F98 /* WalletVC+UISideMenuNavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D9A221DBA6200506F98 /* WalletVC+UISideMenuNavigationControllerDelegate.swift */; };
+		3A3D3FA4221ECD5500506F98 /* ContactStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5F221D723A00506F98 /* ContactStorage.swift */; };
+		3A3D3FA5221ECD5500506F98 /* NetworksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F32D2144213000C358AA /* NetworksViewController.swift */; };
+		3A3D3FA6221ECD5500506F98 /* CurrentWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107E21E507340012A978 /* CurrentWallet.swift */; };
+		3A3D3FA7221ECD5500506F98 /* AddWalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91B6A7DC2143B2F30033A045 /* AddWalletViewController.swift */; };
+		3A3D3FA8221ECD5500506F98 /* XDai.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A442217A45800F385C2 /* XDai.swift */; };
+		3A3D3FA9221ECD5500506F98 /* SettingsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F3242144041400C358AA /* SettingsModels.swift */; };
+		3A3D3FAA221ECD5500506F98 /* ETHTransactionEquatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D69221D730200506F98 /* ETHTransactionEquatable.swift */; };
+		3A3D3FAB221ECD5500506F98 /* DeeplinkPayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A693A962219616F00F385C2 /* DeeplinkPayViewController.swift */; };
+		3A3D3FAC221ECD5500506F98 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9197F31F214403A400C358AA /* SettingsViewController.swift */; };
+		3A3D3FAD221ECD5500506F98 /* Ether.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DB9621F616A40031AC58 /* Ether.swift */; };
+		3A3D3FAE221ECD5500506F98 /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */; };
+		3A3D3FAF221ECD5500506F98 /* WalletVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D9C221DBA8100506F98 /* WalletVC+QRCodeReaderViewControllerDelegate.swift */; };
+		3A3D3FB0221ECD5500506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB8221DD01B00506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift */; };
+		3A3D3FB1221ECD5500506F98 /* WalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103421E507250012A978 /* WalletsService.swift */; };
+		3A3D3FB2221ECD5500506F98 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */; };
+		3A3D3FB4221ECD5500506F98 /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
+		3A3D3FB6221ECD5500506F98 /* TransactionsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */; };
+		3A3D3FB7221ECD5500506F98 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */; };
+		3A3D3FB8221ECD5500506F98 /* Web3Swift.js in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E94321B534D10022CF61 /* Web3Swift.js */; };
+		3A3D3FB9221ECD5500506F98 /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8721F8BA2300F11AD1 /* SF-Pro-Display-ThinItalic.otf */; };
+		3A3D3FBA221ECD5500506F98 /* PublicKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFED21F9519400F11AD1 /* PublicKeyViewController.xib */; };
+		3A3D3FBB221ECD5500506F98 /* librefranklin-bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFCB21F8BD1500F11AD1 /* librefranklin-bold.ttf */; };
+		3A3D3FBC221ECD5500506F98 /* librefranklin-italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFCD21F8BD1500F11AD1 /* librefranklin-italic.ttf */; };
+		3A3D3FBD221ECD5500506F98 /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8221F8BA2200F11AD1 /* SF-Pro-Display-BoldItalic.otf */; };
+		3A3D3FBE221ECD5500506F98 /* AddContactController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A5F2176379100F38E50 /* AddContactController.xib */; };
+		3A3D3FBF221ECD5500506F98 /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8421F8BA2200F11AD1 /* SF-Pro-Display-Thin.otf */; };
+		3A3D3FC0221ECD5500506F98 /* SF-Pro-Text-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9D21F8BA2700F11AD1 /* SF-Pro-Text-Regular.otf */; };
+		3A3D3FC1221ECD5500506F98 /* librefranklin-bolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC821F8BD1400F11AD1 /* librefranklin-bolditalic.ttf */; };
+		3A3D3FC2221ECD5500506F98 /* AddressTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E7255A214FEDE3003FAD76 /* AddressTableViewCell.xib */; };
+		3A3D3FC3221ECD5500506F98 /* DepositsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A7A221937A700F385C2 /* DepositsViewController.xib */; };
+		3A3D3FC4221ECD5500506F98 /* ShopCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A572219238C00F385C2 /* ShopCell.xib */; };
+		3A3D3FC5221ECD5500506F98 /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F320214403A400C358AA /* SettingsViewController.xib */; };
+		3A3D3FC6221ECD5500506F98 /* librefranklin-semibolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC021F8BD1200F11AD1 /* librefranklin-semibolditalic.ttf */; };
+		3A3D3FC7221ECD5500506F98 /* BackupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C14A95220489BC00B060AD /* BackupViewController.xib */; };
+		3A3D3FC8221ECD5500506F98 /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8921F8BA2300F11AD1 /* SF-Pro-Display-RegularItalic.otf */; };
+		3A3D3FC9221ECD5500506F98 /* CardCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2F12143B9D600C358AA /* CardCell.xib */; };
+		3A3D3FCA221ECD5500506F98 /* SF-Pro-Text-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9821F8BA2600F11AD1 /* SF-Pro-Text-BoldItalic.otf */; };
+		3A3D3FCB221ECD5500506F98 /* librefranklin-semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC521F8BD1300F11AD1 /* librefranklin-semibold.ttf */; };
+		3A3D3FCC221ECD5500506F98 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
+		3A3D3FCD221ECD5500506F98 /* SettingsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3272144043500C358AA /* SettingsCell.xib */; };
+		3A3D3FCE221ECD5500506F98 /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA42216080D0032B20C /* bundle.js */; };
+		3A3D3FCF221ECD5500506F98 /* SF-Pro-Display-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8821F8BA2300F11AD1 /* SF-Pro-Display-MediumItalic.otf */; };
+		3A3D3FD0221ECD5500506F98 /* SF-Pro-Text-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8C21F8BA2400F11AD1 /* SF-Pro-Text-Heavy.otf */; };
+		3A3D3FD1221ECD5500506F98 /* SendMoneyController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2F686A721F9DEF600BD3D14 /* SendMoneyController.xib */; };
+		3A3D3FD2221ECD5500506F98 /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9A21F8BA2600F11AD1 /* SF-Pro-Display-Bold.otf */; };
+		3A3D3FD3221ECD5500506F98 /* AcceptChequeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2215ABF21FF44A600FC79AB /* AcceptChequeController.xib */; };
+		3A3D3FD4221ECD5500506F98 /* ContactTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */; };
+		3A3D3FD5221ECD5500506F98 /* ShopViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A512219238C00F385C2 /* ShopViewController.xib */; };
+		3A3D3FD6221ECD5500506F98 /* OnboardingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2E20213220309340046C956 /* OnboardingViewController.xib */; };
+		3A3D3FD7221ECD5500506F98 /* WalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2EC2143B92B00C358AA /* WalletViewController.xib */; };
+		3A3D3FD8221ECD5500506F98 /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091505214A5AD000C8B408 /* WalletCell.xib */; };
+		3A3D3FD9221ECD5500506F98 /* SF-Pro-Text-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8321F8BA2200F11AD1 /* SF-Pro-Text-Semibold.otf */; };
+		3A3D3FDA221ECD5500506F98 /* TokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E234C7A821ECCA4300F175AF /* TokenViewController.xib */; };
+		3A3D3FDB221ECD5500506F98 /* librefranklin-extrabold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFBD21F8BD1000F11AD1 /* librefranklin-extrabold.ttf */; };
+		3A3D3FDC221ECD5500506F98 /* SF-Pro-Display-UltralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8521F8BA2200F11AD1 /* SF-Pro-Display-UltralightItalic.otf */; };
+		3A3D3FDD221ECD5500506F98 /* SF-Pro-Text-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9521F8BA2500F11AD1 /* SF-Pro-Text-Medium.otf */; };
+		3A3D3FDE221ECD5500506F98 /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9121F8BA2500F11AD1 /* SF-Pro-Display-Semibold.otf */; };
+		3A3D3FDF221ECD5500506F98 /* librefranklin-mediumitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC921F8BD1400F11AD1 /* librefranklin-mediumitalic.ttf */; };
+		3A3D3FE0221ECD5500506F98 /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9B21F8BA2600F11AD1 /* SF-Pro-Display-Medium.otf */; };
+		3A3D3FE1221ECD5500506F98 /* librefranklin-blackitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC121F8BD1200F11AD1 /* librefranklin-blackitalic.ttf */; };
+		3A3D3FE2221ECD5500506F98 /* SF-Pro-Display-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8F21F8BA2400F11AD1 /* SF-Pro-Display-LightItalic.otf */; };
+		3A3D3FE3221ECD5500506F98 /* WalletsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20914FD214A564500C8B408 /* WalletsViewController.xib */; };
+		3A3D3FE4221ECD5500506F98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */; };
+		3A3D3FE5221ECD5500506F98 /* NetworksViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F32E2144213000C358AA /* NetworksViewController.xib */; };
+		3A3D3FE6221ECD5500506F98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9197F2FA2143BD7E00C358AA /* Assets.xcassets */; };
+		3A3D3FE7221ECD5500506F98 /* SF-Pro-Text-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9021F8BA2400F11AD1 /* SF-Pro-Text-Bold.otf */; };
+		3A3D3FE8221ECD5500506F98 /* ContactsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2B45A4A21761F4000F38E50 /* ContactsViewController.xib */; };
+		3A3D3FE9221ECD5500506F98 /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9921F8BA2600F11AD1 /* SF-Pro-Display-Light.otf */; };
+		3A3D3FEA221ECD5500506F98 /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8A21F8BA2400F11AD1 /* SF-Pro-Display-Heavy.otf */; };
+		3A3D3FEB221ECD5500506F98 /* SF-Pro-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8B21F8BA2400F11AD1 /* SF-Pro-Display-Ultralight.otf */; };
+		3A3D3FEC221ECD5500506F98 /* SearchTokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E72555214FE104003FAD76 /* SearchTokenCell.xib */; };
+		3A3D3FED221ECD5500506F98 /* NetworksCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9197F3322144228B00C358AA /* NetworksCell.xib */; };
+		3A3D3FEE221ECD5500506F98 /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9721F8BA2600F11AD1 /* SF-Pro-Display-SemiboldItalic.otf */; };
+		3A3D3FEF221ECD5500506F98 /* librefranklin-lightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFBE21F8BD1100F11AD1 /* librefranklin-lightitalic.ttf */; };
+		3A3D3FF0221ECD5500506F98 /* librefranklin-regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFCC21F8BD1500F11AD1 /* librefranklin-regular.ttf */; };
+		3A3D3FF1221ECD5500506F98 /* SF-Pro-Text-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8D21F8BA2400F11AD1 /* SF-Pro-Text-LightItalic.otf */; };
+		3A3D3FF2221ECD5500506F98 /* AddWalletViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91B6A7DD2143B2F30033A045 /* AddWalletViewController.xib */; };
+		3A3D3FF3221ECD5500506F98 /* SearchTokenViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 91E72550214FDD1E003FAD76 /* SearchTokenViewController.xib */; };
+		3A3D3FF4221ECD5500506F98 /* librefranklin-medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFBF21F8BD1100F11AD1 /* librefranklin-medium.ttf */; };
+		3A3D3FF5221ECD5500506F98 /* SF-Pro-Text-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8621F8BA2300F11AD1 /* SF-Pro-Text-HeavyItalic.otf */; };
+		3A3D3FF6221ECD5500506F98 /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9421F8BA2500F11AD1 /* SF-Pro-Display-Regular.otf */; };
+		3A3D3FF7221ECD5500506F98 /* SF-Pro-Text-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9C21F8BA2700F11AD1 /* SF-Pro-Text-Light.otf */; };
+		3A3D3FF8221ECD5500506F98 /* EnterPincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F229F214A783E00ED58E6 /* EnterPincodeViewController.xib */; };
+		3A3D3FF9221ECD5500506F98 /* librefranklin-thinitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFCA21F8BD1400F11AD1 /* librefranklin-thinitalic.ttf */; };
+		3A3D3FFA221ECD5500506F98 /* AcceptChequeFormController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2215AC321FF4B1400FC79AB /* AcceptChequeFormController.xib */; };
+		3A3D3FFB221ECD5500506F98 /* librefranklin-extrabolditalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC621F8BD1400F11AD1 /* librefranklin-extrabolditalic.ttf */; };
+		3A3D3FFC221ECD5500506F98 /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8121F8BA2200F11AD1 /* SF-Pro-Display-HeavyItalic.otf */; };
+		3A3D3FFD221ECD5500506F98 /* librefranklin-black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC721F8BD1400F11AD1 /* librefranklin-black.ttf */; };
+		3A3D3FFE221ECD5500506F98 /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9221F8BA2500F11AD1 /* SF-Pro-Display-BlackItalic.otf */; };
+		3A3D3FFF221ECD5500506F98 /* SF-Pro-Text-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9621F8BA2600F11AD1 /* SF-Pro-Text-MediumItalic.otf */; };
+		3A3D4000221ECD5500506F98 /* librefranklin-thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFBC21F8BD0F00F11AD1 /* librefranklin-thin.ttf */; };
+		3A3D4001221ECD5500506F98 /* librefranklin-extralight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC221F8BD1300F11AD1 /* librefranklin-extralight.ttf */; };
+		3A3D4002221ECD5500506F98 /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8E21F8BA2400F11AD1 /* SF-Pro-Display-Black.otf */; };
+		3A3D4003221ECD5500506F98 /* CreditCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A6C221937A200F385C2 /* CreditCell.xib */; };
+		3A3D4004221ECD5500506F98 /* PayForCheque.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A992219616F00F385C2 /* PayForCheque.xib */; };
+		3A3D4005221ECD5500506F98 /* librefranklin-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC321F8BD1300F11AD1 /* librefranklin-light.ttf */; };
+		3A3D4006221ECD5500506F98 /* AddDepositViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A8A22194CB200F385C2 /* AddDepositViewController.xib */; };
+		3A3D4007221ECD5500506F98 /* DepositCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A7B221937A700F385C2 /* DepositCell.xib */; };
+		3A3D4008221ECD5500506F98 /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
+		3A3D4009221ECD5500506F98 /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
+		3A3D400A221ECD5500506F98 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
+		3A3D400B221ECD5500506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8021F8BA2100F11AD1 /* SF-Pro-Text-RegularItalic.otf */; };
+		3A3D400C221ECD5500506F98 /* librefranklin-extralightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC421F8BD1300F11AD1 /* librefranklin-extralightitalic.ttf */; };
+		3A3D400D221ECD5500506F98 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFE721F8CAF000F11AD1 /* loading.gif */; };
+		3A3D400E221ECD5500506F98 /* CreditsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A6B221937A200F385C2 /* CreditsViewController.xib */; };
+		3A3D400F221ECD5500506F98 /* SF-Pro-Text-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF9321F8BA2500F11AD1 /* SF-Pro-Text-SemiboldItalic.otf */; };
+		3A3D4010221ECD5500506F98 /* DeeplinkPayVIewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A693A982219616F00F385C2 /* DeeplinkPayVIewController.xib */; };
+		3A3D4011221ECD5500506F98 /* WalletImportingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C110BC21E755330012A978 /* WalletImportingViewController.xib */; };
 		3A5D7AA52216080D0032B20C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA42216080D0032B20C /* bundle.js */; };
 		3A5D7AA8221622FC0032B20C /* FundsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA6221622FC0032B20C /* FundsCell.swift */; };
 		3A5D7AA9221622FC0032B20C /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
@@ -643,6 +918,8 @@
 		3A3D3DD7221E18F700506F98 /* AcceptChequeFormVC+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AcceptChequeFormVC+TextFieldDelegate.swift"; sourceTree = "<group>"; };
 		3A3D3EF8221E9B0000506F98 /* FranklinDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FranklinDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A3D3EF9221E9B0100506F98 /* DevInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = DevInfo.plist; path = "/Users/anton/Developer/FranklinPay-iOS/DevInfo.plist"; sourceTree = "<absolute>"; };
+		3A3D4017221ECD5500506F98 /* FranklinAlpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FranklinAlpha.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3A3D4018221ECD5500506F98 /* AlphaInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = AlphaInfo.plist; path = "/Users/anton/Developer/FranklinPay-iOS/AlphaInfo.plist"; sourceTree = "<absolute>"; };
 		3A5D7AA42216080D0032B20C /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = Plasma/bundle.js; sourceTree = SOURCE_ROOT; };
 		3A5D7AA6221622FC0032B20C /* FundsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundsCell.swift; sourceTree = "<group>"; };
 		3A5D7AA7221622FC0032B20C /* FundsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FundsCell.xib; sourceTree = "<group>"; };
@@ -920,6 +1197,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A3D3E93221E9B0000506F98 /* Pods_Franklin.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A3D3FB3221ECD5500506F98 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3D3FB4221ECD5500506F98 /* Pods_Franklin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1356,6 +1641,7 @@
 				B219DC29215B77A80035BF94 /* FranklinUITests.xctest */,
 				1CF54A72215CCF0E009CC78F /* FranklinTests.xctest */,
 				3A3D3EF8221E9B0000506F98 /* FranklinDev.app */,
+				3A3D4017221ECD5500506F98 /* FranklinAlpha.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1397,6 +1683,7 @@
 				91B6A79621435F5D0033A045 /* AppDelegate.swift */,
 				91B6A79F21435F5E0033A045 /* LaunchScreen.storyboard */,
 				3A3D3EF9221E9B0100506F98 /* DevInfo.plist */,
+				3A3D4018221ECD5500506F98 /* AlphaInfo.plist */,
 				91B6A7A221435F5E0033A045 /* Info.plist */,
 				9197F2FA2143BD7E00C358AA /* Assets.xcassets */,
 			);
@@ -2570,6 +2857,26 @@
 			productReference = 3A3D3EF8221E9B0000506F98 /* FranklinDev.app */;
 			productType = "com.apple.product-type.application";
 		};
+		3A3D3EFA221ECD5500506F98 /* FranklinAlpha */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3A3D4014221ECD5500506F98 /* Build configuration list for PBXNativeTarget "FranklinAlpha" */;
+			buildPhases = (
+				3A3D3EFB221ECD5500506F98 /* [CP] Check Pods Manifest.lock */,
+				3A3D3EFC221ECD5500506F98 /* Sources */,
+				3A3D3FB3221ECD5500506F98 /* Frameworks */,
+				3A3D3FB5221ECD5500506F98 /* Resources */,
+				3A3D4012221ECD5500506F98 /* [CP] Embed Pods Frameworks */,
+				3A3D4013221ECD5500506F98 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FranklinAlpha;
+			productName = DiveLane;
+			productReference = 3A3D4017221ECD5500506F98 /* FranklinAlpha.app */;
+			productType = "com.apple.product-type.application";
+		};
 		91B6A79221435F5D0033A045 /* Franklin */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91B6A7A521435F5E0033A045 /* Build configuration list for PBXNativeTarget "Franklin" */;
@@ -2654,6 +2961,7 @@
 				B219DC28215B77A80035BF94 /* FranklinUITests */,
 				1CF54A71215CCF0E009CC78F /* FranklinTests */,
 				3A3D3DD9221E9B0000506F98 /* FranklinDev */,
+				3A3D3EFA221ECD5500506F98 /* FranklinAlpha */,
 			);
 		};
 /* End PBXProject section */
@@ -2762,6 +3070,105 @@
 				3A3D3EEE221E9B0000506F98 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
 				3A3D3EEF221E9B0000506F98 /* DeeplinkPayVIewController.xib in Resources */,
 				3A3D3EF0221E9B0000506F98 /* WalletImportingViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A3D3FB5221ECD5500506F98 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3D3FB6221ECD5500506F98 /* TransactionsHistoryViewController.xib in Resources */,
+				3A3D3FB7221ECD5500506F98 /* TransactionCell.xib in Resources */,
+				3A3D3FB8221ECD5500506F98 /* Web3Swift.js in Resources */,
+				3A3D3FB9221ECD5500506F98 /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				3A3D3FBA221ECD5500506F98 /* PublicKeyViewController.xib in Resources */,
+				3A3D3FBB221ECD5500506F98 /* librefranklin-bold.ttf in Resources */,
+				3A3D3FBC221ECD5500506F98 /* librefranklin-italic.ttf in Resources */,
+				3A3D3FBD221ECD5500506F98 /* SF-Pro-Display-BoldItalic.otf in Resources */,
+				3A3D3FBE221ECD5500506F98 /* AddContactController.xib in Resources */,
+				3A3D3FBF221ECD5500506F98 /* SF-Pro-Display-Thin.otf in Resources */,
+				3A3D3FC0221ECD5500506F98 /* SF-Pro-Text-Regular.otf in Resources */,
+				3A3D3FC1221ECD5500506F98 /* librefranklin-bolditalic.ttf in Resources */,
+				3A3D3FC2221ECD5500506F98 /* AddressTableViewCell.xib in Resources */,
+				3A3D3FC3221ECD5500506F98 /* DepositsViewController.xib in Resources */,
+				3A3D3FC4221ECD5500506F98 /* ShopCell.xib in Resources */,
+				3A3D3FC5221ECD5500506F98 /* SettingsViewController.xib in Resources */,
+				3A3D3FC6221ECD5500506F98 /* librefranklin-semibolditalic.ttf in Resources */,
+				3A3D3FC7221ECD5500506F98 /* BackupViewController.xib in Resources */,
+				3A3D3FC8221ECD5500506F98 /* SF-Pro-Display-RegularItalic.otf in Resources */,
+				3A3D3FC9221ECD5500506F98 /* CardCell.xib in Resources */,
+				3A3D3FCA221ECD5500506F98 /* SF-Pro-Text-BoldItalic.otf in Resources */,
+				3A3D3FCB221ECD5500506F98 /* librefranklin-semibold.ttf in Resources */,
+				3A3D3FCC221ECD5500506F98 /* CreatePincodeViewController.xib in Resources */,
+				3A3D3FCD221ECD5500506F98 /* SettingsCell.xib in Resources */,
+				3A3D3FCE221ECD5500506F98 /* bundle.js in Resources */,
+				3A3D3FCF221ECD5500506F98 /* SF-Pro-Display-MediumItalic.otf in Resources */,
+				3A3D3FD0221ECD5500506F98 /* SF-Pro-Text-Heavy.otf in Resources */,
+				3A3D3FD1221ECD5500506F98 /* SendMoneyController.xib in Resources */,
+				3A3D3FD2221ECD5500506F98 /* SF-Pro-Display-Bold.otf in Resources */,
+				3A3D3FD3221ECD5500506F98 /* AcceptChequeController.xib in Resources */,
+				3A3D3FD4221ECD5500506F98 /* ContactTableCell.xib in Resources */,
+				3A3D3FD5221ECD5500506F98 /* ShopViewController.xib in Resources */,
+				3A3D3FD6221ECD5500506F98 /* OnboardingViewController.xib in Resources */,
+				3A3D3FD7221ECD5500506F98 /* WalletViewController.xib in Resources */,
+				3A3D3FD8221ECD5500506F98 /* WalletCell.xib in Resources */,
+				3A3D3FD9221ECD5500506F98 /* SF-Pro-Text-Semibold.otf in Resources */,
+				3A3D3FDA221ECD5500506F98 /* TokenViewController.xib in Resources */,
+				3A3D3FDB221ECD5500506F98 /* librefranklin-extrabold.ttf in Resources */,
+				3A3D3FDC221ECD5500506F98 /* SF-Pro-Display-UltralightItalic.otf in Resources */,
+				3A3D3FDD221ECD5500506F98 /* SF-Pro-Text-Medium.otf in Resources */,
+				3A3D3FDE221ECD5500506F98 /* SF-Pro-Display-Semibold.otf in Resources */,
+				3A3D3FDF221ECD5500506F98 /* librefranklin-mediumitalic.ttf in Resources */,
+				3A3D3FE0221ECD5500506F98 /* SF-Pro-Display-Medium.otf in Resources */,
+				3A3D3FE1221ECD5500506F98 /* librefranklin-blackitalic.ttf in Resources */,
+				3A3D3FE2221ECD5500506F98 /* SF-Pro-Display-LightItalic.otf in Resources */,
+				3A3D3FE3221ECD5500506F98 /* WalletsViewController.xib in Resources */,
+				3A3D3FE4221ECD5500506F98 /* LaunchScreen.storyboard in Resources */,
+				3A3D3FE5221ECD5500506F98 /* NetworksViewController.xib in Resources */,
+				3A3D3FE6221ECD5500506F98 /* Assets.xcassets in Resources */,
+				3A3D3FE7221ECD5500506F98 /* SF-Pro-Text-Bold.otf in Resources */,
+				3A3D3FE8221ECD5500506F98 /* ContactsViewController.xib in Resources */,
+				3A3D3FE9221ECD5500506F98 /* SF-Pro-Display-Light.otf in Resources */,
+				3A3D3FEA221ECD5500506F98 /* SF-Pro-Display-Heavy.otf in Resources */,
+				3A3D3FEB221ECD5500506F98 /* SF-Pro-Display-Ultralight.otf in Resources */,
+				3A3D3FEC221ECD5500506F98 /* SearchTokenCell.xib in Resources */,
+				3A3D3FED221ECD5500506F98 /* NetworksCell.xib in Resources */,
+				3A3D3FEE221ECD5500506F98 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
+				3A3D3FEF221ECD5500506F98 /* librefranklin-lightitalic.ttf in Resources */,
+				3A3D3FF0221ECD5500506F98 /* librefranklin-regular.ttf in Resources */,
+				3A3D3FF1221ECD5500506F98 /* SF-Pro-Text-LightItalic.otf in Resources */,
+				3A3D3FF2221ECD5500506F98 /* AddWalletViewController.xib in Resources */,
+				3A3D3FF3221ECD5500506F98 /* SearchTokenViewController.xib in Resources */,
+				3A3D3FF4221ECD5500506F98 /* librefranklin-medium.ttf in Resources */,
+				3A3D3FF5221ECD5500506F98 /* SF-Pro-Text-HeavyItalic.otf in Resources */,
+				3A3D3FF6221ECD5500506F98 /* SF-Pro-Display-Regular.otf in Resources */,
+				3A3D3FF7221ECD5500506F98 /* SF-Pro-Text-Light.otf in Resources */,
+				3A3D3FF8221ECD5500506F98 /* EnterPincodeViewController.xib in Resources */,
+				3A3D3FF9221ECD5500506F98 /* librefranklin-thinitalic.ttf in Resources */,
+				3A3D3FFA221ECD5500506F98 /* AcceptChequeFormController.xib in Resources */,
+				3A3D3FFB221ECD5500506F98 /* librefranklin-extrabolditalic.ttf in Resources */,
+				3A3D3FFC221ECD5500506F98 /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				3A3D3FFD221ECD5500506F98 /* librefranklin-black.ttf in Resources */,
+				3A3D3FFE221ECD5500506F98 /* SF-Pro-Display-BlackItalic.otf in Resources */,
+				3A3D3FFF221ECD5500506F98 /* SF-Pro-Text-MediumItalic.otf in Resources */,
+				3A3D4000221ECD5500506F98 /* librefranklin-thin.ttf in Resources */,
+				3A3D4001221ECD5500506F98 /* librefranklin-extralight.ttf in Resources */,
+				3A3D4002221ECD5500506F98 /* SF-Pro-Display-Black.otf in Resources */,
+				3A3D4003221ECD5500506F98 /* CreditCell.xib in Resources */,
+				3A3D4004221ECD5500506F98 /* PayForCheque.xib in Resources */,
+				3A3D4005221ECD5500506F98 /* librefranklin-light.ttf in Resources */,
+				3A3D4006221ECD5500506F98 /* AddDepositViewController.xib in Resources */,
+				3A3D4007221ECD5500506F98 /* DepositCell.xib in Resources */,
+				3A3D4008221ECD5500506F98 /* FundsCell.xib in Resources */,
+				3A3D4009221ECD5500506F98 /* TokenCell.xib in Resources */,
+				3A3D400A221ECD5500506F98 /* PrivateKeyViewController.xib in Resources */,
+				3A3D400B221ECD5500506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */,
+				3A3D400C221ECD5500506F98 /* librefranklin-extralightitalic.ttf in Resources */,
+				3A3D400D221ECD5500506F98 /* loading.gif in Resources */,
+				3A3D400E221ECD5500506F98 /* CreditsViewController.xib in Resources */,
+				3A3D400F221ECD5500506F98 /* SF-Pro-Text-SemiboldItalic.otf in Resources */,
+				3A3D4010221ECD5500506F98 /* DeeplinkPayVIewController.xib in Resources */,
+				3A3D4011221ECD5500506F98 /* WalletImportingViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2968,6 +3375,103 @@
 			shellScript = "\"${PODS_ROOT}/Fabric/run\" ebf2c1b81f019e28e2abc5698b36d86173346ad1 f04c3481d6e18e736fb7f0d15e11fe1ceaab24cc7754b7c823d59181eb7978f8\n";
 		};
 		3A3D3EF3221E9B0000506F98 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nswiftlint autocorrect\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		3A3D3EFB221ECD5500506F98 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Franklin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A3D4012221ECD5500506F98 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BadgeSwift/BadgeSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
+				"${BUILT_PRODUCTS_DIR}/BlockiesSwift/BlockiesSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
+				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
+				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
+				"${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
+				"${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework",
+				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
+				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
+				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BadgeSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlockiesSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusBarOverlay.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionableTab.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3A3D4013221ECD5500506F98 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -3278,6 +3782,195 @@
 				3A3D3E8F221E9B0000506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift in Sources */,
 				3A3D3E90221E9B0000506F98 /* WalletsService.swift in Sources */,
 				3A3D3E91221E9B0000506F98 /* DismissAnimator.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3A3D3EFC221ECD5500506F98 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A3D3EFD221ECD5500506F98 /* TransactionsHistoryState.swift in Sources */,
+				3A3D3EFE221ECD5500506F98 /* TransactionCell.swift in Sources */,
+				3A3D3EFF221ECD5500506F98 /* TransactionsHistoryViewController.swift in Sources */,
+				3A3D3F00221ECD5500506F98 /* UserDefaultKeys.swift in Sources */,
+				3A3D3F01221ECD5500506F98 /* Web3NetworkEquatable.swift in Sources */,
+				3A3D3F02221ECD5500506F98 /* NetworksCell.swift in Sources */,
+				3A3D3F03221ECD5500506F98 /* EnterPincodeFromCases.swift in Sources */,
+				3A3D3F04221ECD5500506F98 /* CurrentNetwork.swift in Sources */,
+				3A3D3F05221ECD5500506F98 /* Contact.swift in Sources */,
+				3A3D3F06221ECD5500506F98 /* ModalViewDelegate.swift in Sources */,
+				3A3D3F07221ECD5500506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F08221ECD5500506F98 /* BiometricsService.swift in Sources */,
+				3A3D3F09221ECD5500506F98 /* DepositsCoordinator.swift in Sources */,
+				3A3D3F0A221ECD5500506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
+				3A3D3F0B221ECD5500506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */,
+				3A3D3F0C221ECD5500506F98 /* Wallet.swift in Sources */,
+				3A3D3F0D221ECD5500506F98 /* PlasmaService.swift in Sources */,
+				3A3D3F0E221ECD5500506F98 /* ContainerCD.swift in Sources */,
+				3A3D3F0F221ECD5500506F98 /* CoreDataModel.xcdatamodeld in Sources */,
+				3A3D3F10221ECD5500506F98 /* Dai.swift in Sources */,
+				3A3D3F11221ECD5500506F98 /* TransactionsHistoryVC+TableViewExtensions.swift in Sources */,
+				3A3D3F12221ECD5500506F98 /* PlasmaTransaction.swift in Sources */,
+				3A3D3F13221ECD5500506F98 /* SendMoneyVC+TableViewExtensions.swift in Sources */,
+				3A3D3F14221ECD5500506F98 /* ETHTransaction.swift in Sources */,
+				3A3D3F15221ECD5500506F98 /* ContactsVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
+				3A3D3F16221ECD5500506F98 /* TableDeposit.swift in Sources */,
+				3A3D3F17221ECD5500506F98 /* URLs.swift in Sources */,
+				3A3D3F18221ECD5500506F98 /* AcceptChequeFormController.swift in Sources */,
+				3A3D3F19221ECD5500506F98 /* TokensService.swift in Sources */,
+				3A3D3F1A221ECD5500506F98 /* DepositsViewController.swift in Sources */,
+				3A3D3F1B221ECD5500506F98 /* PlasmaParser.swift in Sources */,
+				3A3D3F1C221ECD5500506F98 /* CurrentNonce.swift in Sources */,
+				3A3D3F1D221ECD5500506F98 /* WalletTokens.swift in Sources */,
+				3A3D3F1E221ECD5500506F98 /* PincodeEnterStatus.swift in Sources */,
+				3A3D3F1F221ECD5500506F98 /* HDKey.swift in Sources */,
+				3A3D3F20221ECD5500506F98 /* WalletStorage.swift in Sources */,
+				3A3D3F21221ECD5500506F98 /* AcceptChequeVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F22221ECD5500506F98 /* WalletImportingViewController.swift in Sources */,
+				3A3D3F23221ECD5500506F98 /* AddressTableViewCell.swift in Sources */,
+				3A3D3F24221ECD5500506F98 /* ENS.swift in Sources */,
+				3A3D3F25221ECD5500506F98 /* Buff.swift in Sources */,
+				3A3D3F26221ECD5500506F98 /* ContactsVC+TableViewExtensions.swift in Sources */,
+				3A3D3F27221ECD5500506F98 /* StringExtension.swift in Sources */,
+				3A3D3F28221ECD5500506F98 /* PinCodeNumberButton.swift in Sources */,
+				3A3D3F29221ECD5500506F98 /* ShopCell.swift in Sources */,
+				3A3D3F2A221ECD5500506F98 /* ERC20TokenStorage.swift in Sources */,
+				3A3D3F2B221ECD5500506F98 /* TokenViewController.swift in Sources */,
+				3A3D3F2C221ECD5500506F98 /* PlasmaCode.swift in Sources */,
+				3A3D3F2D221ECD5500506F98 /* BasicSegmentedControl.swift in Sources */,
+				3A3D3F2E221ECD5500506F98 /* KeychainService.swift in Sources */,
+				3A3D3F2F221ECD5500506F98 /* ERC20Token.swift in Sources */,
+				3A3D3F30221ECD5500506F98 /* PrivateKeyViewController.swift in Sources */,
+				3A3D3F31221ECD5500506F98 /* LabelExtension.swift in Sources */,
+				3A3D3F32221ECD5500506F98 /* CurrentToken.swift in Sources */,
+				3A3D3F33221ECD5500506F98 /* NetworksService.swift in Sources */,
+				3A3D3F34221ECD5500506F98 /* OnboardingViewController.swift in Sources */,
+				3A3D3F35221ECD5500506F98 /* CreditCell.swift in Sources */,
+				3A3D3F36221ECD5500506F98 /* SearchTokenCell.swift in Sources */,
+				3A3D3F37221ECD5500506F98 /* TransactionsHistoryVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F38221ECD5500506F98 /* PayForCheque.swift in Sources */,
+				3A3D3F39221ECD5500506F98 /* TableCredit.swift in Sources */,
+				3A3D3F3A221ECD5500506F98 /* SendMoneyVC+QRCodeReaderViewControllerDelegate.swift in Sources */,
+				3A3D3F3B221ECD5500506F98 /* Constants.swift in Sources */,
+				3A3D3F3C221ECD5500506F98 /* ColorExtension.swift in Sources */,
+				3A3D3F3D221ECD5500506F98 /* BuffiParser.swift in Sources */,
+				3A3D3F3E221ECD5500506F98 /* AddContactViewController.swift in Sources */,
+				3A3D3F3F221ECD5500506F98 /* ContractsService.swift in Sources */,
+				3A3D3F40221ECD5500506F98 /* WalletTransactions.swift in Sources */,
+				3A3D3F41221ECD5500506F98 /* TextViewExtension.swift in Sources */,
+				3A3D3F42221ECD5500506F98 /* Interactor.swift in Sources */,
+				3A3D3F43221ECD5500506F98 /* BalanceJSON.swift in Sources */,
+				3A3D3F44221ECD5500506F98 /* WalletCell.swift in Sources */,
+				3A3D3F45221ECD5500506F98 /* WalletsViewController.swift in Sources */,
+				3A3D3F46221ECD5500506F98 /* SendMoneyVC+Actions.swift in Sources */,
+				3A3D3F47221ECD5500506F98 /* ContactEquatable.swift in Sources */,
+				3A3D3F48221ECD5500506F98 /* SettingsInteractor.swift in Sources */,
+				3A3D3F49221ECD5500506F98 /* ContactsVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F4A221ECD5500506F98 /* EIP681.swift in Sources */,
+				3A3D3F4B221ECD5500506F98 /* AcceptChequeFormVC+TextFieldDelegate.swift in Sources */,
+				3A3D3F4C221ECD5500506F98 /* Web3Network.swift in Sources */,
+				3A3D3F4D221ECD5500506F98 /* DoubleExtension.swift in Sources */,
+				3A3D3F4E221ECD5500506F98 /* Colors.swift in Sources */,
+				3A3D3F4F221ECD5500506F98 /* TokenCell.swift in Sources */,
+				3A3D3F50221ECD5500506F98 /* SettingsVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F51221ECD5500506F98 /* BasicViewController.swift in Sources */,
+				3A3D3F52221ECD5500506F98 /* WalletCreating.swift in Sources */,
+				3A3D3F53221ECD5500506F98 /* PublicKeyViewController.swift in Sources */,
+				3A3D3F54221ECD5500506F98 /* DepositCell.swift in Sources */,
+				3A3D3F55221ECD5500506F98 /* CreditsViewController.swift in Sources */,
+				3A3D3F56221ECD5500506F98 /* FloatExtension.swift in Sources */,
+				3A3D3F57221ECD5500506F98 /* TableTokens.swift in Sources */,
+				3A3D3F58221ECD5500506F98 /* SendMoneyVC+TextFieldDelegate.swift in Sources */,
+				3A3D3F59221ECD5500506F98 /* PincodeCreationStatus.swift in Sources */,
+				3A3D3F5A221ECD5500506F98 /* BackupViewController.swift in Sources */,
+				3A3D3F5B221ECD5500506F98 /* WriteTranscationInfo.swift in Sources */,
+				3A3D3F5C221ECD5500506F98 /* EnterPincodeViewController.swift in Sources */,
+				3A3D3F5D221ECD5500506F98 /* WalletVC+Actions.swift in Sources */,
+				3A3D3F5E221ECD5500506F98 /* TabBarController.swift in Sources */,
+				3A3D3F5F221ECD5500506F98 /* Franklin.swift in Sources */,
+				3A3D3F60221ECD5500506F98 /* GenericParsedURL.swift in Sources */,
+				3A3D3F61221ECD5500506F98 /* ContactsService.swift in Sources */,
+				3A3D3F62221ECD5500506F98 /* Errors.swift in Sources */,
+				3A3D3F63221ECD5500506F98 /* NameHash.swift in Sources */,
+				3A3D3F64221ECD5500506F98 /* WalletsCoordinator.swift in Sources */,
+				3A3D3F65221ECD5500506F98 /* WalletVC+CardCellDelegate.swift in Sources */,
+				3A3D3F66221ECD5500506F98 /* SearchControllerExtension.swift in Sources */,
+				3A3D3F67221ECD5500506F98 /* BasicButtons.swift in Sources */,
+				3A3D3F68221ECD5500506F98 /* SettingsCell.swift in Sources */,
+				3A3D3F69221ECD5500506F98 /* SendMoneyController.swift in Sources */,
+				3A3D3F6A221ECD5500506F98 /* TableHeader.swift in Sources */,
+				3A3D3F6B221ECD5500506F98 /* BasicTableView.swift in Sources */,
+				3A3D3F6C221ECD5500506F98 /* WalletEquatable.swift in Sources */,
+				3A3D3F6D221ECD5500506F98 /* ContactsCD.xcdatamodeld in Sources */,
+				3A3D3F6E221ECD5500506F98 /* SearchTokenViewController.swift in Sources */,
+				3A3D3F6F221ECD5500506F98 /* WalletVC+TableViewExtensions.swift in Sources */,
+				3A3D3F70221ECD5500506F98 /* NavigationController.swift in Sources */,
+				3A3D3F71221ECD5500506F98 /* EIP681Model.swift in Sources */,
+				3A3D3F72221ECD5500506F98 /* ERC20TokenRate.swift in Sources */,
+				3A3D3F73221ECD5500506F98 /* Alerts.swift in Sources */,
+				3A3D3F74221ECD5500506F98 /* DateExtension.swift in Sources */,
+				3A3D3F75221ECD5500506F98 /* CardCell.swift in Sources */,
+				3A3D3F76221ECD5500506F98 /* MainSettings.swift in Sources */,
+				3A3D3F77221ECD5500506F98 /* SettingsVC+TableViewExtensions.swift in Sources */,
+				3A3D3F78221ECD5500506F98 /* PlasmaConstants.swift in Sources */,
+				3A3D3F79221ECD5500506F98 /* WalletVC+FundsDelegate.swift in Sources */,
+				3A3D3F7A221ECD5500506F98 /* AnimationController.swift in Sources */,
+				3A3D3F7B221ECD5500506F98 /* Token.swift in Sources */,
+				3A3D3F7C221ECD5500506F98 /* BasicTextField.swift in Sources */,
+				3A3D3F7D221ECD5500506F98 /* ABIs.swift in Sources */,
+				3A3D3F7E221ECD5500506F98 /* AcceptChequeController.swift in Sources */,
+				3A3D3F7F221ECD5500506F98 /* ContactsVC+TextFieldDelegate.swift in Sources */,
+				3A3D3F80221ECD5500506F98 /* WalletVC+ModalViewDelegate.swift in Sources */,
+				3A3D3F81221ECD5500506F98 /* EIP681Router.swift in Sources */,
+				3A3D3F82221ECD5500506F98 /* AddDepositViewController.swift in Sources */,
+				3A3D3F83221ECD5500506F98 /* SendMoneyVC+ScreenStatuses.swift in Sources */,
+				3A3D3F84221ECD5500506F98 /* WalletSections.swift in Sources */,
+				3A3D3F85221ECD5500506F98 /* BasicTextView.swift in Sources */,
+				3A3D3F86221ECD5500506F98 /* ERC20TokenEquatable.swift in Sources */,
+				3A3D3F87221ECD5500506F98 /* PincodeViewController.swift in Sources */,
+				3A3D3F88221ECD5500506F98 /* TokenInfoViewController.swift in Sources */,
+				3A3D3F89221ECD5500506F98 /* AddContactVC+TextFieldDelegate.swift in Sources */,
+				3A3D3F8A221ECD5500506F98 /* SettingsTableViewSections.swift in Sources */,
+				3A3D3F8B221ECD5500506F98 /* FontExtension.swift in Sources */,
+				3A3D3F8C221ECD5500506F98 /* WalletPlasma.swift in Sources */,
+				3A3D3F8D221ECD5500506F98 /* EtherCoordinator.swift in Sources */,
+				3A3D3F8E221ECD5500506F98 /* ShopViewController.swift in Sources */,
+				3A3D3F8F221ECD5500506F98 /* WalletViewController.swift in Sources */,
+				3A3D3F90221ECD5500506F98 /* CreatePincodeViewController.swift in Sources */,
+				3A3D3F91221ECD5500506F98 /* AppDelegate.swift in Sources */,
+				3A3D3F92221ECD5500506F98 /* CreditsCoordinator.swift in Sources */,
+				3A3D3F93221ECD5500506F98 /* FundsCell.swift in Sources */,
+				3A3D3F94221ECD5500506F98 /* ContactsViewController.swift in Sources */,
+				3A3D3F95221ECD5500506F98 /* AppController.swift in Sources */,
+				3A3D3F96221ECD5500506F98 /* WalletVC+TableViewHeaderDelegate.swift in Sources */,
+				3A3D3F97221ECD5500506F98 /* WalletTransactionsHistory.swift in Sources */,
+				3A3D3F98221ECD5500506F98 /* TokenInfoCell.swift in Sources */,
+				3A3D3F99221ECD5500506F98 /* ImportType.swift in Sources */,
+				3A3D3F9A221ECD5500506F98 /* ViewExtension.swift in Sources */,
+				3A3D3F9B221ECD5500506F98 /* Parameter.swift in Sources */,
+				3A3D3F9C221ECD5500506F98 /* PlasmaURLs.swift in Sources */,
+				3A3D3F9D221ECD5500506F98 /* TableWallet.swift in Sources */,
+				3A3D3F9E221ECD5500506F98 /* WalletBlock.swift in Sources */,
+				3A3D3F9F221ECD5500506F98 /* ReadTransactionInfo.swift in Sources */,
+				3A3D3FA0221ECD5500506F98 /* Request.swift in Sources */,
+				3A3D3FA1221ECD5500506F98 /* WalletXDai.swift in Sources */,
+				3A3D3FA2221ECD5500506F98 /* XDaiURLs.swift in Sources */,
+				3A3D3FA3221ECD5500506F98 /* WalletVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
+				3A3D3FA4221ECD5500506F98 /* ContactStorage.swift in Sources */,
+				3A3D3FA5221ECD5500506F98 /* NetworksViewController.swift in Sources */,
+				3A3D3FA6221ECD5500506F98 /* CurrentWallet.swift in Sources */,
+				3A3D3FA7221ECD5500506F98 /* AddWalletViewController.swift in Sources */,
+				3A3D3FA8221ECD5500506F98 /* XDai.swift in Sources */,
+				3A3D3FA9221ECD5500506F98 /* SettingsModels.swift in Sources */,
+				3A3D3FAA221ECD5500506F98 /* ETHTransactionEquatable.swift in Sources */,
+				3A3D3FAB221ECD5500506F98 /* DeeplinkPayViewController.swift in Sources */,
+				3A3D3FAC221ECD5500506F98 /* SettingsViewController.swift in Sources */,
+				3A3D3FAD221ECD5500506F98 /* Ether.swift in Sources */,
+				3A3D3FAE221ECD5500506F98 /* ContactTableCell.swift in Sources */,
+				3A3D3FAF221ECD5500506F98 /* WalletVC+QRCodeReaderViewControllerDelegate.swift in Sources */,
+				3A3D3FB0221ECD5500506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift in Sources */,
+				3A3D3FB1221ECD5500506F98 /* WalletsService.swift in Sources */,
+				3A3D3FB2221ECD5500506F98 /* DismissAnimator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3607,6 +4300,62 @@
 			};
 			name = Release;
 		};
+		3A3D4015221ECD5500506F98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */;
+			buildSettings = {
+				APP_ICON_NAME = AppIcon.alpha;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.alpha;
+				BUNDLE_ID_SUFFIX = "-alpha";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Franklin/Franklin.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				IBSC_MODULE = "$(PRODUCT_MODULE_NAME)";
+				INFOPLIST_FILE = "$(SRCROOT)/AlphaInfo.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "inc.matter.Franklin-alpha";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3A3D4016221ECD5500506F98 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */;
+			buildSettings = {
+				APP_ICON_NAME = AppIcon.alpha;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.alpha;
+				BUNDLE_ID_SUFFIX = "-alpha";
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Franklin/Franklin.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 5UH69GW6GE;
+				INFOPLIST_FILE = "$(SRCROOT)/AlphaInfo.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "inc.matter.Franklin-alpha";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = RELEASE;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		91B6A7A321435F5E0033A045 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3837,6 +4586,15 @@
 			buildConfigurations = (
 				3A3D3EF5221E9B0000506F98 /* Debug */,
 				3A3D3EF6221E9B0000506F98 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3A3D4014221ECD5500506F98 /* Build configuration list for PBXNativeTarget "FranklinAlpha" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3A3D4015221ECD5500506F98 /* Debug */,
+				3A3D4016221ECD5500506F98 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

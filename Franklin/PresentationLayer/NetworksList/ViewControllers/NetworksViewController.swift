@@ -17,13 +17,23 @@ class NetworksViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupNavigation()
         self.setupTableView()
     }
     
-    func setupNavigation() {
-        navigationItem.title = "Networks"
-        navigationController?.navigationBar.isHidden = false
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setNavigation(hidden: false)
+        getNetworks()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
     }
     
     private func setupTableView() {
@@ -35,11 +45,6 @@ class NetworksViewController: BasicViewController {
         networksTableView.tableFooterView = footerView
         networksTableView.register(nibToken, forCellReuseIdentifier: "NetworksCell")
         networks.removeAll()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        getNetworks()
     }
 
     func getNetworks() {

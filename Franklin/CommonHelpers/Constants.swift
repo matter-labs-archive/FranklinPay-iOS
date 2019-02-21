@@ -121,12 +121,12 @@ public struct Constants {
         static let heightCoef: CGFloat = 0.08
         public struct Balance {
             static let font = Constants.Fonts.regular
-            static let size: CGFloat = 24
+            static let size: CGFloat = 20
             static let color = Colors.textBlack
         }
         public struct Title {
             static let font = Constants.Fonts.regular
-            static let size: CGFloat = 24
+            static let size: CGFloat = 20
             static let color = Colors.textBlack
         }
     }
@@ -194,7 +194,7 @@ public struct Constants {
     }
     
     public struct Headers {
-        static let leftItemWalletFontSize: CGFloat = 28
+        static let leftItemWalletFontSize: CGFloat = 24
         static let rightItemWalletFontSize: CGFloat = 36
         static let leftItemTransactionsFontSize: CGFloat = 24
         public struct Heights {
