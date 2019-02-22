@@ -24,16 +24,16 @@ class OnboardingViewController: BasicViewController {
     
     // MARK: - Internal lets
     
-    let walletCreating = WalletCreating()
-    let appController = AppController()
-    let alerts = Alerts()
-    var walletCreated = false
+    internal let walletCreating = WalletCreating()
+    internal let appController = AppController()
+    internal let alerts = Alerts()
+    internal var walletCreated = false
     
     // MARK: - Lazy vars
     
     weak var animationTimer: Timer?
     
-    // MARK: - Lifesycle
+    // MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()

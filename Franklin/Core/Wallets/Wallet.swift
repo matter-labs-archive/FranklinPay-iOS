@@ -50,7 +50,7 @@ public class Wallet: IWallet {
     
     internal var web3Instance: web3? {
         get {
-            let web3 = CurrentNetwork.currentWeb
+            let web3 = CurrentNetwork.currentNetwork.getWeb()
             let keystoreManager = self.keystoreManager
             web3?.addKeystoreManager(keystoreManager)
             return web3

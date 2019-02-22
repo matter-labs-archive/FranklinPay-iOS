@@ -70,9 +70,9 @@ class AcceptChequeFormController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
-        self.mainSetup()
-        self.setupTextFields()
+        hideKeyboardWhenTappedAround()
+        mainSetup()
+        setupTextFields()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,35 +88,35 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     func setupContact() {
-        self.amountLabel.text = self.cheque.amount + " ETH"
-        let name = self.isContactExists(address: self.cheque.address) ?? "Unknown contact"
-        self.contactName.text = name
-        self.contactAddress.text = self.cheque.address.address
+        amountLabel.text = cheque.amount + " ETH"
+        let name = isContactExists(address: cheque.address) ?? "Unknown contact"
+        contactName.text = name
+        contactAddress.text = cheque.address.address
         let blockies = Blockies(seed: cheque.address.address, size: 5, scale: 4, color: Colors.mainGreen, bgColor: Colors.mostLightGray, spotColor: Colors.mainBlue)
         let img = blockies.createImage()
-        self.contactImage.layer.cornerRadius = Constants.TableContact.cornerRadius
-        self.contactImage.clipsToBounds = true
-        self.contactImage.image = img
-        self.contactAddress.font = UIFont(name: Constants.TableContact.font,
+        contactImage.layer.cornerRadius = Constants.TableContact.cornerRadius
+        contactImage.clipsToBounds = true
+        contactImage.image = img
+        contactAddress.font = UIFont(name: Constants.TableContact.font,
                                           size: Constants.TableContact.minimumFontSize)
-        //self.contactAddress.adjustsFontSizeToFitWidth = true
-        self.contactAddress.fitTextToBounds()
+        //contactAddress.adjustsFontSizeToFitWidth = true
+        contactAddress.fitTextToBounds()
     }
     
     func mainSetup() {
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         
-        self.contentView.backgroundColor = Constants.ModalView.ContentView.backgroundColor
-        self.contentView.alpha = 1
-        self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
-        self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
-        self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
+        contentView.backgroundColor = Constants.ModalView.ContentView.backgroundColor
+        contentView.alpha = 1
+        contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
+        contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
+        contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissView))
+                                                                 action: #selector(dismissView))
         tap.cancelsTouchesInView = false
         
         backgroundView.addGestureRecognizer(tap)
@@ -131,13 +131,13 @@ class AcceptChequeFormController: BasicViewController {
     
     @objc func fireTimer() {
         animationTimer?.invalidate()
-        self.showAccepted(animated: true)
+        showAccepted(animated: true)
     }
     
     // MARK: - Screen status
     
     func showStart(animated: Bool) {
-        self.screenStatus = .start
+        screenStatus = .start
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.titleLabel.text = "You got a cheque!"
@@ -159,8 +159,8 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     func showAccepting(animated: Bool) {
-        self.screenStatus = .accepting
-        self.updateFranklinBalance()
+        screenStatus = .accepting
+        updateFranklinBalance()
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
                 self.titleLabel.text = "You got a cheque!"
@@ -182,7 +182,7 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     @objc func showAccepted(animated: Bool) {
-        self.screenStatus = .accepted
+        screenStatus = .accepted
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.successIcon.alpha = 1
@@ -211,7 +211,7 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     @objc func showSave(animated: Bool) {
-        self.screenStatus = .save
+        screenStatus = .save
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.titleLabel.text = "Save as contact"
@@ -234,7 +234,7 @@ class AcceptChequeFormController: BasicViewController {
     }
     
     func accepting() {
-        self.animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        animationTimer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
     }
     
     // MARK: - Checks
@@ -285,9 +285,9 @@ class AcceptChequeFormController: BasicViewController {
         let contact = Contact(address: cheque.address.address, name: name)
         do {
             try contact.saveContact()
-            self.dismissView()
+            dismissView()
         } catch let error {
-            alerts.showErrorAlert(for: self, error: error) {
+            alerts.showErrorAlert(for: self, error: error) { [unowned self] in
                 self.dismissView()
             }
         }
@@ -296,12 +296,12 @@ class AcceptChequeFormController: BasicViewController {
     // MARK: - Button actions
     
     @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: false)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+        dismissView()
     }
     
     @IBAction func topButtonAction(_ sender: UIButton) {

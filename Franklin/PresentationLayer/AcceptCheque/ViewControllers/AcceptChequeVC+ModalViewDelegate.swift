@@ -11,7 +11,7 @@ import UIKit
 extension AcceptChequeController: ModalViewDelegate {
     func modalViewBeenDismissed(updateNeeded: Bool) {
         DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: { [unowned self] in
                 self.topViewForModalAnimation.alpha = 0
                 self.titleLabel.alpha = 0
                 self.goToApp()
@@ -24,7 +24,7 @@ extension AcceptChequeController: ModalViewDelegate {
             creatingWallet()
         }
         DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: {
+            UIView.animate(withDuration: Constants.ModalView.animationDuration, animations: { [unowned self] in
                 self.topViewForModalAnimation.alpha = Constants.ModalView.ShadowView.alpha
                 self.titleLabel.alpha = 1.0
             })

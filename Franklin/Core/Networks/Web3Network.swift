@@ -75,4 +75,35 @@ public class Web3Network: IWeb3Network {
             throw resErr
         }
     }
+    
+    public func getWeb() -> web3? {
+        let w3: web3
+        switch self.id {
+        case 1:
+            w3 = Web3.InfuraMainnetWeb3()
+        case 4:
+            w3 = Web3.InfuraRinkebyWeb3()
+        case 3:
+            w3 = Web3.InfuraRopstenWeb3()
+        case 100:
+            let url = URL(string: "https://dai.poa.network")!
+            let infura = Web3HttpProvider(url, network: nil, keystoreManager: nil)!
+            w3 = web3(provider: infura)
+        default:
+            return nil
+        }
+        return w3
+    }
+    
+    func isXDai() -> Bool {
+        return self.id == 100
+    }
+    
+    func isMainnet() -> Bool {
+        return self == Web3Network(network: .Mainnet)
+    }
+    
+    func isRinkebi() -> Bool {
+        return self == Web3Network(network: .Rinkeby)
+    }
 }

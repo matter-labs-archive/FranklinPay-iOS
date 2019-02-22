@@ -10,17 +10,21 @@ import UIKit
 
 class CreatePincodeViewController: PincodeViewController {
     
-    let userDefaults = UserDefaultKeys()
+    // MARK: - Internal vars
+    
+    internal let userDefaults = UserDefaultKeys()
 
-    var pincode: String = ""
-    var repeatedPincode: String = ""
-    var status: PincodeCreationStatus = .new
+    internal var pincode: String = ""
+    internal var repeatedPincode: String = ""
+    internal var status: PincodeCreationStatus = .new
 
-    var pincodeItems: [KeychainPasswordItem] = []
+    internal var pincodeItems: [KeychainPasswordItem] = []
+    
+    // MARK: - Lyfesycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         disableBiometricsButton(true)
         changePincodeStatus(.new)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
@@ -36,6 +40,8 @@ class CreatePincodeViewController: PincodeViewController {
         setNavigation(hidden: true)
     }
     
+    // MARK: - Main setup
+    
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
@@ -45,6 +51,8 @@ class CreatePincodeViewController: PincodeViewController {
         biometricsButton.alpha = disable ? 0.0 : 1.0
         biometricsButton.isUserInteractionEnabled = !disable
     }
+    
+    // MARK: - Actions
 
     override func numberPressedAction(number: String) {
         if status == .new {
@@ -97,17 +105,15 @@ class CreatePincodeViewController: PincodeViewController {
     }
     
     func savePincode() {
-        DispatchQueue.global().async { [weak self] in
+        DispatchQueue.global().async { [unowned self] in
             do {
                 let pincodeItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPincode,
                                                        account: "pincode",
                                                        accessGroup: KeychainConfiguration.accessGroup)
-                guard let pin = self?.pincode else {
-                    fatalError("Error updating keychain - \(Errors.CommonErrors.unknownError)")
-                }
+                let pin = self.pincode
                 try pincodeItem.savePassword(pin)
-                self?.userDefaults.setPincodeExists()
-                self?.finish()
+                self.userDefaults.setPincodeExists()
+                self.finish()
             } catch let error {
                 fatalError("Error updating keychain for pin - \(error)")
             }
@@ -118,9 +124,5 @@ class CreatePincodeViewController: PincodeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
             self.navigationController?.popViewController(animated: true)
         })
-    }
-    
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
     }
 }

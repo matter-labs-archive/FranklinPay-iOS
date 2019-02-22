@@ -39,7 +39,7 @@ public class TokensService: ITokensService {
     }
     
     public var web3Instance: web3? {
-        guard let web3 = CurrentNetwork.currentWeb,
+        guard let web3 = CurrentNetwork.currentNetwork.getWeb(),
             let wallet = CurrentWallet.currentWallet else {return nil}
         let keystoreManager = wallet.keystoreManager
         web3.addKeystoreManager(keystoreManager)

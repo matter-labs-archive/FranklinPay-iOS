@@ -11,33 +11,41 @@ import LocalAuthentication
 import Web3swift
 
 class EnterPincodeViewController: PincodeViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var closeButton: UIButton!
     
-    var pincode: String = ""
-    var status: PincodeEnterStatus = .enter
-
-    var enterCase: EnterPincodeCases = .enterWallet
-    var plasmaTX: PlasmaTransaction?
-    var etherTX: WriteTransaction?
+    // MARK: - Internal vars
     
-    let alerts = Alerts()
-    let plasmaService = PlasmaService()
-    let appController = AppController()
+    internal var pincode: String = ""
+    internal var status: PincodeEnterStatus = .enter
+
+    internal var enterCase: EnterPincodeCases = .enterWallet
+    internal var plasmaTX: PlasmaTransaction?
+    internal var etherTX: WriteTransaction?
+    
+    internal let alerts = Alerts()
+    internal let plasmaService = PlasmaService()
+    internal let appController = AppController()
+    
+    // MARK: - Inits
     
     convenience init<T>(for enterCase: EnterPincodeCases, data: T?) {
         self.init()
         self.enterCase = enterCase
         if T.self == PlasmaTransaction.self {
-            self.plasmaTX = data as? PlasmaTransaction
+            plasmaTX = data as? PlasmaTransaction
         } else if T.self == WriteTransaction.self {
-            self.etherTX = data as? WriteTransaction
+            etherTX = data as? WriteTransaction
         }
     }
     
+    // MARK: - Lifesycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         changePincodeStatus(.enter)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
@@ -49,11 +57,11 @@ class EnterPincodeViewController: PincodeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.setNavigationBarHidden(true, animated: false)
         
-        if self.enterCase == .enterWallet {
-            self.closeButton.alpha = 0
-            self.closeButton.isUserInteractionEnabled = false
+        if enterCase == .enterWallet {
+            closeButton.alpha = 0
+            closeButton.isUserInteractionEnabled = false
         }
         
         let context = LAContext()
@@ -63,6 +71,8 @@ class EnterPincodeViewController: PincodeViewController {
             biometricsButton.isUserInteractionEnabled = false
         }
     }
+    
+    // MARK: - Screen status
 
     func disableBiometricsButton(_ disable: Bool = false) {
         biometricsButton.alpha = disable ? 0.0 : 1.0
@@ -79,6 +89,8 @@ class EnterPincodeViewController: PincodeViewController {
             enterWithPincode()
         }
     }
+    
+    // MARK: - Actions
     
     override func numberPressedAction(number: String) {
         if status == .enter {
@@ -126,9 +138,9 @@ class EnterPincodeViewController: PincodeViewController {
             let reason = "Authenticate with " + type
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics,
                                    localizedReason: reason,
-                                   reply: { [weak self] (success, _) in
+                                   reply: { [unowned self] (success, _) in
                                     if success {
-                                        self?.enterWithPincode()
+                                        self.enterWithPincode()
                                     }
             })
         }
@@ -150,25 +162,25 @@ class EnterPincodeViewController: PincodeViewController {
         switch enterCase {
         case .transaction:
             break
-//            if let etherTx = self.etherTX {
+//            if let etherTx = etherTX {
 //                sendEtherTx(etherTx)
-//            } else if let plasmaTX = self.plasmaTX {
+//            } else if let plasmaTX = plasmaTX {
 //                sendPlasmaTx(plasmaTX)
 //            } else {
 //                alerts.showErrorAlert(for: self, error: "Transaction is wrong") { [unowned self] in
-//                    self.returnToStartTab()
+//                    returnToStartTab()
 //                }
 //            }
         default:
-            self.returnToStartTab()
+            returnToStartTab()
         }
     }
 
 //    func sendPlasmaTx(_ tx: PlasmaTransaction) {
 //        DispatchQueue.global().async { [unowned self] in
 //            guard let wallet = CurrentWallet.currentWallet else {
-//                self.alerts.showErrorAlert(for: self, error: "Can't figure wallet to use") {
-//                    self.returnToStartTab()
+//                alerts.showErrorAlert(for: self, error: "Can't figure wallet to use") {
+//                    returnToStartTab()
 //                }
 //                return
 //            }
@@ -178,8 +190,8 @@ class EnterPincodeViewController: PincodeViewController {
 //            } else if CurrentNetwork.currentNetwork == Web3Network(network: .Rinkeby) {
 //                testnet = true
 //            } else {
-//                self.alerts.showErrorAlert(for: self, error: "Wrong network \(CurrentNetwork.currentNetwork.name), please choose Mainnet or Rinkeby for tests") {
-//                    self.returnToStartTab()
+//                alerts.showErrorAlert(for: self, error: "Wrong network \(CurrentNetwork.currentNetwork.name), please choose Mainnet or Rinkeby for tests") {
+//                    returnToStartTab()
 //                }
 //                return
 //            }
@@ -189,19 +201,19 @@ class EnterPincodeViewController: PincodeViewController {
 //                let privateKeyData = Data(hex: privateKey)
 //                let signedTx = try tx.sign(privateKey: privateKeyData)
 //
-//                let result = try self.plasmaService.sendRawTX(transaction: signedTx, onTestnet: testnet)
+//                let result = try plasmaService.sendRawTX(transaction: signedTx, onTestnet: testnet)
 //                if result {
-//                    self.alerts.showSuccessAlert(for: self) {
-//                        self.returnToStartTab()
+//                    alerts.showSuccessAlert(for: self) {
+//                        returnToStartTab()
 //                    }
 //                } else {
-//                    self.alerts.showErrorAlert(for: self, error: "Sending failed") {
-//                        self.returnToStartTab()
+//                    alerts.showErrorAlert(for: self, error: "Sending failed") {
+//                        returnToStartTab()
 //                    }
 //                }
 //            } catch let error {
-//                self.alerts.showErrorAlert(for: self, error: error) {
-//                    self.returnToStartTab()
+//                alerts.showErrorAlert(for: self, error: error) {
+//                    returnToStartTab()
 //                }
 //            }
 //        }
@@ -210,8 +222,8 @@ class EnterPincodeViewController: PincodeViewController {
 //    func sendEtherTx(_ tx: WriteTransaction) {
 //        DispatchQueue.global().async { [unowned self] in
 //            guard let wallet = CurrentWallet.currentWallet else {
-//                self.alerts.showErrorAlert(for: self, error: "Can't figure wallet to use") {
-//                    self.navigationController?.popViewController(animated: true)
+//                alerts.showErrorAlert(for: self, error: "Can't figure wallet to use") {
+//                    navigationController?.popViewController(animated: true)
 //                }
 //                return
 //            }
@@ -219,12 +231,12 @@ class EnterPincodeViewController: PincodeViewController {
 //                let password = try wallet.getPassword()
 //                let result = try tx.send(password: password, transactionOptions: nil)
 //                let hash = result.hash
-//                self.alerts.showSuccessAlert(for: self, with: "Transaction hash: \(hash)", completion: {
-//                    self.returnToStartTab()
+//                alerts.showSuccessAlert(for: self, with: "Transaction hash: \(hash)", completion: {
+//                    returnToStartTab()
 //                })
 //            } catch let error {
-//                self.alerts.showErrorAlert(for: self, error: error) {
-//                    self.returnToStartTab()
+//                alerts.showErrorAlert(for: self, error: error) {
+//                    returnToStartTab()
 //                }
 //            }
 //
@@ -233,7 +245,7 @@ class EnterPincodeViewController: PincodeViewController {
 
     func returnToStartTab() {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.25) { [unowned self] in
-            UIView.animate(withDuration: Constants.Main.animationDuration) {
+            UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.alpha = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                     let tabViewController = self.appController.goToApp()
@@ -248,11 +260,6 @@ class EnterPincodeViewController: PincodeViewController {
                 })
             }
         }
-//        DispatchQueue.main.async {
-//            let startViewController = AppController().goToApp()
-//            startViewController.view.backgroundColor = Colors.background
-//            UIApplication.shared.keyWindow?.rootViewController = startViewController
-//        }
     }
     
 }

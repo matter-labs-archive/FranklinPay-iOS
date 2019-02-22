@@ -10,6 +10,8 @@ import UIKit
 import QRCodeReader
 
 class SearchTokenViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var searchTextField: BasicTextField!
     @IBOutlet weak var tokensTableView: BasicTableView!
@@ -17,19 +19,24 @@ class SearchTokenViewController: BasicViewController {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
     
-    var ratesUpdating = false
+    // MARK: - Internal vars
+    
+    internal var ratesUpdating = false
 
-    var tokensList: [ERC20Token] = []
-    var tokensAreAdded: [Bool] = []
+    internal var tokensList: [ERC20Token] = []
+    internal var tokensAreAdded: [Bool] = []
 
-    var searchController: UISearchController!
+    internal  var searchController: UISearchController!
+    internal var wallet: Wallet?
 
-    var wallet: Wallet?
-
-    let tokensService = TokensService()
-    let alerts = Alerts()
+    internal let tokensService = TokensService()
+    internal let alerts = Alerts()
+    
+    // MARK: - weak vars
     
     weak var delegate: ModalViewDelegate?
+    
+    // MARK: - lazy vars
 
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -37,11 +44,15 @@ class SearchTokenViewController: BasicViewController {
         }
         return QRCodeReaderViewController(builder: builder)
     }()
+    
+    // MARK: - Inits
 
     convenience init(for wallet: Wallet) {
         self.init()
         self.wallet = wallet
     }
+    
+    // MARK: - Lifesycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +63,13 @@ class SearchTokenViewController: BasicViewController {
         self.mainSetup()
         self.setupSearch()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        makeHelpLabel(enabled: true)
+    }
+    
+    // MARK: - Main setup
     
     func mainSetup() {
         view.backgroundColor = UIColor.clear
@@ -89,29 +107,11 @@ class SearchTokenViewController: BasicViewController {
         self.tokensTableView.register(nibAddress, forCellReuseIdentifier: "AddressTableViewCell")
     }
     
+    // MARK: - Actions
+    
     func clearData() {
         self.tokensList.removeAll()
         self.tokensAreAdded.removeAll()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-        makeHelpLabel(enabled: true)
-    }
-
-    @objc func scanTapped() {
-        readerVC.delegate = self
-        self.readerVC.modalPresentationStyle = .formSheet
-        self.present(readerVC, animated: true)
-    }
-
-    @objc func textFromBuffer() {
-        if let string = UIPasteboard.general.string {
-            self.searchTextField.text = string
-//            DispatchQueue.main.async { [weak self] in
-//                self?.searchBar(searchBar, textDidChange: string)
-//            }
-        }
     }
     
     func searchTokens(string: String) {
@@ -158,6 +158,8 @@ class SearchTokenViewController: BasicViewController {
         reloadTableData()
     }
     
+    // MARK: - Table view updates
+    
     func reloadTableData() {
         DispatchQueue.main.async { [unowned self] in
             self.tokensTableView.reloadData()
@@ -186,6 +188,8 @@ class SearchTokenViewController: BasicViewController {
         completion()
     }
     
+    // MARK: - Buttons actions
+    
     @IBAction func closeAction(_ sender: UIButton) {
         self.dismissView()
     }
@@ -194,110 +198,19 @@ class SearchTokenViewController: BasicViewController {
         self.dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
-}
-
-extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tokensList.isEmpty {
-            return 1
-        } else {
-            return tokensList.count
-        }
+    
+    @objc func scanTapped() {
+        readerVC.delegate = self
+        self.readerVC.modalPresentationStyle = .formSheet
+        self.present(readerVC, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if tokensList.isEmpty {
-            return CGFloat(Constants.TableCells.Heights.additionalButtons)
-        } else {
-            return CGFloat(Constants.TableCells.Heights.tokensSearch)
+    @objc func textFromBuffer() {
+        if let string = UIPasteboard.general.string {
+            self.searchTextField.text = string
+            //            DispatchQueue.main.async { [weak self] in
+            //                self?.searchBar(searchBar, textDidChange: string)
+            //            }
         }
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if !tokensList.isEmpty {
-
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchTokenCell",
-                                                           for: indexPath) as? SearchTokenCell else {
-                return UITableViewCell()
-            }
-
-            cell.configure(with: tokensList[indexPath.row], isAdded: tokensAreAdded[indexPath.row])
-            return cell
-
-        } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "AddressTableViewCell",
-                                                           for: indexPath) as? AddressTableViewCell else {
-                                                            return UITableViewCell()
-            }
-            cell.qr.addTarget(self, action: #selector(self.scanTapped), for: .touchUpInside)
-            cell.paste.addTarget(self, action: #selector(self.textFromBuffer), for: .touchUpInside)
-            return cell
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if tableView.cellForRow(at: indexPath) is AddressTableViewCell {
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
-        let token = self.tokensList[indexPath.row]
-        let isAdded = tokensAreAdded[indexPath.row]
-        guard let wallet = self.wallet else {
-            return
-        }
-        do {
-            if isAdded {
-                try wallet.delete(token: token, network: CurrentNetwork.currentNetwork)
-                tokensAreAdded[indexPath.row] = false
-                CurrentToken.currentToken = Ether()
-            } else {
-                try wallet.add(token: token, network: CurrentNetwork.currentNetwork)
-                tokensAreAdded[indexPath.row] = true
-            }
-            self.reloadTableData()
-        } catch let error {
-            alerts.showErrorAlert(for: self, error: error, completion: nil)
-        }
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-}
-
-extension SearchTokenViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let currentText = (textField.text ?? "") as NSString
-        let newText = currentText.replacingCharacters(in: range, with: string) as String
-        if newText == "" {
-            emptyTokensList()
-            makeHelpLabel(enabled: true)
-        } else {
-            let token = newText
-            makeHelpLabel(enabled: false)
-            searchTokens(string: token)
-        }
-        return true
-    }
-}
-
-extension SearchTokenViewController: QRCodeReaderViewControllerDelegate {
-    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-        reader.stopScanning()
-        let searchText = result.value.lowercased()
-        self.searchTextField.text = searchText
-        reader.dismiss(animated: true)
-//        DispatchQueue.main.async { [weak self] in
-//
-//            self?.searchBar(searchBar, textDidChange: searchText)
-//        }
-    }
-
-    func readerDidCancel(_ reader: QRCodeReaderViewController) {
-        reader.stopScanning()
-        reader.dismiss(animated: true)
     }
 }

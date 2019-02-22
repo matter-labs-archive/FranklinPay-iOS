@@ -217,7 +217,7 @@ class WalletViewController: BasicViewController {
 //            var index = 0
             var newTokens = [TableToken]()
             var xdaiTokens: [ERC20Token] = []
-            if CurrentNetwork().isXDai() {
+            if CurrentNetwork.currentNetwork.isXDai() {
                 if let wallet = tokens.first?.inWallet {
                     if let ts = try? wallet.getXDAITokens() {
                         xdaiTokens = ts
@@ -229,7 +229,7 @@ class WalletViewController: BasicViewController {
                 let currentToken = tabToken.token
                 let currentWallet = tabToken.inWallet
                 var balance: String
-                if CurrentNetwork().isXDai() && currentToken.isXDai() {
+                if CurrentNetwork.currentNetwork.isXDai() && currentToken.isXDai() {
                     balance = "0.0"
                     if let xdaiBalance = try? currentWallet.getXDAIBalance() {
                         if let db = Double(xdaiBalance) {
@@ -238,9 +238,9 @@ class WalletViewController: BasicViewController {
                             balance = str
                         }
                     }
-                } else if !CurrentNetwork().isXDai() || (currentToken.isEther() || currentToken.isDai()) {
+                } else if !CurrentNetwork.currentNetwork.isXDai() || (currentToken.isEther() || currentToken.isDai()) {
                     balance = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
-                } else if CurrentNetwork().isXDai() {
+                } else if CurrentNetwork.currentNetwork.isXDai() {
                     balance = "0.0"
                     for t in xdaiTokens where t == currentToken {
                         if let b = t.balance {

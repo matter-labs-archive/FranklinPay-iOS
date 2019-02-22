@@ -13,6 +13,8 @@ import EthereumAddress
 
 class WalletImportingViewController: BasicViewController {
     
+    // MARK: - Outlets
+    
     @IBOutlet weak var importTypeControl: SegmentedControl!
     @IBOutlet weak var textView: BasicTextView!
     @IBOutlet weak var inputType: UILabel!
@@ -23,17 +25,22 @@ class WalletImportingViewController: BasicViewController {
     @IBOutlet weak var animationImageView: UIImageView!
     @IBOutlet weak var settingUp: UILabel!
     
-    var activeView: UITextView?
-    var lastOffset: CGPoint!
-    var keyboardHeight: CGFloat!
+    // MARK: - Internal vars
     
-    let walletsService = WalletsService()
-    let appController = AppController()
-    let userDefaults = UserDefaultKeys()
-    let alerts = Alerts()
-    var walletCreated = false
+    internal var activeView: UITextView?
+
+    internal let appController = AppController()
+    internal let walletCreating = WalletCreating()
+    internal let alerts = Alerts()
+    
+    internal var walletCreated = false
+    
+    // MARK: - Weak vars
+    
     weak var animationTimer: Timer?
     weak var delegate: ModalViewDelegate?
+    
+    // MARK: - Lazy vars
 
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
@@ -43,10 +50,12 @@ class WalletImportingViewController: BasicViewController {
         return QRCodeReaderViewController(builder: builder)
     }()
     
+    // MARK: - Lifesycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainSetup()
-        self.setImportView()
+        mainSetup()
+        setImportView()
         // Do any additional setup after loading the view.
     }
     
@@ -60,6 +69,8 @@ class WalletImportingViewController: BasicViewController {
         setNavigation(hidden: true)
     }
     
+    // MARK: - Main setup
+    
     func mainSetup() {
         
         animationImageView.setGifImage(UIImage(gifName: "loading.gif"))
@@ -69,17 +80,17 @@ class WalletImportingViewController: BasicViewController {
         animationImageView.alpha = 0
         animationImageView.isUserInteractionEnabled = false
         
-        self.view.backgroundColor = Colors.background
-        self.contentView.backgroundColor = Colors.background
-        self.inputType.textColor = Colors.textDarkGray
-        self.tapToQR.textColor = Colors.textDarkGray
-        self.qr.setImage(UIImage(named: "photo"), for: .normal)
-        self.textView.delegate = self
+        view.backgroundColor = Colors.background
+        contentView.backgroundColor = Colors.background
+        inputType.textColor = Colors.textDarkGray
+        tapToQR.textColor = Colors.textDarkGray
+        qr.setImage(UIImage(named: "photo"), for: .normal)
+        textView.delegate = self
         
          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
         
-        self.contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
+        contentView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(returnTextView(gesture:))))
     }
     
     func setNavigation(hidden: Bool) {
@@ -87,61 +98,44 @@ class WalletImportingViewController: BasicViewController {
         navigationController?.makeClearNavigationController()
     }
     
-    @objc func returnTextView(gesture: UIGestureRecognizer) {
-        guard activeView != nil else {
-            return
-        }
-        activeView?.resignFirstResponder()
-        activeView = nil
-    }
-
-    @IBAction func qrScanTapped(_ sender: Any) {
-        readerVC.delegate = self
-        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
-        }
-        readerVC.modalPresentationStyle = .formSheet
-        present(readerVC, animated: true, completion: nil)
-    }
-    
-    @IBAction func changeImportType(_ sender: UISegmentedControl) {
-        self.setImportView()
-    }
-    
     func setImportView() {
-        switch self.importTypeControl.selectedSegmentIndex {
+        switch importTypeControl.selectedSegmentIndex {
         case ImportType.passphrase.rawValue:
-            self.setPassphraseView()
+            setPassphraseView()
         default:
-            self.setPrivateKeyView()
+            setPrivateKeyView()
         }
     }
     
     func setPassphraseView() {
-        self.inputType.text = "PASSPHRASE"
-        self.importButton.setTitle("IMPORT", for: .normal)
+        inputType.text = "PASSPHRASE"
+        importButton.setTitle("IMPORT", for: .normal)
     }
     
     func setPrivateKeyView() {
-        self.inputType.text = "PRIVATE KEY"
-        self.importButton.setTitle("IMPORT", for: .normal)
+        inputType.text = "PRIVATE KEY"
+        importButton.setTitle("IMPORT", for: .normal)
     }
     
+    // MARK: - Animation
+    
     func animation() {
-        self.animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
-        self.animateIndicator()
+        navigationController?.navigationBar.isHidden = true
+        animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        animateIndicator()
     }
     
     @objc func fireTimer() {
         animationTimer?.invalidate()
         if walletCreated {
-            self.goToApp()
+            goToApp()
         }
     }
     
     func cancelAnimation() {
         animationTimer?.invalidate()
-        self.importButton.isUserInteractionEnabled = true
-        UIView.animate(withDuration: Constants.Main.animationDuration) {
+        importButton.isUserInteractionEnabled = true
+        UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
             self.importButton.alpha = 1
             self.animationImageView.alpha = 0
             self.settingUp.alpha = 0
@@ -156,121 +150,59 @@ class WalletImportingViewController: BasicViewController {
         }
     }
     
-    // TODO: - need to make it better
+    // MARK: - Actions
+    
     func creatingWallet(from text: String) {
         DispatchQueue.global().async { [unowned self] in
             do {
-                
-                let name = Constants.Wallet.newName
-                let password = Constants.Wallet.newPassword
                 let wallet: Wallet
                 switch self.importTypeControl.selectedSegmentIndex {
                 case ImportType.passphrase.rawValue:
-                    wallet = try self.walletsService.createHDWallet(name: name,
-                                                                    password: password,
-                                                                    mnemonics: text,
-                                                                    backupNeeded: false)
-                    
-                    let passphraseItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassphrase,
-                                                              account: wallet.address,
-                                                              accessGroup: KeychainConfiguration.accessGroup)
-                    try passphraseItem.savePassword(text)
+                    wallet = try self.walletCreating.importWalletWithPassphrase(passphrase: text)
                 default:
-                    wallet = try self.walletsService.importWalletWithPrivateKey(name: name,
-                                                                                key: text,
-                                                                                password: password)
+                    wallet = try self.walletCreating.importWalletWithPrivateKey(key: text)
                 }
-                try wallet.save()
-                try wallet.addPassword(password)
-                CurrentWallet.currentWallet = wallet
-                let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
-                let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
-                let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
-                let xdaiAdded = self.userDefaults.isXDaiAdded(for: wallet)
-                let buffAdded = self.userDefaults.isBuffAdded(for: wallet)
-                if !xdaiAdded {
-                    do {
-                        try self.appController.addXDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !franklinAdded {
-                    do {
-                        try self.appController.addFranklin(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !etherAdded {
-                    do {
-                        try self.appController.addEther(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !daiAdded {
-                    do {
-                        try self.appController.addDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !buffAdded {
-                    do {
-                        try self.appController.addBuff(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                self.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                self.finishSavingWallet(wallet)
             } catch let error {
-                self.finishSavingWallet(with: error, needDeleteWallet: nil)
-            }
-        }
-    }
-    
-    @IBAction func importWallet(_ sender: UIButton) {
-        guard let text = self.textView.text else {
-            self.alerts.showErrorAlert(for: self,
-                                       error: self.importTypeControl.selectedSegmentIndex == 0
-                                        ? "Please, enter your passphrase"
-                                        : "Please, enter your private key",
-                                       completion: nil)
-            return
-        }
-        self.importButton.isUserInteractionEnabled = false
-        self.animation()
-        self.creatingWallet(from: text)
-    }
-    
-    func finishSavingWallet(with error: Error?, needDeleteWallet: Wallet?) {
-        if let wallet = needDeleteWallet {
-            do {
-                try wallet.delete()
-            } catch let deleteErr {
-                alerts.showErrorAlert(for: self, error: deleteErr) { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: error) { [unowned self] in
                     self.cancelAnimation()
                 }
             }
         }
-        if let err = error {
-            alerts.showErrorAlert(for: self, error: err) { [unowned self] in
+    }
+    
+    func deleteWallet(wallet: Wallet, withError error: Error) {
+        do {
+            try wallet.delete()
+            alerts.showErrorAlert(for: self, error: error) { [unowned self] in
                 self.cancelAnimation()
             }
-        } else {
-            self.walletCreated = true
-            if animationTimer == nil {
-                self.goToApp()
+        } catch let deleteErr {
+            alerts.showErrorAlert(for: self, error: deleteErr) { [unowned self] in
+                self.cancelAnimation()
             }
         }
     }
     
+    func finishSavingWallet(_ wallet: Wallet) {
+        do {
+            try walletCreating.prepareWallet(wallet)
+            CurrentWallet.currentWallet = wallet
+            walletCreated = true
+            if animationTimer == nil {
+                goToApp()
+            }
+        } catch let error {
+            deleteWallet(wallet: wallet, withError: error)
+        }
+        
+    }
+    
     func goToApp() {
         DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.Main.animationDuration) {
+            UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.alpha = 0
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
                     let tabViewController = self.appController.goToApp()
                     tabViewController.view.backgroundColor = Colors.background
                     let transition = CATransition()
@@ -285,23 +217,40 @@ class WalletImportingViewController: BasicViewController {
         }
     }
     
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
-    }
+    // MARK: - Button actions
     
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed(updateNeeded: false)
-    }
-}
-
-extension WalletImportingViewController: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        activeView = textView
-    }
-    func textViewDidEndEditing(_ textView: UITextView) {
+    @objc func returnTextView(gesture: UIGestureRecognizer) {
+        guard activeView != nil else {
+            return
+        }
         activeView?.resignFirstResponder()
         activeView = nil
+    }
+    
+    @IBAction func qrScanTapped(_ sender: Any) {
+        readerVC.delegate = self
+        readerVC.completionBlock = { (result: QRCodeReaderResult?) in
+        }
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func changeImportType(_ sender: UISegmentedControl) {
+        setImportView()
+    }
+    
+    @IBAction func importWallet(_ sender: UIButton) {
+        guard let text = textView.text else {
+            alerts.showErrorAlert(for: self,
+                                       error: importTypeControl.selectedSegmentIndex == 0
+                                        ? "Please, enter your passphrase"
+                                        : "Please, enter your private key",
+                                       completion: nil)
+            return
+        }
+        importButton.isUserInteractionEnabled = false
+        animation()
+        creatingWallet(from: text)
     }
 }
 
@@ -311,19 +260,4 @@ extension WalletImportingViewController {
     
     @objc func keyboardWillHide(notification: NSNotification) {
     }
-}
-
-extension WalletImportingViewController: QRCodeReaderViewControllerDelegate {
-    
-    func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
-        reader.stopScanning()
-        textView.text = result.value
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func readerDidCancel(_ reader: QRCodeReaderViewController) {
-        reader.stopScanning()
-        dismiss(animated: true, completion: nil)
-    }
-    
 }

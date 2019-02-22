@@ -9,30 +9,37 @@
 import UIKit
 
 class BackupViewController: BasicViewController {
-
-    enum BackupScreenStatus {
-        case start
-        case mnemonic
-        case alert
-    }
     
-    var screenStatus: BackupScreenStatus = .start
-    var mnemonicString: String = "" {
-        didSet {
-            mnemonic.text = mnemonicString
-        }
-    }
-    
-    let alerts = Alerts()
-    let userKeys = UserDefaultKeys()
+    // MARK: - Outlets
     
     @IBOutlet weak var firstTitle: UILabel!
     @IBOutlet weak var secondTitle: UILabel!
     @IBOutlet weak var mainInfo: UILabel!
     @IBOutlet weak var mnemonic: UILabel!
     @IBOutlet weak var alert: UILabel!
-    
     @IBOutlet weak var mainButton: BasicWhiteButton!
+    
+    // MARK: - Enums
+
+    internal enum BackupScreenStatus {
+        case start
+        case mnemonic
+        case alert
+    }
+    
+    // MARK: - Internal vars
+    
+    internal var screenStatus: BackupScreenStatus = .start
+    internal var mnemonicString: String = "" {
+        didSet {
+            mnemonic.text = mnemonicString
+        }
+    }
+    
+    internal let alerts = Alerts()
+    internal let userKeys = UserDefaultKeys()
+    
+    // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +57,8 @@ class BackupViewController: BasicViewController {
         setNavigation(hidden: true)
     }
     
+    // MARK: - Main setup
+    
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
@@ -57,16 +66,18 @@ class BackupViewController: BasicViewController {
     
     func setupMnemonic() {
         guard let mnemonic = CurrentWallet.currentWallet?.backup else {
-            alerts.showErrorAlert(for: self, error: "Can't get mnemonic - reinstall app") {
+            alerts.showErrorAlert(for: self, error: "Can't get mnemonic - reinstall app") { [unowned self] in
                 self.navigationController?.popViewController(animated: true)
             }
             return
         }
-        self.mnemonicString = mnemonic
+        mnemonicString = mnemonic
     }
     
+    // MARK: - Screen status
+    
     func showStart(animated: Bool) {
-        self.screenStatus = .start
+        screenStatus = .start
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.firstTitle.text = "Back up"
@@ -84,7 +95,7 @@ class BackupViewController: BasicViewController {
     }
     
     func showMnemonic(animated: Bool) {
-        self.screenStatus = .mnemonic
+        screenStatus = .mnemonic
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.firstTitle.text = "Write down"
@@ -102,7 +113,7 @@ class BackupViewController: BasicViewController {
     }
     
     func showAlert(animated: Bool) {
-        self.screenStatus = .alert
+        screenStatus = .alert
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.firstTitle.text = "ATTENTION"
@@ -136,9 +147,7 @@ class BackupViewController: BasicViewController {
         }
     }
     
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-    }
+    // MARK: - Button actions
     
     @IBAction func mainAction(_ sender: UIButton) {
         switch screenStatus {

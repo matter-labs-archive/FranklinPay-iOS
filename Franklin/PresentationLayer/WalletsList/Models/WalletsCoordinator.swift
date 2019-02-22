@@ -38,7 +38,7 @@ public class WalletsCoordinator {
     func getDollarsBalance(for wallet: Wallet) -> String {
         do {
             let selectedNetwork = CurrentNetwork.currentNetwork
-            let web3 = CurrentNetwork().isXDai() ? Web3.InfuraMainnetWeb3() : nil
+            let web3 = CurrentNetwork.currentNetwork.isXDai() ? Web3.InfuraMainnetWeb3() : nil
             let tokens = try wallet.getAllTokens(network: selectedNetwork)
             var dollarsWalletBalance: Double = 0
             for token in tokens {
@@ -50,16 +50,16 @@ public class WalletsCoordinator {
                         balance = try wallet.getETHbalance(web3instance: web3)
                     } else if token.isFranklin() {
                         balance = try wallet.getFranklinBalance()
-                    } else if CurrentNetwork().isXDai() && token.isXDai() {
+                    } else if CurrentNetwork.currentNetwork.isXDai() && token.isXDai() {
                         balance = try wallet.getXDAIBalance()
-                    } else if CurrentNetwork().isXDai() && !(token.isDai() || token.isEther()) {
+                    } else if CurrentNetwork.currentNetwork.isXDai() && !(token.isDai() || token.isEther()) {
                         balance = token.balance ?? "0.0"
                     } else {
                         balance = try wallet.getERC20balance(for: token, web3instance: web3)
                     }
                 }
                 let balanceInDollars: Double
-                let noNeedToConvert = token.isFranklin() || token.isXDai() || CurrentNetwork().isXDai() && !(token.isDai() || token.isEther())
+                let noNeedToConvert = token.isFranklin() || token.isXDai() || CurrentNetwork.currentNetwork.isXDai() && !(token.isDai() || token.isEther())
                 if noNeedToConvert {
                     balanceInDollars = Double(balance) ?? 0
                 } else {

@@ -10,14 +10,20 @@ import UIKit
 import Web3swift
 
 class NetworksViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var networksTableView: BasicTableView!
 
-    var networks: [Web3Network] = []
+    // MARK: - Internal vars
+    
+    internal var networks: [Web3Network] = []
+    
+    // MARK: - Lyfesycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupTableView()
+        setupTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -30,6 +36,8 @@ class NetworksViewController: BasicViewController {
         super.viewWillDisappear(animated)
         setNavigation(hidden: true)
     }
+    
+    // MARK: - Main setup
     
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
@@ -46,9 +54,11 @@ class NetworksViewController: BasicViewController {
         networksTableView.register(nibToken, forCellReuseIdentifier: "NetworksCell")
         networks.removeAll()
     }
+    
+    // MARK: - Table view updates
 
     func getNetworks() {
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [unowned self] in
             let basicNetworks: [Networks] = [.Mainnet,
                                              .Rinkeby,
                                              .Ropsten]
@@ -70,43 +80,4 @@ class NetworksViewController: BasicViewController {
         }
     }
 
-}
-
-extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return networks.count
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CGFloat(Constants.TableCells.Heights.networks)
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentNetwork = CurrentNetwork.currentNetwork
-        let networkInCell = networks[indexPath.row]
-        var isChosen = false
-        if currentNetwork == networkInCell {
-            isChosen = true
-        }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
-                                                       for: indexPath) as? NetworksCell else {
-                                                        return UITableViewCell()
-        }
-        cell.configure(network: networkInCell, isChosen: isChosen)
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        CurrentNetwork.currentNetwork = networks[indexPath.row]
-        self.networksTableView.deselectRow(at: indexPath, animated: true)
-        self.reloadDataInTable()
-    }
-    
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.navigationController?.popViewController(animated: true)
-    }
 }

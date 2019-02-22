@@ -11,7 +11,7 @@ import UIKit
 extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if CurrentNetwork().isXDai() {
+        if CurrentNetwork.currentNetwork.isXDai() {
             return nil
         }
         guard let wallet = CurrentWallet.currentWallet else {return nil}
@@ -21,7 +21,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if CurrentNetwork().isXDai() {
+        if CurrentNetwork.currentNetwork.isXDai() {
             return 0
         }
         switch section {
@@ -37,7 +37,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         // TODO: - just for now
-        let unsupportedPlasmaNetworks = CurrentNetwork.currentNetwork != Web3Network(network: .Mainnet) && CurrentNetwork.currentNetwork != Web3Network(network: .Rinkeby) && !CurrentNetwork().isXDai()
+        let unsupportedPlasmaNetworks = !CurrentNetwork.currentNetwork.isMainnet() && !CurrentNetwork.currentNetwork.isRinkebi() && !CurrentNetwork.currentNetwork.isXDai()
         
         switch indexPath.section {
         case WalletSections.card.rawValue:
@@ -123,7 +123,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if CurrentNetwork().isXDai() {
+        if CurrentNetwork.currentNetwork.isXDai() {
             return false
         }
         if indexPath.section == WalletSections.card.rawValue {

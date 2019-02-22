@@ -9,15 +9,8 @@
 import UIKit
 
 class AddWalletViewController: BasicViewController {
-
-    weak var animationTimer: Timer?
-    let walletsService = WalletsService()
-    let appController = AppController()
-    let userDefaults = UserDefaultKeys()
-    let alerts = Alerts()
-    var walletCreated = false
     
-    var pageViewController: UIPageViewController!
+    // MARK: - Outlets
     
     @IBOutlet weak var settingUp: UILabel!
     @IBOutlet weak var iv: UIImageView!
@@ -26,14 +19,22 @@ class AddWalletViewController: BasicViewController {
     @IBOutlet weak var importWallet: BasicWhiteButton!
     @IBOutlet weak var createWallet: BasicGreenButton!
     @IBOutlet weak var animationImageView: UIImageView!
+
+    // MARK: - Internal lets
     
-//    let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
+    internal let walletCreating = WalletCreating()
+    internal let appController = AppController()
+    internal let alerts = Alerts()
+    internal var walletCreated = false
     
-    weak var delegate: ModalViewDelegate?
+    // MARK: - Weak vars
+    
+    weak var animationTimer: Timer?
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.parent?.view.backgroundColor = .white
         createView()
     }
     
@@ -52,6 +53,8 @@ class AddWalletViewController: BasicViewController {
         setNavigation(hidden: true)
     }
     
+    // MARK: - Main setup
+    
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
@@ -68,6 +71,8 @@ class AddWalletViewController: BasicViewController {
     func createView() {
         animationImageView.setGifImage(UIImage(gifName: "loading.gif"))
         animationImageView.loopCount = -1
+        
+        self.parent?.view.backgroundColor = .white
         
         prodName.text = Constants.prodName
         prodName.textAlignment = .center
@@ -110,133 +115,45 @@ class AddWalletViewController: BasicViewController {
         
     }
     
-    // TODO: - need to make it better
+    // MARK: - Actions
+    
     func creatingWallet() {
         DispatchQueue.global().async { [unowned self] in
             do {
-                let mnemonicFrase = try self.walletsService.generateMnemonics(bitsOfEntropy: 128)
-                let name = Constants.Wallet.newName
-                let password = Constants.Wallet.newPassword
-                let wallet = try self.walletsService.createHDWallet(name: name,
-                                                                    password: password,
-                                                                    mnemonics: mnemonicFrase,
-                                                                    backupNeeded: true)
-                try wallet.save()
-                try wallet.addPassword(password)
-                CurrentWallet.currentWallet = wallet
-                let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
-                let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
-                let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
-                let xdaiAdded = self.userDefaults.isXDaiAdded(for: wallet)
-                let buffAdded = self.userDefaults.isBuffAdded(for: wallet)
-                if !xdaiAdded {
-                    do {
-                        try self.appController.addXDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !franklinAdded {
-                    do {
-                        try self.appController.addFranklin(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !etherAdded {
-                    do {
-                        try self.appController.addEther(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !daiAdded {
-                    do {
-                        try self.appController.addDai(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                if !buffAdded {
-                    do {
-                        try self.appController.addBuff(for: wallet)
-                    } catch let error {
-                        self.finishSavingWallet(with: error, needDeleteWallet: wallet)
-                    }
-                }
-                
-                let passphraseItem = KeychainPasswordItem(service: KeychainConfiguration.serviceNameForPassphrase,
-                                                          account: wallet.address,
-                                                          accessGroup: KeychainConfiguration.accessGroup)
-                try passphraseItem.savePassword(mnemonicFrase)
-                
-                self.finishSavingWallet(with: nil, needDeleteWallet: nil)
+                let wallet = try self.walletCreating.createWallet()
+                self.finishSavingWallet(wallet)
             } catch let error {
-                self.finishSavingWallet(with: error, needDeleteWallet: nil)
+                self.alerts.showErrorAlert(for: self, error: error, completion: nil)
             }
         }
     }
     
-    func finishSavingWallet(with error: Error?, needDeleteWallet: Wallet?) {
-        if let wallet = needDeleteWallet {
-            do {
-                try wallet.delete()
-            } catch let deleteErr {
-                //TODO: - need to do something
-                alerts.showErrorAlert(for: self, error: deleteErr, completion: nil)
-            }
-        }
-        if let err = error {
-            //TODO: - need to do something
-            alerts.showErrorAlert(for: self, error: err, completion: nil)
-        } else {
-            self.walletCreated = true
+    func finishSavingWallet(_ wallet: Wallet) {
+        do {
+            try walletCreating.prepareWallet(wallet)
+            CurrentWallet.currentWallet = wallet
+            walletCreated = true
             if animationTimer == nil {
-                self.goToApp()
+                goToApp()
             }
+        } catch let error {
+            deleteWallet(wallet: wallet, withError: error)
         }
+        
     }
     
-    @objc func createAction(sender: UIButton) {
-        self.createWallet.isUserInteractionEnabled = false
-        self.importWallet.isUserInteractionEnabled = false
-        self.animation()
-        self.creatingWallet()
-    }
-    
-    @objc func importAction(sender: UIButton) {
-        let vc = WalletImportingViewController()
-//        vc.delegate = self
-//        vc.modalPresentationStyle = .overCurrentContext
-//        vc.view.layer.speed = Constants.ModalView.animationSpeed
-//        self.present(vc, animated: true, completion: nil)
-        navigationController?.pushViewController(vc, animated: true)
-    }
-    
-    func animation() {
-        self.animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
-        self.animateIndicator()
-    }
-    
-    @objc func fireTimer() {
-        animationTimer?.invalidate()
-        if walletCreated {
-            self.goToApp()
-        }
-    }
-    
-    func animateIndicator() {
-        UIView.animate(withDuration: Constants.Main.animationDuration) {
-            self.createWallet.alpha = 0
-            self.importWallet.alpha = 0
-            self.animationImageView.alpha = 1
-            self.settingUp.alpha = 1
+    func deleteWallet(wallet: Wallet, withError error: Error) {
+        do {
+            try wallet.delete()
+            alerts.showErrorAlert(for: self, error: error, completion: nil)
+        } catch let deleteErr {
+            alerts.showErrorAlert(for: self, error: deleteErr, completion: nil)
         }
     }
     
     func goToApp() {
         DispatchQueue.main.async { [unowned self] in
-            UIView.animate(withDuration: Constants.Main.animationDuration) {
+            UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.alpha = 0
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
                     let tabViewController = self.appController.goToApp()
@@ -250,6 +167,48 @@ class AddWalletViewController: BasicViewController {
                     self.present(tabViewController, animated: false, completion: nil)
                 })
             }
+        }
+    }
+    
+    // MARK: - Buttons actions
+    
+    @objc func createAction(sender: UIButton) {
+        createWallet.isUserInteractionEnabled = false
+        importWallet.isUserInteractionEnabled = false
+        animation()
+        creatingWallet()
+    }
+    
+    @objc func importAction(sender: UIButton) {
+        let vc = WalletImportingViewController()
+//        vc.delegate = self
+//        vc.modalPresentationStyle = .overCurrentContext
+//        vc.view.layer.speed = Constants.ModalView.animationSpeed
+//        self.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    // MARK: - Animations
+    
+    func animation() {
+        navigationController?.navigationBar.isHidden = true
+        animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
+        animateIndicator()
+    }
+    
+    @objc func fireTimer() {
+        animationTimer?.invalidate()
+        if walletCreated {
+            goToApp()
+        }
+    }
+    
+    func animateIndicator() {
+        UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+            self.createWallet.alpha = 0
+            self.importWallet.alpha = 0
+            self.animationImageView.alpha = 1
+            self.settingUp.alpha = 1
         }
     }
     
@@ -268,14 +227,5 @@ class AddWalletViewController: BasicViewController {
 //            })
 //        }
 //    }
-    
-    @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
-    }
-    
-    @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
-        delegate?.modalViewBeenDismissed(updateNeeded: true)
-    }
 
 }

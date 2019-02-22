@@ -10,25 +10,24 @@ import UIKit
 import LocalAuthentication
 
 class PincodeViewController: BasicViewController {
+    
+    // MARK: - Outlets
 
     @IBOutlet weak var messageLabel: UILabel!
-
     @IBOutlet weak var firstNum: UIImageView!
     @IBOutlet weak var secondNum: UIImageView!
     @IBOutlet weak var thirdNum: UIImageView!
     @IBOutlet weak var fourthNum: UIImageView!
     @IBOutlet weak var container: UIView!
-    
     @IBOutlet weak var biometricsButton: PinCodeBiometricsButton!
     @IBOutlet weak var deleteButton: PinCodeDeleteButton!
     
+    // MARK: - Vars 
     let animation = AnimationController()
 
     var numsIcons: [UIImageView]?
 
-//    override var preferredStatusBarStyle: UIStatusBarStyle {
-//        return .lightContent
-//    }
+    // MARK: - Lifesycle
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -56,6 +55,8 @@ class PincodeViewController: BasicViewController {
                                    size: 22) ?? UIFont.boldSystemFont(ofSize: 22)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
+    
+    // MARK: - Screen status
 
     func changeNumsIcons(_ nums: Int) {
         switch nums {
@@ -76,6 +77,8 @@ class PincodeViewController: BasicViewController {
             }
         }
     }
+    
+    // MARK: - Button actions
 
     @IBAction func numButtonPressed(_ sender: PinCodeNumberButton) {
         let number = sender.currentTitle!

@@ -73,6 +73,8 @@ extension SendMoneyController {
     
     @objc func showSending(animated: Bool) {
         screenStatus = .sending
+        closeButton.isHidden = true
+        backgroundView.isUserInteractionEnabled = false
         showGif(true)
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
@@ -97,6 +99,8 @@ extension SendMoneyController {
     
     @objc func showReady(animated: Bool) {
         screenStatus = .ready
+        closeButton.isHidden = false
+        backgroundView.isUserInteractionEnabled = true
         DispatchQueue.main.async { [unowned self] in
             self.showGif(false)
             guard let contact = self.chosenContact else {return}
@@ -149,7 +153,7 @@ extension SendMoneyController {
             sendXDai()
         } else if token.isEther() {
             sendEther()
-        } else if !CurrentNetwork().isXDai() {
+        } else if !CurrentNetwork.currentNetwork.isXDai() {
             sendToken(token)
         } else {
             sendTokenXDai(token)

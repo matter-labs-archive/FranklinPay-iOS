@@ -121,12 +121,12 @@ public struct Constants {
         static let heightCoef: CGFloat = 0.08
         public struct Balance {
             static let font = Constants.Fonts.regular
-            static let size: CGFloat = 20
+            static let size: CGFloat = 22
             static let color = Colors.textBlack
         }
         public struct Title {
             static let font = Constants.Fonts.regular
-            static let size: CGFloat = 20
+            static let size: CGFloat = 22
             static let color = Colors.textBlack
         }
     }
@@ -172,26 +172,54 @@ public struct Constants {
             static let size: CGFloat = 22
             static let color = Colors.background
         }
-        
     }
     
-    public struct TableCells {
-        public struct Heights {
-            static let deposits: CGFloat = 60
-            static let credits: CGFloat = 60
-            static let settings: CGFloat = 45
-            static let contacts: CGFloat = 90
-            static let networks: CGFloat = 90
-            static let wallets: CGFloat = 90
-            static let tokensSearch: CGFloat = 80
-            static let tokens: CGFloat = 270
-            static let additionalButtons: CGFloat = 40
-        }
+    public struct WalletCell {
+        static let heightCoef: CGFloat = 0.12
         static let boldFont = Constants.Fonts.bold
         static let regularFont = Constants.Fonts.regular
         static let maximumFontSize: CGFloat = 18
         static let minimumFontSize: CGFloat = 14
     }
+    
+    public struct NetworkCell {
+        static let heightCoef: CGFloat = 0.1
+        static let boldFont = Constants.Fonts.bold
+        static let regularFont = Constants.Fonts.regular
+        static let maximumFontSize: CGFloat = 18
+        static let minimumFontSize: CGFloat = 14
+    }
+    
+    public struct ContactCell {
+        static let heightCoef: CGFloat = 0.08
+        static let boldFont = Constants.Fonts.bold
+        static let regularFont = Constants.Fonts.regular
+        static let maximumFontSize: CGFloat = 18
+        static let minimumFontSize: CGFloat = 14
+    }
+    
+    public struct SettingCell {
+        static let heightCoef: CGFloat = 0.08
+        static let boldFont = Constants.Fonts.bold
+        static let regularFont = Constants.Fonts.regular
+        static let maximumFontSize: CGFloat = 18
+        static let minimumFontSize: CGFloat = 14
+    }
+    
+    public struct TokenSearchCell {
+        static let emptyCoef: CGFloat = 0.06
+        static let heightCoef: CGFloat = 0.12
+        static let boldFont = Constants.Fonts.bold
+        static let regularFont = Constants.Fonts.regular
+        static let maximumFontSize: CGFloat = 18
+        static let minimumFontSize: CGFloat = 14
+    }
+    
+//    public struct TableCells {
+//        public struct Heights {
+//            static let additionalButtons: CGFloat = 40
+//        }
+//    }
     
     public struct Headers {
         static let leftItemWalletFontSize: CGFloat = 24
@@ -200,7 +228,7 @@ public struct Constants {
         public struct Heights {
             static let txHistory: CGFloat = 46
             static let wallets: CGFloat = 30
-            static let tokens: CGFloat = 50
+            static let tokens: CGFloat = 40
         }
     }
     

@@ -23,7 +23,7 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return Constants.TableCells.Heights.settings
+        return UIScreen.main.bounds.height * Constants.SettingCell.heightCoef
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

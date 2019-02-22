@@ -36,31 +36,6 @@ public class CurrentNetwork {
             _currentNetwork = network
         }
     }
-    
-    public class var currentWeb: web3? {
-        get {
-            let w3: web3
-            switch self.currentNetwork.id {
-            case 1:
-                w3 = Web3.InfuraMainnetWeb3()
-            case 4:
-                w3 = Web3.InfuraRinkebyWeb3()
-            case 3:
-                w3 = Web3.InfuraRopstenWeb3()
-            case 100:
-                let url = URL(string: "https://dai.poa.network")!
-                let infura = Web3HttpProvider(url, network: nil, keystoreManager: nil)!
-                w3 = web3(provider: infura)
-            default:
-                return nil
-            }
-            return w3
-        }
-    }
-    
-    func isXDai() -> Bool {
-        return CurrentNetwork.currentNetwork.id == 100
-    }
 }
 
 extension InfuraProvider {

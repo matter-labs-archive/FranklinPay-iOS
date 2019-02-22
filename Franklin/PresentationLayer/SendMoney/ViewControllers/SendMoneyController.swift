@@ -59,6 +59,7 @@ class SendMoneyController: BasicViewController {
     @IBOutlet weak var sendToLabel: UILabel!
     @IBOutlet weak var addressStackView: UIStackView!
     @IBOutlet weak var emptyContactsView: UIView!
+    @IBOutlet weak var closeButton: UIButton!
     
     // MARK: - Internal lets
     

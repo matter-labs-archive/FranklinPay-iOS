@@ -30,7 +30,18 @@ class NetworksCell: UITableViewCell {
 
     func configure(network: Web3Network, isChosen: Bool = false) {
         self.networkLabel.text = network.name
-        self.idLabel.text = "id: \(network.id)"
+        var networkStr = CurrentNetwork.currentNetwork.getWeb()?.provider.url.absoluteString
+        let httpsPrefixString = "https://"
+        let httpPrefixString = "http://"
+        if networkStr?.hasPrefix(httpsPrefixString) ?? false {
+            networkStr?.removeFirst(httpsPrefixString.count)
+        } else if networkStr?.hasPrefix(httpPrefixString) ?? false {
+            networkStr?.removeFirst(httpPrefixString.count)
+        }
+        if networkStr?.hasSuffix("/") ?? false {
+            networkStr?.removeLast()
+        }
+        self.idLabel.text = networkStr
         self.selectedIcon.alpha = isChosen ? 1.0 : 0.0
     }
 
