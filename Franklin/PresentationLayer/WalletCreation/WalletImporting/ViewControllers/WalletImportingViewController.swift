@@ -29,6 +29,7 @@ class WalletImportingViewController: BasicViewController {
     
     internal var activeView: UITextView?
 
+    internal let navigationItems = NavigationItems()
     internal let appController = AppController()
     internal let walletCreating = WalletCreating()
     internal let alerts = Alerts()
@@ -96,6 +97,8 @@ class WalletImportingViewController: BasicViewController {
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
+        let home = navigationItems.homeItem(target: self, action: #selector(goToApp))
+        navigationItem.setRightBarButton(home, animated: false)
     }
     
     func setImportView() {
@@ -198,7 +201,7 @@ class WalletImportingViewController: BasicViewController {
         
     }
     
-    func goToApp() {
+    @objc func goToApp() {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.alpha = 0

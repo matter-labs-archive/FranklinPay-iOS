@@ -22,6 +22,7 @@ class AddWalletViewController: BasicViewController {
 
     // MARK: - Internal lets
     
+    internal let navigationItems = NavigationItems()
     internal let walletCreating = WalletCreating()
     internal let appController = AppController()
     internal let alerts = Alerts()
@@ -58,6 +59,8 @@ class AddWalletViewController: BasicViewController {
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
+        let home = navigationItems.homeItem(target: self, action: #selector(goToApp))
+        navigationItem.setRightBarButton(home, animated: false)
     }
     
 //    func additionalSetup() {
@@ -151,7 +154,7 @@ class AddWalletViewController: BasicViewController {
         }
     }
     
-    func goToApp() {
+    @objc func goToApp() {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.alpha = 0

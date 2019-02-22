@@ -594,6 +594,9 @@
 		3A3D4037221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D4036221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift */; };
 		3A3D4038221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D4036221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift */; };
 		3A3D4039221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D4036221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift */; };
+		3A3D403B222053DE00506F98 /* NavigationItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D403A222053DE00506F98 /* NavigationItems.swift */; };
+		3A3D403C222053DE00506F98 /* NavigationItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D403A222053DE00506F98 /* NavigationItems.swift */; };
+		3A3D403D222053DE00506F98 /* NavigationItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D403A222053DE00506F98 /* NavigationItems.swift */; };
 		3A5D7AA52216080D0032B20C /* bundle.js in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA42216080D0032B20C /* bundle.js */; };
 		3A5D7AA8221622FC0032B20C /* FundsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA6221622FC0032B20C /* FundsCell.swift */; };
 		3A5D7AA9221622FC0032B20C /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
@@ -886,6 +889,7 @@
 		3A3D402E221F6EC900506F98 /* SearchTokenVC+QRCodeReaderViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchTokenVC+QRCodeReaderViewControllerDelegate.swift"; sourceTree = "<group>"; };
 		3A3D4032221F74DD00506F98 /* WalletImportingVC+TextViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalletImportingVC+TextViewDelegate.swift"; sourceTree = "<group>"; };
 		3A3D4036221F74FB00506F98 /* WalletImportingVC+QRCodeReaderViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "WalletImportingVC+QRCodeReaderViewControllerDelegate.swift"; sourceTree = "<group>"; };
+		3A3D403A222053DE00506F98 /* NavigationItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationItems.swift; sourceTree = "<group>"; };
 		3A5D7AA42216080D0032B20C /* bundle.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = bundle.js; path = Plasma/bundle.js; sourceTree = SOURCE_ROOT; };
 		3A5D7AA6221622FC0032B20C /* FundsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundsCell.swift; sourceTree = "<group>"; };
 		3A5D7AA7221622FC0032B20C /* FundsCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FundsCell.xib; sourceTree = "<group>"; };
@@ -2363,6 +2367,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C1104221E507260012A978 /* NavigationController.swift */,
+				3A3D403A222053DE00506F98 /* NavigationItems.swift */,
 			);
 			path = NavigationController;
 			sourceTree = "<group>";
@@ -3487,6 +3492,7 @@
 				3A3D3E70221E9B0000506F98 /* AppDelegate.swift in Sources */,
 				3A3D3E72221E9B0000506F98 /* FundsCell.swift in Sources */,
 				3A3D3E73221E9B0000506F98 /* ContactsViewController.swift in Sources */,
+				3A3D403C222053DE00506F98 /* NavigationItems.swift in Sources */,
 				3A3D402C221F6EB100506F98 /* SearchTokenVC+TextFieldDelegate.swift in Sources */,
 				3A3D3E74221E9B0000506F98 /* AppController.swift in Sources */,
 				3A3D3E75221E9B0000506F98 /* WalletVC+TableViewHeaderDelegate.swift in Sources */,
@@ -3671,6 +3677,7 @@
 				3A3D3F91221ECD5500506F98 /* AppDelegate.swift in Sources */,
 				3A3D3F93221ECD5500506F98 /* FundsCell.swift in Sources */,
 				3A3D3F94221ECD5500506F98 /* ContactsViewController.swift in Sources */,
+				3A3D403D222053DE00506F98 /* NavigationItems.swift in Sources */,
 				3A3D402D221F6EB100506F98 /* SearchTokenVC+TextFieldDelegate.swift in Sources */,
 				3A3D3F95221ECD5500506F98 /* AppController.swift in Sources */,
 				3A3D3F96221ECD5500506F98 /* WalletVC+TableViewHeaderDelegate.swift in Sources */,
@@ -3855,6 +3862,7 @@
 				91B6A79721435F5D0033A045 /* AppDelegate.swift in Sources */,
 				3A5D7AA8221622FC0032B20C /* FundsCell.swift in Sources */,
 				E2B45A4B21761F4000F38E50 /* ContactsViewController.swift in Sources */,
+				3A3D403B222053DE00506F98 /* NavigationItems.swift in Sources */,
 				3A3D402B221F6EB100506F98 /* SearchTokenVC+TextFieldDelegate.swift in Sources */,
 				91B6A7C62143660B0033A045 /* AppController.swift in Sources */,
 				3A3D3D93221DB57400506F98 /* WalletVC+TableViewHeaderDelegate.swift in Sources */,

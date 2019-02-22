@@ -88,7 +88,7 @@ public class AppController {
 //        return nav
 //    }
 
-    public func goToApp() -> UINavigationController {
+    @objc public func goToApp() -> UINavigationController {
 //    public func goToApp() -> SWRevealViewController {
 //        let frontController:UINavigationController
 //        let rearController:UINavigationController

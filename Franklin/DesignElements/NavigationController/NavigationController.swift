@@ -32,7 +32,7 @@ extension UINavigationController {
         self.navigationBar.barTintColor = Colors.background
         self.navigationBar.tintColor = Colors.mainBlue
         self.navigationBar.shadowImage = UIImage()
-        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationBar.setBackgroundImage(UIImage(), for: .default)
     }
 }
 
