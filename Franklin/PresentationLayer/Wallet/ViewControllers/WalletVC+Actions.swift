@@ -10,8 +10,8 @@ import UIKit
 
 extension WalletViewController {
     func deleteToken(in indexPath: IndexPath) {
-        let token = tokensArray[indexPath.row].token
-        let wallet = tokensArray[indexPath.row].inWallet
+        let token = tokensArray[indexPath.row+1].token
+        let wallet = tokensArray[indexPath.row+1].inWallet
         let network = CurrentNetwork.currentNetwork
         let isEtherToken = token.isEther()
         let isDaiToken = token.isDai()

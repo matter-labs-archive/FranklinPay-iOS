@@ -136,7 +136,7 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else {
             return false
         }
-        let token = tokensArray[indexPathTapped.row].token
+        let token = tokensArray[indexPathTapped.row+1].token
         if token.isEther() || token.isDai() {
             return false
         }
