@@ -13,7 +13,7 @@ extension SearchTokenViewController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
         let searchText = result.value.lowercased()
-        self.searchTextField.text = searchText
+        searchTextField.text = searchText
         reader.dismiss(animated: true)
         //        DispatchQueue.main.async { [weak self] in
         //

@@ -20,6 +20,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchTokenViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
+                <outlet property="addButton" destination="0Ca-1m-Pth" id="4yx-qQ-rwQ"/>
                 <outlet property="backgroundView" destination="A2Y-oy-Hee" id="bpM-Bn-KQz"/>
                 <outlet property="contentView" destination="XI8-ig-nOI" id="r16-KS-an5"/>
                 <outlet property="helpLabel" destination="4Qi-mr-drt" id="Mfa-HZ-6aS"/>
@@ -65,13 +66,13 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter token address or token name to search" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Qi-mr-drt">
-                            <rect key="frame" x="0.0" y="373.5" width="377" height="47"/>
+                            <rect key="frame" x="0.0" y="330.5" width="377" height="47"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ZKV-OY-dv0" customClass="BasicTableView" customModule="Franklin" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="172.5" width="377" height="449.5"/>
+                            <rect key="frame" x="0.0" y="172.5" width="377" height="363"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <outlet property="dataSource" destination="-1" id="CVC-vX-S0j"/>
@@ -84,13 +85,19 @@
                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="22"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardAppearance="light" returnKeyType="search" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                         </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ca-1m-Pth" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
+                            <rect key="frame" x="19" y="545.5" width="339" height="46.5"/>
+                            <state key="normal" title="Button"/>
+                            <connections>
+                                <action selector="addAction:" destination="-1" eventType="touchUpInside" id="5EH-Xv-ZG9"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="OBs-fS-bTi" firstAttribute="top" secondItem="ZeU-eR-Krx" secondAttribute="bottom" id="0Ki-yP-18s"/>
                         <constraint firstItem="OBs-fS-bTi" firstAttribute="centerX" secondItem="XI8-ig-nOI" secondAttribute="centerX" id="4Wd-2n-Rde"/>
                         <constraint firstItem="6pl-2R-Zo5" firstAttribute="width" secondItem="XI8-ig-nOI" secondAttribute="width" multiplier="0.9" id="A6B-s8-r38"/>
-                        <constraint firstAttribute="bottom" secondItem="ZKV-OY-dv0" secondAttribute="bottom" id="AQ5-9u-Igo"/>
                         <constraint firstItem="ZKV-OY-dv0" firstAttribute="width" secondItem="XI8-ig-nOI" secondAttribute="width" id="AcB-4n-IiD"/>
                         <constraint firstItem="ZKV-OY-dv0" firstAttribute="top" secondItem="6pl-2R-Zo5" secondAttribute="bottom" constant="10" id="AmK-oC-wHL"/>
                         <constraint firstItem="ZeU-eR-Krx" firstAttribute="top" secondItem="XI8-ig-nOI" secondAttribute="top" constant="10" id="Hvx-No-oqf"/>
@@ -98,12 +105,15 @@
                         <constraint firstItem="4Qi-mr-drt" firstAttribute="centerY" secondItem="ZKV-OY-dv0" secondAttribute="centerY" id="OfS-Ix-qfL"/>
                         <constraint firstItem="4Qi-mr-drt" firstAttribute="width" secondItem="ZKV-OY-dv0" secondAttribute="width" id="Qni-wn-cYf"/>
                         <constraint firstAttribute="trailing" secondItem="Sva-2Y-yUu" secondAttribute="trailing" constant="20" id="RrV-h3-CFX"/>
+                        <constraint firstItem="0Ca-1m-Pth" firstAttribute="width" secondItem="XI8-ig-nOI" secondAttribute="width" multiplier="0.9" id="Vtj-YO-TOG"/>
                         <constraint firstAttribute="trailing" secondItem="ZeU-eR-Krx" secondAttribute="trailing" constant="20" id="Y3L-He-rjs"/>
                         <constraint firstItem="4Qi-mr-drt" firstAttribute="centerX" secondItem="ZKV-OY-dv0" secondAttribute="centerX" id="asO-0b-Um3"/>
+                        <constraint firstItem="0Ca-1m-Pth" firstAttribute="top" secondItem="ZKV-OY-dv0" secondAttribute="bottom" constant="10" id="boh-3v-gyf"/>
                         <constraint firstItem="Sva-2Y-yUu" firstAttribute="leading" secondItem="OBs-fS-bTi" secondAttribute="trailing" constant="5" id="di5-Vu-Hw1"/>
                         <constraint firstItem="XGj-9w-t3F" firstAttribute="width" secondItem="ZeU-eR-Krx" secondAttribute="width" id="h0I-1l-yEC"/>
                         <constraint firstItem="Sva-2Y-yUu" firstAttribute="top" secondItem="XI8-ig-nOI" secondAttribute="top" constant="20" id="k8i-QK-Utp"/>
                         <constraint firstItem="XGj-9w-t3F" firstAttribute="top" secondItem="OBs-fS-bTi" secondAttribute="bottom" id="l4K-eG-tRS"/>
+                        <constraint firstItem="0Ca-1m-Pth" firstAttribute="centerX" secondItem="XI8-ig-nOI" secondAttribute="centerX" id="lFC-i6-xYb"/>
                         <constraint firstItem="ZKV-OY-dv0" firstAttribute="centerX" secondItem="XI8-ig-nOI" secondAttribute="centerX" id="lGY-Gz-3Xz"/>
                         <constraint firstItem="XGj-9w-t3F" firstAttribute="height" secondItem="XI8-ig-nOI" secondAttribute="height" multiplier="0.04" id="nMJ-pf-8HN"/>
                         <constraint firstItem="6pl-2R-Zo5" firstAttribute="top" secondItem="XGj-9w-t3F" secondAttribute="bottom" id="nlC-0k-TBu"/>
@@ -125,8 +135,10 @@
             <constraints>
                 <constraint firstItem="7Fh-Jz-UOu" firstAttribute="leading" secondItem="n3N-pG-ztR" secondAttribute="leading" constant="-1" id="0cr-rI-Cxm"/>
                 <constraint firstItem="7Fh-Jz-UOu" firstAttribute="leading" secondItem="n3N-pG-ztR" secondAttribute="leading" constant="-1" id="1Q1-Mw-WYS"/>
+                <constraint firstItem="0Ca-1m-Pth" firstAttribute="height" secondItem="n3N-pG-ztR" secondAttribute="height" multiplier="0.07" id="3n9-GK-TLm"/>
                 <constraint firstAttribute="trailing" secondItem="7Fh-Jz-UOu" secondAttribute="trailing" constant="-1" id="6kS-G4-0H1"/>
                 <constraint firstItem="XI8-ig-nOI" firstAttribute="top" secondItem="A2Y-oy-Hee" secondAttribute="bottom" id="JlO-Zq-bFK"/>
+                <constraint firstItem="0Ca-1m-Pth" firstAttribute="bottom" secondItem="7Fh-Jz-UOu" secondAttribute="top" id="NI3-fa-bIg"/>
                 <constraint firstAttribute="trailing" secondItem="A2Y-oy-Hee" secondAttribute="trailing" id="Slh-VY-N4L"/>
                 <constraint firstItem="A2Y-oy-Hee" firstAttribute="top" secondItem="n3N-pG-ztR" secondAttribute="top" id="Ur7-Ta-i9R"/>
                 <constraint firstItem="I65-WG-e6h" firstAttribute="bottom" secondItem="XI8-ig-nOI" secondAttribute="bottom" id="VHu-sp-9CQ"/>

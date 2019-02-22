@@ -46,8 +46,8 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
                                                            for: indexPath) as? AddressTableViewCell else {
                                                             return UITableViewCell()
             }
-            cell.qr.addTarget(self, action: #selector(self.scanTapped), for: .touchUpInside)
-            cell.paste.addTarget(self, action: #selector(self.textFromBuffer), for: .touchUpInside)
+            cell.qr.addTarget(self, action: #selector(scanTapped), for: .touchUpInside)
+            cell.paste.addTarget(self, action: #selector(textFromBuffer), for: .touchUpInside)
             return cell
         }
     }
@@ -57,21 +57,27 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
             tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        let token = self.tokensList[indexPath.row]
+        let token = tokensList[indexPath.row]
         let isAdded = tokensAreAdded[indexPath.row]
-        guard let wallet = self.wallet else {
+        guard let wallet = wallet else {
             return
         }
         do {
             if isAdded {
                 try wallet.delete(token: token, network: CurrentNetwork.currentNetwork)
+                if !tokensForDeleting.contains(token) {
+                    tokensForDeleting.insert(token)
+                }
                 tokensAreAdded[indexPath.row] = false
                 CurrentToken.currentToken = Ether()
             } else {
                 try wallet.add(token: token, network: CurrentNetwork.currentNetwork)
+                if !tokensForAdding.contains(token) {
+                    tokensForAdding.insert(token)
+                }
                 tokensAreAdded[indexPath.row] = true
             }
-            self.reloadTableData()
+            reloadTableData()
         } catch let error {
             alerts.showErrorAlert(for: self, error: error, completion: nil)
         }

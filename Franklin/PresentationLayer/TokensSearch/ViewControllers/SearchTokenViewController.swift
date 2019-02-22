@@ -18,12 +18,15 @@ class SearchTokenViewController: BasicViewController {
     @IBOutlet weak var helpLabel: UILabel!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var addButton: BasicBlueButton!
     
     // MARK: - Internal vars
     
     internal var ratesUpdating = false
 
     internal var tokensList: [ERC20Token] = []
+    internal var tokensForDeleting: Set<ERC20Token> = []
+    internal var tokensForAdding: Set<ERC20Token> = []
     internal var tokensAreAdded: [Bool] = []
 
     internal  var searchController: UISearchController!
@@ -56,16 +59,16 @@ class SearchTokenViewController: BasicViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = Colors.background
-        self.hideKeyboardWhenTappedAround()
-        self.setupNavigation()
-        self.setupTableView()
-        self.mainSetup()
-        self.setupSearch()
+        view.backgroundColor = Colors.background
+        hideKeyboardWhenTappedAround()
+        setupNavigation()
+        setupTableView()
+        mainSetup()
+        setupSearch()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+        super.viewWillAppear(animated)
         makeHelpLabel(enabled: true)
     }
     
@@ -74,13 +77,16 @@ class SearchTokenViewController: BasicViewController {
     func mainSetup() {
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
-        self.contentView.backgroundColor = Colors.background
-        self.contentView.alpha = 1
-        self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
-        self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
-        self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
+        
+        addButton.setTitle("Confirm", for: .normal)
+        
+        contentView.backgroundColor = Colors.background
+        contentView.alpha = 1
+        contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
+        contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
+        contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissView))
+                                                                 action: #selector(dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
     }
@@ -91,27 +97,27 @@ class SearchTokenViewController: BasicViewController {
     }
     
     func setupNavigation() {
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
     }
     
     func setupTableView() {
-        self.tokensTableView.delegate = self
-        self.tokensTableView.dataSource = self
+        tokensTableView.delegate = self
+        tokensTableView.dataSource = self
         let footerView = UIView()
         footerView.backgroundColor = Colors.background
-        self.tokensTableView.tableFooterView = footerView
+        tokensTableView.tableFooterView = footerView
         
         let nibSearch = UINib.init(nibName: "SearchTokenCell", bundle: nil)
-        self.tokensTableView.register(nibSearch, forCellReuseIdentifier: "SearchTokenCell")
+        tokensTableView.register(nibSearch, forCellReuseIdentifier: "SearchTokenCell")
         let nibAddress = UINib.init(nibName: "AddressTableViewCell", bundle: nil)
-        self.tokensTableView.register(nibAddress, forCellReuseIdentifier: "AddressTableViewCell")
+        tokensTableView.register(nibAddress, forCellReuseIdentifier: "AddressTableViewCell")
     }
     
     // MARK: - Actions
     
     func clearData() {
-        self.tokensList.removeAll()
-        self.tokensAreAdded.removeAll()
+        tokensList.removeAll()
+        tokensAreAdded.removeAll()
     }
     
     func searchTokens(string: String) {
@@ -122,21 +128,21 @@ class SearchTokenViewController: BasicViewController {
             }
             self.updateTokensList(with: list, completion: {
                 self.reloadTableData()
-//                self.updateRates {
-//                    self.reloadTableDataWithDelay()
+//                updateRates {
+//                    reloadTableDataWithDelay()
 //                }
             })
         }
     }
     
 //    func updateRates(comletion: @escaping () -> Void) {
-//        guard !self.ratesUpdating else { return }
-//        self.ratesUpdating = true
+//        guard !ratesUpdating else { return }
+//        ratesUpdating = true
 //        let first10List: [ERC20Token]
-//        if self.tokensList.count > 10 {
-//            first10List = Array(self.tokensList.prefix(upTo: 10))
+//        if tokensList.count > 10 {
+//            first10List = Array(tokensList.prefix(upTo: 10))
 //        } else {
-//            first10List = self.tokensList
+//            first10List = tokensList
 //        }
 //        for token in first10List {
 //            do {
@@ -145,7 +151,7 @@ class SearchTokenViewController: BasicViewController {
 //                continue
 //            }
 //        }
-//        self.ratesUpdating = false
+//        ratesUpdating = false
 //        comletion()
 //    }
     
@@ -191,23 +197,47 @@ class SearchTokenViewController: BasicViewController {
     // MARK: - Buttons actions
     
     @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+        dismissView()
+    }
+    
+    @IBAction func addAction(_ sender: BasicBlueButton) {
+        tokensForAdding.removeAll()
+        tokensForDeleting.removeAll()
+        dismissView()
     }
     
     @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        guard let wallet = wallet else {
+            return
+        }
+        let net = CurrentNetwork.currentNetwork
+        for token in tokensForAdding {
+            do {
+                try wallet.delete(token: token, network: net)
+            } catch {
+                return
+            }
+        }
+        for token in tokensForDeleting {
+            do {
+                try wallet.add(token: token, network: net)
+            } catch {
+                return
+            }
+        }
+        dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
     
     @objc func scanTapped() {
         readerVC.delegate = self
-        self.readerVC.modalPresentationStyle = .formSheet
-        self.present(readerVC, animated: true)
+        readerVC.modalPresentationStyle = .formSheet
+        present(readerVC, animated: true)
     }
     
     @objc func textFromBuffer() {
         if let string = UIPasteboard.general.string {
-            self.searchTextField.text = string
+            searchTextField.text = string
             //            DispatchQueue.main.async { [weak self] in
             //                self?.searchBar(searchBar, textDidChange: string)
             //            }

@@ -16,8 +16,12 @@ extension SendMoneyController {
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Send money", color: Colors.mainBlue)
+                guard let chosentoken = self.chosenToken else {
+                    fatalError("no token selected")
+                }
+                var net = chosentoken.isFranklin() ? "via plasma" : nil
+                net = chosentoken.isXDai() ? "via xDai" : net
+                self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
                 self.showGif(false)
                 self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: false)
                 self.setCollectionView(hidden: true)
@@ -35,8 +39,12 @@ extension SendMoneyController {
         screenStatus = .searching
         UIView.animate(withDuration: Constants.ModalView.animationDuration) { [unowned self] in
             self.mainButton.isEnabled = true
-            
-            self.setTitle(text: "Send money", color: Colors.mainBlue)
+            guard let chosentoken = self.chosenToken else {
+                fatalError("no token selected")
+            }
+            var net = chosentoken.isFranklin() ? "via plasma" : nil
+            net = chosentoken.isXDai() ? "via xDai" : net
+            self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
             self.setCollectionView(hidden: false)
@@ -56,8 +64,12 @@ extension SendMoneyController {
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
                 self.mainButton.isEnabled = true
-                
-                self.setTitle(text: "Send money", color: Colors.mainBlue)
+                guard let chosentoken = self.chosenToken else {
+                    fatalError("no token selected")
+                }
+                var net = chosentoken.isFranklin() ? "via plasma" : nil
+                net = chosentoken.isXDai() ? "via xDai" : net
+                self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
                 self.showGif(false)
                 self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
                 self.setCollectionView(hidden: true)

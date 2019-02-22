@@ -81,7 +81,7 @@ class SendMoneyController: BasicViewController {
     internal var screenStatus: SendingScreenStatus = .start
     
     internal var chosenContact: Contact?
-    internal var chosenToken: ERC20Token?
+    var chosenToken: ERC20Token?
     internal var initAddress: String?
     
     // MARK: - Weak vars
