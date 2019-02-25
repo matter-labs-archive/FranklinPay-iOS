@@ -146,7 +146,7 @@ public class AppController {
         return nav
     }
     
-    private func initPreparations(for wallet: Wallet, on network: Web3Network) {
+    public func initPreparations(for wallet: Wallet, on network: Web3Network) {
         let group = DispatchGroup()
         
         let tokensDownloaded = userDefaultKeys.areTokensDownloaded()

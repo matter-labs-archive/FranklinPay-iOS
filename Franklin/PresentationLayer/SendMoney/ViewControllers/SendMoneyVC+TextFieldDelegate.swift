@@ -13,6 +13,7 @@ extension SendMoneyController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = (textField.text ?? "") as NSString
         let newText = currentText.replacingCharacters(in: range, with: string) as String
+        
         if textField == searchTextField {
             if newText == "" {
                 getAllContacts()
@@ -20,6 +21,9 @@ extension SendMoneyController: UITextFieldDelegate {
                 let contact = newText
                 searchContact(string: contact)
             }
+            return true
+        } else if textField == amountTextField {
+            return check18afterDot(text: newText)
         }
         return true
     }

@@ -155,7 +155,7 @@ class OnboardingViewController: BasicViewController {
     func finishSavingWallet(_ wallet: Wallet) {
         do {
             try walletCreating.prepareWallet(wallet)
-            CurrentWallet.currentWallet = wallet
+            appController.initPreparations(for: wallet, on: Web3Network(network: .Mainnet))
             walletCreated = true
             if animationTimer == nil {
                 goToApp()

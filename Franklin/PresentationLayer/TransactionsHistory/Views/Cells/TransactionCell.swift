@@ -39,7 +39,7 @@ class TransactionCell: UITableViewCell {
 
     func configureCell(with model: ETHTransaction, wallet: Wallet) {
         transaction = model
-        amountLabel.text = "$ \(model.amount)"
+        amountLabel.text = "\(model.amount) ETH"
         if model.from.lowercased() == wallet.address.lowercased() {
             //Sent
             if model.isPending {

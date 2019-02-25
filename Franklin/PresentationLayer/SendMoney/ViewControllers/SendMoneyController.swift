@@ -365,6 +365,20 @@ class SendMoneyController: BasicViewController {
         return true
     }
     
+    func check18afterDot(text: String) -> Bool {
+        let isNumeric = text.isEmpty || (Double(text) != nil)
+        let numberOfDots = text.components(separatedBy: ".").count - 1
+        
+        let numberOfDecimalDigits: Int
+        if let dotIndex = text.index(of: ".") {
+            numberOfDecimalDigits = text.distance(from: dotIndex, to: text.endIndex) - 1
+        } else {
+            numberOfDecimalDigits = 0
+        }
+        
+        return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 18
+    }
+    
     func checkAddressAndCreateContact() -> Bool {
         guard let address = addressTextField.text, !address.isEmpty else {
             addressTextField.text = nil
