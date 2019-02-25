@@ -22,7 +22,11 @@ extension WalletViewController {
         do {
             try wallet.delete(token: token, network: network)
             CurrentToken.currentToken = tokensArray[0].token
-            setTokensList()
+            tokensArray.remove(at: indexPath.row+1)
+            reloadDataInTable { [unowned self] in
+                self.refreshControl.endRefreshing()
+                print("Updated")
+            }
         } catch let error {
             alerts.showErrorAlert(for: self, error: error, completion: nil)
         }

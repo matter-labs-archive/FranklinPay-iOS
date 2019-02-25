@@ -169,14 +169,28 @@ class WalletViewController: BasicViewController {
         }
     }
     
+    func removeDeletedTokens(forTokens oldTokens: [TableToken]) -> [TableToken] {
+        var fixedTokens = oldTokens
+        var newTokens = self.tokensArray
+        for i in 0..<tokensArray.count {
+            if oldTokens[i].token.address != newTokens[i].token.address {
+                fixedTokens.remove(at: i)
+                fixedTokens = removeDeletedTokens(forTokens: fixedTokens)
+                break
+            }
+        }
+        return fixedTokens
+    }
+    
     func setTokensList() {
-        DispatchQueue.global().async { [unowned self] in
+        DispatchQueue.global().asyncAfter(deadline: .now()+0.1) { [unowned self] in
             let tokens = self.etherCoordinator.getTokens()
             self.tokensArray = tokens
             self.reloadDataInTable(completion: { [unowned self] in
                 self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
                     self.saveTokensBalances(tokens: uTokens)
-                    self.tokensArray = uTokens
+                    let nTokens = self.removeDeletedTokens(forTokens: uTokens)
+                    self.tokensArray = nTokens
                     self.reloadDataInTable { [unowned self] in
                         self.refreshControl.endRefreshing()
                         print("Updated")
@@ -184,6 +198,20 @@ class WalletViewController: BasicViewController {
                 }
             })
         }
+//        DispatchQueue.global().async { [unowned self] in
+//            let tokens = self.etherCoordinator.getTokens()
+//            self.tokensArray = tokens
+//            self.reloadDataInTable(completion: { [unowned self] in
+//                self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
+//                    self.saveTokensBalances(tokens: uTokens)
+//                    self.tokensArray = uTokens
+//                    self.reloadDataInTable { [unowned self] in
+//                        self.refreshControl.endRefreshing()
+//                        print("Updated")
+//                    }
+//                }
+//            })
+//        }
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
