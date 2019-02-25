@@ -16,8 +16,12 @@ public class SettingInteractor {
         guard let currentWallet = CurrentWallet.currentWallet else {
             return []
         }
-        var settings = [SettingsModel(.wallet),
-                        SettingsModel(.network)]
+        var settings = [SettingsModel]()
+        if userKeys.isPincodeExists() {
+            settings.append(SettingsModel(.changePincode))
+        }
+        settings += [SettingsModel(.wallet),
+                     SettingsModel(.network)]
         if !userKeys.isPincodeExists() {
             settings.append(SettingsModel(.pincode))
         }

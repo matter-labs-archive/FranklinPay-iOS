@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import BigInt
 
 extension SendMoneyController {
     
@@ -16,7 +17,13 @@ extension SendMoneyController {
             guard let amount = self.amountTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
-                let tx = try wallet.prepareSendERC20Tx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
+                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
+                let tx = try wallet.prepareSendERC20Tx(web3instance: changeWeb3,
+                                                       token: token,
+                                                       toAddress: address,
+                                                       tokenAmount: amount,
+                                                       gasLimit: .manual(BigUInt(120000)),
+                                                       gasPrice: .manual(BigUInt(15000000000)))
                 let password = try wallet.getPassword()
                 let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 print(result.transaction.gasLimit)
@@ -37,7 +44,11 @@ extension SendMoneyController {
             guard let amount = self.amountTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
-                let tx = try wallet.prepareSendERC20XDaiTx(token: token, toAddress: address, tokenAmount: amount, gasLimit: .automatic, gasPrice: .automatic)
+                let tx = try wallet.prepareSendERC20XDaiTx(token: token,
+                                                           toAddress: address,
+                                                           tokenAmount: amount,
+                                                           gasLimit: .manual(BigUInt(120000)),
+                                                           gasPrice: .manual(BigUInt(1100000000)))
                 let password = try wallet.getPassword()
                 let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 print(result.transaction.gasLimit)
@@ -58,7 +69,12 @@ extension SendMoneyController {
             guard let amount = self.amountTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
-                let tx = try wallet.prepareSendEthTx(toAddress: address, value: amount, gasLimit: .automatic, gasPrice: .automatic)
+                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
+                let tx = try wallet.prepareSendEthTx(web3instance: changeWeb3,
+                                                     toAddress: address,
+                                                     value: amount,
+                                                     gasLimit: .manual(BigUInt(120000)),
+                                                     gasPrice: .manual(BigUInt(15000000000)))
                 let password = try wallet.getPassword()
                 let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 print(result.transaction.gasLimit)
@@ -80,7 +96,10 @@ extension SendMoneyController {
             guard let address = self.chosenContact?.address else { return }
             do {
                 let password = try wallet.getPassword()
-                let tx = try wallet.prepareSendXDaiTx(toAddress: address, value: amount)
+                let tx = try wallet.prepareSendXDaiTx(toAddress: address,
+                                                      value: amount,
+                                                      gasLimit: .manual(BigUInt(120000)),
+                                                      gasPrice: .manual(BigUInt(1100000000)))
                 let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 print(result.transaction.gasLimit)
                 print(result.transaction.gasPrice)

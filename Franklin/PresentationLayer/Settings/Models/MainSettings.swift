@@ -15,4 +15,5 @@ public enum MainSettings {
     case pincode
     case help
     case topup
+    case changePincode
 }

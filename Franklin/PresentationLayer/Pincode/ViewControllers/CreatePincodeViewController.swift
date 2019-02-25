@@ -20,6 +20,9 @@ class CreatePincodeViewController: PincodeViewController {
 
     internal var pincodeItems: [KeychainPasswordItem] = []
     
+    internal let navigationItems = NavigationItems()
+    internal let appController = AppController()
+    
     // MARK: - Lyfesycle
 
     override func viewDidLoad() {
@@ -45,6 +48,9 @@ class CreatePincodeViewController: PincodeViewController {
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
+        let home = navigationItems.homeItem(target: self, action: #selector(goToApp))
+        navigationItem.setRightBarButton(home, animated: false)
+        navigationItem.hidesBackButton = true
     }
     
     func disableBiometricsButton(_ disable: Bool = false) {
@@ -113,7 +119,8 @@ class CreatePincodeViewController: PincodeViewController {
                 let pin = self.pincode
                 try pincodeItem.savePassword(pin)
                 self.userDefaults.setPincodeExists()
-                self.finish()
+                //self.finish()
+                self.goToApp()
             } catch let error {
                 fatalError("Error updating keychain for pin - \(error)")
             }
@@ -124,5 +131,24 @@ class CreatePincodeViewController: PincodeViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
             self.navigationController?.popViewController(animated: true)
         })
+    }
+    
+    @objc func goToApp() {
+        DispatchQueue.main.async { [unowned self] in
+            UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+                self.view.alpha = 0
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
+                    let tabViewController = self.appController.goToApp()
+                    tabViewController.view.backgroundColor = Colors.background
+                    let transition = CATransition()
+                    transition.duration = Constants.Main.animationDuration
+                    transition.type = CATransitionType.push
+                    transition.subtype = CATransitionSubtype.fromRight
+                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+                    self.view.window!.layer.add(transition, forKey: kCATransition)
+                    self.present(tabViewController, animated: false, completion: nil)
+                })
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@ class NetworksViewController: BasicViewController {
                 Web3Network(network: $0)
             })
             web3networks = basicWeb3Nets
-            let xdai = Web3Network(id: 100, name: "xDai")
+            let xdai = Web3Network(id: 100, name: "xDai", endpoint: "https://dai.poa.network")
             web3networks.append(xdai)
             self.networks = web3networks
             self.reloadDataInTable()

@@ -237,9 +237,10 @@ extension Wallet: IWalletTransactions {
                        options: TransactionOptions? = nil,
                        password: String) throws -> TransactionSendingResult {
         do {
-            var txOptions = options ?? transaction.transactionOptions
-            txOptions.gasPrice = .manual(BigUInt(1100000000))
-            txOptions.gasLimit = .manual(BigUInt(120000))
+            let txOptions = options ?? transaction.transactionOptions
+//            var txOptions = options ?? transaction.transactionOptions
+//            txOptions.gasPrice = .manual(BigUInt(1100000000))
+//            txOptions.gasLimit = .manual(BigUInt(120000))
             let result = try transaction.send(password: password, transactionOptions: txOptions)
             return result
         } catch let error {

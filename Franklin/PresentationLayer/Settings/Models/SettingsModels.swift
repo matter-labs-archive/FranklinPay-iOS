@@ -35,6 +35,12 @@ public struct SettingsModel {
             self.image = UIImage(named: "network") ?? UIImage()
             self.currentState = nil
             self.notification = false
+        case .changePincode:
+            self.title = "Change PIN"
+            self.subtitle = ""
+            self.image = UIImage(named: "pincode") ?? UIImage()
+            self.currentState = nil
+            self.notification = false
         case .pincode:
             self.title = "Set up PIN code"
             self.subtitle = "Protect your phone"

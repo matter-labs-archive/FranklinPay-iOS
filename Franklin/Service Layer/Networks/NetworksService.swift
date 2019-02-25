@@ -43,7 +43,8 @@ public class NetworksService: INetworksService {
         guard let name = networkFromUD["name"] as? String else {
             throw Errors.CommonErrors.wrongType
         }
-        let network = Web3Network(id: id, name: name)
+        let endpoint = networkFromUD["endpoint"] as? String
+        let network = Web3Network(id: id, name: name, endpoint: endpoint)
         return network
     }
 }

@@ -60,6 +60,8 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             presentVC(WalletsViewController())
         case SettingsModel(.network):
             presentVC(NetworksViewController())
+        case SettingsModel(.changePincode):
+            presentVC(EnterPincodeViewController(for: .changePincode, data: Data()))
         default:
             alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
         }

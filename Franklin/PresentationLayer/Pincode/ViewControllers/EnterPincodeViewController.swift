@@ -12,10 +12,6 @@ import Web3swift
 
 class EnterPincodeViewController: PincodeViewController {
     
-    // MARK: - Outlets
-
-    @IBOutlet weak var closeButton: UIButton!
-    
     // MARK: - Internal vars
     
     internal var pincode: String = ""
@@ -31,21 +27,21 @@ class EnterPincodeViewController: PincodeViewController {
     
     // MARK: - Inits
     
-    convenience init<T>(for enterCase: EnterPincodeCases, data: T?) {
+    convenience init<T>(for enterCase: EnterPincodeCases, data: T? = nil) {
         self.init()
         self.enterCase = enterCase
-        if T.self == PlasmaTransaction.self {
-            plasmaTX = data as? PlasmaTransaction
-        } else if T.self == WriteTransaction.self {
-            etherTX = data as? WriteTransaction
-        }
+//        guard let tx = data else { return }
+//        if T.self == PlasmaTransaction.self {
+//            plasmaTX = tx as? PlasmaTransaction
+//        } else if T.self == WriteTransaction.self {
+//            etherTX = tx as? WriteTransaction
+//        }
     }
     
     // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: false)
         changePincodeStatus(.enter)
         numsIcons = [firstNum, secondNum, thirdNum, fourthNum]
     }
@@ -57,11 +53,11 @@ class EnterPincodeViewController: PincodeViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
         
         if enterCase == .enterWallet {
-            closeButton.alpha = 0
-            closeButton.isUserInteractionEnabled = false
+            setNavigation(hidden: true)
+        } else {
+            setNavigation(hidden: false)
         }
         
         let context = LAContext()
@@ -70,6 +66,23 @@ class EnterPincodeViewController: PincodeViewController {
             disableBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
+        
+        if enterCase == .changePincode {
+            disableBiometricsButton(true)
+            biometricsButton.isUserInteractionEnabled = false
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        setNavigation(hidden: true)
+    }
+    
+    // MARK: - Main setup
+    
+    func setNavigation(hidden: Bool) {
+        navigationController?.setNavigationBarHidden(hidden, animated: true)
+        navigationController?.makeClearNavigationController()
     }
     
     // MARK: - Screen status
@@ -171,9 +184,16 @@ class EnterPincodeViewController: PincodeViewController {
 //                    returnToStartTab()
 //                }
 //            }
+        case .changePincode:
+            changePincode()
         default:
             returnToStartTab()
         }
+    }
+    
+    func changePincode() {
+        let vc = CreatePincodeViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
 
 //    func sendPlasmaTx(_ tx: PlasmaTransaction) {

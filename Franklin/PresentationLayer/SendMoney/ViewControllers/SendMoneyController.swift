@@ -345,7 +345,8 @@ class SendMoneyController: BasicViewController {
                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
-        guard let amount = Float(text) else {
+        let textWithDot = text.replacingOccurrences(of: ",", with: ".")
+        guard let amount = Float(textWithDot) else {
             amountTextField.text = nil
             amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
