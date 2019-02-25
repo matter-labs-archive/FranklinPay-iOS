@@ -104,7 +104,7 @@ class WalletsViewController: BasicViewController {
     // MARK: - Actions
     
     func deleteWallet(in indexPath: IndexPath) {
-        alerts.showAccessAlert(for: self, with: "Delete wallet \(wallets[indexPath.row].wallet.name)?") { [unowned self] (answer) in
+        alerts.showAccessAlert(for: self, with: "Delete \(wallets[indexPath.row].wallet.name) \(wallets[indexPath.row].wallet.address.hideExtraSymbolsInAddress())?") { [unowned self] (answer) in
             if answer {
                 do {
                     try self.wallets[indexPath.row].wallet.delete()

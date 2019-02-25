@@ -15,6 +15,9 @@ extension SendMoneyController {
         screenStatus = .start
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0) { [unowned self] in
+                self.closeButton.isHidden = false
+                self.backgroundView.isUserInteractionEnabled = true
+                self.view.isUserInteractionEnabled = true
                 self.mainButton.isEnabled = true
                 guard let chosentoken = self.chosenToken else {
                     fatalError("no token selected")
@@ -87,6 +90,7 @@ extension SendMoneyController {
         screenStatus = .sending
         closeButton.isHidden = true
         backgroundView.isUserInteractionEnabled = false
+        view.isUserInteractionEnabled = false
         showGif(true)
         UIView.animate(withDuration: animated ?
             Constants.ModalView.animationDuration : 0, animations: { [unowned self] in
@@ -111,9 +115,10 @@ extension SendMoneyController {
     
     @objc func showReady(animated: Bool) {
         screenStatus = .ready
-        backgroundView.isUserInteractionEnabled = true
         DispatchQueue.main.async { [unowned self] in
             self.closeButton.isHidden = false
+            self.backgroundView.isUserInteractionEnabled = true
+            self.view.isUserInteractionEnabled = true
             self.showGif(false)
             guard let contact = self.chosenContact else {return}
             UIView.animate(withDuration: animated ?

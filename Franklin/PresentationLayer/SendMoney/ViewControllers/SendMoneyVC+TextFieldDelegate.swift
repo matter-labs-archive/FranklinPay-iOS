@@ -22,7 +22,7 @@ extension SendMoneyController: UITextFieldDelegate {
                 searchContact(string: contact)
             }
             return true
-        } else if textField == amountTextField {
+        } else if textField == amountTextField && screenStatus != .saving {
             return check18afterDot(text: newText)
         }
         return true
