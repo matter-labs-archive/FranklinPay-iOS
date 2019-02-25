@@ -19,8 +19,9 @@ class OnboardingViewController: BasicViewController {
     @IBOutlet weak var bottomInfo: UILabel!
     @IBOutlet weak var prodName: UILabel!
     @IBOutlet weak var subtitle: UILabel!
-    @IBOutlet weak var continueButton: BasicGreenButton!
     @IBOutlet weak var animationImageView: UIImageView!
+    @IBOutlet weak var importButton: BasicWhiteButton!
+    @IBOutlet weak var createButton: BasicGreenButton!
     
     // MARK: - Internal lets
     
@@ -38,6 +39,10 @@ class OnboardingViewController: BasicViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         mainSetup()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setupNavigation()
     }
     
@@ -49,7 +54,7 @@ class OnboardingViewController: BasicViewController {
     // MARK: - Main setup
     
     func setupNavigation() {
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     func showStart() {
@@ -105,11 +110,17 @@ class OnboardingViewController: BasicViewController {
         
         settingUp.alpha = 0
         
-        continueButton.addTarget(self,
+        createButton.addTarget(self,
                                       action: #selector(continueAction(sender:)),
                                       for: .touchUpInside)
-        continueButton.setTitle("Continue", for: .normal)
-        continueButton.alpha = 1
+        createButton.setTitle("Create wallet", for: .normal)
+        createButton.alpha = 1
+        
+        importButton.addTarget(self,
+                               action: #selector(importAction(sender:)),
+                               for: .touchUpInside)
+        importButton.setTitle("Import wallet", for: .normal)
+        importButton.alpha = 1
         
 //        link.addTarget(self, action: #selector(readTerms(sender:)), for: .touchUpInside)
         
@@ -131,7 +142,8 @@ class OnboardingViewController: BasicViewController {
     
     func creatingWalletAnimation() {
         UIView.animate(withDuration: Constants.Main.animationDuration) {
-            self.continueButton.alpha = 0
+            self.createButton.alpha = 0
+            self.importButton.alpha = 0
             self.link.alpha = 0
             self.bottomInfo.alpha = 0
             self.animationImageView.alpha = 1
@@ -197,9 +209,14 @@ class OnboardingViewController: BasicViewController {
     // MARK: - Buttons actions
     
     @objc func continueAction(sender: UIButton) {
-        continueButton.isUserInteractionEnabled = false
+        createButton.isUserInteractionEnabled = false
         animation()
         creatingWallet()
+    }
+    
+    @objc func importAction(sender: UIButton) {
+        let vc = WalletImportingViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func readTerms(sender: UIButton) {

@@ -28,7 +28,8 @@
             <connections>
                 <outlet property="animationImageView" destination="T7T-dq-jmR" id="0nv-sr-V9Y"/>
                 <outlet property="bottomInfo" destination="a1r-5y-Fyt" id="Fee-jU-zAA"/>
-                <outlet property="continueButton" destination="KFu-TQ-CFK" id="9Ef-kr-Nje"/>
+                <outlet property="createButton" destination="KFu-TQ-CFK" id="BX2-1f-gEc"/>
+                <outlet property="importButton" destination="z3B-ys-e39" id="Xiq-V1-9kX"/>
                 <outlet property="iv" destination="66Y-EM-95G" id="uEx-Zh-Xko"/>
                 <outlet property="link" destination="5jd-DQ-sd1" id="C4W-0U-wjL"/>
                 <outlet property="prodName" destination="hRf-R9-Slc" id="cbN-gB-O6f"/>
@@ -69,6 +70,10 @@
                             </subviews>
                             <viewLayoutGuide key="safeArea" id="xni-O0-GEr"/>
                         </stackView>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z3B-ys-e39" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
+                            <rect key="frame" x="1" y="424" width="335" height="46.5"/>
+                            <state key="normal" title="Button"/>
+                        </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageSizeForAccessibilityContentSizeCategory="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFu-TQ-CFK" customClass="BasicGreenButton" customModule="Franklin" customModuleProvider="target">
                             <rect key="frame" x="1" y="490.5" width="335" height="46.5"/>
                             <state key="normal" title="Button"/>
@@ -97,6 +102,7 @@
                         <constraint firstItem="k9L-rX-Kju" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" multiplier="0.7" id="0oi-Bg-Z6l"/>
                         <constraint firstAttribute="bottom" secondItem="5jd-DQ-sd1" secondAttribute="bottom" id="2iM-Vk-qAI"/>
                         <constraint firstItem="F6C-uN-FK3" firstAttribute="leading" secondItem="T7T-dq-jmR" secondAttribute="leading" id="8q5-8E-1bP"/>
+                        <constraint firstItem="z3B-ys-e39" firstAttribute="height" secondItem="KFu-TQ-CFK" secondAttribute="height" id="A4f-Ya-0Fd"/>
                         <constraint firstItem="a1r-5y-Fyt" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="AZW-Tf-sRj"/>
                         <constraint firstItem="z8E-X5-bRF" firstAttribute="height" secondItem="uva-wy-8uq" secondAttribute="height" multiplier="0.04" id="BOk-LQ-rSw"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="top" secondItem="66Y-EM-95G" secondAttribute="bottom" id="Dxs-2p-Z7h"/>
@@ -112,12 +118,15 @@
                         <constraint firstAttribute="bottom" secondItem="KFu-TQ-CFK" secondAttribute="bottom" constant="10" id="VAv-M4-Z9o"/>
                         <constraint firstItem="66Y-EM-95G" firstAttribute="centerY" secondItem="uva-wy-8uq" secondAttribute="centerY" multiplier="0.9" id="awS-YZ-rB0"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="centerX" secondItem="uva-wy-8uq" secondAttribute="centerX" id="fkk-gN-wt4"/>
+                        <constraint firstItem="z3B-ys-e39" firstAttribute="centerX" secondItem="KFu-TQ-CFK" secondAttribute="centerX" id="hbu-9Y-gbB"/>
                         <constraint firstItem="a1r-5y-Fyt" firstAttribute="height" secondItem="5jd-DQ-sd1" secondAttribute="height" id="hiJ-mT-8NM"/>
                         <constraint firstItem="5jd-DQ-sd1" firstAttribute="top" secondItem="a1r-5y-Fyt" secondAttribute="bottom" id="kEo-CC-j4G"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" id="kdg-IY-LIP"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="bottom" secondItem="F6C-uN-FK3" secondAttribute="bottom" id="mzj-6G-b4s"/>
                         <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.2" id="p8s-b4-PAS"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="trailing" secondItem="F6C-uN-FK3" secondAttribute="trailing" id="qUz-Ds-r59"/>
+                        <constraint firstItem="z3B-ys-e39" firstAttribute="width" secondItem="KFu-TQ-CFK" secondAttribute="width" id="w2A-k1-gY1"/>
+                        <constraint firstItem="KFu-TQ-CFK" firstAttribute="top" secondItem="z3B-ys-e39" secondAttribute="bottom" constant="20" id="yCy-Dr-fso"/>
                     </constraints>
                 </view>
             </subviews>

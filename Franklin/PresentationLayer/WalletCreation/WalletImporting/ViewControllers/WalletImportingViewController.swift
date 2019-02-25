@@ -32,6 +32,7 @@ class WalletImportingViewController: BasicViewController {
     internal let navigationItems = NavigationItems()
     internal let appController = AppController()
     internal let walletCreating = WalletCreating()
+    internal let userDefaults = UserDefaultKeys()
     internal let alerts = Alerts()
     
     internal var walletCreated = false
@@ -97,8 +98,10 @@ class WalletImportingViewController: BasicViewController {
     func setNavigation(hidden: Bool) {
         navigationController?.setNavigationBarHidden(hidden, animated: true)
         navigationController?.makeClearNavigationController()
-        let home = navigationItems.homeItem(target: self, action: #selector(goToApp))
-        navigationItem.setRightBarButton(home, animated: false)
+        if CurrentWallet.currentWallet != nil {
+            let home = navigationItems.homeItem(target: self, action: #selector(goToApp))
+            navigationItem.setRightBarButton(home, animated: false)
+        }
     }
     
     func setImportView() {
@@ -167,7 +170,7 @@ class WalletImportingViewController: BasicViewController {
                 }
                 self.finishSavingWallet(wallet)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: error) { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Wrong input") { [unowned self] in
                     self.cancelAnimation()
                 }
             }

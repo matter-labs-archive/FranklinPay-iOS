@@ -58,14 +58,6 @@ public struct UserDefaultKeys {
         UserDefaults.standard.synchronize()
     }
     
-    public func isOnboardingPassed() -> Bool {
-        return UserDefaults.standard.bool(forKey: "OnboardingPassed")
-    }
-    public func setOnboardingPassed() {
-        UserDefaults.standard.set(true, forKey: "OnboardingPassed")
-        UserDefaults.standard.synchronize()
-    }
-    
     public func isPincodeExists() -> Bool {
         return UserDefaults.standard.bool(forKey: "PincodeExists")
     }
