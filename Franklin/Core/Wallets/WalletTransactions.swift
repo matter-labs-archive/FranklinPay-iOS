@@ -236,15 +236,59 @@ extension Wallet: IWalletTransactions {
     public func sendTx(transaction: WriteTransaction,
                        options: TransactionOptions? = nil,
                        password: String) throws -> TransactionSendingResult {
+        var txOptions = options ?? transaction.transactionOptions
         do {
-            let txOptions = options ?? transaction.transactionOptions
+            // fix if tx is stack
+            //txOptions.nonce = .latest
 //            var txOptions = options ?? transaction.transactionOptions
 //            txOptions.gasPrice = .manual(BigUInt(1100000000))
 //            txOptions.gasLimit = .manual(BigUInt(120000))
+            print(txOptions.nonce)
+            print(txOptions.callOnBlock)
+            let pendingNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "pending")
+            print(pendingNonce!)
+            let latestNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "latest")
+            print(latestNonce!)
             let result = try transaction.send(password: password, transactionOptions: txOptions)
             return result
         } catch let error {
-            throw error
+            if let web3error = error as? Web3Error {
+                switch web3error {
+                case .nodeError(desc: "replacement transaction underpriced"):
+                    guard let pendingNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "pending") else {
+                        throw error
+                    }
+                    guard let latestNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "latest") else {
+                        throw error
+                    }
+                    let highest = max(pendingNonce, latestNonce)
+                    txOptions.nonce = .manual(highest)
+                    //txOptions.nonce = .pending
+                    do {
+                        return try transaction.send(password: password, transactionOptions: txOptions)
+                    } catch let err {
+                        throw err
+                    }
+                case .nodeError(desc: "nonce too low"):
+//                    guard let pendingNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "pending") else {
+//                        throw error
+//                    }
+//                    guard let latestNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "latest") else {
+//                        throw error
+//                    }
+//                    let highest = min(pendingNonce, latestNonce)
+                    txOptions.nonce = .latest
+                    do {
+                        return try transaction.send(password: password, transactionOptions: txOptions)
+                    } catch let err {
+                        throw err
+                    }
+                default:
+                    throw error
+                }
+            } else {
+                throw error
+            }
         }
     }
     

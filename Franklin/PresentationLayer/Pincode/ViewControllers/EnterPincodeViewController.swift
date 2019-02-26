@@ -169,6 +169,7 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func enterWithPincode() {
+        changeNumsIcons(pincode.count)
         switch enterCase {
         case .transaction:
             break
