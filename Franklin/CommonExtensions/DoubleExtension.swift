@@ -15,3 +15,17 @@ extension Double {
         return (self * divisor).rounded() / divisor
     }
 }
+
+extension Double {
+    init?(textWithComma text: String) {
+        let formatter = NumberFormatter()
+        formatter.decimalSeparator = ","
+        let grade = formatter.number(from: text)
+        
+        if let doubleGrade = grade?.doubleValue {
+            self = doubleGrade
+        } else {
+            return nil
+        }
+    }
+}

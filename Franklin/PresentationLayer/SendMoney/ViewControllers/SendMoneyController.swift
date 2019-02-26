@@ -346,7 +346,7 @@ class SendMoneyController: BasicViewController {
             return false
         }
         let textWithDot = text.replacingOccurrences(of: ",", with: ".")
-        guard let amount = Float(textWithDot) else {
+        guard let amount = Double(textWithDot) else {
             amountTextField.text = nil
             amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
@@ -358,7 +358,7 @@ class SendMoneyController: BasicViewController {
                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
-        guard amount <= Float(chosenToken?.balance ?? "0.0") ?? 0.0 else {
+        guard amount <= Double(chosenToken?.balance ?? "0.0") ?? 0.0 else {
             alerts.showErrorAlert(for: self, error: "Enter less amount", completion: nil)
             return false
         }
@@ -384,7 +384,23 @@ class SendMoneyController: BasicViewController {
             numberOfDecimalDigits = 0
         }
         
-        return isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 18
+        let result = isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 18
+        return result
+    }
+    
+    func check18afterComma(text: String) -> Bool {
+        let isNumeric = text.isEmpty || (Double(textWithComma: text) != nil)
+        let numberOfDots = text.components(separatedBy: ",").count - 1
+        
+        let numberOfDecimalDigits: Int
+        if let dotIndex = text.index(of: ",") {
+            numberOfDecimalDigits = text.distance(from: dotIndex, to: text.endIndex) - 1
+        } else {
+            numberOfDecimalDigits = 0
+        }
+        
+        let result = isNumeric && numberOfDots <= 1 && numberOfDecimalDigits <= 18
+        return result
     }
     
     func checkAddressAndCreateContact() -> Bool {
