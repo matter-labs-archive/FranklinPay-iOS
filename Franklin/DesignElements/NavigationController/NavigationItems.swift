@@ -10,6 +10,6 @@ import UIKit
 
 class NavigationItems {
     func homeItem(target: Any, action: Selector) -> UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(named: "home"), style: .plain, target: target, action: action)
+        return UIBarButtonItem(image: UIImage(named: "close_blue"), style: .plain, target: target, action: action)
     }
 }

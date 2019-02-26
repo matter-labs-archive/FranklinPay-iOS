@@ -114,17 +114,27 @@ class AcceptChequeController: BasicViewController {
     func goToApp() {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) {
-                self.view.alpha = 0
+                self.view.hideSubviews()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
                     let tabViewController = self.appController.goToApp()
-                    tabViewController.view.backgroundColor = Colors.background
-                    let transition = CATransition()
-                    transition.duration = Constants.Main.animationDuration
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromRight
-                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                    self.view.window!.layer.add(transition, forKey: kCATransition)
+                    //                        tabViewController.context
+                    //                        tabViewController.view.backgroundColor = Colors.background
+                    //                        let transition = CATransition()
+                    //                        transition.duration = Constants.Main.animationDuration
+                    //                        transition.type = CATransitionType.push
+                    //                        transition.subtype = CATransitionSubtype.fromRight
+                    //                        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+                    //                        self.view.window!.layer.add(transition, forKey: kCATransition)
                     self.present(tabViewController, animated: false, completion: nil)
+//                    let tabViewController = self.appController.goToApp()
+//                    tabViewController.view.backgroundColor = Colors.background
+//                    let transition = CATransition()
+//                    transition.duration = Constants.Main.animationDuration
+//                    transition.type = CATransitionType.push
+//                    transition.subtype = CATransitionSubtype.fromRight
+//                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+//                    self.view.window!.layer.add(transition, forKey: kCATransition)
+//                    self.present(tabViewController, animated: false, completion: nil)
                 })
             }
         }

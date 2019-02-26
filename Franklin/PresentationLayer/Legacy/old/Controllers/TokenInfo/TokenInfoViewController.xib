@@ -38,7 +38,7 @@
                         <constraint firstAttribute="width" constant="30" id="hsN-VK-aUB"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <state key="normal" image="close_btn"/>
+                    <state key="normal" image="close_blue"/>
                     <connections>
                         <action selector="closeWithSender:" destination="-1" eventType="touchUpInside" id="9Pc-12-Xdg"/>
                     </connections>
@@ -66,6 +66,6 @@
         </panGestureRecognizer>
     </objects>
     <resources>
-        <image name="close_btn" width="100" height="100"/>
+        <image name="close_blue" width="115" height="111"/>
     </resources>
 </document>

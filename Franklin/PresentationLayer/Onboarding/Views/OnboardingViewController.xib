@@ -28,6 +28,7 @@
             <connections>
                 <outlet property="animationImageView" destination="T7T-dq-jmR" id="0nv-sr-V9Y"/>
                 <outlet property="bottomInfo" destination="a1r-5y-Fyt" id="Fee-jU-zAA"/>
+                <outlet property="contentView" destination="uva-wy-8uq" id="Pq1-NO-0eH"/>
                 <outlet property="createButton" destination="KFu-TQ-CFK" id="BX2-1f-gEc"/>
                 <outlet property="importButton" destination="z3B-ys-e39" id="Xiq-V1-9kX"/>
                 <outlet property="iv" destination="66Y-EM-95G" id="uEx-Zh-Xko"/>

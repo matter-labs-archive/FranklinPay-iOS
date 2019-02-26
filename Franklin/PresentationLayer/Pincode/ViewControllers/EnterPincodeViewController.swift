@@ -48,7 +48,9 @@ class EnterPincodeViewController: PincodeViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        enterWithBiometrics()
+        if enterCase != .changePincode {
+            enterWithBiometrics()
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -62,12 +64,7 @@ class EnterPincodeViewController: PincodeViewController {
         
         let context = LAContext()
         var error: NSError?
-        if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            disableBiometricsButton(true)
-            biometricsButton.isUserInteractionEnabled = false
-        }
-        
-        if enterCase == .changePincode {
+        if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) || enterCase == .changePincode {
             disableBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
@@ -266,17 +263,23 @@ class EnterPincodeViewController: PincodeViewController {
     func returnToStartTab() {
         DispatchQueue.main.asyncAfter(deadline: .now()+0.25) { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
-                self.view.alpha = 0
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
-                    let tabViewController = self.appController.goToApp()
-                    tabViewController.view.backgroundColor = Colors.background
-                    let transition = CATransition()
-                    transition.duration = Constants.Main.animationDuration
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromRight
-                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                    self.view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(tabViewController, animated: false, completion: nil)
+                self.view.hideSubviews()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
+                    if self.enterCase == .enterWallet {
+                        let tabViewController = self.appController.goToApp()
+//                        tabViewController.context
+//                        tabViewController.view.backgroundColor = Colors.background
+//                        let transition = CATransition()
+//                        transition.duration = Constants.Main.animationDuration
+//                        transition.type = CATransitionType.push
+//                        transition.subtype = CATransitionSubtype.fromRight
+//                        transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+//                        self.view.window!.layer.add(transition, forKey: kCATransition)
+                        self.present(tabViewController, animated: false, completion: nil)
+                    } else {
+                        self.setNavigation(hidden: true)
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
                 })
             }
         }

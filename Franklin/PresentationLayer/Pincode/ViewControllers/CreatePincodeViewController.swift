@@ -136,17 +136,19 @@ class CreatePincodeViewController: PincodeViewController {
     @objc func goToApp() {
         DispatchQueue.main.async { [unowned self] in
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
-                self.view.alpha = 0
+                self.view.hideSubviews()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
-                    let tabViewController = self.appController.goToApp()
-                    tabViewController.view.backgroundColor = Colors.background
-                    let transition = CATransition()
-                    transition.duration = Constants.Main.animationDuration
-                    transition.type = CATransitionType.push
-                    transition.subtype = CATransitionSubtype.fromRight
-                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
-                    self.view.window!.layer.add(transition, forKey: kCATransition)
-                    self.present(tabViewController, animated: false, completion: nil)
+                    self.setNavigation(hidden: true)
+                    self.navigationController?.popToRootViewController(animated: true)
+//                    let tabViewController = self.appController.goToApp()
+//                    tabViewController.view.backgroundColor = Colors.background
+//                    let transition = CATransition()
+//                    transition.duration = Constants.Main.animationDuration
+//                    transition.type = CATransitionType.push
+//                    transition.subtype = CATransitionSubtype.fromRight
+//                    transition.timingFunction = CAMediaTimingFunction(name:CAMediaTimingFunctionName.easeInEaseOut)
+//                    self.view.window!.layer.add(transition, forKey: kCATransition)
+//                    self.present(tabViewController, animated: false, completion: nil)
                 })
             }
         }

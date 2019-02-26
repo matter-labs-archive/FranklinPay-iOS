@@ -40,3 +40,11 @@ extension UIView {
         self.addSubview(blurEffectView)
     }
 }
+
+extension UIView {
+    public func hideSubviews() {
+        for subview in self.subviews {
+            subview.alpha = 0
+        }
+    }
+}
