@@ -365,6 +365,14 @@ class SendMoneyController: BasicViewController {
         return true
     }
     
+    func checkMoreThenOneNull(text: String) -> Bool {
+        var wrong = false
+        if text.count > 1 {
+            wrong = text[0] == "0" && text[1] == "0"
+        }
+        return !wrong
+    }
+    
     func check18afterDot(text: String) -> Bool {
         let isNumeric = text.isEmpty || (Double(text) != nil)
         let numberOfDots = text.components(separatedBy: ".").count - 1

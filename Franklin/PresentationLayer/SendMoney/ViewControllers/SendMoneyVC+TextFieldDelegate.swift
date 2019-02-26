@@ -23,7 +23,8 @@ extension SendMoneyController: UITextFieldDelegate {
             }
             return true
         } else if textField == amountTextField && screenStatus != .saving {
-            return check18afterDot(text: newText)
+            let check = check18afterDot(text: newText) && checkMoreThenOneNull(text: newText)
+            return check
         }
         return true
     }
