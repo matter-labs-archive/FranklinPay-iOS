@@ -12,7 +12,7 @@ import QRCodeReader
 extension SendMoneyController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
-        addressTextField.text = result.value
+        topTextField.text = result.value
         reader.dismiss(animated: true, completion: nil)
     }
     

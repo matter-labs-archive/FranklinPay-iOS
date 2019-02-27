@@ -15,7 +15,7 @@ extension SendMoneyController {
     func sendToken(_ token: ERC20Token) {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
+            guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
                 let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
@@ -42,7 +42,7 @@ extension SendMoneyController {
     func sendTokenXDai(_ token: ERC20Token) {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
+            guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
                 let tx = try wallet.prepareSendERC20XDaiTx(token: token,
@@ -67,7 +67,7 @@ extension SendMoneyController {
     func sendEther() {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
+            guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
                 let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
@@ -93,7 +93,7 @@ extension SendMoneyController {
     func sendXDai() {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else { return }
-            guard let amount = self.amountTextField.text else { return }
+            guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
                 let password = try wallet.getPassword()

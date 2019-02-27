@@ -31,9 +31,9 @@ extension SendMoneyController {
                 self.setBottomButton(text: "Other app...", imageName: "share-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
                 self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
                 self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
+                self.setBottomStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "or send to contact:", position: self.searchStackOrigin)
+                self.setMiddleStack(hidden: false, interactive: true, placeholder: "Enter address", labelText: "Enter address:")
+                self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to:")
                 self.setReadyIcon(hidden: true)
         }
     }
@@ -54,9 +54,9 @@ extension SendMoneyController {
             self.setBottomButton(text: "Back", imageName: "left-blue", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
             self.setTopButton(text: "Add contact", imageName: "add-contacts", backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
             self.setTopStack(hidden: true, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-            self.setMiddleStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "Send to:", position: self.amountStackView.frame.origin.y)
-            self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "or send to contact:")
+            self.setBottomStack(hidden: false, interactive: true, placeholder: "Search by name", labelText: "or send to contact:", position: self.topStackView.frame.origin.y)
+            self.setMiddleStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+            self.setContactStack(hidden: true, interactive: false, contact: nil, labelText: "Send to:")
             self.setReadyIcon(hidden: true)
         }
     }
@@ -79,9 +79,9 @@ extension SendMoneyController {
                 self.setBottomButton(text: "Send to \(contact.name)", imageName: "ssend-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
                 self.setTopButton(text: "Send", imageName: "send-white", backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
                 self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "or send to contact:")
+                self.setBottomStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "or send to contact:", position: self.searchStackOrigin)
+                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+                self.setContactStack(hidden: false, interactive: true, contact: contact, labelText: "Send to:")
                 self.setReadyIcon(hidden: true)
         }
     }
@@ -102,9 +102,9 @@ extension SendMoneyController {
                 self.setBottomButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
                 self.setTopButton(text: nil, imageName: nil, backgroundColor: Colors.orange, textColor: Colors.textWhite, hidden: true, borderNeeded: false)
                 self.setTopStack(hidden: false, interactive: true, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by self.name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "or send to contact:")
+                self.setBottomStack(hidden: true, interactive: false, placeholder: "Search by self.name", labelText: "or send to contact:", position: self.searchStackOrigin)
+                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+                self.setContactStack(hidden: false, interactive: true, contact: self.chosenContact, labelText: "Send to:")
                 self.setReadyIcon(hidden: true)
         }) { [unowned self] (completed) in
             if completed {
@@ -135,9 +135,9 @@ extension SendMoneyController {
                     self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.mainBlue, textColor: Colors.textWhite, hidden: false, borderNeeded: true)
                     self.setTopButton(text: "Save contact", imageName: "add-contacts", backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: contact.name == "" ? false : true, borderNeeded: true)
                     self.setTopStack(hidden: false, interactive: false, placeholder: "Amount in \(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")", labelText: "Amount (\(self.chosenToken?.symbol.uppercased() ?? "Unknown currency")):")
-                    self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                    self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                    self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
+                    self.setBottomStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "or send to contact:", position: self.searchStackOrigin)
+                    self.setMiddleStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+                    self.setContactStack(hidden: false, interactive: false, contact: self.chosenContact, labelText: "Send to:")
             }
         }
     }
@@ -155,9 +155,9 @@ extension SendMoneyController {
                 self.setBottomButton(text: "Close", imageName: nil, backgroundColor: Colors.textWhite, textColor: Colors.mainBlue, hidden: false, borderNeeded: true)
                 self.setTopButton(text: "Save", imageName: "button-save", backgroundColor: Colors.mainGreen, textColor: Colors.textWhite, hidden: false, borderNeeded: false)
                 self.setTopStack(hidden: false, interactive: true, placeholder: "Enter name", labelText: "Contact name:", resetText: true, keyboardType: .default)
-                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "Send to:", position: self.searchStackOrigin)
-                self.setBottomStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
-                self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "or send to contact:")
+                self.setBottomStack(hidden: true, interactive: false, placeholder: "Search by name", labelText: "or send to contact:", position: self.searchStackOrigin)
+                self.setMiddleStack(hidden: true, interactive: false, placeholder: "Enter address", labelText: "Enter address:")
+                self.setContactStack(hidden: true, interactive: false, contact: self.chosenContact, labelText: "Send to:")
                 self.setReadyIcon(hidden: true)
         }
     }

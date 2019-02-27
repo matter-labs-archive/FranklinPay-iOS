@@ -29,32 +29,32 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SendMoneyController" customModule="Franklin" customModuleProvider="target">
             <connections>
-                <outlet property="addressStackView" destination="kab-7q-SLl" id="5Lz-75-pbT"/>
-                <outlet property="addressTextField" destination="0hp-FV-oWo" id="0mF-qA-UyI"/>
-                <outlet property="amountLabel" destination="h7J-vs-M6e" id="HrF-Hv-q5x"/>
-                <outlet property="amountStackView" destination="uYS-5y-hVw" id="rMw-D3-GXD"/>
-                <outlet property="amountTextField" destination="vgy-Eq-eB8" id="o72-8E-Ram"/>
                 <outlet property="backgroundView" destination="tXO-f0-PcV" id="I2t-2P-fIm"/>
+                <outlet property="bottomLabel" destination="hBf-L5-Dth" id="KbW-ke-iO1"/>
+                <outlet property="bottomStackView" destination="KNP-6b-UZ7" id="3B1-0q-rQ2"/>
+                <outlet property="bottomTextField" destination="oBb-2T-fhX" id="wuk-Mg-8gc"/>
                 <outlet property="closeButton" destination="Fws-Mk-Vkn" id="H1d-a1-gFE"/>
                 <outlet property="contactAddress" destination="of6-eA-vkY" id="ojr-XL-Zc2"/>
                 <outlet property="contactImage" destination="jXW-wy-cTf" id="O59-SB-duQ"/>
+                <outlet property="contactLabel" destination="4jc-Nu-uD0" id="U7R-En-VK4"/>
                 <outlet property="contactName" destination="g2G-xK-bV7" id="mAg-v9-iwf"/>
                 <outlet property="contactStack" destination="KJu-KL-Rbf" id="10w-CA-IoC"/>
                 <outlet property="contentView" destination="2hx-Eu-a6f" id="jjt-aB-HWN"/>
                 <outlet property="emptyContactsView" destination="MrA-XH-WIY" id="mLK-2m-n0a"/>
                 <outlet property="mainButton" destination="k4H-rt-isT" id="srO-dT-l8N"/>
-                <outlet property="orEnterAddressLabel" destination="Xb6-ru-D7o" id="GXG-QA-MZY"/>
+                <outlet property="middleLabel" destination="Xb6-ru-D7o" id="BfM-jm-TnN"/>
+                <outlet property="middleStackView" destination="kab-7q-SLl" id="LKm-AG-4Ng"/>
+                <outlet property="middleTextField" destination="0hp-FV-oWo" id="tSD-cs-fZf"/>
                 <outlet property="readyIcon" destination="6fN-qy-6IN" id="jCx-A0-UDc"/>
-                <outlet property="searchStackView" destination="KNP-6b-UZ7" id="4pu-SR-t78"/>
-                <outlet property="searchTextField" destination="oBb-2T-fhX" id="IfC-io-NWm"/>
                 <outlet property="sendButton" destination="9CJ-bn-7By" id="khc-QY-lfg"/>
-                <outlet property="sendToContactLabel" destination="hBf-L5-Dth" id="h3d-T0-BWk"/>
-                <outlet property="sendToLabel" destination="4jc-Nu-uD0" id="Mu6-6a-Rtw"/>
                 <outlet property="sendingGif" destination="1L8-Jl-9PO" id="ufx-FX-hdu"/>
                 <outlet property="separatorView" destination="eWh-4Y-qZs" id="VIs-xU-cHr"/>
                 <outlet property="shareLabel" destination="lEV-c5-9oG" id="3p4-nL-UVR"/>
                 <outlet property="tableView" destination="xLG-Eg-GUa" id="tc4-75-j0h"/>
                 <outlet property="titleLabel" destination="Z4A-Yj-ak4" id="MQo-uW-F6X"/>
+                <outlet property="topLabel" destination="h7J-vs-M6e" id="tV7-oo-gsU"/>
+                <outlet property="topStackView" destination="uYS-5y-hVw" id="psc-rf-dDs"/>
+                <outlet property="topTextField" destination="vgy-Eq-eB8" id="Xag-QW-ZdL"/>
                 <outlet property="view" destination="b0J-PN-wbi" id="rRb-FF-Oxk"/>
             </connections>
         </placeholder>
@@ -245,7 +245,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1L8-Jl-9PO">
                                     <rect key="frame" x="0.0" y="383.66666666666663" width="374.66666666666669" height="361.66666666666663"/>
                                 </imageView>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-KL-Rbf">
+                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-KL-Rbf">
                                     <rect key="frame" x="-0.66666666666665719" y="265.66666666666669" width="376" height="108"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4jc-Nu-uD0">
@@ -255,7 +255,7 @@
                                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="H7l-j8-TOP">
+                                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="H7l-j8-TOP">
                                             <rect key="frame" x="0.0" y="45.333333333333314" width="376" height="62.666666666666657"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts_gray" translatesAutoresizingMaskIntoConstraints="NO" id="jXW-wy-cTf">
@@ -265,7 +265,7 @@
                                                         <constraint firstAttribute="height" constant="48" id="Ed9-Vz-0Kw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2hv-e3-4VV">
+                                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2hv-e3-4VV">
                                                     <rect key="frame" x="68" y="7.3333333333333144" width="308" height="48"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-xK-bV7">
@@ -284,7 +284,7 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="2hv-e3-4VV" firstAttribute="height" secondItem="jXW-wy-cTf" secondAttribute="height" id="52g-cl-5Gi"/>
+                                                <constraint firstItem="2hv-e3-4VV" firstAttribute="height" secondItem="jXW-wy-cTf" secondAttribute="height" id="vkm-P8-qes"/>
                                             </constraints>
                                         </stackView>
                                     </subviews>
@@ -345,8 +345,7 @@
                                 <constraint firstItem="1L8-Jl-9PO" firstAttribute="leading" secondItem="DXW-0M-o2a" secondAttribute="leading" id="Doi-fc-7rg"/>
                                 <constraint firstItem="eWh-4Y-qZs" firstAttribute="centerX" secondItem="uYS-5y-hVw" secondAttribute="centerX" id="G8b-qt-dSe"/>
                                 <constraint firstItem="k4H-rt-isT" firstAttribute="height" secondItem="vgy-Eq-eB8" secondAttribute="height" id="Gin-1A-91f"/>
-                                <constraint firstItem="KJu-KL-Rbf" firstAttribute="width" secondItem="KNP-6b-UZ7" secondAttribute="width" id="I1e-SE-ub2"/>
-                                <constraint firstItem="kab-7q-SLl" firstAttribute="height" secondItem="KJu-KL-Rbf" secondAttribute="height" id="JMn-ie-M6T"/>
+                                <constraint firstItem="KJu-KL-Rbf" firstAttribute="width" secondItem="uYS-5y-hVw" secondAttribute="width" id="JRS-Q5-ddC"/>
                                 <constraint firstItem="x3H-n7-idt" firstAttribute="leading" secondItem="BOP-5s-JkX" secondAttribute="leading" id="KYm-VM-Wur"/>
                                 <constraint firstItem="x3H-n7-idt" firstAttribute="centerX" secondItem="DXW-0M-o2a" secondAttribute="centerX" id="MEQ-dd-KDX"/>
                                 <constraint firstItem="kab-7q-SLl" firstAttribute="top" secondItem="eWh-4Y-qZs" secondAttribute="bottom" constant="15" id="MLx-5W-Rfw"/>
@@ -374,6 +373,7 @@
                                 <constraint firstItem="nRH-T1-NTN" firstAttribute="width" secondItem="oBb-2T-fhX" secondAttribute="width" id="loI-yY-DEG"/>
                                 <constraint firstItem="4jc-Nu-uD0" firstAttribute="height" secondItem="h7J-vs-M6e" secondAttribute="height" id="nVu-8s-M3q"/>
                                 <constraint firstItem="eWh-4Y-qZs" firstAttribute="top" secondItem="uYS-5y-hVw" secondAttribute="bottom" constant="15" id="nsR-CE-XZc"/>
+                                <constraint firstItem="kab-7q-SLl" firstAttribute="height" secondItem="uYS-5y-hVw" secondAttribute="height" id="o8H-Fz-q5s"/>
                                 <constraint firstItem="kab-7q-SLl" firstAttribute="top" secondItem="KJu-KL-Rbf" secondAttribute="top" id="qcq-b7-YoC"/>
                                 <constraint firstItem="kab-7q-SLl" firstAttribute="centerX" secondItem="DXW-0M-o2a" secondAttribute="centerX" id="uZd-i6-vw1"/>
                                 <constraint firstItem="9CJ-bn-7By" firstAttribute="width" secondItem="k4H-rt-isT" secondAttribute="width" id="vYd-Fn-bnH"/>
@@ -432,7 +432,7 @@
     </objects>
     <resources>
         <image name="Checkmark" width="50" height="50"/>
-        <image name="close_blue" width="115" height="111"/>
+        <image name="close_blue" width="96" height="96"/>
         <image name="contacts_gray" width="21" height="21"/>
         <image name="photo" width="96" height="96"/>
         <image name="share-blue" width="48" height="48"/>

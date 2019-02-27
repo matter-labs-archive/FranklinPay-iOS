@@ -18,9 +18,9 @@ class SendMoneyController: BasicViewController {
     // MARK: - Enums
     
     enum TextFieldsTags: Int {
-        case amount = 0
-        case search = 1
-        case address = 2
+        case top = 0
+        case middle = 1
+        case bottom = 2
     }
     
     enum SendingScreenStatus {
@@ -34,32 +34,36 @@ class SendMoneyController: BasicViewController {
     
     // MARK: - Outlets
     
-    @IBOutlet weak var amountTextField: BasicTextField!
-    @IBOutlet weak var searchTextField: BasicTextField!
-    @IBOutlet weak var amountLabel: UILabel!
-    @IBOutlet weak var sendToContactLabel: UILabel!
+    @IBOutlet weak var topStackView: UIStackView!
+    @IBOutlet weak var topTextField: BasicTextField!
+    @IBOutlet weak var topLabel: UILabel!
+    
+    @IBOutlet weak var contactLabel: UILabel!
+    @IBOutlet weak var contactStack: UIStackView!
+    @IBOutlet weak var contactImage: UIImageView!
+    @IBOutlet weak var contactName: UILabel!
+    @IBOutlet weak var contactAddress: UILabel!
+    @IBOutlet weak var tableView: BasicTableView!
+    @IBOutlet weak var emptyContactsView: UIView!
+    
+    @IBOutlet weak var bottomStackView: UIStackView!
+    @IBOutlet weak var bottomLabel: UILabel!
+    @IBOutlet weak var bottomTextField: BasicTextField!
+    
+    @IBOutlet weak var middleStackView: UIStackView!
+    @IBOutlet weak var middleLabel: UILabel!
+    @IBOutlet weak var middleTextField: BasicTextField!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var readyIcon: UIImageView!
     @IBOutlet weak var shareLabel: UILabel!
     @IBOutlet weak var mainButton: BasicWhiteButton!
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var backgroundView: UIView!
-    @IBOutlet weak var tableView: BasicTableView!
-    @IBOutlet weak var searchStackView: UIStackView!
-    @IBOutlet weak var amountStackView: UIStackView!
-    @IBOutlet weak var contactStack: UIStackView!
-    @IBOutlet weak var contactImage: UIImageView!
-    @IBOutlet weak var contactName: UILabel!
-    @IBOutlet weak var contactAddress: UILabel!
-    @IBOutlet weak var sendingGif: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var readyIcon: UIImageView!
-    @IBOutlet weak var addressTextField: BasicTextField!
-    @IBOutlet weak var sendButton: BasicWhiteButton!
-    @IBOutlet weak var orEnterAddressLabel: UILabel!
-    @IBOutlet weak var sendToLabel: UILabel!
-    @IBOutlet weak var addressStackView: UIStackView!
-    @IBOutlet weak var emptyContactsView: UIView!
     @IBOutlet weak var closeButton: UIButton!
+    @IBOutlet weak var sendingGif: UIImageView!
+    @IBOutlet weak var sendButton: BasicWhiteButton!
     
     // MARK: - Internal lets
     
@@ -142,30 +146,30 @@ class SendMoneyController: BasicViewController {
     // MARK: - Main setup
     
     func setMiddleStackPosition() {
-        searchStackOrigin = searchStackView.frame.origin.y
+        searchStackOrigin = bottomStackView.frame.origin.y
     }
     
     func setupTextFields() {
         
         if initAddress != nil {
-            addressTextField.text = initAddress
+            middleTextField.text = initAddress
         }
         
-        searchTextField.delegate = self
-        amountTextField.delegate = self
-        addressTextField.delegate = self
+        bottomTextField.delegate = self
+        topTextField.delegate = self
+        middleTextField.delegate = self
         
-        searchTextField.enablesReturnKeyAutomatically = true
-        amountTextField.enablesReturnKeyAutomatically = true
-        addressTextField.enablesReturnKeyAutomatically = true
+        bottomTextField.enablesReturnKeyAutomatically = true
+        topTextField.enablesReturnKeyAutomatically = true
+        middleTextField.enablesReturnKeyAutomatically = true
         
-        searchTextField.returnKeyType = .next
-        searchTextField.returnKeyType = .next
-        searchTextField.returnKeyType = .next
+        topTextField.returnKeyType = .next
+        middleTextField.returnKeyType = .next
+        bottomTextField.returnKeyType = .next
         
-        amountTextField.tag = TextFieldsTags.amount.rawValue
-        searchTextField.tag = TextFieldsTags.search.rawValue
-        addressTextField.tag = TextFieldsTags.address.rawValue
+        topTextField.tag = TextFieldsTags.top.rawValue
+        bottomTextField.tag = TextFieldsTags.bottom.rawValue
+        middleTextField.tag = TextFieldsTags.middle.rawValue
     }
     
     func getAllContacts() {
@@ -269,33 +273,33 @@ class SendMoneyController: BasicViewController {
     }
     
     func setTopStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, resetText: Bool = false, keyboardType: UIKeyboardType = .decimalPad) {
-        amountLabel.text = labelText
-        amountTextField.placeholder = placeholder
-        amountStackView.alpha = hidden ? 0 : 1
-        amountStackView.isUserInteractionEnabled = interactive
-        amountTextField.keyboardType = keyboardType
+        topLabel.text = labelText
+        topTextField.placeholder = placeholder
+        topStackView.alpha = hidden ? 0 : 1
+        topStackView.isUserInteractionEnabled = interactive
+        topTextField.keyboardType = keyboardType
         if resetText {
-            amountTextField.text = nil
+            topTextField.text = nil
         }
     }
     
-    func setMiddleStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, position: CGFloat) {
-        sendToLabel.text = labelText
-        searchTextField.placeholder = placeholder
-        searchStackView.alpha = hidden ? 0 : 1
-        searchStackView.isUserInteractionEnabled = interactive
-        searchStackView.frame.origin.y = position
+    func setBottomStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?, position: CGFloat) {
+        bottomLabel.text = labelText
+        bottomTextField.placeholder = placeholder
+        bottomStackView.alpha = hidden ? 0 : 1
+        bottomStackView.isUserInteractionEnabled = interactive
+        bottomStackView.frame.origin.y = position
     }
     
-    func setBottomStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?) {
-        orEnterAddressLabel.text = labelText
-        addressTextField.placeholder = placeholder
-        addressStackView.alpha = hidden ? 0 : 1
-        addressStackView.isUserInteractionEnabled = interactive
+    func setMiddleStack(hidden: Bool, interactive: Bool, placeholder: String?, labelText: String?) {
+        middleLabel.text = labelText
+        middleTextField.placeholder = placeholder
+        middleStackView.alpha = hidden ? 0 : 1
+        middleStackView.isUserInteractionEnabled = interactive
     }
     
     func setContactStack(hidden: Bool, interactive: Bool, contact: Contact?, labelText: String?) {
-        sendToContactLabel.text = labelText
+        contactLabel.text = labelText
         chosenContact = contact
         contactStack.alpha = hidden ? 0 : 1
         contactStack.isUserInteractionEnabled = interactive
@@ -339,23 +343,23 @@ class SendMoneyController: BasicViewController {
     // MARK: - Data verifications
     
     func checkAmountAndNotifyIfError() -> Bool {
-        guard let text = amountTextField.text else {
-            amountTextField.text = nil
-            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+        guard let text = topTextField.text else {
+            topTextField.text = nil
+            topTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
         let textWithDot = text.replacingOccurrences(of: ",", with: ".")
         guard let amount = Double(textWithDot) else {
-            amountTextField.text = nil
-            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
-                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            topTextField.text = nil
+            topTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
         guard amount > 0 else {
-            amountTextField.text = nil
-            amountTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
-                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+            topTextField.text = nil
+            topTextField.attributedPlaceholder = NSAttributedString(string: "Should be more",
+                                                                    attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
         guard amount <= Double(chosenToken?.balance ?? "0.0") ?? 0.0 else {
@@ -404,10 +408,10 @@ class SendMoneyController: BasicViewController {
     }
     
     func checkAddressAndCreateContact() -> Bool {
-        guard let address = addressTextField.text, !address.isEmpty else {
-            addressTextField.text = nil
-            addressTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
-                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
+        guard let address = middleTextField.text, !address.isEmpty else {
+            middleTextField.text = nil
+            middleTextField.attributedPlaceholder = NSAttributedString(string: "Please, enter address",
+                                                                       attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return false
         }
         guard EthereumAddress(address) != nil else {
@@ -491,8 +495,8 @@ class SendMoneyController: BasicViewController {
     }
     
     func saveContact() {
-        guard let text = amountTextField.text else {
-            amountTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
+        guard let text = topTextField.text else {
+            topTextField.attributedPlaceholder = NSAttributedString(string: "Please, fill this field",
                                                                        attributes: [NSAttributedString.Key.foregroundColor: UIColor.red])
             return
         }
@@ -506,7 +510,7 @@ class SendMoneyController: BasicViewController {
     }
     
     func addContact() {
-        searchTextField.endEditing(true)
+        bottomTextField.endEditing(true)
         modalViewAppeared()
         let addContactController = AddContactController()
         addContactController.delegate = self
