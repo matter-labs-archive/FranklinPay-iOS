@@ -169,7 +169,9 @@ class EnterPincodeViewController: PincodeViewController {
     }
 
     func enterWithPincode() {
-        changeNumsIcons(pincode.count)
+        DispatchQueue.main.async { [unowned self] in
+            self.changeNumsIcons(4)
+        }
         switch enterCase {
         case .transaction:
             break

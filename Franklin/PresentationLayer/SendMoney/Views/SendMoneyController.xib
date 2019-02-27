@@ -7,6 +7,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -245,7 +246,7 @@
                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1L8-Jl-9PO">
                                     <rect key="frame" x="0.0" y="383.66666666666663" width="374.66666666666669" height="361.66666666666663"/>
                                 </imageView>
-                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-KL-Rbf">
+                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="KJu-KL-Rbf">
                                     <rect key="frame" x="-0.66666666666665719" y="265.66666666666669" width="376" height="108"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Send to:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4jc-Nu-uD0">
@@ -255,27 +256,26 @@
                                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleAspectFit" distribution="fillProportionally" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="H7l-j8-TOP">
-                                            <rect key="frame" x="0.0" y="45.333333333333314" width="376" height="62.666666666666657"/>
+                                        <stackView opaque="NO" contentMode="scaleAspectFit" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="H7l-j8-TOP">
+                                            <rect key="frame" x="0.0" y="45.333333333333314" width="375.33333333333331" height="62.666666666666657"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="contacts_gray" translatesAutoresizingMaskIntoConstraints="NO" id="jXW-wy-cTf">
-                                                    <rect key="frame" x="0.0" y="7.3333333333333144" width="48" height="48"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="62.666666666666664" height="62.666666666666664"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="jXW-wy-cTf" secondAttribute="height" multiplier="1:1" id="Amn-Ql-fbV"/>
-                                                        <constraint firstAttribute="height" constant="48" id="Ed9-Vz-0Kw"/>
                                                     </constraints>
                                                 </imageView>
-                                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillProportionally" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="2hv-e3-4VV">
-                                                    <rect key="frame" x="68" y="7.3333333333333144" width="308" height="48"/>
+                                                <stackView opaque="NO" contentMode="scaleAspectFit" axis="vertical" distribution="fillEqually" alignment="top" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="2hv-e3-4VV">
+                                                    <rect key="frame" x="72.666666666666657" y="0.0" width="302.66666666666674" height="62.666666666666664"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bob" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-xK-bV7">
-                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="24"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="46" height="27.333333333333332"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="26"/>
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="addressdfdafjkdjfkasdjfklasdjfjadshfjadhfjdsahfjdshafaddressdfdafjkdjfkasdjfklasdjfjadshfjadhfjdsahfjdshaf" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="of6-eA-vkY">
-                                                            <rect key="frame" x="0.0" y="29" width="308" height="19"/>
+                                                            <rect key="frame" x="0.0" y="35.333333333333314" width="302.66666666666669" height="27.333333333333329"/>
                                                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="11"/>
                                                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -284,6 +284,10 @@
                                                 </stackView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="g2G-xK-bV7" firstAttribute="top" secondItem="jXW-wy-cTf" secondAttribute="top" id="OlF-hl-Bsg"/>
+                                                <constraint firstItem="of6-eA-vkY" firstAttribute="bottom" secondItem="jXW-wy-cTf" secondAttribute="bottom" id="PTU-l1-50I"/>
+                                                <constraint firstItem="jXW-wy-cTf" firstAttribute="height" secondItem="H7l-j8-TOP" secondAttribute="height" id="WbU-ej-h1c"/>
+                                                <constraint firstItem="2hv-e3-4VV" firstAttribute="centerY" secondItem="jXW-wy-cTf" secondAttribute="centerY" id="vim-DA-gzR"/>
                                                 <constraint firstItem="2hv-e3-4VV" firstAttribute="height" secondItem="jXW-wy-cTf" secondAttribute="height" id="vkm-P8-qes"/>
                                             </constraints>
                                         </stackView>
@@ -332,7 +336,6 @@
                                 <constraint firstAttribute="bottom" secondItem="k4H-rt-isT" secondAttribute="bottom" constant="10" id="2Uf-YA-hpl"/>
                                 <constraint firstItem="1L8-Jl-9PO" firstAttribute="top" secondItem="KJu-KL-Rbf" secondAttribute="bottom" constant="10" id="2m8-fF-Nq6"/>
                                 <constraint firstItem="k4H-rt-isT" firstAttribute="top" secondItem="lEV-c5-9oG" secondAttribute="bottom" constant="10" id="2we-8e-Iu8"/>
-                                <constraint firstItem="KJu-KL-Rbf" firstAttribute="height" secondItem="uYS-5y-hVw" secondAttribute="height" id="3Dl-L2-O2P"/>
                                 <constraint firstItem="lEV-c5-9oG" firstAttribute="leading" secondItem="k4H-rt-isT" secondAttribute="leading" id="6Ql-Qd-kqD"/>
                                 <constraint firstItem="nRH-T1-NTN" firstAttribute="height" secondItem="oBb-2T-fhX" secondAttribute="height" id="6aX-Wk-HzC"/>
                                 <constraint firstItem="KNP-6b-UZ7" firstAttribute="top" secondItem="kab-7q-SLl" secondAttribute="bottom" constant="10" id="7yl-m8-c9S"/>
@@ -352,6 +355,7 @@
                                 <constraint firstItem="KJu-KL-Rbf" firstAttribute="centerX" secondItem="KNP-6b-UZ7" secondAttribute="centerX" id="MkG-ha-Ntx"/>
                                 <constraint firstItem="x3H-n7-idt" firstAttribute="top" secondItem="Z4A-Yj-ak4" secondAttribute="bottom" id="P2H-VR-Kll"/>
                                 <constraint firstItem="Z4A-Yj-ak4" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="DXW-0M-o2a" secondAttribute="leading" constant="10" id="S0u-r2-1gL"/>
+                                <constraint firstItem="H7l-j8-TOP" firstAttribute="height" secondItem="vgy-Eq-eB8" secondAttribute="height" id="UEJ-gP-g1x"/>
                                 <constraint firstAttribute="bottom" secondItem="1L8-Jl-9PO" secondAttribute="bottom" id="UWv-BW-yfw"/>
                                 <constraint firstItem="eWh-4Y-qZs" firstAttribute="width" secondItem="uYS-5y-hVw" secondAttribute="width" id="UnU-vd-DXA"/>
                                 <constraint firstItem="rfC-VC-fUS" firstAttribute="width" secondItem="k4H-rt-isT" secondAttribute="width" id="Vdb-y4-yf8"/>
