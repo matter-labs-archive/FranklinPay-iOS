@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Web3swift
 import BigInt
 
 extension SendMoneyController {
@@ -31,7 +32,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: error, completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -56,7 +57,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: error, completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -82,7 +83,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: error, completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -106,7 +107,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: error, completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }

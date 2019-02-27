@@ -256,10 +256,10 @@ extension Wallet: IWalletTransactions {
                 switch web3error {
                 case .nodeError(desc: "replacement transaction underpriced"):
                     guard let pendingNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "pending") else {
-                        throw error
+                        throw web3error
                     }
                     guard let latestNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "latest") else {
-                        throw error
+                        throw web3error
                     }
                     let highest = max(pendingNonce, latestNonce)
                     txOptions.nonce = .manual(highest)
@@ -284,7 +284,7 @@ extension Wallet: IWalletTransactions {
                         throw err
                     }
                 default:
-                    throw error
+                    throw web3error
                 }
             } else {
                 throw error
