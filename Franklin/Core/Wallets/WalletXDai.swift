@@ -32,10 +32,11 @@ protocol IWalletXDAI {
 
 extension Wallet: IWalletXDAI {
     public func getXDAIBalance() throws -> String {
-        let balance = try self.getXDAIBalancePromise().wait()
-        let floatBalance = Float(balance)!
-        let amount = floatBalance / ("1000000000000000000" as NSString).floatValue
-        return String(amount)
+        if let balance = try BigUInt(self.getXDAIBalancePromise().wait()) {
+            return balance.getConvinientRepresentationBalance
+        } else {
+            throw Errors.NetworkErrors.noData
+        }
     }
     
     private func getXDAIBalancePromise() -> Promise<String> {
@@ -127,7 +128,7 @@ extension Wallet: IWalletXDAI {
                     }
                     do {
                         let transaction = try self.buildTXlist(from: results,
-                                                               txType: .custom,
+                                                               txType: .ether,
                                                                networkId: 100)
                         seal.fulfill(transaction)
                     } catch let err {

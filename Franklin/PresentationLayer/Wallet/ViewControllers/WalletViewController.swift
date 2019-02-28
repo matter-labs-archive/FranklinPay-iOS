@@ -35,6 +35,8 @@ class WalletViewController: BasicViewController {
     internal let alerts = Alerts()
     internal let etherCoordinator = EtherCoordinator()
     
+    internal var stopUpdatingTable = false
+    
     internal let topViewForModalAnimation = UIView(frame: UIScreen.main.bounds)
 
     // MARK: - Lazy vars
@@ -155,79 +157,99 @@ class WalletViewController: BasicViewController {
     func setXDai() {
         DispatchQueue.global().async { [unowned self] in
             let tokens = self.etherCoordinator.getTokens()
-            self.tokensArray = tokens
-            self.reloadDataInTable(completion: { [unowned self] in
+            if self.stopUpdatingTable {
+                self.stopUpdatingTable = false
+                return
+            }
+            self.reloadTokensInTable(tokens: tokens, completion: { [unowned self] in
                 self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
                     self.saveTokensBalances(tokens: uTokens)
-                    self.tokensArray = uTokens
-                    self.reloadDataInTable { [unowned self] in
+                    if self.stopUpdatingTable {
+                        self.stopUpdatingTable = false
+                        return
+                    }
+                    self.reloadBalancesInTable(forTokens: uTokens, completion: {
                         self.refreshControl.endRefreshing()
                         print("Updated")
-                    }
+                    })
                 }
             })
         }
     }
     
-    func removeDeletedTokens(forTokens oldTokens: [TableToken]) -> [TableToken] {
-        var fixedTokens = oldTokens
-        var newTokens = self.tokensArray
-        for i in 0..<tokensArray.count {
-            if oldTokens[i].token.address != newTokens[i].token.address {
-                fixedTokens.remove(at: i)
-                fixedTokens = removeDeletedTokens(forTokens: fixedTokens)
-                break
-            }
-        }
-        return fixedTokens
-    }
+//    func removeDeletedTokens(forTokens oldTokens: [TableToken]) -> [TableToken] {
+//        var fixedTokens = oldTokens
+//        var newTokens = self.tokensArray
+//        for i in 0..<tokensArray.count {
+//            if oldTokens[i].token != newTokens[i].token {
+//                fixedTokens.remove(at: i)
+//                fixedTokens = removeDeletedTokens(forTokens: fixedTokens)
+//                break
+//            }
+//        }
+//        return fixedTokens
+//    }
     
     func setTokensList() {
         DispatchQueue.global().asyncAfter(deadline: .now()+0.1) { [unowned self] in
             let tokens = self.etherCoordinator.getTokens()
-            self.tokensArray = tokens
-            self.reloadDataInTable(completion: { [unowned self] in
+            if self.stopUpdatingTable {
+                self.stopUpdatingTable = false
+                return
+            }
+            self.reloadTokensInTable(tokens: tokens, completion: { [unowned self] in
                 self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
                     self.saveTokensBalances(tokens: uTokens)
-                    let nTokens = self.removeDeletedTokens(forTokens: uTokens)
-                    self.tokensArray = nTokens
-                    self.reloadDataInTable { [unowned self] in
+                    if self.stopUpdatingTable {
+                        self.stopUpdatingTable = false
+                        return
+                    }
+                    self.reloadBalancesInTable(forTokens: uTokens, completion: {
                         self.refreshControl.endRefreshing()
                         print("Updated")
-                    }
+                    })
                 }
             })
         }
-//        DispatchQueue.global().async { [unowned self] in
-//            let tokens = self.etherCoordinator.getTokens()
-//            self.tokensArray = tokens
-//            self.reloadDataInTable(completion: { [unowned self] in
-//                self.updateTokensBalances(tokens: tokens) { [unowned self] uTokens in
-//                    self.saveTokensBalances(tokens: uTokens)
-//                    self.tokensArray = uTokens
-//                    self.reloadDataInTable { [unowned self] in
-//                        self.refreshControl.endRefreshing()
-//                        print("Updated")
-//                    }
-//                }
-//            })
-//        }
     }
 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         self.updateTokensBalances(tokens: tokensArray) { [unowned self] uTokens in
             self.saveTokensBalances(tokens: uTokens)
-            self.tokensArray = uTokens
-            self.reloadDataInTable { [unowned self] in
+            if self.stopUpdatingTable {
+                self.stopUpdatingTable = false
+                return
+            }
+            self.reloadBalancesInTable(forTokens: uTokens, completion: {
                 self.refreshControl.endRefreshing()
                 print("Updated")
-            }
+            })
+        }
+    }
+    
+    func reloadTableView(completion: @escaping () -> Void) {
+        DispatchQueue.main.async { [unowned self] in
+            self.walletTableView.reloadData()
+            completion()
         }
     }
 
-    func reloadDataInTable(completion: @escaping () -> Void) {
-        DispatchQueue.main.async { [unowned self] in
-            self.walletTableView.reloadData()
+    func reloadTokensInTable(tokens: [TableToken], completion: @escaping () -> Void) {
+        tokensArray = tokens
+        reloadTableView {
+            completion()
+        }
+    }
+    
+    func reloadBalancesInTable(forTokens tokens: [TableToken], completion: @escaping () -> Void) {
+        for token in tokens {
+            for tokenInTable in tokensArray {
+                if token.token == tokenInTable.token {
+                    tokenInTable.token.balance = token.token.balance
+                }
+            }
+        }
+        reloadTableView {
             completion()
         }
     }
@@ -260,23 +282,16 @@ class WalletViewController: BasicViewController {
                 if CurrentNetwork.currentNetwork.isXDai() && currentToken.isXDai() {
                     balance = "0.0"
                     if let xdaiBalance = try? currentWallet.getXDAIBalance() {
-                        if let db = Double(xdaiBalance) {
-                            let rnd = Double(round(1000*db)/1000)
-                            let str = String(rnd)
-                            balance = str
-                        }
+                        balance = xdaiBalance
                     }
                 } else if !CurrentNetwork.currentNetwork.isXDai() || (currentToken.isEther() || currentToken.isDai()) {
                     balance = self.etherCoordinator.getBalance(for: currentToken, wallet: currentWallet)
                 } else if CurrentNetwork.currentNetwork.isXDai() {
                     balance = "0.0"
-                    for t in xdaiTokens where t == currentToken {
-                        if let b = t.balance {
-                            if let bn = BigUInt(b) {
-                                var fl = Double(bn)/1000000000000000000
-                                fl = Double(round(1000*fl)/1000)
-                                let str = String(fl)
-                                balance = str
+                    for xdaiToken in xdaiTokens where xdaiToken == currentToken {
+                        if let xBalance = xdaiToken.balance {
+                            if let bn = BigUInt(xBalance) {
+                                balance = bn.getConvinientRepresentationBalance
                             }
                         }
                     }

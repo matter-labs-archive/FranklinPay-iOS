@@ -153,10 +153,15 @@ class TransactionsHistoryViewController: BasicViewController {
             return
         }
         let net = CurrentNetwork.currentNetwork
-        guard let txs = try? wallet.loadTransactions(txType: .custom, network: net) else {
-            prepareTransactionsForView(transactions: [])
-            return
+        
+        var txs = [ETHTransaction]()
+        if let etherTxs = try? wallet.loadTransactions(txType: .ether, network: net) {
+            txs += etherTxs
         }
+        if let erc20Txs = try? wallet.loadERC20Transactions(txType: .erc20, network: net) {
+            txs += erc20Txs
+        }
+        
 //        guard let pendingTxs = try? wallet.loadTransactionsPool() else {
 //            prepareTransactionsForView(transactions: txs)
 //            return

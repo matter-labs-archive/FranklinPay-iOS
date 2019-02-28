@@ -23,12 +23,16 @@
     </entity>
     <entity name="ETHTransactionModel" representedClassName="ETHTransactionModel" syncable="YES" codeGenerationType="class">
         <attribute name="amount" attributeType="String" defaultValueString="0" syncable="YES"/>
+        <attribute name="contractAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="data" optional="YES" attributeType="Binary" syncable="YES"/>
         <attribute name="date" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="from" attributeType="String" syncable="YES"/>
         <attribute name="isPending" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="networkId" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="to" attributeType="String" syncable="YES"/>
+        <attribute name="tokenDecimal" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tokenName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tokenSymbol" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="transactionHash" attributeType="String" syncable="YES"/>
         <relationship name="network" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NetworkModel" inverseName="transaction" inverseEntity="NetworkModel" syncable="YES"/>
         <relationship name="token" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ERC20TokenModel" inverseName="transaction" inverseEntity="ERC20TokenModel" syncable="YES"/>
@@ -55,7 +59,7 @@
     <elements>
         <element name="ContactModel" positionX="-27" positionY="117" width="128" height="75"/>
         <element name="ERC20TokenModel" positionX="-45" positionY="0" width="128" height="270"/>
-        <element name="ETHTransactionModel" positionX="-27" positionY="36" width="128" height="210"/>
+        <element name="ETHTransactionModel" positionX="-27" positionY="36" width="128" height="270"/>
         <element name="NetworkModel" positionX="-27" positionY="117" width="128" height="120"/>
         <element name="WalletModel" positionX="-18" positionY="27" width="128" height="180"/>
     </elements>

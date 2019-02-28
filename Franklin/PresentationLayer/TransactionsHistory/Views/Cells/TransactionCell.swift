@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BigInt
 
 protocol LongPressDelegate: class {
     func didLongPressCell(transaction: ETHTransaction?)
@@ -39,7 +40,40 @@ class TransactionCell: UITableViewCell {
 
     func configureCell(with model: ETHTransaction, wallet: Wallet) {
         transaction = model
-        amountLabel.text = "\(model.amount) ETH"
+        
+//        let amount: String
+//        let address: String
+//        
+//        if let hex = model.data?.toHexString() {
+//            let count = hex.count
+//            if count == 136 {
+//                let id: String = "a9059cbb"
+//                let methodID = hex.contains(id)
+//                if methodID {
+//                    //getting value
+//                    var valueHex = hex
+//                    valueHex.removeFirst(74)
+//                    let trimmedValueHex = valueHex.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+//                    if let value = UInt64(trimmedValueHex, radix: 16) {
+//                        let bn = BigUInt(value)
+//                        amount = bn.getConvinientRepresentationBalance
+//                    }
+//                    //getting address
+//                    var addressHex = hex
+//                    addressHex.removeLast(64)
+//                    addressHex.removeFirst(8)
+//                    let trimmedAddressHex = addressHex.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+//                    address = trimmedAddressHex
+//                }
+//            }
+//        } else {
+//            amount = model.amount
+//            
+//        }
+        let token = model.token ?? Ether()
+        let symbol = token.symbol
+        
+        amountLabel.text = "\(model.amount) \(symbol)"
         if model.from.lowercased() == wallet.address.lowercased() {
             //Sent
             if model.isPending {
@@ -62,6 +96,31 @@ class TransactionCell: UITableViewCell {
             }
             addressLabel.text = "From " + model.from.hideExtraSymbolsInAddress()
         }
+        
+//        if let hex = model.data?.toHexString() {
+//            let count = hex.count
+//            if count == 136 {
+//                let id: String = "a9059cbb"
+//                let methodID = hex.contains(id)
+//                if methodID {
+//                    //getting value
+//                    var valueHex = hex
+//                    valueHex.removeFirst(74)
+//                    let trimmedValueHex = valueHex.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+//                    if let value = UInt64(trimmedValueHex, radix: 16) {
+//                        let bn = BigUInt(value)
+//                        let val = bn.getConvinientRepresentationBalance
+//                        amountLabel.text = "\(val)"
+//                    }
+//                    //getting address
+//                    var addressHex = hex
+//                    addressHex.removeLast(64)
+//                    addressHex.removeFirst(8)
+//                    let trimmedAddressHex = addressHex.replacingOccurrences(of: "^0+", with: "", options: .regularExpression)
+//                    addressLabel.text
+//                }
+//            }
+//        }
     }
 
     func longPressGesture() -> UILongPressGestureRecognizer {

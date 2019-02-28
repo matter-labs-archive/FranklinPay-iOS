@@ -6,6 +6,7 @@
 //  Copyright © 2018 Matter Inc. All rights reserved.
 //
 import Foundation
+
 extension String {
     subscript (i: Int) -> Character {
         return self[index(startIndex, offsetBy: i)]

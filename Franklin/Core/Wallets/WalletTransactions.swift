@@ -59,7 +59,8 @@ extension Wallet: IWalletTransactions {
         
         let currentNetwork = CurrentNetwork.currentNetwork
         let balance = try self.getPlasmaBalance(network: currentNetwork)
-        return balance
+        let balanceString = balance.getConvenientRepresentationPlasmaBalance
+        return balanceString
     }
     
     public func getETHbalance(web3instance: web3? = nil) throws -> String {
@@ -74,9 +75,7 @@ extension Wallet: IWalletTransactions {
             else {
                 throw Web3Error.walletError
         }
-        guard let balanceString = Web3.Utils.formatToEthereumUnits(balanceResult, toUnits: .eth, decimals: 3) else {
-            throw Web3Error.dataError
-        }
+        let balanceString = balanceResult.getConvinientRepresentationBalance
         return balanceString
     }
     
@@ -100,10 +99,10 @@ extension Wallet: IWalletTransactions {
                                                     parameters: [walletAddress] as [AnyObject],
                                                     extraData: Data())
             let tokenBalance = try self.callTx(transaction: tx)
-            guard let balanceResult = tokenBalance["0"] as? BigUInt,
-                let balanceString = Web3.Utils.formatToEthereumUnits(balanceResult, toUnits: .eth, decimals: 3) else {
+            guard let balanceResult = tokenBalance["0"] as? BigUInt else {
                     throw Web3Error.dataError
             }
+            let balanceString = balanceResult.getConvinientRepresentationBalance
             return balanceString
         } catch let error {
             throw error

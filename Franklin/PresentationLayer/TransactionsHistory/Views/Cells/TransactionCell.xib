@@ -61,7 +61,7 @@
                                 </subviews>
                             </stackView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Amount" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AKT-zp-Qaz">
-                                <rect key="frame" x="301" y="19.5" width="60" height="21.5"/>
+                                <rect key="frame" x="301" y="25.5" width="60" height="21.5"/>
                                 <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="18"/>
                                 <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -70,10 +70,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="WYS-hr-rjT" firstAttribute="trailing" secondItem="AKT-zp-Qaz" secondAttribute="trailing" constant="10" id="Ghp-Ee-cDl"/>
-                            <constraint firstItem="AKT-zp-Qaz" firstAttribute="centerY" secondItem="WYS-hr-rjT" secondAttribute="centerY" id="R0V-A5-Fc4"/>
+                            <constraint firstItem="AKT-zp-Qaz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="JG3-mu-DmT" secondAttribute="trailing" constant="10" id="LRZ-fv-upu"/>
                             <constraint firstItem="M2S-94-Gcb" firstAttribute="centerY" secondItem="WYS-hr-rjT" secondAttribute="centerY" id="WpS-Ec-hVV"/>
                             <constraint firstItem="M2S-94-Gcb" firstAttribute="height" secondItem="npQ-eQ-fg1" secondAttribute="height" multiplier="0.8" id="wGr-ld-V8Z"/>
-                            <constraint firstItem="AKT-zp-Qaz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="M2S-94-Gcb" secondAttribute="trailing" constant="10" id="x9u-ZP-m7p"/>
+                            <constraint firstItem="AKT-zp-Qaz" firstAttribute="top" secondItem="6tD-Ou-uMH" secondAttribute="bottom" id="wH5-NW-6QV"/>
                             <constraint firstItem="M2S-94-Gcb" firstAttribute="leading" secondItem="WYS-hr-rjT" secondAttribute="leading" constant="20" id="ygP-Tu-91Z"/>
                             <constraint firstAttribute="height" constant="60" id="zl6-bs-kr6"/>
                         </constraints>

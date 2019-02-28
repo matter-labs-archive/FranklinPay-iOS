@@ -126,7 +126,7 @@ class WalletImportingViewController: BasicViewController {
     // MARK: - Animation
     
     func animation() {
-        navigationController?.navigationBar.isHidden = true
+        setNavigation(hidden: true)
         animationTimer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: false)
         animateIndicator()
     }
@@ -142,6 +142,7 @@ class WalletImportingViewController: BasicViewController {
         animationTimer?.invalidate()
         importButton.isUserInteractionEnabled = true
         UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+            self.setNavigation(hidden: false)
             self.importButton.alpha = 1
             self.animationImageView.alpha = 0
             self.settingUp.alpha = 0
@@ -206,6 +207,7 @@ class WalletImportingViewController: BasicViewController {
     
     @objc func goToApp() {
         DispatchQueue.main.async { [unowned self] in
+            //self.setNavigation(hidden: false)
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.hideSubviews()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in

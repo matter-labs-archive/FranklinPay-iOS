@@ -20,10 +20,11 @@ extension WalletViewController {
         if isDaiToken {return}
         if isCard {return}
         do {
+            tokensArray.remove(at: indexPath.row+1)
+            stopUpdatingTable = true
             try wallet.delete(token: token, network: network)
             CurrentToken.currentToken = tokensArray[0].token
-            tokensArray.remove(at: indexPath.row+1)
-            reloadDataInTable { [unowned self] in
+            reloadTokensInTable(tokens: tokensArray) {
                 self.refreshControl.endRefreshing()
                 print("Updated")
             }

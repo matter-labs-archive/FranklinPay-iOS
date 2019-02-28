@@ -10,7 +10,8 @@ import Foundation
 import Web3swift
 
 public enum TransactionType {
-    case custom
+    case ether
+    case erc20
     case arbitraryMethodWithParams
 }
 

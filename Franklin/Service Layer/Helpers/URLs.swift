@@ -35,8 +35,10 @@ public struct URLs {
         
         var url: URL?
         switch type {
-        case .custom:
+        case .ether:
             url = URL(string: "https://api\(urlNetworkParameter).etherscan.io/api?module=account&action=txlist&address=\(address)&startblock=0&endblock=99999999&sort=asc")
+        case .erc20:
+            url = URL(string: "https://api\(urlNetworkParameter).etherscan.io/api?module=account&action=tokentx&address=\(address)&startblock=0&endblock=99999999&sort=asc")
         case .arbitraryMethodWithParams:
             url = URL(string: "https://api\(urlNetworkParameter).etherscan.io/api?module=account&action=tokentx&address=\(address)&startblock=0&endblock=99999999&sort=asc")
             

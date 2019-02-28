@@ -17,7 +17,7 @@ private typealias PromiseResult = PromiseKit.Result
 protocol IWalletPlasma {
     func getID() throws -> BigUInt
     func setID(_ id: String) throws
-    func getPlasmaBalance(network: Web3Network) throws -> String
+    func getPlasmaBalance(network: Web3Network) throws -> BigUInt
     func getPlasmaNonce(network: Web3Network) throws -> BigUInt
     func sendPlasmaTx(nonce: BigUInt, to: EthereumAddress, value: String, network: Web3Network) throws -> Bool
     //func loadTransactions(network: Web3Network) throws -> [ETHTransaction]
@@ -58,7 +58,7 @@ extension Wallet: IWalletPlasma {
         }
     }
     
-    public func getPlasmaBalance(network: Web3Network) throws -> String {
+    public func getPlasmaBalance(network: Web3Network) throws -> BigUInt {
         if network.id != 1 && network.id != 4 {
             throw Errors.NetworkErrors.wrongURL
         }
@@ -66,8 +66,8 @@ extension Wallet: IWalletPlasma {
         return try self.getPlasmaBalancePromise(onTestnet: onTestnet).wait()
     }
     
-    private func getPlasmaBalancePromise(onTestnet: Bool) -> Promise<String> {
-        let returnPromise = Promise<String> { (seal) in
+    private func getPlasmaBalancePromise(onTestnet: Bool) -> Promise<BigUInt> {
+        let returnPromise = Promise<BigUInt> { (seal) in
             guard let id = self.plasmaID else {
                 seal.reject(Errors.NetworkErrors.noData)
                 return
@@ -105,12 +105,12 @@ extension Wallet: IWalletPlasma {
                         seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
                     }
-                    guard let floatBalance = Float(balance) else {
+                    guard let bnBalance = BigUInt(balance) else {
                         seal.reject(Errors.NetworkErrors.wrongJSON)
                         return
                     }
-                    let trueBalance = String(floatBalance/1000000)
-                    seal.fulfill(trueBalance)
+//                    let trueBalance = String(floatBalance/1000000)
+                    seal.fulfill(bnBalance)
                 } catch let err {
                     seal.reject(err)
                 }

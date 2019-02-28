@@ -16,6 +16,8 @@ private typealias PromiseResult = PromiseKit.Result
 protocol IWalletTransactionsHistory {
     func loadTransactions(txType: TransactionType?,
                           network: Web3Network) throws -> [ETHTransaction]
+    func loadERC20Transactions(txType: TransactionType?,
+                               network: Web3Network) throws -> [ETHTransaction]
     func save(transactions: [ETHTransaction]) throws
     func getAllTransactions(for network: Web3Network) throws -> [ETHTransaction]
 }
@@ -40,6 +42,53 @@ extension Wallet: IWalletTransactionsHistory {
                         result.networkId = transaction.networkId
                         result.to = transaction.to
                         result.isPending = false
+                        
+                        if let contractAddress = transaction.token?.address {
+                            //In case of ERC20 tokens
+                            let res = try context.fetch(self.fetchTokenRequest(withAddress: contractAddress)).first
+                            if let token = res {
+                                result.tokenName = token.name
+                                result.contractAddress = token.address
+                                result.tokenSymbol = token.symbol
+                                result.tokenDecimal = token.decimals
+                            } else {
+                                let newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20TokenModel", into: context) as? ERC20TokenModel
+                                newToken?.address = transaction.token?.address
+                                newToken?.decimals = transaction.token?.decimals
+                                newToken?.name = transaction.token?.name
+                                newToken?.symbol = transaction.token?.symbol
+                                newToken?.networkId = transaction.networkId
+                                result.tokenName = newToken?.name
+                                result.contractAddress = newToken?.address
+                                result.tokenSymbol = newToken?.symbol
+                                result.tokenDecimal = newToken?.decimals
+                            }
+                        } else {
+                            //In case of custom ETH transaction
+                            let res = try context.fetch(self.fetchTokenRequest(withAddress: ""))
+                            if let ethToken = res.first {
+                                result.tokenName = ethToken.name
+                                result.contractAddress = ethToken.address
+                                result.tokenSymbol = ethToken.symbol
+                                result.tokenDecimal = ethToken.decimals
+                            } else {
+                                let newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20TokenModel", into: context) as? ERC20TokenModel
+                                newToken?.address = ""
+                                newToken?.name = "Ether"
+                                newToken?.decimals = "18"
+                                newToken?.symbol = "ETH"
+                                result.tokenName = newToken?.name
+                                result.contractAddress = newToken?.address
+                                result.tokenSymbol = newToken?.symbol
+                                result.tokenDecimal = newToken?.decimals
+                            }
+                            
+                        }
+                        
+//                        result.tokenName = transaction.token?.name
+//                        result.contractAddress = transaction.token?.address
+//                        result.tokenSymbol = transaction.token?.symbol
+//                        result.tokenDecimal = transaction.token?.decimals
                         //Update information stored in local storage.
                     } else {
                         guard let newTransaction = NSEntityDescription.insertNewObject(forEntityName: "ETHTransactionModel", into: context) as? ETHTransactionModel else {
@@ -59,7 +108,10 @@ extension Wallet: IWalletTransactionsHistory {
                             //In case of ERC20 tokens
                             let result = try context.fetch(self.fetchTokenRequest(withAddress: contractAddress)).first
                             if let token = result {
-                                newTransaction.token = token
+                                newTransaction.tokenName = token.name
+                                newTransaction.contractAddress = token.address
+                                newTransaction.tokenSymbol = token.symbol
+                                newTransaction.tokenDecimal = token.decimals
                             } else {
                                 let newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20TokenModel", into: context) as? ERC20TokenModel
                                 newToken?.address = transaction.token?.address
@@ -67,20 +119,29 @@ extension Wallet: IWalletTransactionsHistory {
                                 newToken?.name = transaction.token?.name
                                 newToken?.symbol = transaction.token?.symbol
                                 newToken?.networkId = transaction.networkId
-                                newTransaction.token = newToken
+                                newTransaction.tokenName = newToken?.name
+                                newTransaction.contractAddress = newToken?.address
+                                newTransaction.tokenSymbol = newToken?.symbol
+                                newTransaction.tokenDecimal = newToken?.decimals
                             }
                         } else {
                             //In case of custom ETH transaction
                             let result = try context.fetch(self.fetchTokenRequest(withAddress: ""))
                             if let ethToken = result.first {
-                                newTransaction.token = ethToken
+                                newTransaction.tokenName = ethToken.name
+                                newTransaction.contractAddress = ethToken.address
+                                newTransaction.tokenSymbol = ethToken.symbol
+                                newTransaction.tokenDecimal = ethToken.decimals
                             } else {
                                 let newToken = NSEntityDescription.insertNewObject(forEntityName: "ERC20TokenModel", into: context) as? ERC20TokenModel
                                 newToken?.address = ""
                                 newToken?.name = "Ether"
                                 newToken?.decimals = "18"
                                 newToken?.symbol = "ETH"
-                                newTransaction.token = newToken
+                                newTransaction.tokenName = newToken?.name
+                                newTransaction.contractAddress = newToken?.address
+                                newTransaction.tokenSymbol = newToken?.symbol
+                                newTransaction.tokenDecimal = newToken?.decimals
                             }
                             
                         }
@@ -175,9 +236,15 @@ extension Wallet: IWalletTransactionsHistory {
             guard let data = result["input"] as? String else {
                 throw Errors.NetworkErrors.wrongJSON
             }
+            
+            // Check if contract corresponding
+            guard value != "0" else {
+                continue
+            }
+            
             let date = Date(timeIntervalSince1970: TimeInterval(timestamp))
             var tokenModel: ERC20Token?
-            if txType == .arbitraryMethodWithParams {
+            if txType == .erc20 {
                 guard let tokenName = result["tokenName"] as? String,
                     let tokenSymbol = result["tokenSymbol"] as? String,
                     let tokenDecimal = result["tokenDecimal"] as? String,
@@ -194,9 +261,7 @@ extension Wallet: IWalletTransactionsHistory {
             guard let amount = BigUInt(value) else {
                 throw Errors.NetworkErrors.wrongJSON
             }
-            guard let amountString = Web3.Utils.formatToEthereumUnits(amount) else {
-                throw Errors.NetworkErrors.wrongJSON
-            }
+            let amountString = amount.getConvinientRepresentationBalance
             let transaction = ETHTransaction(transactionHash: hash,
                                              from: from,
                                              to: to,
@@ -226,7 +291,7 @@ extension Wallet: IWalletTransactionsHistory {
     
     public func loadTransactions(txType: TransactionType?,
                                  network: Web3Network) throws -> [ETHTransaction] {
-        let type = txType ?? .arbitraryMethodWithParams
+        let type = txType ?? .ether
         return try self.loadTransactionsPromise(for: self.address, txType: type, networkId: network.id).wait()
     }
     
@@ -260,6 +325,56 @@ extension Wallet: IWalletTransactionsHistory {
                     do {
                         let transaction = try self.buildTXlist(from: results,
                                                                txType: txType,
+                                                               networkId: networkId)
+                        seal.fulfill(transaction)
+                    } catch let err {
+                        seal.reject(err)
+                    }
+                } catch let err {
+                    seal.reject(err)
+                }
+            }
+            dataTask.resume()
+        }
+        return returnPromise
+    }
+    
+    public func loadERC20Transactions(txType: TransactionType?,
+                                      network: Web3Network) throws -> [ETHTransaction] {
+        let type = txType ?? .erc20
+        return try self.loadERC20TransactionsPromise(for: self.address, txType: type, networkId: network.id).wait()
+    }
+    
+    private func loadERC20TransactionsPromise(for address: String,
+                                              txType: TransactionType,
+                                              networkId: Int64) -> Promise<[ETHTransaction]> {
+        let returnPromise = Promise<[ETHTransaction]> { (seal) in
+            guard let url = URLs().getEtherscanURL(for: txType, address: address, networkId: networkId) else {
+                seal.reject(Errors.NetworkErrors.wrongURL)
+                return
+            }
+            var request = URLRequest(url: url)
+            request.httpMethod = "GET"
+            let dataTask = URLSession.shared.dataTask(with: request) { (data, _, error) in
+                if let error = error {
+                    seal.reject(error)
+                }
+                guard let data = data else {
+                    seal.reject(Errors.NetworkErrors.noData)
+                    return
+                }
+                do {
+                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
+                        return
+                    }
+                    guard let results = json["result"] as? [[String: Any]] else {
+                        seal.reject(Errors.NetworkErrors.wrongJSON)
+                        return
+                    }
+                    do {
+                        let transaction = try self.buildTXlist(from: results,
+                                                                txType: txType,
                                                                networkId: networkId)
                         seal.fulfill(transaction)
                     } catch let err {
