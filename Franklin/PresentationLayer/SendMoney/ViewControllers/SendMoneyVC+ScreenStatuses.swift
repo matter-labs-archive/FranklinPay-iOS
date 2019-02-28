@@ -22,9 +22,10 @@ extension SendMoneyController {
                 guard let chosentoken = self.chosenToken else {
                     fatalError("no token selected")
                 }
-                var net = chosentoken.isFranklin() ? "via plasma" : nil
-                net = chosentoken.isXDai() ? "via xDai" : net
-                self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
+//                var net = chosentoken.isFranklin() ? "via plasma" : nil
+//                net = chosentoken.isXDai() ? "via xDai" : net
+//                self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
+                self.setTitle(text: "Send \(chosentoken.name)", color: Colors.mainBlue)
                 self.showGif(false)
                 self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: false)
                 self.setCollectionView(hidden: true)
@@ -45,9 +46,7 @@ extension SendMoneyController {
             guard let chosentoken = self.chosenToken else {
                 fatalError("no token selected")
             }
-            var net = chosentoken.isFranklin() ? "via plasma" : nil
-            net = chosentoken.isXDai() ? "via xDai" : net
-            self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
+            self.setTitle(text: "Send \(chosentoken.name)", color: Colors.mainBlue)
             self.showGif(false)
             self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
             self.setCollectionView(hidden: false)
@@ -70,9 +69,7 @@ extension SendMoneyController {
                 guard let chosentoken = self.chosenToken else {
                     fatalError("no token selected")
                 }
-                var net = chosentoken.isFranklin() ? "via plasma" : nil
-                net = chosentoken.isXDai() ? "via xDai" : net
-                self.setTitle(text: "Send money \(net ?? "")", color: Colors.mainBlue)
+                self.setTitle(text: "Send \(chosentoken.name)", color: Colors.mainBlue)
                 self.showGif(false)
                 self.setBottomLabel(text: "Or share via", color: Colors.textLightGray, hidden: true)
                 self.setCollectionView(hidden: true)
