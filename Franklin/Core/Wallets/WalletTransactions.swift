@@ -238,20 +238,24 @@ extension Wallet: IWalletTransactions {
                        password: String) throws -> TransactionSendingResult {
         var txOptions = options ?? transaction.transactionOptions
         let gasLimit = BigUInt(120000)
-        let startGasPrice = BigUInt(1100000000)
+        let startGasPrice = BigUInt(11000000000)
         let gasPriceDelta = BigUInt(400000000)
         guard let pendingNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "pending") else {
             throw Errors.NetworkErrors.cantCreateRequest
         }
+        print(pendingNonce)
         guard let latestNonce = try self.web3Instance?.eth.getTransactionCount(address: EthereumAddress(self.address)!, onBlock: "latest") else {
             throw Errors.NetworkErrors.cantCreateRequest
         }
-        let selectedNonce = min(pendingNonce, latestNonce)
+        print(latestNonce)
+        let selectedNonce = max(pendingNonce, latestNonce)
         let deltaNonce = BigUInt(1)
         do {
             txOptions.gasPrice = .manual(startGasPrice)
             txOptions.gasLimit = .manual(gasLimit)
             txOptions.nonce = .manual(selectedNonce)
+            
+            print(txOptions)
             let result = try transaction.send(password: password, transactionOptions: txOptions)
             return result
         } catch let error {
@@ -261,6 +265,7 @@ extension Wallet: IWalletTransactions {
                     let newGasPrice = startGasPrice + gasPriceDelta
                     txOptions.gasPrice = .manual(newGasPrice)
                     do {
+                        print(txOptions)
                         return try transaction.send(password: password, transactionOptions: txOptions)
                     } catch let err {
                         throw err
@@ -269,6 +274,7 @@ extension Wallet: IWalletTransactions {
                     let newNonce = selectedNonce + deltaNonce
                     txOptions.nonce = .manual(newNonce)
                     do {
+                        print(txOptions)
                         return try transaction.send(password: password, transactionOptions: txOptions)
                     } catch let err {
                         throw err
