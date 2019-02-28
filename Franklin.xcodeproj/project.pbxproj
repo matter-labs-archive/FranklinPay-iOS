@@ -944,7 +944,7 @@
 		9197F32E2144213000C358AA /* NetworksViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksViewController.xib; sourceTree = "<group>"; };
 		9197F3312144228B00C358AA /* NetworksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCell.swift; sourceTree = "<group>"; };
 		9197F3322144228B00C358AA /* NetworksCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetworksCell.xib; sourceTree = "<group>"; };
-		91B6A79321435F5D0033A045 /* Franklin-alpha.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Franklin-alpha.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91B6A79321435F5D0033A045 /* Franklin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Franklin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		91B6A79621435F5D0033A045 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		91B6A7A021435F5E0033A045 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		91B6A7A221435F5E0033A045 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1432,7 +1432,7 @@
 		91B6A79421435F5D0033A045 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				91B6A79321435F5D0033A045 /* Franklin-alpha.app */,
+				91B6A79321435F5D0033A045 /* Franklin.app */,
 				B219DC29215B77A80035BF94 /* FranklinUITests.xctest */,
 				1CF54A72215CCF0E009CC78F /* FranklinTests.xctest */,
 				3A3D3EF8221E9B0000506F98 /* FranklinDev.app */,
@@ -2666,7 +2666,7 @@
 			);
 			name = Franklin;
 			productName = DiveLane;
-			productReference = 91B6A79321435F5D0033A045 /* Franklin-alpha.app */;
+			productReference = 91B6A79321435F5D0033A045 /* Franklin.app */;
 			productType = "com.apple.product-type.application";
 		};
 		B219DC28215B77A80035BF94 /* FranklinUITests */ = {
@@ -4210,9 +4210,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */;
 			buildSettings = {
-				APP_ICON_NAME = AppIcon.alpha;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.alpha;
-				BUNDLE_ID_SUFFIX = "-alpha";
+				APP_ICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				BUNDLE_ID_SUFFIX = "";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Franklin/Franklin.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -4225,8 +4225,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "inc.matter.Franklin-alpha";
-				PRODUCT_NAME = "Franklin-alpha";
+				PRODUCT_BUNDLE_IDENTIFIER = inc.matter.Franklin;
+				PRODUCT_NAME = Franklin;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
