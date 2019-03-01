@@ -32,7 +32,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -57,7 +57,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -83,7 +83,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
@@ -107,7 +107,7 @@ extension SendMoneyController {
                 print(result.transaction.hash?.toHexString())
                 self.showReady(animated: true)
             } catch let error {
-                self.alerts.showErrorAlert(for: self, error: "Error occured: \(error.localizedDescription)", completion: { [unowned self] in
+                self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
                     self.showStart(animated: true)
                 })
             }
