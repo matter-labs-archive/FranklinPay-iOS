@@ -28,9 +28,9 @@ class NetworksCell: UITableViewCell {
         self.selectedIcon.image = UIImage(named: "added")
     }
 
-    func configure(network: Web3Network, isChosen: Bool = false) {
-        self.networkLabel.text = network.name
-        var networkStr = network.endpoint ?? "Unknown endpoint"
+    func configure(network: TableNetwork) {
+        self.networkLabel.text = network.network.name
+        var networkStr = network.network.endpoint ?? "Unknown endpoint"
         let httpsPrefixString = "https://"
         let httpPrefixString = "http://"
         if networkStr.hasPrefix(httpsPrefixString) {
@@ -42,7 +42,7 @@ class NetworksCell: UITableViewCell {
             networkStr.removeLast()
         }
         self.idLabel.text = networkStr
-        self.selectedIcon.alpha = isChosen ? 1.0 : 0.0
+        self.selectedIcon.alpha = network.isSelected ? 1.0 : 0.0
     }
 
     override func prepareForReuse() {

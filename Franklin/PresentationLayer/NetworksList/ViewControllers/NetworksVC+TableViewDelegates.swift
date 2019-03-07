@@ -22,23 +22,24 @@ extension NetworksViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let currentNetwork = CurrentNetwork.currentNetwork
-        let networkInCell = networks[indexPath.row]
-        var isChosen = false
-        if currentNetwork == networkInCell {
-            isChosen = true
-        }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "NetworksCell",
                                                        for: indexPath) as? NetworksCell else {
                                                         return UITableViewCell()
         }
-        cell.configure(network: networkInCell, isChosen: isChosen)
+        cell.configure(network: networks[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        CurrentNetwork.currentNetwork = networks[indexPath.row]
-        networksTableView.deselectRow(at: indexPath, animated: true)
+        CurrentNetwork.currentNetwork = networks[indexPath.row].network
+        var networksArray = [TableNetwork]()
+        for network in networks {
+            var n = network
+            n.isSelected = network.network == networks[indexPath.row].network ? true : false
+            networksArray.append(n)
+        }
+        networks = networksArray
         reloadDataInTable()
+        networksTableView.deselectRow(at: indexPath, animated: true)
     }
 }

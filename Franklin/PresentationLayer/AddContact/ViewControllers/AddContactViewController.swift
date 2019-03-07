@@ -61,63 +61,63 @@ class AddContactController: BasicViewController {
     
     convenience init(contact: Contact) {
         self.init()
-        self.initContact = contact
+        initContact = contact
     }
     
     // MARK: - Lifesycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainSetup()
-        self.setupTextField()
+        mainSetup()
+        setupTextField()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.showLabels(true)
-        KeyboardAvoiding.avoidingView = self.contentView
+        showLabels(true)
+        KeyboardAvoiding.avoidingView = contentView
     }
     
     // MARK: - Main setup
     
     func showLabels(_ show: Bool) {
-        self.contactNameLabel.alpha = show ? 1 : 0
-        self.addressLabel.alpha = show ? 1 : 0
-        self.titleLabel.alpha = show ? 1 : 0
+        contactNameLabel.alpha = show ? 1 : 0
+        addressLabel.alpha = show ? 1 : 0
+        titleLabel.alpha = show ? 1 : 0
     }
     
     func setupTextField() {
         if initContact != nil {
-            self.addressTextField.text = initContact?.address
-            self.nameTextField.text = initContact?.name
+            addressTextField.text = initContact?.address
+            nameTextField.text = initContact?.name
         }
-        self.nameTextField.delegate = self
-        self.addressTextField.delegate = self
-        self.nameTextField.tag = TextFieldsTags.name.rawValue
-        self.addressTextField.tag = TextFieldsTags.address.rawValue
+        nameTextField.delegate = self
+        addressTextField.delegate = self
+        nameTextField.tag = TextFieldsTags.name.rawValue
+        addressTextField.tag = TextFieldsTags.address.rawValue
         nameTextField.returnKeyType = .next
         addressTextField.returnKeyType = .next
     }
     
     func mainSetup() {
-        self.hideKeyboardWhenTappedAround()
+        hideKeyboardWhenTappedAround()
         
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         enterButton.isEnabled = false
         updateEnterButtonAlpha()
         
-        self.contentView.backgroundColor = Colors.background
-        self.contentView.alpha = 1
-        self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
-        self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
-        self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
-        self.qrCodeButton.setImage(UIImage(named: "photo"), for: .normal)
+        contentView.backgroundColor = Colors.background
+        contentView.alpha = 1
+        contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
+        contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
+        contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
+        qrCodeButton.setImage(UIImage(named: "photo"), for: .normal)
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissView))
+                                                                 action: #selector(dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
     }
@@ -151,9 +151,9 @@ class AddContactController: BasicViewController {
                 try initContact?.deleteContact()
             }
             try contact.saveContact()
-            self.dismissView()
+            dismissView()
         } catch let error {
-            alerts.showErrorAlert(for: self, error: error) {
+            alerts.showErrorAlert(for: self, error: error) { [unowned self] in
                 self.dismissView()
             }
         }
@@ -162,7 +162,7 @@ class AddContactController: BasicViewController {
     // MARK: - Buttons actions
     
     @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
 
@@ -185,10 +185,10 @@ class AddContactController: BasicViewController {
         guard let name = nameTextField.text else {
             return
         }
-        self.addContact(address: address, name: name)
+        addContact(address: address, name: name)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+        dismissView()
     }
 }

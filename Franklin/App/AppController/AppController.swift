@@ -353,6 +353,17 @@ public class AppController {
         self.userDefaultKeys.setBuffAdded(for: wallet)
     }
     
+    public func addEther(for wallet: Wallet, network: Web3Network) throws {
+        let ether = ERC20Token(ether: true)
+        do {
+            try wallet.add(token: ether,
+                           network: network)
+        } catch let error {
+            throw error
+        }
+        self.userDefaultKeys.setEtherAdded(for: wallet)
+    }
+    
     public func addEther(for wallet: Wallet) throws {
         let ether = ERC20Token(ether: true)
         

@@ -111,9 +111,7 @@ public class Web3Network: IWeb3Network {
             let infura = Web3HttpProvider(url)!
             w3 = web3(provider: infura)
         default:
-            if endpoint != nil {
-                let url = URL(string: self.endpoint!)!
-                let infura = Web3HttpProvider(url)!
+            if let urlString = endpoint, let url = URL(string: urlString), let infura = Web3HttpProvider(url) {
                 w3 = web3(provider: infura)
                 return w3
             }
@@ -123,7 +121,7 @@ public class Web3Network: IWeb3Network {
     }
     
     func isXDai() -> Bool {
-        return self.id == 100
+        return self == XDaiNetwork()
     }
     
     func isMainnet() -> Bool {

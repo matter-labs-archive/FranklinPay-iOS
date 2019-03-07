@@ -57,11 +57,17 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count = 0
+        for token in tokensArray {
+            if token.isCard {
+                count += 1
+            }
+        }
         switch section {
         case WalletSections.card.rawValue:
-            return 1
+            return count
         case WalletSections.tokens.rawValue:
-            return tokensArray.count - 1
+            return tokensArray.count - count
         default:
             return 0
         }
@@ -69,16 +75,29 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tokensArray.isEmpty {return UITableViewCell()}
-        let card = tokensArray[0]
-        var tokens = tokensArray
-        tokens.removeFirst()
+//        let card = tokensArray[0]
+//        var tokens = tokensArray
+        
+        //tokens.removeFirst()
+        
+        var cards = [TableToken]()
+        var tokens = [TableToken]()
+        
+        for token in tokensArray {
+            if token.isCard {
+                cards.append(token)
+            } else {
+                tokens.append(token)
+            }
+        }
+        
         switch indexPath.section {
         case WalletSections.card.rawValue:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "CardCell",
                                                            for: indexPath) as? CardCell else {
                                                             return UITableViewCell()
             }
-            let tableToken = card
+            let tableToken = cards[indexPath.row]
             cell.configure(token: tableToken)
             cell.delegate = self
             return cell
@@ -109,9 +128,21 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else {
             return
         }
+        
+        var cards = [TableToken]()
+        var tokens = [TableToken]()
+        
+        for token in tokensArray {
+            if token.isCard {
+                cards.append(token)
+            } else {
+                tokens.append(token)
+            }
+        }
+        
         let tableToken = isCard ?
-            tokensArray[0] :
-            tokensArray[indexPathTapped.row+1]
+            cards[indexPathTapped.row] :
+            tokens[indexPathTapped.row]
         
         showSend(token: tableToken.token)
     }
@@ -123,9 +154,6 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        if CurrentNetwork.currentNetwork.isXDai() {
-            return false
-        }
         if indexPath.section == WalletSections.card.rawValue {
             return false
         }
@@ -136,10 +164,37 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
         guard let indexPathTapped = walletTableView.indexPath(for: selectedCell) else {
             return false
         }
-        let token = tokensArray[indexPathTapped.row+1].token
-        if token.isEther() || token.isDai() {
+        
+        var cards = [TableToken]()
+        var tokens = [TableToken]()
+        
+        for token in tokensArray {
+            if token.isCard {
+                cards.append(token)
+            } else {
+                tokens.append(token)
+            }
+        }
+        
+        let isCard = indexPath.section == WalletSections.card.rawValue
+        
+        let tableToken = isCard ?
+            cards[indexPathTapped.row] :
+            tokens[indexPathTapped.row]
+        
+        if isCard {
             return false
         }
+        
+        if CurrentNetwork.currentNetwork.isXDai() {
+            return false
+        }
+        
+        //let token = tokensArray[indexPathTapped.row+1].token
+        if tableToken.token.isEther() || tableToken.token.isDai() {
+            return false
+        }
+        
         return true
     }
 }

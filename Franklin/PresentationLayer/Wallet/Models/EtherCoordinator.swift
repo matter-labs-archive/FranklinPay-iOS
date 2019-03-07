@@ -31,6 +31,7 @@ public class EtherCoordinator {
         let tableTokens: [TableToken] = tokens.map {
             TableToken(token: $0,
                        inWallet: wallet,
+                       isCard: $0.isFranklin() || $0.isXDai(),
                        isSelected: ($0 == currentToken))
         }
         return tableTokens
@@ -38,7 +39,7 @@ public class EtherCoordinator {
     
     func getBalance(for token: ERC20Token, wallet: Wallet) -> String {
         do {
-            let web3 = CurrentNetwork.currentNetwork.isXDai() ? Web3.InfuraMainnetWeb3() : nil
+            let web3 = CurrentNetwork.currentNetwork.isXDai() ? Web3.InfuraMainnetWeb3() : CurrentNetwork.currentNetwork.getWeb()
             let balance: String
             if token.isEther() {
                 balance = try wallet.getETHbalance(web3instance: web3)

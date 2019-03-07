@@ -166,6 +166,7 @@ class WalletViewController: BasicViewController {
                     self.saveTokensBalances(tokens: uTokens)
                     if self.stopUpdatingTable {
                         self.stopUpdatingTable = false
+                        self.refreshControl.endRefreshing()
                         return
                     }
                     self.reloadBalancesInTable(forTokens: uTokens, completion: {
@@ -202,6 +203,7 @@ class WalletViewController: BasicViewController {
                     self.saveTokensBalances(tokens: uTokens)
                     if self.stopUpdatingTable {
                         self.stopUpdatingTable = false
+                        self.refreshControl.endRefreshing()
                         return
                     }
                     self.reloadBalancesInTable(forTokens: uTokens, completion: {
@@ -218,6 +220,7 @@ class WalletViewController: BasicViewController {
             self.saveTokensBalances(tokens: uTokens)
             if self.stopUpdatingTable {
                 self.stopUpdatingTable = false
+                self.refreshControl.endRefreshing()
                 return
             }
             self.reloadBalancesInTable(forTokens: uTokens, completion: {

@@ -29,6 +29,7 @@ class WalletImportingViewController: BasicViewController {
     
     internal var activeView: UITextView?
 
+    internal let walletsService = WalletsService()
     internal let navigationItems = NavigationItems()
     internal let appController = AppController()
     internal let walletCreating = WalletCreating()
@@ -206,12 +207,19 @@ class WalletImportingViewController: BasicViewController {
     }
     
     @objc func goToApp() {
+        guard let walletsCount = try? walletsService.getAllWallets().count else {
+            alerts.showErrorAlert(for: self, error: "Can't get wallets") { [unowned self] in
+                self.setNavigation(hidden: true)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            return
+        }
         DispatchQueue.main.async { [unowned self] in
             //self.setNavigation(hidden: false)
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.hideSubviews()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
-                    if CurrentWallet.currentWallet == nil {
+                    if walletsCount == 1 {
                         let tabViewController = self.appController.goToApp()
                         //                        tabViewController.context
                         //                        tabViewController.view.backgroundColor = Colors.background

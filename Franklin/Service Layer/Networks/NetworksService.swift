@@ -14,22 +14,22 @@ import CoreData
 
 protocol INetworksService {
     func getSelectedNetwork() throws -> Web3Network
-    func getAllCustomNetworks() throws -> [Web3Network]
+    func getAllCustomNetworks() -> [Web3Network]
 }
 
 public class NetworksService: INetworksService {
     
     private let userDefault = UserDefaultKeys()
     
-    public func getAllCustomNetworks() throws -> [Web3Network] {
+    public func getAllCustomNetworks() -> [Web3Network] {
         let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
         do {
             let results = try ContainerCD.context.fetch(requestNetwork)
             return try results.map {
                 return try Web3Network(crModel: $0)
             }
-        } catch let error {
-            throw error
+        } catch {
+            return []
         }
     }
     
@@ -47,4 +47,25 @@ public class NetworksService: INetworksService {
         let network = Web3Network(id: id, name: name, endpoint: endpoint)
         return network
     }
+    
+    public func getHighestID() -> Int64 {
+        let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
+        do {
+            let results = try ContainerCD.context.fetch(requestNetwork)
+            let nets = try results.map {
+                return try Web3Network(crModel: $0)
+            }
+            var id: Int64 = 100
+            for net in nets {
+                if net.id > id {
+                    id = Int64(net.id)
+                }
+            }
+            return id
+        } catch {
+            return 100
+        }
+    }
 }
+
+
