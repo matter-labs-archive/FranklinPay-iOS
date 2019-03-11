@@ -60,6 +60,7 @@ extension SearchTokenViewController: UITableViewDelegate, UITableViewDataSource 
         let token = tokensList[indexPath.row]
         let isAdded = tokensAreAdded[indexPath.row]
         guard let wallet = wallet else {
+            alerts.showErrorAlert(for: self, error: "Can't get wallet", completion: nil)
             return
         }
         do {

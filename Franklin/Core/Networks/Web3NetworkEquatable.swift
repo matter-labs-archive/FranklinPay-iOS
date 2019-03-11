@@ -10,6 +10,6 @@ import Foundation
 
 extension Web3Network: Equatable {
     public static func ==(lhs: Web3Network, rhs: Web3Network) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.endpoint == rhs.endpoint
     }
 }

@@ -17,6 +17,7 @@ class NetworksViewController: BasicViewController {
 
     // MARK: - Internal vars
     
+    internal let alerts = Alerts()
     internal var networks: [TableNetwork] = []
     internal let networksCoordinator = NetworksCoordinator()
     
@@ -81,6 +82,17 @@ class NetworksViewController: BasicViewController {
         DispatchQueue.main.async { [weak self] in
             self?.networksTableView.reloadData()
         }
+    }
+    
+    func selectNetwork(_ network: Web3Network) {
+        CurrentNetwork.currentNetwork = network
+        var networksArray = [TableNetwork]()
+        for net in networks {
+            var n = net
+            n.isSelected = net.network == network ? true : false
+            networksArray.append(n)
+        }
+        networks = networksArray
     }
     
     // MARK: - Buttons actions

@@ -375,6 +375,14 @@ public class AppController {
                 throw error
             }
         }
+        let customNetworks = networksService.getAllCustomNetworks()
+        for network in customNetworks {
+            do {
+                try addEther(for: wallet, network: network)
+            } catch let error {
+                throw error
+            }
+        }
         self.userDefaultKeys.setEtherAdded(for: wallet)
     }
     

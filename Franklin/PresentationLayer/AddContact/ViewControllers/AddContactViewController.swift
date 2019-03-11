@@ -52,7 +52,7 @@ class AddContactController: BasicViewController {
     
     // MARK: - Enums
     
-    enum TextFieldsTags: Int {
+    internal enum TextFieldsTags: Int {
         case name = 0
         case address = 1
     }

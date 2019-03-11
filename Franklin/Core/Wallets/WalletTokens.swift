@@ -17,6 +17,7 @@ protocol IWalletTokensStorage {
     func delete(token: ERC20Token, network: Web3Network) throws
     func getAllTokens(network: Web3Network) throws -> [ERC20Token]
     func getSelectedToken(network: Web3Network) throws -> ERC20Token
+    func isTokenExists(token: ERC20Token, network: Web3Network) throws -> Bool
 }
 
 extension Wallet: IWalletTokensStorage {
@@ -205,6 +206,20 @@ extension Wallet: IWalletTokensStorage {
             return try results.map {
                 return try ERC20Token(crModel: $0)
             }
+        } catch let error {
+            throw error
+        }
+    }
+    
+    public func isTokenExists(token: ERC20Token, network: Web3Network) throws -> Bool {
+        do {
+            let tokens = try self.getAllTokens(network: network)
+            for tok in tokens {
+                if tok.address == token.address {
+                    return true
+                }
+            }
+            return false
         } catch let error {
             throw error
         }

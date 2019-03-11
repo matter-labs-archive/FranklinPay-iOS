@@ -54,12 +54,12 @@ public class Web3Network: IWeb3Network {
             self.endpoint = endpoint
             return
         }
-        switch network.chainID {
-        case 1:
+        switch network {
+        case .Mainnet:
             self.endpoint = Web3.InfuraMainnetWeb3().provider.url.absoluteString
-        case 4:
+        case .Rinkeby:
             self.endpoint = Web3.InfuraRinkebyWeb3().provider.url.absoluteString
-        case 3:
+        case .Ropsten:
             self.endpoint = Web3.InfuraRopstenWeb3().provider.url.absoluteString
         default:
             self.endpoint = nil
@@ -90,6 +90,32 @@ public class Web3Network: IWeb3Network {
                 error = someErr
                 group.leave()
             }
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
+    }
+    
+    public func delete() throws {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
+        let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
+        requestNetwork.predicate = NSPredicate(format: "endpoint = %@", self.endpoint ?? "")
+        do {
+            let results = try ContainerCD.context.fetch(requestNetwork)
+            guard let network = results.first else {
+                error = Errors.WalletErrors.wrongWallet
+                group.leave()
+                return
+            }
+            ContainerCD.context.delete(network)
+            try ContainerCD.context.save()
+            group.leave()
+        } catch let someErr {
+            error = someErr
+            group.leave()
         }
         group.wait()
         if let resErr = error {

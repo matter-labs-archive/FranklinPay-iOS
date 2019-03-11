@@ -122,15 +122,136 @@ class AddNetworkViewController: BasicViewController {
     
     // MARK: - Actions
     
+    func wrongCharForEndpoint(character: Character) {
+        alerts.showErrorAlert(for: self, error: "Endpoint can't contain '\(character)'", completion: nil)
+    }
+    
+    func wrongPrefixForEndpoint(prefix: String) {
+        alerts.showErrorAlert(for: self, error: "Endpoint can't start with '\(prefix)'", completion: nil)
+    }
+    
+    func wrongSuffixForEndpoint(suffix: String) {
+        alerts.showErrorAlert(for: self, error: "Endpoint can't end with '\(suffix)'", completion: nil)
+    }
+    
+    func isEndpointValid(endpoint: String) -> Bool {
+        if endpoint.hasPrefix("/") {
+            wrongPrefixForEndpoint(prefix: "/")
+            return false
+        }
+        if endpoint.hasSuffix("//") {
+            wrongSuffixForEndpoint(suffix: "//")
+            return false
+        }
+        if (endpoint.hasSuffix("https://") || endpoint.hasSuffix("http://")) && endpoint.contains(":") {
+            wrongCharForEndpoint(character: ":")
+            return false
+        }
+        if endpoint.contains(",") {
+            wrongCharForEndpoint(character: ",")
+            return false
+        }
+        if endpoint.contains("@") {
+            wrongCharForEndpoint(character: "@")
+            return false
+        }
+        if endpoint.contains("#") {
+            wrongCharForEndpoint(character: "#")
+            return false
+        }
+        if endpoint.contains("%") {
+            wrongCharForEndpoint(character: "%")
+            return false
+        }
+        if endpoint.contains("%") {
+            wrongCharForEndpoint(character: "%")
+            return false
+        }
+        if endpoint.contains("^") {
+            wrongCharForEndpoint(character: "^")
+            return false
+        }
+        if endpoint.contains("&") {
+            wrongCharForEndpoint(character: "&")
+            return false
+        }
+        if endpoint.contains("*") {
+            wrongCharForEndpoint(character: "*")
+            return false
+        }
+        if endpoint.contains("(") {
+            wrongCharForEndpoint(character: "(")
+            return false
+        }
+        if endpoint.contains(")") {
+            wrongCharForEndpoint(character: ")")
+            return false
+        }
+        if endpoint.contains("~") {
+            wrongCharForEndpoint(character: "~")
+            return false
+        }
+        if endpoint.contains("]") {
+            wrongCharForEndpoint(character: "]")
+            return false
+        }
+        if endpoint.contains("[") {
+            wrongCharForEndpoint(character: "[")
+            return false
+        }
+        if endpoint.contains(";") {
+            wrongCharForEndpoint(character: ";")
+            return false
+        }
+        if endpoint.contains("'") {
+            wrongCharForEndpoint(character: "'")
+            return false
+        }
+        if endpoint.contains("\"") {
+            wrongCharForEndpoint(character: "\"")
+            return false
+        }
+        if endpoint.contains("\\") {
+            wrongCharForEndpoint(character: "\\")
+            return false
+        }
+        if endpoint.contains(">") {
+            wrongCharForEndpoint(character: ">")
+            return false
+        }
+        if endpoint.contains("<") {
+            wrongCharForEndpoint(character: "<")
+            return false
+        }
+        return true
+    }
+    
+    func checkSymbol(symbol: Character, inString string: String) -> Bool {
+        return string.contains(symbol)
+    }
+    
     private func addNetwork(endpoint: String, name: String) {
+        if !isEndpointValid(endpoint: endpoint) {
+            return
+        }
+        
         var url = endpoint
         if !endpoint.hasPrefix("https://") && !endpoint.hasPrefix("http://") {
             url = "https://" + endpoint
         }
+        if !endpoint.hasSuffix("/") {
+            url = url + "/"
+        }
+        
         let id = networksService.getHighestID() + 1
         let network = Web3Network(id: id, name: name, endpoint: url)
         guard let currentWallet = CurrentWallet.currentWallet else {
             alerts.showErrorAlert(for: self, error: "No selected wallet", completion: nil)
+            return
+        }
+        let networkExists = networksService.isNetworkExists(network: network)
+        if networkExists {
+            alerts.showErrorAlert(for: self, error: "Network exists", completion: nil)
             return
         }
         do {
