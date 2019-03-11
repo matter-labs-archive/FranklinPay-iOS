@@ -334,7 +334,7 @@ public class AppController {
         
         do {
             try wallet.add(token: xdai,
-                           network: Web3Network(id: 100, name: "xDai"))
+                           network: XDaiNetwork())
         } catch let error {
             throw error
         }
@@ -346,7 +346,7 @@ public class AppController {
         
         do {
             try wallet.add(token: buff,
-                           network: Web3Network(id: 100, name: "xDai"))
+                           network: XDaiNetwork())
         } catch let error {
             throw error
         }
@@ -367,7 +367,7 @@ public class AppController {
     public func addEther(for wallet: Wallet) throws {
         let ether = ERC20Token(ether: true)
         
-        for networkID in 1...100 {
+        for networkID in 1...99 {
             do {
                 try wallet.add(token: ether,
                                network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
@@ -381,13 +381,11 @@ public class AppController {
     public func addFranklin(for wallet: Wallet) throws {
         let franklin = ERC20Token(franklin: true)
         
-        for networkID in 1...99 {
-            do {
-                try wallet.add(token: franklin,
-                               network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
-            } catch let error {
-                throw error
-            }
+        do {
+            try wallet.add(token: franklin, network: Web3Network(network: Networks.Mainnet))
+            try wallet.add(token: franklin, network: Web3Network(network: Networks.Rinkeby))
+        } catch let error {
+            throw error
         }
         CurrentToken.currentToken = franklin
         self.userDefaultKeys.setFranklinAdded(for: wallet)
@@ -396,7 +394,7 @@ public class AppController {
     public func addDai(for wallet: Wallet) throws {
         let dai = ERC20Token(dai: true)
         
-        for networkID in 1...100 {
+        for networkID in 1...99 {
             do {
                 try wallet.add(token: dai,
                                network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))

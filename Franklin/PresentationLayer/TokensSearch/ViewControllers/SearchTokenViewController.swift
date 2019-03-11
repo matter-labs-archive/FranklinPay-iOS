@@ -25,8 +25,16 @@ class SearchTokenViewController: BasicViewController {
     internal var ratesUpdating = false
 
     internal var tokensList: [ERC20Token] = []
-    internal var tokensForDeleting: Set<ERC20Token> = []
-    internal var tokensForAdding: Set<ERC20Token> = []
+    internal var tokensForDeleting: Set<ERC20Token> = [] {
+        didSet {
+            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+        }
+    }
+    internal var tokensForAdding: Set<ERC20Token> = [] {
+        didSet {
+            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+        }
+    }
     internal var tokensAreAdded: [Bool] = []
 
     internal  var searchController: UISearchController!
@@ -69,6 +77,7 @@ class SearchTokenViewController: BasicViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        makeConfirmButton(enabled: false)
         makeHelpLabel(enabled: true)
     }
     
@@ -162,6 +171,11 @@ class SearchTokenViewController: BasicViewController {
     func emptyTokensList() {
         clearData()
         reloadTableData()
+    }
+    
+    func makeConfirmButton(enabled: Bool) {
+        addButton.isEnabled = enabled
+        addButton.alpha = enabled ? 1 : 0.5
     }
     
     // MARK: - Table view updates
