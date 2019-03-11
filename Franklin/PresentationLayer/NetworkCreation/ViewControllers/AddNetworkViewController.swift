@@ -240,7 +240,7 @@ class AddNetworkViewController: BasicViewController {
             url = "https://" + endpoint
         }
         if !endpoint.hasSuffix("/") {
-            url = url + "/"
+            url += "/"
         }
         
         let id = networksService.getHighestID() + 1

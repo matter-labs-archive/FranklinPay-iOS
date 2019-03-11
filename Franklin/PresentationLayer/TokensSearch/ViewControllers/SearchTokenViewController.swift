@@ -385,7 +385,6 @@ class SearchTokenViewController: BasicViewController {
         }
     }
     
-    
     @objc func dismissView() {
         dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)

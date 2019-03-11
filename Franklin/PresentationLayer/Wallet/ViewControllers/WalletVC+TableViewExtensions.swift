@@ -151,7 +151,6 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         
-        
         var cards = [TableToken]()
         var tokens = [TableToken]()
         

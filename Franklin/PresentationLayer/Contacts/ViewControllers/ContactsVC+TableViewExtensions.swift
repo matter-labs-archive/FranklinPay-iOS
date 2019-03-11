@@ -38,7 +38,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.deselectRow(at: indexPath, animated: true)
         let contact = contactsList[indexPath.row]
         let alert = UIAlertController(title: contact.name, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (action) in
+        alert.addAction(UIAlertAction(title: "Send", style: .default, handler: { [unowned self] (_) in
             let vc = SendMoneyController(token: Franklin(), address: contact.address)
             self.searchTextField.endEditing(true)
             self.modalViewAppeared()
@@ -47,7 +47,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.view.layer.speed = Constants.ModalView.animationSpeed
             self.tabBarController?.present(vc, animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { [unowned self] (action) in
+        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { [unowned self] (_) in
             let vc = AddContactController(contact: contact)
             self.searchTextField.endEditing(true)
             self.modalViewAppeared()
@@ -56,7 +56,7 @@ extension ContactsViewController: UITableViewDelegate, UITableViewDataSource {
             vc.view.layer.speed = Constants.ModalView.animationSpeed
             self.tabBarController?.present(vc, animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [unowned self] (action) in
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { [unowned self] (_) in
             DispatchQueue.main.async { [unowned self] in
                 let searchString = self.searchTextField.text
                 try? contact.deleteContact()
