@@ -186,9 +186,16 @@ class EnterPincodeViewController: PincodeViewController {
 //            }
         case .changePincode:
             changePincode()
+        case .privateKey:
+            showPrivateKey()
         default:
             returnToStartTab()
         }
+    }
+    
+    func showPrivateKey() {
+        let vc = PrivateKeyViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func changePincode() {

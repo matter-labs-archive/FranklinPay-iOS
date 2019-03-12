@@ -27,6 +27,8 @@ public class SettingInteractor {
         }
         if !userKeys.isBackupReady(for: currentWallet) {
             settings.append(SettingsModel(.backup))
+        } else {
+            settings.append(SettingsModel(.privateKey))
         }
         return settings.reversed()
     }

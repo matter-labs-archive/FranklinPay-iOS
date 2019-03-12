@@ -16,4 +16,5 @@ public enum MainSettings {
     case help
     case topup
     case changePincode
+    case privateKey
 }

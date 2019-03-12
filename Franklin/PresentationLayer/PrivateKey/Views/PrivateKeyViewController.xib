@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SF-Pro-Display-Regular.otf">
+            <string>SFProDisplay-Regular</string>
+        </array>
+        <array key="SF-Pro-Display-Semibold.otf">
+            <string>SFProDisplay-Semibold</string>
+        </array>
+        <array key="librefranklin-semibold.ttf">
+            <string>LibreFranklin-SemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PrivateKeyViewController" customModule="Franklin" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="QRv-vO-LQ8" id="uYd-OG-Hgv"/>
+                <outlet property="copyAddress" destination="bna-o3-oev" id="ZpE-Pd-Qha"/>
+                <outlet property="privateKey" destination="12c-zc-opP" id="ffu-eO-yI3"/>
+                <outlet property="qrCode" destination="v8c-bb-0gS" id="ylU-Lh-dpN"/>
+                <outlet property="shareAddress" destination="aCJ-FR-xy3" id="f3I-Za-Y2m"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QRv-vO-LQ8" userLabel="Content View">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Use it to restore your wallet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Nfd-Xl-m8O">
+                            <rect key="frame" x="20.5" y="91.5" width="373" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="K8j-YP-iIc"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="18"/>
+                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="752" text="Your private key" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="QaZ-2C-WFG">
+                            <rect key="frame" x="20.5" y="10" width="373" height="41.5"/>
+                            <fontDescription key="fontDescription" name="LibreFranklin-SemiBold" family="Libre Franklin" pointSize="34"/>
+                            <color key="textColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="v8c-bb-0gS">
+                            <rect key="frame" x="103.5" y="223.5" width="207" height="207"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="v8c-bb-0gS" secondAttribute="height" multiplier="1:1" id="KWl-Hq-Xrz"/>
+                            </constraints>
+                        </imageView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="IQO-4X-Cfw">
+                            <rect key="frame" x="20" y="724" width="374" height="44"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bna-o3-oev" customClass="BasicWhiteButton" customModule="Franklin" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="177" height="44"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <state key="normal" title="Copy">
+                                        <color key="titleColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="copyAction:" destination="-1" eventType="touchUpInside" id="ZSF-hf-6bT"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aCJ-FR-xy3" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
+                                    <rect key="frame" x="197" y="0.0" width="177" height="44"/>
+                                    <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="26"/>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <inset key="titleEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="Share" image="share-white">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="shareAction:" destination="-1" eventType="touchUpInside" id="64g-KL-V5L"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="aCJ-FR-xy3" firstAttribute="height" secondItem="IQO-4X-Cfw" secondAttribute="height" id="cTI-PU-myq"/>
+                                <constraint firstItem="bna-o3-oev" firstAttribute="height" secondItem="IQO-4X-Cfw" secondAttribute="height" id="cjs-yI-4BM"/>
+                            </constraints>
+                        </stackView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="12c-zc-opP">
+                            <rect key="frame" x="20" y="443.5" width="374" height="53"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Semibold" family="SF Pro Display" pointSize="22"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="v8c-bb-0gS" firstAttribute="width" secondItem="QRv-vO-LQ8" secondAttribute="width" multiplier="0.5" id="2fV-Tj-QNV"/>
+                        <constraint firstItem="QaZ-2C-WFG" firstAttribute="width" secondItem="QRv-vO-LQ8" secondAttribute="width" multiplier="0.9" id="3fH-zl-Gl5"/>
+                        <constraint firstItem="Nfd-Xl-m8O" firstAttribute="leading" secondItem="QaZ-2C-WFG" secondAttribute="leading" id="4h5-uc-99Z"/>
+                        <constraint firstItem="IQO-4X-Cfw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="12c-zc-opP" secondAttribute="bottom" constant="10" id="5Zl-bx-WyF"/>
+                        <constraint firstItem="xkR-Ct-gRW" firstAttribute="bottom" secondItem="IQO-4X-Cfw" secondAttribute="bottom" constant="50" id="7jJ-Aq-FTF"/>
+                        <constraint firstItem="12c-zc-opP" firstAttribute="width" secondItem="IQO-4X-Cfw" secondAttribute="width" id="I7M-Ny-ylq"/>
+                        <constraint firstItem="12c-zc-opP" firstAttribute="centerX" secondItem="QRv-vO-LQ8" secondAttribute="centerX" id="Lai-ue-oyw"/>
+                        <constraint firstItem="QaZ-2C-WFG" firstAttribute="top" secondItem="xkR-Ct-gRW" secondAttribute="top" constant="10" id="NS0-6N-Zjt"/>
+                        <constraint firstItem="QaZ-2C-WFG" firstAttribute="centerX" secondItem="QRv-vO-LQ8" secondAttribute="centerX" id="Nkm-ZW-3Hs"/>
+                        <constraint firstItem="Nfd-Xl-m8O" firstAttribute="trailing" secondItem="QaZ-2C-WFG" secondAttribute="trailing" id="Nso-Vz-y27"/>
+                        <constraint firstItem="IQO-4X-Cfw" firstAttribute="centerX" secondItem="QRv-vO-LQ8" secondAttribute="centerX" id="WFf-U9-Twp"/>
+                        <constraint firstItem="IQO-4X-Cfw" firstAttribute="leading" secondItem="QRv-vO-LQ8" secondAttribute="leading" constant="20" id="aa7-yv-5aB"/>
+                        <constraint firstItem="v8c-bb-0gS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Nfd-Xl-m8O" secondAttribute="bottom" constant="10" id="iCp-yq-kS0"/>
+                        <constraint firstItem="Nfd-Xl-m8O" firstAttribute="top" secondItem="QaZ-2C-WFG" secondAttribute="bottom" constant="40" id="j4v-cA-bKx"/>
+                        <constraint firstItem="v8c-bb-0gS" firstAttribute="centerY" secondItem="QRv-vO-LQ8" secondAttribute="centerY" multiplier="0.8" id="tLP-wD-Qzb"/>
+                        <constraint firstItem="v8c-bb-0gS" firstAttribute="centerX" secondItem="QRv-vO-LQ8" secondAttribute="centerX" id="vPu-Gh-xN3"/>
+                        <constraint firstItem="12c-zc-opP" firstAttribute="top" secondItem="v8c-bb-0gS" secondAttribute="bottom" constant="13" id="xFQ-1t-Frj"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="xkR-Ct-gRW"/>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="QRv-vO-LQ8" secondAttribute="leading" id="5a9-MV-fFp"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="QRv-vO-LQ8" secondAttribute="bottom" id="7BS-9J-kbv"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="QRv-vO-LQ8" secondAttribute="top" id="MMJ-TZ-wDy"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="QRv-vO-LQ8" secondAttribute="trailing" id="VrE-zj-Hfs"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="146.40000000000001" y="48.125937031484263"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="share-white" width="24" height="24"/>
+    </resources>
+</document>
