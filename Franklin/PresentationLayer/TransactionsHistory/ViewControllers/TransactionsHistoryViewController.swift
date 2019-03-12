@@ -11,12 +11,21 @@ import SideMenu
 
 class TransactionsHistoryViewController: BasicViewController {
     
+    // MARK: - Enums
+    
+    internal enum ScreenStatus {
+        case showHistory
+        case hideHistory
+    }
+    
     // MARK: - Outlets
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var transactionsTypeSegmentedControl: UISegmentedControl!
     @IBOutlet weak var marker: UIImageView!
     @IBOutlet weak var emptyTXsView: UIView!
+    @IBOutlet weak var noTXsMessage: UILabel!
+    @IBOutlet weak var wrongNetworkView: UIView!
     
     // MARK: - Internal lets
     
@@ -28,6 +37,19 @@ class TransactionsHistoryViewController: BasicViewController {
         didSet {
             DispatchQueue.global().async { [weak self] in
                 self?.uploadTransactions()
+            }
+        }
+    }
+    
+    internal var currentStatus: ScreenStatus = .showHistory {
+        didSet {
+            switch currentStatus {
+            case .showHistory:
+                wrongNetworkView.alpha = 0
+                wrongNetworkView.isUserInteractionEnabled = false
+            default:
+                wrongNetworkView.alpha = 1
+                wrongNetworkView.isUserInteractionEnabled = true
             }
         }
     }
@@ -67,6 +89,7 @@ class TransactionsHistoryViewController: BasicViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setScreenStatus()
         getTransactions()
     }
     
@@ -82,6 +105,17 @@ class TransactionsHistoryViewController: BasicViewController {
     }
     
     // MARK: - Main setup
+    
+    func setScreenStatus() {
+        let currentNetwork = CurrentNetwork.currentNetwork
+        if currentNetwork.isRinkebi()
+            || currentNetwork.isRopsten()
+            || currentNetwork.isMainnet() {
+            currentStatus = .showHistory
+        } else {
+            currentStatus = .hideHistory
+        }
+    }
     
     func getTransactions() {
         DispatchQueue.global().async { [unowned self] in

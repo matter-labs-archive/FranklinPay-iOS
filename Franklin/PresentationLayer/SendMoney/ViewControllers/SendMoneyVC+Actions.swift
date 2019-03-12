@@ -11,7 +11,6 @@ import Web3swift
 import BigInt
 
 extension SendMoneyController {
-    
     func sendToken(_ token: ERC20Token) {
         DispatchQueue.global().async { [unowned self] in
             guard let wallet = CurrentWallet.currentWallet else { return }

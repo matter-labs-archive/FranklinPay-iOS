@@ -22,9 +22,11 @@
             <connections>
                 <outlet property="emptyTXsView" destination="420-XG-4Bt" id="hsK-KR-DSC"/>
                 <outlet property="marker" destination="Zdu-Xb-D8P" id="9YJ-V3-W7f"/>
+                <outlet property="noTXsMessage" destination="OB9-7R-Npr" id="vEL-HP-AD1"/>
                 <outlet property="tableView" destination="1v0-2Z-m9X" id="weW-q2-Wlc"/>
                 <outlet property="transactionsTypeSegmentedControl" destination="2QD-ja-FLv" id="I4y-u2-45F"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+                <outlet property="wrongNetworkView" destination="ENw-Ap-ML3" id="78u-NX-fBf"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -33,11 +35,11 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1v0-2Z-m9X">
-                    <rect key="frame" x="0.0" y="158" width="375" height="509"/>
+                    <rect key="frame" x="0.0" y="156" width="375" height="511"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 </tableView>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="2QD-ja-FLv">
-                    <rect key="frame" x="20" y="114" width="335" height="29"/>
+                    <rect key="frame" x="20" y="112" width="335" height="29"/>
                     <segments>
                         <segment title="All"/>
                         <segment title="Sent"/>
@@ -54,7 +56,7 @@
                     </connections>
                 </segmentedControl>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Transactions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tLb-oQ-tLY">
-                    <rect key="frame" x="76.5" y="50" width="222" height="44"/>
+                    <rect key="frame" x="86" y="50" width="203.5" height="42"/>
                     <fontDescription key="fontDescription" name="LibreFranklin-SemiBold" family="Libre Franklin" pointSize="36"/>
                     <color key="textColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <nil key="highlightedColor"/>
@@ -76,10 +78,10 @@
                     <rect key="frame" x="25" y="30" width="15" height="15"/>
                 </imageView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="420-XG-4Bt">
-                    <rect key="frame" x="0.0" y="158" width="375" height="509"/>
+                    <rect key="frame" x="0.0" y="156" width="375" height="511"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No transactions yet" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OB9-7R-Npr">
-                            <rect key="frame" x="20" y="242.5" width="335" height="24"/>
+                            <rect key="frame" x="20" y="243.5" width="335" height="24"/>
                             <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
                             <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
@@ -91,18 +93,39 @@
                         <constraint firstItem="OB9-7R-Npr" firstAttribute="centerX" secondItem="420-XG-4Bt" secondAttribute="centerX" id="ZvZ-Vx-3fj"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ENw-Ap-ML3">
+                    <rect key="frame" x="0.0" y="92" width="375" height="575"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sorry, transaction list for this network is not available yet" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="LOE-1q-Ggr">
+                            <rect key="frame" x="19" y="264" width="337.5" height="47"/>
+                            <fontDescription key="fontDescription" name="SFProDisplay-Regular" family="SF Pro Display" pointSize="20"/>
+                            <color key="textColor" red="0.4431372549" green="0.4431372549" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="LOE-1q-Ggr" firstAttribute="centerY" secondItem="ENw-Ap-ML3" secondAttribute="centerY" id="VSc-zF-qOB"/>
+                        <constraint firstItem="LOE-1q-Ggr" firstAttribute="centerX" secondItem="ENw-Ap-ML3" secondAttribute="centerX" id="md0-gv-lbM"/>
+                        <constraint firstItem="LOE-1q-Ggr" firstAttribute="width" secondItem="ENw-Ap-ML3" secondAttribute="width" multiplier="0.9" id="yCm-yX-SKA"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ENw-Ap-ML3" secondAttribute="trailing" id="0Qv-p8-b49"/>
                 <constraint firstItem="tLb-oQ-tLY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="30" id="780-yq-X12"/>
+                <constraint firstItem="ENw-Ap-ML3" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="8dK-dr-9Eu"/>
                 <constraint firstItem="420-XG-4Bt" firstAttribute="bottom" secondItem="1v0-2Z-m9X" secondAttribute="bottom" id="Bv7-hy-QBf"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="Eq5-Bh-XCX"/>
+                <constraint firstItem="ENw-Ap-ML3" firstAttribute="top" secondItem="tLb-oQ-tLY" secondAttribute="bottom" id="IGh-UV-uWS"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="IZZ-aK-chy"/>
                 <constraint firstItem="Zdu-Xb-D8P" firstAttribute="top" secondItem="nzT-Xk-IIZ" secondAttribute="top" id="K4d-id-EHE"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="1v0-2Z-m9X" secondAttribute="bottom" id="KIi-MP-i6Q"/>
                 <constraint firstItem="tLb-oQ-tLY" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="MEl-SD-0za"/>
                 <constraint firstItem="2QD-ja-FLv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Oxa-Qc-pb5"/>
                 <constraint firstItem="nzT-Xk-IIZ" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="10" id="SNf-Or-3Wc"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ENw-Ap-ML3" secondAttribute="bottom" id="SUj-80-3SD"/>
                 <constraint firstItem="420-XG-4Bt" firstAttribute="top" secondItem="1v0-2Z-m9X" secondAttribute="top" id="SXv-cc-xbx"/>
                 <constraint firstItem="1v0-2Z-m9X" firstAttribute="top" secondItem="2QD-ja-FLv" secondAttribute="bottom" constant="16" id="Set-cZ-Fpg"/>
                 <constraint firstItem="420-XG-4Bt" firstAttribute="trailing" secondItem="1v0-2Z-m9X" secondAttribute="trailing" id="ekH-iX-gjk"/>
