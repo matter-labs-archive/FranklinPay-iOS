@@ -14,7 +14,7 @@ import CoreData
 
 protocol INetworksService {
     func getSelectedNetwork() throws -> Web3Network
-    func getAllCustomNetworks() -> [Web3Network]
+    func getAllNetworks() -> [Web3Network]
     func getHighestID() -> Int64
     func isNetworkExists(network: Web3Network) -> Bool
 }
@@ -23,7 +23,7 @@ public class NetworksService: INetworksService {
     
     private let userDefault = UserDefaultKeys()
     
-    public func getAllCustomNetworks() -> [Web3Network] {
+    public func getAllNetworks() -> [Web3Network] {
         let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
         do {
             let results = try ContainerCD.context.fetch(requestNetwork)
@@ -45,19 +45,15 @@ public class NetworksService: INetworksService {
         guard let name = networkFromUD["name"] as? String else {
             throw Errors.CommonErrors.wrongType
         }
-        let endpoint = networkFromUD["endpoint"] as? String
+        guard let endpoint = networkFromUD["endpoint"] as? String else {
+            throw Errors.CommonErrors.wrongType
+        }
         let network = Web3Network(id: id, name: name, endpoint: endpoint)
         return network
     }
     
     public func isNetworkExists(network: Web3Network) -> Bool {
-        if network.isXDai()
-            || network.isMainnet()
-            || network.isRopsten()
-            || network.isRinkebi() {
-            return true
-        }
-        let networks = self.getAllCustomNetworks()
+        let networks = self.getAllNetworks()
         for net in networks {
             if net.endpoint == network.endpoint {
                 return true

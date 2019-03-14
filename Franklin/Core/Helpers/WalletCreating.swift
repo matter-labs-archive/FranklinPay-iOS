@@ -63,13 +63,21 @@ public class WalletCreating {
     
     func prepareWallet(_ wallet: Wallet) throws {
         CurrentWallet.currentWallet = wallet
-        CurrentNetwork.currentNetwork = Web3Network(network: .Mainnet)
+        CurrentNetwork.currentNetwork = MainnetNetwork()
+        let defaultNetworksAdded = self.userDefaults.areDefaultNetworksAdded()
         let tokensDownloaded = self.userDefaults.areTokensDownloaded()
         let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
         let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
         let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
         let xdaiAdded = self.userDefaults.isXDaiAdded(for: wallet)
         let buffAdded = self.userDefaults.isBuffAdded(for: wallet)
+        if !defaultNetworksAdded {
+            do {
+                try self.appController.addDefaultNetworks()
+            } catch let error {
+                throw error
+            }
+        }
         if !tokensDownloaded {
             do {
                 try self.tokensService.downloadAllAvailableTokensIfNeeded()

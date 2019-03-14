@@ -149,6 +149,7 @@ public class AppController {
     public func initPreparations(for wallet: Wallet, on network: Web3Network) {
         let group = DispatchGroup()
         
+        let defaultNetworksAdded = userDefaultKeys.areDefaultNetworksAdded()
         let tokensDownloaded = userDefaultKeys.areTokensDownloaded()
         let etherAdded = userDefaultKeys.isEtherAdded(for: wallet)
         let franklinAdded = userDefaultKeys.isFranklinAdded(for: wallet)
@@ -158,6 +159,20 @@ public class AppController {
         
         CurrentWallet.currentWallet = wallet
         CurrentNetwork.currentNetwork = network
+        
+        group.enter()
+        DispatchQueue.global().async { [unowned self] in
+            if !defaultNetworksAdded {
+                do {
+                    try self.addDefaultNetworks()
+                    group.leave()
+                } catch let error {
+                    fatalError("Can't add networks - \(String(describing: error))")
+                }
+            } else {
+                group.leave()
+            }
+        }
         
         group.enter()
         DispatchQueue.global().async { [unowned self] in
@@ -257,7 +272,7 @@ public class AppController {
         if let sn = try? self.networksService.getSelectedNetwork() {
             selectedNetwork = sn
         } else {
-            let mainnet = Web3Network(network: .Mainnet)
+            let mainnet = MainnetNetwork()
             //let xdai = Web3Network(id: 100, name: "xDai")
             selectedNetwork = mainnet
         }
@@ -275,57 +290,24 @@ public class AppController {
             self.createRootViewController(startViewController, in: window)
         }
     }
-
-//    private func startAsUsual(in window: UIWindow) {
-//
-//        var startViewController: UIViewController
-//
-//        let selectedNetwork: Web3Network
-//        if let sn = try? self.networksService.getSelectedNetwork() {
-//            selectedNetwork = sn
-//        } else {
-//            let mainnet = Web3Network(network: .Mainnet)
-//            selectedNetwork = mainnet
-//        }
-//
-//        let onboardingPassed = userDefaultKeys.isOnboardingPassed
-//        if !onboardingPassed {
-//            startViewController = self.onboardingController()
-//            self.createRootViewController(startViewController, in: window)
-//            return
-//        }
-//
-//        let pincodeExists = userDefaultKeys.isPincodeExists
-//        if !pincodeExists {
-//            startViewController = self.createPincodeController()
-//            self.createRootViewController(startViewController, in: window)
-//            return
-//        }
-//
-//        if let walletsExists = try? walletsService.getAllWallets(), let firstWallet = walletsExists.first {
-//            if let selectedWallet = try? walletsService.getSelectedWallet() {
-//                self.initPreparations(for: selectedWallet, on: selectedNetwork)
-//                startViewController = self.goToApp()
-//                self.createRootViewController(startViewController, in: window)
-//                return
-//            } else {
-//                self.initPreparations(for: firstWallet, on: selectedNetwork)
-//                startViewController = self.goToApp()
-//                self.createRootViewController(startViewController, in: window)
-//                return
-//            }
-//        } else {
-//            startViewController = self.addWalletController()
-//            self.createRootViewController(startViewController, in: window)
-//            return
-//        }
-//    }
     
     private func createRootViewController(_ vc: UIViewController, in window: UIWindow) {
         DispatchQueue.main.async {
             vc.view.backgroundColor = Colors.background
             window.rootViewController = vc
             window.makeKeyAndVisible()
+        }
+    }
+    
+    public func addDefaultNetworks() throws {
+        let defaultNets = [MainnetNetwork(), RinkebyNetwork(), RopstenNetwork(), XDaiNetwork()]
+        do {
+            for network in defaultNets {
+                try network.save()
+            }
+            self.userDefaultKeys.setDefaultNetworksAdded()
+        } catch let error {
+            throw error
         }
     }
     
@@ -366,19 +348,11 @@ public class AppController {
     
     public func addEther(for wallet: Wallet) throws {
         let ether = ERC20Token(ether: true)
-        
-        for networkID in 1...99 {
+        let networks = networksService.getAllNetworks()
+        for network in networks {
             do {
                 try wallet.add(token: ether,
-                               network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
-            } catch let error {
-                throw error
-            }
-        }
-        let customNetworks = networksService.getAllCustomNetworks()
-        for network in customNetworks {
-            do {
-                try addEther(for: wallet, network: network)
+                               network: network)
             } catch let error {
                 throw error
             }
@@ -390,8 +364,10 @@ public class AppController {
         let franklin = ERC20Token(franklin: true)
         
         do {
-            try wallet.add(token: franklin, network: Web3Network(network: Networks.Mainnet))
-            try wallet.add(token: franklin, network: Web3Network(network: Networks.Rinkeby))
+            try wallet.add(token: franklin,
+                           network: MainnetNetwork())
+            try wallet.add(token: franklin,
+                           network: RinkebyNetwork())
         } catch let error {
             throw error
         }
@@ -401,14 +377,15 @@ public class AppController {
     
     public func addDai(for wallet: Wallet) throws {
         let dai = ERC20Token(dai: true)
-        
-        for networkID in 1...99 {
-            do {
-                try wallet.add(token: dai,
-                               network: Web3Network(network: Networks.fromInt(networkID) ?? .Mainnet))
-            } catch let error {
-                throw error
-            }
+        do {
+            try wallet.add(token: dai,
+                           network: MainnetNetwork())
+            try wallet.add(token: dai,
+                           network: RinkebyNetwork())
+            try wallet.add(token: dai,
+                           network: RopstenNetwork())
+        } catch let error {
+            throw error
         }
         self.userDefaultKeys.setDaiAdded(for: wallet)
     }

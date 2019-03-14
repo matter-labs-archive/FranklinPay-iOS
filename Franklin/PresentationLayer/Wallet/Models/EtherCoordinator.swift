@@ -39,7 +39,9 @@ public class EtherCoordinator {
     
     func getBalance(for token: ERC20Token, wallet: Wallet) -> String {
         do {
-            let web3 = CurrentNetwork.currentNetwork.isXDai() ? Web3.InfuraMainnetWeb3() : CurrentNetwork.currentNetwork.getWeb()
+            let web3 = CurrentNetwork.currentNetwork.isXDai() ?
+                Web3.InfuraMainnetWeb3() :
+                try CurrentNetwork.currentNetwork.getWeb()
             let balance: String
             if token.isEther() {
                 balance = try wallet.getETHbalance(web3instance: web3)

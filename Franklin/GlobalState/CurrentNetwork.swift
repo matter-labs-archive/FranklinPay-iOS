@@ -24,7 +24,7 @@ public class CurrentNetwork {
                     return selectedNetwork
                 }
                 //let xdai = Web3Network(id: 100, name: "xDai")
-                let mainnet = Web3Network(network: Networks.Mainnet)
+                let mainnet = MainnetNetwork()
                 mainnet.select()
                 _currentNetwork = mainnet
                 return mainnet

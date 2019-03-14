@@ -17,7 +17,9 @@ extension SendMoneyController {
             guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
-                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
+                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai()
+                    ? try MainnetNetwork().getWeb()
+                    : nil
                 let tx = try wallet.prepareSendERC20Tx(web3instance: changeWeb3,
                                                        token: token,
                                                        toAddress: address,
@@ -69,7 +71,9 @@ extension SendMoneyController {
             guard let amount = self.topTextField.text else { return }
             guard let address = self.chosenContact?.address else { return }
             do {
-                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai() ? Web3Network(network: .Mainnet).getWeb() : nil
+                let changeWeb3 = CurrentNetwork.currentNetwork.isXDai()
+                    ? try MainnetNetwork().getWeb()
+                    : nil
                 let tx = try wallet.prepareSendEthTx(web3instance: changeWeb3,
                                                      toAddress: address,
                                                      value: amount,

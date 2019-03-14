@@ -41,6 +41,7 @@
     <entity name="NetworkModel" representedClassName="NetworkModel" syncable="YES" codeGenerationType="class">
         <attribute name="endpoint" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isCustom" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="token" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ERC20TokenModel" inverseName="network" inverseEntity="ERC20TokenModel" syncable="YES"/>
         <relationship name="transaction" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ETHTransactionModel" inverseName="network" inverseEntity="ETHTransactionModel" syncable="YES"/>
@@ -60,7 +61,7 @@
         <element name="ContactModel" positionX="-27" positionY="117" width="128" height="75"/>
         <element name="ERC20TokenModel" positionX="-45" positionY="0" width="128" height="270"/>
         <element name="ETHTransactionModel" positionX="-27" positionY="36" width="128" height="270"/>
-        <element name="NetworkModel" positionX="-27" positionY="117" width="128" height="120"/>
+        <element name="NetworkModel" positionX="-27" positionY="117" width="128" height="135"/>
         <element name="WalletModel" positionX="-18" positionY="27" width="128" height="180"/>
     </elements>
 </model>

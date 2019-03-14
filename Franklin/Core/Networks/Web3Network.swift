@@ -12,48 +12,52 @@ import CoreData
 
 protocol IWeb3Network {
     func select()
-    func saveAsCustom() throws
+    func save() throws
 }
 
 public class Web3Network: IWeb3Network {
     public let id: Int64
     public let name: String
-    public var endpoint: String?
+    public var endpoint: String
+    public let isCustom: Bool
     
     private let userDefaults = UserDefaultKeys()
     
     public init(crModel: NetworkModel) throws {
         let id = crModel.id
-        let endpoint = crModel.endpoint
-        guard let name = crModel.name else {
-                throw Errors.NetworkStorageErrors.cantGetNetwork
+        guard let endpoint = crModel.endpoint else {
+            throw Errors.NetworkStorageErrors.cantGetNetwork
         }
+        guard let name = crModel.name else {
+            throw Errors.NetworkStorageErrors.cantGetNetwork
+        }
+        let isCustom = crModel.isCustom
         self.id = id
         self.name = name
         self.endpoint = endpoint
+        self.isCustom = isCustom
     }
     
     public init(network: Web3Network) {
         self.id = network.id
         self.name = network.name
         self.endpoint = network.endpoint
+        self.isCustom = network.isCustom
     }
     
     public init(id: Int64,
                 name: String,
-                endpoint: String? = nil) {
+                endpoint: String,
+                isCustom: Bool = true) {
         self.id = id
         self.name = name
         self.endpoint = endpoint
+        self.isCustom = isCustom
     }
     
-    public init(network: Networks, endpoint: String? = nil) {
+    public init(network: Networks) {
         self.id = Int64(network.chainID.description)!
         self.name = network.name
-        if endpoint != nil {
-            self.endpoint = endpoint
-            return
-        }
         switch network {
         case .Mainnet:
             self.endpoint = Web3.InfuraMainnetWeb3().provider.url.absoluteString
@@ -62,15 +66,16 @@ public class Web3Network: IWeb3Network {
         case .Ropsten:
             self.endpoint = Web3.InfuraRopstenWeb3().provider.url.absoluteString
         default:
-            self.endpoint = nil
+            self.endpoint =  Web3.InfuraMainnetWeb3().provider.url.absoluteString
         }
+        self.isCustom = false
     }
     
     public func select() {
         userDefaults.setCurrentNetwork(self)
     }
     
-    public func saveAsCustom() throws {
+    public func save() throws {
         let group = DispatchGroup()
         group.enter()
         var error: Error?
@@ -83,6 +88,7 @@ public class Web3Network: IWeb3Network {
             entity.id = self.id
             entity.name = self.name
             entity.endpoint = self.endpoint
+            entity.isCustom = self.isCustom
             do {
                 try context.save()
                 group.leave()
@@ -102,7 +108,7 @@ public class Web3Network: IWeb3Network {
         group.enter()
         var error: Error?
         let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
-        requestNetwork.predicate = NSPredicate(format: "endpoint = %@", self.endpoint ?? "")
+        requestNetwork.predicate = NSPredicate(format: "endpoint = %@", self.endpoint)
         do {
             let results = try ContainerCD.context.fetch(requestNetwork)
             guard let network = results.first else {
@@ -123,26 +129,11 @@ public class Web3Network: IWeb3Network {
         }
     }
     
-    public func getWeb() -> web3? {
-        let w3: web3
-        switch self.id {
-        case 1:
-            w3 = Web3.InfuraMainnetWeb3()
-        case 4:
-            w3 = Web3.InfuraRinkebyWeb3()
-        case 3:
-            w3 = Web3.InfuraRopstenWeb3()
-        case 100:
-            let url = URL(string: "https://dai.poa.network")!
-            let infura = Web3HttpProvider(url)!
-            w3 = web3(provider: infura)
-        default:
-            if let urlString = endpoint, let url = URL(string: urlString), let infura = Web3HttpProvider(url) {
-                w3 = web3(provider: infura)
-                return w3
-            }
-            return nil
+    public func getWeb() throws -> web3 {
+        guard let url = URL(string: endpoint), let infura = Web3HttpProvider(url) else {
+            throw Errors.NetworkErrors.wrongURL
         }
+        let w3: web3 = web3(provider: infura)
         return w3
     }
     

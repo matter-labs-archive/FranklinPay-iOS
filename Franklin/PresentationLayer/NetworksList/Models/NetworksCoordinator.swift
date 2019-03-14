@@ -13,23 +13,10 @@ public class NetworksCoordinator {
     private let networksService = NetworksService()
     
     func getNetworks() -> [TableNetwork] {
-        let customNetworks = self.networksService.getAllCustomNetworks()
-        let basicNetworks: [Networks] = [.Mainnet,
-                                         .Rinkeby,
-                                         .Ropsten]
-        var web3networks: [Web3Network]
-        let basicWeb3Nets = basicNetworks.map({
-            Web3Network(network: $0)
-        })
-        web3networks = basicWeb3Nets
-        let xdai = XDaiNetwork()
-        web3networks.append(xdai)
-        web3networks.append(contentsOf: customNetworks)
-        
+        let customNetworks = self.networksService.getAllNetworks()
         let currentNetwork = CurrentNetwork.currentNetwork
-        
         var networksArray = [TableNetwork]()
-        for network in web3networks {
+        for network in customNetworks {
             let tableNetwork = TableNetwork(network: network,
                                             isSelected: (network == currentNetwork)
             )

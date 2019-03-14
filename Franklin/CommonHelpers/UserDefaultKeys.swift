@@ -83,4 +83,12 @@ public struct UserDefaultKeys {
         UserDefaults.standard.set(true, forKey: "TokensDownloaded")
         UserDefaults.standard.synchronize()
     }
+    
+    public func areDefaultNetworksAdded() -> Bool {
+        return UserDefaults.standard.bool(forKey: "NetworksAdded")
+    }
+    public func setDefaultNetworksAdded() {
+        UserDefaults.standard.set(true, forKey: "NetworksAdded")
+        UserDefaults.standard.synchronize()
+    }
 }
