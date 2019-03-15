@@ -17,6 +17,9 @@
 		3A0CD5BD223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
 		3A0CD5BE223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
 		3A0CD5BF223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
+		3A0CD5EF223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
+		3A0CD5F0223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
+		3A0CD5F1223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
 		3A3D3D5A221D6E3B00506F98 /* PlasmaCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D59221D6E3B00506F98 /* PlasmaCode.swift */; };
 		3A3D3D5C221D6E5800506F98 /* PlasmaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5B221D6E5800506F98 /* PlasmaParser.swift */; };
 		3A3D3D60221D723A00506F98 /* ContactStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5F221D723A00506F98 /* ContactStorage.swift */; };
@@ -848,6 +851,7 @@
 		3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
 		3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointValidator.swift; sourceTree = "<group>"; };
+		3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCreator.swift; sourceTree = "<group>"; };
 		3A3D3D59221D6E3B00506F98 /* PlasmaCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaCode.swift; sourceTree = "<group>"; };
 		3A3D3D5B221D6E5800506F98 /* PlasmaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaParser.swift; sourceTree = "<group>"; };
 		3A3D3D5F221D723A00506F98 /* ContactStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStorage.swift; sourceTree = "<group>"; };
@@ -1256,6 +1260,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		3A0CD5ED223BEC9C00D0A4FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		3A3D3D6B221D731600506F98 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -1411,6 +1423,7 @@
 		3AC3BD83223120C700656EC7 /* NetworkCreation */ = {
 			isa = PBXGroup;
 			children = (
+				3A0CD5ED223BEC9C00D0A4FE /* Models */,
 				3AC3BD85223120EB00656EC7 /* ViewControllers */,
 				3AC3BD84223120E100656EC7 /* Views */,
 			);
@@ -1812,7 +1825,6 @@
 				E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */,
 				3A3D3D63221D72B700506F98 /* Web3NetworkEquatable.swift */,
 				3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */,
-				3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -2050,6 +2062,7 @@
 		E2C1103121E507250012A978 /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */,
 				E2C1103221E507250012A978 /* NetworksService.swift */,
 			);
 			path = Networks;
@@ -3444,6 +3457,7 @@
 				3A3D3DE3221E9B0000506F98 /* CurrentNetwork.swift in Sources */,
 				3A3D3DE4221E9B0000506F98 /* Contact.swift in Sources */,
 				3A3D3DE5221E9B0000506F98 /* ModalViewDelegate.swift in Sources */,
+				3A0CD5F0223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D3DE6221E9B0000506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				3A3D40402223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3DE7221E9B0000506F98 /* BiometricsService.swift in Sources */,
@@ -3636,6 +3650,7 @@
 				3A3D3F04221ECD5500506F98 /* CurrentNetwork.swift in Sources */,
 				3A3D3F05221ECD5500506F98 /* Contact.swift in Sources */,
 				3A3D3F06221ECD5500506F98 /* ModalViewDelegate.swift in Sources */,
+				3A0CD5F1223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D3F07221ECD5500506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				3A3D40412223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3F08221ECD5500506F98 /* BiometricsService.swift in Sources */,
@@ -3828,6 +3843,7 @@
 				3A3D3DBB221DD1D100506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				E2C1105A21E507260012A978 /* BiometricsService.swift in Sources */,
 				3A3D3DCF221E0AFA00506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
+				3A0CD5EF223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D403F2223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3DD1221E0B3F00506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */,
 				E2A8DAFD21F1F6A00031AC58 /* Wallet.swift in Sources */,

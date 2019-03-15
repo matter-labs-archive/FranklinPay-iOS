@@ -30,7 +30,7 @@ class NetworksCell: UITableViewCell {
 
     func configure(network: TableNetwork) {
         self.networkLabel.text = network.network.name
-        var networkStr = network.network.endpoint ?? "Unknown endpoint"
+        var networkStr = network.network.endpoint.absoluteString ?? "Unknown endpoint"
         let httpsPrefixString = "https://"
         let httpPrefixString = "http://"
         if networkStr.hasPrefix(httpsPrefixString) {

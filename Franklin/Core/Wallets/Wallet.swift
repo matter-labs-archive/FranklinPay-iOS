@@ -57,7 +57,7 @@ public class Wallet: IWallet {
             web3.addKeystoreManager(keystoreManager)
             return web3
         }
-        set (web3) {
+        set {
             let keystoreManager = self.keystoreManager
             web3Instance?.addKeystoreManager(keystoreManager)
         }

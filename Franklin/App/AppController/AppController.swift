@@ -349,10 +349,13 @@ public class AppController {
     public func addEther(for wallet: Wallet) throws {
         let ether = ERC20Token(ether: true)
         let networks = networksService.getAllNetworks()
-        for network in networks {
+        for network in networks where network != XDaiNetwork() {
             do {
-                try wallet.add(token: ether,
-                               network: network)
+                if let balance = try? wallet.getETHbalance(web3instance: Web3.new(network.endpoint)) {
+                    print(balance)
+                    try wallet.add(token: ether,
+                                   network: network)
+                }
             } catch let error {
                 throw error
             }

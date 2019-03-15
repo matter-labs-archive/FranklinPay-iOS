@@ -16,7 +16,7 @@ protocol INetworksService {
     func getSelectedNetwork() throws -> Web3Network
     func getAllNetworks() -> [Web3Network]
     func getHighestID() -> Int64
-    func isNetworkExists(network: Web3Network) -> Bool
+    func isNetworkExistsInWallet(network: Web3Network) -> Bool
 }
 
 public class NetworksService: INetworksService {
@@ -45,19 +45,20 @@ public class NetworksService: INetworksService {
         guard let name = networkFromUD["name"] as? String else {
             throw Errors.CommonErrors.wrongType
         }
-        guard let endpoint = networkFromUD["endpoint"] as? String else {
+        guard let endpointString = networkFromUD["endpoint"] as? String else {
             throw Errors.CommonErrors.wrongType
         }
-        let network = Web3Network(id: id, name: name, endpoint: endpoint)
+        guard let endpointURL = URL(string: endpointString) else {
+            throw Errors.CommonErrors.wrongType
+        }
+        let network = Web3Network(id: id, name: name, endpoint: endpointURL)
         return network
     }
     
-    public func isNetworkExists(network: Web3Network) -> Bool {
+    public func isNetworkExistsInWallet(network: Web3Network) -> Bool {
         let networks = self.getAllNetworks()
-        for net in networks {
-            if net.endpoint == network.endpoint {
-                return true
-            }
+        for net in networks where net.endpoint == network.endpoint {
+            return true
         }
         return false
     }
@@ -70,10 +71,8 @@ public class NetworksService: INetworksService {
                 return try Web3Network(crModel: $0)
             }
             var id: Int64 = 100
-            for net in nets {
-                if net.id > id {
-                    id = Int64(net.id)
-                }
+            for net in nets where net.id > id {
+                id = Int64(net.id)
             }
             return id
         } catch {

@@ -12,7 +12,7 @@ class XDaiNetwork: Web3Network {
     init() {
         super.init(id: 100,
                    name: "xDai",
-                   endpoint: "https://dai.poa.network/",
+                   endpoint: URL(string: "https://dai.poa.network/")!,
                    isCustom: false)
     }
 }

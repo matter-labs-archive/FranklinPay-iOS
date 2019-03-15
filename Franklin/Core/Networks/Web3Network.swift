@@ -18,7 +18,7 @@ protocol IWeb3Network {
 public class Web3Network: IWeb3Network {
     public let id: Int64
     public let name: String
-    public var endpoint: String
+    public var endpoint: URL
     public let isCustom: Bool
     
     private let userDefaults = UserDefaultKeys()
@@ -47,7 +47,7 @@ public class Web3Network: IWeb3Network {
     
     public init(id: Int64,
                 name: String,
-                endpoint: String,
+                endpoint: URL,
                 isCustom: Bool = true) {
         self.id = id
         self.name = name
@@ -60,13 +60,13 @@ public class Web3Network: IWeb3Network {
         self.name = network.name
         switch network {
         case .Mainnet:
-            self.endpoint = Web3.InfuraMainnetWeb3().provider.url.absoluteString
+            self.endpoint = Web3.InfuraMainnetWeb3().provider.url
         case .Rinkeby:
-            self.endpoint = Web3.InfuraRinkebyWeb3().provider.url.absoluteString
+            self.endpoint = Web3.InfuraRinkebyWeb3().provider.url
         case .Ropsten:
-            self.endpoint = Web3.InfuraRopstenWeb3().provider.url.absoluteString
+            self.endpoint = Web3.InfuraRopstenWeb3().provider.url
         default:
-            self.endpoint =  Web3.InfuraMainnetWeb3().provider.url.absoluteString
+            self.endpoint =  Web3.InfuraMainnetWeb3().provider.url
         }
         self.isCustom = false
     }
@@ -108,7 +108,7 @@ public class Web3Network: IWeb3Network {
         group.enter()
         var error: Error?
         let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
-        requestNetwork.predicate = NSPredicate(format: "endpoint = %@", self.endpoint)
+        requestNetwork.predicate = NSPredicate(format: "endpoint = %@", self.endpoint.absoluteString)
         do {
             let results = try ContainerCD.context.fetch(requestNetwork)
             guard let network = results.first else {
@@ -130,7 +130,7 @@ public class Web3Network: IWeb3Network {
     }
     
     public func getWeb() throws -> web3 {
-        guard let url = URL(string: endpoint), let infura = Web3HttpProvider(url) else {
+        guard let infura = Web3HttpProvider(endpoint) else {
             throw Errors.NetworkErrors.wrongURL
         }
         let w3: web3 = web3(provider: infura)

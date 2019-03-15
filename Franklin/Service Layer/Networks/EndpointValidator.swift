@@ -29,15 +29,12 @@ extension EndpointError: LocalizedError {
 
 public class EndpointValidator {
     
-    func checkEnpointAndReturnError(endpoint: String) -> EndpointError? {
+    func checkEnpointForSemanticAndReturnError(endpoint: String) -> EndpointError? {
         if endpoint.hasPrefix("/") {
             return EndpointError.wrongPrefix("/")
         }
         if endpoint.hasSuffix("//") {
             return EndpointError.wrongSuffix("//")
-        }
-        if !(endpoint.hasSuffix("https://") || endpoint.hasSuffix("http://")) && endpoint.contains(":") {
-            return EndpointError.wrongChar(":")
         }
         if endpoint.contains(",") {
             return EndpointError.wrongChar(",")
@@ -94,5 +91,9 @@ public class EndpointValidator {
             return EndpointError.wrongChar("<")
         }
         return nil
+    }
+    
+    func checkNetworkExistense(network: Web3Network) {
+        
     }
 }

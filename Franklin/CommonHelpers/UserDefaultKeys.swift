@@ -71,7 +71,7 @@ public struct UserDefaultKeys {
         return networkFromUD
     }
     public func setCurrentNetwork(_ network: Web3Network) {
-        let network = ["id": network.id, "name": network.name, "endpoint": network.endpoint ?? ""] as [String : Any]
+        let network = ["id": network.id, "name": network.name, "endpoint": network.endpoint.absoluteString] as [String : Any]
         UserDefaults.standard.set(network, forKey: "CurrentNetwork")
         UserDefaults.standard.synchronize()
     }

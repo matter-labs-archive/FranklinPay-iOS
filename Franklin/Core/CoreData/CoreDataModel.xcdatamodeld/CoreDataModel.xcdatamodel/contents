@@ -39,7 +39,7 @@
         <relationship name="wallet" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WalletModel" inverseName="transactions" inverseEntity="WalletModel" syncable="YES"/>
     </entity>
     <entity name="NetworkModel" representedClassName="NetworkModel" syncable="YES" codeGenerationType="class">
-        <attribute name="endpoint" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="endpoint" optional="YES" attributeType="URI" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="isCustom" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>

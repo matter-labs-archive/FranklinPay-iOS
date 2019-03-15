@@ -28,6 +28,7 @@ class AddNetworkViewController: BasicViewController {
     internal let appController = AppController()
     internal let alerts = Alerts()
     internal let endpointValidator = EndpointValidator()
+    internal let networkCreator = NetworkCreator()
     
     // MARK: - Enums
     
@@ -124,37 +125,33 @@ class AddNetworkViewController: BasicViewController {
     // MARK: - Actions
     
     private func addNetwork(endpoint: String, name: String) {
-        if let error = endpointValidator.checkEnpointAndReturnError(endpoint: endpoint) {
+        if let error = endpointValidator.checkEnpointForSemanticAndReturnError(endpoint: endpoint) {
             alerts.showErrorAlert(for: self, error: error, completion: nil)
         } else {
-            var url = endpoint
-            if !endpoint.hasPrefix("https://") && !endpoint.hasPrefix("http://") {
-                url = "https://" + endpoint
+            guard let url = try? networkCreator.formEndpointURLString(fromString: endpoint) else {
+                alerts.showErrorAlert(for: self, error: "Wrong URL string", completion: nil)
+                return
             }
-            if !endpoint.hasSuffix("/") {
-                url += "/"
-            }
-            
             let id = networksService.getHighestID() + 1
             let network = Web3Network(id: id,
                                       name: name,
                                       endpoint: url)
-            guard let currentWallet = CurrentWallet.currentWallet else {
-                alerts.showErrorAlert(for: self, error: "No selected wallet", completion: nil)
-                return
-            }
-            let networkExists = networksService.isNetworkExists(network: network)
+            let networkExists = networksService.isNetworkExistsInWallet(network: network)
             if networkExists {
                 alerts.showErrorAlert(for: self, error: "Network exists", completion: nil)
                 return
             }
+            if !networkCreator.isNetworkPossible(network: network) {
+                alerts.showErrorAlert(for: self, error: "Wrong URL", completion: nil)
+                return
+            }
             do {
                 try network.save()
-                try appController.addEther(for: currentWallet, network: network)
                 CurrentNetwork.currentNetwork = network
+                try networkCreator.addBaseTokenIfExists(forNetwork: network)
                 goToApp()
-            } catch let error {
-                alerts.showErrorAlert(for: self, error: "Error: \(error)", completion: nil)
+            } catch {
+                alerts.showErrorAlert(for: self, error: "Can't create network. Error: \(error)", completion: nil)
                 return
             }
         }
