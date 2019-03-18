@@ -643,6 +643,9 @@
 		3AC3BD9C2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
 		3AC3BD9D2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
 		3AC3BD9E2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
+		3AE49490223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
+		3AE49491223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
+		3AE49492223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
 		694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
 		914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
@@ -946,6 +949,7 @@
 		3AC3BD93223124C500656EC7 /* TableNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableNetwork.swift; sourceTree = "<group>"; };
 		3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworks.swift; sourceTree = "<group>"; };
 		3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddNetworkVC+TextFieldDelegate.swift"; sourceTree = "<group>"; };
+		3AE4948F223FB94900AB2972 /* QRiteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRiteractor.swift; sourceTree = "<group>"; };
 		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.release.xcconfig"; sourceTree = "<group>"; };
@@ -1789,6 +1793,7 @@
 				E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */,
 				E2C59073215258B800FF53D3 /* TableTokens.swift */,
 				3A3D3D96221DB8F500506F98 /* WalletSections.swift */,
+				3AE4948F223FB94900AB2972 /* QRiteractor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3552,6 +3557,7 @@
 				3A3D3E46221E9B0000506F98 /* BasicButtons.swift in Sources */,
 				3A3D3E47221E9B0000506F98 /* SettingsCell.swift in Sources */,
 				3AC3BD99223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49491223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				3A3D3E48221E9B0000506F98 /* SendMoneyController.swift in Sources */,
 				3A3D3E49221E9B0000506F98 /* TableHeader.swift in Sources */,
 				3A3D3E4A221E9B0000506F98 /* BasicTableView.swift in Sources */,
@@ -3745,6 +3751,7 @@
 				3A3D3F67221ECD5500506F98 /* BasicButtons.swift in Sources */,
 				3A3D3F68221ECD5500506F98 /* SettingsCell.swift in Sources */,
 				3AC3BD9A223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49492223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				3A3D3F69221ECD5500506F98 /* SendMoneyController.swift in Sources */,
 				3A3D3F6A221ECD5500506F98 /* TableHeader.swift in Sources */,
 				3A3D3F6B221ECD5500506F98 /* BasicTableView.swift in Sources */,
@@ -3938,6 +3945,7 @@
 				E2C110C821E8A86C0012A978 /* BasicButtons.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
 				3AC3BD98223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49490223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				E2F686A821F9DEF600BD3D14 /* SendMoneyController.swift in Sources */,
 				E2C110CE21E8A8D90012A978 /* TableHeader.swift in Sources */,
 				E234C7A621EBF62900F175AF /* BasicTableView.swift in Sources */,
