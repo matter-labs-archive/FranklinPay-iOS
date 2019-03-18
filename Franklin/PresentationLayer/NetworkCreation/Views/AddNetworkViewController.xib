@@ -26,6 +26,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddNetworkViewController" customModule="Franklin" customModuleProvider="target">
             <connections>
+                <outlet property="animationImageView" destination="5ob-og-2cZ" id="Zeh-rp-XTd"/>
                 <outlet property="contentView" destination="V2N-78-rvh" id="FK9-oh-bFI"/>
                 <outlet property="endpointLabel" destination="MSt-64-pKv" id="A9U-9L-fSr"/>
                 <outlet property="endpointTextField" destination="7aQ-W2-OKg" id="5Wb-af-3m6"/>
@@ -93,6 +94,9 @@
                                 <constraint firstItem="MSt-64-pKv" firstAttribute="width" secondItem="7aQ-W2-OKg" secondAttribute="width" id="80G-2T-NaB"/>
                             </constraints>
                         </stackView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5ob-og-2cZ">
+                            <rect key="frame" x="20" y="483.5" width="335" height="133.5"/>
+                        </imageView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K8R-Is-G54" customClass="BasicBlueButton" customModule="Franklin" customModuleProvider="target">
                             <rect key="frame" x="20" y="570.5" width="335" height="46.5"/>
                             <color key="backgroundColor" red="0.27450980390000002" green="0.49803921569999998" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -117,8 +121,11 @@
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstItem="3ZC-WT-NcV" firstAttribute="height" secondItem="V2N-78-rvh" secondAttribute="height" multiplier="0.06" id="2YK-sv-Bka"/>
+                        <constraint firstItem="5ob-og-2cZ" firstAttribute="trailing" secondItem="K8R-Is-G54" secondAttribute="trailing" id="2wX-Md-EcZ"/>
+                        <constraint firstItem="5ob-og-2cZ" firstAttribute="leading" secondItem="K8R-Is-G54" secondAttribute="leading" id="3JR-gE-jf2"/>
                         <constraint firstItem="YaH-jL-izz" firstAttribute="height" secondItem="V2N-78-rvh" secondAttribute="height" multiplier="0.145" id="4oj-UZ-G9q"/>
                         <constraint firstItem="YaH-jL-izz" firstAttribute="top" secondItem="GMB-kq-lEv" secondAttribute="bottom" id="C86-kq-sqT"/>
+                        <constraint firstItem="5ob-og-2cZ" firstAttribute="bottom" secondItem="K8R-Is-G54" secondAttribute="bottom" id="CLG-JH-qfR"/>
                         <constraint firstItem="YaH-jL-izz" firstAttribute="trailing" secondItem="1og-sN-Dtf" secondAttribute="trailing" id="De8-XV-KZK"/>
                         <constraint firstItem="K8R-Is-G54" firstAttribute="centerX" secondItem="V2N-78-rvh" secondAttribute="centerX" id="Dt6-Iy-Dn3"/>
                         <constraint firstItem="GMB-kq-lEv" firstAttribute="top" secondItem="3ZC-WT-NcV" secondAttribute="bottom" id="E9J-wv-ctn"/>
@@ -135,6 +142,7 @@
                         <constraint firstItem="GMB-kq-lEv" firstAttribute="height" secondItem="V2N-78-rvh" secondAttribute="height" multiplier="0.04" id="ira-FZ-chv"/>
                         <constraint firstItem="YaH-jL-izz" firstAttribute="width" secondItem="K8R-Is-G54" secondAttribute="width" id="jh8-u5-L4R"/>
                         <constraint firstItem="7aQ-W2-OKg" firstAttribute="height" secondItem="yWz-Ww-F8K" secondAttribute="height" id="qFy-kr-i6u"/>
+                        <constraint firstItem="5ob-og-2cZ" firstAttribute="width" secondItem="K8R-Is-G54" secondAttribute="width" id="wju-Id-VOa"/>
                         <constraint firstItem="GMB-kq-lEv" firstAttribute="width" secondItem="V2N-78-rvh" secondAttribute="width" id="x5f-Wc-V5c"/>
                         <constraint firstItem="GMB-kq-lEv" firstAttribute="centerX" secondItem="V2N-78-rvh" secondAttribute="centerX" id="zc4-9P-dOl"/>
                     </constraints>
@@ -143,6 +151,7 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="K8R-Is-G54" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.07" id="7Uu-dz-zq6"/>
+                <constraint firstItem="5ob-og-2cZ" firstAttribute="height" secondItem="i5M-Pr-FkT" secondAttribute="height" multiplier="0.2" id="BRs-I7-ZBF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="V2N-78-rvh" secondAttribute="trailing" id="Zxs-tm-WwZ"/>
                 <constraint firstItem="V2N-78-rvh" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="dw6-Sq-3EK"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="leading" secondItem="V2N-78-rvh" secondAttribute="leading" id="h2j-nB-h5G"/>

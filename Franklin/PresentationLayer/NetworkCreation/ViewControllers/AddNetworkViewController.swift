@@ -20,6 +20,7 @@ class AddNetworkViewController: BasicViewController {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var endpointLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var animationImageView: UIImageView!
     
     // MARK: - Internal lets
     
@@ -80,6 +81,13 @@ class AddNetworkViewController: BasicViewController {
     func mainSetup() {
         hideKeyboardWhenTappedAround()
         
+        animationImageView.setGifImage(UIImage(gifName: "loading.gif"))
+        animationImageView.loopCount = -1
+        animationImageView.frame = CGRect(x: 0, y: 0, width: 0.8*UIScreen.main.bounds.width, height: 257)
+        animationImageView.contentMode = .center
+        animationImageView.alpha = 0
+        animationImageView.isUserInteractionEnabled = false
+        
         enterButton.isEnabled = false
         updateEnterButtonAlpha()
         
@@ -122,14 +130,43 @@ class AddNetworkViewController: BasicViewController {
         enterButton.isEnabled = everyFieldIsOK
     }
     
+    // MARK: - Animation
+    
+    func animation() {
+        //setNavigation(hidden: true)
+        animateIndicator()
+    }
+    
+    func cancelAnimation() {
+        DispatchQueue.main.async { [unowned self] in
+            self.enterButton.isUserInteractionEnabled = true
+            UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+                //self.setNavigation(hidden: false)
+                self.enterButton.alpha = 1
+                self.animationImageView.alpha = 0
+            }
+        }
+    }
+    
+    func animateIndicator() {
+        UIView.animate(withDuration: Constants.Main.animationDuration) {
+            self.enterButton.alpha = 0
+            self.animationImageView.alpha = 1
+        }
+    }
+    
     // MARK: - Actions
     
     private func addNetwork(endpoint: String, name: String) {
         if let error = endpointValidator.checkEnpointForSemanticAndReturnError(endpoint: endpoint) {
-            alerts.showErrorAlert(for: self, error: error, completion: nil)
+            alerts.showErrorAlert(for: self, error: error) { [unowned self] in
+                self.cancelAnimation()
+            }
         } else {
             guard let url = try? networkCreator.formEndpointURLString(fromString: endpoint) else {
-                alerts.showErrorAlert(for: self, error: "Wrong URL string", completion: nil)
+                alerts.showErrorAlert(for: self, error: "Wrong URL string") { [unowned self] in
+                    self.cancelAnimation()
+                }
                 return
             }
             let id = networksService.getHighestID() + 1
@@ -138,20 +175,27 @@ class AddNetworkViewController: BasicViewController {
                                       endpoint: url)
             let networkExists = networksService.isNetworkExistsInWallet(network: network)
             if networkExists {
-                alerts.showErrorAlert(for: self, error: "Network exists", completion: nil)
+                alerts.showErrorAlert(for: self, error: "Network exists") { [unowned self] in
+                    self.cancelAnimation()
+                }
                 return
             }
             if !networkCreator.isNetworkPossible(network: network) {
-                alerts.showErrorAlert(for: self, error: "Wrong URL", completion: nil)
+                alerts.showErrorAlert(for: self, error: "Wrong URL") { [unowned self] in
+                    self.cancelAnimation()
+                }
                 return
             }
             do {
                 try network.save()
                 CurrentNetwork.currentNetwork = network
                 try networkCreator.addBaseTokenIfExists(forNetwork: network)
+                cancelAnimation()
                 goToApp()
             } catch {
-                alerts.showErrorAlert(for: self, error: "Can't create network. Error: \(error)", completion: nil)
+                alerts.showErrorAlert(for: self, error: "Can't create network. Error: \(error)") { [unowned self] in
+                    self.cancelAnimation()
+                }
                 return
             }
         }
@@ -187,6 +231,9 @@ class AddNetworkViewController: BasicViewController {
         guard let name = nameTextField.text else {
             return
         }
-        addNetwork(endpoint: endpoint, name: name)
+        animation()
+        DispatchQueue.global().async { [unowned self] in
+            self.addNetwork(endpoint: endpoint, name: name)
+        }
     }
 }
