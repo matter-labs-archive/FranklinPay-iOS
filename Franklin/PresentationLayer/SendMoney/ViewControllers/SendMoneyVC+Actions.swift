@@ -27,10 +27,7 @@ extension SendMoneyController {
                                                        gasLimit: .manual(BigUInt(120000)),
                                                        gasPrice: .manual(BigUInt(15000000000)))
                 let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
+                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -52,10 +49,7 @@ extension SendMoneyController {
                                                            gasLimit: .manual(BigUInt(120000)),
                                                            gasPrice: .manual(BigUInt(1100000000)))
                 let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
+                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -80,10 +74,7 @@ extension SendMoneyController {
                                                      gasLimit: .manual(BigUInt(120000)),
                                                      gasPrice: .manual(BigUInt(15000000000)))
                 let password = try wallet.getPassword()
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
+                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -104,10 +95,7 @@ extension SendMoneyController {
                                                       value: amount,
                                                       gasLimit: .manual(BigUInt(120000)),
                                                       gasPrice: .manual(BigUInt(1100000000)))
-                let result = try wallet.sendTx(transaction: tx, options: nil, password: password)
-                print(result.transaction.gasLimit)
-                print(result.transaction.gasPrice)
-                print(result.transaction.hash?.toHexString())
+                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in

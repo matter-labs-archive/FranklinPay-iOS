@@ -171,7 +171,7 @@ class WalletImportingViewController: BasicViewController {
                     wallet = try self.walletCreating.importWalletWithPrivateKey(key: text)
                 }
                 self.finishSavingWallet(wallet)
-            } catch let error {
+            } catch {
                 self.alerts.showErrorAlert(for: self, error: "Wrong input") { [unowned self] in
                     self.cancelAnimation()
                 }

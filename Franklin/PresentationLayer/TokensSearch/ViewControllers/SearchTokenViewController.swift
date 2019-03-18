@@ -125,7 +125,6 @@ class SearchTokenViewController: BasicViewController {
         super.viewWillAppear(animated)
         makeConfirmButton(enabled: false)
         makeHelpLabel(enabled: true)
-        
     }
     
     // MARK: - Main setup

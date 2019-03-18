@@ -214,10 +214,8 @@ extension Wallet: IWalletTokensStorage {
     public func isTokenExists(token: ERC20Token, network: Web3Network) throws -> Bool {
         do {
             let tokens = try self.getAllTokens(network: network)
-            for tok in tokens {
-                if tok.address == token.address {
-                    return true
-                }
+            for tok in tokens where tok.address == token.address {
+                return true
             }
             return false
         } catch let error {

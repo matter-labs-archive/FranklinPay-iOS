@@ -55,8 +55,7 @@ class TokenCell: UITableViewCell {
             options: [
                 .processor(processor),
                 .cacheOriginalImage
-            ]) {
-            result in
+            ]) { result in
             switch result {
             case .success(let value):
                 print("Task done for: \(value.source.url?.absoluteString ?? "")")

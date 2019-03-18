@@ -58,10 +58,8 @@ extension WalletViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count = 0
-        for token in tokensArray {
-            if token.isCard {
-                count += 1
-            }
+        for token in tokensArray where token.isCard {
+            count += 1
         }
         switch section {
         case WalletSections.card.rawValue:
