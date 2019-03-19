@@ -25,12 +25,12 @@ extension Wallet: IWalletTokensStorage {
     func getSelectedToken(network: Web3Network) throws -> ERC20Token {
         do {
             let requestTokens: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-            requestTokens.predicate = NSPredicate(format:
-                "networkId == %@ && isAdded == %@ && isSelected == %@ && walletAddress == %@",
-                                                  NSNumber(value: network.id),
-                                                  NSNumber(value: true),
-                                                  NSNumber(value: true),
-                                                  NSString(string: self.address)
+            requestTokens.predicate = NSPredicate(
+                format: "networkId == %@ && isAdded == %@ && isSelected == %@ && walletAddress == %@",
+                NSNumber(value: network.id),
+                NSNumber(value: true),
+                NSNumber(value: true),
+                NSString(string: self.address)
             )
             let results = try ContainerCD.context.fetch(requestTokens)
             guard let result = results.first else {
@@ -47,11 +47,11 @@ extension Wallet: IWalletTokensStorage {
         group.enter()
         var error: Error?
         let requestToken: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-        requestToken.predicate = NSPredicate(format:
-            "networkId == %@ && isAdded == %@ && walletAddress == %@",
-                                             NSNumber(value: network.id),
-                                             NSNumber(value: true),
-                                             NSString(string: self.address)
+        requestToken.predicate = NSPredicate(
+            format: "networkId == %@ && isAdded == %@ && walletAddress == %@",
+            NSNumber(value: network.id),
+            NSNumber(value: true),
+            NSString(string: self.address)
         )
         do {
             let results = try ContainerCD.context.fetch(requestToken)
@@ -76,12 +76,12 @@ extension Wallet: IWalletTokensStorage {
         group.enter()
         var error: Error?
         let requestToken: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-        requestToken.predicate = NSPredicate(format:
-            "networkId == %@ && isAdded == %@ && walletAddress == %@",
-                                             NSNumber(value: network.id),
-                                             NSNumber(value: true),
-                                             NSString(string: self.address),
-                                             NSString(string: token.address)
+        requestToken.predicate = NSPredicate(
+            format: "networkId == %@ && isAdded == %@ && walletAddress == %@",
+            NSNumber(value: network.id),
+            NSNumber(value: true),
+            NSString(string: self.address),
+            NSString(string: token.address)
         )
         do {
             let results = try ContainerCD.context.fetch(requestToken)
@@ -105,12 +105,12 @@ extension Wallet: IWalletTokensStorage {
         group.enter()
         var error: Error?
         let requestToken: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-        requestToken.predicate = NSPredicate(format:
-            "networkId == %@ && isAdded == %@ && walletAddress == %@",
-                                             NSNumber(value: network.id),
-                                             NSNumber(value: true),
-                                             NSString(string: self.address),
-                                             NSString(string: token.address)
+        requestToken.predicate = NSPredicate(
+            format: "networkId == %@ && isAdded == %@ && walletAddress == %@",
+            NSNumber(value: network.id),
+            NSNumber(value: true),
+            NSString(string: self.address),
+            NSString(string: token.address)
         )
         do {
             let results = try ContainerCD.context.fetch(requestToken)
@@ -166,12 +166,12 @@ extension Wallet: IWalletTokensStorage {
         group.enter()
         var error: Error?
         let requestToken: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-        requestToken.predicate = NSPredicate(format:
-            "networkId == %@ && isAdded == %@ && walletAddress == %@ && address == %@",
-                                             NSNumber(value: network.id),
-                                             NSNumber(value: true),
-                                             NSString(string: self.address),
-                                             NSString(string: token.address)
+        requestToken.predicate = NSPredicate(
+            format: "networkId == %@ && isAdded == %@ && walletAddress == %@ && address == %@",
+            NSNumber(value: network.id),
+            NSNumber(value: true),
+            NSString(string: self.address),
+            NSString(string: token.address)
         )
         do {
             let results = try ContainerCD.context.fetch(requestToken)
@@ -196,11 +196,11 @@ extension Wallet: IWalletTokensStorage {
     public func getAllTokens(network: Web3Network) throws -> [ERC20Token] {
         do {
             let requestTokens: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-            requestTokens.predicate = NSPredicate(format:
-                "networkId == %@ && isAdded == %@ && walletAddress == %@",
-                                                  NSNumber(value: network.id),
-                                                  NSNumber(value: true),
-                                                  NSString(string: self.address)
+            requestTokens.predicate = NSPredicate(
+                format: "networkId == %@ && isAdded == %@ && walletAddress == %@",
+                NSNumber(value: network.id),
+                NSNumber(value: true),
+                NSString(string: self.address)
             )
             let results = try ContainerCD.context.fetch(requestTokens)
             return try results.map {
@@ -214,12 +214,12 @@ extension Wallet: IWalletTokensStorage {
     public func isTokenExists(token: ERC20Token, network: Web3Network) throws -> Bool {
         do {
             let requestTokens: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
-            requestTokens.predicate = NSPredicate(format:
-                "networkId == %@ && isAdded == %@ && walletAddress == %@ && address == %@",
-                                                  NSNumber(value: network.id),
-                                                  NSNumber(value: true),
-                                                  NSString(string: self.address),
-                                                  NSString(string: token.address)
+            requestTokens.predicate = NSPredicate(
+                format: "networkId == %@ && isAdded == %@ && walletAddress == %@ && address == %@",
+                NSNumber(value: network.id),
+                NSNumber(value: true),
+                NSString(string: self.address),
+                NSString(string: token.address)
             )
             let results = try ContainerCD.context.fetch(requestTokens)
             return !results.isEmpty

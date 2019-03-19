@@ -56,11 +56,15 @@ public class NetworksService: INetworksService {
     }
     
     public func isNetworkExistsInWallet(network: Web3Network) -> Bool {
-        let networks = self.getAllNetworks()
-        for net in networks where net.endpoint == network.endpoint {
-            return true
+        let requestNetwork: NSFetchRequest<NetworkModel> = NetworkModel.fetchRequest()
+        requestNetwork.predicate = NSPredicate(format: "endpoint == %@",
+                                               NSURL(string: network.endpoint.absoluteString)!)
+        do {
+            let results = try ContainerCD.context.fetch(requestNetwork)
+            return !results.isEmpty
+        } catch {
+            return false
         }
-        return false
     }
     
     public func getHighestID() -> Int64 {
