@@ -213,11 +213,16 @@ extension Wallet: IWalletTokensStorage {
     
     public func isTokenExists(token: ERC20Token, network: Web3Network) throws -> Bool {
         do {
-            let tokens = try self.getAllTokens(network: network)
-            for tok in tokens where tok.address == token.address {
-                return true
-            }
-            return false
+            let requestTokens: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
+            requestTokens.predicate = NSPredicate(format:
+                "networkId == %@ && isAdded == %@ && walletAddress == %@ && address == %@",
+                                                  NSNumber(value: network.id),
+                                                  NSNumber(value: true),
+                                                  NSString(string: self.address),
+                                                  NSString(string: token.address)
+            )
+            let results = try ContainerCD.context.fetch(requestTokens)
+            return !results.isEmpty
         } catch let error {
             throw error
         }
