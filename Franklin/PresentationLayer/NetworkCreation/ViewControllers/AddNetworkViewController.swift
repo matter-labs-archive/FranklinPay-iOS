@@ -158,12 +158,13 @@ class AddNetworkViewController: BasicViewController {
     // MARK: - Actions
     
     private func addNetwork(endpoint: String, name: String) {
-        if let error = endpointValidator.checkEnpointForSemanticAndReturnError(endpoint: endpoint) {
+        let lowercasedURL = endpoint.lowercased()
+        if let error = endpointValidator.checkEnpointForSemanticAndReturnError(endpoint: lowercasedURL) {
             alerts.showErrorAlert(for: self, error: error) { [unowned self] in
                 self.cancelAnimation()
             }
         } else {
-            guard let url = try? networkCreator.formEndpointURLString(fromString: endpoint) else {
+            guard let url = try? networkCreator.formEndpointURLString(fromString: lowercasedURL) else {
                 alerts.showErrorAlert(for: self, error: "Wrong URL string") { [unowned self] in
                     self.cancelAnimation()
                 }

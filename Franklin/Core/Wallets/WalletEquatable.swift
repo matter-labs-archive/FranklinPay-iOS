@@ -10,6 +10,6 @@ import Foundation
 
 extension Wallet: Equatable {
     public static func ==(lhs: Wallet, rhs: Wallet) -> Bool {
-        return lhs.address == rhs.address
+        return lhs.address.lowercased() == rhs.address.lowercased()
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 
 extension ETHTransaction: Equatable {
     public static func ==(lhs: ETHTransaction, rhs: ETHTransaction) -> Bool {
-        return lhs.transactionHash == rhs.transactionHash
+        return lhs.transactionHash.lowercased() == rhs.transactionHash.lowercased()
     }
 }
