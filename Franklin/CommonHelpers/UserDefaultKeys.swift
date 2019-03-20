@@ -71,7 +71,8 @@ public struct UserDefaultKeys {
         return networkFromUD
     }
     public func setCurrentNetwork(_ network: Web3Network) {
-        UserDefaults.standard.set(["id": network.id, "name": network.name], forKey: "CurrentNetwork")
+        let network = ["id": network.id, "name": network.name, "endpoint": network.endpoint.absoluteString] as [String : Any]
+        UserDefaults.standard.set(network, forKey: "CurrentNetwork")
         UserDefaults.standard.synchronize()
     }
     
@@ -80,6 +81,14 @@ public struct UserDefaultKeys {
     }
     public func setTokensDownloaded() {
         UserDefaults.standard.set(true, forKey: "TokensDownloaded")
+        UserDefaults.standard.synchronize()
+    }
+    
+    public func areDefaultNetworksAdded() -> Bool {
+        return UserDefaults.standard.bool(forKey: "NetworksAdded")
+    }
+    public func setDefaultNetworksAdded() {
+        UserDefaults.standard.set(true, forKey: "NetworksAdded")
         UserDefaults.standard.synchronize()
     }
 }

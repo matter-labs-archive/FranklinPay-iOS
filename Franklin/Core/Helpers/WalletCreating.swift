@@ -13,6 +13,7 @@ public class WalletCreating {
     internal let walletsService = WalletsService()
     internal let userDefaults = UserDefaultKeys()
     internal let appController = AppController()
+    internal let tokensService = TokensService()
     
     internal let name = Constants.Wallet.newName
     internal let password = Constants.Wallet.newPassword
@@ -61,11 +62,30 @@ public class WalletCreating {
     }
     
     func prepareWallet(_ wallet: Wallet) throws {
+        CurrentWallet.currentWallet = wallet
+        CurrentNetwork.currentNetwork = MainnetNetwork()
+        let defaultNetworksAdded = self.userDefaults.areDefaultNetworksAdded()
+        let tokensDownloaded = self.userDefaults.areTokensDownloaded()
         let etherAdded = self.userDefaults.isEtherAdded(for: wallet)
         let franklinAdded = self.userDefaults.isFranklinAdded(for: wallet)
         let daiAdded = self.userDefaults.isDaiAdded(for: wallet)
         let xdaiAdded = self.userDefaults.isXDaiAdded(for: wallet)
         let buffAdded = self.userDefaults.isBuffAdded(for: wallet)
+        if !defaultNetworksAdded {
+            do {
+                try self.appController.addDefaultNetworks()
+            } catch let error {
+                throw error
+            }
+        }
+        if !tokensDownloaded {
+            do {
+                try self.tokensService.downloadAllAvailableTokensIfNeeded()
+                self.userDefaults.setTokensDownloaded()
+            } catch let error {
+                throw error
+            }
+        }
         if !xdaiAdded {
             do {
                 try self.appController.addXDai(for: wallet)

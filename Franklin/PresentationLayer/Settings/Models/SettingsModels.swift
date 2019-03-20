@@ -17,6 +17,12 @@ public struct SettingsModel {
     
     init(_ setting: MainSettings) {
         switch setting {
+        case .privateKey:
+            self.title = "Private key"
+            self.subtitle = "Don't give it to anyone!"
+            self.image = UIImage(named: "backup") ?? UIImage()
+            self.currentState = nil
+            self.notification = false
         case .backup:
             self.title = "Backup now"
             self.subtitle = "Your money is at risk!"

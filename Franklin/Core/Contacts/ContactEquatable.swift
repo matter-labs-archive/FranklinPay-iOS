@@ -10,6 +10,6 @@ import Foundation
 
 extension Contact: Equatable {
     public static func ==(lhs: Contact, rhs: Contact) -> Bool {
-        return lhs.address == rhs.address
+        return lhs.address.lowercased() == rhs.address.lowercased()
     }
 }

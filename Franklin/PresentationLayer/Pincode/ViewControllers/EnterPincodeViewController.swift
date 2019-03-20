@@ -48,7 +48,7 @@ class EnterPincodeViewController: PincodeViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if enterCase != .changePincode {
+        if biometricsNeedToBe() {
             enterWithBiometrics()
         }
     }
@@ -64,7 +64,7 @@ class EnterPincodeViewController: PincodeViewController {
         
         let context = LAContext()
         var error: NSError?
-        if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) || enterCase == .changePincode {
+        if !context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) || !biometricsNeedToBe() {
             disableBiometricsButton(true)
             biometricsButton.isUserInteractionEnabled = false
         }
@@ -101,6 +101,10 @@ class EnterPincodeViewController: PincodeViewController {
     }
     
     // MARK: - Actions
+    
+    func biometricsNeedToBe() -> Bool {
+        return enterCase != .changePincode && enterCase != .privateKey
+    }
     
     override func numberPressedAction(number: String) {
         if status == .enter {
@@ -186,9 +190,16 @@ class EnterPincodeViewController: PincodeViewController {
 //            }
         case .changePincode:
             changePincode()
+        case .privateKey:
+            showPrivateKey()
         default:
             returnToStartTab()
         }
+    }
+    
+    func showPrivateKey() {
+        let vc = PrivateKeyViewController()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
     func changePincode() {

@@ -166,6 +166,7 @@ class WalletViewController: BasicViewController {
                     self.saveTokensBalances(tokens: uTokens)
                     if self.stopUpdatingTable {
                         self.stopUpdatingTable = false
+                        self.refreshControl.endRefreshing()
                         return
                     }
                     self.reloadBalancesInTable(forTokens: uTokens, completion: {
@@ -202,6 +203,7 @@ class WalletViewController: BasicViewController {
                     self.saveTokensBalances(tokens: uTokens)
                     if self.stopUpdatingTable {
                         self.stopUpdatingTable = false
+                        self.refreshControl.endRefreshing()
                         return
                     }
                     self.reloadBalancesInTable(forTokens: uTokens, completion: {
@@ -218,6 +220,7 @@ class WalletViewController: BasicViewController {
             self.saveTokensBalances(tokens: uTokens)
             if self.stopUpdatingTable {
                 self.stopUpdatingTable = false
+                self.refreshControl.endRefreshing()
                 return
             }
             self.reloadBalancesInTable(forTokens: uTokens, completion: {
@@ -243,10 +246,8 @@ class WalletViewController: BasicViewController {
     
     func reloadBalancesInTable(forTokens tokens: [TableToken], completion: @escaping () -> Void) {
         for token in tokens {
-            for tokenInTable in tokensArray {
-                if token.token == tokenInTable.token {
-                    tokenInTable.token.balance = token.token.balance
-                }
+            for tokenInTable in tokensArray where token.token == tokenInTable.token {
+                tokenInTable.token.balance = token.token.balance
             }
         }
         reloadTableView {

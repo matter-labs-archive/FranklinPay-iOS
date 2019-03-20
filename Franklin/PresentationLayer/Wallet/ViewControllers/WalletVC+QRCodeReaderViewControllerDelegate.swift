@@ -13,9 +13,7 @@ extension WalletViewController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
         reader.dismiss(animated: true) { [unowned self] in
-            self.modalViewAppeared()
-            let token = self.tokensArray[0].token
-            self.showSend(token: token, address: result.value)
+            self.acceptQR(value: result.value)
         }
     }
     

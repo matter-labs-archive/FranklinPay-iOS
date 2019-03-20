@@ -134,7 +134,6 @@ class AddWalletViewController: BasicViewController {
     func finishSavingWallet(_ wallet: Wallet) {
         do {
             try walletCreating.prepareWallet(wallet)
-            CurrentWallet.currentWallet = wallet
             walletCreated = true
             if animationTimer == nil {
                 goToApp()

@@ -25,6 +25,7 @@ class SettingsViewController: BasicViewController {
     internal var walletsService = WalletsService()
     internal var settingsInteractor = SettingInteractor()
     internal let alerts = Alerts()
+    internal let userKeys = UserDefaultKeys()
     
     // MARK: - Lifesycle
     

@@ -29,6 +29,7 @@ class WalletImportingViewController: BasicViewController {
     
     internal var activeView: UITextView?
 
+    internal let walletsService = WalletsService()
     internal let navigationItems = NavigationItems()
     internal let appController = AppController()
     internal let walletCreating = WalletCreating()
@@ -170,7 +171,7 @@ class WalletImportingViewController: BasicViewController {
                     wallet = try self.walletCreating.importWalletWithPrivateKey(key: text)
                 }
                 self.finishSavingWallet(wallet)
-            } catch let error {
+            } catch {
                 self.alerts.showErrorAlert(for: self, error: "Wrong input") { [unowned self] in
                     self.cancelAnimation()
                 }
@@ -194,7 +195,6 @@ class WalletImportingViewController: BasicViewController {
     func finishSavingWallet(_ wallet: Wallet) {
         do {
             try walletCreating.prepareWallet(wallet)
-            CurrentWallet.currentWallet = wallet
             walletCreated = true
             if animationTimer == nil {
                 goToApp()
@@ -206,12 +206,19 @@ class WalletImportingViewController: BasicViewController {
     }
     
     @objc func goToApp() {
+        guard let walletsCount = try? walletsService.getAllWallets().count else {
+            alerts.showErrorAlert(for: self, error: "Can't get wallets") { [unowned self] in
+                self.setNavigation(hidden: true)
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            return
+        }
         DispatchQueue.main.async { [unowned self] in
             //self.setNavigation(hidden: false)
             UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
                 self.view.hideSubviews()
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [unowned self] in
-                    if CurrentWallet.currentWallet == nil {
+                    if walletsCount == 1 {
                         let tabViewController = self.appController.goToApp()
                         //                        tabViewController.context
                         //                        tabViewController.view.backgroundColor = Colors.background

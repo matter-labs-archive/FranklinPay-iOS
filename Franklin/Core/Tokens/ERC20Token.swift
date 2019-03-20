@@ -171,7 +171,10 @@ public class ERC20Token: IERC20Token {
 }
 
 extension ERC20Token: Hashable {
-    public var hashValue: Int {
-        return name.hashValue ^ address.hashValue ^ symbol.hashValue ^ decimals.hashValue &* 16777619
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(address)
+        hasher.combine(symbol)
+        hasher.combine(decimals)
     }
 }

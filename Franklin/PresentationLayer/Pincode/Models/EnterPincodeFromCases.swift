@@ -12,4 +12,5 @@ enum EnterPincodeCases {
     case transaction
     case enterWallet
     case changePincode
+    case privateKey
 }

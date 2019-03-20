@@ -8,6 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		1CF54A75215CCF0E009CC78F /* MatterWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */; };
+		3A0C1FE92237C8C200968304 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */; };
+		3A0C1FEA2237C8C200968304 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */; };
+		3A0C1FEB2237C8C200968304 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */; };
+		3A0C1FEC2237C8C200968304 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */; };
+		3A0C1FED2237C8C200968304 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */; };
+		3A0C1FEE2237C8C200968304 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */; };
+		3A0CD5BD223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
+		3A0CD5BE223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
+		3A0CD5BF223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */; };
+		3A0CD5EF223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
+		3A0CD5F0223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
+		3A0CD5F1223BECDB00D0A4FE /* NetworksCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */; };
 		3A3D3D5A221D6E3B00506F98 /* PlasmaCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D59221D6E3B00506F98 /* PlasmaCode.swift */; };
 		3A3D3D5C221D6E5800506F98 /* PlasmaParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5B221D6E5800506F98 /* PlasmaParser.swift */; };
 		3A3D3D60221D723A00506F98 /* ContactStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3D5F221D723A00506F98 /* ContactStorage.swift */; };
@@ -110,7 +122,6 @@
 		3A3D3E0C221E9B0000506F98 /* BasicSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D451D621EE331600218872 /* BasicSegmentedControl.swift */; };
 		3A3D3E0D221E9B0000506F98 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102921E507250012A978 /* KeychainService.swift */; };
 		3A3D3E0E221E9B0000506F98 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */; };
-		3A3D3E0F221E9B0000506F98 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
 		3A3D3E10221E9B0000506F98 /* LabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC82201B0ED00FC79AB /* LabelExtension.swift */; };
 		3A3D3E11221E9B0000506F98 /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107F21E507340012A978 /* CurrentToken.swift */; };
 		3A3D3E12221E9B0000506F98 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103221E507250012A978 /* NetworksService.swift */; };
@@ -309,7 +320,6 @@
 		3A3D3EE4221E9B0000506F98 /* librefranklin-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC321F8BD1300F11AD1 /* librefranklin-light.ttf */; };
 		3A3D3EE7221E9B0000506F98 /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
 		3A3D3EE8221E9B0000506F98 /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
-		3A3D3EE9221E9B0000506F98 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		3A3D3EEA221E9B0000506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8021F8BA2100F11AD1 /* SF-Pro-Text-RegularItalic.otf */; };
 		3A3D3EEB221E9B0000506F98 /* librefranklin-extralightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC421F8BD1300F11AD1 /* librefranklin-extralightitalic.ttf */; };
 		3A3D3EEC221E9B0000506F98 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFE721F8CAF000F11AD1 /* loading.gif */; };
@@ -362,7 +372,6 @@
 		3A3D3F2D221ECD5500506F98 /* BasicSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D451D621EE331600218872 /* BasicSegmentedControl.swift */; };
 		3A3D3F2E221ECD5500506F98 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1102921E507250012A978 /* KeychainService.swift */; };
 		3A3D3F2F221ECD5500506F98 /* ERC20Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8DAF321F1F6A00031AC58 /* ERC20Token.swift */; };
-		3A3D3F30221ECD5500506F98 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
 		3A3D3F31221ECD5500506F98 /* LabelExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2215AC82201B0ED00FC79AB /* LabelExtension.swift */; };
 		3A3D3F32221ECD5500506F98 /* CurrentToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1107F21E507340012A978 /* CurrentToken.swift */; };
 		3A3D3F33221ECD5500506F98 /* NetworksService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103221E507250012A978 /* NetworksService.swift */; };
@@ -561,7 +570,6 @@
 		3A3D4005221ECD5500506F98 /* librefranklin-light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC321F8BD1300F11AD1 /* librefranklin-light.ttf */; };
 		3A3D4008221ECD5500506F98 /* FundsCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A5D7AA7221622FC0032B20C /* FundsCell.xib */; };
 		3A3D4009221ECD5500506F98 /* TokenCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A8096CF2212E9FC00DAB8DC /* TokenCell.xib */; };
-		3A3D400A221ECD5500506F98 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		3A3D400B221ECD5500506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EF8021F8BA2100F11AD1 /* SF-Pro-Text-RegularItalic.otf */; };
 		3A3D400C221ECD5500506F98 /* librefranklin-extralightitalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFC421F8BD1300F11AD1 /* librefranklin-extralightitalic.ttf */; };
 		3A3D400D221ECD5500506F98 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = E2F0EFE721F8CAF000F11AD1 /* loading.gif */; };
@@ -617,6 +625,27 @@
 		3A8096D92213111100DAB8DC /* PlasmaService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096D82213111100DAB8DC /* PlasmaService.swift */; };
 		3A8096DB2213125A00DAB8DC /* PlasmaURLs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DA2213125A00DAB8DC /* PlasmaURLs.swift */; };
 		3A8096DD2213828100DAB8DC /* CurrentNonce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8096DC2213828100DAB8DC /* CurrentNonce.swift */; };
+		3AC3BD882231213B00656EC7 /* AddNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD862231213B00656EC7 /* AddNetworkViewController.swift */; };
+		3AC3BD892231213B00656EC7 /* AddNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD862231213B00656EC7 /* AddNetworkViewController.swift */; };
+		3AC3BD8A2231213B00656EC7 /* AddNetworkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD862231213B00656EC7 /* AddNetworkViewController.swift */; };
+		3AC3BD8B2231213B00656EC7 /* AddNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC3BD872231213B00656EC7 /* AddNetworkViewController.xib */; };
+		3AC3BD8C2231213B00656EC7 /* AddNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC3BD872231213B00656EC7 /* AddNetworkViewController.xib */; };
+		3AC3BD8D2231213B00656EC7 /* AddNetworkViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3AC3BD872231213B00656EC7 /* AddNetworkViewController.xib */; };
+		3AC3BD902231233500656EC7 /* NetworksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD8F2231233500656EC7 /* NetworksCoordinator.swift */; };
+		3AC3BD912231233500656EC7 /* NetworksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD8F2231233500656EC7 /* NetworksCoordinator.swift */; };
+		3AC3BD922231233500656EC7 /* NetworksCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD8F2231233500656EC7 /* NetworksCoordinator.swift */; };
+		3AC3BD94223124C500656EC7 /* TableNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD93223124C500656EC7 /* TableNetwork.swift */; };
+		3AC3BD95223124C500656EC7 /* TableNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD93223124C500656EC7 /* TableNetwork.swift */; };
+		3AC3BD96223124C500656EC7 /* TableNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD93223124C500656EC7 /* TableNetwork.swift */; };
+		3AC3BD98223151DD00656EC7 /* DefaultNetworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */; };
+		3AC3BD99223151DD00656EC7 /* DefaultNetworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */; };
+		3AC3BD9A223151DD00656EC7 /* DefaultNetworks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */; };
+		3AC3BD9C2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
+		3AC3BD9D2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
+		3AC3BD9E2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */; };
+		3AE49490223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
+		3AE49491223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
+		3AE49492223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
 		694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
 		914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
@@ -658,8 +687,6 @@
 		B20914FF214A564500C8B408 /* WalletsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B20914FD214A564500C8B408 /* WalletsViewController.xib */; };
 		B2091506214A5AD000C8B408 /* WalletCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2091504214A5AD000C8B408 /* WalletCell.swift */; };
 		B2091507214A5AD000C8B408 /* WalletCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2091505214A5AD000C8B408 /* WalletCell.xib */; };
-		B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209150C214A659500C8B408 /* PrivateKeyViewController.swift */; };
-		B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B209150D214A659500C8B408 /* PrivateKeyViewController.xib */; };
 		B219DC2C215B77A80035BF94 /* MatterWalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC2B215B77A80035BF94 /* MatterWalletUITests.swift */; };
 		B219DC34215B786D0035BF94 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B219DC33215B786D0035BF94 /* SnapshotHelper.swift */; };
 		E20F3DFB220AFD1000669C8B /* ContactTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */; };
@@ -824,6 +851,10 @@
 		1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
+		3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
+		3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
+		3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointValidator.swift; sourceTree = "<group>"; };
+		3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCreator.swift; sourceTree = "<group>"; };
 		3A3D3D59221D6E3B00506F98 /* PlasmaCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaCode.swift; sourceTree = "<group>"; };
 		3A3D3D5B221D6E5800506F98 /* PlasmaParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaParser.swift; sourceTree = "<group>"; };
 		3A3D3D5F221D723A00506F98 /* ContactStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactStorage.swift; sourceTree = "<group>"; };
@@ -912,6 +943,13 @@
 		3A8096DA2213125A00DAB8DC /* PlasmaURLs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlasmaURLs.swift; sourceTree = "<group>"; };
 		3A8096DC2213828100DAB8DC /* CurrentNonce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentNonce.swift; sourceTree = "<group>"; };
 		3A84FE02220D9D1E00B5A069 /* Franklin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Franklin.entitlements; sourceTree = "<group>"; };
+		3AC3BD862231213B00656EC7 /* AddNetworkViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNetworkViewController.swift; sourceTree = "<group>"; };
+		3AC3BD872231213B00656EC7 /* AddNetworkViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddNetworkViewController.xib; sourceTree = "<group>"; };
+		3AC3BD8F2231233500656EC7 /* NetworksCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworksCoordinator.swift; sourceTree = "<group>"; };
+		3AC3BD93223124C500656EC7 /* TableNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableNetwork.swift; sourceTree = "<group>"; };
+		3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworks.swift; sourceTree = "<group>"; };
+		3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddNetworkVC+TextFieldDelegate.swift"; sourceTree = "<group>"; };
+		3AE4948F223FB94900AB2972 /* QRiteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRiteractor.swift; sourceTree = "<group>"; };
 		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.release.xcconfig"; sourceTree = "<group>"; };
@@ -967,8 +1005,6 @@
 		B20914FD214A564500C8B408 /* WalletsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletsViewController.xib; sourceTree = "<group>"; };
 		B2091504214A5AD000C8B408 /* WalletCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletCell.swift; sourceTree = "<group>"; };
 		B2091505214A5AD000C8B408 /* WalletCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WalletCell.xib; sourceTree = "<group>"; };
-		B209150C214A659500C8B408 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
-		B209150D214A659500C8B408 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		B2091516214AB04800C8B408 /* WalletImportMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletImportMode.swift; sourceTree = "<group>"; };
 		B219DC29215B77A80035BF94 /* FranklinUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FranklinUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B219DC2B215B77A80035BF94 /* MatterWalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletUITests.swift; sourceTree = "<group>"; };
@@ -1203,6 +1239,39 @@
 			path = FranklinTests;
 			sourceTree = "<group>";
 		};
+		3A0C1FE42237C88A00968304 /* PrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				3A0C1FE62237C8A800968304 /* Views */,
+				3A0C1FE52237C8A100968304 /* ViewControllers */,
+			);
+			path = PrivateKey;
+			sourceTree = "<group>";
+		};
+		3A0C1FE52237C8A100968304 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3A0C1FE62237C8A800968304 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3A0CD5ED223BEC9C00D0A4FE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3A0CD5EE223BECDB00D0A4FE /* NetworksCreator.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		3A3D3D6B221D731600506F98 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -1315,6 +1384,7 @@
 		3A8096C92211794600DAB8DC /* NetworksList */ = {
 			isa = PBXGroup;
 			children = (
+				3AC3BD8E2231232800656EC7 /* Models */,
 				3A8096CB2211796F00DAB8DC /* Views */,
 				3A8096CA2211796600DAB8DC /* ViewControllers */,
 			);
@@ -1352,6 +1422,42 @@
 				3A8096DA2213125A00DAB8DC /* PlasmaURLs.swift */,
 			);
 			path = Plasma;
+			sourceTree = "<group>";
+		};
+		3AC3BD83223120C700656EC7 /* NetworkCreation */ = {
+			isa = PBXGroup;
+			children = (
+				3A0CD5ED223BEC9C00D0A4FE /* Models */,
+				3AC3BD85223120EB00656EC7 /* ViewControllers */,
+				3AC3BD84223120E100656EC7 /* Views */,
+			);
+			path = NetworkCreation;
+			sourceTree = "<group>";
+		};
+		3AC3BD84223120E100656EC7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3AC3BD872231213B00656EC7 /* AddNetworkViewController.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		3AC3BD85223120EB00656EC7 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				3AC3BD862231213B00656EC7 /* AddNetworkViewController.swift */,
+				3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		3AC3BD8E2231232800656EC7 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3AC3BD8F2231233500656EC7 /* NetworksCoordinator.swift */,
+				3AC3BD93223124C500656EC7 /* TableNetwork.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		6DE660421B91D607B06623B4 /* Frameworks */ = {
@@ -1539,8 +1645,10 @@
 			children = (
 				3A3D3DBC221DD1E400506F98 /* CommonDelegates */,
 				E2F686A421F9DE5A00BD3D14 /* Legacy */,
+				3A0C1FE42237C88A00968304 /* PrivateKey */,
 				E2C110D021E90D6A0012A978 /* TokensSearch */,
 				E2C1109821E566B60012A978 /* WalletCreation */,
+				3AC3BD83223120C700656EC7 /* NetworkCreation */,
 				3A8096C92211794600DAB8DC /* NetworksList */,
 				E2A8DBBA21F780280031AC58 /* WalletsList */,
 				E20F3D17220857E600669C8B /* Pincode */,
@@ -1654,15 +1762,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		E234C7A021EB5F8500F175AF /* PrivateKey */ = {
-			isa = PBXGroup;
-			children = (
-				B209150D214A659500C8B408 /* PrivateKeyViewController.xib */,
-				B209150C214A659500C8B408 /* PrivateKeyViewController.swift */,
-			);
-			path = PrivateKey;
-			sourceTree = "<group>";
-		};
 		E27BF78C21D1674600951061 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1694,6 +1793,7 @@
 				E2A8DB0121F1FA480031AC58 /* EtherCoordinator.swift */,
 				E2C59073215258B800FF53D3 /* TableTokens.swift */,
 				3A3D3D96221DB8F500506F98 /* WalletSections.swift */,
+				3AE4948F223FB94900AB2972 /* QRiteractor.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1729,6 +1829,7 @@
 			children = (
 				E2A8DAEB21F1F6A00031AC58 /* Web3Network.swift */,
 				3A3D3D63221D72B700506F98 /* Web3NetworkEquatable.swift */,
+				3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */,
 			);
 			path = Networks;
 			sourceTree = "<group>";
@@ -1966,6 +2067,7 @@
 		E2C1103121E507250012A978 /* Networks */ = {
 			isa = PBXGroup;
 			children = (
+				3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */,
 				E2C1103221E507250012A978 /* NetworksService.swift */,
 			);
 			path = Networks;
@@ -2512,7 +2614,6 @@
 		E2F686A421F9DE5A00BD3D14 /* Legacy */ = {
 			isa = PBXGroup;
 			children = (
-				E234C7A021EB5F8500F175AF /* PrivateKey */,
 				E2C1109E21E567070012A978 /* old */,
 				E2C1109921E566D40012A978 /* Token */,
 			);
@@ -2776,6 +2877,7 @@
 				3A3D3EAE221E9B0000506F98 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				3A3D3EAF221E9B0000506F98 /* SF-Pro-Text-Heavy.otf in Resources */,
 				3A3D3EB0221E9B0000506F98 /* SendMoneyController.xib in Resources */,
+				3A0C1FED2237C8C200968304 /* PrivateKeyViewController.xib in Resources */,
 				3A3D3EB1221E9B0000506F98 /* SF-Pro-Display-Bold.otf in Resources */,
 				3A3D3EB2221E9B0000506F98 /* AcceptChequeController.xib in Resources */,
 				3A3D3EB3221E9B0000506F98 /* ContactTableCell.xib in Resources */,
@@ -2805,6 +2907,7 @@
 				3A3D3ECC221E9B0000506F98 /* NetworksCell.xib in Resources */,
 				3A3D3ECD221E9B0000506F98 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				3A3D3ECE221E9B0000506F98 /* librefranklin-lightitalic.ttf in Resources */,
+				3AC3BD8C2231213B00656EC7 /* AddNetworkViewController.xib in Resources */,
 				3A3D3ECF221E9B0000506F98 /* librefranklin-regular.ttf in Resources */,
 				3A3D3ED0221E9B0000506F98 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				3A3D3ED1221E9B0000506F98 /* AddWalletViewController.xib in Resources */,
@@ -2827,7 +2930,6 @@
 				3A3D3EE4221E9B0000506F98 /* librefranklin-light.ttf in Resources */,
 				3A3D3EE7221E9B0000506F98 /* FundsCell.xib in Resources */,
 				3A3D3EE8221E9B0000506F98 /* TokenCell.xib in Resources */,
-				3A3D3EE9221E9B0000506F98 /* PrivateKeyViewController.xib in Resources */,
 				3A3D3EEA221E9B0000506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				3A3D3EEB221E9B0000506F98 /* librefranklin-extralightitalic.ttf in Resources */,
 				3A3D3EEC221E9B0000506F98 /* loading.gif in Resources */,
@@ -2866,6 +2968,7 @@
 				3A3D3FCF221ECD5500506F98 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				3A3D3FD0221ECD5500506F98 /* SF-Pro-Text-Heavy.otf in Resources */,
 				3A3D3FD1221ECD5500506F98 /* SendMoneyController.xib in Resources */,
+				3A0C1FEE2237C8C200968304 /* PrivateKeyViewController.xib in Resources */,
 				3A3D3FD2221ECD5500506F98 /* SF-Pro-Display-Bold.otf in Resources */,
 				3A3D3FD3221ECD5500506F98 /* AcceptChequeController.xib in Resources */,
 				3A3D3FD4221ECD5500506F98 /* ContactTableCell.xib in Resources */,
@@ -2895,6 +2998,7 @@
 				3A3D3FED221ECD5500506F98 /* NetworksCell.xib in Resources */,
 				3A3D3FEE221ECD5500506F98 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				3A3D3FEF221ECD5500506F98 /* librefranklin-lightitalic.ttf in Resources */,
+				3AC3BD8D2231213B00656EC7 /* AddNetworkViewController.xib in Resources */,
 				3A3D3FF0221ECD5500506F98 /* librefranklin-regular.ttf in Resources */,
 				3A3D3FF1221ECD5500506F98 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				3A3D3FF2221ECD5500506F98 /* AddWalletViewController.xib in Resources */,
@@ -2917,7 +3021,6 @@
 				3A3D4005221ECD5500506F98 /* librefranklin-light.ttf in Resources */,
 				3A3D4008221ECD5500506F98 /* FundsCell.xib in Resources */,
 				3A3D4009221ECD5500506F98 /* TokenCell.xib in Resources */,
-				3A3D400A221ECD5500506F98 /* PrivateKeyViewController.xib in Resources */,
 				3A3D400B221ECD5500506F98 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				3A3D400C221ECD5500506F98 /* librefranklin-extralightitalic.ttf in Resources */,
 				3A3D400D221ECD5500506F98 /* loading.gif in Resources */,
@@ -2956,6 +3059,7 @@
 				E2F0EFA621F8BA2700F11AD1 /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				E2F0EFAA21F8BA2700F11AD1 /* SF-Pro-Text-Heavy.otf in Resources */,
 				E2F686A921F9DEF600BD3D14 /* SendMoneyController.xib in Resources */,
+				3A0C1FEC2237C8C200968304 /* PrivateKeyViewController.xib in Resources */,
 				E2F0EFB821F8BA2700F11AD1 /* SF-Pro-Display-Bold.otf in Resources */,
 				E2215AC121FF44A700FC79AB /* AcceptChequeController.xib in Resources */,
 				E20F3DFC220AFD1000669C8B /* ContactTableCell.xib in Resources */,
@@ -2985,6 +3089,7 @@
 				9197F3342144228B00C358AA /* NetworksCell.xib in Resources */,
 				E2F0EFB521F8BA2700F11AD1 /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				E2F0EFD021F8BD1500F11AD1 /* librefranklin-lightitalic.ttf in Resources */,
+				3AC3BD8B2231213B00656EC7 /* AddNetworkViewController.xib in Resources */,
 				E2F0EFDE21F8BD1500F11AD1 /* librefranklin-regular.ttf in Resources */,
 				E2F0EFAB21F8BA2700F11AD1 /* SF-Pro-Text-LightItalic.otf in Resources */,
 				91B6A7DF2143B2F30033A045 /* AddWalletViewController.xib in Resources */,
@@ -3007,7 +3112,6 @@
 				E2F0EFD521F8BD1500F11AD1 /* librefranklin-light.ttf in Resources */,
 				3A5D7AA9221622FC0032B20C /* FundsCell.xib in Resources */,
 				3A8096D12212E9FC00DAB8DC /* TokenCell.xib in Resources */,
-				B209150F214A659500C8B408 /* PrivateKeyViewController.xib in Resources */,
 				E2F0EF9E21F8BA2700F11AD1 /* SF-Pro-Text-RegularItalic.otf in Resources */,
 				E2F0EFD621F8BD1500F11AD1 /* librefranklin-extralightitalic.ttf in Resources */,
 				E2F0EFE821F8CAF000F11AD1 /* loading.gif in Resources */,
@@ -3358,16 +3462,19 @@
 				3A3D3DE3221E9B0000506F98 /* CurrentNetwork.swift in Sources */,
 				3A3D3DE4221E9B0000506F98 /* Contact.swift in Sources */,
 				3A3D3DE5221E9B0000506F98 /* ModalViewDelegate.swift in Sources */,
+				3A0CD5F0223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D3DE6221E9B0000506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				3A3D40402223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3DE7221E9B0000506F98 /* BiometricsService.swift in Sources */,
 				3A3D3DE9221E9B0000506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
 				3A3D3DEA221E9B0000506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */,
 				3A3D3DEB221E9B0000506F98 /* Wallet.swift in Sources */,
+				3A0C1FEA2237C8C200968304 /* PrivateKeyViewController.swift in Sources */,
 				3A3D3DEC221E9B0000506F98 /* PlasmaService.swift in Sources */,
 				3A3D3DED221E9B0000506F98 /* ContainerCD.swift in Sources */,
 				3A3D3DEE221E9B0000506F98 /* CoreDataModel.xcdatamodeld in Sources */,
 				3A3D4034221F74DE00506F98 /* WalletImportingVC+TextViewDelegate.swift in Sources */,
+				3AC3BD912231233500656EC7 /* NetworksCoordinator.swift in Sources */,
 				3A3D3DEF221E9B0000506F98 /* Dai.swift in Sources */,
 				3A3D3DF0221E9B0000506F98 /* TransactionsHistoryVC+TableViewExtensions.swift in Sources */,
 				3A3D3DF1221E9B0000506F98 /* PlasmaTransaction.swift in Sources */,
@@ -3397,7 +3504,6 @@
 				3A3D3E0C221E9B0000506F98 /* BasicSegmentedControl.swift in Sources */,
 				3A3D3E0D221E9B0000506F98 /* KeychainService.swift in Sources */,
 				3A3D3E0E221E9B0000506F98 /* ERC20Token.swift in Sources */,
-				3A3D3E0F221E9B0000506F98 /* PrivateKeyViewController.swift in Sources */,
 				3A3D3E10221E9B0000506F98 /* LabelExtension.swift in Sources */,
 				3A3D3E11221E9B0000506F98 /* CurrentToken.swift in Sources */,
 				3A3D3E12221E9B0000506F98 /* NetworksService.swift in Sources */,
@@ -3417,6 +3523,7 @@
 				3A3D3E23221E9B0000506F98 /* WalletCell.swift in Sources */,
 				3A3D3E24221E9B0000506F98 /* WalletsViewController.swift in Sources */,
 				3A3D3E25221E9B0000506F98 /* SendMoneyVC+Actions.swift in Sources */,
+				3AC3BD95223124C500656EC7 /* TableNetwork.swift in Sources */,
 				3A3D3E26221E9B0000506F98 /* ContactEquatable.swift in Sources */,
 				3A3D3E27221E9B0000506F98 /* SettingsInteractor.swift in Sources */,
 				3A3D3E28221E9B0000506F98 /* ContactsVC+ModalViewDelegate.swift in Sources */,
@@ -3440,6 +3547,7 @@
 				3A3D3E3D221E9B0000506F98 /* TabBarController.swift in Sources */,
 				3A3D3E3E221E9B0000506F98 /* Franklin.swift in Sources */,
 				3A3D3E3F221E9B0000506F98 /* GenericParsedURL.swift in Sources */,
+				3AC3BD892231213B00656EC7 /* AddNetworkViewController.swift in Sources */,
 				3A3D3E40221E9B0000506F98 /* ContactsService.swift in Sources */,
 				3A3D3E41221E9B0000506F98 /* Errors.swift in Sources */,
 				3A3D3E42221E9B0000506F98 /* NameHash.swift in Sources */,
@@ -3448,6 +3556,8 @@
 				3A3D3E45221E9B0000506F98 /* SearchControllerExtension.swift in Sources */,
 				3A3D3E46221E9B0000506F98 /* BasicButtons.swift in Sources */,
 				3A3D3E47221E9B0000506F98 /* SettingsCell.swift in Sources */,
+				3AC3BD99223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49491223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				3A3D3E48221E9B0000506F98 /* SendMoneyController.swift in Sources */,
 				3A3D3E49221E9B0000506F98 /* TableHeader.swift in Sources */,
 				3A3D3E4A221E9B0000506F98 /* BasicTableView.swift in Sources */,
@@ -3471,6 +3581,8 @@
 				3A3D3E5B221E9B0000506F98 /* BasicTextField.swift in Sources */,
 				3A3D3E5C221E9B0000506F98 /* ABIs.swift in Sources */,
 				3A3D3E5D221E9B0000506F98 /* AcceptChequeController.swift in Sources */,
+				3AC3BD9D2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */,
+				3A0CD5BE223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */,
 				3A3D3E5E221E9B0000506F98 /* ContactsVC+TextFieldDelegate.swift in Sources */,
 				3A3D3E5F221E9B0000506F98 /* WalletVC+ModalViewDelegate.swift in Sources */,
 				3A3D3E60221E9B0000506F98 /* EIP681Router.swift in Sources */,
@@ -3544,16 +3656,19 @@
 				3A3D3F04221ECD5500506F98 /* CurrentNetwork.swift in Sources */,
 				3A3D3F05221ECD5500506F98 /* Contact.swift in Sources */,
 				3A3D3F06221ECD5500506F98 /* ModalViewDelegate.swift in Sources */,
+				3A0CD5F1223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D3F07221ECD5500506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				3A3D40412223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3F08221ECD5500506F98 /* BiometricsService.swift in Sources */,
 				3A3D3F0A221ECD5500506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
 				3A3D3F0B221ECD5500506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */,
 				3A3D3F0C221ECD5500506F98 /* Wallet.swift in Sources */,
+				3A0C1FEB2237C8C200968304 /* PrivateKeyViewController.swift in Sources */,
 				3A3D3F0D221ECD5500506F98 /* PlasmaService.swift in Sources */,
 				3A3D3F0E221ECD5500506F98 /* ContainerCD.swift in Sources */,
 				3A3D3F0F221ECD5500506F98 /* CoreDataModel.xcdatamodeld in Sources */,
 				3A3D4035221F74DE00506F98 /* WalletImportingVC+TextViewDelegate.swift in Sources */,
+				3AC3BD922231233500656EC7 /* NetworksCoordinator.swift in Sources */,
 				3A3D3F10221ECD5500506F98 /* Dai.swift in Sources */,
 				3A3D3F11221ECD5500506F98 /* TransactionsHistoryVC+TableViewExtensions.swift in Sources */,
 				3A3D3F12221ECD5500506F98 /* PlasmaTransaction.swift in Sources */,
@@ -3583,7 +3698,6 @@
 				3A3D3F2D221ECD5500506F98 /* BasicSegmentedControl.swift in Sources */,
 				3A3D3F2E221ECD5500506F98 /* KeychainService.swift in Sources */,
 				3A3D3F2F221ECD5500506F98 /* ERC20Token.swift in Sources */,
-				3A3D3F30221ECD5500506F98 /* PrivateKeyViewController.swift in Sources */,
 				3A3D3F31221ECD5500506F98 /* LabelExtension.swift in Sources */,
 				3A3D3F32221ECD5500506F98 /* CurrentToken.swift in Sources */,
 				3A3D3F33221ECD5500506F98 /* NetworksService.swift in Sources */,
@@ -3603,6 +3717,7 @@
 				3A3D3F44221ECD5500506F98 /* WalletCell.swift in Sources */,
 				3A3D3F45221ECD5500506F98 /* WalletsViewController.swift in Sources */,
 				3A3D3F46221ECD5500506F98 /* SendMoneyVC+Actions.swift in Sources */,
+				3AC3BD96223124C500656EC7 /* TableNetwork.swift in Sources */,
 				3A3D3F47221ECD5500506F98 /* ContactEquatable.swift in Sources */,
 				3A3D3F48221ECD5500506F98 /* SettingsInteractor.swift in Sources */,
 				3A3D3F49221ECD5500506F98 /* ContactsVC+ModalViewDelegate.swift in Sources */,
@@ -3626,6 +3741,7 @@
 				3A3D3F5E221ECD5500506F98 /* TabBarController.swift in Sources */,
 				3A3D3F5F221ECD5500506F98 /* Franklin.swift in Sources */,
 				3A3D3F60221ECD5500506F98 /* GenericParsedURL.swift in Sources */,
+				3AC3BD8A2231213B00656EC7 /* AddNetworkViewController.swift in Sources */,
 				3A3D3F61221ECD5500506F98 /* ContactsService.swift in Sources */,
 				3A3D3F62221ECD5500506F98 /* Errors.swift in Sources */,
 				3A3D3F63221ECD5500506F98 /* NameHash.swift in Sources */,
@@ -3634,6 +3750,8 @@
 				3A3D3F66221ECD5500506F98 /* SearchControllerExtension.swift in Sources */,
 				3A3D3F67221ECD5500506F98 /* BasicButtons.swift in Sources */,
 				3A3D3F68221ECD5500506F98 /* SettingsCell.swift in Sources */,
+				3AC3BD9A223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49492223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				3A3D3F69221ECD5500506F98 /* SendMoneyController.swift in Sources */,
 				3A3D3F6A221ECD5500506F98 /* TableHeader.swift in Sources */,
 				3A3D3F6B221ECD5500506F98 /* BasicTableView.swift in Sources */,
@@ -3657,6 +3775,8 @@
 				3A3D3F7C221ECD5500506F98 /* BasicTextField.swift in Sources */,
 				3A3D3F7D221ECD5500506F98 /* ABIs.swift in Sources */,
 				3A3D3F7E221ECD5500506F98 /* AcceptChequeController.swift in Sources */,
+				3AC3BD9E2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */,
+				3A0CD5BF223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */,
 				3A3D3F7F221ECD5500506F98 /* ContactsVC+TextFieldDelegate.swift in Sources */,
 				3A3D3F80221ECD5500506F98 /* WalletVC+ModalViewDelegate.swift in Sources */,
 				3A3D3F81221ECD5500506F98 /* EIP681Router.swift in Sources */,
@@ -3730,16 +3850,19 @@
 				3A3D3DBB221DD1D100506F98 /* SendMoneyVC+ModalViewDelegate.swift in Sources */,
 				E2C1105A21E507260012A978 /* BiometricsService.swift in Sources */,
 				3A3D3DCF221E0AFA00506F98 /* TransactionHistoryVC+UISideMenuNavigationControllerDelegate.swift in Sources */,
+				3A0CD5EF223BECDB00D0A4FE /* NetworksCreator.swift in Sources */,
 				3A3D403F2223FB5600506F98 /* WalletCreating.swift in Sources */,
 				3A3D3DD1221E0B3F00506F98 /* TransactionsHistoryVC+CellLongPressureDelegate.swift in Sources */,
 				E2A8DAFD21F1F6A00031AC58 /* Wallet.swift in Sources */,
 				3A8096D92213111100DAB8DC /* PlasmaService.swift in Sources */,
 				E2A8DAFE21F1F6A00031AC58 /* ContainerCD.swift in Sources */,
 				E2A8DAF621F1F6A00031AC58 /* CoreDataModel.xcdatamodeld in Sources */,
+				3A0C1FE92237C8C200968304 /* PrivateKeyViewController.swift in Sources */,
 				3A8096CD2212D1CC00DAB8DC /* Dai.swift in Sources */,
 				3A3D3DD3221E0B7300506F98 /* TransactionsHistoryVC+TableViewExtensions.swift in Sources */,
 				3A3D4033221F74DD00506F98 /* WalletImportingVC+TextViewDelegate.swift in Sources */,
 				3A8096D722130FE500DAB8DC /* PlasmaTransaction.swift in Sources */,
+				3AC3BD902231233500656EC7 /* NetworksCoordinator.swift in Sources */,
 				3A3D3DC6221E060900506F98 /* SendMoneyVC+TableViewExtensions.swift in Sources */,
 				E2A8DAFB21F1F6A00031AC58 /* ETHTransaction.swift in Sources */,
 				3A3D401A221F54FC00506F98 /* WalletsVC+WalletCellDelegate.swift in Sources */,
@@ -3768,7 +3891,6 @@
 				E2D451D721EE331600218872 /* BasicSegmentedControl.swift in Sources */,
 				E2C1105921E507260012A978 /* KeychainService.swift in Sources */,
 				E2A8DAFF21F1F6A00031AC58 /* ERC20Token.swift in Sources */,
-				B209150E214A659500C8B408 /* PrivateKeyViewController.swift in Sources */,
 				E2215AC92201B0ED00FC79AB /* LabelExtension.swift in Sources */,
 				E2C1108621E507340012A978 /* CurrentToken.swift in Sources */,
 				E2C1105F21E507260012A978 /* NetworksService.swift in Sources */,
@@ -3789,6 +3911,7 @@
 				B20914FE214A564500C8B408 /* WalletsViewController.swift in Sources */,
 				3A3D3DC2221DD74500506F98 /* SendMoneyVC+Actions.swift in Sources */,
 				3A3D3D62221D727200506F98 /* ContactEquatable.swift in Sources */,
+				3AC3BD94223124C500656EC7 /* TableNetwork.swift in Sources */,
 				3A3D3DA3221DBD2100506F98 /* SettingsInteractor.swift in Sources */,
 				3A3D3DB5221DC97700506F98 /* ContactsVC+ModalViewDelegate.swift in Sources */,
 				E2C1109421E557FE0012A978 /* EIP681.swift in Sources */,
@@ -3812,6 +3935,7 @@
 				E2F0EF6D21F7C2F500F11AD1 /* TabBarController.swift in Sources */,
 				E2A8DB9921F616BE0031AC58 /* Franklin.swift in Sources */,
 				E2C1106221E507260012A978 /* GenericParsedURL.swift in Sources */,
+				3AC3BD882231213B00656EC7 /* AddNetworkViewController.swift in Sources */,
 				E2C1105E21E507260012A978 /* ContactsService.swift in Sources */,
 				E2C1106721E507260012A978 /* Errors.swift in Sources */,
 				E2C1109321E557FE0012A978 /* NameHash.swift in Sources */,
@@ -3820,6 +3944,8 @@
 				E2C1108321E507340012A978 /* SearchControllerExtension.swift in Sources */,
 				E2C110C821E8A86C0012A978 /* BasicButtons.swift in Sources */,
 				9197F3282144043500C358AA /* SettingsCell.swift in Sources */,
+				3AC3BD98223151DD00656EC7 /* DefaultNetworks.swift in Sources */,
+				3AE49490223FB94900AB2972 /* QRiteractor.swift in Sources */,
 				E2F686A821F9DEF600BD3D14 /* SendMoneyController.swift in Sources */,
 				E2C110CE21E8A8D90012A978 /* TableHeader.swift in Sources */,
 				E234C7A621EBF62900F175AF /* BasicTableView.swift in Sources */,
@@ -3843,6 +3969,8 @@
 				E2F686AC21F9E0C600BD3D14 /* BasicTextField.swift in Sources */,
 				E2C1106321E507260012A978 /* ABIs.swift in Sources */,
 				E2215AC021FF44A700FC79AB /* AcceptChequeController.swift in Sources */,
+				3AC3BD9C2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift in Sources */,
+				3A0CD5BD223A8FCD00D0A4FE /* EndpointValidator.swift in Sources */,
 				3A3D3DB1221DC7D800506F98 /* ContactsVC+TextFieldDelegate.swift in Sources */,
 				3A3D3D95221DB70600506F98 /* WalletVC+ModalViewDelegate.swift in Sources */,
 				E2C1109521E557FE0012A978 /* EIP681Router.swift in Sources */,

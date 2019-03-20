@@ -27,8 +27,8 @@ class PublicKeyViewController: BasicViewController {
     
     internal var pk: String = "" {
         didSet {
-            self.publicKey.text = pk
-            self.qrCode.image = self.generateQRCode(from: pk)
+            publicKey.text = pk
+            qrCode.image = generateQRCode(from: pk)
         }
     }
     
@@ -51,26 +51,26 @@ class PublicKeyViewController: BasicViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.mainSetup()
-        self.setup()
+        mainSetup()
+        setup()
     }
     
     // MARK: - Main setup
     
     func mainSetup() {
-        self.navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         
-        self.contentView.backgroundColor = Colors.background
-        self.contentView.alpha = 1
-        self.contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
-        self.contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
-        self.contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
+        contentView.backgroundColor = Colors.background
+        contentView.alpha = 1
+        contentView.layer.cornerRadius = Constants.ModalView.ContentView.cornerRadius
+        contentView.layer.borderColor = Constants.ModalView.ContentView.borderColor
+        contentView.layer.borderWidth = Constants.ModalView.ContentView.borderWidth
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
-                                                                 action: #selector(self.dismissView))
+                                                                 action: #selector(dismissView))
         tap.cancelsTouchesInView = false
         backgroundView.addGestureRecognizer(tap)
     }
@@ -99,12 +99,12 @@ class PublicKeyViewController: BasicViewController {
     // MARK: - Buttons actions
     
     @objc func dismissView() {
-        self.dismiss(animated: true, completion: nil)
+        dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }
     
     @IBAction func closeAction(_ sender: UIButton) {
-        self.dismissView()
+        dismissView()
     }
     
     @IBAction func copyAction(_ sender: UIButton) {
@@ -116,9 +116,9 @@ class PublicKeyViewController: BasicViewController {
         
         let itemsToShare = [ addressToShare ]
         let activityViewController = UIActivityViewController(activityItems: itemsToShare, applicationActivities: nil)
-        activityViewController.popoverPresentationController?.sourceView = self.view // so that iPads won't crash
+        activityViewController.popoverPresentationController?.sourceView = view // so that iPads won't crash
         // exclude some activity types from the list (optional)
         activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.mail, UIActivity.ActivityType.message, UIActivity.ActivityType.copyToPasteboard, UIActivity.ActivityType.markupAsPDF ]
-        self.present(activityViewController, animated: true, completion: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
 }

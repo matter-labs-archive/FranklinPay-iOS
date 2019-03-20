@@ -8,8 +8,24 @@
 
 import UIKit
 import QRCodeReader
+import EthereumAddress
 
 class SearchTokenViewController: BasicViewController {
+    
+    // MARK: - Enums
+    
+    internal enum ScreenStatus {
+        case search
+        case customToken
+    }
+    
+    internal enum TextFieldsTags: Int {
+        case name = 0
+        case address = 1
+        case symbol = 2
+        case decimals = 3
+        case search = 4
+    }
     
     // MARK: - Outlets
 
@@ -19,14 +35,32 @@ class SearchTokenViewController: BasicViewController {
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var addButton: BasicBlueButton!
+    @IBOutlet weak var addCustomToken: UIButton!
+    @IBOutlet weak var searchView: UIView!
+    @IBOutlet weak var customTokenView: UIView!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var tokenNameTextField: BasicTextField!
+    @IBOutlet weak var tokenSymbolTextField: BasicTextField!
+    @IBOutlet weak var tokenAddressTextField: BasicTextField!
+    @IBOutlet weak var decimalsTextField: BasicTextField!
+    @IBOutlet var tokenTextFields: [BasicTextField]!
     
     // MARK: - Internal vars
     
     internal var ratesUpdating = false
 
     internal var tokensList: [ERC20Token] = []
-    internal var tokensForDeleting: Set<ERC20Token> = []
-    internal var tokensForAdding: Set<ERC20Token> = []
+    internal var tokensForDeleting: Set<ERC20Token> = [] {
+        didSet {
+            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+        }
+    }
+    internal var tokensForAdding: Set<ERC20Token> = [] {
+        didSet {
+            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+        }
+    }
     internal var tokensAreAdded: [Bool] = []
 
     internal  var searchController: UISearchController!
@@ -34,6 +68,25 @@ class SearchTokenViewController: BasicViewController {
 
     internal let tokensService = TokensService()
     internal let alerts = Alerts()
+    
+    internal var currentScreen: ScreenStatus = .search {
+        didSet {
+            switch currentScreen {
+            case .search:
+                addCustomToken.setTitle("Create", for: .normal)
+                titleLabel.text = "Search tokens"
+                makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+                makeSearchView(enabled: true)
+                makeCustomTokenView(enabled: false)
+            case .customToken:
+                addCustomToken.setTitle("Back", for: .normal)
+                titleLabel.text = "Add custom token"
+                makeConfirmButton(enabled: areTokenFieldsFilled())
+                makeSearchView(enabled: false)
+                makeCustomTokenView(enabled: true)
+            }
+        }
+    }
     
     // MARK: - weak vars
     
@@ -65,16 +118,20 @@ class SearchTokenViewController: BasicViewController {
         setupTableView()
         mainSetup()
         setupSearch()
+        setupTokenTextFields()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        makeConfirmButton(enabled: false)
         makeHelpLabel(enabled: true)
     }
     
     // MARK: - Main setup
     
     func mainSetup() {
+        currentScreen = .search
+        
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
         
@@ -111,6 +168,20 @@ class SearchTokenViewController: BasicViewController {
         tokensTableView.register(nibSearch, forCellReuseIdentifier: "SearchTokenCell")
         let nibAddress = UINib.init(nibName: "AddressTableViewCell", bundle: nil)
         tokensTableView.register(nibAddress, forCellReuseIdentifier: "AddressTableViewCell")
+    }
+    
+    func setupTokenTextFields() {
+        tokenNameTextField.delegate = self
+        tokenAddressTextField.delegate = self
+        decimalsTextField.delegate = self
+        tokenSymbolTextField.delegate = self
+        searchTextField.delegate = self
+        
+        tokenNameTextField.tag = TextFieldsTags.name.rawValue
+        tokenAddressTextField.tag = TextFieldsTags.address.rawValue
+        decimalsTextField.tag = TextFieldsTags.decimals.rawValue
+        tokenSymbolTextField.tag = TextFieldsTags.symbol.rawValue
+        searchTextField.tag = TextFieldsTags.search.rawValue
     }
     
     // MARK: - Actions
@@ -164,6 +235,33 @@ class SearchTokenViewController: BasicViewController {
         reloadTableData()
     }
     
+    func makeConfirmButton(enabled: Bool) {
+        addButton.isEnabled = enabled
+        addButton.alpha = enabled ? 1 : 0.5
+    }
+    
+    func makeSearchView(enabled: Bool) {
+        UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+            self.searchView.isHidden = !enabled
+            self.searchView.isUserInteractionEnabled = enabled
+        }
+    }
+    
+    func makeCustomTokenView(enabled: Bool) {
+        UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
+            self.customTokenView.isHidden = !enabled
+            self.customTokenView.isUserInteractionEnabled = enabled
+        }
+    }
+    
+    func areTokenFieldsFilled() -> Bool {
+        let filled = !(tokenNameTextField.text?.isEmpty ?? true)
+            && !(tokenAddressTextField.text?.isEmpty ?? true)
+            && !(tokenSymbolTextField.text?.isEmpty ?? true)
+            && !(decimalsTextField.text?.isEmpty ?? true)
+        return filled
+    }
+    
     // MARK: - Table view updates
     
     func reloadTableData() {
@@ -194,19 +292,44 @@ class SearchTokenViewController: BasicViewController {
         completion()
     }
     
-    // MARK: - Buttons actions
-    
-    @IBAction func closeAction(_ sender: UIButton) {
-        dismissView()
+    func addTokenWithResult() -> Bool {
+        guard let name = tokenNameTextField.text,
+            let address = tokenAddressTextField.text,
+            let symbol = tokenSymbolTextField.text,
+            let decimals = decimalsTextField.text else {
+            alerts.showErrorAlert(for: self, error: "Can't get token info", completion: nil)
+                return false
+        }
+        guard EthereumAddress(address) != nil else {
+            alerts.showErrorAlert(for: self, error: "Wrong address", completion: nil)
+            return false
+        }
+        let token = ERC20Token(name: name,
+                               address: address,
+                               decimals: decimals,
+                               symbol: symbol)
+        let net = CurrentNetwork.currentNetwork
+        guard let wallet = CurrentWallet.currentWallet else {
+            alerts.showErrorAlert(for: self, error: "Can't get wallet", completion: nil)
+            return false
+        }
+        guard let tokenExists = try? wallet.isTokenExists(token: token, network: net) else {
+            alerts.showErrorAlert(for: self, error: "Can't check token existance", completion: nil)
+            return false
+        }
+        if tokenExists {
+            alerts.showErrorAlert(for: self, error: "Token exists", completion: nil)
+            return false
+        }
+        do {
+            try wallet.add(token: token, network: net)
+        } catch let error {
+            alerts.showErrorAlert(for: self, error: "Can't save token: \(error.localizedDescription)", completion: nil)
+        }
+        return true
     }
     
-    @IBAction func addAction(_ sender: BasicBlueButton) {
-        tokensForAdding.removeAll()
-        tokensForDeleting.removeAll()
-        dismissView()
-    }
-    
-    @objc func dismissView() {
+    func deleteUnsavedTokens() {
         guard let wallet = wallet else {
             return
         }
@@ -225,6 +348,43 @@ class SearchTokenViewController: BasicViewController {
                 return
             }
         }
+    }
+    
+    func removeSavedTokens() {
+        tokensForAdding.removeAll()
+        tokensForDeleting.removeAll()
+    }
+    
+    // MARK: - Buttons actions
+    
+    @IBAction func closeAction(_ sender: UIButton) {
+        deleteUnsavedTokens()
+        dismissView()
+    }
+    
+    @IBAction func addAction(_ sender: BasicBlueButton) {
+        if currentScreen == .customToken {
+            if addTokenWithResult() {
+                deleteUnsavedTokens()
+                dismissView()
+            }
+        } else {
+            removeSavedTokens()
+            deleteUnsavedTokens()
+            dismissView()
+        }
+    }
+    
+    @IBAction func changeScreenStatus(_ sender: UIButton) {
+        switch currentScreen {
+        case .search:
+            currentScreen = .customToken
+        case .customToken:
+            currentScreen = .search
+        }
+    }
+    
+    @objc func dismissView() {
         dismiss(animated: true, completion: nil)
         delegate?.modalViewBeenDismissed(updateNeeded: true)
     }

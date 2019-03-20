@@ -17,7 +17,9 @@ class NetworksViewController: BasicViewController {
 
     // MARK: - Internal vars
     
-    internal var networks: [Web3Network] = []
+    internal let alerts = Alerts()
+    internal var networks: [TableNetwork] = []
+    internal let networksCoordinator = NetworksCoordinator()
     
     // MARK: - Lyfesycle
 
@@ -59,17 +61,19 @@ class NetworksViewController: BasicViewController {
 
     func getNetworks() {
         DispatchQueue.global().async { [unowned self] in
-            let basicNetworks: [Networks] = [.Mainnet,
-                                             .Rinkeby,
-                                             .Ropsten]
-            var web3networks: [Web3Network]
-            let basicWeb3Nets = basicNetworks.map({
-                Web3Network(network: $0)
-            })
-            web3networks = basicWeb3Nets
-            let xdai = Web3Network(id: 100, name: "xDai", endpoint: "https://dai.poa.network")
-            web3networks.append(xdai)
-            self.networks = web3networks
+//            let basicNetworks: [Networks] = [.Mainnet,
+//                                             .Rinkeby,
+//                                             .Ropsten]
+//            var web3networks: [Web3Network]
+//            let basicWeb3Nets = basicNetworks.map({
+//                Web3Network(network: $0)
+//            })
+//            web3networks = basicWeb3Nets
+//            let xdai = Web3Network(id: 100, name: "xDai", endpoint: "https://dai.poa.network")
+//            web3networks.append(xdai)
+            let networks = self.networksCoordinator.getNetworks()
+            
+            self.networks = networks
             self.reloadDataInTable()
         }
     }
@@ -79,5 +83,23 @@ class NetworksViewController: BasicViewController {
             self?.networksTableView.reloadData()
         }
     }
-
+    
+    func selectNetwork(_ network: Web3Network) {
+        CurrentNetwork.currentNetwork = network
+        var networksArray = [TableNetwork]()
+        for net in networks {
+            var n = net
+            n.isSelected = net.network == network ? true : false
+            networksArray.append(n)
+        }
+        networks = networksArray
+    }
+    
+    // MARK: - Buttons actions
+    
+    @IBAction func addNetwork(_ sender: BasicBlueButton) {
+        let vc = AddNetworkViewController()
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
 }

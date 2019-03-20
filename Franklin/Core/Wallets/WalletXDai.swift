@@ -58,7 +58,7 @@ extension Wallet: IWalletXDAI {
                                             seal.reject(Errors.NetworkErrors.cantCreateRequest)
                                             return
             }
-            session.dataTask(with: request, completionHandler: { (data, response, error) in
+            session.dataTask(with: request, completionHandler: { (data, _, error) in
                 if let error = error {
                     seal.reject(error)
                 }
@@ -108,7 +108,7 @@ extension Wallet: IWalletXDAI {
                                             seal.reject(Errors.NetworkErrors.cantCreateRequest)
                                             return
             }
-            session.dataTask(with: request, completionHandler: { (data, response, error) in
+            session.dataTask(with: request, completionHandler: { (data, _, error) in
                 if let error = error {
                     seal.reject(error)
                 }
@@ -165,7 +165,7 @@ extension Wallet: IWalletXDAI {
                                             seal.reject(Errors.NetworkErrors.cantCreateRequest)
                                             return
             }
-            session.dataTask(with: request, completionHandler: { (data, response, error) in
+            session.dataTask(with: request, completionHandler: { (data, _, error) in
                 if let error = error {
                     seal.reject(error)
                 }

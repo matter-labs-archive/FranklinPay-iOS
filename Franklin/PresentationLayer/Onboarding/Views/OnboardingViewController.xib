@@ -92,7 +92,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setting up your wallet..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="F6C-uN-FK3">
-                            <rect key="frame" x="0.0" y="513" width="337.5" height="26"/>
+                            <rect key="frame" x="0.0" y="508.5" width="337.5" height="30.5"/>
                             <fontDescription key="fontDescription" name="SFProText-Regular" family="SF Pro Text" pointSize="24"/>
                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <nil key="highlightedColor"/>
@@ -124,7 +124,7 @@
                         <constraint firstItem="5jd-DQ-sd1" firstAttribute="top" secondItem="a1r-5y-Fyt" secondAttribute="bottom" id="kEo-CC-j4G"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="width" secondItem="uva-wy-8uq" secondAttribute="width" id="kdg-IY-LIP"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="bottom" secondItem="F6C-uN-FK3" secondAttribute="bottom" id="mzj-6G-b4s"/>
-                        <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.2" id="p8s-b4-PAS"/>
+                        <constraint firstItem="F6C-uN-FK3" firstAttribute="height" secondItem="a1r-5y-Fyt" secondAttribute="height" multiplier="1.4" id="p8s-b4-PAS"/>
                         <constraint firstItem="T7T-dq-jmR" firstAttribute="trailing" secondItem="F6C-uN-FK3" secondAttribute="trailing" id="qUz-Ds-r59"/>
                         <constraint firstItem="z3B-ys-e39" firstAttribute="width" secondItem="KFu-TQ-CFK" secondAttribute="width" id="w2A-k1-gY1"/>
                         <constraint firstItem="KFu-TQ-CFK" firstAttribute="top" secondItem="z3B-ys-e39" secondAttribute="bottom" constant="20" id="yCy-Dr-fso"/>

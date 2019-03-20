@@ -53,8 +53,7 @@ class SearchTokenCell: UITableViewCell {
                 .scaleFactor(UIScreen.main.scale),
                 .transition(.fade(1)),
                 .cacheOriginalImage
-        ]) {
-            result in
+        ]) { result in
             switch result {
             case .success(let value):
                 print("Task done for: \(value.source.url?.absoluteString ?? "")")

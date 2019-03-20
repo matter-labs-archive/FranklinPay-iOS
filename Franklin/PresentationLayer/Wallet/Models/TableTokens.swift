@@ -11,6 +11,7 @@ import Foundation
 public struct TableToken {
     var token: ERC20Token
     var inWallet: Wallet
+    var isCard: Bool
     var isSelected: Bool
 }
 

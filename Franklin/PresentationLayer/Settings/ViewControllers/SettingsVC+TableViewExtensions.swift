@@ -62,6 +62,11 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
             presentVC(NetworksViewController())
         case SettingsModel(.changePincode):
             presentVC(EnterPincodeViewController(for: .changePincode, data: Data()))
+        case SettingsModel(.privateKey):
+            let vc = userKeys.isPincodeExists()
+                ? EnterPincodeViewController(for: .privateKey, data: Data())
+                : PrivateKeyViewController()
+            presentVC(vc)
         default:
             alerts.showErrorAlert(for: self, error: "Coming soon", completion: nil)
         }
