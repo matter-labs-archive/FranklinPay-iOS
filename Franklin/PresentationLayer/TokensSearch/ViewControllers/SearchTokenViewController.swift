@@ -28,7 +28,7 @@ class SearchTokenViewController: BasicViewController {
     }
     
     // MARK: - Outlets
-
+    
     @IBOutlet weak var searchTextField: BasicTextField!
     @IBOutlet weak var tokensTableView: BasicTableView!
     @IBOutlet weak var helpLabel: UILabel!
@@ -39,6 +39,7 @@ class SearchTokenViewController: BasicViewController {
     @IBOutlet weak var searchView: UIView!
     @IBOutlet weak var customTokenView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var animationView: UIImageView!
     
     @IBOutlet weak var tokenNameTextField: BasicTextField!
     @IBOutlet weak var tokenSymbolTextField: BasicTextField!
@@ -49,23 +50,23 @@ class SearchTokenViewController: BasicViewController {
     // MARK: - Internal vars
     
     internal var ratesUpdating = false
-
+    
     internal var tokensList: [ERC20Token] = []
     internal var tokensForDeleting: Set<ERC20Token> = [] {
         didSet {
-            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+            makeConfirmButtonEnabled(!tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
         }
     }
     internal var tokensForAdding: Set<ERC20Token> = [] {
         didSet {
-            makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+            makeConfirmButtonEnabled(!tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
         }
     }
     internal var tokensAreAdded: [Bool] = []
-
+    
     internal  var searchController: UISearchController!
     internal var wallet: Wallet?
-
+    
     internal let tokensService = TokensService()
     internal let alerts = Alerts()
     
@@ -75,15 +76,15 @@ class SearchTokenViewController: BasicViewController {
             case .search:
                 addCustomToken.setTitle("Create", for: .normal)
                 titleLabel.text = "Search tokens"
-                makeConfirmButton(enabled: !tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
-                makeSearchView(enabled: true)
-                makeCustomTokenView(enabled: false)
+                makeConfirmButtonEnabled(!tokensForAdding.isEmpty || !tokensForDeleting.isEmpty)
+                makeSearchViewEnabled(true)
+                makeCustomTokenViewEnabled(false)
             case .customToken:
                 addCustomToken.setTitle("Back", for: .normal)
                 titleLabel.text = "Add custom token"
-                makeConfirmButton(enabled: areTokenFieldsFilled())
-                makeSearchView(enabled: false)
-                makeCustomTokenView(enabled: true)
+                makeConfirmButtonEnabled(areTokenFieldsFilled())
+                makeSearchViewEnabled(false)
+                makeCustomTokenViewEnabled(true)
             }
         }
     }
@@ -93,7 +94,7 @@ class SearchTokenViewController: BasicViewController {
     weak var delegate: ModalViewDelegate?
     
     // MARK: - lazy vars
-
+    
     lazy var readerVC: QRCodeReaderViewController = {
         let builder = QRCodeReaderViewControllerBuilder {
             $0.reader = QRCodeReader(metadataObjectTypes: [.qr], captureDevicePosition: .back)
@@ -102,14 +103,14 @@ class SearchTokenViewController: BasicViewController {
     }()
     
     // MARK: - Inits
-
+    
     convenience init(for wallet: Wallet) {
         self.init()
         self.wallet = wallet
     }
     
     // MARK: - Lifesycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = Colors.background
@@ -123,14 +124,19 @@ class SearchTokenViewController: BasicViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        makeConfirmButton(enabled: false)
-        makeHelpLabel(enabled: true)
+        makeConfirmButtonEnabled(false)
+        makeHelpLabelEnabled(true)
     }
     
     // MARK: - Main setup
     
     func mainSetup() {
         currentScreen = .search
+        
+        animationView.setGifImage(UIImage(gifName: "loading.gif"))
+        animationView.loopCount = -1
+        animationView.isUserInteractionEnabled = false
+        makeAnimationViewEnabled(false)
         
         view.backgroundColor = UIColor.clear
         view.isOpaque = false
@@ -199,34 +205,34 @@ class SearchTokenViewController: BasicViewController {
             }
             self.updateTokensList(with: list, completion: {
                 self.reloadTableData()
-//                updateRates {
-//                    reloadTableDataWithDelay()
-//                }
+                //                updateRates {
+                //                    reloadTableDataWithDelay()
+                //                }
             })
         }
     }
     
-//    func updateRates(comletion: @escaping () -> Void) {
-//        guard !ratesUpdating else { return }
-//        ratesUpdating = true
-//        let first10List: [ERC20Token]
-//        if tokensList.count > 10 {
-//            first10List = Array(tokensList.prefix(upTo: 10))
-//        } else {
-//            first10List = tokensList
-//        }
-//        for token in first10List {
-//            do {
-//                _ = try token.updateRateAndChange()
-//            } catch {
-//                continue
-//            }
-//        }
-//        ratesUpdating = false
-//        comletion()
-//    }
+    //    func updateRates(comletion: @escaping () -> Void) {
+    //        guard !ratesUpdating else { return }
+    //        ratesUpdating = true
+    //        let first10List: [ERC20Token]
+    //        if tokensList.count > 10 {
+    //            first10List = Array(tokensList.prefix(upTo: 10))
+    //        } else {
+    //            first10List = tokensList
+    //        }
+    //        for token in first10List {
+    //            do {
+    //                _ = try token.updateRateAndChange()
+    //            } catch {
+    //                continue
+    //            }
+    //        }
+    //        ratesUpdating = false
+    //        comletion()
+    //    }
     
-    func makeHelpLabel(enabled: Bool) {
+    func makeHelpLabelEnabled(_ enabled: Bool) {
         helpLabel.alpha = enabled ? 1 : 0
     }
     
@@ -235,22 +241,30 @@ class SearchTokenViewController: BasicViewController {
         reloadTableData()
     }
     
-    func makeConfirmButton(enabled: Bool) {
+    func makeConfirmButtonEnabled(_ enabled: Bool) {
         addButton.isEnabled = enabled
-        addButton.alpha = enabled ? 1 : 0.5
+        addButton.alpha = enabled ? 1.0 : 0.5
     }
     
-    func makeSearchView(enabled: Bool) {
+    func makeAnimationViewEnabled(_ enabled: Bool) {
+        DispatchQueue.main.async { [unowned self] in
+            self.animationView.alpha = enabled ? 1.0 : 0.0
+        }
+    }
+    
+    func makeSearchViewEnabled(_ enabled: Bool) {
         UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
             self.searchView.isHidden = !enabled
             self.searchView.isUserInteractionEnabled = enabled
         }
     }
     
-    func makeCustomTokenView(enabled: Bool) {
+    func makeCustomTokenViewEnabled(_ enabled: Bool) {
         UIView.animate(withDuration: Constants.Main.animationDuration) { [unowned self] in
             self.customTokenView.isHidden = !enabled
             self.customTokenView.isUserInteractionEnabled = enabled
+            let addressFilled = enabled && !(self.tokenAddressTextField.text?.isEmpty ?? true)
+            self.makeAdditionalTokenTextFieldsEnabled(addressFilled)
         }
     }
     
@@ -260,6 +274,46 @@ class SearchTokenViewController: BasicViewController {
             && !(tokenSymbolTextField.text?.isEmpty ?? true)
             && !(decimalsTextField.text?.isEmpty ?? true)
         return filled
+    }
+    
+    func makeAdditionalTokenTextFieldsEnabled(_ enabled: Bool) {
+        tokenNameTextField.isUserInteractionEnabled = enabled
+        tokenSymbolTextField.isUserInteractionEnabled = enabled
+        decimalsTextField.isUserInteractionEnabled = enabled
+        tokenNameTextField.alpha = enabled ? 1 : 0.5
+        tokenSymbolTextField.alpha = enabled ? 1 : 0.5
+        decimalsTextField.alpha = enabled ? 1 : 0.5
+    }
+    
+    func checkTokenInfo(address: String) {
+        makeAnimationViewEnabled(true)
+        DispatchQueue.global().asyncAfter(deadline: .now()+0.1) { [unowned self] in
+            guard let ethAddress = EthereumAddress(address) else {
+                self.alerts.showErrorAlert(for: self, error: "Wrong token address") { [unowned self] in
+                    self.makeAdditionalTokenTextFieldsEnabled(false)
+                    self.makeConfirmButtonEnabled(false)
+                    self.makeAnimationViewEnabled(false)
+                }
+                return
+            }
+            do {
+                let token = try ERC20Token.getInfoFromInfura(tokenAddress: ethAddress)
+                DispatchQueue.main.async {
+                    self.tokenNameTextField.text = token.name
+                    self.tokenSymbolTextField.text = token.symbol
+                    self.decimalsTextField.text = token.decimals
+                    self.makeAdditionalTokenTextFieldsEnabled(true)
+                    self.makeConfirmButtonEnabled(self.areTokenFieldsFilled())
+                    self.makeAnimationViewEnabled(false)
+                }
+            } catch {
+                self.alerts.showErrorAlert(for: self, error: "Can't get token info") { [unowned self] in
+                    self.makeAdditionalTokenTextFieldsEnabled(true)
+                    self.makeConfirmButtonEnabled(self.areTokenFieldsFilled())
+                    self.makeAnimationViewEnabled(false)
+                }
+            }
+        }
     }
     
     // MARK: - Table view updates
@@ -297,7 +351,7 @@ class SearchTokenViewController: BasicViewController {
             let address = tokenAddressTextField.text,
             let symbol = tokenSymbolTextField.text,
             let decimals = decimalsTextField.text else {
-            alerts.showErrorAlert(for: self, error: "Can't get token info", completion: nil)
+                alerts.showErrorAlert(for: self, error: "Can't get token info", completion: nil)
                 return false
         }
         guard EthereumAddress(address) != nil else {
@@ -375,6 +429,14 @@ class SearchTokenViewController: BasicViewController {
         }
     }
     
+    @IBAction func getTokenAddressQR(_ sender: ScanButton) {
+        scanTapped()
+    }
+    
+    @IBAction func getTokenAddressBuffer(_ sender: BasicBlueButton) {
+        textFromBuffer()
+    }
+    
     @IBAction func changeScreenStatus(_ sender: UIButton) {
         switch currentScreen {
         case .search:
@@ -397,7 +459,14 @@ class SearchTokenViewController: BasicViewController {
     
     @objc func textFromBuffer() {
         if let string = UIPasteboard.general.string {
-            searchTextField.text = string
+            let text = string.lowercased()
+            switch currentScreen {
+            case .customToken:
+                tokenAddressTextField.text = text
+                checkTokenInfo(address: text)
+            case .search:
+                searchTextField.text = text
+            }
             //            DispatchQueue.main.async { [weak self] in
             //                self?.searchBar(searchBar, textDidChange: string)
             //            }

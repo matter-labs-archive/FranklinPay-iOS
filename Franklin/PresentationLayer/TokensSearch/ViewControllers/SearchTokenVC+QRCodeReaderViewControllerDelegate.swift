@@ -12,9 +12,17 @@ import QRCodeReader
 extension SearchTokenViewController: QRCodeReaderViewControllerDelegate {
     func reader(_ reader: QRCodeReaderViewController, didScanResult result: QRCodeReaderResult) {
         reader.stopScanning()
-        let searchText = result.value.lowercased()
-        searchTextField.text = searchText
-        reader.dismiss(animated: true)
+        reader.dismiss(animated: true) { [unowned self] in
+            let text = result.value.lowercased()
+            switch self.currentScreen {
+            case .customToken:
+                self.tokenAddressTextField.text = text
+                self.checkTokenInfo(address: text)
+            case .search:
+                self.searchTextField.text = text
+            }
+        }
+        
         //        DispatchQueue.main.async { [weak self] in
         //
         //            self?.searchBar(searchBar, textDidChange: searchText)

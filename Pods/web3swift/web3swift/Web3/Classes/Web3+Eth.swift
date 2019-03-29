@@ -96,16 +96,6 @@ extension web3.Eth {
         return result
     }
     
-    /// Returns a block  of the last mined block that Ethereum node knows about.
-    ///
-    /// This function is synchronous!
-    ///
-    /// Returns the Result object that indicates either success of failure.
-    public func getBlock() throws -> String {
-        let result = try self.getBlockPromise().wait()
-        return result
-    }
-    
     /// Returns a current gas price in the units of Wei. The node has internal algorithms for averaging over the last few blocks.
     ///
     /// This function is synchronous!

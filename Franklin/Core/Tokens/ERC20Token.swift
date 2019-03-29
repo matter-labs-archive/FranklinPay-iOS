@@ -10,12 +10,14 @@ import Foundation
 import Web3swift
 import BigInt
 import PromiseKit
+import EthereumAddress
 private typealias PromiseResult = PromiseKit.Result
 
 protocol IERC20Token: IToken {
     func isEther() -> Bool
     func isFranklin() -> Bool
     func isDai() -> Bool
+    static func getInfoFromInfura(tokenAddress: EthereumAddress) throws -> ERC20Token
 }
 
 public class ERC20Token: IERC20Token {
@@ -167,6 +169,50 @@ public class ERC20Token: IERC20Token {
         return self == Buff()
             ? true
             : false
+    }
+    
+    public static func getInfoFromInfura(tokenAddress: EthereumAddress) throws -> ERC20Token {
+        guard let web3 = try? CurrentNetwork.currentNetwork.getWeb() else {
+            throw Errors.NetworkErrors.cantCreateRequest
+        }
+        guard let contract = web3.contract(Web3.Utils.erc20ABI,
+                                     at: tokenAddress,
+                                     abiVersion: 2) else {
+                                        throw Errors.NetworkErrors.cantCreateRequest
+        }
+        var transactionOptions = TransactionOptions.defaultOptions
+        transactionOptions.callOnBlock = .latest
+        guard let namePromise = contract.read("name", parameters: [] as [AnyObject], extraData: Data(), transactionOptions: transactionOptions)?.callPromise() else {
+            throw Errors.NetworkErrors.cantCreateRequest
+        }
+        
+        guard let symbolPromise = contract.read("symbol", parameters: [] as [AnyObject], extraData: Data(), transactionOptions: transactionOptions)?.callPromise() else {
+            throw Errors.NetworkErrors.cantCreateRequest
+        }
+        
+        guard let decimalPromise = contract.read("decimals", parameters: [] as [AnyObject], extraData: Data(), transactionOptions: transactionOptions)?.callPromise() else {
+            throw Errors.NetworkErrors.cantCreateRequest
+        }
+        
+        let allPromises = [namePromise, symbolPromise, decimalPromise]
+        let queue = web3.requestDispatcher.queue
+        var token: ERC20Token?
+        when(resolved: allPromises).map(on: queue) { (resolvedPromises) -> Void in
+            guard case .fulfilled(let nameResult) = resolvedPromises[0] else {return}
+            guard let name = nameResult["0"] as? String else {return}
+            
+            guard case .fulfilled(let symbolResult) = resolvedPromises[1] else {return}
+            guard let symbol = symbolResult["0"] as? String else {return}
+            
+            guard case .fulfilled(let decimalsResult) = resolvedPromises[2] else {return}
+            guard let decimals = decimalsResult["0"] as? BigUInt else {return}
+            
+            token = ERC20Token(name: name, address: tokenAddress.address, decimals: decimals.description, symbol: symbol)
+        }.wait()
+        guard let readyToken = token else {
+            throw Errors.NetworkErrors.noData
+        }
+        return readyToken
     }
 }
 

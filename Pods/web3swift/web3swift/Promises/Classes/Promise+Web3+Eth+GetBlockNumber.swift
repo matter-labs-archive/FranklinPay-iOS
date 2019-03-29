@@ -24,20 +24,3 @@ extension web3.Eth {
         }
     }
 }
-
-extension web3.Eth {
-    public func getBlockPromise() -> Promise<String> {
-        let request = JSONRPCRequestFabric.prepareRequest(.blockNumber, parameters: ["latest"])
-        let rp = web3.dispatch(request)
-        let queue = web3.requestDispatcher.queue
-        return rp.map(on: queue ) { response in
-            guard let data: String = response.jsonrpc else {
-                if response.error != nil {
-                    throw Web3Error.nodeError(desc: response.error!.message)
-                }
-                throw Web3Error.nodeError(desc: "Invalid value from Ethereum node")
-            }
-            return data
-        }
-    }
-}

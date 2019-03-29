@@ -220,11 +220,15 @@ class WalletViewController: BasicViewController {
             self.saveTokensBalances(tokens: uTokens)
             if self.stopUpdatingTable {
                 self.stopUpdatingTable = false
-                self.refreshControl.endRefreshing()
+                DispatchQueue.main.async { [unowned self] in
+                    self.refreshControl.endRefreshing()
+                }
                 return
             }
             self.reloadBalancesInTable(forTokens: uTokens, completion: {
-                self.refreshControl.endRefreshing()
+                DispatchQueue.main.async { [unowned self] in
+                    self.refreshControl.endRefreshing()
+                }
                 print("Updated")
             })
         }

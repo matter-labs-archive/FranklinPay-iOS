@@ -11,21 +11,24 @@ import UIKit
 extension SearchTokenViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let currentText = (textField.text ?? "") as NSString
+        let newText = currentText.replacingCharacters(in: range, with: string) as String
         switch currentScreen {
         case .search:
-            let currentText = (textField.text ?? "") as NSString
-            let newText = currentText.replacingCharacters(in: range, with: string) as String
             if newText == "" {
                 emptyTokensList()
-                makeHelpLabel(enabled: true)
+                makeHelpLabelEnabled(true)
             } else {
                 let token = newText
-                makeHelpLabel(enabled: false)
+                makeHelpLabelEnabled(false)
                 searchTokens(string: token)
             }
             return true
         case .customToken:
-            makeConfirmButton(enabled: areTokenFieldsFilled())
+            let isAddressTF = textField.tag == TextFieldsTags.address.rawValue
+            let isEmpty = newText.isEmpty
+            makeAdditionalTokenTextFieldsEnabled((isAddressTF && !isEmpty) || !isAddressTF)
+            makeConfirmButtonEnabled(areTokenFieldsFilled())
             switch textField.tag {
             case TextFieldsTags.decimals.rawValue:
                 return textField.text?.count ?? 0 <= 9

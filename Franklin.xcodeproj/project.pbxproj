@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0774D99066CA34A6275206DA /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A125FC0EB1748492C1C4AB /* Pods_Franklin.framework */; };
 		1CF54A75215CCF0E009CC78F /* MatterWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */; };
 		3A0C1FE92237C8C200968304 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */; };
 		3A0C1FEA2237C8C200968304 /* PrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */; };
@@ -242,7 +243,6 @@
 		3A3D3E8F221E9B0000506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB8221DD01B00506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift */; };
 		3A3D3E90221E9B0000506F98 /* WalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103421E507250012A978 /* WalletsService.swift */; };
 		3A3D3E91221E9B0000506F98 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */; };
-		3A3D3E93221E9B0000506F98 /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		3A3D3E95221E9B0000506F98 /* TransactionsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */; };
 		3A3D3E96221E9B0000506F98 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */; };
 		3A3D3E97221E9B0000506F98 /* Web3Swift.js in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E94321B534D10022CF61 /* Web3Swift.js */; };
@@ -492,7 +492,6 @@
 		3A3D3FB0221ECD5500506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A3D3DB8221DD01B00506F98 /* AddContactVC+QRCodeReaderViewControllerDelegate.swift */; };
 		3A3D3FB1221ECD5500506F98 /* WalletsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C1103421E507250012A978 /* WalletsService.swift */; };
 		3A3D3FB2221ECD5500506F98 /* DismissAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B45A2D2174D1CC00F38E50 /* DismissAnimator.swift */; };
-		3A3D3FB4221ECD5500506F98 /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		3A3D3FB6221ECD5500506F98 /* TransactionsHistoryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF95214BAD730023FC18 /* TransactionsHistoryViewController.xib */; };
 		3A3D3FB7221ECD5500506F98 /* TransactionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B271CF9A214BAEDB0023FC18 /* TransactionCell.xib */; };
 		3A3D3FB8221ECD5500506F98 /* Web3Swift.js in Resources */ = {isa = PBXBuildFile; fileRef = 91F6E94321B534D10022CF61 /* Web3Swift.js */; };
@@ -646,7 +645,6 @@
 		3AE49490223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
 		3AE49491223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
 		3AE49492223FB94900AB2972 /* QRiteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE4948F223FB94900AB2972 /* QRiteractor.swift */; };
-		694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */; };
 		914F228A21499ACC00ED58E6 /* PincodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228821499ACC00ED58E6 /* PincodeViewController.swift */; };
 		914F228B21499ACC00ED58E6 /* CreatePincodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */; };
 		914F228E21499D4500ED58E6 /* PinCodeNumberButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 914F228D21499D4500ED58E6 /* PinCodeNumberButton.swift */; };
@@ -846,11 +844,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		17EBB792E37A98908EBFCED1 /* Pods-MatterWallet.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatterWallet.beta.xcconfig"; path = "Pods/Target Support Files/Pods-MatterWallet/Pods-MatterWallet.beta.xcconfig"; sourceTree = "<group>"; };
+		08A125FC0EB1748492C1C4AB /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A72215CCF0E009CC78F /* FranklinTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FranklinTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CF54A74215CCF0E009CC78F /* MatterWalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatterWalletTests.swift; sourceTree = "<group>"; };
 		1CF54A76215CCF0E009CC78F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.debug.xcconfig"; sourceTree = "<group>"; };
 		3A0C1FE72237C8C200968304 /* PrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrivateKeyViewController.swift; sourceTree = "<group>"; };
 		3A0C1FE82237C8C200968304 /* PrivateKeyViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrivateKeyViewController.xib; sourceTree = "<group>"; };
 		3A0CD5BC223A8FCD00D0A4FE /* EndpointValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndpointValidator.swift; sourceTree = "<group>"; };
@@ -950,9 +947,7 @@
 		3AC3BD97223151DD00656EC7 /* DefaultNetworks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultNetworks.swift; sourceTree = "<group>"; };
 		3AC3BD9B2231579200656EC7 /* AddNetworkVC+TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddNetworkVC+TextFieldDelegate.swift"; sourceTree = "<group>"; };
 		3AE4948F223FB94900AB2972 /* QRiteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QRiteractor.swift; sourceTree = "<group>"; };
-		7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
-		77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Franklin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.release.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.release.xcconfig"; sourceTree = "<group>"; };
+		7EA067074FA892DC5CE96AF9 /* Pods-Franklin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.debug.xcconfig"; path = "Target Support Files/Pods-Franklin/Pods-Franklin.debug.xcconfig"; sourceTree = "<group>"; };
 		914F228821499ACC00ED58E6 /* PincodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PincodeViewController.swift; sourceTree = "<group>"; };
 		914F228921499ACC00ED58E6 /* CreatePincodeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatePincodeViewController.xib; sourceTree = "<group>"; };
 		914F228D21499D4500ED58E6 /* PinCodeNumberButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeNumberButton.swift; sourceTree = "<group>"; };
@@ -1024,10 +1019,7 @@
 		B2E668D92150FF0500C3CC2D /* TokenCellDropdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCellDropdown.swift; sourceTree = "<group>"; };
 		B2E668DA2150FF0500C3CC2D /* TokenCellDropdown.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TokenCellDropdown.xib; sourceTree = "<group>"; };
 		B2E668DE2151238200C3CC2D /* Enumerations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enumerations.swift; sourceTree = "<group>"; };
-		B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.release.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.release.xcconfig"; sourceTree = "<group>"; };
-		CBC201C3B485F2719151925D /* Pods-MatterWallet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatterWallet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MatterWallet/Pods-MatterWallet.debug.xcconfig"; sourceTree = "<group>"; };
-		D2A83FAAE20C73BE712E321A /* Pods-MatterWallet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MatterWallet.release.xcconfig"; path = "Pods/Target Support Files/Pods-MatterWallet/Pods-MatterWallet.release.xcconfig"; sourceTree = "<group>"; };
-		D5B44D77536C7320086DD73C /* Pods-Franklin.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.beta.xcconfig"; path = "Pods/Target Support Files/Pods-Franklin/Pods-Franklin.beta.xcconfig"; sourceTree = "<group>"; };
+		BF17C2EA54CA0F20433CCE86 /* Pods-Franklin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Franklin.release.xcconfig"; path = "Target Support Files/Pods-Franklin/Pods-Franklin.release.xcconfig"; sourceTree = "<group>"; };
 		E20F3DF9220AFD1000669C8B /* ContactTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableCell.swift; sourceTree = "<group>"; };
 		E20F3DFA220AFD1000669C8B /* ContactTableCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableCell.xib; sourceTree = "<group>"; };
 		E2215ABE21FF44A600FC79AB /* AcceptChequeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcceptChequeController.swift; sourceTree = "<group>"; };
@@ -1169,7 +1161,6 @@
 		E2F686A621F9DEF600BD3D14 /* SendMoneyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMoneyController.swift; sourceTree = "<group>"; };
 		E2F686A721F9DEF600BD3D14 /* SendMoneyController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SendMoneyController.xib; sourceTree = "<group>"; };
 		E2F686AB21F9E0C600BD3D14 /* BasicTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTextField.swift; sourceTree = "<group>"; };
-		F1EAA67A3BA7548BCFC82F33 /* Pods-DiveLane.beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiveLane.beta.xcconfig"; path = "Pods/Target Support Files/Pods-DiveLane/Pods-DiveLane.beta.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1184,7 +1175,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A3D3E93221E9B0000506F98 /* Pods_Franklin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1192,7 +1182,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A3D3FB4221ECD5500506F98 /* Pods_Franklin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1200,7 +1189,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				694EF6C656B1E9D75E82EA2D /* Pods_Franklin.framework in Frameworks */,
+				0774D99066CA34A6275206DA /* Pods_Franklin.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,22 +1203,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		01C0C7BFEA430D8AD09D7D4D /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				2D953DB44EF6BCFD40656B30 /* Pods-DiveLane.debug.xcconfig */,
-				B3A7D6406822C0774A93B7EB /* Pods-DiveLane.release.xcconfig */,
-				F1EAA67A3BA7548BCFC82F33 /* Pods-DiveLane.beta.xcconfig */,
-				CBC201C3B485F2719151925D /* Pods-MatterWallet.debug.xcconfig */,
-				D2A83FAAE20C73BE712E321A /* Pods-MatterWallet.release.xcconfig */,
-				17EBB792E37A98908EBFCED1 /* Pods-MatterWallet.beta.xcconfig */,
-				7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */,
-				8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */,
-				D5B44D77536C7320086DD73C /* Pods-Franklin.beta.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		1CF54A73215CCF0E009CC78F /* FranklinTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1460,14 +1433,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		6DE660421B91D607B06623B4 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				77B62B920A6AD4A37743E1A4 /* Pods_Franklin.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		9197F2D62143B4FE00C358AA /* WalletCreation */ = {
 			isa = PBXGroup;
 			children = (
@@ -1530,8 +1495,8 @@
 				B219DC2A215B77A80035BF94 /* FranklinUITests */,
 				1CF54A73215CCF0E009CC78F /* FranklinTests */,
 				91B6A79421435F5D0033A045 /* Products */,
-				01C0C7BFEA430D8AD09D7D4D /* Pods */,
-				6DE660421B91D607B06623B4 /* Frameworks */,
+				A3EC8A9F3750E036C9CB7D66 /* Pods */,
+				9E66195383BBE603BB6F59C9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1638,6 +1603,23 @@
 				91F6E93F21B5339F0022CF61 /* BrowserController.xib */,
 			);
 			path = Browser;
+			sourceTree = "<group>";
+		};
+		9E66195383BBE603BB6F59C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				08A125FC0EB1748492C1C4AB /* Pods_Franklin.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A3EC8A9F3750E036C9CB7D66 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7EA067074FA892DC5CE96AF9 /* Pods-Franklin.debug.xcconfig */,
+				BF17C2EA54CA0F20433CCE86 /* Pods-Franklin.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		B2091518214BA5D800C8B408 /* PresentationLayer */ = {
@@ -2713,11 +2695,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A3D3EF4221E9B0000506F98 /* Build configuration list for PBXNativeTarget "FranklinDev" */;
 			buildPhases = (
-				3A3D3DDA221E9B0000506F98 /* [CP] Check Pods Manifest.lock */,
 				3A3D3DDB221E9B0000506F98 /* Sources */,
 				3A3D3E92221E9B0000506F98 /* Frameworks */,
 				3A3D3E94221E9B0000506F98 /* Resources */,
-				3A3D3EF1221E9B0000506F98 /* [CP] Embed Pods Frameworks */,
 				3A3D3EF2221E9B0000506F98 /* ShellScript */,
 				3A3D3EF3221E9B0000506F98 /* ShellScript */,
 			);
@@ -2734,11 +2714,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3A3D4014221ECD5500506F98 /* Build configuration list for PBXNativeTarget "FranklinAlpha" */;
 			buildPhases = (
-				3A3D3EFB221ECD5500506F98 /* [CP] Check Pods Manifest.lock */,
 				3A3D3EFC221ECD5500506F98 /* Sources */,
 				3A3D3FB3221ECD5500506F98 /* Frameworks */,
 				3A3D3FB5221ECD5500506F98 /* Resources */,
-				3A3D4012221ECD5500506F98 /* [CP] Embed Pods Frameworks */,
 				3A3D4013221ECD5500506F98 /* ShellScript */,
 			);
 			buildRules = (
@@ -2754,12 +2732,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 91B6A7A521435F5E0033A045 /* Build configuration list for PBXNativeTarget "Franklin" */;
 			buildPhases = (
-				545595EA32A4C5AA1688643D /* [CP] Check Pods Manifest.lock */,
+				B56652C89ECACCF480626B49 /* [CP] Check Pods Manifest.lock */,
 				91B6A78F21435F5D0033A045 /* Sources */,
 				91B6A79021435F5D0033A045 /* Frameworks */,
 				91B6A79121435F5D0033A045 /* Resources */,
-				84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */,
 				B2495E05215CE6F2005B18F2 /* ShellScript */,
+				3D17B098BFCE998B6CF2DBB5 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3130,86 +3108,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3A3D3DDA221E9B0000506F98 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Franklin-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3A3D3EF1221E9B0000506F98 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BadgeSwift/BadgeSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BlockiesSwift/BlockiesSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
-				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
-				"${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework",
-				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BadgeSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlockiesSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusBarOverlay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionableTab.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A3D3EF2221E9B0000506F98 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3240,86 +3138,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nswiftlint autocorrect\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		3A3D3EFB221ECD5500506F98 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Franklin-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		3A3D4012221ECD5500506F98 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BadgeSwift/BadgeSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BlockiesSwift/BlockiesSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
-				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
-				"${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework",
-				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BadgeSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlockiesSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusBarOverlay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionableTab.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3A3D4013221ECD5500506F98 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3337,84 +3155,21 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nswiftlint autocorrect\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		545595EA32A4C5AA1688643D /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Franklin-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		84397CBE724119CCA1184C7C /* [CP] Embed Pods Frameworks */ = {
+		3D17B098BFCE998B6CF2DBB5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/BadgeSwift/BadgeSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework",
-				"${BUILT_PRODUCTS_DIR}/BlockiesSwift/BlockiesSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework",
-				"${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework",
-				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
-				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
-				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
-				"${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
-				"${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework",
-				"${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework",
-				"${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework",
-				"${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework",
-				"${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework",
-				"${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BadgeSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BigInt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BlockiesSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CryptoSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumABI.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EthereumAddress.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/QRCodeReader.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SipHash.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StatusBarOverlay.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftRLP.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyGif.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionableTab.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/scrypt.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/secp256k1_swift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Web3swift.framework",
+				"${PODS_ROOT}/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		B2495E05215CE6F2005B18F2 /* ShellScript */ = {
@@ -3433,6 +3188,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\nswiftlint\nswiftlint autocorrect\nelse\necho \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		B56652C89ECACCF480626B49 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Franklin-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -4110,7 +3887,6 @@
 		};
 		3A3D3EF5221E9B0000506F98 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon.dev;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.dev;
@@ -4138,7 +3914,6 @@
 		};
 		3A3D3EF6221E9B0000506F98 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon.dev;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.dev;
@@ -4166,7 +3941,6 @@
 		};
 		3A3D4015221ECD5500506F98 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon.alpha;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.alpha;
@@ -4194,7 +3968,6 @@
 		};
 		3A3D4016221ECD5500506F98 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon.alpha;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon.alpha;
@@ -4336,7 +4109,7 @@
 		};
 		91B6A7A621435F5E0033A045 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7262024E9528CEBCA11501E5 /* Pods-Franklin.debug.xcconfig */;
+			baseConfigurationReference = 7EA067074FA892DC5CE96AF9 /* Pods-Franklin.debug.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -4364,7 +4137,7 @@
 		};
 		91B6A7A721435F5E0033A045 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8369632F6AE20EACFD1BC1E6 /* Pods-Franklin.release.xcconfig */;
+			baseConfigurationReference = BF17C2EA54CA0F20433CCE86 /* Pods-Franklin.release.xcconfig */;
 			buildSettings = {
 				APP_ICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

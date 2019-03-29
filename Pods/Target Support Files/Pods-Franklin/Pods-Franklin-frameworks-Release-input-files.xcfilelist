@@ -1,0 +1,22 @@
+${PODS_ROOT}/Target Support Files/Pods-Franklin/Pods-Franklin-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/BadgeSwift/BadgeSwift.framework
+${BUILT_PRODUCTS_DIR}/BigInt/BigInt.framework
+${BUILT_PRODUCTS_DIR}/BlockiesSwift/BlockiesSwift.framework
+${BUILT_PRODUCTS_DIR}/CryptoSwift/CryptoSwift.framework
+${BUILT_PRODUCTS_DIR}/EthereumABI/EthereumABI.framework
+${BUILT_PRODUCTS_DIR}/EthereumAddress/EthereumAddress.framework
+${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework
+${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
+${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework
+${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework
+${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework
+${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework
+${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework
+${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework
+${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework
+${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework
+${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework
+${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework
+${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework
+${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework
