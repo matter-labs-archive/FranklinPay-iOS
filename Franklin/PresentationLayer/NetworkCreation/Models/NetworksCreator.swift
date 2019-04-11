@@ -29,7 +29,7 @@ public class NetworkCreator {
     }
     
     func isNetworkPossible(network: Web3Network) -> Bool {
-        if Web3.new(network.endpoint) != nil {
+        if (try? Web3.new(network.endpoint)) != nil {
             return true
         } else {
             return false
@@ -40,11 +40,11 @@ public class NetworkCreator {
         guard let wallets = try? walletsService.getAllWallets() else {
             throw Errors.CommonErrors.unknownError
         }
-        guard let web3 = Web3.new(network.endpoint) else {
+        guard let web3 = try? Web3.new(network.endpoint) else {
             throw Errors.NetworkErrors.wrongURL
         }
         for wallet in wallets {
-            if let _ = try? wallet.getETHbalance(web3instance: web3) {
+            if (try? wallet.getETHbalance(web3instance: web3)) != nil {
                 try appController.addEther(for: wallet, network: network)
             }
         }

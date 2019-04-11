@@ -40,17 +40,17 @@ public class WalletsService: IWalletsService {
             throw Errors.WalletErrors.cantImportWallet
         }
         
-        guard let newWallet = try? EthereumKeystoreV3(privateKey: data, password: password) else {
+        guard let wallet = try? EthereumKeystoreV3(privateKey: data, password: password) else {
             throw Errors.WalletErrors.cantImportWallet
         }
         
-        guard let wallet = newWallet, wallet.addresses?.count == 1 else {
+        guard wallet.addresses?.count == 1 else {
             throw Errors.WalletErrors.cantImportWallet
         }
         guard let keyData = try? JSONEncoder().encode(wallet.keystoreParams) else {
             throw Errors.WalletErrors.cantImportWallet
         }
-        guard let address = newWallet?.addresses?.first?.address else {
+        guard let address = wallet.addresses?.first?.address else {
             throw Errors.WalletErrors.cantImportWallet
         }
         let w = Wallet(address: address,
@@ -64,10 +64,10 @@ public class WalletsService: IWalletsService {
     
     public func createWallet(name: String,
                              password: String) throws -> Wallet {
-        guard let newWallet = try? EthereumKeystoreV3(password: password) else {
+        guard let wallet = try? EthereumKeystoreV3(password: password) else {
             throw Errors.WalletErrors.cantCreateWallet
         }
-        guard let wallet = newWallet, wallet.addresses?.count == 1 else {
+        guard wallet.addresses?.count == 1 else {
             throw Errors.WalletErrors.cantCreateWallet
         }
         guard let keyData = try? JSONEncoder().encode(wallet.keystoreParams) else {
@@ -89,10 +89,10 @@ public class WalletsService: IWalletsService {
                                password: String,
                                mnemonics: String,
                                backupNeeded: Bool) throws -> Wallet {
-        guard let keystore = try? BIP32Keystore(mnemonics: mnemonics,
+        guard let wallet = try? BIP32Keystore(mnemonics: mnemonics,
                                                 password: password,
                                                 mnemonicsPassword: "",
-                                                language: .english), let wallet = keystore else {
+                                                language: .english) else {
             throw Errors.WalletErrors.cantCreateWallet
         }
         guard let address = wallet.addresses?.first?.address else {
@@ -111,11 +111,10 @@ public class WalletsService: IWalletsService {
     }
     
     public func generateMnemonics(bitsOfEntropy: Int) throws -> String {
-        guard let mnemonics = try? BIP39.generateMnemonics(bitsOfEntropy: bitsOfEntropy),
-            let unwrapped = mnemonics else {
+        guard let mnemonics = try? BIP39.generateMnemonics(bitsOfEntropy: bitsOfEntropy) else {
                 throw Web3Error.keystoreError(err: .noEntropyError)
         }
-        return unwrapped
+        return mnemonics
     }
 }
 

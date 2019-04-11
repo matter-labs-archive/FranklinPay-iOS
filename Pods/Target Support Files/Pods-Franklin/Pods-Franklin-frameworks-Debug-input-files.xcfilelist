@@ -13,10 +13,10 @@ ${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework
 ${BUILT_PRODUCTS_DIR}/QRCodeReader.swift/QRCodeReader.framework
 ${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework
 ${BUILT_PRODUCTS_DIR}/SipHash/SipHash.framework
+${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework
 ${BUILT_PRODUCTS_DIR}/StatusBarOverlay/StatusBarOverlay.framework
 ${BUILT_PRODUCTS_DIR}/SwiftRLP/SwiftRLP.framework
 ${BUILT_PRODUCTS_DIR}/SwiftyGif/SwiftyGif.framework
 ${BUILT_PRODUCTS_DIR}/TransitionableTab/TransitionableTab.framework
-${BUILT_PRODUCTS_DIR}/scrypt/scrypt.framework
 ${BUILT_PRODUCTS_DIR}/secp256k1_swift/secp256k1_swift.framework
 ${BUILT_PRODUCTS_DIR}/web3swift/Web3swift.framework
