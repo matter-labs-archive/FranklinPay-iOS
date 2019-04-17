@@ -195,6 +195,9 @@ class TransactionsHistoryViewController: BasicViewController {
         if let erc20Txs = try? wallet.loadERC20Transactions(txType: .erc20, network: net) {
             txs += erc20Txs
         }
+        if let pendingTxs = try? wallet.loadPendingTransactions(network: net) {
+            txs += pendingTxs
+        }
         
 //        guard let pendingTxs = try? wallet.loadTransactionsPool() else {
 //            prepareTransactionsForView(transactions: txs)

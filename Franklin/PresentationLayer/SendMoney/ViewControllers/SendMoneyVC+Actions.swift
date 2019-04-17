@@ -49,7 +49,8 @@ extension SendMoneyController {
                                                            gasLimit: .manual(BigUInt(120000)),
                                                            gasPrice: .manual(BigUInt(1100000000)))
                 let password = try wallet.getPassword()
-                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                let txResult = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                try self.saveTransaction(wallet: wallet, value: amount, txResult: txResult, token: token)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -74,7 +75,8 @@ extension SendMoneyController {
                                                      gasLimit: .manual(BigUInt(120000)),
                                                      gasPrice: .manual(BigUInt(15000000000)))
                 let password = try wallet.getPassword()
-                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                let txResult = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                try self.saveTransaction(wallet: wallet, value: amount, txResult: txResult, token: nil)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -95,7 +97,8 @@ extension SendMoneyController {
                                                       value: amount,
                                                       gasLimit: .manual(BigUInt(120000)),
                                                       gasPrice: .manual(BigUInt(1100000000)))
-                _ = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                let txResult = try wallet.sendTx(transaction: tx, options: nil, password: password)
+                try self.saveTransaction(wallet: wallet, value: amount, txResult: txResult, token: nil)
                 self.showReady(animated: true)
             } catch let error {
                 self.alerts.showErrorAlert(for: self, error: "Error occurred: \(error.localizedDescription)", completion: { [unowned self] in
@@ -103,5 +106,18 @@ extension SendMoneyController {
                 })
             }
         }
+    }
+    
+    internal func saveTransaction(wallet: Wallet, value: String, txResult: TransactionSendingResult, token: ERC20Token?) throws {
+        let transaction = ETHTransaction(transactionHash: txResult.hash,
+                                         from: txResult.transaction.sender!.address,
+                                         to: txResult.transaction.to.address,
+                                         amount: value,
+                                         date: Date.init(),
+                                         data: txResult.transaction.data,
+                                         token: token,
+                                         networkId: CurrentNetwork.currentNetwork.id,
+                                         isPending: true)
+        try wallet.save(transactions: [transaction])
     }
 }
