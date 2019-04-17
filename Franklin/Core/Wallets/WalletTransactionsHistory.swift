@@ -102,7 +102,7 @@ extension Wallet: IWalletTransactionsHistory {
                         newTransaction.from = transaction.from
                         newTransaction.networkId = transaction.networkId
                         newTransaction.to = transaction.to
-                        newTransaction.isPending = false
+                        newTransaction.isPending = transaction.isPending
                         
                         if let contractAddress = transaction.token?.address {
                             //In case of ERC20 tokens
@@ -389,6 +389,51 @@ extension Wallet: IWalletTransactionsHistory {
         return returnPromise
     }
     
+    public func loadPendingTransactions(network: Web3Network) throws -> [ETHTransaction] {
+        let group = DispatchGroup()
+        group.enter()
+        var error: Error?
+        var transactions = [ETHTransaction]()
+        let eth = CurrentWallet.currentWallet?.web3Instance?.eth
+        do {
+            let results = try ContainerCD.context.fetch(self.fetchWalletTransactions(isPending: true, networkId: network.id))
+            for tx in results {
+                let txDetails = try eth!.getTransactionDetails(tx.transactionHash!)
+                if txDetails.blockNumber != nil {
+                    tx.setValue(tx.date, forKey: "date") // TODO: obtain Tx confirmation date
+                    tx.setValue(false, forKey: "isPending")
+                    try ContainerCD.context.save()
+                } else {
+                    let transaction = ETHTransaction(transactionHash: tx.transactionHash!,
+                                      from: tx.from!,
+                                      to: tx.to!,
+                                      amount: tx.amount!,
+                                      date: tx.date!,
+                                      data: tx.data,
+                                      token: tx.token.flatMap {
+                                        return ERC20Token(name: $0.name!,
+                                                          address: $0.address!,
+                                                          decimals: $0.decimals!,
+                                                          symbol: $0.symbol!)
+                    }, networkId: tx.networkId,
+                       isPending: tx.isPending)
+                    transactions.append(transaction)
+                }
+                
+            }
+            group.leave()
+        } catch let someErr {
+            error = someErr
+            print(someErr)
+            group.leave()
+        }
+        group.wait()
+        if let resErr = error {
+            throw resErr
+        }
+        return transactions
+    }
+    
     private func fetchTokenRequest(withAddress address: String) -> NSFetchRequest<ERC20TokenModel> {
         let fr: NSFetchRequest<ERC20TokenModel> = ERC20TokenModel.fetchRequest()
         fr.predicate = NSPredicate(format: "address = %@", address)
@@ -398,6 +443,14 @@ extension Wallet: IWalletTransactionsHistory {
     private func fetchWalletRequest(with address: String) -> NSFetchRequest<WalletModel> {
         let fr: NSFetchRequest<WalletModel> = WalletModel.fetchRequest()
         fr.predicate = NSPredicate(format: "address = %@", address)
+        return fr
+    }
+    
+    private func fetchWalletTransactions(isPending pending: Bool, networkId: Int64) -> NSFetchRequest<ETHTransactionModel> {
+        let fr: NSFetchRequest<ETHTransactionModel> = ETHTransactionModel.fetchRequest()
+        let p1 = NSPredicate(format: "isPending == %@", NSNumber(value: pending))
+        let p2 = NSPredicate(format: "networkId == %@", NSNumber(value: networkId))
+        fr.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [p1, p2])
         return fr
     }
 }
