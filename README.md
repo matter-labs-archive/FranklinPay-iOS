@@ -42,6 +42,9 @@
  Even more:
 - Sign transactions and **call arbitrary contract's methods** via deep links
 
+### Franklin Pay testing
+To join the Franklin Pay beta, tap the [link](https://testflight.apple.com/join/FVWgauFQ) on your iPhone or iPad after you install TestFlight.
+
 ## Purpose
 
 The solution that we **BUIDL**: 
